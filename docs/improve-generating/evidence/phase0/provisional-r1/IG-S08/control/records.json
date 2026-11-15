@@ -1,0 +1,3056 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S08",
+  "shard": "control",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "manifestHash": "909ad60160328f6759f6e72042ea239a066b27e5eb2ba8972c624c3448eedc54",
+  "records": [
+    {
+      "key": "IG-S08/control/jigsaw9:expert:1100/unprofiled",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "jigsaw9:expert:1100",
+      "gridCluster": null,
+      "requestSeed": 1100,
+      "attempt": null,
+      "sample": null,
+      "variantId": "unprofiled",
+      "level": "expert",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "jigsaw9",
+        "difficulty": "expert",
+        "seed": 1100,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "native-w1",
+      "poolWidth": 1,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); an observed request is an attribution run, not a timing run",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 510.7363,
+        "coldWallMs": 611.1814999999997,
+        "occupiedWallMs": 616.8107999999997,
+        "cpuToDecisionMs": 984,
+        "cpuTotalMs": 984,
+        "cpuReadyTotalMs": 890,
+        "startupMs": 100.44519999999966,
+        "startupCpuMs": 94,
+        "cleanupMs": 5.6293000000000575,
+        "readyOccupiedWallMs": 516.3656000000001,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 0
+      },
+      "validation": {
+        "wallMs": 111.14319999999998,
+        "cpuMs": 126,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": true,
+      "verifiedExact": true,
+      "required": true,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "expert",
+      "score": 993,
+      "puzzleHash": "6b2c35d92da1ce29fee1b6bb917a8a6a095c4d886924e993fe0a4ddf65028423",
+      "attemptsUsed": 3,
+      "samplesUsed": null,
+      "canonicalRatings": 275,
+      "localProposals": 65536,
+      "localCapReasons": [
+        "proposals",
+        "proposals"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": null,
+        "dfsChecks": null,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [],
+      "error": null,
+      "arm": "reference",
+      "puzzleVariant": "jigsaw9",
+      "blockKey": "IG-S08/control/jigsaw9:expert:1100",
+      "shard": "control",
+      "order": 0,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [],
+      "engineElapsedMs": 509.88239999999996,
+      "digests": {
+        "structure": "b5fe198e14d1e00688501fcba8a26fa4f79fcd0992555af3537e8b6f093ac4c2",
+        "givens": "fe3af1427356fe7d8ac2b3ee6770c8565788dd0f4478d416c5353b6a7dc265c1",
+        "solution": "8ef1573e57c8eb5d0d75928166613411bf32e743a36c5e12168806b99339a98d",
+        "rating": "48f61e88076e627dbd87c52cc48bb489399543d4f16548db7a340f894a183e86",
+        "config": "c211e7c626ae834876353e30af456d5fe1a007eef20a3dfcfe6a9cf601eb953b",
+        "warnings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "log": "b9435ee81661f42947abcbb030eef8163f68a188e438754488c6a4157986aa0e",
+        "work": "8a6575c507a76b506329a2586c160a44fdb35e349433e62719de8295cdb39301",
+        "scalars": "92f7f6c8a933742127efc80055a0f15a1c43add8d3bd765ae9d5c0d98da3db5d",
+        "puzzle": "6b2c35d92da1ce29fee1b6bb917a8a6a095c4d886924e993fe0a4ddf65028423",
+        "all": "144eb8e83b273d1297d5eed1df3a8cd82a7c5806fe3e8b1954da0f0033a7f92f"
+      },
+      "engineTimingsMs": {
+        "configure": 0.3128999999998996,
+        "buildModel": 11.294199999999819,
+        "fullGrid": 0.7239999999997053,
+        "extraStructure": 0.14900000000034197,
+        "dig": 486.7708000000016,
+        "rate": 7.316000000001168,
+        "tune": 0.23650000000179716
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "cellKind": "control",
+      "preMs07": true
+    },
+    {
+      "key": "IG-S08/control/jigsaw9:expert:1100/profiled",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "jigsaw9:expert:1100",
+      "gridCluster": null,
+      "requestSeed": 1100,
+      "attempt": null,
+      "sample": null,
+      "variantId": "profiled",
+      "level": "expert",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "jigsaw9",
+        "difficulty": "expert",
+        "seed": 1100,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 8,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "beacon",
+      "poolWidth": 1,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); an observed request is an attribution run, not a timing run",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 591.9542999999994,
+        "coldWallMs": 722.0924999999997,
+        "occupiedWallMs": 727.6579000000002,
+        "cpuToDecisionMs": 1109,
+        "cpuTotalMs": 1109,
+        "cpuReadyTotalMs": 999,
+        "startupMs": 130.13820000000032,
+        "startupCpuMs": 110,
+        "cleanupMs": 5.565400000000409,
+        "readyOccupiedWallMs": 597.5196999999998,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 0
+      },
+      "validation": {
+        "wallMs": 112.78129999999965,
+        "cpuMs": 203,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": true,
+      "verifiedExact": true,
+      "required": true,
+      "vacuous": false,
+      "shallow": false,
+      "achieved": "expert",
+      "score": 993,
+      "puzzleHash": "6b2c35d92da1ce29fee1b6bb917a8a6a095c4d886924e993fe0a4ddf65028423",
+      "attemptsUsed": 3,
+      "samplesUsed": null,
+      "canonicalRatings": 275,
+      "localProposals": 65536,
+      "localCapReasons": [
+        "proposals",
+        "proposals"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": null,
+        "dfsEntries": 4974,
+        "dfsChecks": 4233,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "jigsaw9",
+      "blockKey": "IG-S08/control/jigsaw9:expert:1100",
+      "shard": "control",
+      "order": 1,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "jigsaw-profile"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "jig.layout-attempt",
+          "file": "js/variants/jigsaw.js",
+          "beforeTextHash": "0826ded674ccf417c20216b2ac7b54ce5eadb972390843b62646c0338418faa2",
+          "afterTextHash": "dfdf5c224d23e4a85f4dfc99e53990f3a8b44f342a2d617d8c2a617b8bcdbde2"
+        },
+        {
+          "id": "jig.layout-grow",
+          "file": "js/variants/jigsaw.js",
+          "beforeTextHash": "dfdf5c224d23e4a85f4dfc99e53990f3a8b44f342a2d617d8c2a617b8bcdbde2",
+          "afterTextHash": "adfb92f0aa01fd18dd8517710048191c893766800ef7c97a6a4a6279a56b5784"
+        },
+        {
+          "id": "jig.layout-solvable",
+          "file": "js/variants/jigsaw.js",
+          "beforeTextHash": "adfb92f0aa01fd18dd8517710048191c893766800ef7c97a6a4a6279a56b5784",
+          "afterTextHash": "e80dda2a514aa8aea585c99165b3d0b263849c9b65531b59443cadd3da54dbba"
+        },
+        {
+          "id": "jig.layout-unsolvable",
+          "file": "js/variants/jigsaw.js",
+          "beforeTextHash": "e80dda2a514aa8aea585c99165b3d0b263849c9b65531b59443cadd3da54dbba",
+          "afterTextHash": "c92f1d35c6787da8c145be11315c44991875906ef4ccc46587e20ec890ec5bd6"
+        },
+        {
+          "id": "jig.layout-plain",
+          "file": "js/variants/jigsaw.js",
+          "beforeTextHash": "c92f1d35c6787da8c145be11315c44991875906ef4ccc46587e20ec890ec5bd6",
+          "afterTextHash": "c2c22b69466213dcacac396900e95a2b31f9ed47df345b6f1394be970d35cde5"
+        },
+        {
+          "id": "jig.layout-hard",
+          "file": "js/variants/jigsaw.js",
+          "beforeTextHash": "c2c22b69466213dcacac396900e95a2b31f9ed47df345b6f1394be970d35cde5",
+          "afterTextHash": "f59a8ff5b08bdf0b5f5c18a91f239cc072099324d5b121ca2b5e418e7f675ead"
+        },
+        {
+          "id": "jig.layout-accepted",
+          "file": "js/variants/jigsaw.js",
+          "beforeTextHash": "f59a8ff5b08bdf0b5f5c18a91f239cc072099324d5b121ca2b5e418e7f675ead",
+          "afterTextHash": "9c2ad68efca3a785ca7cea1f2f4dacbc449d4fc0dec0cb740669fcbbc4205963"
+        },
+        {
+          "id": "jig.growth-backtrack",
+          "file": "js/variants/jigsaw.js",
+          "beforeTextHash": "9c2ad68efca3a785ca7cea1f2f4dacbc449d4fc0dec0cb740669fcbbc4205963",
+          "afterTextHash": "49d6af46a0f380e674df59726016be63e79ed45dff2774c6576f186c3c9bf024"
+        },
+        {
+          "id": "jig.open-level",
+          "file": "js/variants/jigsaw.js",
+          "beforeTextHash": "49d6af46a0f380e674df59726016be63e79ed45dff2774c6576f186c3c9bf024",
+          "afterTextHash": "3afa9a675d176a150118ca800c8f2a031c2ad3985c6f940dac0a405f9b710a7d"
+        },
+        {
+          "id": "jig.feasible",
+          "file": "js/variants/jigsaw.js",
+          "beforeTextHash": "3afa9a675d176a150118ca800c8f2a031c2ad3985c6f940dac0a405f9b710a7d",
+          "afterTextHash": "06148defbf5af0754b1f99f4b6d42a31de13d7008b167cabe5681577d3fca9a3"
+        },
+        {
+          "id": "grid.unlimited",
+          "file": "js/engine/full-grid.js",
+          "beforeTextHash": "9f633b4f150ef8e12c7cfbe4c64dd98e60d4a9d5ea8d878754d705c508f06889",
+          "afterTextHash": "60229a571b7150c385a5dea70fdda9a4898d22c471f315baa2fe717d0be017e8"
+        },
+        {
+          "id": "grid.search",
+          "file": "js/engine/full-grid.js",
+          "beforeTextHash": "60229a571b7150c385a5dea70fdda9a4898d22c471f315baa2fe717d0be017e8",
+          "afterTextHash": "e7dee83cfa98762146dbba0537e878e08f74ccf57d8129cb080e15924270b423"
+        },
+        {
+          "id": "grid.backtracks",
+          "file": "js/engine/full-grid.js",
+          "beforeTextHash": "e7dee83cfa98762146dbba0537e878e08f74ccf57d8129cb080e15924270b423",
+          "afterTextHash": "e7bd53cd9ade05de628814a3ceb6cc79b566bcf6a3fd4149afd3d724e1f9bb1c"
+        },
+        {
+          "id": "grid.restart",
+          "file": "js/engine/full-grid.js",
+          "beforeTextHash": "e7bd53cd9ade05de628814a3ceb6cc79b566bcf6a3fd4149afd3d724e1f9bb1c",
+          "afterTextHash": "be8ae7921919acb9da1160ddd0d0237dacea08b053263cd71d6f165924c837b6"
+        },
+        {
+          "id": "dfs.node",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d",
+          "afterTextHash": "fd1156b62e883e3827260b76500c44421bf45c68b74ba10a27dfaa5aedb47fbf"
+        },
+        {
+          "id": "dfs.check",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "fd1156b62e883e3827260b76500c44421bf45c68b74ba10a27dfaa5aedb47fbf",
+          "afterTextHash": "ca88174390d030bd8242d174afbbe63c1679ee33a52f986dd81b7518b5c49898"
+        },
+        {
+          "id": "dfs.backtrack",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "ca88174390d030bd8242d174afbbe63c1679ee33a52f986dd81b7518b5c49898",
+          "afterTextHash": "33b81e7ad98b8e46b1a42e4f92ff807378aae49cf7b8cf663ee590a16084620e"
+        },
+        {
+          "id": "solver.finder",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "378397c110bf815d5f196d67fdfb5a3b5f06474793eae68242632f5456b2bb39"
+        },
+        {
+          "id": "dig.stage-open",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "daf49d16a22e25733883486d19c90639abf115dad596f26c02878fbc9e6b46f0"
+        },
+        {
+          "id": "dig.stage-close",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "daf49d16a22e25733883486d19c90639abf115dad596f26c02878fbc9e6b46f0",
+          "afterTextHash": "22a89b2a9f018e2e8b861fd60456570c87258b465203e15a6687b8b1278a5d0a"
+        },
+        {
+          "id": "dig.oracle",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "22a89b2a9f018e2e8b861fd60456570c87258b465203e15a6687b8b1278a5d0a",
+          "afterTextHash": "ffa5cac6bfecfc591c895835347e13c5e6f397845bd1396237860c23d5969de1"
+        },
+        {
+          "id": "dig.verify",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "ffa5cac6bfecfc591c895835347e13c5e6f397845bd1396237860c23d5969de1",
+          "afterTextHash": "4d44a080897cb0c9ca97a2bcffd209cf2f025a1f6fb9d39f4d4ff60f028d191e"
+        },
+        {
+          "id": "dig.objective",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "4d44a080897cb0c9ca97a2bcffd209cf2f025a1f6fb9d39f4d4ff60f028d191e",
+          "afterTextHash": "ea075df0e9bdc94962a6a41435e47d13ee04d9775fdf788fad560395df712ae9"
+        },
+        {
+          "id": "dig.safety",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "ea075df0e9bdc94962a6a41435e47d13ee04d9775fdf788fad560395df712ae9",
+          "afterTextHash": "27b332a4a0b23ca82e7dde8043af176f7da0dfad459c4a64fe878e697b7d06d4"
+        },
+        {
+          "id": "dig.keeper",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "27b332a4a0b23ca82e7dde8043af176f7da0dfad459c4a64fe878e697b7d06d4",
+          "afterTextHash": "90650034a1dc8cc90b3ab6c40ef16e00f05a6e4e819b94027410590c748c5933"
+        },
+        {
+          "id": "dig.level-enter",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "90650034a1dc8cc90b3ab6c40ef16e00f05a6e4e819b94027410590c748c5933",
+          "afterTextHash": "7f7a3461635c398ced2d154d01322d067d07460fe73b38a727e143ef1ec764e0"
+        },
+        {
+          "id": "dig.proposal-rating",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7f7a3461635c398ced2d154d01322d067d07460fe73b38a727e143ef1ec764e0",
+          "afterTextHash": "7b43f6e1ff5709f012d7c570238f090d1786d18076c12eec34e3800e8782009a"
+        },
+        {
+          "id": "dig.proposal-refine",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7b43f6e1ff5709f012d7c570238f090d1786d18076c12eec34e3800e8782009a",
+          "afterTextHash": "65336cbf733e89a9296a05e78440f30a96c541b9474c863e0133bf261fb07844"
+        },
+        {
+          "id": "dig.search-strategy",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "65336cbf733e89a9296a05e78440f30a96c541b9474c863e0133bf261fb07844",
+          "afterTextHash": "96eb042de1265bb3e85d7b7073710b65f3db5d69da775aa1640bf5c90b765687"
+        },
+        {
+          "id": "dig.local-refine",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "96eb042de1265bb3e85d7b7073710b65f3db5d69da775aa1640bf5c90b765687",
+          "afterTextHash": "f24a36dec15fd0a9a2178132c56dcb43b2d9397a44a8552e94a0d43cbb42a5f1"
+        },
+        {
+          "id": "dig.local-unique",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "f24a36dec15fd0a9a2178132c56dcb43b2d9397a44a8552e94a0d43cbb42a5f1",
+          "afterTextHash": "96b61f25f50ecb05a36e61e840e303263cd5196a58139d9361c57896524a2889"
+        },
+        {
+          "id": "dig.local-rating",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "96b61f25f50ecb05a36e61e840e303263cd5196a58139d9361c57896524a2889",
+          "afterTextHash": "19d617fdc210a494922428419c19c17fe6671d6f02ccef03eb2f61ef747ad0d9"
+        }
+      ],
+      "engineElapsedMs": 588.3205999999996,
+      "digests": {
+        "structure": "b5fe198e14d1e00688501fcba8a26fa4f79fcd0992555af3537e8b6f093ac4c2",
+        "givens": "fe3af1427356fe7d8ac2b3ee6770c8565788dd0f4478d416c5353b6a7dc265c1",
+        "solution": "8ef1573e57c8eb5d0d75928166613411bf32e743a36c5e12168806b99339a98d",
+        "rating": "48f61e88076e627dbd87c52cc48bb489399543d4f16548db7a340f894a183e86",
+        "config": "c211e7c626ae834876353e30af456d5fe1a007eef20a3dfcfe6a9cf601eb953b",
+        "warnings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "log": "b9435ee81661f42947abcbb030eef8163f68a188e438754488c6a4157986aa0e",
+        "work": "8a6575c507a76b506329a2586c160a44fdb35e349433e62719de8295cdb39301",
+        "scalars": "92f7f6c8a933742127efc80055a0f15a1c43add8d3bd765ae9d5c0d98da3db5d",
+        "puzzle": "6b2c35d92da1ce29fee1b6bb917a8a6a095c4d886924e993fe0a4ddf65028423",
+        "all": "144eb8e83b273d1297d5eed1df3a8cd82a7c5806fe3e8b1954da0f0033a7f92f"
+      },
+      "engineTimingsMs": {
+        "configure": 0.3087000000000444,
+        "buildModel": 10.332300000000032,
+        "fullGrid": 0.8726999999994405,
+        "extraStructure": 0.6820999999995365,
+        "dig": 561.3130000000037,
+        "rate": 8.669000000000779,
+        "tune": 0.209500000000844
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "cellKind": "control",
+      "preMs07": true,
+      "censored": false,
+      "stageJournal": {
+        "file": "stage-journal.jsonl",
+        "lines": 273,
+        "sha256OfItsLines": "9a80b27ebd73f0895704f7aa01558fc37d7d82ec2af82f258e2f38ccd89ebcab"
+      },
+      "jigsaw": {
+        "schema": "ig-s08-attribution/1",
+        "preMs07": true,
+        "evidenceStatus": "provisional (pre-freeze)",
+        "source": "final",
+        "attributedAtRelMs": 727.68,
+        "outcome": "complete",
+        "censored": false,
+        "timeoutScope": null,
+        "limitAppliedMs": 180000,
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandWindowRemainingAtSpawnMs": 258381.126,
+        "attribution": {
+          "state": "finished",
+          "current": null,
+          "beaconObservedMs": 588.4677740000002,
+          "inProgressMs": 0,
+          "stages": [
+            {
+              "stage": "outside",
+              "wallMsLowerBound": 5.236084,
+              "share": 0.008897826238484893,
+              "contexts": [
+                "outside"
+              ],
+              "counters": {
+                "dfsNodes": 0,
+                "dfsChecks": 0,
+                "dfsBacktracks": 0,
+                "gridSearches": 0,
+                "gridRestarts": 0,
+                "gridBacktracks": 0
+              }
+            },
+            {
+              "stage": "configure",
+              "wallMsLowerBound": 0.397461,
+              "share": 0.0006754167646230359,
+              "contexts": [
+                "configure"
+              ],
+              "counters": {
+                "dfsNodes": 0,
+                "dfsChecks": 0,
+                "dfsBacktracks": 0,
+                "gridSearches": 0,
+                "gridRestarts": 0,
+                "gridBacktracks": 0
+              }
+            },
+            {
+              "stage": "buildModel",
+              "wallMsLowerBound": 10.347167,
+              "share": 0.017583234727820453,
+              "contexts": [
+                "layout.growth",
+                "layout.solvable",
+                "buildModel",
+                "layout.plain"
+              ],
+              "counters": {
+                "dfsNodes": 83,
+                "dfsChecks": 81,
+                "dfsBacktracks": 18,
+                "gridSearches": 1,
+                "gridRestarts": 0,
+                "gridBacktracks": 12
+              }
+            },
+            {
+              "stage": "fullGrid",
+              "wallMsLowerBound": 0.922363,
+              "share": 0.0015673976396879121,
+              "contexts": [
+                "fullGrid"
+              ],
+              "counters": {
+                "dfsNodes": 120,
+                "dfsChecks": 117,
+                "dfsBacktracks": 39,
+                "gridSearches": 3,
+                "gridRestarts": 0,
+                "gridBacktracks": 39
+              }
+            },
+            {
+              "stage": "extraStructure",
+              "wallMsLowerBound": 0.71167,
+              "share": 0.0012093610414085306,
+              "contexts": [
+                "extraStructure"
+              ],
+              "counters": {
+                "dfsNodes": 0,
+                "dfsChecks": 0,
+                "dfsBacktracks": 0,
+                "gridSearches": 0,
+                "gridRestarts": 0,
+                "gridBacktracks": 0
+              }
+            },
+            {
+              "stage": "dig",
+              "wallMsLowerBound": 231.458495,
+              "share": 0.393323993643193,
+              "contexts": [
+                "dig.objective(stageB)",
+                "dig.oracle(stageA)",
+                "dig",
+                "dig.safetyCount",
+                "dig.keeperCount"
+              ],
+              "counters": {
+                "dfsNodes": 485,
+                "dfsChecks": 451,
+                "dfsBacktracks": 914,
+                "gridSearches": 0,
+                "gridRestarts": 0,
+                "gridBacktracks": 0
+              }
+            },
+            {
+              "stage": "rate",
+              "wallMsLowerBound": 8.941650000000001,
+              "share": 0.01519479977505106,
+              "contexts": [
+                "rate"
+              ],
+              "counters": {
+                "dfsNodes": 0,
+                "dfsChecks": 0,
+                "dfsBacktracks": 0,
+                "gridSearches": 0,
+                "gridRestarts": 0,
+                "gridBacktracks": 0
+              }
+            },
+            {
+              "stage": "tune",
+              "wallMsLowerBound": 0.417969,
+              "share": 0.0007102665914208581,
+              "contexts": [
+                "tune"
+              ],
+              "counters": {
+                "dfsNodes": 0,
+                "dfsChecks": 0,
+                "dfsBacktracks": 0,
+                "gridSearches": 0,
+                "gridRestarts": 0,
+                "gridBacktracks": 0
+              }
+            },
+            {
+              "stage": "local",
+              "wallMsLowerBound": 330.034915,
+              "share": 0.56083770357831,
+              "contexts": [
+                "local",
+                "local.rating",
+                "local.unique"
+              ],
+              "counters": {
+                "dfsNodes": 4286,
+                "dfsChecks": 3584,
+                "dfsBacktracks": 5073,
+                "gridSearches": 0,
+                "gridRestarts": 0,
+                "gridBacktracks": 0
+              }
+            }
+          ],
+          "contexts": [
+            {
+              "ctx": 18,
+              "name": "local",
+              "stage": "local",
+              "ms": 215.286133,
+              "entries": 2,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 215.286133,
+                  "calls": 2,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 10,
+              "name": "dig.objective(stageB)",
+              "stage": "dig",
+              "ms": 190.44921800000003,
+              "entries": 2304,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 8.288574,
+                  "calls": 2304,
+                  "hits": 0
+                },
+                {
+                  "sub": 1,
+                  "kind": "finder",
+                  "id": "nakedSingle",
+                  "group": "basic",
+                  "ms": 33.539551,
+                  "calls": 115386,
+                  "hits": 92293
+                },
+                {
+                  "sub": 2,
+                  "kind": "finder",
+                  "id": "hiddenSingleBox",
+                  "group": "basic",
+                  "ms": 13.212646,
+                  "calls": 23093,
+                  "hits": 14250
+                },
+                {
+                  "sub": 3,
+                  "kind": "finder",
+                  "id": "hiddenSingleLine",
+                  "group": "basic",
+                  "ms": 7.130615,
+                  "calls": 8843,
+                  "hits": 3264
+                },
+                {
+                  "sub": 4,
+                  "kind": "finder",
+                  "id": "pointing",
+                  "group": "locked",
+                  "ms": 7.960449,
+                  "calls": 5579,
+                  "hits": 3116
+                },
+                {
+                  "sub": 7,
+                  "kind": "finder",
+                  "id": "boxLine",
+                  "group": "locked",
+                  "ms": 3.243896,
+                  "calls": 2463,
+                  "hits": 1490
+                },
+                {
+                  "sub": 8,
+                  "kind": "finder",
+                  "id": "nakedPair",
+                  "group": "subset",
+                  "ms": 3.760742,
+                  "calls": 973,
+                  "hits": 106
+                },
+                {
+                  "sub": 9,
+                  "kind": "finder",
+                  "id": "hiddenPair",
+                  "group": "subset",
+                  "ms": 5.206543,
+                  "calls": 867,
+                  "hits": 73
+                },
+                {
+                  "sub": 10,
+                  "kind": "finder",
+                  "id": "nakedTriple",
+                  "group": "subset",
+                  "ms": 3.074219,
+                  "calls": 794,
+                  "hits": 23
+                },
+                {
+                  "sub": 12,
+                  "kind": "finder",
+                  "id": "hiddenTriple",
+                  "group": "subset",
+                  "ms": 4.47583,
+                  "calls": 771,
+                  "hits": 10
+                },
+                {
+                  "sub": 14,
+                  "kind": "finder",
+                  "id": "nakedQuad",
+                  "group": "subset",
+                  "ms": 3.247559,
+                  "calls": 761,
+                  "hits": 0
+                },
+                {
+                  "sub": 15,
+                  "kind": "finder",
+                  "id": "hiddenQuad",
+                  "group": "subset",
+                  "ms": 4.20459,
+                  "calls": 761,
+                  "hits": 0
+                },
+                {
+                  "sub": 16,
+                  "kind": "finder",
+                  "id": "xWing",
+                  "group": "fish",
+                  "ms": 10.620605,
+                  "calls": 761,
+                  "hits": 51
+                },
+                {
+                  "sub": 17,
+                  "kind": "finder",
+                  "id": "simpleColouring",
+                  "group": "fish",
+                  "ms": 16.807129,
+                  "calls": 710,
+                  "hits": 423
+                },
+                {
+                  "sub": 18,
+                  "kind": "finder",
+                  "id": "swordfish",
+                  "group": "fish",
+                  "ms": 3.510986,
+                  "calls": 287,
+                  "hits": 17
+                },
+                {
+                  "sub": 20,
+                  "kind": "finder",
+                  "id": "jellyfish",
+                  "group": "fish",
+                  "ms": 3.197266,
+                  "calls": 270,
+                  "hits": 0
+                },
+                {
+                  "sub": 21,
+                  "kind": "finder",
+                  "id": "xyWing",
+                  "group": "wing",
+                  "ms": 1.771973,
+                  "calls": 270,
+                  "hits": 16
+                },
+                {
+                  "sub": 22,
+                  "kind": "finder",
+                  "id": "xyzWing",
+                  "group": "wing",
+                  "ms": 1.174561,
+                  "calls": 254,
+                  "hits": 15
+                },
+                {
+                  "sub": 43,
+                  "kind": "solver",
+                  "id": null,
+                  "group": null,
+                  "ms": 56.021484,
+                  "calls": 2304,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 20,
+              "name": "local.rating",
+              "stage": "local",
+              "ms": 86.47387900000001,
+              "entries": 246,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.245117,
+                  "calls": 246,
+                  "hits": 0
+                },
+                {
+                  "sub": 1,
+                  "kind": "finder",
+                  "id": "nakedSingle",
+                  "group": "basic",
+                  "ms": 4.992188,
+                  "calls": 17496,
+                  "hits": 9310
+                },
+                {
+                  "sub": 2,
+                  "kind": "finder",
+                  "id": "hiddenSingleBox",
+                  "group": "basic",
+                  "ms": 4.000244,
+                  "calls": 8186,
+                  "hits": 3733
+                },
+                {
+                  "sub": 3,
+                  "kind": "finder",
+                  "id": "hiddenSingleLine",
+                  "group": "basic",
+                  "ms": 3.336426,
+                  "calls": 4453,
+                  "hits": 1292
+                },
+                {
+                  "sub": 4,
+                  "kind": "finder",
+                  "id": "pointing",
+                  "group": "locked",
+                  "ms": 4.120605,
+                  "calls": 3161,
+                  "hits": 1577
+                },
+                {
+                  "sub": 7,
+                  "kind": "finder",
+                  "id": "boxLine",
+                  "group": "locked",
+                  "ms": 1.934326,
+                  "calls": 1584,
+                  "hits": 924
+                },
+                {
+                  "sub": 8,
+                  "kind": "finder",
+                  "id": "nakedPair",
+                  "group": "subset",
+                  "ms": 2.177979,
+                  "calls": 660,
+                  "hits": 84
+                },
+                {
+                  "sub": 9,
+                  "kind": "finder",
+                  "id": "hiddenPair",
+                  "group": "subset",
+                  "ms": 3.339844,
+                  "calls": 576,
+                  "hits": 76
+                },
+                {
+                  "sub": 10,
+                  "kind": "finder",
+                  "id": "nakedTriple",
+                  "group": "subset",
+                  "ms": 2.267334,
+                  "calls": 500,
+                  "hits": 41
+                },
+                {
+                  "sub": 12,
+                  "kind": "finder",
+                  "id": "hiddenTriple",
+                  "group": "subset",
+                  "ms": 2.961182,
+                  "calls": 459,
+                  "hits": 4
+                },
+                {
+                  "sub": 14,
+                  "kind": "finder",
+                  "id": "nakedQuad",
+                  "group": "subset",
+                  "ms": 2.334229,
+                  "calls": 455,
+                  "hits": 0
+                },
+                {
+                  "sub": 15,
+                  "kind": "finder",
+                  "id": "hiddenQuad",
+                  "group": "subset",
+                  "ms": 2.874756,
+                  "calls": 455,
+                  "hits": 0
+                },
+                {
+                  "sub": 16,
+                  "kind": "finder",
+                  "id": "xWing",
+                  "group": "fish",
+                  "ms": 6.118408,
+                  "calls": 455,
+                  "hits": 118
+                },
+                {
+                  "sub": 17,
+                  "kind": "finder",
+                  "id": "simpleColouring",
+                  "group": "fish",
+                  "ms": 7.70166,
+                  "calls": 337,
+                  "hits": 238
+                },
+                {
+                  "sub": 18,
+                  "kind": "finder",
+                  "id": "swordfish",
+                  "group": "fish",
+                  "ms": 1.718262,
+                  "calls": 99,
+                  "hits": 12
+                },
+                {
+                  "sub": 20,
+                  "kind": "finder",
+                  "id": "jellyfish",
+                  "group": "fish",
+                  "ms": 1.539551,
+                  "calls": 87,
+                  "hits": 0
+                },
+                {
+                  "sub": 21,
+                  "kind": "finder",
+                  "id": "xyWing",
+                  "group": "wing",
+                  "ms": 0.507813,
+                  "calls": 87,
+                  "hits": 8
+                },
+                {
+                  "sub": 22,
+                  "kind": "finder",
+                  "id": "xyzWing",
+                  "group": "wing",
+                  "ms": 0.602783,
+                  "calls": 79,
+                  "hits": 5
+                },
+                {
+                  "sub": 23,
+                  "kind": "finder",
+                  "id": "wWing",
+                  "group": "wing",
+                  "ms": 1.4104,
+                  "calls": 74,
+                  "hits": 9
+                },
+                {
+                  "sub": 24,
+                  "kind": "finder",
+                  "id": "uniqueRectangle",
+                  "group": "wing",
+                  "ms": 3.276123,
+                  "calls": 65,
+                  "hits": 0
+                },
+                {
+                  "sub": 25,
+                  "kind": "finder",
+                  "id": "forcingChain",
+                  "group": "chain",
+                  "ms": 18.22583,
+                  "calls": 65,
+                  "hits": 48
+                },
+                {
+                  "sub": 26,
+                  "kind": "finder",
+                  "id": "nishio",
+                  "group": "chain",
+                  "ms": 0.648682,
+                  "calls": 17,
+                  "hits": 17
+                },
+                {
+                  "sub": 43,
+                  "kind": "solver",
+                  "id": null,
+                  "group": null,
+                  "ms": 8.557129,
+                  "calls": 246,
+                  "hits": 0
+                },
+                {
+                  "sub": 44,
+                  "kind": "rating",
+                  "id": null,
+                  "group": null,
+                  "ms": 1.583008,
+                  "calls": 246,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 19,
+              "name": "local.unique",
+              "stage": "local",
+              "ms": 28.274903,
+              "entries": 417,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.428223,
+                  "calls": 417,
+                  "hits": 0
+                },
+                {
+                  "sub": 45,
+                  "kind": "dfs",
+                  "id": null,
+                  "group": null,
+                  "ms": 27.84668,
+                  "calls": 417,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 9,
+              "name": "dig.oracle(stageA)",
+              "stage": "dig",
+              "ms": 20.803711,
+              "entries": 656,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 2.008545,
+                  "calls": 656,
+                  "hits": 0
+                },
+                {
+                  "sub": 1,
+                  "kind": "finder",
+                  "id": "nakedSingle",
+                  "group": "basic",
+                  "ms": 5.226074,
+                  "calls": 15046,
+                  "hits": 15019
+                },
+                {
+                  "sub": 2,
+                  "kind": "finder",
+                  "id": "hiddenSingleBox",
+                  "group": "basic",
+                  "ms": 0.024658,
+                  "calls": 27,
+                  "hits": 7
+                },
+                {
+                  "sub": 3,
+                  "kind": "finder",
+                  "id": "hiddenSingleLine",
+                  "group": "basic",
+                  "ms": 0.022705,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 4,
+                  "kind": "finder",
+                  "id": "pointing",
+                  "group": "locked",
+                  "ms": 0.034912,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 7,
+                  "kind": "finder",
+                  "id": "boxLine",
+                  "group": "locked",
+                  "ms": 0.023438,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 8,
+                  "kind": "finder",
+                  "id": "nakedPair",
+                  "group": "subset",
+                  "ms": 0.040283,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 9,
+                  "kind": "finder",
+                  "id": "hiddenPair",
+                  "group": "subset",
+                  "ms": 0.061279,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 10,
+                  "kind": "finder",
+                  "id": "nakedTriple",
+                  "group": "subset",
+                  "ms": 0.0271,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 12,
+                  "kind": "finder",
+                  "id": "hiddenTriple",
+                  "group": "subset",
+                  "ms": 0.049316,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 14,
+                  "kind": "finder",
+                  "id": "nakedQuad",
+                  "group": "subset",
+                  "ms": 0.024414,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 15,
+                  "kind": "finder",
+                  "id": "hiddenQuad",
+                  "group": "subset",
+                  "ms": 0.04541,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 16,
+                  "kind": "finder",
+                  "id": "xWing",
+                  "group": "fish",
+                  "ms": 0.228271,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 17,
+                  "kind": "finder",
+                  "id": "simpleColouring",
+                  "group": "fish",
+                  "ms": 0.267578,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 18,
+                  "kind": "finder",
+                  "id": "swordfish",
+                  "group": "fish",
+                  "ms": 0.150391,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 20,
+                  "kind": "finder",
+                  "id": "jellyfish",
+                  "group": "fish",
+                  "ms": 0.132813,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 21,
+                  "kind": "finder",
+                  "id": "xyWing",
+                  "group": "wing",
+                  "ms": 0.080811,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 22,
+                  "kind": "finder",
+                  "id": "xyzWing",
+                  "group": "wing",
+                  "ms": 0.076416,
+                  "calls": 20,
+                  "hits": 0
+                },
+                {
+                  "sub": 43,
+                  "kind": "solver",
+                  "id": null,
+                  "group": null,
+                  "ms": 12.279297,
+                  "calls": 656,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 8,
+              "name": "dig",
+              "stage": "dig",
+              "ms": 14.610596,
+              "entries": 29,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 14.610596,
+                  "calls": 29,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 16,
+              "name": "rate",
+              "stage": "rate",
+              "ms": 8.941650000000001,
+              "entries": 31,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.711426,
+                  "calls": 31,
+                  "hits": 0
+                },
+                {
+                  "sub": 1,
+                  "kind": "finder",
+                  "id": "nakedSingle",
+                  "group": "basic",
+                  "ms": 0.63916,
+                  "calls": 2228,
+                  "hits": 1077
+                },
+                {
+                  "sub": 2,
+                  "kind": "finder",
+                  "id": "hiddenSingleBox",
+                  "group": "basic",
+                  "ms": 0.58374,
+                  "calls": 1151,
+                  "hits": 439
+                },
+                {
+                  "sub": 3,
+                  "kind": "finder",
+                  "id": "hiddenSingleLine",
+                  "group": "basic",
+                  "ms": 0.648682,
+                  "calls": 712,
+                  "hits": 195
+                },
+                {
+                  "sub": 4,
+                  "kind": "finder",
+                  "id": "pointing",
+                  "group": "locked",
+                  "ms": 0.699707,
+                  "calls": 517,
+                  "hits": 272
+                },
+                {
+                  "sub": 7,
+                  "kind": "finder",
+                  "id": "boxLine",
+                  "group": "locked",
+                  "ms": 0.332275,
+                  "calls": 245,
+                  "hits": 167
+                },
+                {
+                  "sub": 8,
+                  "kind": "finder",
+                  "id": "nakedPair",
+                  "group": "subset",
+                  "ms": 0.296631,
+                  "calls": 78,
+                  "hits": 11
+                },
+                {
+                  "sub": 9,
+                  "kind": "finder",
+                  "id": "hiddenPair",
+                  "group": "subset",
+                  "ms": 0.40332,
+                  "calls": 67,
+                  "hits": 11
+                },
+                {
+                  "sub": 10,
+                  "kind": "finder",
+                  "id": "nakedTriple",
+                  "group": "subset",
+                  "ms": 0.252441,
+                  "calls": 56,
+                  "hits": 6
+                },
+                {
+                  "sub": 12,
+                  "kind": "finder",
+                  "id": "hiddenTriple",
+                  "group": "subset",
+                  "ms": 0.373779,
+                  "calls": 50,
+                  "hits": 1
+                },
+                {
+                  "sub": 14,
+                  "kind": "finder",
+                  "id": "nakedQuad",
+                  "group": "subset",
+                  "ms": 0.244629,
+                  "calls": 49,
+                  "hits": 0
+                },
+                {
+                  "sub": 15,
+                  "kind": "finder",
+                  "id": "hiddenQuad",
+                  "group": "subset",
+                  "ms": 0.334961,
+                  "calls": 49,
+                  "hits": 0
+                },
+                {
+                  "sub": 16,
+                  "kind": "finder",
+                  "id": "xWing",
+                  "group": "fish",
+                  "ms": 0.642334,
+                  "calls": 49,
+                  "hits": 7
+                },
+                {
+                  "sub": 17,
+                  "kind": "finder",
+                  "id": "simpleColouring",
+                  "group": "fish",
+                  "ms": 1.064453,
+                  "calls": 42,
+                  "hits": 40
+                },
+                {
+                  "sub": 18,
+                  "kind": "finder",
+                  "id": "swordfish",
+                  "group": "fish",
+                  "ms": 0.023193,
+                  "calls": 2,
+                  "hits": 1
+                },
+                {
+                  "sub": 20,
+                  "kind": "finder",
+                  "id": "jellyfish",
+                  "group": "fish",
+                  "ms": 0.013672,
+                  "calls": 1,
+                  "hits": 0
+                },
+                {
+                  "sub": 21,
+                  "kind": "finder",
+                  "id": "xyWing",
+                  "group": "wing",
+                  "ms": 0.002686,
+                  "calls": 1,
+                  "hits": 1
+                },
+                {
+                  "sub": 43,
+                  "kind": "solver",
+                  "id": null,
+                  "group": null,
+                  "ms": 1.381836,
+                  "calls": 29,
+                  "hits": 0
+                },
+                {
+                  "sub": 44,
+                  "kind": "rating",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.292725,
+                  "calls": 29,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 12,
+              "name": "dig.safetyCount",
+              "stage": "dig",
+              "ms": 5.417235999999999,
+              "entries": 31,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 1.056396,
+                  "calls": 31,
+                  "hits": 0
+                },
+                {
+                  "sub": 45,
+                  "kind": "dfs",
+                  "id": null,
+                  "group": null,
+                  "ms": 4.36084,
+                  "calls": 31,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 0,
+              "name": "outside",
+              "stage": "outside",
+              "ms": 5.236084,
+              "entries": 0,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 5.236084,
+                  "calls": 0,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 3,
+              "name": "layout.growth",
+              "stage": "buildModel",
+              "ms": 4.7229,
+              "entries": 1,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 4.7229,
+                  "calls": 1,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 4,
+              "name": "layout.solvable",
+              "stage": "buildModel",
+              "ms": 2.648193,
+              "entries": 1,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.113281,
+                  "calls": 1,
+                  "hits": 0
+                },
+                {
+                  "sub": 45,
+                  "kind": "dfs",
+                  "id": null,
+                  "group": null,
+                  "ms": 1.709717,
+                  "calls": 1,
+                  "hits": 0
+                },
+                {
+                  "sub": 46,
+                  "kind": "gridGenerator",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.825195,
+                  "calls": 1,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 2,
+              "name": "buildModel",
+              "stage": "buildModel",
+              "ms": 2.605713,
+              "entries": 1,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 2.605713,
+                  "calls": 1,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 6,
+              "name": "fullGrid",
+              "stage": "fullGrid",
+              "ms": 0.922363,
+              "entries": 3,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.133789,
+                  "calls": 3,
+                  "hits": 0
+                },
+                {
+                  "sub": 45,
+                  "kind": "dfs",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.637695,
+                  "calls": 3,
+                  "hits": 0
+                },
+                {
+                  "sub": 46,
+                  "kind": "gridGenerator",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.150879,
+                  "calls": 3,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 7,
+              "name": "extraStructure",
+              "stage": "extraStructure",
+              "ms": 0.71167,
+              "entries": 3,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.71167,
+                  "calls": 3,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 17,
+              "name": "tune",
+              "stage": "tune",
+              "ms": 0.417969,
+              "entries": 31,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.417969,
+                  "calls": 31,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 1,
+              "name": "configure",
+              "stage": "configure",
+              "ms": 0.397461,
+              "entries": 1,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.397461,
+                  "calls": 1,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 5,
+              "name": "layout.plain",
+              "stage": "buildModel",
+              "ms": 0.370361,
+              "entries": 1,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.071533,
+                  "calls": 1,
+                  "hits": 0
+                },
+                {
+                  "sub": 45,
+                  "kind": "dfs",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.298828,
+                  "calls": 1,
+                  "hits": 0
+                }
+              ]
+            },
+            {
+              "ctx": 13,
+              "name": "dig.keeperCount",
+              "stage": "dig",
+              "ms": 0.177734,
+              "entries": 3,
+              "bySub": [
+                {
+                  "sub": 0,
+                  "kind": "own",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.007324,
+                  "calls": 3,
+                  "hits": 0
+                },
+                {
+                  "sub": 45,
+                  "kind": "dfs",
+                  "id": null,
+                  "group": null,
+                  "ms": 0.17041,
+                  "calls": 3,
+                  "hits": 0
+                }
+              ]
+            }
+          ],
+          "finderGroups": [
+            {
+              "group": "basic",
+              "ms": 73.356689,
+              "calls": 196641,
+              "hits": 140879
+            },
+            {
+              "group": "fish",
+              "ms": 53.736572,
+              "calls": 3180,
+              "hits": 907
+            },
+            {
+              "group": "subset",
+              "ms": 42.07837,
+              "calls": 8501,
+              "hits": 446
+            },
+            {
+              "group": "chain",
+              "ms": 18.874512,
+              "calls": 82,
+              "hits": 65
+            },
+            {
+              "group": "locked",
+              "ms": 18.349607999999996,
+              "calls": 13589,
+              "hits": 7546
+            },
+            {
+              "group": "wing",
+              "ms": 8.903566000000001,
+              "calls": 870,
+              "hits": 54
+            }
+          ],
+          "finders": [
+            {
+              "id": "nakedSingle",
+              "group": "basic",
+              "ms": 44.396972999999996,
+              "calls": 150156,
+              "hits": 117699
+            },
+            {
+              "id": "simpleColouring",
+              "group": "fish",
+              "ms": 25.84082,
+              "calls": 1109,
+              "hits": 701
+            },
+            {
+              "id": "forcingChain",
+              "group": "chain",
+              "ms": 18.22583,
+              "calls": 65,
+              "hits": 48
+            },
+            {
+              "id": "hiddenSingleBox",
+              "group": "basic",
+              "ms": 17.821288000000003,
+              "calls": 32457,
+              "hits": 18429
+            },
+            {
+              "id": "xWing",
+              "group": "fish",
+              "ms": 17.609617999999998,
+              "calls": 1285,
+              "hits": 176
+            },
+            {
+              "id": "pointing",
+              "group": "locked",
+              "ms": 12.815673,
+              "calls": 9277,
+              "hits": 4965
+            },
+            {
+              "id": "hiddenSingleLine",
+              "group": "basic",
+              "ms": 11.138428,
+              "calls": 14028,
+              "hits": 4751
+            },
+            {
+              "id": "hiddenPair",
+              "group": "subset",
+              "ms": 9.010985999999999,
+              "calls": 1530,
+              "hits": 160
+            },
+            {
+              "id": "hiddenTriple",
+              "group": "subset",
+              "ms": 7.860107,
+              "calls": 1300,
+              "hits": 15
+            },
+            {
+              "id": "hiddenQuad",
+              "group": "subset",
+              "ms": 7.4597169999999995,
+              "calls": 1285,
+              "hits": 0
+            },
+            {
+              "id": "nakedPair",
+              "group": "subset",
+              "ms": 6.275634999999999,
+              "calls": 1731,
+              "hits": 201
+            },
+            {
+              "id": "nakedQuad",
+              "group": "subset",
+              "ms": 5.850831,
+              "calls": 1285,
+              "hits": 0
+            },
+            {
+              "id": "nakedTriple",
+              "group": "subset",
+              "ms": 5.621093999999999,
+              "calls": 1370,
+              "hits": 70
+            },
+            {
+              "id": "boxLine",
+              "group": "locked",
+              "ms": 5.533935,
+              "calls": 4312,
+              "hits": 2581
+            },
+            {
+              "id": "swordfish",
+              "group": "fish",
+              "ms": 5.402832,
+              "calls": 408,
+              "hits": 30
+            },
+            {
+              "id": "jellyfish",
+              "group": "fish",
+              "ms": 4.8833020000000005,
+              "calls": 378,
+              "hits": 0
+            },
+            {
+              "id": "uniqueRectangle",
+              "group": "wing",
+              "ms": 3.276123,
+              "calls": 65,
+              "hits": 0
+            },
+            {
+              "id": "xyWing",
+              "group": "wing",
+              "ms": 2.363283,
+              "calls": 378,
+              "hits": 25
+            },
+            {
+              "id": "xyzWing",
+              "group": "wing",
+              "ms": 1.8537599999999999,
+              "calls": 353,
+              "hits": 20
+            },
+            {
+              "id": "wWing",
+              "group": "wing",
+              "ms": 1.4104,
+              "calls": 74,
+              "hits": 9
+            },
+            {
+              "id": "nishio",
+              "group": "chain",
+              "ms": 0.648682,
+              "calls": 17,
+              "hits": 17
+            }
+          ],
+          "finderByStage": [
+            {
+              "stage": "dig",
+              "group": "basic",
+              "ms": 59.156249,
+              "calls": 162415,
+              "hits": 124833
+            },
+            {
+              "stage": "dig",
+              "group": "fish",
+              "ms": 34.915039,
+              "calls": 2108,
+              "hits": 491
+            },
+            {
+              "stage": "dig",
+              "group": "subset",
+              "ms": 24.217284999999997,
+              "calls": 5047,
+              "hits": 212
+            },
+            {
+              "stage": "local",
+              "group": "chain",
+              "ms": 18.874512,
+              "calls": 82,
+              "hits": 65
+            },
+            {
+              "stage": "local",
+              "group": "fish",
+              "ms": 17.077880999999998,
+              "calls": 978,
+              "hits": 368
+            },
+            {
+              "stage": "local",
+              "group": "subset",
+              "ms": 15.955324,
+              "calls": 3105,
+              "hits": 205
+            },
+            {
+              "stage": "local",
+              "group": "basic",
+              "ms": 12.328858,
+              "calls": 30135,
+              "hits": 14335
+            },
+            {
+              "stage": "dig",
+              "group": "locked",
+              "ms": 11.262694999999999,
+              "calls": 8082,
+              "hits": 4606
+            },
+            {
+              "stage": "local",
+              "group": "locked",
+              "ms": 6.054931,
+              "calls": 4745,
+              "hits": 2501
+            },
+            {
+              "stage": "local",
+              "group": "wing",
+              "ms": 5.797119,
+              "calls": 305,
+              "hits": 22
+            },
+            {
+              "stage": "dig",
+              "group": "wing",
+              "ms": 3.103761,
+              "calls": 564,
+              "hits": 31
+            },
+            {
+              "stage": "rate",
+              "group": "subset",
+              "ms": 1.905761,
+              "calls": 349,
+              "hits": 29
+            },
+            {
+              "stage": "rate",
+              "group": "basic",
+              "ms": 1.871582,
+              "calls": 4091,
+              "hits": 1711
+            },
+            {
+              "stage": "rate",
+              "group": "fish",
+              "ms": 1.743652,
+              "calls": 94,
+              "hits": 48
+            },
+            {
+              "stage": "rate",
+              "group": "locked",
+              "ms": 1.031982,
+              "calls": 762,
+              "hits": 439
+            },
+            {
+              "stage": "rate",
+              "group": "wing",
+              "ms": 0.002686,
+              "calls": 1,
+              "hits": 1
+            }
+          ],
+          "nonFinderWallMs": {
+            "solver": 78.23974600000001,
+            "rating": 1.8757329999999999,
+            "dfs": 35.02417,
+            "gridGenerator": 0.976074,
+            "own": 257.052734
+          },
+          "layout": {
+            "layoutAttempts": 1,
+            "layoutGrowthBacktracks": 0,
+            "layoutLevels": 72,
+            "layoutFeasibility": 247,
+            "layoutUnsolvable": 0,
+            "layoutHard": 0,
+            "layoutAccepted": 1,
+            "gridUnlimitedEntered": 0,
+            "samples": 31
+          },
+          "counters": {
+            "totals": {
+              "dfsNodes": 4974,
+              "dfsChecks": 4233,
+              "dfsBacktracks": 6044,
+              "gridSearches": 4,
+              "gridRestarts": 0,
+              "gridBacktracks": 51
+            },
+            "byContext": [
+              {
+                "ctx": 4,
+                "name": "layout.solvable",
+                "stage": "buildModel",
+                "dfsNodes": 43,
+                "dfsChecks": 42,
+                "dfsBacktracks": 12,
+                "gridSearches": 1,
+                "gridRestarts": 0,
+                "gridBacktracks": 12
+              },
+              {
+                "ctx": 5,
+                "name": "layout.plain",
+                "stage": "buildModel",
+                "dfsNodes": 40,
+                "dfsChecks": 39,
+                "dfsBacktracks": 6,
+                "gridSearches": 0,
+                "gridRestarts": 0,
+                "gridBacktracks": 0
+              },
+              {
+                "ctx": 6,
+                "name": "fullGrid",
+                "stage": "fullGrid",
+                "dfsNodes": 120,
+                "dfsChecks": 117,
+                "dfsBacktracks": 39,
+                "gridSearches": 3,
+                "gridRestarts": 0,
+                "gridBacktracks": 39
+              },
+              {
+                "ctx": 12,
+                "name": "dig.safetyCount",
+                "stage": "dig",
+                "dfsNodes": 463,
+                "dfsChecks": 432,
+                "dfsBacktracks": 876,
+                "gridSearches": 0,
+                "gridRestarts": 0,
+                "gridBacktracks": 0
+              },
+              {
+                "ctx": 13,
+                "name": "dig.keeperCount",
+                "stage": "dig",
+                "dfsNodes": 22,
+                "dfsChecks": 19,
+                "dfsBacktracks": 38,
+                "gridSearches": 0,
+                "gridRestarts": 0,
+                "gridBacktracks": 0
+              },
+              {
+                "ctx": 19,
+                "name": "local.unique",
+                "stage": "local",
+                "dfsNodes": 4286,
+                "dfsChecks": 3584,
+                "dfsBacktracks": 5073,
+                "gridSearches": 0,
+                "gridRestarts": 0,
+                "gridBacktracks": 0
+              }
+            ]
+          },
+          "samples": 31,
+          "markers": {
+            "posted": 268,
+            "dropped": 0
+          }
+        },
+        "markerAgreement": "finished",
+        "reconcile": {
+          "lines": 273,
+          "markers": 268,
+          "heartbeats": 0,
+          "source": "final",
+          "problems": [],
+          "truncatedLastLine": false,
+          "unparsableLines": [],
+          "openStages": [],
+          "layoutEvents": 2,
+          "stageColumns": [
+            "step",
+            "attempt",
+            "sample",
+            "kind",
+            "wallMs",
+            "closed"
+          ],
+          "stages": [
+            [
+              "configure",
+              null,
+              null,
+              "none",
+              0.397461,
+              true
+            ],
+            [
+              "buildModel",
+              null,
+              null,
+              "none",
+              10.347168,
+              true
+            ],
+            [
+              "fullGrid",
+              1,
+              null,
+              "none",
+              0.518799,
+              true
+            ],
+            [
+              "extraStructure",
+              1,
+              null,
+              "none",
+              0.678955,
+              true
+            ],
+            [
+              "dig",
+              1,
+              1,
+              "ordinary",
+              22.713623,
+              true
+            ],
+            [
+              "rate",
+              1,
+              1,
+              "ordinary",
+              0.48291,
+              true
+            ],
+            [
+              "tune",
+              1,
+              1,
+              "ordinary",
+              0.066406,
+              true
+            ],
+            [
+              "dig",
+              1,
+              2,
+              "ordinary",
+              11.581299,
+              true
+            ],
+            [
+              "rate",
+              1,
+              2,
+              "ordinary",
+              0.925781,
+              true
+            ],
+            [
+              "tune",
+              1,
+              2,
+              "ordinary",
+              0.037842,
+              true
+            ],
+            [
+              "dig",
+              1,
+              3,
+              "ordinary",
+              4.49585,
+              true
+            ],
+            [
+              "rate",
+              1,
+              3,
+              "ordinary",
+              0.117188,
+              true
+            ],
+            [
+              "tune",
+              1,
+              3,
+              "ordinary",
+              0.009277,
+              true
+            ],
+            [
+              "dig",
+              1,
+              4,
+              "ordinary",
+              7.881592,
+              true
+            ],
+            [
+              "rate",
+              1,
+              4,
+              "ordinary",
+              0.148926,
+              true
+            ],
+            [
+              "tune",
+              1,
+              4,
+              "ordinary",
+              0.010254,
+              true
+            ],
+            [
+              "dig",
+              1,
+              5,
+              "ordinary",
+              5.628174,
+              true
+            ],
+            [
+              "rate",
+              1,
+              5,
+              "ordinary",
+              0.085693,
+              true
+            ],
+            [
+              "tune",
+              1,
+              5,
+              "ordinary",
+              0.016602,
+              true
+            ],
+            [
+              "dig",
+              1,
+              6,
+              "ordinary",
+              7.475342,
+              true
+            ],
+            [
+              "rate",
+              1,
+              6,
+              "ordinary",
+              0.415283,
+              true
+            ],
+            [
+              "tune",
+              1,
+              6,
+              "ordinary",
+              0.01123,
+              true
+            ],
+            [
+              "dig",
+              1,
+              7,
+              "ordinary",
+              9.465332,
+              true
+            ],
+            [
+              "rate",
+              1,
+              7,
+              "ordinary",
+              0.487793,
+              true
+            ],
+            [
+              "tune",
+              1,
+              7,
+              "ordinary",
+              0.015625,
+              true
+            ],
+            [
+              "dig",
+              1,
+              8,
+              "ordinary",
+              8.032715,
+              true
+            ],
+            [
+              "rate",
+              1,
+              8,
+              "ordinary",
+              0.396729,
+              true
+            ],
+            [
+              "tune",
+              1,
+              8,
+              "ordinary",
+              0.010986,
+              true
+            ],
+            [
+              "dig",
+              1,
+              9,
+              "ordinary",
+              6.118408,
+              true
+            ],
+            [
+              "rate",
+              1,
+              9,
+              "ordinary",
+              0.144531,
+              true
+            ],
+            [
+              "tune",
+              1,
+              9,
+              "ordinary",
+              0.021729,
+              true
+            ],
+            [
+              "dig",
+              1,
+              10,
+              "ordinary",
+              3.878174,
+              true
+            ],
+            [
+              "rate",
+              1,
+              10,
+              "ordinary",
+              0.094971,
+              true
+            ],
+            [
+              "tune",
+              1,
+              10,
+              "ordinary",
+              0.009766,
+              true
+            ],
+            [
+              "dig",
+              1,
+              11,
+              "ordinary",
+              4.608398,
+              true
+            ],
+            [
+              "rate",
+              1,
+              11,
+              "ordinary",
+              0.325684,
+              true
+            ],
+            [
+              "tune",
+              1,
+              11,
+              "ordinary",
+              0.017334,
+              true
+            ],
+            [
+              "dig",
+              1,
+              12,
+              "ordinary",
+              9.8396,
+              true
+            ],
+            [
+              "rate",
+              1,
+              12,
+              "ordinary",
+              0.476563,
+              true
+            ],
+            [
+              "tune",
+              1,
+              12,
+              "ordinary",
+              0.012939,
+              true
+            ],
+            [
+              "dig",
+              1,
+              12,
+              "local",
+              273.097656,
+              true
+            ],
+            [
+              "rate",
+              1,
+              12,
+              "local",
+              0.044189,
+              true
+            ],
+            [
+              "tune",
+              1,
+              12,
+              "local",
+              0.006348,
+              true
+            ],
+            [
+              "fullGrid",
+              2,
+              null,
+              "local",
+              0.1521,
+              true
+            ],
+            [
+              "extraStructure",
+              2,
+              null,
+              "local",
+              0.014648,
+              true
+            ],
+            [
+              "dig",
+              2,
+              1,
+              "ordinary",
+              6.787598,
+              true
+            ],
+            [
+              "rate",
+              2,
+              1,
+              "ordinary",
+              0.130859,
+              true
+            ],
+            [
+              "tune",
+              2,
+              1,
+              "ordinary",
+              0.005127,
+              true
+            ],
+            [
+              "dig",
+              2,
+              2,
+              "ordinary",
+              6.602783,
+              true
+            ],
+            [
+              "rate",
+              2,
+              2,
+              "ordinary",
+              0.396729,
+              true
+            ],
+            [
+              "tune",
+              2,
+              2,
+              "ordinary",
+              0.018555,
+              true
+            ],
+            [
+              "dig",
+              2,
+              3,
+              "ordinary",
+              5.049316,
+              true
+            ],
+            [
+              "rate",
+              2,
+              3,
+              "ordinary",
+              0.118652,
+              true
+            ],
+            [
+              "tune",
+              2,
+              3,
+              "ordinary",
+              0.005615,
+              true
+            ],
+            [
+              "dig",
+              2,
+              4,
+              "ordinary",
+              5.761719,
+              true
+            ],
+            [
+              "rate",
+              2,
+              4,
+              "ordinary",
+              0.279541,
+              true
+            ],
+            [
+              "tune",
+              2,
+              4,
+              "ordinary",
+              0.007568,
+              true
+            ],
+            [
+              "dig",
+              2,
+              5,
+              "ordinary",
+              6.31665,
+              true
+            ],
+            [
+              "rate",
+              2,
+              5,
+              "ordinary",
+              0.333008,
+              true
+            ],
+            [
+              "tune",
+              2,
+              5,
+              "ordinary",
+              0.013672,
+              true
+            ],
+            [
+              "dig",
+              2,
+              6,
+              "ordinary",
+              12.054688,
+              true
+            ],
+            [
+              "rate",
+              2,
+              6,
+              "ordinary",
+              0.758301,
+              true
+            ],
+            [
+              "tune",
+              2,
+              6,
+              "ordinary",
+              0.019775,
+              true
+            ],
+            [
+              "dig",
+              2,
+              7,
+              "ordinary",
+              10.820557,
+              true
+            ],
+            [
+              "rate",
+              2,
+              7,
+              "ordinary",
+              0.169434,
+              true
+            ],
+            [
+              "tune",
+              2,
+              7,
+              "ordinary",
+              0.005859,
+              true
+            ],
+            [
+              "dig",
+              2,
+              8,
+              "ordinary",
+              6.449219,
+              true
+            ],
+            [
+              "rate",
+              2,
+              8,
+              "ordinary",
+              0.142334,
+              true
+            ],
+            [
+              "tune",
+              2,
+              8,
+              "ordinary",
+              0.009033,
+              true
+            ],
+            [
+              "dig",
+              2,
+              9,
+              "ordinary",
+              10.468262,
+              true
+            ],
+            [
+              "rate",
+              2,
+              9,
+              "ordinary",
+              0.389404,
+              true
+            ],
+            [
+              "tune",
+              2,
+              9,
+              "ordinary",
+              0.00708,
+              true
+            ],
+            [
+              "dig",
+              2,
+              10,
+              "ordinary",
+              8.684082,
+              true
+            ],
+            [
+              "rate",
+              2,
+              10,
+              "ordinary",
+              0.26709,
+              true
+            ],
+            [
+              "tune",
+              2,
+              10,
+              "ordinary",
+              0.01709,
+              true
+            ],
+            [
+              "dig",
+              2,
+              11,
+              "ordinary",
+              7.38501,
+              true
+            ],
+            [
+              "rate",
+              2,
+              11,
+              "ordinary",
+              0.152588,
+              true
+            ],
+            [
+              "tune",
+              2,
+              11,
+              "ordinary",
+              0.005371,
+              true
+            ],
+            [
+              "dig",
+              2,
+              12,
+              "ordinary",
+              7.588867,
+              true
+            ],
+            [
+              "rate",
+              2,
+              12,
+              "ordinary",
+              0.287354,
+              true
+            ],
+            [
+              "tune",
+              2,
+              12,
+              "ordinary",
+              0.006592,
+              true
+            ],
+            [
+              "dig",
+              2,
+              12,
+              "local",
+              57.650879,
+              true
+            ],
+            [
+              "rate",
+              2,
+              12,
+              "local",
+              0.010742,
+              true
+            ],
+            [
+              "tune",
+              2,
+              12,
+              "local",
+              0.005615,
+              true
+            ],
+            [
+              "fullGrid",
+              3,
+              null,
+              "local",
+              0.251465,
+              true
+            ],
+            [
+              "extraStructure",
+              3,
+              null,
+              "local",
+              0.018066,
+              true
+            ],
+            [
+              "dig",
+              3,
+              1,
+              "ordinary",
+              4.465576,
+              true
+            ],
+            [
+              "rate",
+              3,
+              1,
+              "ordinary",
+              0.115234,
+              true
+            ],
+            [
+              "tune",
+              3,
+              1,
+              "ordinary",
+              0.004639,
+              true
+            ],
+            [
+              "dig",
+              3,
+              2,
+              "ordinary",
+              9.534424,
+              true
+            ],
+            [
+              "rate",
+              3,
+              2,
+              "ordinary",
+              0.408936,
+              true
+            ],
+            [
+              "tune",
+              3,
+              2,
+              "ordinary",
+              0.006836,
+              true
+            ],
+            [
+              "dig",
+              3,
+              3,
+              "ordinary",
+              6.253906,
+              true
+            ],
+            [
+              "rate",
+              3,
+              3,
+              "ordinary",
+              0.233643,
+              true
+            ],
+            [
+              "tune",
+              3,
+              3,
+              "ordinary",
+              0.005371,
+              true
+            ],
+            [
+              "dig",
+              3,
+              4,
+              "ordinary",
+              9.011475,
+              true
+            ],
+            [
+              "rate",
+              3,
+              4,
+              "ordinary",
+              0.290039,
+              true
+            ],
+            [
+              "tune",
+              3,
+              4,
+              "ordinary",
+              0.009521,
+              true
+            ],
+            [
+              "dig",
+              3,
+              5,
+              "ordinary",
+              5.792236,
+              true
+            ],
+            [
+              "rate",
+              3,
+              5,
+              "ordinary",
+              0.311523,
+              true
+            ],
+            [
+              "tune",
+              3,
+              5,
+              "ordinary",
+              0.018311,
+              true
+            ]
+          ]
+        },
+        "unknownCounters": [
+          {
+            "counter": "solverBudgetChecks",
+            "why": "the request has no budget (ctx.check is a no-op); the propagation checks of the chain finders bypass ctx.check in any case (IG-S07 limitation)"
+          },
+          {
+            "counter": "constraintPropagationOperations",
+            "why": "no counter exists in the private source; the time is part of the cell of the caller (the logical solver's own code, a finder or the depth-first search)"
+          },
+          {
+            "counter": "findingApplicationTime",
+            "why": "part of the logical solver's own code (sub solver), not separated from the ladder loop"
+          },
+          {
+            "counter": "perCallTimeOfOracleObjectiveKeeperLocal",
+            "why": "wall time and call counts are kept per context, not per individual call"
+          }
+        ],
+        "workerEnd": {
+          "restore": {
+            "restored": true,
+            "problems": [],
+            "wasInstalled": true
+          },
+          "runMs": 588.3205999999996,
+          "ok": true,
+          "stats": {
+            "markers": 268,
+            "dropped": 0,
+            "depth": 0,
+            "spans": 230594
+          },
+          "runError": null
+        },
+        "calibration": {
+          "wallMs": 106.49609999999996,
+          "cpuMs": 156,
+          "enterLeavePairNs": 206.51999999999816,
+          "epochReadNs": 90.87999999999964,
+          "counterIncrementNs": 6.738600000000133,
+          "markerPostNs": 239.8900000000026,
+          "iterations": 50000,
+          "repeats": 3,
+          "markersPosted": 60002
+        }
+      },
+      "beaconProblems": []
+    }
+  ]
+}

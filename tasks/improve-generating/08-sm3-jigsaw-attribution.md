@@ -89,12 +89,12 @@ The orchestrator records the future S7 design question; the developer changes no
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start /end | |
-| Developer /model | |
-| Files /source identities | |
-| Verification /evidence | |
-| Machine charged /priority wait | |
-| Findings /author answers | |
-| Orchestrator review /acceptance | |
-| Handoff | |
+| Status | Accepted (pack author: IG-S08 ACCEPT after one reporting-only fix round; provisional SM3 diagnostic, not a latency gate) |
+| Start /end | 2026-11-15 08:07:58-08:50 (+07:00) first pass; 08:55 author review (accept with fixes F1-F3); 09:00-09:12 fix round r3 (reporting only); 09:15 author acceptance; orchestrator commit |
+| Developer /model | claude-sonnet-5.5; 153 model calls, 62,647,594 input tokens (61,371,813 cache reads), 340,362 output tokens, about 1,273 AI credits. Author review gpt-6-astra; orchestrator claude-opus-5.5 |
+| Files /source identities | New under `phase0/`: `jigsaw-profile.cjs`, `adapters/jigsaw-profile.cjs` (32 in-memory transforms), `plans/ig-s08.cjs`, `ig08-worker.cjs`, `ig08-run.cjs`, `ig08-aggregate.cjs`, `ig08-test.cjs` (32/32); `run.cjs` (task glue, `attemptDir` passed to `prepare`/`execute`), one dispatch line in `worker.cjs`; README. Fingerprints: runtime `36b2b832…`, harness base `5027a528f03a`, commands `fe2bae1efce6`, r2 writer `acd724186e2d`, r3 writer `82b623923934` |
+| Verification /evidence | `docs/improve-generating/evidence/phase0/provisional-r1/IG-S08/` (`summary-r3.md` current; r1 and r2 kept; `tail-attribution-r3.json`; `control/`, `tail/` journals and records). Jigsaw seed 1111 **censored at 240.015 s** (guard 240 s, command deadline 265 s), CPU at least 238.55 s, no puzzle; historical 325.313 s not remeasured. Cumulative full-grid contexts 238.78 s (99.5 %), local continuation 0.77 s, dig 0.27 s, buildModel 0.04 s (layout accepted first), rate 0.01 s. Open stage (fullGrid attempt 4) at least 238.46 s, inside the unlimited last search entered 0.27 s after the stage opened (after restart 50), running at least 238.18 s; the 3 finished full-grid stages took 0.32 s. Completed searches 138 (111 full-grid + 27 buildModel), unchanged from heartbeat 1 to the end; the running search is in none of the counts; live DFS counters 84,717,442 nodes and 176,221,059 backtracks; per-attempt counts unknown, not reconstructed. Counters advanced at all 47 heartbeats (not a stall). Control seed 1100 observed matches native, ready-wall factor 1.16 (n = 1). 28/28 engine checks, 15/15 synthetic journal-recovery checks. The author reran the pure tests and reproduced r2 and r3 read-only, with journal-hash and record reconciliation |
+| Machine charged /priority wait | 336.39 s of 360 s (control 4.98 s + 45 s grace; tail 241.42 s + 45 s grace), no approvals; priority waits 45.21 s and 45.13 s (quiet period only, no contention), not charged |
+| Findings /author answers | The tail points at the full-grid search (Q07 option (b): versioned total-work/restart limits, outcome unknown), not at buildJigsaw, the safety count, rating or local search; consistent with, not proof of, the historical 325 s being the same stage. The instrumented observation ran past the 120 s application guard, which does not establish uninstrumented latency; no ceiling sized from one censored request; no ceiling changed. Author findings: F1 counter scope (cumulative vs open stage, completed vs active searches), F2 solver-check totals were not instrumented (internal `OBJECTIVE_STEPS` and uniqueness-count guards exist and are unchanged), F3 unconditional application/native-speed claims removed; all closed in r3. Disclosed deviations: the control command also ran the instrument's engine checks and a calibration; pure tests, a source-only transform dry run, `-PlanOnly` and the aggregator ran unwrapped (no engine/worker thread); records, `command.json` notes and r1/r2 keep the earlier wording (listed in r3) |
+| Orchestrator review /acceptance | Only harness and evidence folders changed; formats checked |
+| Handoff | IG-S09 proceeds with the existing populations, arms and 15-minute allocation; brief additions: explicit internal-guard accounting, full-grid/setup time separated from sign-pass/local effects, and "unwrapped native" controls mean observer-free but still inside the priority wrapper. Explicitly pre-MS07 |

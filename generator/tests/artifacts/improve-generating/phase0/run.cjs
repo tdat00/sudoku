@@ -30,7 +30,7 @@ const SELF_TEST_ESTIMATE_MS = 15000;
 
 // Task glue loaded lazily: a task that runs its own kind of request (IG-S02: a pool) registers its module here.
 const TASK_HOOKS = { 'IG-S02': './ig02-run.cjs', 'IG-S03': './ig03-run.cjs', 'IG-S04': './ig04-run.cjs',
-  'IG-S05': './ig05-run.cjs', 'IG-S07': './ig07-run.cjs' };
+  'IG-S05': './ig05-run.cjs', 'IG-S07': './ig07-run.cjs', 'IG-S08': './ig08-run.cjs' };
 
 function taskHooks(task) {
   return Object.prototype.hasOwnProperty.call(TASK_HOOKS, task) ? require(TASK_HOOKS[task]) : null;
@@ -642,7 +642,7 @@ async function runShard(opts, repoRoot) {
     if (hooks && hooks.prepare) {
       // Task preparation under the same lock: the unmeasured catalogue probe and, in the first shard, its synthetic tests.
       prepared = await hooks.prepare({ host: host, shard: shard, repoRoot: repoRoot, jobs: jobs,
-        runKeys: runKeys, readyCheck: readyCheck, round: opts.round });
+        runKeys: runKeys, readyCheck: readyCheck, round: opts.round, attemptDir: att.dir });
       if (prepared.catalogue && catalogue === null) catalogue = prepared.catalogue;
       if (prepared.failure) {
         fatalError = new HarnessError(prepared.failure.code, prepared.failure.message);
@@ -658,7 +658,7 @@ async function runShard(opts, repoRoot) {
       }
       journal.start(job.key);
       const obs = hooks && hooks.execute && job.executor ? await hooks.execute({ host: host, job: job,
-        catalogue: catalogue, readyCheck: readyCheck }) : await host.runRequest({ key: job.key,
+        catalogue: catalogue, readyCheck: readyCheck, attemptDir: att.dir }) : await host.runRequest({ key: job.key,
         request: job.request, adapterIds: job.adapterIds, guardScope: job.guardScope,
         wantCatalogue: catalogue === null, readyCheck: readyCheck });
       if (obs.ready && obs.ready.catalogue && catalogue === null) catalogue = obs.ready.catalogue;
