@@ -6,7 +6,7 @@ one band target through generation, the expanded solver, and rating/cache versio
 executable files are written for serial dispatch; review follows the S-OD4 matrix below.
 Only the orchestrator changes Done marks, Execution logs and the execution summary.
 **Authority:** `docs/difficulty-v3/clarifications-resolved.md` Parts F/G (AC01 and acceptance),
-owner acceptance, 2026-11-12 11:50; Part H, PR-S1/PR-S2, CV6-03 to CV6-05 and S-OD1 through S-OD6 also bind.
+owner acceptance, 2026-11-12 11:50; Part H, PR-S1/PR-S2, CV6-03 to CV6-05 and S-OD1 through S-OD8 also bind.
 S-OD3/S-OD4 supersede the earlier performance-only recovery stops, not correctness or evidence integrity.
 **Traceability:** [accepted report](../../docs/difficulty-v3/report-detailed.md), R1-R24;
 [answers](../../docs/difficulty-v3/clarifications-resolved.md), Parts A-H, PR-S1/PR-S2 and CV6-03 to CV6-05;
@@ -72,7 +72,7 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [x] | MS06c1 | [MS06c1](MS06c1-target-transport.md) | Nullable target transport; no policy activation | MS06b | M, 45-60 min + GG check/GR | Generator plumbing | M6c1 | 14a |
 | [x] | MS06c2 | [MS06c2](MS06c2-activate-target-policy.md) | Atomic all-stage target activation | MS06c1 | M, 50-60 min + GG/GR | Generator engine | M6c2 | 14b |
 | [x] | MS06d | [MS06d](MS06d-target-comparison.md) | Isolated target comparison | MS06c2 | S, 20-30 min | Evidence | M6 | 15 |
-| [ ] | MS07 | MS07a-MS07e | Windows/selection/checkpoint (parent) | MS06d | split | Solver/tools | M7 | 16-20 |
+| [ ] | MS07 | MS07a-MS07f | Windows/selection/checkpoint and approved tier move (parent) | MS06d | split | Solver/tools | M7 | 16-21a |
 | [x] | MS07a | [MS07a](MS07a-window-kernels-and-pattern-metrics.md) | Window kernels and pattern metrics | MS06d | M, 50-60 min | Shared solver/tools | M7a | 16 |
 | [x] | MS07b | [MS07b](MS07b-register-chain-windows.md) | Chain/depth integration and Hell 1 pilot | MS07a | M, 50-60 min + E/GH/pilot | Shared solver | M7b | 17 |
 | [x] | MS07c | [MS07c](MS07c-select-chain-cutoff.md) | Cutoff tooling, cost and measured selection | MS07b | M, 40-55 min + GS/GP-cost | Tools/evidence | M7c | 18 |
@@ -80,7 +80,8 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [x] | MS07e | [MS07e](MS07e-first-qualification.md) | Complete first checkpoint | MS07d | S, 25-40 min | Evidence | M7 | 20 |
 | [ ] | MS08 | MS08a-MS08c | Single-digit patterns (parent) | MS07e | split | Shared solver | M8 | 21-23 |
 | [ ] | MS08a | [MS08a](MS08a-skyscraper.md) | Skyscraper | MS07e | M, 40-55 min | Shared fish | M8a | 21 |
-| [ ] | MS08b | [MS08b](MS08b-two-string-kite.md) | Two-string kite | MS08a | M, 40-55 min | Shared fish | M8b | 22 |
+| [ ] | MS07f | [MS07f](MS07f-quick-tier-move.md) | Approved slow quick cases to manual, assertions preserved | MS08a + S-OD8 | S-M, 30-45 min + bounded checks | Generator tooling | M7f | 21a |
+| [ ] | MS08b | [MS08b](MS08b-two-string-kite.md) | Two-string kite | MS07f (after MS08a) | M, 40-55 min | Shared fish | M8b | 22 |
 | [ ] | MS08c | [MS08c](MS08c-empty-rectangle.md) | Empty rectangle | MS08b | M, 50-60 min | Shared fish | M8 | 23 |
 | [ ] | MS09 | MS09a-MS09b | Finned fish (parent) | MS08c | split | Shared fish | M9 | 24-25 |
 | [ ] | MS09a | [MS09a](MS09a-finned-x-wing.md) | Finned X-Wing/sashimi | MS08c | M, 50-60 min | Shared fish | M9a | 24 |
@@ -161,6 +162,12 @@ MS06 makes no edit to `greater-than.js` and adds no pool, constant or comparator
 Refinement is still not entered for models with inequalities. Waves 14a/14b
 replace 14; historical references to MS06c mean both parts, not a dispatchable old file.
 MS07a kernels precede registration MS07b, selection MS07c, merger MS07d and first GQ MS07e.
+**Post-MS07e owner decisions, 2026-11-15 14:42:** S-OD7 leaves Killer Hard/Expert hidden until
+later calibration, with no Killer weight recalibration in v3; MS18c owns publication and MS18e
+the audit. S-OD8 approves only section 9's four-case tier proposal. The next serial order is
+**MS08a (already running) -> MS07f (wave 21a) -> MS08b**. MS07f uses the accepted post-MS08a
+tree and owns its CI-manifest handoff; do not interrupt MS08a or run the two writers together.
+All six S3 groups still run; neither decision drops a qualification cell or changes an assertion.
 MS13a graph stays inactive until consumers MS13b and activation MS13c. MS14a/MS15a kernels likewise
 precede their registrations. Final GQ is MS18c, after all S3, MS17b and final rechecks MS18b.
 No intermediate pruning. Parent milestones are not additional waves or commits.
@@ -176,10 +183,12 @@ accepted. The owner-ordered pause commit `a7f6660` was not green; preserve it as
 | Resume decision | Binding rule |
 |---|---|
 | S-OD3 (a), (d) | Full-attempt mega Nightmare leaves quick coverage; every original request/relation remains in the mandatory tool-based deep inventory. Quick: one real one-attempt mega12 request and scripted mega16 stop control. G13 persistence is allowed at r6a; its request and 120000 ms recorder guard stay. |
-| S-OD4 (c1), (c2) | Final qualification alone determines all offers; a bounded fallback is a miss. Default attempts are 8/4/2 by <=81/82-144/>144 cells; explicit settings win; R5 remains 256 until the final recheck. |
+| S-OD4 (c1), (c2) | Every offer requires final qualification; a bounded fallback is a miss. S-OD7 additionally withholds Killer Hard/Expert until later calibration; no other qualification exception is authorized. Default attempts are 8/4/2 by <=81/82-144/>144 cells; explicit settings win; R5 remains 256 until the final recheck. |
 | S-OD4 stops/evidence | Correctness or a proposed recorded-decision change stops for the owner. Performance/availability is a named numerical item, first MS07e then MS18c/MS18d, and work continues within existing bounds. No new evidence class/tooling task for a slow intermediate cell. |
 | S-OD4 reviews/scope | All six S3 groups remain. Analyst cross-review only on the named semantics tasks below; MS08a supplies the technique template. |
 | S-OD6 (MS05e D1), answered CV6-05 | Owner delegated both choices to Fable on 2026-11-14 at 16:38. Fable chose Q1(b), withdraw the pool, and Q2(a), keep the contracts and let final qualification decide the offer. MS05e closes "measured, set aside"; the candidate patch and all measurements remain history, baseline identity is proved without a run. Greater-Than transports but does not consume the target in its first-allowed sign dig; MS06 edits no `greater-than.js`. S-AV01 follows the three fixed endings below; no present budget/offer change or future improvement feature is authorized. |
+| S-OD7 (Q-MS07e-1) | Owner, 2026-11-15 14:42 through `ask_user` and email: Killer Hard (0/14) and Expert (1/14) stay **hidden until later calibration**; no Killer weight recalibration inside v3. Keep both in the complete final qualification and preserve its raw verdicts. MS18c records the owner-directed withholding separately from qualification if necessary; MS18e audits S-AV05/S-AV06. No interim live-list edit is assigned here. |
+| S-OD8 (S-AV08) | Owner, same time/channel: approve MS07e report section 9's three generation-cost ratio tests to manual `perf` and its replay split (classic9 Hell 1 stays quick, the two mega16 requests go to manual `variants`). Requests/seeds/assertions/limits stay byte for byte; the CI consequence is accepted. MS07f follows MS08a, then MS08b; it updates r6c grouping metadata, both guides/design and measured before/after quick cost. No other tier move is approved. |
 
 The following are serial ownership transfers, not permission for parallel edits:
 
@@ -200,6 +209,7 @@ The following are serial ownership transfers, not permission for parallel edits:
 | Events/pipeline/result view/app | MS05a transport, retained MS05b1 activation, MS05r3 work, MS06c1 nullable target transport; MS06c2 activates value production |
 | `generator/js/engine/explain-data.js`, tune explanation, shallow-warning grammar | MS05b1 finishes MS05a's handoff; MS06c2 later target facts |
 | Seven manual exactness/warning consumer contracts | MS05r2 absorbs MS05b2; GD owners run them, no threshold relaxation |
+| S-OD8's three `pipeline` ratio cases and Generator `player` replay split; manual `perf`/`variants` destinations | MS07f after MS08a only; existing assertions/requests unchanged. MS18c owns later hidden-level diagnostic compatibility; MS18e checks the four manual cases on final source |
 | Recovery profile driver/pure suite | MS05r1; r3 alone extends copied richer work, preserving immutable r1 evidence/protocol; r4 reads it without new policy |
 | Work-schema and no-extra-allowance quick premises | MS05r3, including exact `work.localSearches` literals and sign-memo setup; all MS05b1 pipeline cases run before selection |
 | Selected-default quick assertion triage and pins | MS05r4 records genuine default-coupled pins; premise fixes return to r3; MS05r6a explicitly owns listed pins; r6b validates without weakening contracts |
@@ -216,8 +226,8 @@ The following are serial ownership transfers, not permission for parallel edits:
 | Live qualification table, v2 archive, support lists | MS18c only |
 | Qualification-authorized performance targets | MS18d under the existing rule; CV6-05's conditional final Normal contract is decided through MS18c and implemented in one assigned step before MS18d timing, never after GP |
 | Regression/replay fixtures and `player/js/ui/help-examples.js` | behavior owner using its gate; recovery final GG/GR/pins exclusively MS05r6a, r6b checks current merges; no recovery GH or separate fixture writer |
-| Standing quick cost, AGENTS quick comments and both developer-guide testing paragraphs | MS05r6b before final quick freeze; actual cost data afterwards in the separate report, acknowledged with combined acceptance |
-| `.github/scripts/generator-suites.sh`, both workflows and bounded CI manifest | MS05r6c first; each later suite-adding task owns its group/membership update; MS18e owns the final-tree audit and v3 PR CI |
+| Standing quick cost, AGENTS quick comments and both developer-guide testing paragraphs | MS05r6b before final quick freeze; actual cost data afterwards in the separate report, acknowledged with combined acceptance. MS07f owns S-OD8's before/after per-app costs and guide/design tier descriptions; no unrelated AGENTS edit |
+| `.github/scripts/generator-suites.sh`, both workflows and bounded CI manifest | MS05r6c first; each later suite-adding task owns its group/membership update; MS07f owns S-OD8's current inventory/count/projection update after MS08a without changing job IDs, factor or timeouts; MS18e owns the final-tree audit and v3 PR CI |
 | Living guides/designs and test HTML lists | the current task only, for the facts/files it changes |
 
 The task's detailed file list controls. An unlisted file needs orchestrator assignment; report a defect
@@ -265,7 +275,8 @@ do not confuse that with stopping the task for an owner decision.
   source/defaults, measured numbers or labelled projection, limit, outcome, evidence path, next owner
   and disposition in the task's existing report/evidence and final reply. Carry inherited open items,
   even when this task finds none. Before MS07e route to MS07e and the final MS18c (availability) or
-  MS18d (cost); afterwards route directly to those final owners. MS18e reconciles the entire list.
+  MS18d (cost); afterwards route directly to those final owners unless a recorded owner decision
+  assigns a specific follow-up (S-OD8 routes S-AV08 to MS07f). MS18e reconciles the entire list.
   A correctly recorded unavailable outcome is not lost evidence; missing/corrupted records are.
 - **Final gates stay honest:** an item does not authorize an offer, a green test/CI claim, an incomplete
   qualification publication or a release. MS18c applies (c1); MS18d reports the actual GP verdict;
@@ -283,10 +294,10 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | S-AV02 mega12 Nightmare | r4 seed 1: 48.202 s against 6 s; seed 3: 47.1 s, shallow at 8 attempts | r5p/r5m update, MS07e, MS18c/MS18d |
 | S-AV03 mega16 Nightmare | r4 quick: 60 s timeouts; seed 3 diagnostic: 310.2 s, exact at attempt 6; app 120 s. **PR-S2 remark:** on the reviewed size-default search, mega16 Nightmare fails the 30 s qualification budget by its work ceiling, not as a tail | r5p/r5m update, MS07e, MS18c/MS18d |
 | S-AV04 samurai Nightmare/G13 | r4: 104.712 s of 120 s, shallow at 8 attempts | r5p/r6a update, MS07e, MS18c/MS18d |
-| S-AV05 Killer Hard | 0/12 exact at every R5 setting; S3 is not expected to repair its weight problem | MS07e owner question if hidden, MS18c |
-| S-AV06 Killer Expert | 0/12 exact at every R5 setting; no weight change without the later answer | MS07e owner question if hidden, MS18c |
+| S-AV05 Killer Hard | **S-OD7: hidden until later calibration; no in-v3 Killer weight recalibration.** MS07e: 0/14 exact, all in band and shallow, p95 6.6 s; observed hidden. Earlier R5: 0/12 at every setting; MS05b3: 0/20. Owner question Q-MS07e-1 is answered, not pending | Later calibration; MS18c publication, MS18e audit |
+| S-AV06 Killer Expert | **S-OD7: hidden until later calibration; no in-v3 Killer weight recalibration.** MS07e: 1/14 exact, 13 shallow, p95 17.8 s, stopped on time; observed hidden. Earlier R5: 0/12 at every setting. Owner question Q-MS07e-1 is answered, not pending | Later calibration; MS18c publication, MS18e audit |
 | S-AV07 classic9 Nightmare | 2/12 exact at none and 256; S2.2 is expected to add the missing tier | MS07e, MS18c |
-| S-AV08 standing quick cost | **692.1 s** at MS07e (no suite changed; quick-tier proposal to the owner). Earlier: **679.4 s** at MS07d (+46 merger tests). Earlier: **684.3 s** at MS07c (C = 4 makes the Nightmare work smaller). Earlier: **744.9 s** at MS07b (+7.9 % over MS07a's 690.2 s; G14 now rates `nishioDeep`). Earlier: **690.7 s** at MS06c2 (MS06b 652.9 s, MS06c1 650.7 s; the activation adds about 40 s: `pipeline` +35.8 s in four puzzle-generating tests, +15-21 %; `mega` +40 %; IR47). Earlier: **648.0 s**, MS05r6c Generator quick baseline retained by the CV6-05 restoration/identity proof. Rejected pool: 726.2 s, historical only. Earlier b1's 713.8 s was partial, not a complete baseline | MS07e proposal if Generator remains above about 5 minutes; MS18d/MS18e |
+| S-AV08 standing quick cost | **S-OD8 approved; implementation is MS07f after MS08a, not yet a measured saving.** MS07e: **692.1 s** Generator, **33.5 s** Player; section 9's three ratio tests plus combined replay case cost 392.1 s, but the classic9 request stays quick. No five-minute promise or further move follows. Earlier: **679.4 s** at MS07d (+46 merger tests). Earlier: **684.3 s** at MS07c (C = 4 makes the Nightmare work smaller). Earlier: **744.9 s** at MS07b (+7.9 % over MS07a's 690.2 s; G14 now rates `nishioDeep`). Earlier: **690.7 s** at MS06c2 (MS06b 652.9 s, MS06c1 650.7 s; the activation adds about 40 s: `pipeline` +35.8 s in four puzzle-generating tests, +15-21 %; `mega` +40 %; IR47). Earlier: **648.0 s**, MS05r6c Generator quick baseline retained by the CV6-05 restoration/identity proof. Rejected pool: 726.2 s, historical only. Earlier b1's 713.8 s was partial, not a complete baseline | MS07f; MS18e final cost/tier audit |
 | S-AV16 Greater-Than Nightmare CV6 | **Withdrawn as a current-source item (CV6-05).** Rejected pool p95 40,396 ms against 20,000 ms remains historical evidence. Restored source returns to the observed 19,192 ms pass; see the margin note below | History retained; MS18e audit, not an open pool regression |
 | S-AV17 pool's neighbour and quick-cost regressions | **Withdrawn as a current-source item (CV6-05).** Preserve candidate Easy/Hard/Expert slowdowns and 726.2 s quick cost as measured history; do not describe them as the restored source | History retained; MS18e audit, not an open pool regression |
 | S-AV18 Greater-Than Expert off-band misses | MS06a (restored source, seeds 20260101): 10/12 exact; requests 2 and 5 end off-band in Master (scores 1013 and 1046, about 14 s each); the same two requests missed in MS02 | MS06d comparison, MS07e, MS18c |
@@ -298,10 +309,24 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | S-AV24 mega Hell 1 request time | MS07b (14 records, final source): mega12 29.3-34.4 s, mega16 99.9-123.3 s; 120 s guard exceeded by 1 of 7 mega16; 30 s qualification budget exceeded by mega12 6 of 7 and mega16 7 of 7 | MS07e, MS18c/MS18d |
 | S-AV25 Hell 1 exactness | MS07b: 0 of 14 mega Hell 1 records and 0 of 2 classic9 pilot requests exact (in band, shallow); SA1 expects the classic9 Hell 1 GD batch (at least 90 % exact) to fail at MS07e | MS07e, MS18c |
 | S-AV26 classic9 Hell 1 cost (indication) | MS07b pilot: about 5 s per request against the 2.5 s design budget; two requests only; related to S-AV19 | MS07e, MS18d |
-| S-AV27 qualification second round on one worker | MS07d (`round2-workers.txt`): in a one-level invocation the 60 second-round requests run on the single worker that finished round 1 (max in flight 1 for jobs 1/2/4/8, against 1/2/4/8 in round 1): about 60 request times of wall instead of about 15 per expanding cell; verdicts and the early-stop proof unchanged; scheduler untouched. The p95 of an expanded cell mixes one-worker and up-to-four-worker timings: not comparable across cells, `--jobs` values or jobs-1 GP timings, and not a protected timing measurement | MS07e (cost; launch only at a credible <=450 s projection), MS18c; timing caveat to MS18d/MS18e |
+| S-AV27 qualification second round on one worker | MS07d (`round2-workers.txt`): in a one-level invocation the 60 second-round requests run on the single worker that finished round 1 (max in flight 1 for jobs 1/2/4/8, against 1/2/4/8 in round 1): about 60 request times of wall instead of about 15 per expanding cell; verdicts and the early-stop proof unchanged; scheduler untouched. MS07e left six cells unexecuted above the 450 s projection limit; Q-MS07e-2 below routes them to MS18c without a rule change. The p95 of an expanded cell mixes one-worker and up-to-four-worker timings: not comparable across cells, `--jobs` values or jobs-1 GP timings, and not a protected timing measurement | MS18c (six cells/current-source bounds); timing caveat to MS18d/MS18e |
 | S-AV28 Easy availability | MS07e GQ: diagonalX Easy 28/40, hyper 29/40, samurai 10/22, sohei 4/18, butterfly 1/15, flower 0/14 (current offers lose Easy on six variants); 40/40 elsewhere | MS18c |
 | S-AV29 Greater-Than Master time | MS07e GQ: 40/40 hits but p95 14.5 s over the 10 s budget (heavy tail; the cell took 35.3 s against a 27.5 s projection): hidden by time | MS18c, MS18d |
 | S-AV30 mid-level shortfalls | MS07e GQ: flower Expert 23/35, flower Master 29/40, wordoku Normal 35/46; classic9 Normal and mega16 Expert at exactly 36/40 | MS18c |
+
+**Q-MS07e-2 — SA2 ruling, 2026-11-15: no rule change; route to MS18c.**
+Do not reopen MS07e or launch the six cells once speculatively. Its section 4 source/projections
+remain: mega12/hell1 **556 s**, mega16/nightmare **1,246 s**, mega16/hell1 **1,808 s**,
+greaterThan/expert **919 s**, greaterThan/hell1 **3,957 s**, butterfly/hell1 **4,032 s**.
+These are unexecuted cells with labelled projections, not hidden verdicts. Keep each in the final
+135-cell manifest. MS18c reassesses from its final-source evidence, including the serial second
+round, startup and variance margin; launch only with a credible <=450 s projection and the
+unchanged 540 s ceiling. Protocol-proved early stopping during a run remains valid, but the
+129 cells' 13% aggregate cost is not a bound for these six and authorizes no advance early-stop
+credit. No scheduler fix, jobs change, new evidence class or new tooling task is assigned.
+If a complete bounded route is still unavailable, report the final gap and leave publication/
+release unsatisfied; any later proposal to change the recorded rule goes through the orchestrator,
+not an implementer's exception. No request to Fable is initiated by this ruling.
 
 **CV6-05: S-AV01's three fixed endings.** Nobody now edits, skips or wraps the Normal CV6
 assertion. It is manual, outside the quick set and CI, and its honest red outcome blocks no
@@ -369,6 +394,8 @@ the normal intentional-expectation refresh, not a waiver of a contractual quick 
 r6b makes no ad hoc assertion repair. Its measured quick cost is presented **per app** with normal
 acceptance. If Generator remains above about five minutes, carry S-AV08 to MS07e for a proposal of
 which generation-heavy quick cases should move to the manual tier; do not move them without approval.
+That proposal was approved in S-OD8 on 2026-11-15 for the four named cases only; MS07f now owns
+the move after MS08a, preserving the original assertions and recording actual before/after costs.
 
 After r6b's audit and r6c's CI closure, the orchestrator makes **one** meaningful combined commit:
 `difficulty-v3 MS05: required exactness with measured bounded recovery`.
@@ -515,7 +542,7 @@ No implementer chooses an alternative from the original reports.
 | SA2-Q-S09 | Existing cageCombo covers both interactions; quick regressions, no cageLocked |
 | SA2-Q-S10 | Preserve v2 history, add v3 expectations and explain reclassification; no weight fitting to labels |
 | SA2-Q-S11 | Bounded curated real help examples; stop/report if a required example cannot be obtained |
-| SA1-Q-S5 | Final qualification determines offers; no intermediate pruning or weight calibration |
+| SA1-Q-S5 | Final qualification governs offers, with S-OD7's later owner-directed withholding of Killer Hard/Expert; no intermediate pruning or weight calibration |
 | AUTH-S1 | Live qualification table updated in place, v2 archived first |
 | AUTH-S2; PROC-S1 | Baseline/tooling, orders, S1, split chains, all S3, version/final evidence |
 | AC01, Parts F/G | Analytic lower bound, null/reason when undefined, defined values unclamped, raw position retained; bounded search is not a global-minimum proof |
@@ -526,6 +553,9 @@ No implementer chooses an alternative from the original reports.
 | PR-S1 / S-OD4 stop/evidence rule | Only correctness or changing a recorded decision stops for the owner. Performance/availability findings become numbered items with numbers and MS07e/MS18c/MS18d ownership; every task reports them and MS18e audits them. Continue within bounded commands; no new evidence class/tooling task for slow intermediate cells. |
 | PR-S1 / S-OD4 review/full-scope rule | All six S3 groups remain. Analyst reviews: remaining MS05, MS05e, MS06b-c2, MS07a-c, MS13a-c, MS15a, MS17b, MS18c; MS08a as template. Orchestrator template/generic-soundness/order checks for the other technique tasks. |
 | CV6-03 sub-questions (1)-(3) / S-OD4 | CV3 mega16 Nightmare is not deferred; matching r5m puzzles may be reused with CV3's checks. Implementation: B1 selects the live route for MS05b3 instead. >240 s is an availability item, not a stop. Apply the same authorized contract to mega hell1 at MS07b. r6c owns bounded quick CI before the combined commit; every later suite owner updates its group, and MS18e owns the final PR CI. |
+| Q-MS07e-1 / S-OD7 | Owner, 2026-11-15 14:42, `ask_user` and email: Killer Hard (0/14) and Expert (1/14) stay **hidden until later calibration**; no Killer weight recalibration inside v3. MS18c preserves both cells' raw final qualification and separately records the owner-directed withholding, even if a raw cell later qualifies; MS18e audits S-AV05/S-AV06. This narrows the product offer, never offers an unqualified cell or reduces the 135-cell protocol. No interim live-list change is assigned. |
+| MS07e section 9 / S-OD8 | Owner, same time/channel, approves the three `pipeline` generation-cost ratios moving to manual `perf`, plus the replay split: classic9 Hell 1 seed 3 stays quick; mega16 Nightmare seed 478576959 and Hell 1 seed 2422420669 move to manual `variants`. Requests/seeds/assertions/limits remain byte for byte; the loss of their PR-CI coverage is accepted. Dispatch MS07f after MS08a and before MS08b; update r6c CI manifest/group metadata, both developer guides/design and measured before/after per-app quick cost. No other tier move, asserted saving or five-minute guarantee is approved. |
+| Q-MS07e-2 / SA2 implementation ruling | No projection-rule change or speculative one-off launch; the six named unexecuted cells and their projections in section 2 route to MS18c. Final-source bounds, including the serial second round, must credibly fit <=450 s under the unchanged 540 s ceiling. No early-stop credit, scheduler fix, changed jobs or new tooling/evidence class is authorized. Incomplete final qualification still cannot be published. |
 | FS22 implementation disposition, updated by S-OD3/S-OD4 and B1 | MS05r2 absorbed consumers; b3 follows r5p/r5/r5m under the approved contracts, not passed original mega limits. Lazy per-level I5/CV3 remains; the mega CV3 cells run live under B1 with their own checks. Syntax is not GD evidence. MS14c stays corpus-free; final I5 remains per level. |
 | SA1 IR02 / IR04, implementation review 2026-11-14 | Binding B1 is copied into MS05b3: live mega CV3, no record provider/replay entry point/reuse code or edits to the deep tool/fixture/SOURCE_FILES. r6a/r6b check both currentMatches hashes explicitly; retain only a proved exact-diff non-generation-file mismatch, else execute their named MEGA-REFRESH step. Original hashes/records remain untouched. |
 | FS12-FS16 / FS20 implementation dispositions; CV6-05 sign handoff | `acceptReveal` receives current/next exact flags. A cells guided winner refused by the apply table ends that pass; local acceptance retains `next.score < spec.max`. MS06c1 transports null/inert metadata with no production draw; MS06c2 draws once and activates all candidate-comparing stages. The real `signs` strategy receives but ignores `options.target`; `digger-target` proves its originating target reaches the selected result. No partial intermediate policy, sign comparator, new RNG stream or post-exact polishing. |
@@ -554,6 +584,7 @@ The first three groups keep production generation, scoring, orders, support list
 | Named techniques replace generic proofs | MS08a/b/c, MS09a/b, MS10a/b, MS11a/b/c, MS12, MS13a/b/c, MS14a/b/c, MS15a/b, MS16; R11-R19 | each algorithm, soundness/coverage, full B |
 | Old puzzles/claims/history stay honest | MS04 and introducing tasks, MS17a/b; R20/R22 | separate references, cache 3, history 1 and compatible imports |
 | Availability/cost are measured and published honestly | MS07d/e, MS18a/b/c/d/e; R24 | complete matrices, errors retained, no intermediate pruning |
+| Owner-approved availability/tier decisions remain explicit | MS07f, MS18c/e; S-OD7/S-OD8 | Killer Hard/Expert hidden until later calibration; preserved slow checks, accepted CI loss and measured before/after quick costs |
 | Every changed output is reproducible | MS03a/b/c/d and each E owner; R21 | bounded recorders, fixed manifests, explicit differences |
 | Manual contract changes are tested early and in bounded populations | MS05r2, MS05b3, MS05r6b, MS05e, MS18e; FS22/FS25/FS26/S-OD2 | same seeds/counts, boundary-prefixed filters, post-selection I5/CV3/refusals, complete closure then final current-source rerun |
 
@@ -569,6 +600,7 @@ The first three groups keep production generation, scoring, orders, support list
 | Measured Greater-Than experiment and restored sign-target route | MS05e closed/set aside; tested transport MS06b/c1/c2; item review MS07e and final disposition MS18c/d/e | CV6-01 / S-OD1, superseded for the pool/handoff by CV6-05 / S-OD6 |
 | S1.2 / R6/R7 | MS06a/b/c1/c2/d | SA1-Q-S4, SA2-Q-S03, AC01; FS12-FS16/FS20 |
 | S2.2 / R9/R10 | MS07a/b/c/d/e | SA1-Q-S1, SA2-Q-S04, PROC-S1 |
+| Approved quick-tier follow-up | MS07f after MS08a; final audit/checks MS18e | S-OD8, MS07e report section 9; no assertion/request change |
 | S3 group 1 / R11 | MS08a/b/c | confirmed R10 costs/limits, Part D |
 | S3 group 2 / R12 | MS09a/b | SA2-Q-S05/S08/S11 |
 | S3 group 3 / R13/R14 | MS10a/b, MS11a/b/c | SA2-Q-S05/S08/S11 |
@@ -1026,6 +1058,10 @@ bounded protocol is a named item and an incomplete cell, not a fabricated hidden
 tooling task; continue other cells. Final publication still needs a complete valid matrix. Final MS18c
 archives v2 first and composes the live report around the table body. Record the measured identity
 and publication's support-array-only difference; algorithm changes require new qualification.
+S-OD7 keeps Killer Hard/Expert in this full protocol but withholds them from the product until
+later calibration; never overwrite a raw qualification verdict to encode that owner disposition.
+S-OD8 changes only quick/manual test membership. Q-MS07e-2's six cells follow the unchanged
+projection rule in section 2; no early-stop credit is a new permission to launch them.
 
 ### Fixed GS manifest
 

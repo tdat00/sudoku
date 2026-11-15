@@ -5,13 +5,13 @@
 | Depends on | MS18b accepted, including any owner-directed replacement task/evidence |
 | Size / active time | Medium; 35-50 minutes plus GQ |
 | Owner / milestone | Qualification/publication; M18c |
-| Authority / review | R24/R21, AUTH-S1, SA1-Q-S5, S-OD4 (c1), CV6-05; analyst cross-review |
+| Authority / review | R24/R21, AUTH-S1, SA1-Q-S5, S-OD4 (c1), S-OD7/S-OD8, CV6-05; analyst cross-review |
 | Status | Not started |
 
 ## Goal & business context
 
-Let complete final evidence determine availability. Preserve the v2 record and keep the live table
-at the path its readers already use.
+Let complete final evidence determine availability, with S-OD7's additional owner-directed
+withholding of Killer Hard/Expert. Preserve the v2 record and keep the live table at its existing path.
 
 ## Scope
 
@@ -35,16 +35,28 @@ R24, verbatim:
 Use Q's 15 variants x 9 levels, jobs 4, base 20260601, 40/100 seeds, exact+valid+solved+not-approximate
 hits and original p95 budgets. No diagnostic overrides or --probe. MS07d merge rejects incomplete/
 mixed records. Captured request errors/timeouts remain misses; worker/IPC loss is a failed run.
-Only after complete validation derive offered arrays, preserving global level order.
+Only after complete validation derive offered arrays, preserving global level order and S-OD7.
 Use r5p's **board-default attempts**, never an explicit eight-attempt qualifier override.
 
-**S-OD4 (c1), without exception:** at least 36 exact hits of 40 or 90 of 100 and p95 within
+**S-OD4 (c1), required for every offer:** at least 36 exact hits of 40 or 90 of 100 and p95 within
 2/10/30 seconds for <=36/<=81/>81 cells. A bounded fallback, shallow result or timeout is a miss;
 none keeps mega Nightmare/Hell or any other cell offered. A protocol-valid hidden verdict is
 an accepted product outcome. Do not ask for a waiver before applying it, even for large grids.
 Any proposal to retain an unqualified cell or raise a budget would change a recorded decision.
 An invalid/non-unique puzzle, unsound proof or wrong exact flag/warning is a correctness stop,
 not an availability miss that can be excused by hiding its cell.
+
+**S-OD7 — Killer Hard/Expert stay hidden until later calibration.** The owner answered
+Q-MS07e-1 on 2026-11-15 at 14:42 through `ask_user` and email: no Killer weight recalibration
+inside v3. MS07e observed Hard 0/14 exact (p95 6.6 s) and Expert 1/14 (p95 17.8 s).
+This is the recorded disposition of S-AV05/S-AV06, not another pending calibration question.
+Keep both cells in the full final 135-cell protocol. Preserve the checked raw qualifier records,
+including any later passing verdict; publish both levels as **hidden until later calibration
+(S-OD7)** and record that owner withholding separately from qualification. If a raw cell qualifies,
+do not falsify its raw `offered` verdict to make the product decision look like a qualification
+failure, or re-offer it contrary to S-OD7. The live report distinguishes qualification from actual
+offers; the latter match `difficultySupport`. No other cell receives this exclusion, no
+unqualified cell is offered, and no interim publication or in-v3 weight change is authorized.
 
 **PR-S2 remark — expected outcome under the existing rule, not a new decision.**
 Fable's answer (`92a7693`, `docs/difficulty-v3/clarifications-resolved.md`) confirms that cells
@@ -64,10 +76,22 @@ population above 450 s and follow the existing named unexecuted-item rule, witho
 counts or guards. Carry this warning and the current projection/margin to MS18e if Nightmare
 remains offered. This does not add a GD run to MS18c or replace GQ's separate 40/100 protocol.
 
-Reconcile all inherited availability items (including Killer Hard/Expert and large-grid Nightmare/
-hell1) with final verdicts. If a Killer calibration decision was requested at MS07e, apply only its
-recorded disposition; no weight change here. A hidden verdict needs no calibration to be legitimate.
+Reconcile all inherited availability items (including S-OD7's Killer disposition and large-grid
+Nightmare/hell1) with final verdicts. A hidden verdict needs no calibration to be legitimate.
 Route remaining cost findings to MS18d; include the complete item list for MS18e.
+
+**Q-MS07e-2 / S-AV27 — six unexecuted cells, unchanged launch rule.** MS07e's section 4
+left mega12/hell1 (556 s), mega16/nightmare (1,246 s), mega16/hell1 (1,808 s),
+greaterThan/expert (919 s), greaterThan/hell1 (3,957 s) and butterfly/hell1 (4,032 s)
+unexecuted; those are that source's projections, not measured qualification verdicts.
+SA2 routed them here without reopening MS07e or requesting a rule amendment. Reassess
+using authorized final-source evidence, including the first round at four workers, any possible
+60-request **serial** second round, startup and variance margin. Launch only at a credible
+<=450 s projection under the unchanged 540 s ceiling. Protocol-proved early stopping within
+a run is still valid, but no early-stop credit, changed jobs, scheduler repair or new evidence/
+tooling class is authorized for planning. Keep all six cells in the required final matrix.
+If a complete bounded route remains unavailable, continue safe work and report an unsatisfied
+publication gate; do not infer hidden verdicts, discard cells or publish a partial matrix.
 
 ### CV6-05 — the three fixed S-AV01 endings, before MS18d timing
 
@@ -111,8 +135,11 @@ Any solver/algorithm change invalidates qualification, unlike that declared publ
 
 Fixed regression/replay corpora remain all original keys/recipes. MS03a/d tooling temporarily
 enables hidden requested levels. Apply the same diagnostic-only guard around the quick replay
-loader's toConfig/pipeline call, restoring the original array in finally. Do not change requests,
-silently normalize them to another offered level or advertise hidden levels again.
+loader's toConfig/pipeline call, restoring the original array in finally. This also covers
+Generator `player.realResult` and the S-OD8/MS07f manual `variants` replay helper: its fixed
+mega16 Nightmare seed 478576959 and Hell 1 seed 2422420669 survive unchanged even if hidden,
+as does the quick classic9 Hell 1 seed 3. Do not change requests/assertions, silently normalize
+them to another offered level, skip them because of their tier or advertise hidden levels again.
 
 Resume anchors at c9935cd: `qualify.js:143,186,223,320` (`child`, `hitOf`, `decide`, `certain`);
 the later MS07d merge owns current output. Quick loaders are `replay.entry` at 22, `steps.golden`
@@ -133,7 +160,9 @@ priority. Hidden explicit pipeline requests must still throw; existing Player pu
 - Only `difficultySupport` arrays in `generator/js/variants/*.js`.
 - `generator/js/ui/store.js`, `controls.js` and app startup only as needed for the stored-request
   correction note; existing EN/VI keys or both languages if a new message is necessary. No generation policy.
-- All three fixed golden quick loaders/helpers and focused restoration tests, not only replay.
+- All three fixed golden quick loaders/helpers, Generator `player.realResult` and the
+  MS07f fixed replay helper in `generator/tests/manual/variants.test.js`, with focused restoration
+  tests. Only hidden-level diagnostic compatibility; S-OD8's requests/assertions/tier stay intact.
   Enumerate directly affected quick/manual offer assertions/populations before editing; preserve original
   diagnostic requests and public refusal coverage. Existing reader path remains.
 - Generator design 5.1/15.4 and both guides' actual availability facts.
@@ -148,7 +177,8 @@ priority. Hidden explicit pipeline requests must still throw; existing Player pu
 1. Finish the narrowly coupled compatibility logic/tests on controlled hidden-level fixtures, without
    pruning live offers. Then freeze candidate/defaults and archive v2 before any live-table change.
 2. Collect all 135 complete cells, merge/check, distinguish hidden verdicts from failures.
-3. Update live report and exact matching support arrays together; record every addition/removal.
+3. Update live report and exact matching product support arrays together; record every
+   addition/removal and S-OD7's separate Killer withholding without altering the raw GQ verdicts.
    Audit MS05b3's manual level/selector population against those offers now. Some variant suites
    have fixed `LEVELS` arrays; requesting a newly hidden level through the normal pipeline throws
    `difficulty.unsupportedLevel`. Identify any such test/publication compatibility work before
@@ -158,7 +188,8 @@ priority. Hidden explicit pipeline requests must still throw; existing Player pu
    authorize weakening an I5/hit threshold; record the explicit qualification-driven population
    disposition and keep the independent fixed GG/GR diagnostic populations unchanged.
 4. Preserve fixed diagnostic recipes after hiding levels and restore arrays even on failure.
-   Verify all three golden consumers, mega deep requests and every affected fixed quick request.
+   Verify all three golden consumers, mega deep requests, every affected fixed quick request
+   and MS07f's two fixed manual mega16 replays. Their original requests/assertions remain.
    Keep diagnostic generation separate from public unsupported-level refusal; no lost request
    or reindexed manual seed is disguised as a qualification-driven test update.
    Verify stored hidden-request nearest-level selection and its visible initial note in both languages.
@@ -178,9 +209,9 @@ priority. Hidden explicit pipeline requests must still throw; existing Player pu
 | ID | Criterion |
 |---|---|
 | MS18c-T01 | Complete 135-cell/jobs 4 protocol, exact source/defaults and checked merge |
-| MS18c-T02 | Live table equals support lists; archive unchanged; no algorithm tuning |
+| MS18c-T02 | Live product offers equal support lists and withhold Killer Hard/Expert under S-OD7; raw qualification verdicts and v2 archive unchanged; no algorithm/weight tuning |
 | MS18c-T03 | Hidden-level diagnostics restore arrays, recipes unchanged, both quick sets pass |
-| MS18c-T04 | (c1) covers every board/level, fallbacks miss, stored hidden requests show the note, Player imports remain compatible, all items reconcile, and S-AV01's CV6-05 disposition precedes MS18d timing |
+| MS18c-T04 | (c1) covers every board/level, fallbacks miss, S-OD7 and all six Q-MS07e-2 cells are accounted for, stored hidden requests show the note, Player imports remain compatible, all items reconcile, and S-AV01's CV6-05 disposition precedes MS18d timing |
 
 ## Test plan and gates
 
@@ -220,7 +251,10 @@ Run the stored-load notification through actual startup/control initialization, 
 
 Give MS18d/e full qualification/provenance, offered lists, v2 archive, compatibility evidence and
 the cumulative numerical item list, including S-AV01's fixed ending and any decided Normal
-contract update completed before GP. A correctly hidden large-board cell is a valid result, not a blocker.
+contract update completed before GP. Include S-OD7's two withheld cells and the disposition
+of each Q-MS07e-2 cell; an unexecuted cell is not a hidden verdict. Hand off the unchanged
+MS07f manual replay selectors and any diagnostic compatibility proof for MS18e's final checks.
+A correctly hidden large-board cell is a valid result, not a blocker.
 If any variant has no offered level and current UI/registry cannot represent that, report a blocker
 for an assigned compatibility fix; never invent a qualified level.
 

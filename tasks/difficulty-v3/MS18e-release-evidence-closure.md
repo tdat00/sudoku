@@ -3,9 +3,9 @@
 | Header | Value |
 |---|---|
 | Depends on | MS18d accepted; all required owner actions resolved |
-| Size / active time | Evidence/CI audit; 40-60 minutes plus GD/quick/final deep evidence |
+| Size / active time | Evidence/CI audit; 40-60 minutes plus GD/quick/final deep and named MS07f checks |
 | Owner / milestone | Release evidence and owner of the v3 PR's CI; M18 complete |
-| Authority / review | R20-R24, S-OD3/S-OD4; orchestrator review, not routine analyst cross-review |
+| Authority / review | R20-R24, S-OD3/S-OD4/S-OD7/S-OD8; orchestrator review, not routine analyst cross-review |
 | Status | Not started |
 
 ## Goal & business context
@@ -15,7 +15,7 @@ This task does not deploy, push, commit or edit the orchestrator's task logs.
 
 ## Scope and repository rules
 
-In: final GD/quick/deep checks, complete item/evidence audit, final-tree workflow/PR-CI ownership,
+In: final GD/quick/deep and the four named MS07f manual checks, complete item/evidence audit, final-tree workflow/PR-CI ownership,
 living documentation/release record and tightly coupled CI manifest/group corrections.
 Out: application/tuning/fixture repairs, blanket all/manual/browser runs, historical report or pack edits.
 AGENTS/checklist; CRLF, both guide languages; no Git writes.
@@ -27,7 +27,9 @@ bands, selected cap/C and frozen pattern limits. Exact means canonical solved/in
 legacy history/imports remain honest. Complete final 135-cell qualification and >=90% performance
 matrix use the accepted source/configuration. Fixed 520 hashes remain present.
 The attempt policy is 8/4/2 by size, not a global eight; complete GR now has five G09-G13 wires
-and fourteen analyses. Final offers apply (c1) without exceptions; bounded fallbacks are misses.
+and fourteen analyses. Every final offer meets (c1); bounded fallbacks are misses. S-OD7
+additionally withholds Killer Hard/Expert until later calibration without altering their raw
+qualification verdicts or the complete 135-cell population.
 
 R20, verbatim:
 
@@ -59,7 +61,8 @@ and the `digLevel makes one attempt` guarantee;
 1. Reconcile all task handoffs and every inherited/new S-OD4 item against final sources/decisions.
 2. Finish living guide/design/workflow/group corrections and create the release-report skeleton
    before the final quick fingerprint. Audit the workflows once on that final tree as below.
-3. Run final GD and the complete bounded quick manifest; collect/reconcile final deep records.
+3. Run final GD, the complete bounded quick manifest and S-OD8's four named manual cases;
+   collect/reconcile final deep records.
    Every correctness failure blocks; time-only outcomes retain their real status and item owners.
 4. Fill the data-only release report with actual counts, settings, versions, compatibility, availability,
    costs and PR-CI status. Do not edit hashed quick inputs after verification without replacing affected checks.
@@ -69,11 +72,32 @@ and the `digLevel makes one attempt` guarantee;
 
 Inventory the stable S-AV IDs from every task, not only the most recent report. For each retain
 origin, old/new numbers, source/config/request, evidence, checkpoint/final owner and disposition.
-Account explicitly for CV6, Killer Hard/Expert and its conditional owner question, large-board
-Nightmare/hell1, classic9 Nightmare, quick-set cost/proposal and every guard/projection finding.
+Account explicitly for CV6, Killer Hard/Expert and the answered S-OD7 decision, large-board
+Nightmare/hell1, classic9 Nightmare, S-OD8/MS07f's quick-tier move/cost and every guard/projection finding.
 No item vanishes because a test moved tiers or a level became hidden: link its final qualification
 or cost verdict. A proposal not approved is not an implemented change. No weights changed before
 an answer; no missing S3 group, new unapproved evidence class or silent performance waiver.
+
+**S-OD7 audit (S-AV05/S-AV06):** Killer Hard and Expert remain hidden until later calibration;
+no Killer weight recalibration occurred inside v3. Preserve MS07e's 0/14 and 1/14 observations,
+both cells' raw final qualification and the separate owner-directed offer restriction. The live
+product table/support arrays must agree; do not reopen Q-MS07e-1 as an unanswered question
+or count the two cells as omitted from qualification. Later calibration is outside this pack.
+
+**S-OD8 audit (S-AV08):** verify MS07f's exact relocation map, preserved assertions/workloads/
+requests/timeouts and source-qualified before/after costs for both apps; report actual final
+quick cost as well. The three generation-cost ratios and two mega16 replay requests are outside
+PR CI by explicit owner approval, not waived or replaced by G01-G14's different requests.
+Classic9 Hell 1 seed 3 and the retained structural/short-cost cases stay quick. No further tier
+move, threshold relaxation, new skip or five-minute guarantee follows from that approval.
+Reconcile the four relocated cases through the final-source selectors below, not an old quick
+pass or the warn-only status of unrelated manual performance samples.
+
+**Q-MS07e-2 audit (S-AV27):** account for mega12/hell1, mega16/nightmare, mega16/hell1,
+greaterThan/expert, greaterThan/hell1 and butterfly/hell1 individually. No launch-rule amendment
+was approved: current-source projections must include the serial second round and fit <=450 s
+under the 540 s ceiling, without advance early-stop credit. Final unexecuted cells are explicit
+unsatisfied qualification/publication gates, never hidden verdicts or complete release evidence.
 
 **CV6-05 audit:** MS05e is "measured, set aside", not an accepted sign repair. Keep its saved
 `docs/difficulty-v3/evidence/MS05e/candidate-pool-4.patch`, measurements and restoration/identity
@@ -119,6 +143,26 @@ This task owns reading/checking the final-head results and investigating bounded
 failures, forwarding application/correctness defects to their owner. Local success is not a
 remote CI pass; if no matching final-head run exists, leave PR-CI sign-off explicitly pending.
 No merge, push, workflow dispatch or new browser run is authorized by this task file.
+
+### S-OD8 — final-source checks of the relocated cases
+
+Use MS07f's relocation map and the actual final files. Preflight with `--list-tests`: exactly
+three hard-failing ratio cases in `perf`, and one replay case containing the two unchanged
+mega16 requests in `variants`. No warn-only wrapper, extra sweep, stub or skipped hidden request.
+MS18c owns any diagnostic-only support guard needed by the fixed replay requests; verify its
+array restoration and do not weaken the public unsupported-level refusal.
+
+```powershell
+Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=perf','--filter=> instrumented generators: what the events cost > generating puzzles:','--verbose','--results=..\docs\difficulty-v3\evidence\MS18e\manual\ratios.json')
+Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=variants','--filter=> player: the replay steps of a result > real top-level results with clues shown again replay faithfully (mega16)','--verbose','--results=..\docs\difficulty-v3\evidence\MS18e\manual\mega-replay.json')
+```
+
+Apply the current-source <=450 s projection and 540 s command ceiling, with explicit margin;
+split the ratios into individual exact selectors if their combined projection is unsafe.
+MS07f's historical times are not final bounds. Retain every real failure/incomplete outcome
+and its item; `-AllowExit1` does not turn it into a pass. These four selectors are specifically
+authorized, not a whole `perf`/`variants` or `--manual` run. Verify the retained classic9 request
+through final quick coverage, without duplicating its generation outside that set.
 
 ### Final-source deep mega evidence
 
@@ -167,10 +211,10 @@ their refusal coverage; do not enable them for CV3. Their fixed deep diagnostic 
 
 | ID | Criterion |
 |---|---|
-| MS18e-T01 | Final GD/quick correctness, live mega CV3 outcomes and actual performance verdicts are reconciled; no failed/incomplete gate is called green |
+| MS18e-T01 | Final GD/quick correctness, the four S-OD8 manual cases, live mega CV3 outcomes and actual performance verdicts are reconciled; no failed/incomplete gate is called green |
 | MS18e-T02 | GS/GQ/GP/GG/GR/GH and 28 deep occurrences/relations have current compatible evidence or explicitly unsatisfied release status |
 | MS18e-T03 | Living EN/VI docs match the final code; no application/tuning/fixture/pack edit |
-| MS18e-T04 | Every S-OD4 item has an evidenced disposition or named outstanding owner; all six S3 groups remain |
+| MS18e-T04 | Every S-OD4 item has an evidenced disposition or named outstanding owner, including S-OD7/S-OD8 and the six Q-MS07e-2 cells; all six S3 groups remain |
 | MS18e-T05 | Final workflow/group audit and matching-head PR-CI status are recorded; no time-factor/timeout raise or deep CI run |
 
 ## Test plan and gates

@@ -2,7 +2,7 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS08a accepted |
+| Depends on | MS07f accepted (after MS08a); S-OD8 serial CI-manifest handoff |
 | Size / active time | Medium; 40-55 minutes plus gates |
 | Owner / milestone | Shared fish / both apps; M8b |
 | Authority | R10/R11/R20/R21 |
@@ -22,6 +22,11 @@ In: kite and full B integration. Out: empty rectangle, finned fish, weights/offe
 AGENTS/checklist; no Git/pack/log writes. Both locale pairs, real fixtures/help, CRLF and E.
 
 ## Inputs & context
+
+Use MS08a's accepted technique template after MS07f's approved quick-tier move. Preserve that
+move and its current r6c manifest; do not restore the three ratio cases or the two mega16 replay
+requests to quick coverage. MS07f precedes this task so the two developers never edit the
+manifest concurrently. MS18e owns their named final-source manual checks.
 
 R11, verbatim:
 
