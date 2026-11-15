@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=wordoku --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-hell2.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+wordoku/hell2: 4/18 hits, p95 6.76 s (budget 10.0 s), hidden (stopped: misses)
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| wordoku | hell2 | 18 | 4 | 22 % | 4.94 s | 6.76 s | 6.76 s | 10.0 s | hidden (stopped: misses) |
+
+wordoku: []
+exit=0 seconds=23.247

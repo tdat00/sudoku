@@ -1045,3 +1045,24 @@ the dig (IR59) refused nothing in 240,130 solves observed outside the soak. The 
 catalogue, the pilot and the cost record. Not verified: the manual `difficulty` suite (edited for the three constructed Nightmare puzzles, **not run**: MS07b's edit had left its "constructed puzzle keeps its label" contract false for
 `constructed-nightmare-2`), the mega Nightmare and Hell 1 deep records (history on earlier sources, see above; MS18e reruns them), and any qualification or GQ-first (not this task's gate). Named items: S-AV08 re-measured at 684.3 s;
 S-AV04, S-AV07, S-AV19, S-AV20, S-AV22 and S-AV23 changed numbers on the window cells and on G13 (listed in the evidence, routes MS07e then MS18c and MS18d); S-AV25 (no `nishioDeep` step in 30 Hell 1 generations) and S-AV26 (5.6 s per Hell 1 request) with the pilot's numbers; S-AV02, S-AV03 and S-AV24 as history.
+
+## MS07e: the first qualification checkpoint (incomplete by cost), GG and GD on the C = 4 source
+
+**What ran.** The 135 cells of checklist Q at jobs 4 on HEAD `8b70875` (engine sources `029720df77c6c12a`, qualifier `c0ef0d25…`, C = 4, attempts 8 / 4 / 2): **129 cells complete and protocol-valid**
+(4,311 requests, 3,794 exact hits, 0 errors, 0 invalid or non-unique puzzles), **6 not launched** because the S-AV27 projection (the first round on four workers plus 60 serial second-round request times, no early stop)
+exceeds 450 s: mega12 hell1, mega16 nightmare and hell1, greaterThan expert and hell1, butterfly hell1. The merger accepts the 129 shards and rejects the folder only for `missing 6 of 135 cells`, so the checkpoint
+is **not** a complete merged record; `docs/difficulty-v3/qualification-checkpoint-2026-11-15.json` (`complete: false`) and `.md` carry the table, the six named items and every number. Nothing is offered, hidden or pruned by it.
+
+**Results.** 89 of the 129 cells offered, 40 hidden. Against the current lists, 23 cells are observed hidden (classic9 hell1; diagonalX and hyper easy and hell1; jigsaw9 hell1; killer hard to hell1; greaterThan master on time;
+samurai, sohei and flower easy and hell1; butterfly easy; flower expert and master; wordoku normal and hell1) and none is observed offered that is hidden today. Nightmare is now 40 of 40 on every board with tiers except Killer
+(the pre-split records of mega12 0 of 7, samurai and classic9 21 of 100 are history); **every executed Hell 1 cell has 0 exact hits** (112 requests, all in band and shallow); Killer Hard 0 of 14 and Expert 1 of 14 are
+hidden (the owner question Q-MS07e-1: Killer weights inside v3, or hidden until a later calibration); Easy fails on diagonalX, hyper, samurai, sohei, butterfly and flower. New items S-AV28 (Easy), S-AV29 (Greater-Than Master p95
+14.5 s over 10 s), S-AV30 (mid-level shortfalls); S-AV15 (the confusion matrix) is executed and passed.
+
+**GG and GD.** All 520 regression hashes unchanged (104 shards, one merge check). The classic9 `difficulty` manual suite ran as 154 tests once each: 152 passed, 2 failed on the unchanged aggregate hit-rate assertion
+(Hell 1 0 of 20 exact, S-AV25; Normal 83 of 100, S-AV14), no per-puzzle failure; the Nightmare batch took 17.3 s (430.5 s at the recovery source: the IR17 margin question disappears at C = 4). Greater-Than Nightmare CV6
+passes; Normal CV6 fails at p95 5,361.5 ms against 1,400 ms (S-AV01, unchanged 700 ms base and offers).
+
+**Cost of the evidence and of the tier.** The 129 launched cells took 1,523 s against 11,645 s projected (13 %); one cell expanded to a second round. The standing quick cost is **692.1 s** Generator (3,505 of 3,505) and 33.5 s Player
+(1,750 of 1,750), the fingerprints of MS07d; four generation-heavy tests are 392.1 s of it and are the proposal for a move to the manual tier (checkpoint note, section 9; nothing moved). Lock waits 4,054 s (longest 561 s), 20 IR12 compounds.
+Verified here: both quick sets, the CI check. Not verified: any offer, the six cells, a GP run (MS18d).

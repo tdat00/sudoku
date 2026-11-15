@@ -1,0 +1,8 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-diagonalX.json --cells=diagonalX/nightmare:2,diagonalX/hell1:3 --budget-seconds=420
+diagonalX/nightmare #0: 119.4 ms, hit true, achieved nightmare, exact true, approximate false
+diagonalX/nightmare #1: 1046.1 ms, hit true, achieved nightmare, exact true, approximate false
+diagonalX/hell1 #0: 25940.7 ms, hit false, achieved hell1, exact false, approximate true
+diagonalX/hell1 #1: 21346.9 ms, hit false, achieved hell1, exact false, approximate true
+diagonalX/hell1 #2: 22921.9 ms, hit false, achieved hell1, exact false, approximate true
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-diagonalX.json (71.378 s)
+exit=0 seconds=71.858

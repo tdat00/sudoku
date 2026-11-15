@@ -1,0 +1,199 @@
+{
+  "schema": 1,
+  "kind": "gd-pilot",
+  "task": "MS05r6b",
+  "complete": true,
+  "argv": [
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\pilot.json",
+    "--count=8"
+  ],
+  "startedAt": "2026-11-15T03:47:11.994Z",
+  "identity": {
+    "sourceHash": "09f91d6db3fa3373307fed4bf175e9d48ce6cf0c0b98eccec1386dda7cb35ed9",
+    "node": "v26.13.0",
+    "commit": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "dirty": false
+  },
+  "machine": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64
+  },
+  "seeds": "7000 + i, i = 0..7",
+  "call": "SG.digger.generate(model9, level, SG.rng.create(7000 + i), {})",
+  "offered": [
+    "veryEasy",
+    "easy",
+    "normal",
+    "hard",
+    "expert",
+    "master",
+    "nightmare",
+    "hell1"
+  ],
+  "levels": {
+    "veryEasy": {
+      "requests": 8,
+      "ms": [
+        10.62,
+        2.744,
+        1.394,
+        1.517,
+        1.16,
+        1.043,
+        1.029,
+        1.143
+      ],
+      "meanMs": 2.581,
+      "medianMs": 1.394,
+      "maxMs": 10.62,
+      "exact": 8,
+      "achieved": {
+        "veryEasy": 8
+      }
+    },
+    "easy": {
+      "requests": 8,
+      "ms": [
+        23.723,
+        166.03,
+        4.098,
+        159.681,
+        1090.214,
+        10.374,
+        8.89,
+        8.106
+      ],
+      "meanMs": 183.89,
+      "medianMs": 23.723,
+      "maxMs": 1090.214,
+      "exact": 7,
+      "achieved": {
+        "easy": 8
+      }
+    },
+    "normal": {
+      "requests": 8,
+      "ms": [
+        27.833,
+        659.158,
+        353.944,
+        305.624,
+        3.062,
+        18.077,
+        206.499,
+        1.809
+      ],
+      "meanMs": 197.001,
+      "medianMs": 206.499,
+      "maxMs": 659.158,
+      "exact": 7,
+      "achieved": {
+        "normal": 8
+      }
+    },
+    "hard": {
+      "requests": 8,
+      "ms": [
+        6.931,
+        22.42,
+        21.034,
+        14.768,
+        5.439,
+        10.613,
+        29.888,
+        51.035
+      ],
+      "meanMs": 20.266,
+      "medianMs": 21.034,
+      "maxMs": 51.035,
+      "exact": 8,
+      "achieved": {
+        "hard": 8
+      }
+    },
+    "expert": {
+      "requests": 8,
+      "ms": [
+        8.899,
+        5.826,
+        36.561,
+        18.584,
+        25.835,
+        6.055,
+        22.379,
+        5.333
+      ],
+      "meanMs": 16.184,
+      "medianMs": 18.584,
+      "maxMs": 36.561,
+      "exact": 8,
+      "achieved": {
+        "expert": 8
+      }
+    },
+    "master": {
+      "requests": 8,
+      "ms": [
+        53.234,
+        79.337,
+        8.573,
+        27.616,
+        39.377,
+        25.907,
+        81.255,
+        34.906
+      ],
+      "meanMs": 43.776,
+      "medianMs": 39.377,
+      "maxMs": 81.255,
+      "exact": 8,
+      "achieved": {
+        "master": 8
+      }
+    },
+    "nightmare": {
+      "requests": 8,
+      "ms": [
+        7.819,
+        114.932,
+        21.074,
+        225.674,
+        64.822,
+        238.227,
+        52.402,
+        165.687
+      ],
+      "meanMs": 111.33,
+      "medianMs": 114.932,
+      "maxMs": 238.227,
+      "exact": 8,
+      "achieved": {
+        "nightmare": 8
+      }
+    },
+    "hell1": {
+      "requests": 8,
+      "ms": [
+        6168.104,
+        5623.423,
+        5150.971,
+        6506.139,
+        6106.278,
+        6078.94,
+        5259.527,
+        6567.979
+      ],
+      "meanMs": 5932.67,
+      "medianMs": 6106.278,
+      "maxMs": 6567.979,
+      "exact": 0,
+      "achieved": {
+        "hell1": 8
+      }
+    }
+  },
+  "endedAt": "2026-11-15T03:48:04.062Z"
+}

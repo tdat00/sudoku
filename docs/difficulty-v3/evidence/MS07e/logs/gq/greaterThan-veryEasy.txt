@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=greaterThan --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-veryEasy.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+greaterThan/veryEasy: 40/40 hits, p95 56 ms (budget 10.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| greaterThan | veryEasy | 40 | 40 | 100 % | 27 ms | 56 ms | 62 ms | 10.0 s | offered |
+
+greaterThan: ["veryEasy"]
+exit=0 seconds=0.964

@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=butterfly --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-normal.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+butterfly/normal: 40/40 hits, p95 791 ms (budget 30.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| butterfly | normal | 40 | 40 | 100 % | 101 ms | 791 ms | 824 ms | 30.0 s | offered |
+
+butterfly: ["normal"]
+exit=0 seconds=2.298

@@ -1,0 +1,5408 @@
+{
+  "schema": 1,
+  "kind": "difficulty-v3-qualification-checkpoint",
+  "task": "MS07e",
+  "date": "2026-11-15",
+  "complete": false,
+  "merged": false,
+  "note": "Checkpoint-only record of the first qualification (R24): no offer is published and the live table is untouched. It is not a merged record (the merger refuses a folder with a missing cell) and is not a complete-checkpoint claim: the cells without a shard are named, with their projection and reason, and carry no verdict.",
+  "mergeAttempt": "docs/difficulty-v3/evidence/MS07e/merge-attempt.txt",
+  "identity": {
+    "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+    "seedBase": 20260601,
+    "machine": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300",
+      "node": "v26.13.0",
+      "jobs": 4
+    },
+    "engineSources": "029720df77c6c12a",
+    "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+    "ratingVersion": 2,
+    "acceptance": "canonical-required-tier",
+    "guardMs": 120000,
+    "earlyStop": true,
+    "probe": 0,
+    "attemptPolicy": {
+      "function": "SG.digger.defaultMaxAttempts",
+      "explicitMaxAttempts": false,
+      "sources": {
+        "js/engine/digger.js": "c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786",
+        "js/engine/pipeline.js": "b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1",
+        "js/variants/registry.js": "967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"
+      }
+    }
+  },
+  "matrix": {
+    "variants": [
+      "classic4",
+      "classic6",
+      "classic9",
+      "mega12",
+      "mega16",
+      "diagonalX",
+      "hyper",
+      "jigsaw9",
+      "killer",
+      "greaterThan",
+      "samurai",
+      "sohei",
+      "butterfly",
+      "flower",
+      "wordoku"
+    ],
+    "levels": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1",
+      "hell2"
+    ],
+    "cells": 135
+  },
+  "counts": {
+    "cells": 135,
+    "executed": 129,
+    "unexecuted": 6,
+    "incomplete": 0,
+    "offered": 89,
+    "hidden": 40
+  },
+  "shards": [
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-easy.json",
+      "sha256": "9061a30e8fd5eee4727afa6f1582d880209242af2e0d79161a3e6a1bb85dfd7c",
+      "started": "2026-11-15T06:14:30.467Z",
+      "finished": "2026-11-15T06:14:34.669Z",
+      "seconds": 4,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "butterfly/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-expert.json",
+      "sha256": "e66e9554926df1bc4733d15c4bdd96432a21687cf3d17a87c67cd4a9f59fc507",
+      "started": "2026-11-15T06:13:11.512Z",
+      "finished": "2026-11-15T06:13:22.205Z",
+      "seconds": 11,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "butterfly/expert"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-hard.json",
+      "sha256": "4642fd69ffdec9b0355a757777116f87b9418700e29b7ea47ea55ff94bf5a1b4",
+      "started": "2026-11-15T06:10:58.900Z",
+      "finished": "2026-11-15T06:11:00.345Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "butterfly/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-hell2.json",
+      "sha256": "a39ec860d4e65bb6e914b790b2846ac4a107e6a3801585e51d0fb308bc86f78d",
+      "started": "2026-11-15T06:32:57.500Z",
+      "finished": "2026-11-15T06:33:25.626Z",
+      "seconds": 28,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "butterfly/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-master.json",
+      "sha256": "1a573f87398044caf03531d40bd4f7be5f0044ff46d1c15777dba4fdb7600cab",
+      "started": "2026-11-15T06:19:15.752Z",
+      "finished": "2026-11-15T06:19:20.042Z",
+      "seconds": 4,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "butterfly/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-nightmare.json",
+      "sha256": "5255e5b1f40ee4da50416ce19dfeea46ce3c9eb4e5a55d971c6699679952c6bb",
+      "started": "2026-11-15T06:12:08.974Z",
+      "finished": "2026-11-15T06:12:19.628Z",
+      "seconds": 11,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "butterfly/nightmare"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-normal.json",
+      "sha256": "5c591d24c469fd87d84d802af82069661a097f03ccf151423f55860a5968fbc2",
+      "started": "2026-11-15T06:10:34.276Z",
+      "finished": "2026-11-15T06:10:36.417Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "butterfly/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-veryEasy.json",
+      "sha256": "860be72587894a67c959a8b728736d62501b46dfccdb67722b67cf1379bb6d5f",
+      "started": "2026-11-15T06:10:04.969Z",
+      "finished": "2026-11-15T06:10:05.566Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "butterfly/veryEasy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-easy.json",
+      "sha256": "8daa0d371bd7ed8b2303cd0bec7799c5c18a2e5ddf5ec8fff3fee0a6c28a6c7e",
+      "started": "2026-11-15T06:09:57.645Z",
+      "finished": "2026-11-15T06:09:58.647Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic4/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-expert.json",
+      "sha256": "07cdc478b120d3742edb28f56c581b0837d660fed567c12f0b3ddf15bf4e1385",
+      "started": "2026-11-15T06:10:01.135Z",
+      "finished": "2026-11-15T06:10:02.424Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic4/expert"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-hard.json",
+      "sha256": "2b8ce5f86cbf7b03339a58428147c3d0ef5b77ebeda480b64b69fbd4ed43c51a",
+      "started": "2026-11-15T06:10:02.682Z",
+      "finished": "2026-11-15T06:10:03.823Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic4/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-hell1.json",
+      "sha256": "0191c0c1bb84a9d2f4cc2be56c6d92a39de5c949b1f8a2d778b618a4575ed2f7",
+      "started": "2026-11-15T06:10:36.669Z",
+      "finished": "2026-11-15T06:10:37.924Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic4/hell1"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-hell2.json",
+      "sha256": "f13dab5f915522b0db36d1f888730a1d05a7ae664d6c81286e968f209598245b",
+      "started": "2026-11-15T06:10:08.651Z",
+      "finished": "2026-11-15T06:10:09.807Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic4/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-master.json",
+      "sha256": "cdc8bec757db8bbb113e2b4744d2c53d602949f6990aa7f5014b0a7b5877b2f9",
+      "started": "2026-11-15T06:09:56.108Z",
+      "finished": "2026-11-15T06:09:57.404Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic4/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-nightmare.json",
+      "sha256": "d9ab268a04ac6751ebf457bd311a082a839cba8b0ed4b93cbf2fd7464bec3673",
+      "started": "2026-11-15T06:09:58.885Z",
+      "finished": "2026-11-15T06:10:00.074Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic4/nightmare"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-normal.json",
+      "sha256": "3c3e6edf45ba0994ffdebfdcd63a99b24348a50089eb81fa030ca8a1cf64d8dc",
+      "started": "2026-11-15T06:09:54.818Z",
+      "finished": "2026-11-15T06:09:55.867Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic4/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-veryEasy.json",
+      "sha256": "ca86f331e9a551f51133f77155eaad3b2c353399c895fcd13a2b694408178232",
+      "started": "2026-11-15T06:09:52.475Z",
+      "finished": "2026-11-15T06:09:52.982Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic4/veryEasy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-easy.json",
+      "sha256": "c2ba5c57a927754db258c7d15bb5ec1c4b13252146645470f6983ef70d8e4a8c",
+      "started": "2026-11-15T06:10:12.785Z",
+      "finished": "2026-11-15T06:10:14.379Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic6/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-expert.json",
+      "sha256": "0a5e3ac56cf495d6da064d499c5e8ff800dfa6f4ce14407ea0991ee6f59e30e0",
+      "started": "2026-11-15T06:11:57.407Z",
+      "finished": "2026-11-15T06:11:59.613Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic6/expert"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-hard.json",
+      "sha256": "14a4005834858a6ed8e2ae23b87fd8526d6f1a709e0fabaa3dd3172e68ae5c7b",
+      "started": "2026-11-15T06:11:49.540Z",
+      "finished": "2026-11-15T06:11:51.219Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic6/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-hell1.json",
+      "sha256": "f4f525af88a3a2fd339934fc4812b1f4afea63fea0ab962cb735cc22164666a3",
+      "started": "2026-11-15T06:10:26.289Z",
+      "finished": "2026-11-15T06:10:29.604Z",
+      "seconds": 3,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic6/hell1"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-hell2.json",
+      "sha256": "7574c28ced71a6abecd13d743d83773bdbcf774800c4849eabcffcb212d56af5",
+      "started": "2026-11-15T06:10:30.973Z",
+      "finished": "2026-11-15T06:10:34.039Z",
+      "seconds": 3,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic6/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-master.json",
+      "sha256": "2d1d000d6fe8c3ae7e6d06bf5cf85085af4b69385a5c39e3ccf87618d47894d8",
+      "started": "2026-11-15T06:12:24.590Z",
+      "finished": "2026-11-15T06:12:27.202Z",
+      "seconds": 3,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic6/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-nightmare.json",
+      "sha256": "9b25237304df28eeea9f73a1e9782db4620e571332ad5c1584d1163a01373021",
+      "started": "2026-11-15T06:13:22.446Z",
+      "finished": "2026-11-15T06:13:25.568Z",
+      "seconds": 3,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic6/nightmare"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-normal.json",
+      "sha256": "97963393477813cf36fa1d34db1ad561da4a864ebdb71c11e08db0c086867c73",
+      "started": "2026-11-15T06:10:10.042Z",
+      "finished": "2026-11-15T06:10:11.703Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic6/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-veryEasy.json",
+      "sha256": "a6641e12fbef107ca26e39f2ca619588189f04aff66e2e718aa5862e98892428",
+      "started": "2026-11-15T06:09:53.223Z",
+      "finished": "2026-11-15T06:09:53.759Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic6/veryEasy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-easy.json",
+      "sha256": "a0816d860941fe126a20aaf935f3f3ed42a58cb502033f74b2f01ab54a5cee0a",
+      "started": "2026-11-15T06:13:25.809Z",
+      "finished": "2026-11-15T06:13:29.300Z",
+      "seconds": 3,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic9/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-expert.json",
+      "sha256": "2fe5774577c15836cfbd9058d0eb21c8463bdcffdd6db5536a0eb3b46331b11b",
+      "started": "2026-11-15T06:11:41.055Z",
+      "finished": "2026-11-15T06:11:42.510Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic9/expert"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-hard.json",
+      "sha256": "79bb320938c8027396b4512d690c2923baa015e738860bf03b60affa1528fa81",
+      "started": "2026-11-15T06:10:25.070Z",
+      "finished": "2026-11-15T06:10:26.048Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic9/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-hell1.json",
+      "sha256": "54e98e285c9d30bda4c194caec4c295c81174e487f9f5c8d95f00c27d02eaf10",
+      "started": "2026-11-15T06:18:35.920Z",
+      "finished": "2026-11-15T06:19:00.045Z",
+      "seconds": 24,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic9/hell1"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-hell2.json",
+      "sha256": "d12202c7fd77bd19757c69aebffeee9e667a724b6f979ae92c376232b4217cc4",
+      "started": "2026-11-15T06:14:40.815Z",
+      "finished": "2026-11-15T06:15:00.826Z",
+      "seconds": 20,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic9/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-master.json",
+      "sha256": "cb9aa131828804a705d0ed39ed2e9dbe733e16c8020b40bfa28fd5e2d968f6a4",
+      "started": "2026-11-15T06:13:29.541Z",
+      "finished": "2026-11-15T06:13:31.129Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic9/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-nightmare.json",
+      "sha256": "2f2630591a673e53d48a224fa3e7c4088cfa45d04fa64433fc4723848e2a4669",
+      "started": "2026-11-15T06:19:27.624Z",
+      "finished": "2026-11-15T06:19:29.619Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic9/nightmare"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-normal.json",
+      "sha256": "c40f94ccf9db3bcd3993a8d0fe89949b46de8d4133fa623045d0f3a9ac25b0d2",
+      "started": "2026-11-15T06:12:19.877Z",
+      "finished": "2026-11-15T06:12:24.337Z",
+      "seconds": 4,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic9/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-veryEasy.json",
+      "sha256": "651216c7a805fa265b2dba28167f4ed9f04c21129207dc8491749296271e42fd",
+      "started": "2026-11-15T06:09:54.004Z",
+      "finished": "2026-11-15T06:09:54.572Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "classic9/veryEasy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-easy.json",
+      "sha256": "a3616177922c76296c5a7f2b15e0f70a4914a40ecb9baee245c870036a08ef1d",
+      "started": "2026-11-15T06:19:20.278Z",
+      "finished": "2026-11-15T06:19:27.385Z",
+      "seconds": 7,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "diagonalX/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-expert.json",
+      "sha256": "b3b6cf48f2b457741a55ec8f815b9b31b379e338aaf7ce8279bd1cbd445294de",
+      "started": "2026-11-15T06:19:29.865Z",
+      "finished": "2026-11-15T06:19:41.619Z",
+      "seconds": 12,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "diagonalX/expert"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-hard.json",
+      "sha256": "3bca203a27596068ba4e90721d6a85325ce9443268c2993d3cf9ad075af11981",
+      "started": "2026-11-15T06:10:04.065Z",
+      "finished": "2026-11-15T06:10:04.717Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "diagonalX/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-hell1.json",
+      "sha256": "e0703ce6aad2c9ed04caa6857aab9d3a023e52c55660dcb78628dce8cb172476",
+      "started": "2026-11-15T06:33:25.867Z",
+      "finished": "2026-11-15T06:34:35.096Z",
+      "seconds": 69,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "diagonalX/hell1"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-hell2.json",
+      "sha256": "c8df16d235873f01df7da701d8a6eb1e5007b66c77f87db909fe13a095fc7418",
+      "started": "2026-11-15T06:16:42.184Z",
+      "finished": "2026-11-15T06:16:46.868Z",
+      "seconds": 5,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "diagonalX/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-master.json",
+      "sha256": "b724671d19bf80562c17223051e363f3b62a119cd2b28400b5a729bcee682202",
+      "started": "2026-11-15T06:11:45.715Z",
+      "finished": "2026-11-15T06:11:47.413Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "diagonalX/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-nightmare.json",
+      "sha256": "42442d147fe09774396582c581016f74ab4c85fa763416f61b8705f980c63e91",
+      "started": "2026-11-15T06:13:31.367Z",
+      "finished": "2026-11-15T06:13:37.170Z",
+      "seconds": 6,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "diagonalX/nightmare"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-normal.json",
+      "sha256": "d1343fb74573a00ab90470b8d6d4a9cc670b930a7a697b030f53bb1ee8b0abc6",
+      "started": "2026-11-15T06:10:29.858Z",
+      "finished": "2026-11-15T06:10:30.734Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "diagonalX/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-veryEasy.json",
+      "sha256": "5ecf7569d12a64f8ed20858ad8de150c0ddc27f0be2be307fecbcae66dbcc97a",
+      "started": "2026-11-15T06:09:49.298Z",
+      "finished": "2026-11-15T06:09:49.856Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "diagonalX/veryEasy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/flower-easy.json",
+      "sha256": "e7968d00a958047624cf1c7fb147acd934f1657f5daa58e0371893a0e9059f57",
+      "started": "2026-11-15T06:19:07.093Z",
+      "finished": "2026-11-15T06:19:10.214Z",
+      "seconds": 3,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "flower/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/flower-expert.json",
+      "sha256": "2db0744421e985cdb5e6bba91423844ea7425560ec57554420d104190211d180",
+      "started": "2026-11-15T06:23:22.339Z",
+      "finished": "2026-11-15T06:23:37.097Z",
+      "seconds": 15,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "flower/expert"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/flower-hard.json",
+      "sha256": "225009bcbd48934cacf531843b0d8528c876ae72b16937470bdc820fd93c481a",
+      "started": "2026-11-15T06:10:52.842Z",
+      "finished": "2026-11-15T06:10:55.967Z",
+      "seconds": 3,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "flower/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/flower-hell1.json",
+      "sha256": "a805d00ca49e486058f28bbdff77c7a6f13c17ef9e3f125c6816ec3966456c1c",
+      "started": "2026-11-15T06:43:39.723Z",
+      "finished": "2026-11-15T06:45:15.803Z",
+      "seconds": 96,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "flower/hell1"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/flower-hell2.json",
+      "sha256": "9606df038d31d0c9a1a80e217a081000bf0dfa47e4e4183ce3a9084938e4de60",
+      "started": "2026-11-15T06:28:35.667Z",
+      "finished": "2026-11-15T06:28:56.881Z",
+      "seconds": 21,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "flower/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/flower-master.json",
+      "sha256": "60abd851440be1216eca3c5fe54b52fef5af3d192084c41feb1fb740d8ba2b47",
+      "started": "2026-11-15T06:12:59.738Z",
+      "finished": "2026-11-15T06:13:08.853Z",
+      "seconds": 9,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "flower/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/flower-nightmare.json",
+      "sha256": "a40b1d33c9b184c9d91263a0da05c16a4af11a14348c3847e836dd40674a8a80",
+      "started": "2026-11-15T06:47:26.240Z",
+      "finished": "2026-11-15T06:47:54.455Z",
+      "seconds": 28,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "flower/nightmare"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/flower-normal.json",
+      "sha256": "8c85fb16c0bb497e110d22598b9076588a61e24317f751e5af148258b8267ece",
+      "started": "2026-11-15T06:18:22.148Z",
+      "finished": "2026-11-15T06:18:25.412Z",
+      "seconds": 3,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "flower/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/flower-veryEasy.json",
+      "sha256": "c9b6ddddcdfbac61bef34a912d9bd5d39063257eab0fb6c77f9cc47d3d9c1bcb",
+      "started": "2026-11-15T06:10:11.940Z",
+      "finished": "2026-11-15T06:10:12.543Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "flower/veryEasy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/greaterThan-easy.json",
+      "sha256": "7eb94bccfb0d04a26a1f38416e717fea34d1758766ea5c65b7ac0951e8411013",
+      "started": "2026-11-15T06:10:20.341Z",
+      "finished": "2026-11-15T06:10:21.342Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "greaterThan/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/greaterThan-hard.json",
+      "sha256": "9455656b278678658f0c7c7741bcf94d34b25ed623aada8e2a6195d8f04ecf8f",
+      "started": "2026-11-15T06:24:35.777Z",
+      "finished": "2026-11-15T06:24:51.326Z",
+      "seconds": 16,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "greaterThan/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/greaterThan-hell2.json",
+      "sha256": "a011246109373ab86c95e7a9aeb2ce449123593efe9767efe79bb400849c94f7",
+      "started": "2026-11-15T06:24:51.597Z",
+      "finished": "2026-11-15T06:25:05.857Z",
+      "seconds": 14,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "greaterThan/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/greaterThan-master.json",
+      "sha256": "6a868247846e84813595de88d3c0296ef04c46df320a3b75746fb29cc8f5b2fc",
+      "started": "2026-11-15T06:11:03.097Z",
+      "finished": "2026-11-15T06:11:38.183Z",
+      "seconds": 35,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "greaterThan/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/greaterThan-nightmare.json",
+      "sha256": "0979679806ba28e59e622bac64e498179d1465262bc3b0ae2261c144199d68fa",
+      "started": "2026-11-15T06:25:34.553Z",
+      "finished": "2026-11-15T06:25:54.351Z",
+      "seconds": 20,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "greaterThan/nightmare"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/greaterThan-normal.json",
+      "sha256": "ecdf39457c130e8f7a5c1dee4672ac170a5796bf2d92780b340afc6705765ddc",
+      "started": "2026-11-15T06:25:06.106Z",
+      "finished": "2026-11-15T06:25:34.314Z",
+      "seconds": 28,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "greaterThan/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/greaterThan-veryEasy.json",
+      "sha256": "34476b7264a67fa0f5fa32cb38274cddaf7fc5c786b3cfe307a62025b97d7943",
+      "started": "2026-11-15T06:10:14.615Z",
+      "finished": "2026-11-15T06:10:15.423Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "greaterThan/veryEasy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-easy.json",
+      "sha256": "7392edae5506bf66227b4b0923800a5075d7cc62a3d0ea782e9bc6ee789b8fec",
+      "started": "2026-11-15T06:18:14.425Z",
+      "finished": "2026-11-15T06:18:21.907Z",
+      "seconds": 7,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "hyper/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-expert.json",
+      "sha256": "27b971dc03b47944a55caa196009ce8ddbbe1c8b881df908579117da9d3b8849",
+      "started": "2026-11-15T06:19:49.547Z",
+      "finished": "2026-11-15T06:19:54.985Z",
+      "seconds": 5,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "hyper/expert"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-hard.json",
+      "sha256": "52ccaf0a2bce09ef6f8178df09eeca77e9129b832a25e395e41438288786ab2d",
+      "started": "2026-11-15T06:10:06.771Z",
+      "finished": "2026-11-15T06:10:07.494Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "hyper/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-hell1.json",
+      "sha256": "2f17b93e6cf5149485363f3f1344d031aa1566991130441e18e706b84f9d36da",
+      "started": "2026-11-15T06:19:55.229Z",
+      "finished": "2026-11-15T06:20:29.925Z",
+      "seconds": 35,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "hyper/hell1"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-hell2.json",
+      "sha256": "78686fec7a8fe94b148ac3050b50ff7dc003b42c03b68498ac7804c2c7ad485a",
+      "started": "2026-11-15T06:12:32.510Z",
+      "finished": "2026-11-15T06:12:41.936Z",
+      "seconds": 9,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "hyper/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-master.json",
+      "sha256": "c93fa580a14e29f2f20236986972d7e77f706053e66fa7ff1f4250c5242147d5",
+      "started": "2026-11-15T06:12:06.508Z",
+      "finished": "2026-11-15T06:12:08.738Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "hyper/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-nightmare.json",
+      "sha256": "28bf45f8736348600025e11b69299f452c9e5a28ee12b40c3b6a2859abdeba78",
+      "started": "2026-11-15T06:10:40.962Z",
+      "finished": "2026-11-15T06:10:44.648Z",
+      "seconds": 4,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "hyper/nightmare"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-normal.json",
+      "sha256": "036034ae5f1eb0d2aeb6a1942b6ecb366320b60af026be9ec26c10c7a1c17c0a",
+      "started": "2026-11-15T06:11:38.426Z",
+      "finished": "2026-11-15T06:11:40.819Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "hyper/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-veryEasy.json",
+      "sha256": "8e6a6ff7c50269d8c56bcd82a21d0ad4dc2c0e1ca9eced00040e1223fd476108",
+      "started": "2026-11-15T06:09:50.099Z",
+      "finished": "2026-11-15T06:09:50.635Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "hyper/veryEasy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-easy.json",
+      "sha256": "c8a920f31a3ba94df845bab1a7fc680826f02a661dd80ab6b9de20a8fff775fd",
+      "started": "2026-11-15T06:12:49.180Z",
+      "finished": "2026-11-15T06:12:51.534Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "jigsaw9/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-expert.json",
+      "sha256": "703755b95676527d97ddb17e75fa36b7cbb1ac12038baadacaabc4e9eeeea8df",
+      "started": "2026-11-15T06:28:25.810Z",
+      "finished": "2026-11-15T06:28:35.431Z",
+      "seconds": 10,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "jigsaw9/expert"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-hard.json",
+      "sha256": "035a95dabd222a687fed67738e94b629d733ae4eade1b6a2f440f252581ed7b7",
+      "started": "2026-11-15T06:10:21.579Z",
+      "finished": "2026-11-15T06:10:22.421Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "jigsaw9/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-hell1.json",
+      "sha256": "ea97716780b877f5f50c23bc070d88303bd64b704edc103e692aa32891562fc1",
+      "started": "2026-11-15T06:23:55.899Z",
+      "finished": "2026-11-15T06:24:35.518Z",
+      "seconds": 40,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "jigsaw9/hell1"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-hell2.json",
+      "sha256": "2bbc7cdd6869318c54d4b42ccdbecefd30c9c253d7b8194b581875c0119471e4",
+      "started": "2026-11-15T06:18:25.662Z",
+      "finished": "2026-11-15T06:18:35.663Z",
+      "seconds": 10,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "jigsaw9/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-master.json",
+      "sha256": "ef01b8205bb2c95b267fb05f1e422120f19675a7b9a3282bac929cbb4a02b13a",
+      "started": "2026-11-15T06:10:44.950Z",
+      "finished": "2026-11-15T06:10:46.742Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "jigsaw9/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-nightmare.json",
+      "sha256": "5a87e1bf8593f471bf3be388cfae14bcf40cadf560e8fa3c38fa99c59e8543f0",
+      "started": "2026-11-15T06:11:42.750Z",
+      "finished": "2026-11-15T06:11:45.466Z",
+      "seconds": 3,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "jigsaw9/nightmare"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-normal.json",
+      "sha256": "01d511f1304fa3fd4d0dc54a1d1e4cd73a0c173662817b32b810ae02b8754d5a",
+      "started": "2026-11-15T06:11:47.658Z",
+      "finished": "2026-11-15T06:11:49.290Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "jigsaw9/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-veryEasy.json",
+      "sha256": "c72f032ba4a852d6c546f20fd086349c7eb00b7a0bae9b9da525d3212bf610a4",
+      "started": "2026-11-15T06:10:05.803Z",
+      "finished": "2026-11-15T06:10:06.535Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "jigsaw9/veryEasy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/killer-easy.json",
+      "sha256": "7771e394789935aa79a1d1a02fa619df3a8c208fb79aa44d293598b531429c3e",
+      "started": "2026-11-15T06:10:18.367Z",
+      "finished": "2026-11-15T06:10:19.023Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "killer/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/killer-expert.json",
+      "sha256": "bfe55f9f287b689bef4da033a938616b49bd68b499d3f493a17a34882b56cf34",
+      "started": "2026-11-15T06:17:34.758Z",
+      "finished": "2026-11-15T06:18:14.177Z",
+      "seconds": 39,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "killer/expert"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/killer-hard.json",
+      "sha256": "b38a324182fed15d8175838b76526981f2a2578af17ef9e783c8420854b33a24",
+      "started": "2026-11-15T06:15:54.773Z",
+      "finished": "2026-11-15T06:16:17.251Z",
+      "seconds": 22,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "killer/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/killer-hell1.json",
+      "sha256": "c983964376909dcdb02c787013d249fb06384ca77af216e770a9112d47652d47",
+      "started": "2026-11-15T06:47:54.701Z",
+      "finished": "2026-11-15T06:49:13.953Z",
+      "seconds": 79,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "killer/hell1"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/killer-hell2.json",
+      "sha256": "e1461e08e7160f106fc72716b423b24bccc6792f74453098393fe3319ff65e20",
+      "started": "2026-11-15T06:27:52.506Z",
+      "finished": "2026-11-15T06:28:25.553Z",
+      "seconds": 33,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "killer/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/killer-master.json",
+      "sha256": "bb1a5de774f6234959fc6c050aed86dd06182463700a67d49904888a81eba6e8",
+      "started": "2026-11-15T06:20:30.178Z",
+      "finished": "2026-11-15T06:21:11.851Z",
+      "seconds": 42,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "killer/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/killer-nightmare.json",
+      "sha256": "dacbe5cd89c50d68ab54c1f9239571823ff9f1da14b5166220b8d386a2472f53",
+      "started": "2026-11-15T06:26:44.260Z",
+      "finished": "2026-11-15T06:27:52.269Z",
+      "seconds": 68,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "killer/nightmare"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/killer-normal.json",
+      "sha256": "3ddbe259d001111a4dd119f0c307d81ff0a9bff8417f9854c23a64faf93d7ccb",
+      "started": "2026-11-15T06:19:00.286Z",
+      "finished": "2026-11-15T06:19:06.845Z",
+      "seconds": 7,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "killer/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/killer-veryEasy.json",
+      "sha256": "2b623be03259c1d00739cf6152554505c92161dc74121efaacf826cde3c15039",
+      "started": "2026-11-15T06:09:51.676Z",
+      "finished": "2026-11-15T06:09:52.238Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "killer/veryEasy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-easy.json",
+      "sha256": "f00b017bcb4e8402b3ceae08f2229922b49dcc76c9961a4359e93d8807a7bb6e",
+      "started": "2026-11-15T06:10:07.732Z",
+      "finished": "2026-11-15T06:10:08.415Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega12/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-expert.json",
+      "sha256": "5e47487b3af7af9ccb1b9c63562614251690c4bfaa1a0bf11b984df2bb14e19b",
+      "started": "2026-11-15T06:10:56.213Z",
+      "finished": "2026-11-15T06:10:58.657Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega12/expert"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-hard.json",
+      "sha256": "a9907d538ad01c0fae072a016a036c8788349012a431cd58aafec5f0563fc630",
+      "started": "2026-11-15T06:10:38.165Z",
+      "finished": "2026-11-15T06:10:39.177Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega12/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-hell2.json",
+      "sha256": "81661f2409b113f2056775f5c38dd1cb6f04340fcf764411b9750f9204e4e04e",
+      "started": "2026-11-15T06:43:12.427Z",
+      "finished": "2026-11-15T06:43:38.876Z",
+      "seconds": 26,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega12/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-master.json",
+      "sha256": "5f6919452bd75358349a7cd9378c166c42c38ba3cce4379723ef579d25eb50b1",
+      "started": "2026-11-15T06:12:57.877Z",
+      "finished": "2026-11-15T06:12:59.499Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega12/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-nightmare.json",
+      "sha256": "ac101f708747d08a591a70cc4f6bcbd4ba3281852955dd7302bda7b33cb55563",
+      "started": "2026-11-15T06:12:02.179Z",
+      "finished": "2026-11-15T06:12:06.259Z",
+      "seconds": 4,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega12/nightmare"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-normal.json",
+      "sha256": "0b626a942b3df342494b614f7596b646e78122d66df22e8e32f4984280af76e4",
+      "started": "2026-11-15T06:10:19.268Z",
+      "finished": "2026-11-15T06:10:20.098Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega12/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-veryEasy.json",
+      "sha256": "a3dc77026d281f555291c34244f864a1a161e4051f41e823b331a94134e24ea6",
+      "started": "2026-11-15T06:10:00.312Z",
+      "finished": "2026-11-15T06:10:00.896Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega12/veryEasy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega16-easy.json",
+      "sha256": "76d0fba70f069ce4d86bcdb4dd5af6bca533b439fbfa4725795c74aa5452accd",
+      "started": "2026-11-15T06:10:22.670Z",
+      "finished": "2026-11-15T06:10:23.379Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega16/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega16-expert.json",
+      "sha256": "d88fa2ae29cb6e7d33f23c2c940593559159485ed46617c737fa033851a8de15",
+      "started": "2026-11-15T06:16:17.494Z",
+      "finished": "2026-11-15T06:16:41.946Z",
+      "seconds": 24,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega16/expert"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega16-hard.json",
+      "sha256": "0ff84bd0e468d6666d23826ccb139cfd4623adc8439ccf281bf9cb6947f9bf71",
+      "started": "2026-11-15T06:12:42.175Z",
+      "finished": "2026-11-15T06:12:44.529Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega16/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega16-hell2.json",
+      "sha256": "a9db8cf0dba74dae7f40f9688d31a27fc199b6d7ea247f9d12aff6453876ce09",
+      "started": "2026-11-15T06:13:50.514Z",
+      "finished": "2026-11-15T06:14:06.894Z",
+      "seconds": 16,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega16/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega16-master.json",
+      "sha256": "e4f914f157dd656f3f52e6c21f4d1428437599cec27d83e68197b402f1fb8b4f",
+      "started": "2026-11-15T06:13:44.233Z",
+      "finished": "2026-11-15T06:13:50.275Z",
+      "seconds": 6,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega16/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega16-normal.json",
+      "sha256": "0d750032215bedc4d205832df4333ed45f696048dabed39e180d270d7977b322",
+      "started": "2026-11-15T06:10:51.622Z",
+      "finished": "2026-11-15T06:10:52.591Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega16/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/mega16-veryEasy.json",
+      "sha256": "72d9eb734607ae0d08791eaa22700b2caa7c6a5b1ce91cb21d109e958d29463a",
+      "started": "2026-11-15T06:10:15.665Z",
+      "finished": "2026-11-15T06:10:16.300Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "mega16/veryEasy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-easy.json",
+      "sha256": "91b5b7a0d96efaacaeb915ebcc0e874e47b8d6a571cfc73ec5ebb9cc3b1033f5",
+      "started": "2026-11-15T06:12:44.774Z",
+      "finished": "2026-11-15T06:12:48.940Z",
+      "seconds": 4,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "samurai/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-expert.json",
+      "sha256": "214cd1b538fce94b8cd2e90141c2347ff10436d0e7e0143af693913f7db0fa11",
+      "started": "2026-11-15T06:19:10.454Z",
+      "finished": "2026-11-15T06:19:15.511Z",
+      "seconds": 5,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "samurai/expert"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-hard.json",
+      "sha256": "21f8083ac2823a92a0541d7a1f4617582ca72a62f14b99615520b965ebb6c075",
+      "started": "2026-11-15T06:12:51.775Z",
+      "finished": "2026-11-15T06:12:54.081Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "samurai/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-hell1.json",
+      "sha256": "08a37a3906853c0072b46c9549c856318ea6b58b4b9780aaeeaaae72b8d781ef",
+      "started": "2026-11-15T06:51:44.411Z",
+      "finished": "2026-11-15T06:53:32.666Z",
+      "seconds": 108,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "samurai/hell1"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-hell2.json",
+      "sha256": "eb64341c1b37e568e74bac71c153397c2808a26339547a700b2a003ba493b5df",
+      "started": "2026-11-15T06:55:13.085Z",
+      "finished": "2026-11-15T06:55:49.658Z",
+      "seconds": 37,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "samurai/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-master.json",
+      "sha256": "134252912d94a9709b72a32165308d1e08a97b2fe5dbca882897b9e79e085b2b",
+      "started": "2026-11-15T06:19:41.861Z",
+      "finished": "2026-11-15T06:19:49.304Z",
+      "seconds": 7,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "samurai/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-nightmare.json",
+      "sha256": "706912ef3152219bbb60a4755a644b67ab0bdaa0db9ffa6b1f397d0f5d706505",
+      "started": "2026-11-15T06:25:54.587Z",
+      "finished": "2026-11-15T06:26:23.886Z",
+      "seconds": 29,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "samurai/nightmare"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-normal.json",
+      "sha256": "4f7ddf210e2fae1fae3cdba1f564b8fc2764519acc982f5186be89dba5ed92fd",
+      "started": "2026-11-15T06:10:46.995Z",
+      "finished": "2026-11-15T06:10:51.373Z",
+      "seconds": 4,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "samurai/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-veryEasy.json",
+      "sha256": "7fbaf54d583bd903742a348b74b2a9acfd7231035b2a1600a53469463e15af62",
+      "started": "2026-11-15T06:10:17.439Z",
+      "finished": "2026-11-15T06:10:18.131Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "samurai/veryEasy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-easy.json",
+      "sha256": "bc62921bbec0ccde69665762f1ba15930fa6b4639caab2b5d70a8bf28f3d47b9",
+      "started": "2026-11-15T06:15:01.074Z",
+      "finished": "2026-11-15T06:15:04.329Z",
+      "seconds": 3,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "sohei/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-expert.json",
+      "sha256": "16fb93b391712b6dcfe3bf3fe01183429011b72dc729ca4ffca3d5cea9697f11",
+      "started": "2026-11-15T06:12:27.440Z",
+      "finished": "2026-11-15T06:12:32.269Z",
+      "seconds": 5,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "sohei/expert"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-hard.json",
+      "sha256": "0fce0cfd8bf6e68705b6d5d2fed7aeae35d40440ba2c4408904c5c232884136f",
+      "started": "2026-11-15T06:13:09.094Z",
+      "finished": "2026-11-15T06:13:11.268Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "sohei/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-hell1.json",
+      "sha256": "1a1f9b06514d69c3c87803b135d888a324f25ba6c34f5324ac9a350bb031ceb3",
+      "started": "2026-11-15T06:36:35.662Z",
+      "finished": "2026-11-15T06:38:16.588Z",
+      "seconds": 101,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "sohei/hell1"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-hell2.json",
+      "sha256": "480e9c17ab1b814283091b34d8e11a882de04e32bf616c5480c62e3535f9c1d0",
+      "started": "2026-11-15T06:23:37.338Z",
+      "finished": "2026-11-15T06:23:55.655Z",
+      "seconds": 18,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "sohei/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-master.json",
+      "sha256": "f6e196078c747d422f7dccd6392a680f1d1e69c8ceb90a3d67c4ca581df52fdf",
+      "started": "2026-11-15T06:14:34.930Z",
+      "finished": "2026-11-15T06:14:40.573Z",
+      "seconds": 6,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "sohei/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-nightmare.json",
+      "sha256": "1c48776849c0fc66cc1843542e9113a919e0c5e1da0d595b67384edbc9039b54",
+      "started": "2026-11-15T06:17:09.400Z",
+      "finished": "2026-11-15T06:17:34.521Z",
+      "seconds": 25,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "sohei/nightmare"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-normal.json",
+      "sha256": "46ebc8cfc717d1d1f3582fbba738076b3aeb0a2623dabdb8f6834dee83008c80",
+      "started": "2026-11-15T06:11:51.458Z",
+      "finished": "2026-11-15T06:11:57.157Z",
+      "seconds": 6,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "sohei/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-veryEasy.json",
+      "sha256": "c0bd1e075b87bc769398f5f8f7b727279274874b6d4c363214e9f97ca6ef5109",
+      "started": "2026-11-15T06:10:16.536Z",
+      "finished": "2026-11-15T06:10:17.198Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "sohei/veryEasy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-easy.json",
+      "sha256": "b75b4537b3bdbcc80d3c53a744005c5d3d7ec8f7706a1606b7a126e92e5b642d",
+      "started": "2026-11-15T06:12:54.321Z",
+      "finished": "2026-11-15T06:12:57.642Z",
+      "seconds": 3,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "wordoku/easy"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-expert.json",
+      "sha256": "1e9c4695b7e2ec9afe1d2da85c15b950e0911d0b06ab700e732076539f581cbb",
+      "started": "2026-11-15T06:10:39.421Z",
+      "finished": "2026-11-15T06:10:40.717Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "wordoku/expert"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-hard.json",
+      "sha256": "0e1e4146ecf956b3ebdc1356937043e3f744cf121a57266b077aa86328f11a01",
+      "started": "2026-11-15T06:10:23.630Z",
+      "finished": "2026-11-15T06:10:24.831Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "wordoku/hard"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-hell1.json",
+      "sha256": "35dbf107b25af620715c4abafa9b7d72cefa89bcb7fa5270bbe2076a3131bfb7",
+      "started": "2026-11-15T06:16:47.130Z",
+      "finished": "2026-11-15T06:17:09.150Z",
+      "seconds": 22,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "wordoku/hell1"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-hell2.json",
+      "sha256": "e1ee134bc3693c7f2055fd055a5087547a686944dcbcd8aab58615af0911e94a",
+      "started": "2026-11-15T06:14:07.135Z",
+      "finished": "2026-11-15T06:14:30.223Z",
+      "seconds": 23,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "wordoku/hell2"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-master.json",
+      "sha256": "8e7ba31ecf7c0ff44bf2306f40559fd1643aa59c8901769401f62308a2c13f85",
+      "started": "2026-11-15T06:11:59.852Z",
+      "finished": "2026-11-15T06:12:01.937Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "wordoku/master"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-nightmare.json",
+      "sha256": "93b7e8db0389d939bca592196f076eb5d0efc84f401352c0d4eace2e72b32f97",
+      "started": "2026-11-15T06:11:00.584Z",
+      "finished": "2026-11-15T06:11:02.853Z",
+      "seconds": 2,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "wordoku/nightmare"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-normal.json",
+      "sha256": "a298f8caa55bf6e89dff6bdf0a9a36216d2b86417fe6732fa2f449ab453e09f6",
+      "started": "2026-11-15T06:13:37.410Z",
+      "finished": "2026-11-15T06:13:43.982Z",
+      "seconds": 7,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "wordoku/normal"
+      ]
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-veryEasy.json",
+      "sha256": "a499bd8846f2f5cfbad389312139b84c12527f45627698e496657897a63bb7d8",
+      "started": "2026-11-15T06:09:50.880Z",
+      "finished": "2026-11-15T06:09:51.439Z",
+      "seconds": 1,
+      "engine": {
+        "sources": "029720df77c6c12a",
+        "commit": "8b70875",
+        "dirty": true
+      },
+      "cells": [
+        "wordoku/veryEasy"
+      ]
+    }
+  ],
+  "cells": [
+    {
+      "variant": "classic4",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 16,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 0.6845,
+        "p95": 8.6633,
+        "max": 11.1476,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic4",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 16,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 121.4547,
+        "p95": 176.0977,
+        "max": 176.0977,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic4",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 16,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 127.0888,
+        "p95": 190.0472,
+        "max": 190.0472,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-normal.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic4",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 16,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 160.8451,
+        "p95": 227.9193,
+        "max": 227.9193,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic4",
+      "level": "expert",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 16,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 190.9359,
+        "p95": 279.0539,
+        "max": 279.0539,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-expert.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic4",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 16,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 181.5134,
+        "p95": 297.6762,
+        "max": 297.6762,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic4",
+      "level": "nightmare",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 16,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 167.9247,
+        "p95": 237.9585,
+        "max": 237.9585,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-nightmare.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic4",
+      "level": "hell1",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 16,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 163.7308,
+        "p95": 327.5353,
+        "max": 327.5353,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-hell1.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic4",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 16,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 166.4789,
+        "p95": 279.3853,
+        "max": 279.3853,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic4-hell2.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic6",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 36,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 1.7289,
+        "p95": 13.9918,
+        "max": 14.6256,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic6",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 36,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 263.3677,
+        "p95": 332.6472,
+        "max": 332.6472,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic6",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 36,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 277.737,
+        "p95": 361.3252,
+        "max": 361.3252,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-normal.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic6",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 36,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 39,
+        "rate": 0.975,
+        "p50": 62.7998,
+        "p95": 328.0673,
+        "max": 406.7823,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 1,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic6",
+      "level": "expert",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 36,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 22,
+        "hits": 9,
+        "rate": 0.4090909090909091,
+        "p50": 301.4328,
+        "p95": 433.8423,
+        "max": 448.6905,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 13,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-expert.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic6",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 36,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 23,
+        "hits": 10,
+        "rate": 0.43478260869565216,
+        "p50": 365.2583,
+        "p95": 617.837,
+        "max": 621.6252,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 13,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic6",
+      "level": "nightmare",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 36,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 18,
+        "hits": 4,
+        "rate": 0.2222222222222222,
+        "p50": 527.9715,
+        "p95": 879.6172,
+        "max": 879.6172,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-nightmare.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic6",
+      "level": "hell1",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 36,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 697.8857,
+        "p95": 827.6247,
+        "max": 827.6247,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-hell1.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic6",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 36,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 631.6894,
+        "p95": 869.2817,
+        "max": 869.2817,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic6-hell2.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic9",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 2.6106,
+        "p95": 20.5973,
+        "max": 21.9858,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic9",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 178.6755,
+        "p95": 634.3738,
+        "max": 1029.764,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic9",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 36,
+        "rate": 0.9,
+        "p50": 339.8911,
+        "p95": 704.3026,
+        "max": 833.5802,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 4,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-normal.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic9",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 21.4375,
+        "p95": 180.0053,
+        "max": 203.7427,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic9",
+      "level": "expert",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 22.3528,
+        "p95": 245.6565,
+        "max": 496.0859,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-expert.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic9",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 70.5955,
+        "p95": 252.6853,
+        "max": 358.5794,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic9",
+      "level": "nightmare",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 139.8834,
+        "p95": 260.2526,
+        "max": 418.3807,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-nightmare.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic9",
+      "level": "hell1",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 6253.7096,
+        "p95": 8068.8312,
+        "max": 8068.8312,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-hell1.json",
+      "secondRound": false
+    },
+    {
+      "variant": "classic9",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 15,
+        "hits": 1,
+        "rate": 0.06666666666666667,
+        "p50": 5003.5349,
+        "p95": 5703.3744,
+        "max": 5703.3744,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/classic9-hell2.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega12",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 5.2813,
+        "p95": 26.7873,
+        "max": 29.3727,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega12",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 13.3283,
+        "p95": 51.1048,
+        "max": 54.1349,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega12",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 17.7166,
+        "p95": 63.5581,
+        "max": 110.0671,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-normal.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega12",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 38.1069,
+        "p95": 128.395,
+        "max": 168.1694,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega12",
+      "level": "expert",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 76.8771,
+        "p95": 1088.6281,
+        "max": 1429.8863,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-expert.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega12",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 81.5792,
+        "p95": 274.4858,
+        "max": 329.2034,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega12",
+      "level": "nightmare",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 185.5109,
+        "p95": 1048.8423,
+        "max": 1571.6586,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-nightmare.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega12",
+      "level": "hell1",
+      "status": "unexecuted",
+      "currentOffer": true,
+      "attemptsConfigured": 4,
+      "projectionSeconds": 556.1,
+      "projection": {
+        "meanRequestSeconds": 36.538377999999994,
+        "margin": 1.5,
+        "expansionPossible": false,
+        "basis": "pilot mean 36.538 s (n 1)",
+        "pooledEarlierHits": "0/8",
+        "pilot": {
+          "n": 1,
+          "hits": 0,
+          "meanMs": 36538.378,
+          "maxMs": 36538.3776,
+          "file": "pilot-mega12.json"
+        }
+      },
+      "reason": "projected 556 s > 450 s (S-AV27 rule: 1.5 x 36.5 s x (10) + 8 s; expansion excluded: 0 hits of 8 pooled, 95 % upper bound 0.31)",
+      "runs": []
+    },
+    {
+      "variant": "mega12",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 2113.9852,
+        "p95": 4803.7474,
+        "max": 7443.6382,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega12-hell2.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega16",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 256,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 10.8542,
+        "p95": 35.0351,
+        "max": 37.7846,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega16-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega16",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 256,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 17.3647,
+        "p95": 48.8003,
+        "max": 60.7582,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega16-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega16",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 256,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 35.6254,
+        "p95": 85.5561,
+        "max": 123.7027,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega16-normal.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega16",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 256,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 101.5783,
+        "p95": 389.3024,
+        "max": 775.3685,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega16-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega16",
+      "level": "expert",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 256,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 36,
+        "rate": 0.9,
+        "p50": 326.5488,
+        "p95": 9691.3799,
+        "max": 11096.4198,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 4,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega16-expert.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega16",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 256,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 398.5932,
+        "p95": 1337.1675,
+        "max": 1995.5029,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega16-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "mega16",
+      "level": "nightmare",
+      "status": "unexecuted",
+      "currentOffer": true,
+      "attemptsConfigured": 2,
+      "projectionSeconds": 1246.5,
+      "projection": {
+        "meanRequestSeconds": 11.7950625,
+        "margin": 1.5,
+        "expansionPossible": true,
+        "basis": "pilot mean 11.795 s (n 4)",
+        "pooledEarlierHits": "4/13",
+        "pilot": {
+          "n": 4,
+          "hits": 4,
+          "meanMs": 11795.0625,
+          "maxMs": 26456.7263,
+          "file": "pilot-mega16.json+pilotx-mega16.json"
+        }
+      },
+      "reason": "projected 1246 s > 450 s (S-AV27 rule: 1.5 x 11.8 s x (10 + 60) + 8 s; expansion not excluded: 4 hits of 13 pooled, 95 % upper bound 0.57)",
+      "runs": []
+    },
+    {
+      "variant": "mega16",
+      "level": "hell1",
+      "status": "unexecuted",
+      "currentOffer": true,
+      "attemptsConfigured": 2,
+      "projectionSeconds": 1808,
+      "projection": {
+        "meanRequestSeconds": 120.002253,
+        "margin": 1.5,
+        "expansionPossible": false,
+        "basis": "pilot mean 120.002 s (n 1)",
+        "pooledEarlierHits": "0/8",
+        "pilot": {
+          "n": 1,
+          "hits": 0,
+          "meanMs": 120002.253,
+          "maxMs": 120002.2526,
+          "file": "pilot-mega16.json"
+        }
+      },
+      "reason": "projected 1808 s > 450 s (S-AV27 rule: 1.5 x 120 s x (10) + 8 s; expansion excluded: 0 hits of 8 pooled, 95 % upper bound 0.31)",
+      "runs": []
+    },
+    {
+      "variant": "mega16",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 256,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 422.9359,
+        "p95": 1981.2335,
+        "max": 11881.0168,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/mega16-hell2.json",
+      "secondRound": false
+    },
+    {
+      "variant": "diagonalX",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 2.7828,
+        "p95": 17.7499,
+        "max": 20.0418,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "diagonalX",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 28,
+        "rate": 0.7,
+        "p50": 447.1579,
+        "p95": 1193.0665,
+        "max": 1237.1082,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 12,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "diagonalX",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 18.9152,
+        "p95": 160.1992,
+        "max": 206.6891,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-normal.json",
+      "secondRound": false
+    },
+    {
+      "variant": "diagonalX",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 10.2712,
+        "p95": 50.3353,
+        "max": 60.1565,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "diagonalX",
+      "level": "expert",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 38,
+        "rate": 0.95,
+        "p50": 534.1256,
+        "p95": 2775.1066,
+        "max": 3311.4157,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 2,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-expert.json",
+      "secondRound": false
+    },
+    {
+      "variant": "diagonalX",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 77.009,
+        "p95": 297.6504,
+        "max": 424.8536,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "diagonalX",
+      "level": "nightmare",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 344.6154,
+        "p95": 1217.8205,
+        "max": 2087.119,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-nightmare.json",
+      "secondRound": false
+    },
+    {
+      "variant": "diagonalX",
+      "level": "hell1",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 9,
+        "hits": 0,
+        "rate": 0,
+        "p50": 23783.1055,
+        "p95": 25908.98,
+        "max": 25908.98,
+        "verdict": "hidden",
+        "stopped": "time",
+        "errors": 0,
+        "approximate": 9,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-hell1.json",
+      "secondRound": false
+    },
+    {
+      "variant": "diagonalX",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 123.7854,
+        "p95": 1084.2887,
+        "max": 1268.5208,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/diagonalX-hell2.json",
+      "secondRound": false
+    },
+    {
+      "variant": "hyper",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 2.7237,
+        "p95": 17.038,
+        "max": 18.1948,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "hyper",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 29,
+        "rate": 0.725,
+        "p50": 645.955,
+        "p95": 1190.3268,
+        "max": 1325.6008,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 11,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "hyper",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 112.4487,
+        "p95": 430.5739,
+        "max": 781.4578,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-normal.json",
+      "secondRound": false
+    },
+    {
+      "variant": "hyper",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 14.3114,
+        "p95": 62.3007,
+        "max": 80.78,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "hyper",
+      "level": "expert",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 39,
+        "rate": 0.975,
+        "p50": 386.5806,
+        "p95": 1302.0979,
+        "max": 2103.4075,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 1,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-expert.json",
+      "secondRound": false
+    },
+    {
+      "variant": "hyper",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 83.7613,
+        "p95": 490.9145,
+        "max": 646.6406,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "hyper",
+      "level": "nightmare",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 222.0355,
+        "p95": 704.7394,
+        "max": 1387.2256,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-nightmare.json",
+      "secondRound": false
+    },
+    {
+      "variant": "hyper",
+      "level": "hell1",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 12,
+        "hits": 0,
+        "rate": 0,
+        "p50": 10524.4349,
+        "p95": 13110.6798,
+        "max": 13110.6798,
+        "verdict": "hidden",
+        "stopped": "time",
+        "errors": 0,
+        "approximate": 12,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-hell1.json",
+      "secondRound": false
+    },
+    {
+      "variant": "hyper",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 700.3477,
+        "p95": 1953.6391,
+        "max": 2405.7373,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/hyper-hell2.json",
+      "secondRound": false
+    },
+    {
+      "variant": "jigsaw9",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 15.264,
+        "p95": 56.7742,
+        "max": 68.4769,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "jigsaw9",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 72.6529,
+        "p95": 500.1699,
+        "max": 608.649,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "jigsaw9",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 49.9261,
+        "p95": 373.4864,
+        "max": 543.5495,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-normal.json",
+      "secondRound": false
+    },
+    {
+      "variant": "jigsaw9",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 23.8107,
+        "p95": 78.5979,
+        "max": 84.4834,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "jigsaw9",
+      "level": "expert",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 38,
+        "rate": 0.95,
+        "p50": 541.7271,
+        "p95": 2293.6759,
+        "max": 2628.6803,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 2,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-expert.json",
+      "secondRound": false
+    },
+    {
+      "variant": "jigsaw9",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 101.9424,
+        "p95": 232.0417,
+        "max": 291.3737,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "jigsaw9",
+      "level": "nightmare",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 210.1161,
+        "p95": 429.1703,
+        "max": 575.8116,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-nightmare.json",
+      "secondRound": false
+    },
+    {
+      "variant": "jigsaw9",
+      "level": "hell1",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 12,
+        "hits": 0,
+        "rate": 0,
+        "p50": 11083.1379,
+        "p95": 15497.9837,
+        "max": 15497.9837,
+        "verdict": "hidden",
+        "stopped": "time",
+        "errors": 0,
+        "approximate": 12,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-hell1.json",
+      "secondRound": false
+    },
+    {
+      "variant": "jigsaw9",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 739.6666,
+        "p95": 1963.483,
+        "max": 4263.3581,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/jigsaw9-hell2.json",
+      "secondRound": false
+    },
+    {
+      "variant": "killer",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 3.5306,
+        "p95": 24.5428,
+        "max": 26.6185,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/killer-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "killer",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 12.2313,
+        "p95": 35.9894,
+        "max": 66.2902,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/killer-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "killer",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 38,
+        "rate": 0.95,
+        "p50": 377.7334,
+        "p95": 1820.4773,
+        "max": 2276.997,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 2,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/killer-normal.json",
+      "secondRound": false
+    },
+    {
+      "variant": "killer",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 5355.1828,
+        "p95": 6577.5866,
+        "max": 6577.5866,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/killer-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "killer",
+      "level": "expert",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 1,
+        "rate": 0.07142857142857142,
+        "p50": 10242.6003,
+        "p95": 17772.56,
+        "max": 17772.56,
+        "verdict": "hidden",
+        "stopped": "time",
+        "errors": 0,
+        "approximate": 13,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/killer-expert.json",
+      "secondRound": false
+    },
+    {
+      "variant": "killer",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 13,
+        "hits": 5,
+        "rate": 0.38461538461538464,
+        "p50": 11792.4635,
+        "p95": 22781.1994,
+        "max": 22781.1994,
+        "verdict": "hidden",
+        "stopped": "time",
+        "errors": 0,
+        "approximate": 8,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/killer-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "killer",
+      "level": "nightmare",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 24,
+        "hits": 19,
+        "rate": 0.7916666666666666,
+        "p50": 4108.3294,
+        "p95": 24903.159,
+        "max": 33690.2868,
+        "verdict": "hidden",
+        "stopped": "time",
+        "errors": 0,
+        "approximate": 5,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/killer-nightmare.json",
+      "secondRound": false
+    },
+    {
+      "variant": "killer",
+      "level": "hell1",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 9,
+        "hits": 0,
+        "rate": 0,
+        "p50": 26065.9719,
+        "p95": 50222.1831,
+        "max": 50222.1831,
+        "verdict": "hidden",
+        "stopped": "time",
+        "errors": 0,
+        "approximate": 9,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/killer-hell1.json",
+      "secondRound": false
+    },
+    {
+      "variant": "killer",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 1544.857,
+        "p95": 6350.6309,
+        "max": 12065.2438,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/killer-hell2.json",
+      "secondRound": false
+    },
+    {
+      "variant": "greaterThan",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 26.6606,
+        "p95": 55.5271,
+        "max": 62.1361,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/greaterThan-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "greaterThan",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 37.2132,
+        "p95": 80.3751,
+        "max": 98.7032,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/greaterThan-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "greaterThan",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 1921.8997,
+        "p95": 9627.2607,
+        "max": 10301.3082,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/greaterThan-normal.json",
+      "secondRound": false
+    },
+    {
+      "variant": "greaterThan",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 225.6386,
+        "p95": 3226.4338,
+        "max": 11174.744,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/greaterThan-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "greaterThan",
+      "level": "expert",
+      "status": "unexecuted",
+      "currentOffer": true,
+      "attemptsConfigured": 8,
+      "projectionSeconds": 918.7,
+      "projection": {
+        "meanRequestSeconds": 8.673774,
+        "margin": 1.5,
+        "expansionPossible": true,
+        "basis": "pilot mean 8.674 s (n 2)",
+        "pooledEarlierHits": "1/2",
+        "pilot": {
+          "n": 2,
+          "hits": 1,
+          "meanMs": 8673.774,
+          "maxMs": 14976.3809,
+          "file": "pilot-greaterThan.json"
+        }
+      },
+      "reason": "projected 919 s > 450 s (S-AV27 rule: 1.5 x 8.67 s x (10 + 60) + 8 s; expansion not excluded: 1 hits of 2 pooled, 95 % upper bound 0.97)",
+      "runs": []
+    },
+    {
+      "variant": "greaterThan",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 744.3801,
+        "p95": 14477.7974,
+        "max": 18574.167,
+        "verdict": "hidden",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/greaterThan-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "greaterThan",
+      "level": "nightmare",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 1325.6525,
+        "p95": 5180.6206,
+        "max": 8845.1284,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/greaterThan-nightmare.json",
+      "secondRound": false
+    },
+    {
+      "variant": "greaterThan",
+      "level": "hell1",
+      "status": "unexecuted",
+      "currentOffer": true,
+      "attemptsConfigured": 8,
+      "projectionSeconds": 3956.9,
+      "projection": {
+        "meanRequestSeconds": 37.608898,
+        "margin": 1.5,
+        "expansionPossible": true,
+        "basis": "pilot mean 37.609 s (n 3)",
+        "pooledEarlierHits": "0/3",
+        "pilot": {
+          "n": 3,
+          "hits": 0,
+          "meanMs": 37608.898,
+          "maxMs": 40046.6068,
+          "file": "pilot-greaterThan.json"
+        }
+      },
+      "reason": "projected 3957 s > 450 s (S-AV27 rule: 1.5 x 37.6 s x (10 + 60) + 8 s; expansion not excluded: 0 hits of 3 pooled, 95 % upper bound 0.63)",
+      "runs": []
+    },
+    {
+      "variant": "greaterThan",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 855.5097,
+        "p95": 4457.0656,
+        "max": 6066.2676,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/greaterThan-hell2.json",
+      "secondRound": false
+    },
+    {
+      "variant": "samurai",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 369,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 16.1975,
+        "p95": 40.5694,
+        "max": 45.1746,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "samurai",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 369,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 22,
+        "hits": 10,
+        "rate": 0.45454545454545453,
+        "p50": 789.9433,
+        "p95": 992.2133,
+        "max": 1012.5398,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 12,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "samurai",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 369,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 250.9392,
+        "p95": 749.9177,
+        "max": 1755.1672,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-normal.json",
+      "secondRound": false
+    },
+    {
+      "variant": "samurai",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 369,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 136.5089,
+        "p95": 417.6467,
+        "max": 590.6263,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "samurai",
+      "level": "expert",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 369,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 245.3716,
+        "p95": 979.0716,
+        "max": 3286.5087,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-expert.json",
+      "secondRound": false
+    },
+    {
+      "variant": "samurai",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 369,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 698.3208,
+        "p95": 1667.8331,
+        "max": 2063.736,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "samurai",
+      "level": "nightmare",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 369,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 1829.8365,
+        "p95": 7557.6826,
+        "max": 9145.1911,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-nightmare.json",
+      "secondRound": false
+    },
+    {
+      "variant": "samurai",
+      "level": "hell1",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 369,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 28895.4861,
+        "p95": 37924.5819,
+        "max": 37924.5819,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-hell1.json",
+      "secondRound": false
+    },
+    {
+      "variant": "samurai",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 369,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 2711.2755,
+        "p95": 7881.3861,
+        "max": 10058.4488,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/samurai-hell2.json",
+      "secondRound": false
+    },
+    {
+      "variant": "sohei",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 288,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 12.031,
+        "p95": 40.8314,
+        "max": 42.3827,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "sohei",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 288,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 18,
+        "hits": 4,
+        "rate": 0.2222222222222222,
+        "p50": 627.3443,
+        "p95": 837.0448,
+        "max": 837.0448,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "sohei",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 288,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 39,
+        "rate": 0.975,
+        "p50": 226.5175,
+        "p95": 1509.1529,
+        "max": 2543.2229,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 1,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-normal.json",
+      "secondRound": false
+    },
+    {
+      "variant": "sohei",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 288,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 78.3805,
+        "p95": 387.5341,
+        "max": 701.2347,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "sohei",
+      "level": "expert",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 288,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 174.7616,
+        "p95": 1015.9722,
+        "max": 2600.7291,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-expert.json",
+      "secondRound": false
+    },
+    {
+      "variant": "sohei",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 288,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 324.3378,
+        "p95": 1164.0638,
+        "max": 4044.0432,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "sohei",
+      "level": "nightmare",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 288,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 1515.6056,
+        "p95": 7587.4785,
+        "max": 7961.5819,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-nightmare.json",
+      "secondRound": false
+    },
+    {
+      "variant": "sohei",
+      "level": "hell1",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 288,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 23382.4464,
+        "p95": 33125.7646,
+        "max": 33125.7646,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-hell1.json",
+      "secondRound": false
+    },
+    {
+      "variant": "sohei",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 288,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 1503.3298,
+        "p95": 3600.9487,
+        "max": 8357.3785,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/sohei-hell2.json",
+      "secondRound": false
+    },
+    {
+      "variant": "butterfly",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 6.5792,
+        "p95": 28.1371,
+        "max": 33.9556,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "butterfly",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 15,
+        "hits": 1,
+        "rate": 0.06666666666666667,
+        "p50": 871.9594,
+        "p95": 1110.1235,
+        "max": 1110.1235,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "butterfly",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 101.4041,
+        "p95": 791.2644,
+        "max": 823.5683,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-normal.json",
+      "secondRound": false
+    },
+    {
+      "variant": "butterfly",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 63.4733,
+        "p95": 197.4773,
+        "max": 260.7758,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "butterfly",
+      "level": "expert",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 39,
+        "rate": 0.975,
+        "p50": 252.6219,
+        "p95": 3096.4843,
+        "max": 4666.5471,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 1,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-expert.json",
+      "secondRound": false
+    },
+    {
+      "variant": "butterfly",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 193.9236,
+        "p95": 1032.3376,
+        "max": 1346.424,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "butterfly",
+      "level": "nightmare",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 537.1355,
+        "p95": 1970.4322,
+        "max": 4618.072,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-nightmare.json",
+      "secondRound": false
+    },
+    {
+      "variant": "butterfly",
+      "level": "hell1",
+      "status": "unexecuted",
+      "currentOffer": true,
+      "attemptsConfigured": 4,
+      "projectionSeconds": 4032.3,
+      "projection": {
+        "meanRequestSeconds": 38.326516000000005,
+        "margin": 1.5,
+        "expansionPossible": true,
+        "basis": "pilot mean 38.327 s (n 3)",
+        "pooledEarlierHits": "0/3",
+        "pilot": {
+          "n": 3,
+          "hits": 0,
+          "meanMs": 38326.516,
+          "maxMs": 39490.7707,
+          "file": "pilot-butterfly.json"
+        }
+      },
+      "reason": "projected 4032 s > 450 s (S-AV27 rule: 1.5 x 38.3 s x (10 + 60) + 8 s; expansion not excluded: 0 hits of 3 pooled, 95 % upper bound 0.63)",
+      "runs": []
+    },
+    {
+      "variant": "butterfly",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 144,
+      "budget": 30000,
+      "attempts": 4,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 1751.6261,
+        "p95": 5528.2554,
+        "max": 8948.5766,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/butterfly-hell2.json",
+      "secondRound": false
+    },
+    {
+      "variant": "flower",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 189,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 7.6657,
+        "p95": 31.3263,
+        "max": 33.544,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/flower-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "flower",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 189,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 646.2955,
+        "p95": 769.0599,
+        "max": 769.0599,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/flower-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "flower",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 189,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 134.6078,
+        "p95": 811.6067,
+        "max": 1605.2805,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/flower-normal.json",
+      "secondRound": false
+    },
+    {
+      "variant": "flower",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 189,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 150.537,
+        "p95": 435.7031,
+        "max": 2082.5537,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/flower-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "flower",
+      "level": "expert",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 189,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 35,
+        "hits": 23,
+        "rate": 0.6571428571428571,
+        "p50": 1416.0352,
+        "p95": 4161.089,
+        "max": 4546.9837,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 12,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/flower-expert.json",
+      "secondRound": false
+    },
+    {
+      "variant": "flower",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 189,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 29,
+        "rate": 0.725,
+        "p50": 715.7551,
+        "p95": 1643.6338,
+        "max": 2003.6933,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 11,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/flower-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "flower",
+      "level": "nightmare",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 189,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 1898.6272,
+        "p95": 5917.4741,
+        "max": 8473.5778,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/flower-nightmare.json",
+      "secondRound": false
+    },
+    {
+      "variant": "flower",
+      "level": "hell1",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 189,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 24208.2065,
+        "p95": 27428.9382,
+        "max": 27428.9382,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/flower-hell1.json",
+      "secondRound": false
+    },
+    {
+      "variant": "flower",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 189,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 1665.7254,
+        "p95": 4086.7311,
+        "max": 10020.1686,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/flower-hell2.json",
+      "secondRound": false
+    },
+    {
+      "variant": "wordoku",
+      "level": "veryEasy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 3.4861,
+        "p95": 19.4321,
+        "max": 21.6532,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-veryEasy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "wordoku",
+      "level": "easy",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 155.8306,
+        "p95": 734.3432,
+        "max": 1078.4752,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-easy.json",
+      "secondRound": false
+    },
+    {
+      "variant": "wordoku",
+      "level": "normal",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 46,
+        "hits": 35,
+        "rate": 0.7608695652173914,
+        "p50": 328.2296,
+        "p95": 814.3005,
+        "max": 1100.5973,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 11,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-normal.json",
+      "secondRound": true
+    },
+    {
+      "variant": "wordoku",
+      "level": "hard",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 17.8908,
+        "p95": 201.5921,
+        "max": 472.963,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-hard.json",
+      "secondRound": false
+    },
+    {
+      "variant": "wordoku",
+      "level": "expert",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 34.5417,
+        "p95": 246.9194,
+        "max": 330.4414,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-expert.json",
+      "secondRound": false
+    },
+    {
+      "variant": "wordoku",
+      "level": "master",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 79.3959,
+        "p95": 221.978,
+        "max": 929.2224,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-master.json",
+      "secondRound": false
+    },
+    {
+      "variant": "wordoku",
+      "level": "nightmare",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 40,
+        "hits": 40,
+        "rate": 1,
+        "p50": 105.5012,
+        "p95": 444.2675,
+        "max": 517.3865,
+        "verdict": "offered",
+        "stopped": null,
+        "errors": 0,
+        "approximate": 0,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-nightmare.json",
+      "secondRound": false
+    },
+    {
+      "variant": "wordoku",
+      "level": "hell1",
+      "status": "executed",
+      "currentOffer": true,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 14,
+        "hits": 0,
+        "rate": 0,
+        "p50": 5545.8348,
+        "p95": 8060.5464,
+        "max": 8060.5464,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-hell1.json",
+      "secondRound": false
+    },
+    {
+      "variant": "wordoku",
+      "level": "hell2",
+      "status": "executed",
+      "currentOffer": false,
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {
+        "n": 18,
+        "hits": 4,
+        "rate": 0.2222222222222222,
+        "p50": 4937.2571,
+        "p95": 6761.8617,
+        "max": 6761.8617,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "errors": 0,
+        "approximate": 14,
+        "invalid": 0
+      },
+      "shard": "docs/difficulty-v3/evidence/MS07e/qualification/wordoku-hell2.json",
+      "secondRound": false
+    }
+  ],
+  "observedOffersOfExecutedCells": {
+    "classic4": [
+      "veryEasy"
+    ],
+    "classic6": [
+      "veryEasy",
+      "hard"
+    ],
+    "classic9": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare"
+    ],
+    "mega12": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "mega16": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "hell2"
+    ],
+    "diagonalX": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "hyper": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "jigsaw9": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "killer": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hell2"
+    ],
+    "greaterThan": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "nightmare",
+      "hell2"
+    ],
+    "samurai": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "sohei": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "butterfly": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "flower": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "nightmare",
+      "hell2"
+    ],
+    "wordoku": [
+      "veryEasy",
+      "easy",
+      "hard",
+      "expert",
+      "master",
+      "nightmare"
+    ]
+  },
+  "offersDiffer": [
+    "classic9/hell1: observed hidden, current offered",
+    "mega12/hell1: no verdict (unexecuted), current offered",
+    "mega16/nightmare: no verdict (unexecuted), current offered",
+    "mega16/hell1: no verdict (unexecuted), current offered",
+    "diagonalX/easy: observed hidden, current offered",
+    "diagonalX/hell1: observed hidden, current offered",
+    "hyper/easy: observed hidden, current offered",
+    "hyper/hell1: observed hidden, current offered",
+    "jigsaw9/hell1: observed hidden, current offered",
+    "killer/hard: observed hidden, current offered",
+    "killer/expert: observed hidden, current offered",
+    "killer/master: observed hidden, current offered",
+    "killer/nightmare: observed hidden, current offered",
+    "killer/hell1: observed hidden, current offered",
+    "greaterThan/expert: no verdict (unexecuted), current offered",
+    "greaterThan/master: observed hidden, current offered",
+    "greaterThan/hell1: no verdict (unexecuted), current offered",
+    "samurai/easy: observed hidden, current offered",
+    "samurai/hell1: observed hidden, current offered",
+    "sohei/easy: observed hidden, current offered",
+    "sohei/hell1: observed hidden, current offered",
+    "butterfly/easy: observed hidden, current offered",
+    "butterfly/hell1: no verdict (unexecuted), current offered",
+    "flower/easy: observed hidden, current offered",
+    "flower/expert: observed hidden, current offered",
+    "flower/master: observed hidden, current offered",
+    "flower/hell1: observed hidden, current offered",
+    "wordoku/normal: observed hidden, current offered",
+    "wordoku/hell1: observed hidden, current offered"
+  ]
+}

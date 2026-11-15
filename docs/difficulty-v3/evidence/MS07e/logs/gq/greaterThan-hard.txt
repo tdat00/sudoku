@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=greaterThan --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-hard.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+greaterThan/hard: 40/40 hits, p95 3.23 s (budget 10.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| greaterThan | hard | 40 | 40 | 100 % | 226 ms | 3.23 s | 11.2 s | 10.0 s | offered |
+
+greaterThan: ["hard"]
+exit=0 seconds=15.726

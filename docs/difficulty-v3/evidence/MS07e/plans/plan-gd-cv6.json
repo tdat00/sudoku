@@ -1,0 +1,35 @@
+[
+  {
+    "id": "gd-greaterThan-nightmare-cv6",
+    "phase": "gd",
+    "label": "greaterThan Nightmare CV6 margin (existing selector, SA1 IR66 handoff)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=greater-than",
+      "--filter=> nightmare: 10 puzzles > CV6:",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\greaterThan-nightmare-cv6.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-greaterThan-nightmare-cv6.txt",
+    "allowExit1": true,
+    "projectionSeconds": 170,
+    "projectionBasis": "MS05b3 I5 greaterThan nightmare, 10 puzzles, 75.2 s at the old source (labelled) x 2 + 20 s = 170 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\greaterThan-nightmare-cv6.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-greaterThan-nightmare-cv6.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=greater-than",
+        "--filter=> nightmare: 10 puzzles > CV6:",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\greaterThan-nightmare-cv6.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\greaterThan-nightmare-cv6.json",
+      "expectTotal": 1
+    }
+  }
+]

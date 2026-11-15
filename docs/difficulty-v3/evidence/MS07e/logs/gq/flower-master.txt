@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=flower --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-master.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+flower/master: 29/40 hits, p95 1.64 s (budget 30.0 s), hidden (stopped: misses)
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| flower | master | 40 | 29 | 73 % | 716 ms | 1.64 s | 2.00 s | 30.0 s | hidden (stopped: misses) |
+
+flower: []
+exit=0 seconds=9.272

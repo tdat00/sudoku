@@ -1,0 +1,35 @@
+[
+  {
+    "id": "gd-confusion-matrix",
+    "phase": "gd",
+    "label": "classic9 confusion matrix (reads the batches of all eight levels)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=is a confusion matrix",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\confusion-matrix.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-confusion-matrix.txt",
+    "allowExit1": true,
+    "projectionSeconds": 254,
+    "projectionBasis": "MEASURED batch seconds of this run (first test of each level shard: veryEasy 0.1, easy 23.3, normal 29.8, hard 2.8, expert 2.9, master 7.5, nightmare 16.5, hell1 111.7 = 194.6 s; the batches are generated again in one process) x 1.25 + 10 s = 254 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\confusion-matrix.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-confusion-matrix.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=is a confusion matrix",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\confusion-matrix.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\confusion-matrix.json",
+      "expectTotal": 1
+    }
+  }
+]

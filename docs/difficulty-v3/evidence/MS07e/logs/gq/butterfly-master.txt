@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=butterfly --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-master.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+butterfly/master: 40/40 hits, p95 1.03 s (budget 30.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| butterfly | master | 40 | 40 | 100 % | 194 ms | 1.03 s | 1.35 s | 30.0 s | offered |
+
+butterfly: ["master"]
+exit=0 seconds=4.448

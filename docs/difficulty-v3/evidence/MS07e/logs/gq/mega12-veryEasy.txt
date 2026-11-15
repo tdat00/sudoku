@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=mega12 --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-veryEasy.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+mega12/veryEasy: 40/40 hits, p95 27 ms (budget 30.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| mega12 | veryEasy | 40 | 40 | 100 % | 5 ms | 27 ms | 29 ms | 30.0 s | offered |
+
+mega12: ["veryEasy"]
+exit=0 seconds=0.739

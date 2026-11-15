@@ -1,0 +1,164 @@
+{
+  "schema": 1,
+  "kind": "ms07e-projection-pilot",
+  "task": "MS07e",
+  "argv": [
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-jigsaw9.json",
+    "--cells=jigsaw9/expert:2,jigsaw9/nightmare:3,jigsaw9/hell1:3",
+    "--budget-seconds=420"
+  ],
+  "startedAt": "2026-11-15T04:54:02.547Z",
+  "identity": {
+    "sourceHash": "09f91d6db3fa3373307fed4bf175e9d48ce6cf0c0b98eccec1386dda7cb35ed9",
+    "node": "v26.13.0",
+    "commit": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "dirty": false
+  },
+  "machine": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64
+  },
+  "call": "SG.pipeline.run({ variantId, difficulty, seed, trace: \"off\" }, null, SG.budget.create({ ms: 120000 })), serial, one process; seed = FNV-1a(\"variant/level/index\") on 20260601 (qualify.js seedFor); no maxAttempts",
+  "budgetSeconds": 420,
+  "cells": {
+    "jigsaw9/expert": {
+      "variant": "jigsaw9",
+      "level": "expert",
+      "asked": 2,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 1016757700,
+          "hit": true,
+          "ms": 123.386,
+          "achieved": "expert",
+          "score": 977,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 1033535319,
+          "hit": true,
+          "ms": 560.3738,
+          "achieved": "expert",
+          "score": 968,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        }
+      ],
+      "n": 2,
+      "hits": 2,
+      "meanMs": 341.88,
+      "maxMs": 560.3738
+    },
+    "jigsaw9/nightmare": {
+      "variant": "jigsaw9",
+      "level": "nightmare",
+      "asked": 3,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 582286619,
+          "hit": true,
+          "ms": 140.6136,
+          "achieved": "nightmare",
+          "score": 2240,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 565509000,
+          "hit": true,
+          "ms": 327.0677,
+          "achieved": "nightmare",
+          "score": 2302,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 615841857,
+          "hit": true,
+          "ms": 153.9929,
+          "achieved": "nightmare",
+          "score": 2223,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 3,
+      "meanMs": 207.225,
+      "maxMs": 327.0677
+    },
+    "jigsaw9/hell1": {
+      "variant": "jigsaw9",
+      "level": "hell1",
+      "asked": 3,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 3066296848,
+          "hit": false,
+          "ms": 15265.5901,
+          "achieved": "hell1",
+          "score": 2590,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 3083074467,
+          "hit": false,
+          "ms": 9381.3536,
+          "achieved": "hell1",
+          "score": 2935,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 3099852086,
+          "hit": false,
+          "ms": 14427.1496,
+          "achieved": "hell1",
+          "score": 3343,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 0,
+      "meanMs": 13024.698,
+      "maxMs": 15265.5901
+    }
+  },
+  "notReached": [],
+  "correctness": [],
+  "endedAt": "2026-11-15T04:54:42.933Z",
+  "seconds": 40.385
+}

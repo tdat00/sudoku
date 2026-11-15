@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=mega12 --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-expert.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+mega12/expert: 40/40 hits, p95 1.09 s (budget 30.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| mega12 | expert | 40 | 40 | 100 % | 77 ms | 1.09 s | 1.43 s | 30.0 s | offered |
+
+mega12: ["expert"]
+exit=0 seconds=2.601

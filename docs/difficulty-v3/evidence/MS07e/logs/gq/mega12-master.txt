@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=mega12 --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-master.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+mega12/master: 40/40 hits, p95 274 ms (budget 30.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| mega12 | master | 40 | 40 | 100 % | 82 ms | 274 ms | 329 ms | 30.0 s | offered |
+
+mega12: ["master"]
+exit=0 seconds=1.776

@@ -1,0 +1,106 @@
+[
+  {
+    "id": "quick-shared-small",
+    "phase": "quick",
+    "label": "Generator quick group shared-small",
+    "args": [
+      "..\\.github\\scripts\\generator-quick.js",
+      "run",
+      "shared-small",
+      "--results-dir=..\\docs\\difficulty-v3\\evidence\\MS07e\\quick"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\quick\\log-shared-small.txt",
+    "allowExit1": true,
+    "projectionSeconds": 98,
+    "projectionBasis": "MEASURED at MS07d, same sources and tests (70.3 s) x 1.25 + 10 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\quick\\log-shared-small.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\quick-failed"
+  },
+  {
+    "id": "quick-own-suites",
+    "phase": "quick",
+    "label": "Generator quick group own-suites",
+    "args": [
+      "..\\.github\\scripts\\generator-quick.js",
+      "run",
+      "own-suites",
+      "--results-dir=..\\docs\\difficulty-v3\\evidence\\MS07e\\quick"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\quick\\log-own-suites.txt",
+    "allowExit1": true,
+    "projectionSeconds": 220,
+    "projectionBasis": "MEASURED at MS07d, same sources and tests (168 s) x 1.25 + 10 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\quick\\log-own-suites.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\quick-failed"
+  },
+  {
+    "id": "quick-pipeline",
+    "phase": "quick",
+    "label": "Generator quick group pipeline",
+    "args": [
+      "..\\.github\\scripts\\generator-quick.js",
+      "run",
+      "pipeline",
+      "--results-dir=..\\docs\\difficulty-v3\\evidence\\MS07e\\quick"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\quick\\log-pipeline.txt",
+    "allowExit1": true,
+    "projectionSeconds": 397,
+    "projectionBasis": "MEASURED at MS07d, same sources and tests (309.5 s) x 1.25 + 10 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\quick\\log-pipeline.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\quick-failed"
+  },
+  {
+    "id": "quick-replay-player",
+    "phase": "quick",
+    "label": "Generator quick group replay-player",
+    "args": [
+      "..\\.github\\scripts\\generator-quick.js",
+      "run",
+      "replay-player",
+      "--results-dir=..\\docs\\difficulty-v3\\evidence\\MS07e\\quick"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\quick\\log-replay-player.txt",
+    "allowExit1": true,
+    "projectionSeconds": 179,
+    "projectionBasis": "MEASURED at MS07d, same sources and tests (134.8 s) x 1.25 + 10 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\quick\\log-replay-player.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\quick-failed"
+  },
+  {
+    "id": "quick-player",
+    "phase": "quick",
+    "label": "Player quick set",
+    "cwd": "player",
+    "args": [
+      "tests\\node-runner.js",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\quick\\player-quick.json"
+    ],
+    "tee": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\quick\\log-player-quick.txt",
+    "allowExit1": true,
+    "projectionSeconds": 52,
+    "projectionBasis": "MEASURED at MS07d (33.4 s) x 1.25 + 10 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\quick\\log-player-quick.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\quick-failed"
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "9e39c6e85b802e7570774e2cdab2d2132aaaa952c0629b3f2d584eb864065a6c",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > difficulty: the Difficulty Score table (section 5.6)","exact":null,"count":4},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 220.1,
+  "results": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 31,
+    "tests": [
+      {"suite":"difficulty","name":"shares the score among the rows exactly: the hardest row also carries P, the empty cells V","fullName":"difficulty > difficulty: the Difficulty Score table (section 5.6) > shares the score among the rows exactly: the hardest row also carries P, the empty cells V","status":"pass","ms":1.163,"reason":"","error":null,"ordinal":46},
+      {"suite":"difficulty","name":"rounds the shares once, to whole numbers that add up to the score (the worked example)","fullName":"difficulty > difficulty: the Difficulty Score table (section 5.6) > rounds the shares once, to whole numbers that add up to the score (the worked example)","status":"pass","ms":0.497,"reason":"","error":null,"ordinal":47},
+      {"suite":"difficulty","name":"adds up to the score for any counts, also without empty cells or without techniques","fullName":"difficulty > difficulty: the Difficulty Score table (section 5.6) > adds up to the score for any counts, also without empty cells or without techniques","status":"pass","ms":28.179,"reason":"","error":null,"ordinal":48},
+      {"suite":"difficulty","name":"exposes the exact numbers behind every whole number of the table","fullName":"difficulty > difficulty: the Difficulty Score table (section 5.6) > exposes the exact numbers behind every whole number of the table","status":"pass","ms":0.222,"reason":"","error":null,"ordinal":49}
+    ],
+    "suites": [
+      {"name":"difficulty","total":4,"passed":4,"failed":0,"skipped":0,"ms":30.879}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > difficulty: the Difficulty Score table (section 5.6)","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\score-table.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

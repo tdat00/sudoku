@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=sohei --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-expert.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+sohei/expert: 40/40 hits, p95 1.02 s (budget 30.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| sohei | expert | 40 | 40 | 100 % | 175 ms | 1.02 s | 2.60 s | 30.0 s | offered |
+
+sohei: ["expert"]
+exit=0 seconds=4.985

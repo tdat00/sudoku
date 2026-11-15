@@ -1,0 +1,43 @@
+{
+  "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+  "seedBase": 20260601,
+  "machine": {"cpu":"AMD EPYC 7763 64-Core Processor","logicalProcessors":16,"memoryGb":64,"platform":"win32 10.0.26300","node":"v26.13.0","jobs":4},
+  "engine": {"sources":"029720df77c6c12a","commit":"8b70875","dirty":true},
+  "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+  "acceptance": "canonical-required-tier",
+  "ratingVersion": 2,
+  "probe": 0,
+  "earlyStop": true,
+  "guardMs": 120000,
+  "attemptPolicy": {"function":"SG.digger.defaultMaxAttempts","explicitMaxAttempts":false,"sources":{"js/engine/digger.js":"c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786","js/engine/pipeline.js":"b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1","js/variants/registry.js":"967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"}},
+  "started": "2026-11-15T06:51:44.411Z",
+  "finished": "2026-11-15T06:53:32.666Z",
+  "seconds": 108,
+  "cells": [
+    {
+      "variant": "samurai",
+      "level": "hell1",
+      "cellCount": 369,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {"n":14,"hits":0,"rate":0,"p50":28895.4861,"p95":37924.5819,"max":37924.5819,"verdict":"hidden","stopped":"misses","errors":0,"approximate":14,"invalid":0},
+      "requests": [
+        {"key":"samurai/hell1","index":0,"seed":2465926200,"hit":false,"ms":22096.2114,"achieved":"hell1","score":3240,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/hell1","index":1,"seed":2482703819,"hit":false,"ms":23617.0171,"achieved":"hell1","score":3336,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/hell1","index":2,"seed":2499481438,"hit":false,"ms":26309.5348,"achieved":"hell1","score":3484,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/hell1","index":3,"seed":2516259057,"hit":false,"ms":37924.5819,"achieved":"hell1","score":3554,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/hell1","index":4,"seed":2533036676,"hit":false,"ms":30782.2763,"achieved":"hell1","score":2631,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/hell1","index":5,"seed":2549814295,"hit":false,"ms":29917.8664,"achieved":"hell1","score":3415,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/hell1","index":6,"seed":2566591914,"hit":false,"ms":33363.1031,"achieved":"hell1","score":3098,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/hell1","index":7,"seed":2583369533,"hit":false,"ms":30196.0674,"achieved":"hell1","score":3193,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/hell1","index":8,"seed":2331705248,"hit":false,"ms":25669.1603,"achieved":"hell1","score":2676,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/hell1","index":9,"seed":2348482867,"hit":false,"ms":32094.2558,"achieved":"hell1","score":3591,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/hell1","index":10,"seed":4013359649,"hit":false,"ms":27518.5627,"achieved":"hell1","score":3562,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/hell1","index":11,"seed":3996582030,"hit":false,"ms":31186.4706,"achieved":"hell1","score":3564,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/hell1","index":12,"seed":3979804411,"hit":false,"ms":28895.4861,"achieved":"hell1","score":2633,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/hell1","index":13,"seed":3963026792,"hit":false,"ms":22128.5324,"achieved":"hell1","score":2890,"solved":true,"approximate":true,"exact":false,"valid":true}
+      ]
+    }
+  ],
+  "support": {"samurai":[]}
+}

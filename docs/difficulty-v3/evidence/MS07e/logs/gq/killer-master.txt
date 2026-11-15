@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=killer --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-master.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+killer/master: 5/13 hits, p95 22.8 s (budget 10.0 s), hidden (stopped: time)
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| killer | master | 13 | 5 | 38 % | 11.8 s | 22.8 s | 22.8 s | 10.0 s | hidden (stopped: time) |
+
+killer: []
+exit=0 seconds=41.834

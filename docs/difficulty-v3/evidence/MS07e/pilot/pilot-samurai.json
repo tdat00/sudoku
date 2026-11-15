@@ -1,0 +1,188 @@
+{
+  "schema": 1,
+  "kind": "ms07e-projection-pilot",
+  "task": "MS07e",
+  "argv": [
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-samurai.json",
+    "--cells=samurai/normal:3,samurai/nightmare:2,samurai/hell1:2,samurai/hell2:2",
+    "--budget-seconds=420"
+  ],
+  "startedAt": "2026-11-15T05:08:39.701Z",
+  "identity": {
+    "sourceHash": "09f91d6db3fa3373307fed4bf175e9d48ce6cf0c0b98eccec1386dda7cb35ed9",
+    "node": "v26.13.0",
+    "commit": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "dirty": false
+  },
+  "machine": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64
+  },
+  "call": "SG.pipeline.run({ variantId, difficulty, seed, trace: \"off\" }, null, SG.budget.create({ ms: 120000 })), serial, one process; seed = FNV-1a(\"variant/level/index\") on 20260601 (qualify.js seedFor); no maxAttempts",
+  "budgetSeconds": 420,
+  "cells": {
+    "samurai/normal": {
+      "variant": "samurai",
+      "level": "normal",
+      "asked": 3,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 3123632483,
+          "hit": true,
+          "ms": 256.95,
+          "achieved": "normal",
+          "score": 292,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 3106854864,
+          "hit": true,
+          "ms": 86.6644,
+          "achieved": "normal",
+          "score": 284,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 3157187721,
+          "hit": true,
+          "ms": 50.6843,
+          "achieved": "normal",
+          "score": 373,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 3,
+      "meanMs": 131.433,
+      "maxMs": 256.95
+    },
+    "samurai/nightmare": {
+      "variant": "samurai",
+      "level": "nightmare",
+      "asked": 2,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 1199179411,
+          "hit": true,
+          "ms": 2196.7964,
+          "achieved": "nightmare",
+          "score": 2376,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 1182401792,
+          "hit": true,
+          "ms": 3000.8617,
+          "achieved": "nightmare",
+          "score": 2226,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        }
+      ],
+      "n": 2,
+      "hits": 2,
+      "meanMs": 2598.829,
+      "maxMs": 3000.8617
+    },
+    "samurai/hell1": {
+      "variant": "samurai",
+      "level": "hell1",
+      "asked": 2,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 2465926200,
+          "hit": false,
+          "ms": 21341.3274,
+          "achieved": "hell1",
+          "score": 3240,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 2482703819,
+          "hit": false,
+          "ms": 22290.7476,
+          "achieved": "hell1",
+          "score": 3336,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 2,
+      "hits": 0,
+      "meanMs": 21816.038,
+      "maxMs": 22290.7476
+    },
+    "samurai/hell2": {
+      "variant": "samurai",
+      "level": "hell2",
+      "asked": 2,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 231936877,
+          "hit": true,
+          "ms": 7412.4774,
+          "achieved": "hell2",
+          "score": 3869,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 215159258,
+          "hit": true,
+          "ms": 2345.6615,
+          "achieved": "hell2",
+          "score": 4320,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        }
+      ],
+      "n": 2,
+      "hits": 2,
+      "meanMs": 4879.069,
+      "maxMs": 7412.4774
+    }
+  },
+  "notReached": [],
+  "correctness": [],
+  "endedAt": "2026-11-15T05:09:38.720Z",
+  "seconds": 59.017
+}

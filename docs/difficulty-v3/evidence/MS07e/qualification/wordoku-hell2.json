@@ -1,0 +1,47 @@
+{
+  "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+  "seedBase": 20260601,
+  "machine": {"cpu":"AMD EPYC 7763 64-Core Processor","logicalProcessors":16,"memoryGb":64,"platform":"win32 10.0.26300","node":"v26.13.0","jobs":4},
+  "engine": {"sources":"029720df77c6c12a","commit":"8b70875","dirty":true},
+  "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+  "acceptance": "canonical-required-tier",
+  "ratingVersion": 2,
+  "probe": 0,
+  "earlyStop": true,
+  "guardMs": 120000,
+  "attemptPolicy": {"function":"SG.digger.defaultMaxAttempts","explicitMaxAttempts":false,"sources":{"js/engine/digger.js":"c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786","js/engine/pipeline.js":"b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1","js/variants/registry.js":"967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"}},
+  "started": "2026-11-15T06:14:07.135Z",
+  "finished": "2026-11-15T06:14:30.223Z",
+  "seconds": 23,
+  "cells": [
+    {
+      "variant": "wordoku",
+      "level": "hell2",
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {"n":18,"hits":4,"rate":0.2222222222222222,"p50":4937.2571,"p95":6761.8617,"max":6761.8617,"verdict":"hidden","stopped":"misses","errors":0,"approximate":14,"invalid":0},
+      "requests": [
+        {"key":"wordoku/hell2","index":0,"seed":1829662094,"hit":false,"ms":4946.1046,"achieved":"hell1","score":3481,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":1,"seed":1846439713,"hit":false,"ms":4937.2571,"achieved":"hell1","score":3502,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":2,"seed":1796106856,"hit":false,"ms":6761.8617,"achieved":"hell1","score":3592,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":3,"seed":1812884475,"hit":true,"ms":5715.9722,"achieved":"hell2","score":3609,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"wordoku/hell2","index":4,"seed":1896772570,"hit":false,"ms":5296.5414,"achieved":"hell1","score":3514,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":5,"seed":1913550189,"hit":true,"ms":2622.1345,"achieved":"hell2","score":3646,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"wordoku/hell2","index":6,"seed":1863217332,"hit":false,"ms":4336.9551,"achieved":"hell1","score":3475,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":7,"seed":1879994951,"hit":false,"ms":5093.9961,"achieved":"hell1","score":3448,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":8,"seed":1695441142,"hit":true,"ms":5438.3688,"achieved":"hell2","score":3777,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"wordoku/hell2","index":9,"seed":1712218761,"hit":true,"ms":1112.6405,"achieved":"hell2","score":3618,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"wordoku/hell2","index":10,"seed":1371068355,"hit":false,"ms":4585.4356,"achieved":"hell1","score":3115,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":11,"seed":1354290736,"hit":false,"ms":5633.555,"achieved":"hell1","score":3552,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":12,"seed":1404623593,"hit":false,"ms":4515.2964,"achieved":"hell1","score":3300,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":13,"seed":1387845974,"hit":false,"ms":5164.1742,"achieved":"hell1","score":3586,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":14,"seed":1438178831,"hit":false,"ms":4677.9114,"achieved":"hell1","score":3442,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":15,"seed":1421401212,"hit":false,"ms":5615.1699,"achieved":"hell1","score":3342,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":16,"seed":1471734069,"hit":false,"ms":4387.7456,"achieved":"hell1","score":3125,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":17,"seed":1454956450,"hit":false,"ms":4420.1794,"achieved":"hell1","score":3483,"solved":true,"approximate":true,"exact":false,"valid":true}
+      ]
+    }
+  ],
+  "support": {"wordoku":[]}
+}

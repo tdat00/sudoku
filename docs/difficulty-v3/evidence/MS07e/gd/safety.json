@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "9e39c6e85b802e7570774e2cdab2d2132aaaa952c0629b3f2d584eb864065a6c",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > digger.generate: safety net against a technique bug (risk R3)","exact":null,"count":3},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 4944.9,
+  "results": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 4754.2,
+    "tests": [
+      {"suite":"difficulty","name":"never returns an ambiguous puzzle, reports the bug and still delivers a unique puzzle","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > never returns an ambiguous puzzle, reports the bug and still delivers a unique puzzle","status":"pass","ms":96.441,"reason":"","error":null,"ordinal":151},
+      {"suite":"difficulty","name":"digLevel marks the puzzle it had to replace","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > digLevel marks the puzzle it had to replace","status":"pass","ms":73.645,"reason":"","error":null,"ordinal":152},
+      {"suite":"difficulty","name":"never returns an ambiguous candidate of a search either: the keeper counts before it keeps","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > never returns an ambiguous candidate of a search either: the keeper counts before it keeps","status":"pass","ms":4583.344,"reason":"","error":null,"ordinal":153}
+    ],
+    "suites": [
+      {"name":"difficulty","total":3,"passed":3,"failed":0,"skipped":0,"ms":4754.09}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > digger.generate: safety net against a technique bug (risk R3)","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\safety.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

@@ -1,0 +1,728 @@
+[
+  {
+    "id": "gd-classic9-nightmare",
+    "phase": "gd",
+    "label": "classic9 nightmare batch (100 requests)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > nightmare >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-nightmare.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-nightmare.txt",
+    "allowExit1": true,
+    "projectionSeconds": 33,
+    "projectionBasis": "MEASURED same-seed pilot (gd/pilot.json, 8 requests, mean 111.3 ms, max 238.2 ms, 8 of 8 exact) x 100 requests x 2 (conservative margin) + 10 s for the checks and the start-up = 33 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-nightmare.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=time) > nightmare >",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-nightmare.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-nightmare.json",
+      "expectTotal": 8
+    }
+  },
+  {
+    "id": "gd-classic9-hell1",
+    "phase": "gd",
+    "label": "classic9 hell1 batch (20 requests)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > hell1 >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-hell1.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-hell1.txt",
+    "allowExit1": true,
+    "projectionSeconds": 248,
+    "projectionBasis": "MEASURED same-seed pilot (gd/pilot.json, 8 requests, mean 5932.7 ms, max 6568.0 ms, 0 of 8 exact) x 20 requests x 2 (conservative margin) + 10 s for the checks and the start-up = 248 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-hell1.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=time) > hell1 >",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-hell1.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-hell1.json",
+      "expectTotal": 8
+    }
+  },
+  {
+    "id": "gd-classic9-veryEasy",
+    "phase": "gd",
+    "label": "classic9 veryEasy batch (100 requests)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > veryEasy >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-veryEasy.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-veryEasy.txt",
+    "allowExit1": true,
+    "projectionSeconds": 11,
+    "projectionBasis": "MEASURED same-seed pilot (gd/pilot.json, 8 requests, mean 2.6 ms, max 10.6 ms, 8 of 8 exact) x 100 requests x 2 (conservative margin) + 10 s for the checks and the start-up = 11 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-veryEasy.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=time) > veryEasy >",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-veryEasy.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-veryEasy.json",
+      "expectTotal": 8
+    }
+  },
+  {
+    "id": "gd-classic9-easy",
+    "phase": "gd",
+    "label": "classic9 easy batch (100 requests)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > easy >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-easy.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-easy.txt",
+    "allowExit1": true,
+    "projectionSeconds": 47,
+    "projectionBasis": "MEASURED same-seed pilot (gd/pilot.json, 8 requests, mean 183.9 ms, max 1090.2 ms, 7 of 8 exact) x 100 requests x 2 (conservative margin) + 10 s for the checks and the start-up = 47 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-easy.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=time) > easy >",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-easy.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-easy.json",
+      "expectTotal": 8
+    }
+  },
+  {
+    "id": "gd-classic9-normal",
+    "phase": "gd",
+    "label": "classic9 normal batch (100 requests)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > normal >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-normal.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-normal.txt",
+    "allowExit1": true,
+    "projectionSeconds": 50,
+    "projectionBasis": "MEASURED same-seed pilot (gd/pilot.json, 8 requests, mean 197.0 ms, max 659.2 ms, 7 of 8 exact) x 100 requests x 2 (conservative margin) + 10 s for the checks and the start-up = 50 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-normal.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=time) > normal >",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-normal.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-normal.json",
+      "expectTotal": 8
+    }
+  },
+  {
+    "id": "gd-classic9-hard",
+    "phase": "gd",
+    "label": "classic9 hard batch (100 requests)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > hard >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-hard.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-hard.txt",
+    "allowExit1": true,
+    "projectionSeconds": 15,
+    "projectionBasis": "MEASURED same-seed pilot (gd/pilot.json, 8 requests, mean 20.3 ms, max 51.0 ms, 8 of 8 exact) x 100 requests x 2 (conservative margin) + 10 s for the checks and the start-up = 15 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-hard.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=time) > hard >",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-hard.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-hard.json",
+      "expectTotal": 8
+    }
+  },
+  {
+    "id": "gd-classic9-expert",
+    "phase": "gd",
+    "label": "classic9 expert batch (100 requests)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > expert >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-expert.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-expert.txt",
+    "allowExit1": true,
+    "projectionSeconds": 14,
+    "projectionBasis": "MEASURED same-seed pilot (gd/pilot.json, 8 requests, mean 16.2 ms, max 36.6 ms, 8 of 8 exact) x 100 requests x 2 (conservative margin) + 10 s for the checks and the start-up = 14 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-expert.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=time) > expert >",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-expert.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-expert.json",
+      "expectTotal": 8
+    }
+  },
+  {
+    "id": "gd-classic9-master",
+    "phase": "gd",
+    "label": "classic9 master batch (100 requests)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > master >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-master.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-master.txt",
+    "allowExit1": true,
+    "projectionSeconds": 19,
+    "projectionBasis": "MEASURED same-seed pilot (gd/pilot.json, 8 requests, mean 43.8 ms, max 81.3 ms, 8 of 8 exact) x 100 requests x 2 (conservative margin) + 10 s for the checks and the start-up = 19 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\classic9-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-classic9-master.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=time) > master >",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-master.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\classic9-master.json",
+      "expectTotal": 8
+    }
+  },
+  {
+    "id": "gd-levels",
+    "phase": "gd",
+    "label": "difficulty: levels",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: levels",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\levels.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-levels.txt",
+    "allowExit1": true,
+    "projectionSeconds": 11,
+    "projectionBasis": "MS05r6b actual 0.415 s (an older source, labelled) x 2 + 10 s = 11 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\levels.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-levels.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: levels",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\levels.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\levels.json",
+      "expectTotal": 4
+    }
+  },
+  {
+    "id": "gd-spec9",
+    "phase": "gd",
+    "label": "difficulty: spec(level, model) on a 9x9 board",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: spec(level, model) on a 9x9 board",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\spec9.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-spec9.txt",
+    "allowExit1": true,
+    "projectionSeconds": 11,
+    "projectionBasis": "MS05r6b actual 0.393 s (an older source, labelled) x 2 + 10 s = 11 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\spec9.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-spec9.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: spec(level, model) on a 9x9 board",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\spec9.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\spec9.json",
+      "expectTotal": 8
+    }
+  },
+  {
+    "id": "gd-spec-other",
+    "phase": "gd",
+    "label": "difficulty: spec on other boards, and difficultySupport",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: spec on other boards, and difficultySupport",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\spec-other.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-spec-other.txt",
+    "allowExit1": true,
+    "projectionSeconds": 11,
+    "projectionBasis": "MS05r6b actual 0.406 s (an older source, labelled) x 2 + 10 s = 11 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\spec-other.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-spec-other.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: spec on other boards, and difficultySupport",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\spec-other.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\spec-other.json",
+      "expectTotal": 4
+    }
+  },
+  {
+    "id": "gd-qualification",
+    "phase": "gd",
+    "label": "qualification: tests/qualify.js counts every request (Node only, fake workers)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\qualification.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-qualification.txt",
+    "allowExit1": true,
+    "projectionSeconds": 18,
+    "projectionBasis": "MS05r6b actual 3.763 s (an older source, labelled) x 2 + 10 s = 18 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\qualification.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-qualification.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers)",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\qualification.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\qualification.json",
+      "expectTotal": 6
+    }
+  },
+  {
+    "id": "gd-clue-floor",
+    "phase": "gd",
+    "label": "difficulty: the clue floor of a variant (clueFloor)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: the clue floor of a variant (clueFloor)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\clue-floor.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-clue-floor.txt",
+    "allowExit1": true,
+    "projectionSeconds": 11,
+    "projectionBasis": "MS05r6b actual 0.416 s (an older source, labelled) x 2 + 10 s = 11 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\clue-floor.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-clue-floor.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: the clue floor of a variant (clueFloor)",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\clue-floor.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\clue-floor.json",
+      "expectTotal": 9
+    }
+  },
+  {
+    "id": "gd-score-v2",
+    "phase": "gd",
+    "label": "difficulty: the score of rating v2",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: the score of rating v2",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\score-v2.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-score-v2.txt",
+    "allowExit1": true,
+    "projectionSeconds": 12,
+    "projectionBasis": "MS05r6b actual 0.514 s (an older source, labelled) x 2 + 10 s = 12 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\score-v2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-score-v2.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: the score of rating v2",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\score-v2.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\score-v2.json",
+      "expectTotal": 15
+    }
+  },
+  {
+    "id": "gd-score-table",
+    "phase": "gd",
+    "label": "difficulty: the Difficulty Score table (section 5.6)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: the Difficulty Score table (section 5.6)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\score-table.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-score-table.txt",
+    "allowExit1": true,
+    "projectionSeconds": 11,
+    "projectionBasis": "MS05r6b actual 0.422 s (an older source, labelled) x 2 + 10 s = 11 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\score-table.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-score-table.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: the Difficulty Score table (section 5.6)",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\score-table.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\score-table.json",
+      "expectTotal": 4
+    }
+  },
+  {
+    "id": "gd-labelled",
+    "phase": "gd",
+    "label": "difficulty: labelled puzzles (fixtures/rated.js)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: labelled puzzles (fixtures/rated.js)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\labelled.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-labelled.txt",
+    "allowExit1": true,
+    "projectionSeconds": 13,
+    "projectionBasis": "MS05r6b actual 1.183 s (an older source, labelled) x 2 + 10 s = 13 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\labelled.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-labelled.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: labelled puzzles (fixtures/rated.js)",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\labelled.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\labelled.json",
+      "expectTotal": 7
+    }
+  },
+  {
+    "id": "gd-removing",
+    "phase": "gd",
+    "label": "difficulty: removing a clue (the score is not monotone under clue removal, section 5.1)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\removing.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-removing.txt",
+    "allowExit1": true,
+    "projectionSeconds": 12,
+    "projectionBasis": "MS05r6b actual 0.627 s (an older source, labelled) x 2 + 10 s = 12 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\removing.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-removing.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1)",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\removing.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\removing.json",
+      "expectTotal": 2
+    }
+  },
+  {
+    "id": "gd-oracle",
+    "phase": "gd",
+    "label": "digger: technique-bounded oracle",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger: technique-bounded oracle",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\oracle.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-oracle.txt",
+    "allowExit1": true,
+    "projectionSeconds": 13,
+    "projectionBasis": "MS05r6b actual 1.083 s (an older source, labelled) x 2 + 10 s = 13 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\oracle.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-oracle.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger: technique-bounded oracle",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\oracle.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\oracle.json",
+      "expectTotal": 7
+    }
+  },
+  {
+    "id": "gd-guarantees",
+    "phase": "gd",
+    "label": "digger.generate: guarantees",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger.generate: guarantees",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\guarantees.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-guarantees.txt",
+    "allowExit1": true,
+    "projectionSeconds": 115,
+    "projectionBasis": "MS05r6b actual 52.17 s (an older source, labelled) x 2 + 10 s = 115 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\guarantees.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-guarantees.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: guarantees",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\guarantees.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\guarantees.json",
+      "expectTotal": 10
+    }
+  },
+  {
+    "id": "gd-cap",
+    "phase": "gd",
+    "label": "digger.generate: the full-rating cap of an attempt (section 5.7 (9))",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9))",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\cap.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-cap.txt",
+    "allowExit1": true,
+    "projectionSeconds": 21,
+    "projectionBasis": "MS05r6b actual 5.419 s (an older source, labelled) x 2 + 10 s = 21 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\cap.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-cap.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9))",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\cap.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\cap.json",
+      "expectTotal": 5
+    }
+  },
+  {
+    "id": "gd-unreachable",
+    "phase": "gd",
+    "label": "digger.generate: when the level cannot be reached",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger.generate: when the level cannot be reached",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\unreachable.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-unreachable.txt",
+    "allowExit1": true,
+    "projectionSeconds": 12,
+    "projectionBasis": "MS05r6b actual 0.648 s (an older source, labelled) x 2 + 10 s = 12 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\unreachable.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-unreachable.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: when the level cannot be reached",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\unreachable.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\unreachable.json",
+      "expectTotal": 5
+    }
+  },
+  {
+    "id": "gd-safety",
+    "phase": "gd",
+    "label": "digger.generate: safety net against a technique bug (risk R3)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger.generate: safety net against a technique bug (risk R3)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\safety.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-safety.txt",
+    "allowExit1": true,
+    "projectionSeconds": 21,
+    "projectionBasis": "MS05r6b actual 5.07 s (an older source, labelled) x 2 + 10 s = 21 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\safety.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-safety.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: safety net against a technique bug (risk R3)",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\safety.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\safety.json",
+      "expectTotal": 3
+    }
+  }
+]

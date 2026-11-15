@@ -1,0 +1,3295 @@
+[
+  {
+    "id": "gg-check",
+    "phase": "gg-check",
+    "label": "GG: complete merge of the 104 hash shards, check only (no generation, never --update-hashes)",
+    "args": [
+      "tests\\perf.js",
+      "--hash-merge=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes",
+      "--check-hashes"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gg-check.txt",
+    "allowExit1": true,
+    "projectionSeconds": 30,
+    "projectionBasis": "MS07c hash-check 0.3 s of output; merge reads 104 small files and the fixture; 30 s bound",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gg-check.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gg-failed"
+  },
+  {
+    "id": "gd-greaterThan-normal-cv6",
+    "phase": "gd",
+    "label": "greaterThan Normal CV6 (existing selector, S-AV01: this source's own number)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=greater-than",
+      "--filter=> normal: 20 puzzles > CV6:",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\greaterThan-normal-cv6.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-greaterThan-normal-cv6.txt",
+    "allowExit1": true,
+    "projectionSeconds": 120,
+    "projectionBasis": "MS05b3 I5 greaterThan normal, 20 puzzles, 39.2 s at the old source (labelled) x 2 + 20 s = 100 s, rounded to 120 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\greaterThan-normal-cv6.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-greaterThan-normal-cv6.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=greater-than",
+        "--filter=> normal: 20 puzzles > CV6:",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\greaterThan-normal-cv6.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\greaterThan-normal-cv6.json",
+      "expectTotal": 1
+    }
+  },
+  {
+    "id": "gq-diagonalX-veryEasy",
+    "phase": "gq",
+    "label": "diagonalX/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=diagonalX",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\diagonalX-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 9,
+    "projectionBasis": "S-AV27: 3 x 0.003 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.003 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-hyper-veryEasy",
+    "phase": "gq",
+    "label": "hyper/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=hyper",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\hyper-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 9,
+    "projectionBasis": "S-AV27: 3 x 0.003 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.003 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-wordoku-veryEasy",
+    "phase": "gq",
+    "label": "wordoku/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=wordoku",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\wordoku-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 9,
+    "projectionBasis": "S-AV27: 3 x 0.003 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.003 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-killer-veryEasy",
+    "phase": "gq",
+    "label": "killer/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=killer",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\killer-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 9,
+    "projectionBasis": "S-AV27: 3 x 0.004 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.004 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic4-veryEasy",
+    "phase": "gq",
+    "label": "classic4/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic4",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic4-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 9,
+    "projectionBasis": "S-AV27: 3 x 0.004 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.004 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic6-veryEasy",
+    "phase": "gq",
+    "label": "classic6/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic6",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic6-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 9,
+    "projectionBasis": "S-AV27: 3 x 0.004 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.004 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic9-veryEasy",
+    "phase": "gq",
+    "label": "classic9/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic9",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic9-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 10,
+    "projectionBasis": "S-AV27: 3 x 0.006 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.006 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic4-normal",
+    "phase": "gq",
+    "label": "classic4/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic4",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic4-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 10,
+    "projectionBasis": "S-AV27: 3 x 0.058 s x (10) + 8 s; rating-v2 p95 (no MS05b3 request): 0.058 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic4-master",
+    "phase": "gq",
+    "label": "classic4/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic4",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic4-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 11,
+    "projectionBasis": "S-AV27: 3 x 0.069 s x (10) + 8 s; rating-v2 p95 (no MS05b3 request): 0.069 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic4-easy",
+    "phase": "gq",
+    "label": "classic4/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic4",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic4-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 11,
+    "projectionBasis": "S-AV27: 3 x 0.071 s x (10) + 8 s; rating-v2 p95 (no MS05b3 request): 0.071 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic4-nightmare",
+    "phase": "gq",
+    "label": "classic4/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic4",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic4-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 11,
+    "projectionBasis": "S-AV27: 3 x 0.072 s x (10) + 8 s; rating-v2 p95 (no MS05b3 request): 0.072 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega12-veryEasy",
+    "phase": "gq",
+    "label": "mega12/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega12",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega12-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 11,
+    "projectionBasis": "S-AV27: 3 x 0.010 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.010 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic4-expert",
+    "phase": "gq",
+    "label": "classic4/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic4",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic4-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 11,
+    "projectionBasis": "S-AV27: 3 x 0.077 s x (10) + 8 s; rating-v2 p95 (no MS05b3 request): 0.077 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic4-hard",
+    "phase": "gq",
+    "label": "classic4/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic4",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic4-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 11,
+    "projectionBasis": "S-AV27: 3 x 0.081 s x (10) + 8 s; rating-v2 p95 (no MS05b3 request): 0.081 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-diagonalX-hard",
+    "phase": "gq",
+    "label": "diagonalX/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=diagonalX",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\diagonalX-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 11,
+    "projectionBasis": "S-AV27: 3 x 0.012 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.012 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-butterfly-veryEasy",
+    "phase": "gq",
+    "label": "butterfly/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=butterfly",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\butterfly-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 11,
+    "projectionBasis": "S-AV27: 3 x 0.014 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.014 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-jigsaw9-veryEasy",
+    "phase": "gq",
+    "label": "jigsaw9/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=jigsaw9",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\jigsaw9-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 12,
+    "projectionBasis": "S-AV27: 3 x 0.014 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.014 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-hyper-hard",
+    "phase": "gq",
+    "label": "hyper/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=hyper",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\hyper-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 12,
+    "projectionBasis": "S-AV27: 3 x 0.014 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.014 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega12-easy",
+    "phase": "gq",
+    "label": "mega12/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega12",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega12-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 12,
+    "projectionBasis": "S-AV27: 3 x 0.016 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.016 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic4-hell2",
+    "phase": "gq",
+    "label": "classic4/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic4",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic4-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 12,
+    "projectionBasis": "S-AV27: 3 x 0.115 s x (10) + 8 s; rating-v2 p95 (no MS05b3 request): 0.115 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic6-normal",
+    "phase": "gq",
+    "label": "classic6/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic6",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic6-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 12,
+    "projectionBasis": "S-AV27: 1.5 x 0.235 s x (10) + 8 s; pilot mean 0.235 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-flower-veryEasy",
+    "phase": "gq",
+    "label": "flower/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=flower",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\flower-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 12,
+    "projectionBasis": "S-AV27: 3 x 0.017 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.017 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic6-easy",
+    "phase": "gq",
+    "label": "classic6/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic6",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic6-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 12,
+    "projectionBasis": "S-AV27: 1.5 x 0.252 s x (10) + 8 s; pilot mean 0.252 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-greaterThan-veryEasy",
+    "phase": "gq",
+    "label": "greaterThan/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=greaterThan",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\greaterThan-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 13,
+    "projectionBasis": "S-AV27: 3 x 0.019 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.019 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega16-veryEasy",
+    "phase": "gq",
+    "label": "mega16/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega16",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega16-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 13,
+    "projectionBasis": "S-AV27: 3 x 0.019 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.019 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-sohei-veryEasy",
+    "phase": "gq",
+    "label": "sohei/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=sohei",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\sohei-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 13,
+    "projectionBasis": "S-AV27: 3 x 0.021 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.021 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-samurai-veryEasy",
+    "phase": "gq",
+    "label": "samurai/veryEasy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=samurai",
+      "--level=veryEasy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-veryEasy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-veryEasy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\samurai-veryEasy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 14,
+    "projectionBasis": "S-AV27: 3 x 0.024 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.024 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-veryEasy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-veryEasy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-killer-easy",
+    "phase": "gq",
+    "label": "killer/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=killer",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\killer-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 14,
+    "projectionBasis": "S-AV27: 3 x 0.024 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.024 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega12-normal",
+    "phase": "gq",
+    "label": "mega12/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega12",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega12-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 14,
+    "projectionBasis": "S-AV27: 3 x 0.025 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.025 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-greaterThan-easy",
+    "phase": "gq",
+    "label": "greaterThan/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=greaterThan",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\greaterThan-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 14,
+    "projectionBasis": "S-AV27: 3 x 0.028 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.028 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-jigsaw9-hard",
+    "phase": "gq",
+    "label": "jigsaw9/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=jigsaw9",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\jigsaw9-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 15,
+    "projectionBasis": "S-AV27: 3 x 0.029 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.029 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega16-easy",
+    "phase": "gq",
+    "label": "mega16/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega16",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega16-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 15,
+    "projectionBasis": "S-AV27: 3 x 0.033 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.033 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-wordoku-hard",
+    "phase": "gq",
+    "label": "wordoku/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=wordoku",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\wordoku-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 16,
+    "projectionBasis": "S-AV27: 3 x 0.035 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.035 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic9-hard",
+    "phase": "gq",
+    "label": "classic9/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic9",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic9-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 16,
+    "projectionBasis": "S-AV27: 3 x 0.037 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.037 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic6-hell1",
+    "phase": "gq",
+    "label": "classic6/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic6",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic6-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 17,
+    "projectionBasis": "S-AV27: 1.5 x 0.546 s x (10) + 8 s; pilot mean 0.546 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-diagonalX-normal",
+    "phase": "gq",
+    "label": "diagonalX/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=diagonalX",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\diagonalX-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 17,
+    "projectionBasis": "S-AV27: 3 x 0.041 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.041 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic6-hell2",
+    "phase": "gq",
+    "label": "classic6/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic6",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic6-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 17,
+    "projectionBasis": "S-AV27: 1.5 x 0.581 s x (10) + 8 s; pilot mean 0.581 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-butterfly-normal",
+    "phase": "gq",
+    "label": "butterfly/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=butterfly",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\butterfly-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 18,
+    "projectionBasis": "S-AV27: 3 x 0.044 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.044 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic4-hell1",
+    "phase": "gq",
+    "label": "classic4/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic4",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic4-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 18,
+    "projectionBasis": "S-AV27: 3 x 0.320 s x (10) + 8 s; rating-v2 p95 (no MS05b3 request) x 4 (Hell 1 was vacuous before MS07b; classic9 went 1.38 -> 5.57 s): 0.320 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic4-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega12-hard",
+    "phase": "gq",
+    "label": "mega12/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega12",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega12-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 19,
+    "projectionBasis": "S-AV27: 3 x 0.052 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.052 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-wordoku-expert",
+    "phase": "gq",
+    "label": "wordoku/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=wordoku",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\wordoku-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 21,
+    "projectionBasis": "S-AV27: 3 x 0.058 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.058 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-hyper-nightmare",
+    "phase": "gq",
+    "label": "hyper/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=hyper",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\hyper-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 21,
+    "projectionBasis": "S-AV27: 1.5 x 0.120 s x (10 + 60) + 8 s; pilot mean 0.120 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-jigsaw9-master",
+    "phase": "gq",
+    "label": "jigsaw9/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=jigsaw9",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\jigsaw9-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 21,
+    "projectionBasis": "S-AV27: 3 x 0.060 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.060 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-samurai-normal",
+    "phase": "gq",
+    "label": "samurai/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=samurai",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\samurai-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 22,
+    "projectionBasis": "S-AV27: 1.5 x 0.131 s x (10 + 60) + 8 s; pilot mean 0.131 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega16-normal",
+    "phase": "gq",
+    "label": "mega16/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega16",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega16-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 23,
+    "projectionBasis": "S-AV27: 3 x 0.068 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.068 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-flower-hard",
+    "phase": "gq",
+    "label": "flower/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=flower",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\flower-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 25,
+    "projectionBasis": "S-AV27: 3 x 0.080 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.080 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega12-expert",
+    "phase": "gq",
+    "label": "mega12/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega12",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega12-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 26,
+    "projectionBasis": "S-AV27: 3 x 0.083 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.083 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-butterfly-hard",
+    "phase": "gq",
+    "label": "butterfly/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=butterfly",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\butterfly-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 26,
+    "projectionBasis": "S-AV27: 3 x 0.083 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.083 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-wordoku-nightmare",
+    "phase": "gq",
+    "label": "wordoku/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=wordoku",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\wordoku-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 26,
+    "projectionBasis": "S-AV27: 1.5 x 0.169 s x (10 + 60) + 8 s; pilot mean 0.169 s (n 2)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-greaterThan-master",
+    "phase": "gq",
+    "label": "greaterThan/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=greaterThan",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\greaterThan-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 28,
+    "projectionBasis": "S-AV27: 1.5 x 0.186 s x (10 + 60) + 8 s; pilot mean 0.186 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-hyper-normal",
+    "phase": "gq",
+    "label": "hyper/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=hyper",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\hyper-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 28,
+    "projectionBasis": "S-AV27: 3 x 0.093 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.093 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic9-expert",
+    "phase": "gq",
+    "label": "classic9/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic9",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic9-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 28,
+    "projectionBasis": "S-AV27: 3 x 0.095 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.095 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-jigsaw9-nightmare",
+    "phase": "gq",
+    "label": "jigsaw9/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=jigsaw9",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\jigsaw9-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 30,
+    "projectionBasis": "S-AV27: 1.5 x 0.207 s x (10 + 60) + 8 s; pilot mean 0.207 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-diagonalX-master",
+    "phase": "gq",
+    "label": "diagonalX/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=diagonalX",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\diagonalX-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 31,
+    "projectionBasis": "S-AV27: 3 x 0.106 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.106 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-jigsaw9-normal",
+    "phase": "gq",
+    "label": "jigsaw9/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=jigsaw9",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\jigsaw9-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 32,
+    "projectionBasis": "S-AV27: 3 x 0.113 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.113 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic6-hard",
+    "phase": "gq",
+    "label": "classic6/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic6",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic6-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 32,
+    "projectionBasis": "S-AV27: 3 x 0.113 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.113 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-sohei-normal",
+    "phase": "gq",
+    "label": "sohei/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=sohei",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\sohei-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 33,
+    "projectionBasis": "S-AV27: 3 x 0.115 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.115 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic6-expert",
+    "phase": "gq",
+    "label": "classic6/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic6",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic6-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 34,
+    "projectionBasis": "S-AV27: 1.5 x 0.246 s x (10 + 60) + 8 s; pilot mean 0.246 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-wordoku-master",
+    "phase": "gq",
+    "label": "wordoku/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=wordoku",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\wordoku-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 36,
+    "projectionBasis": "S-AV27: 3 x 0.133 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.133 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega12-nightmare",
+    "phase": "gq",
+    "label": "mega12/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega12",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega12-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 38,
+    "projectionBasis": "S-AV27: 1.5 x 0.277 s x (10 + 60) + 8 s; pilot mean 0.277 s (n 2)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-hyper-master",
+    "phase": "gq",
+    "label": "hyper/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=hyper",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\hyper-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 40,
+    "projectionBasis": "S-AV27: 3 x 0.150 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.150 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-butterfly-nightmare",
+    "phase": "gq",
+    "label": "butterfly/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=butterfly",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\butterfly-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 42,
+    "projectionBasis": "S-AV27: 1.5 x 0.316 s x (10 + 60) + 8 s; pilot mean 0.316 s (n 1)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic9-normal",
+    "phase": "gq",
+    "label": "classic9/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic9",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic9-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 44,
+    "projectionBasis": "S-AV27: 3 x 0.169 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.169 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic6-master",
+    "phase": "gq",
+    "label": "classic6/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic6",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic6-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 44,
+    "projectionBasis": "S-AV27: 1.5 x 0.342 s x (10 + 60) + 8 s; pilot mean 0.342 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-sohei-expert",
+    "phase": "gq",
+    "label": "sohei/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=sohei",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\sohei-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 45,
+    "projectionBasis": "S-AV27: 3 x 0.172 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.172 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-hyper-hell2",
+    "phase": "gq",
+    "label": "hyper/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=hyper",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\hyper-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 48,
+    "projectionBasis": "S-AV27: 1.5 x 0.374 s x (10 + 60) + 8 s; pilot mean 0.374 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega16-hard",
+    "phase": "gq",
+    "label": "mega16/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega16",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega16-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 48,
+    "projectionBasis": "S-AV27: 3 x 0.189 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.189 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-samurai-easy",
+    "phase": "gq",
+    "label": "samurai/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=samurai",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\samurai-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 52,
+    "projectionBasis": "S-AV27: 3 x 0.208 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.208 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-jigsaw9-easy",
+    "phase": "gq",
+    "label": "jigsaw9/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=jigsaw9",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\jigsaw9-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 54,
+    "projectionBasis": "S-AV27: 3 x 0.218 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.218 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-samurai-hard",
+    "phase": "gq",
+    "label": "samurai/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=samurai",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\samurai-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 56,
+    "projectionBasis": "S-AV27: 3 x 0.227 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.227 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-wordoku-easy",
+    "phase": "gq",
+    "label": "wordoku/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=wordoku",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\wordoku-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 57,
+    "projectionBasis": "S-AV27: 3 x 0.230 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.230 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega12-master",
+    "phase": "gq",
+    "label": "mega12/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega12",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega12-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 58,
+    "projectionBasis": "S-AV27: 3 x 0.236 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.236 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-flower-master",
+    "phase": "gq",
+    "label": "flower/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=flower",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\flower-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 61,
+    "projectionBasis": "S-AV27: 1.5 x 0.496 s x (10 + 60) + 8 s; pilot mean 0.496 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-sohei-hard",
+    "phase": "gq",
+    "label": "sohei/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=sohei",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\sohei-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 63,
+    "projectionBasis": "S-AV27: 3 x 0.260 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.260 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-butterfly-expert",
+    "phase": "gq",
+    "label": "butterfly/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=butterfly",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\butterfly-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 64,
+    "projectionBasis": "S-AV27: 3 x 0.267 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.267 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic6-nightmare",
+    "phase": "gq",
+    "label": "classic6/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic6",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic6-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 66,
+    "projectionBasis": "S-AV27: 1.5 x 0.545 s x (10 + 60) + 8 s; pilot mean 0.545 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic6-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic9-easy",
+    "phase": "gq",
+    "label": "classic9/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic9",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic9-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 67,
+    "projectionBasis": "S-AV27: 3 x 0.280 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.280 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic9-master",
+    "phase": "gq",
+    "label": "classic9/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic9",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic9-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 70,
+    "projectionBasis": "S-AV27: 3 x 0.291 s x (10 + 60) + 8 s; MS05b3 mean of 3 requests (guard-capped, older source): 0.291 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-diagonalX-nightmare",
+    "phase": "gq",
+    "label": "diagonalX/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=diagonalX",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\diagonalX-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 70,
+    "projectionBasis": "S-AV27: 1.5 x 0.583 s x (10 + 60) + 8 s; pilot mean 0.583 s (n 2)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-wordoku-normal",
+    "phase": "gq",
+    "label": "wordoku/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=wordoku",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\wordoku-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 70,
+    "projectionBasis": "S-AV27: 3 x 0.294 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.294 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega16-master",
+    "phase": "gq",
+    "label": "mega16/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega16",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega16-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 71,
+    "projectionBasis": "S-AV27: 1.5 x 0.594 s x (10 + 60) + 8 s; pilot mean 0.594 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega16-hell2",
+    "phase": "gq",
+    "label": "mega16/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega16",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega16-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 72,
+    "projectionBasis": "S-AV27: 3 x 0.303 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.303 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-wordoku-hell2",
+    "phase": "gq",
+    "label": "wordoku/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=wordoku",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\wordoku-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 77,
+    "projectionBasis": "S-AV27: 1.5 x 4.540 s x (10) + 8 s; pilot mean 4.540 s (n 2)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-butterfly-easy",
+    "phase": "gq",
+    "label": "butterfly/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=butterfly",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\butterfly-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 84,
+    "projectionBasis": "S-AV27: 1.5 x 0.718 s x (10 + 60) + 8 s; pilot mean 0.718 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-sohei-master",
+    "phase": "gq",
+    "label": "sohei/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=sohei",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\sohei-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 87,
+    "projectionBasis": "S-AV27: 3 x 0.374 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.374 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic9-hell2",
+    "phase": "gq",
+    "label": "classic9/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic9",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic9-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 88,
+    "projectionBasis": "S-AV27: 1.5 x 5.313 s x (10) + 8 s; pilot mean 5.313 s (n 2)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-sohei-easy",
+    "phase": "gq",
+    "label": "sohei/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=sohei",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\sohei-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 89,
+    "projectionBasis": "S-AV27: 3 x 0.385 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.385 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-killer-hard",
+    "phase": "gq",
+    "label": "killer/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=killer",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\killer-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 94,
+    "projectionBasis": "S-AV27: 1.5 x 5.730 s x (10) + 8 s; pilot mean 5.730 s (n 2)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega16-expert",
+    "phase": "gq",
+    "label": "mega16/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega16",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega16-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 100,
+    "projectionBasis": "S-AV27: 3 x 0.437 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.437 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-diagonalX-hell2",
+    "phase": "gq",
+    "label": "diagonalX/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=diagonalX",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\diagonalX-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 102,
+    "projectionBasis": "S-AV27: 3 x 0.447 s x (10 + 60) + 8 s; MS05b3 mean of 11 requests (guard-capped, older source): 0.447 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-wordoku-hell1",
+    "phase": "gq",
+    "label": "wordoku/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=wordoku",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\wordoku-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 104,
+    "projectionBasis": "S-AV27: 1.5 x 6.368 s x (10) + 8 s; pilot mean 6.368 s (n 4)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\wordoku-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-sohei-nightmare",
+    "phase": "gq",
+    "label": "sohei/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=sohei",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\sohei-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 106,
+    "projectionBasis": "S-AV27: 1.5 x 0.926 s x (10 + 60) + 8 s; pilot mean 0.926 s (n 2)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-killer-expert",
+    "phase": "gq",
+    "label": "killer/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=killer",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\killer-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 109,
+    "projectionBasis": "S-AV27: 1.5 x 6.671 s x (10) + 8 s; pilot mean 6.671 s (n 2)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-hyper-easy",
+    "phase": "gq",
+    "label": "hyper/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=hyper",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\hyper-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 109,
+    "projectionBasis": "S-AV27: 3 x 0.479 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.479 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-flower-normal",
+    "phase": "gq",
+    "label": "flower/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=flower",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\flower-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 109,
+    "projectionBasis": "S-AV27: 3 x 0.479 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.479 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-jigsaw9-hell2",
+    "phase": "gq",
+    "label": "jigsaw9/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=jigsaw9",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\jigsaw9-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 109,
+    "projectionBasis": "S-AV27: 3 x 0.481 s x (10 + 60) + 8 s; MS05b3 mean of 11 requests (guard-capped, older source): 0.481 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic9-hell1",
+    "phase": "gq",
+    "label": "classic9/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic9",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic9-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 111,
+    "projectionBasis": "S-AV27: 1.5 x 6.802 s x (10) + 8 s; pilot mean 6.802 s (n 2)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-killer-normal",
+    "phase": "gq",
+    "label": "killer/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=killer",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\killer-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 112,
+    "projectionBasis": "S-AV27: 3 x 0.494 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.494 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-flower-easy",
+    "phase": "gq",
+    "label": "flower/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=flower",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\flower-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 114,
+    "projectionBasis": "S-AV27: 3 x 0.503 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.503 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-samurai-expert",
+    "phase": "gq",
+    "label": "samurai/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=samurai",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\samurai-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 114,
+    "projectionBasis": "S-AV27: 3 x 0.504 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.504 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-butterfly-master",
+    "phase": "gq",
+    "label": "butterfly/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=butterfly",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\butterfly-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 117,
+    "projectionBasis": "S-AV27: 3 x 0.515 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.515 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-diagonalX-easy",
+    "phase": "gq",
+    "label": "diagonalX/easy",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=diagonalX",
+      "--level=easy",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-easy.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-easy.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\diagonalX-easy.txt",
+    "allowExit1": false,
+    "projectionSeconds": 123,
+    "projectionBasis": "S-AV27: 3 x 0.546 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.546 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-easy.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-easy.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-classic9-nightmare",
+    "phase": "gq",
+    "label": "classic9/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=classic9",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\classic9-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 134,
+    "projectionBasis": "S-AV27: 3 x 0.600 s x (10 + 60) + 8 s; MS07b/MS07c measurement (classic9 pilot mean at C = 4; mega deep records at C = 6; classic9 Nightmare window cell at C = 4 plus margin): 0.600 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\classic9-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-diagonalX-expert",
+    "phase": "gq",
+    "label": "diagonalX/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=diagonalX",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\diagonalX-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 138,
+    "projectionBasis": "S-AV27: 3 x 0.618 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.618 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-samurai-master",
+    "phase": "gq",
+    "label": "samurai/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=samurai",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\samurai-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 142,
+    "projectionBasis": "S-AV27: 3 x 0.638 s x (10 + 60) + 8 s; MS05b3 mean of 2 requests (guard-capped, older source): 0.638 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-hyper-expert",
+    "phase": "gq",
+    "label": "hyper/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=hyper",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\hyper-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 150,
+    "projectionBasis": "S-AV27: 3 x 0.673 s x (10 + 60) + 8 s; MS05b3 mean of 23 requests (guard-capped, older source): 0.673 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-hyper-hell1",
+    "phase": "gq",
+    "label": "hyper/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=hyper",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\hyper-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 150,
+    "projectionBasis": "S-AV27: 1.5 x 9.429 s x (10) + 8 s; pilot mean 9.429 s (n 4)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\hyper-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-killer-master",
+    "phase": "gq",
+    "label": "killer/master",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=killer",
+      "--level=master",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-master.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-master.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\killer-master.txt",
+    "allowExit1": false,
+    "projectionSeconds": 162,
+    "projectionBasis": "S-AV27: 1.5 x 10.228 s x (10) + 8 s; pilot mean 10.228 s (n 2)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-master.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-master.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-flower-expert",
+    "phase": "gq",
+    "label": "flower/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=flower",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\flower-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 166,
+    "projectionBasis": "S-AV27: 1.5 x 1.500 s x (10 + 60) + 8 s; pilot mean 1.500 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-sohei-hell2",
+    "phase": "gq",
+    "label": "sohei/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=sohei",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\sohei-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 182,
+    "projectionBasis": "S-AV27: 1.5 x 1.656 s x (10 + 60) + 8 s; pilot mean 1.656 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-jigsaw9-hell1",
+    "phase": "gq",
+    "label": "jigsaw9/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=jigsaw9",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\jigsaw9-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 199,
+    "projectionBasis": "S-AV27: 1.5 x 12.719 s x (10) + 8 s; pilot mean 12.719 s (n 4)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-greaterThan-hard",
+    "phase": "gq",
+    "label": "greaterThan/hard",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=greaterThan",
+      "--level=hard",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-hard.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-hard.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\greaterThan-hard.txt",
+    "allowExit1": false,
+    "projectionSeconds": 220,
+    "projectionBasis": "S-AV27: 1.5 x 2.018 s x (10 + 60) + 8 s; pilot mean 2.018 s (n 3) or half the stale prior 1.202 s (heavy tail in the old sample), the larger",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-hard.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-hard.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-greaterThan-hell2",
+    "phase": "gq",
+    "label": "greaterThan/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=greaterThan",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\greaterThan-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 235,
+    "projectionBasis": "S-AV27: 1.5 x 2.157 s x (10 + 60) + 8 s; pilot mean 2.157 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-greaterThan-normal",
+    "phase": "gq",
+    "label": "greaterThan/normal",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=greaterThan",
+      "--level=normal",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-normal.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-normal.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\greaterThan-normal.txt",
+    "allowExit1": false,
+    "projectionSeconds": 260,
+    "projectionBasis": "S-AV27: 1.5 x 2.399 s x (10 + 60) + 8 s; pilot mean 2.399 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-normal.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-normal.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-greaterThan-nightmare",
+    "phase": "gq",
+    "label": "greaterThan/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=greaterThan",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\greaterThan-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 272,
+    "projectionBasis": "S-AV27: 1.5 x 2.508 s x (10 + 60) + 8 s; pilot mean 2.508 s (n 4)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-samurai-nightmare",
+    "phase": "gq",
+    "label": "samurai/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=samurai",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\samurai-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 281,
+    "projectionBasis": "S-AV27: 1.5 x 2.599 s x (10 + 60) + 8 s; pilot mean 2.599 s (n 2)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-killer-nightmare",
+    "phase": "gq",
+    "label": "killer/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=killer",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\killer-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 290,
+    "projectionBasis": "S-AV27: 1.5 x 2.678 s x (10 + 60) + 8 s; pilot mean 2.678 s (n 4)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-killer-hell2",
+    "phase": "gq",
+    "label": "killer/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=killer",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\killer-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 309,
+    "projectionBasis": "S-AV27: 1.5 x 2.861 s x (10 + 60) + 8 s; pilot mean 2.861 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-jigsaw9-expert",
+    "phase": "gq",
+    "label": "jigsaw9/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=jigsaw9",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\jigsaw9-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 326,
+    "projectionBasis": "S-AV27: 1.5 x 3.022 s x (10 + 60) + 8 s; pilot mean 0.342 s (n 2) or half the stale prior 6.043 s (heavy tail in the old sample), the larger",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\jigsaw9-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-flower-hell2",
+    "phase": "gq",
+    "label": "flower/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=flower",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\flower-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 329,
+    "projectionBasis": "S-AV27: 1.5 x 3.050 s x (10 + 60) + 8 s; pilot mean 3.050 s (n 2)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-butterfly-hell2",
+    "phase": "gq",
+    "label": "butterfly/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=butterfly",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\butterfly-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 333,
+    "projectionBasis": "S-AV27: 1.5 x 3.090 s x (10 + 60) + 8 s; pilot mean 3.090 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-diagonalX-hell1",
+    "phase": "gq",
+    "label": "diagonalX/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=diagonalX",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\diagonalX-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 351,
+    "projectionBasis": "S-AV27: 1.5 x 22.843 s x (10) + 8 s; pilot mean 22.843 s (n 4) or half the stale prior 0.277 s (heavy tail in the old sample), the larger",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\diagonalX-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-sohei-hell1",
+    "phase": "gq",
+    "label": "sohei/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=sohei",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\sohei-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 353,
+    "projectionBasis": "S-AV27: 1.5 x 22.954 s x (10) + 8 s; pilot mean 22.954 s (n 4)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\sohei-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega12-hell2",
+    "phase": "gq",
+    "label": "mega12/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega12",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega12-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 363,
+    "projectionBasis": "S-AV27: 1.5 x 3.374 s x (10 + 60) + 8 s; pilot mean 3.374 s (n 3)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-flower-hell1",
+    "phase": "gq",
+    "label": "flower/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=flower",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\flower-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 363,
+    "projectionBasis": "S-AV27: 1.5 x 23.642 s x (10) + 8 s; pilot mean 23.642 s (n 4)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-flower-nightmare",
+    "phase": "gq",
+    "label": "flower/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=flower",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\flower-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 378,
+    "projectionBasis": "S-AV27: 1.5 x 3.516 s x (10 + 60) + 8 s; pilot mean 3.516 s (n 2)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\flower-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-killer-hell1",
+    "phase": "gq",
+    "label": "killer/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=killer",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\killer-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 398,
+    "projectionBasis": "S-AV27: 1.5 x 25.969 s x (10) + 8 s; pilot mean 25.969 s (n 4)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\killer-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-samurai-hell1",
+    "phase": "gq",
+    "label": "samurai/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=samurai",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\samurai-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 411,
+    "projectionBasis": "S-AV27: 1.5 x 26.842 s x (10) + 8 s; pilot mean 26.842 s (n 4)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-samurai-hell2",
+    "phase": "gq",
+    "label": "samurai/hell2",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=samurai",
+      "--level=hell2",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-hell2.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-hell2.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\samurai-hell2.txt",
+    "allowExit1": false,
+    "projectionSeconds": 423,
+    "projectionBasis": "S-AV27: 1.5 x 3.947 s x (10 + 60) + 8 s; pilot mean 3.947 s (n 4)",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-hell2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\samurai-hell2.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega12-hell1",
+    "phase": "gq",
+    "label": "mega12/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega12",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega12-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 557,
+    "projectionBasis": "S-AV27: 1.5 x 36.538 s x (10) + 8 s; pilot mean 36.538 s (n 1)",
+    "launch": false,
+    "reason": "projected 556 s > 450 s (S-AV27 rule: 1.5 x 36.5 s x (10) + 8 s; expansion excluded: 0 hits of 8 pooled, 95 % upper bound 0.31)",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega12-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-greaterThan-expert",
+    "phase": "gq",
+    "label": "greaterThan/expert",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=greaterThan",
+      "--level=expert",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-expert.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-expert.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\greaterThan-expert.txt",
+    "allowExit1": false,
+    "projectionSeconds": 919,
+    "projectionBasis": "S-AV27: 1.5 x 8.674 s x (10 + 60) + 8 s; pilot mean 8.674 s (n 2)",
+    "launch": false,
+    "reason": "projected 919 s > 450 s (S-AV27 rule: 1.5 x 8.67 s x (10 + 60) + 8 s; expansion not excluded: 1 hits of 2 pooled, 95 % upper bound 0.97)",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-expert.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-expert.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega16-nightmare",
+    "phase": "gq",
+    "label": "mega16/nightmare",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega16",
+      "--level=nightmare",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-nightmare.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-nightmare.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega16-nightmare.txt",
+    "allowExit1": false,
+    "projectionSeconds": 1247,
+    "projectionBasis": "S-AV27: 1.5 x 11.795 s x (10 + 60) + 8 s; pilot mean 11.795 s (n 4)",
+    "launch": false,
+    "reason": "projected 1246 s > 450 s (S-AV27 rule: 1.5 x 11.8 s x (10 + 60) + 8 s; expansion not excluded: 4 hits of 13 pooled, 95 % upper bound 0.57)",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-nightmare.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-nightmare.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-mega16-hell1",
+    "phase": "gq",
+    "label": "mega16/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=mega16",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\mega16-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 1809,
+    "projectionBasis": "S-AV27: 1.5 x 120.002 s x (10) + 8 s; pilot mean 120.002 s (n 1)",
+    "launch": false,
+    "reason": "projected 1808 s > 450 s (S-AV27 rule: 1.5 x 120 s x (10) + 8 s; expansion excluded: 0 hits of 8 pooled, 95 % upper bound 0.31)",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\mega16-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-greaterThan-hell1",
+    "phase": "gq",
+    "label": "greaterThan/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=greaterThan",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\greaterThan-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 3957,
+    "projectionBasis": "S-AV27: 1.5 x 37.609 s x (10 + 60) + 8 s; pilot mean 37.609 s (n 3)",
+    "launch": false,
+    "reason": "projected 3957 s > 450 s (S-AV27 rule: 1.5 x 37.6 s x (10 + 60) + 8 s; expansion not excluded: 0 hits of 3 pooled, 95 % upper bound 0.63)",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\greaterThan-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  },
+  {
+    "id": "gq-butterfly-hell1",
+    "phase": "gq",
+    "label": "butterfly/hell1",
+    "args": [
+      "tests\\qualify.js",
+      "--variant=butterfly",
+      "--level=hell1",
+      "--jobs=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-hell1.json",
+      "--markdown=..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-hell1.md"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gq\\butterfly-hell1.txt",
+    "allowExit1": false,
+    "projectionSeconds": 4033,
+    "projectionBasis": "S-AV27: 1.5 x 38.327 s x (10 + 60) + 8 s; pilot mean 38.327 s (n 3)",
+    "launch": false,
+    "reason": "projected 4032 s > 450 s (S-AV27 rule: 1.5 x 38.3 s x (10 + 60) + 8 s; expansion not excluded: 0 hits of 3 pooled, 95 % upper bound 0.63)",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-hell1.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification\\butterfly-hell1.md"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\qualification-failed"
+  }
+]

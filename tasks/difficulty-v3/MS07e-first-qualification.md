@@ -201,14 +201,14 @@ Return the complete item list and conditional decision requests; no suite/CI edi
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (orchestrator review; evidence task, outside the analyst review set). Checkpoint **incomplete by the S-AV27 rule**: 129 of 135 cells have complete valid records, 6 were not launched (projection above 450 s); the merger rejects the folder only for `missing 6 of 135 cells`, so no merged record and no complete-checkpoint claim |
+| Start | 2026-11-15 10:30 (+07:00) |
+| End | 2026-11-15 14:15 (owner pause 12:22-12:59 for improve-generating, nothing interrupted); orchestrator re-check and commit |
+| Duration | 3 h 7 min active (3 h 45 min elapsed incl. the pause); 289 commands, 4,414 s process time, 30 locked invocations (20 of them IR12 compounds), recorded lock wait 4,054 s (longest 561 s) |
+| Model | claude-sonnet-5.5 (developer); claude-opus-5.5 (orchestrator) |
+| Token usage | 252 model calls; 98,362,024 input tokens (97,249,001 cache reads); 300,096 output tokens |
+| AI credits | about 1,551 (developer) |
+| Verification | Source `8b70875` (MS07d), engine sources `029720df77c6c12a`, qualifier `c0ef0d25…`, C = 4, jobs 4, AMD EPYC 7763, Node v26.13.0. **GQ**: 129 cells, 4,311 requests, 3,794 exact hits, 0 errors, 0 invalid or non-unique puzzles; 89 cells offered, 40 hidden, one second round (wordoku/normal); `stats` unavailable in qualifier shards (reported as unavailable). Not launched by projection: mega12/hell1 556 s, mega16/nightmare 1,246 s, mega16/hell1 1,808 s, greaterThan/expert 919 s, greaterThan/hell1 3,957 s, butterfly/hell1 4,032 s; the launched cells cost 1,523 s against 11,645 s projected. **GG**: 520 keys once each, 0 changed (check only). **GD**: 154 of 154 classic9 `difficulty` tests once each, 152 passed, 2 failed on aggregate hit rate (Hell 1 0 of 20, needs 18; Normal 83 of 100, needs 90), 0 correctness failures; Nightmare batch 17.3 s, passing; confusion matrix executed for the first time, passed, 191.7 s. Extra existing CV6 selectors: Greater-Than Nightmare passed (24.1 s); Greater-Than Normal failed at p95 5,361.5 ms against 1,400 ms (S-AV01). **Quick sets** on the final tree: Generator 3,505/3,505 (692.1 s), Player 1,750/1,750 (33.5 s); CI check passes. Orchestrator: CI check, tree confined to the evidence folder, the two checkpoint files and `notes.md`, format check of 671 files |
+| Acceptance | MS07e-B01, B02, T02, T03, T04 met; T01 met as written (all 135 cells accounted for at jobs 4: 129 valid records, 6 named cost items; incomplete checkpoint, no merged record). Live offers and table unchanged. Records: `docs/difficulty-v3/qualification-checkpoint-2026-11-15.json` (checkpoint-only, `complete:false`, `merged:false`) and `.md`; evidence `docs/difficulty-v3/evidence/MS07e/` |
+| Issues & resolutions | Observed against current offers (not applied): 23 offered cells observed hidden (classic9 hell1; diagonalX easy, hell1; hyper easy, hell1; jigsaw9 hell1; killer hard, expert, master, nightmare, hell1; greaterThan master; samurai easy, hell1; sohei easy, hell1; butterfly easy; flower easy, expert, master, hell1; wordoku normal, hell1); none observed offered where hidden today. Items S-AV01 to S-AV30 reconciled in the checkpoint §8 (new S-AV28 Easy availability, S-AV29 Greater-Than Master time, S-AV30 mid-level shortfalls; S-AV25 confirmed: 0 exact in every executed Hell 1 cell). Disclosed deviation: IR12 compounds instead of one command per lock (accepted by the orchestrator). Owner requests raised: **Q-MS07e-1** Killer Hard 0/14 and Expert 1/14 hidden (weights inside v3 or hidden until later calibration); **quick-tier proposal** (four tests, 392.1 s of 692.1 s, to the manual tier; changes the recorded quick contract); optional **Q-MS07e-2** to SA2 (launching the six cells once under an amended rule). Forwarded by the orchestrator |
+| Handoff | MS08 may begin (correctness accepted; performance items do not pause the remaining scope). Routes: availability to MS18c, cost to MS18d, all items to MS18e's audit. Standing quick cost 692.1 s (S-AV08) |

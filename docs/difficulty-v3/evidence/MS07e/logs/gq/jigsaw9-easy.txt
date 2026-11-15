@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=jigsaw9 --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-easy.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+jigsaw9/easy: 40/40 hits, p95 500 ms (budget 10.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| jigsaw9 | easy | 40 | 40 | 100 % | 73 ms | 500 ms | 609 ms | 10.0 s | offered |
+
+jigsaw9: ["easy"]
+exit=0 seconds=2.512

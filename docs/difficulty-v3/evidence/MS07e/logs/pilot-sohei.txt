@@ -1,0 +1,11 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-sohei.json --cells=sohei/nightmare:2,sohei/hell1:3,sohei/hell2:3 --budget-seconds=420
+sohei/nightmare #0: 1467.9 ms, hit true, achieved nightmare, exact true, approximate false
+sohei/nightmare #1: 383.3 ms, hit true, achieved nightmare, exact true, approximate false
+sohei/hell1 #0: 23140.0 ms, hit false, achieved hell1, exact false, approximate true
+sohei/hell1 #1: 23914.1 ms, hit false, achieved hell1, exact false, approximate true
+sohei/hell1 #2: 22673.7 ms, hit false, achieved hell1, exact false, approximate true
+sohei/hell2 #0: 2833.3 ms, hit true, achieved hell2, exact true, approximate false
+sohei/hell2 #1: 1980.9 ms, hit true, achieved hell2, exact true, approximate false
+sohei/hell2 #2: 154.7 ms, hit true, achieved hell2, exact true, approximate false
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-sohei.json (76.56 s)
+exit=0 seconds=77.029

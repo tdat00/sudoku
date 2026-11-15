@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "kind": "ms07e-projection-pilot",
+  "task": "MS07e",
+  "argv": [
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-classic9.json",
+    "--cells=classic9/hell1:2,classic9/hell2:2",
+    "--budget-seconds=420"
+  ],
+  "startedAt": "2026-11-15T04:29:49.656Z",
+  "identity": {
+    "sourceHash": "09f91d6db3fa3373307fed4bf175e9d48ce6cf0c0b98eccec1386dda7cb35ed9",
+    "node": "v26.13.0",
+    "commit": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "dirty": false
+  },
+  "machine": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64
+  },
+  "call": "SG.pipeline.run({ variantId, difficulty, seed, trace: \"off\" }, null, SG.budget.create({ ms: 120000 })), serial, one process; seed = FNV-1a(\"variant/level/index\") on 20260601 (qualify.js seedFor); no maxAttempts",
+  "budgetSeconds": 420,
+  "cells": {
+    "classic9/hell1": {
+      "variant": "classic9",
+      "level": "hell1",
+      "asked": 2,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 3860929237,
+          "hit": false,
+          "ms": 5990.1096,
+          "achieved": "hell1",
+          "score": 2425,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 3844151618,
+          "hit": false,
+          "ms": 7612.895,
+          "achieved": "hell1",
+          "score": 2795,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 2,
+      "hits": 0,
+      "meanMs": 6801.502,
+      "maxMs": 7612.895
+    },
+    "classic9/hell2": {
+      "variant": "classic9",
+      "level": "hell2",
+      "asked": 2,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 3931817856,
+          "hit": false,
+          "ms": 5443.9071,
+          "achieved": "hell1",
+          "score": 3559,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 3948595475,
+          "hit": false,
+          "ms": 5181.1812,
+          "achieved": "hell1",
+          "score": 3521,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 2,
+      "hits": 0,
+      "meanMs": 5312.544,
+      "maxMs": 5443.9071
+    }
+  },
+  "notReached": [],
+  "correctness": [],
+  "endedAt": "2026-11-15T04:30:13.889Z",
+  "seconds": 24.231
+}

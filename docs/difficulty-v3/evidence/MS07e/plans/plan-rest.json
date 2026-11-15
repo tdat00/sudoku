@@ -1,0 +1,2989 @@
+[
+  {
+    "id": "gd-spec9",
+    "phase": "gd",
+    "label": "difficulty: spec(level, model) on a 9x9 board",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: spec(level, model) on a 9x9 board",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\spec9.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-spec9.txt",
+    "allowExit1": true,
+    "projectionSeconds": 11,
+    "projectionBasis": "MS05r6b actual 0.393 s (an older source, labelled) x 2 + 10 s = 11 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\spec9.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-spec9.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: spec(level, model) on a 9x9 board",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\spec9.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\spec9.json",
+      "expectTotal": 8
+    }
+  },
+  {
+    "id": "gd-spec-other",
+    "phase": "gd",
+    "label": "difficulty: spec on other boards, and difficultySupport",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: spec on other boards, and difficultySupport",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\spec-other.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-spec-other.txt",
+    "allowExit1": true,
+    "projectionSeconds": 11,
+    "projectionBasis": "MS05r6b actual 0.406 s (an older source, labelled) x 2 + 10 s = 11 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\spec-other.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-spec-other.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: spec on other boards, and difficultySupport",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\spec-other.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\spec-other.json",
+      "expectTotal": 4
+    }
+  },
+  {
+    "id": "gd-qualification",
+    "phase": "gd",
+    "label": "qualification: tests/qualify.js counts every request (Node only, fake workers)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\qualification.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-qualification.txt",
+    "allowExit1": true,
+    "projectionSeconds": 18,
+    "projectionBasis": "MS05r6b actual 3.763 s (an older source, labelled) x 2 + 10 s = 18 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\qualification.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-qualification.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers)",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\qualification.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\qualification.json",
+      "expectTotal": 6
+    }
+  },
+  {
+    "id": "gd-clue-floor",
+    "phase": "gd",
+    "label": "difficulty: the clue floor of a variant (clueFloor)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: the clue floor of a variant (clueFloor)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\clue-floor.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-clue-floor.txt",
+    "allowExit1": true,
+    "projectionSeconds": 11,
+    "projectionBasis": "MS05r6b actual 0.416 s (an older source, labelled) x 2 + 10 s = 11 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\clue-floor.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-clue-floor.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: the clue floor of a variant (clueFloor)",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\clue-floor.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\clue-floor.json",
+      "expectTotal": 9
+    }
+  },
+  {
+    "id": "gd-score-v2",
+    "phase": "gd",
+    "label": "difficulty: the score of rating v2",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: the score of rating v2",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\score-v2.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-score-v2.txt",
+    "allowExit1": true,
+    "projectionSeconds": 12,
+    "projectionBasis": "MS05r6b actual 0.514 s (an older source, labelled) x 2 + 10 s = 12 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\score-v2.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-score-v2.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: the score of rating v2",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\score-v2.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\score-v2.json",
+      "expectTotal": 15
+    }
+  },
+  {
+    "id": "gd-score-table",
+    "phase": "gd",
+    "label": "difficulty: the Difficulty Score table (section 5.6)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: the Difficulty Score table (section 5.6)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\score-table.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-score-table.txt",
+    "allowExit1": true,
+    "projectionSeconds": 11,
+    "projectionBasis": "MS05r6b actual 0.422 s (an older source, labelled) x 2 + 10 s = 11 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\score-table.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-score-table.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: the Difficulty Score table (section 5.6)",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\score-table.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\score-table.json",
+      "expectTotal": 4
+    }
+  },
+  {
+    "id": "gd-labelled",
+    "phase": "gd",
+    "label": "difficulty: labelled puzzles (fixtures/rated.js)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: labelled puzzles (fixtures/rated.js)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\labelled.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-labelled.txt",
+    "allowExit1": true,
+    "projectionSeconds": 13,
+    "projectionBasis": "MS05r6b actual 1.183 s (an older source, labelled) x 2 + 10 s = 13 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\labelled.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-labelled.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: labelled puzzles (fixtures/rated.js)",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\labelled.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\labelled.json",
+      "expectTotal": 7
+    }
+  },
+  {
+    "id": "gd-removing",
+    "phase": "gd",
+    "label": "difficulty: removing a clue (the score is not monotone under clue removal, section 5.1)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\removing.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-removing.txt",
+    "allowExit1": true,
+    "projectionSeconds": 12,
+    "projectionBasis": "MS05r6b actual 0.627 s (an older source, labelled) x 2 + 10 s = 12 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\removing.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-removing.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1)",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\removing.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\removing.json",
+      "expectTotal": 2
+    }
+  },
+  {
+    "id": "gd-oracle",
+    "phase": "gd",
+    "label": "digger: technique-bounded oracle",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger: technique-bounded oracle",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\oracle.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-oracle.txt",
+    "allowExit1": true,
+    "projectionSeconds": 13,
+    "projectionBasis": "MS05r6b actual 1.083 s (an older source, labelled) x 2 + 10 s = 13 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\oracle.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-oracle.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger: technique-bounded oracle",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\oracle.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\oracle.json",
+      "expectTotal": 7
+    }
+  },
+  {
+    "id": "gd-guarantees",
+    "phase": "gd",
+    "label": "digger.generate: guarantees",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger.generate: guarantees",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\guarantees.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-guarantees.txt",
+    "allowExit1": true,
+    "projectionSeconds": 115,
+    "projectionBasis": "MS05r6b actual 52.17 s (an older source, labelled) x 2 + 10 s = 115 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\guarantees.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-guarantees.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: guarantees",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\guarantees.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\guarantees.json",
+      "expectTotal": 10
+    }
+  },
+  {
+    "id": "gd-cap",
+    "phase": "gd",
+    "label": "digger.generate: the full-rating cap of an attempt (section 5.7 (9))",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9))",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\cap.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-cap.txt",
+    "allowExit1": true,
+    "projectionSeconds": 21,
+    "projectionBasis": "MS05r6b actual 5.419 s (an older source, labelled) x 2 + 10 s = 21 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\cap.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-cap.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9))",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\cap.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\cap.json",
+      "expectTotal": 5
+    }
+  },
+  {
+    "id": "gd-unreachable",
+    "phase": "gd",
+    "label": "digger.generate: when the level cannot be reached",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger.generate: when the level cannot be reached",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\unreachable.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-unreachable.txt",
+    "allowExit1": true,
+    "projectionSeconds": 12,
+    "projectionBasis": "MS05r6b actual 0.648 s (an older source, labelled) x 2 + 10 s = 12 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\unreachable.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-unreachable.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: when the level cannot be reached",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\unreachable.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\unreachable.json",
+      "expectTotal": 5
+    }
+  },
+  {
+    "id": "gd-safety",
+    "phase": "gd",
+    "label": "digger.generate: safety net against a technique bug (risk R3)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=difficulty > digger.generate: safety net against a technique bug (risk R3)",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\safety.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-safety.txt",
+    "allowExit1": true,
+    "projectionSeconds": 21,
+    "projectionBasis": "MS05r6b actual 5.07 s (an older source, labelled) x 2 + 10 s = 21 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\safety.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-safety.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: safety net against a technique bug (risk R3)",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\safety.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\safety.json",
+      "expectTotal": 3
+    }
+  },
+  {
+    "id": "gd-confusion-matrix",
+    "phase": "gd",
+    "label": "classic9 confusion matrix (reads the batches of all eight levels)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=is a confusion matrix",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\confusion-matrix.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-confusion-matrix.txt",
+    "allowExit1": true,
+    "projectionSeconds": 254,
+    "projectionBasis": "MEASURED batch seconds of this run (first test of each level shard: veryEasy 0.1, easy 23.3, normal 29.8, hard 2.8, expert 2.9, master 7.5, nightmare 16.5, hell1 111.7 = 194.6 s; the batches are generated again in one process) x 1.25 + 10 s = 254 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\confusion-matrix.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-confusion-matrix.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=is a confusion matrix",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\confusion-matrix.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\confusion-matrix.json",
+      "expectTotal": 1
+    }
+  },
+  {
+    "id": "gd-greaterThan-nightmare-cv6",
+    "phase": "gd",
+    "label": "greaterThan Nightmare CV6 margin (existing selector, SA1 IR66 handoff)",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=greater-than",
+      "--filter=> nightmare: 10 puzzles > CV6:",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\greaterThan-nightmare-cv6.json"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-greaterThan-nightmare-cv6.txt",
+    "allowExit1": true,
+    "projectionSeconds": 170,
+    "projectionBasis": "MS05b3 I5 greaterThan nightmare, 10 puzzles, 75.2 s at the old source (labelled) x 2 + 20 s = 170 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\greaterThan-nightmare-cv6.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-greaterThan-nightmare-cv6.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd-failed",
+    "preList": {
+      "args": [
+        "tests\\node-runner.js",
+        "--suite=greater-than",
+        "--filter=> nightmare: 10 puzzles > CV6:",
+        "--list-tests=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\greaterThan-nightmare-cv6.json"
+      ],
+      "out": "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\selectors\\greaterThan-nightmare-cv6.json",
+      "expectTotal": 1
+    }
+  },
+  {
+    "id": "gg-classic4-veryEasy-00",
+    "phase": "gg",
+    "label": "classic4-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic4-veryEasy-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.519 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic4-veryEasy-00.json"
+    ]
+  },
+  {
+    "id": "gg-classic4-veryEasy-05",
+    "phase": "gg",
+    "label": "classic4-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic4-veryEasy-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.506 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic4-veryEasy-05.json"
+    ]
+  },
+  {
+    "id": "gg-classic4-veryEasy-10",
+    "phase": "gg",
+    "label": "classic4-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic4-veryEasy-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.538 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic4-veryEasy-10.json"
+    ]
+  },
+  {
+    "id": "gg-classic4-veryEasy-15",
+    "phase": "gg",
+    "label": "classic4-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic4-veryEasy-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.515 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic4-veryEasy-15.json"
+    ]
+  },
+  {
+    "id": "gg-classic6-veryEasy-00",
+    "phase": "gg",
+    "label": "classic6-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-veryEasy-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.519 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-veryEasy-00.json"
+    ]
+  },
+  {
+    "id": "gg-classic6-veryEasy-05",
+    "phase": "gg",
+    "label": "classic6-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-veryEasy-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.52 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-veryEasy-05.json"
+    ]
+  },
+  {
+    "id": "gg-classic6-veryEasy-10",
+    "phase": "gg",
+    "label": "classic6-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-veryEasy-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.507 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-veryEasy-10.json"
+    ]
+  },
+  {
+    "id": "gg-classic6-veryEasy-15",
+    "phase": "gg",
+    "label": "classic6-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-veryEasy-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.516 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-veryEasy-15.json"
+    ]
+  },
+  {
+    "id": "gg-classic6-hard-00",
+    "phase": "gg",
+    "label": "classic6-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-hard-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.895 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-hard-00.json"
+    ]
+  },
+  {
+    "id": "gg-classic6-hard-05",
+    "phase": "gg",
+    "label": "classic6-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-hard-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.987 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-hard-05.json"
+    ]
+  },
+  {
+    "id": "gg-classic6-hard-10",
+    "phase": "gg",
+    "label": "classic6-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-hard-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.055 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-hard-10.json"
+    ]
+  },
+  {
+    "id": "gg-classic6-hard-15",
+    "phase": "gg",
+    "label": "classic6-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-hard-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.196 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic6-hard-15.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-veryEasy-00",
+    "phase": "gg",
+    "label": "classic9-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-veryEasy-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.509 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-veryEasy-00.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-veryEasy-05",
+    "phase": "gg",
+    "label": "classic9-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-veryEasy-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.512 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-veryEasy-05.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-veryEasy-10",
+    "phase": "gg",
+    "label": "classic9-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-veryEasy-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.513 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-veryEasy-10.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-veryEasy-15",
+    "phase": "gg",
+    "label": "classic9-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-veryEasy-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.513 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-veryEasy-15.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-easy-00",
+    "phase": "gg",
+    "label": "classic9-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-easy-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 9,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.678 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-easy-00.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-easy-05",
+    "phase": "gg",
+    "label": "classic9-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-easy-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 9,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.671 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-easy-05.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-easy-10",
+    "phase": "gg",
+    "label": "classic9-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-easy-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 9,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.765 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-easy-10.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-easy-15",
+    "phase": "gg",
+    "label": "classic9-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-easy-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 11,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.81 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-easy-15.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-normal-00",
+    "phase": "gg",
+    "label": "classic9-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-normal-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 10,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.256 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-normal-00.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-normal-05",
+    "phase": "gg",
+    "label": "classic9-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-normal-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 12,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (3.453 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-normal-05.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-normal-10",
+    "phase": "gg",
+    "label": "classic9-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-normal-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 10,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.469 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-normal-10.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-normal-15",
+    "phase": "gg",
+    "label": "classic9-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-normal-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 10,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.155 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-normal-15.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-hard-00",
+    "phase": "gg",
+    "label": "classic9-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-hard-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.613 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-hard-00.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-hard-05",
+    "phase": "gg",
+    "label": "classic9-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-hard-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.632 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-hard-05.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-hard-10",
+    "phase": "gg",
+    "label": "classic9-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-hard-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.739 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-hard-10.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-hard-15",
+    "phase": "gg",
+    "label": "classic9-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-hard-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.619 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-hard-15.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-expert-00",
+    "phase": "gg",
+    "label": "classic9-expert-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-expert-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.877 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-expert-00.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-expert-05",
+    "phase": "gg",
+    "label": "classic9-expert-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-expert-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.911 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-expert-05.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-expert-10",
+    "phase": "gg",
+    "label": "classic9-expert-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-expert-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.865 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-expert-10.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-expert-15",
+    "phase": "gg",
+    "label": "classic9-expert-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-expert-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.786 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-expert-15.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-master-00",
+    "phase": "gg",
+    "label": "classic9-master-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-master-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 9,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.83 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-master-00.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-master-05",
+    "phase": "gg",
+    "label": "classic9-master-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-master-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.768 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-master-05.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-master-10",
+    "phase": "gg",
+    "label": "classic9-master-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-master-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.216 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-master-10.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-master-15",
+    "phase": "gg",
+    "label": "classic9-master-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-master-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.791 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-master-15.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-nightmare-00",
+    "phase": "gg",
+    "label": "classic9-nightmare-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-nightmare-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.225 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-nightmare-00.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-nightmare-05",
+    "phase": "gg",
+    "label": "classic9-nightmare-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-nightmare-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.389 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-nightmare-05.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-nightmare-10",
+    "phase": "gg",
+    "label": "classic9-nightmare-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-nightmare-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.06 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-nightmare-10.json"
+    ]
+  },
+  {
+    "id": "gg-classic9-nightmare-15",
+    "phase": "gg",
+    "label": "classic9-nightmare-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-nightmare-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.978 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\classic9-nightmare-15.json"
+    ]
+  },
+  {
+    "id": "gg-mega12-normal-00",
+    "phase": "gg",
+    "label": "mega12-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega12-normal-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.595 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega12-normal-00.json"
+    ]
+  },
+  {
+    "id": "gg-mega12-normal-05",
+    "phase": "gg",
+    "label": "mega12-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega12-normal-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.608 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega12-normal-05.json"
+    ]
+  },
+  {
+    "id": "gg-mega12-normal-10",
+    "phase": "gg",
+    "label": "mega12-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega12-normal-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.603 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega12-normal-10.json"
+    ]
+  },
+  {
+    "id": "gg-mega12-normal-15",
+    "phase": "gg",
+    "label": "mega12-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega12-normal-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.579 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega12-normal-15.json"
+    ]
+  },
+  {
+    "id": "gg-mega16-easy-00",
+    "phase": "gg",
+    "label": "mega16-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega16-easy-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.583 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega16-easy-00.json"
+    ]
+  },
+  {
+    "id": "gg-mega16-easy-05",
+    "phase": "gg",
+    "label": "mega16-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega16-easy-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.588 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega16-easy-05.json"
+    ]
+  },
+  {
+    "id": "gg-mega16-easy-10",
+    "phase": "gg",
+    "label": "mega16-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega16-easy-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.613 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega16-easy-10.json"
+    ]
+  },
+  {
+    "id": "gg-mega16-easy-15",
+    "phase": "gg",
+    "label": "mega16-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega16-easy-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.611 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\mega16-easy-15.json"
+    ]
+  },
+  {
+    "id": "gg-diagonalX-easy-00",
+    "phase": "gg",
+    "label": "diagonalX-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-easy-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 14,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (4.357 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-easy-00.json"
+    ]
+  },
+  {
+    "id": "gg-diagonalX-easy-05",
+    "phase": "gg",
+    "label": "diagonalX-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-easy-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 13,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (3.801 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-easy-05.json"
+    ]
+  },
+  {
+    "id": "gg-diagonalX-easy-10",
+    "phase": "gg",
+    "label": "diagonalX-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-easy-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 9,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.703 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-easy-10.json"
+    ]
+  },
+  {
+    "id": "gg-diagonalX-easy-15",
+    "phase": "gg",
+    "label": "diagonalX-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-easy-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 12,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (3.483 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-easy-15.json"
+    ]
+  },
+  {
+    "id": "gg-diagonalX-nightmare-00",
+    "phase": "gg",
+    "label": "diagonalX-nightmare-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-nightmare-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 9,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.858 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-nightmare-00.json"
+    ]
+  },
+  {
+    "id": "gg-diagonalX-nightmare-05",
+    "phase": "gg",
+    "label": "diagonalX-nightmare-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-nightmare-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 10,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.344 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-nightmare-05.json"
+    ]
+  },
+  {
+    "id": "gg-diagonalX-nightmare-10",
+    "phase": "gg",
+    "label": "diagonalX-nightmare-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-nightmare-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 11,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.65 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-nightmare-10.json"
+    ]
+  },
+  {
+    "id": "gg-diagonalX-nightmare-15",
+    "phase": "gg",
+    "label": "diagonalX-nightmare-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-nightmare-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 10,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.203 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\diagonalX-nightmare-15.json"
+    ]
+  },
+  {
+    "id": "gg-hyper-hard-00",
+    "phase": "gg",
+    "label": "hyper-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\hyper-hard-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.585 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\hyper-hard-00.json"
+    ]
+  },
+  {
+    "id": "gg-hyper-hard-05",
+    "phase": "gg",
+    "label": "hyper-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\hyper-hard-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.573 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\hyper-hard-05.json"
+    ]
+  },
+  {
+    "id": "gg-hyper-hard-10",
+    "phase": "gg",
+    "label": "hyper-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\hyper-hard-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.589 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\hyper-hard-10.json"
+    ]
+  },
+  {
+    "id": "gg-hyper-hard-15",
+    "phase": "gg",
+    "label": "hyper-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\hyper-hard-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.607 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\hyper-hard-15.json"
+    ]
+  },
+  {
+    "id": "gg-jigsaw9-normal-00",
+    "phase": "gg",
+    "label": "jigsaw9-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-normal-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.419 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-normal-00.json"
+    ]
+  },
+  {
+    "id": "gg-jigsaw9-normal-05",
+    "phase": "gg",
+    "label": "jigsaw9-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-normal-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.715 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-normal-05.json"
+    ]
+  },
+  {
+    "id": "gg-jigsaw9-normal-10",
+    "phase": "gg",
+    "label": "jigsaw9-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-normal-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.948 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-normal-10.json"
+    ]
+  },
+  {
+    "id": "gg-jigsaw9-normal-15",
+    "phase": "gg",
+    "label": "jigsaw9-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-normal-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.238 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-normal-15.json"
+    ]
+  },
+  {
+    "id": "gg-jigsaw9-master-00",
+    "phase": "gg",
+    "label": "jigsaw9-master-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-master-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.832 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-master-00.json"
+    ]
+  },
+  {
+    "id": "gg-jigsaw9-master-05",
+    "phase": "gg",
+    "label": "jigsaw9-master-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-master-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.048 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-master-05.json"
+    ]
+  },
+  {
+    "id": "gg-jigsaw9-master-10",
+    "phase": "gg",
+    "label": "jigsaw9-master-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-master-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.875 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-master-10.json"
+    ]
+  },
+  {
+    "id": "gg-jigsaw9-master-15",
+    "phase": "gg",
+    "label": "jigsaw9-master-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-master-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.933 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\jigsaw9-master-15.json"
+    ]
+  },
+  {
+    "id": "gg-killer-easy-00",
+    "phase": "gg",
+    "label": "killer-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-easy-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.556 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-easy-00.json"
+    ]
+  },
+  {
+    "id": "gg-killer-easy-05",
+    "phase": "gg",
+    "label": "killer-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-easy-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.58 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-easy-05.json"
+    ]
+  },
+  {
+    "id": "gg-killer-easy-10",
+    "phase": "gg",
+    "label": "killer-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-easy-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.57 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-easy-10.json"
+    ]
+  },
+  {
+    "id": "gg-killer-easy-15",
+    "phase": "gg",
+    "label": "killer-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-easy-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.602 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-easy-15.json"
+    ]
+  },
+  {
+    "id": "gg-killer-hard-00",
+    "phase": "gg",
+    "label": "killer-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-hard-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 57,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (25.899 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-hard-00.json"
+    ]
+  },
+  {
+    "id": "gg-killer-hard-05",
+    "phase": "gg",
+    "label": "killer-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-hard-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 61,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (27.767 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-hard-05.json"
+    ]
+  },
+  {
+    "id": "gg-killer-hard-10",
+    "phase": "gg",
+    "label": "killer-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-hard-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 58,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (26.47 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-hard-10.json"
+    ]
+  },
+  {
+    "id": "gg-killer-hard-15",
+    "phase": "gg",
+    "label": "killer-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-hard-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 59,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (26.522 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\killer-hard-15.json"
+    ]
+  },
+  {
+    "id": "gg-greaterThan-normal-00",
+    "phase": "gg",
+    "label": "greaterThan-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-normal-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 30,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (12.162 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-normal-00.json"
+    ]
+  },
+  {
+    "id": "gg-greaterThan-normal-05",
+    "phase": "gg",
+    "label": "greaterThan-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-normal-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 28,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (11.32 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-normal-05.json"
+    ]
+  },
+  {
+    "id": "gg-greaterThan-normal-10",
+    "phase": "gg",
+    "label": "greaterThan-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-normal-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.285 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-normal-10.json"
+    ]
+  },
+  {
+    "id": "gg-greaterThan-normal-15",
+    "phase": "gg",
+    "label": "greaterThan-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-normal-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 31,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (12.883 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-normal-15.json"
+    ]
+  },
+  {
+    "id": "gg-greaterThan-hard-00",
+    "phase": "gg",
+    "label": "greaterThan-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-hard-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 27,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (10.924 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-hard-00.json"
+    ]
+  },
+  {
+    "id": "gg-greaterThan-hard-05",
+    "phase": "gg",
+    "label": "greaterThan-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-hard-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 45,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (19.554 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-hard-05.json"
+    ]
+  },
+  {
+    "id": "gg-greaterThan-hard-10",
+    "phase": "gg",
+    "label": "greaterThan-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-hard-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 24,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (9.449 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-hard-10.json"
+    ]
+  },
+  {
+    "id": "gg-greaterThan-hard-15",
+    "phase": "gg",
+    "label": "greaterThan-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-hard-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 29,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (11.8 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\greaterThan-hard-15.json"
+    ]
+  },
+  {
+    "id": "gg-samurai-easy-00",
+    "phase": "gg",
+    "label": "samurai-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\samurai-easy-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 11,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.724 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\samurai-easy-00.json"
+    ]
+  },
+  {
+    "id": "gg-samurai-easy-05",
+    "phase": "gg",
+    "label": "samurai-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\samurai-easy-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 12,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (3.417 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\samurai-easy-05.json"
+    ]
+  },
+  {
+    "id": "gg-samurai-easy-10",
+    "phase": "gg",
+    "label": "samurai-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\samurai-easy-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 12,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (3.12 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\samurai-easy-10.json"
+    ]
+  },
+  {
+    "id": "gg-samurai-easy-15",
+    "phase": "gg",
+    "label": "samurai-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\samurai-easy-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 10,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.344 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\samurai-easy-15.json"
+    ]
+  },
+  {
+    "id": "gg-sohei-veryEasy-00",
+    "phase": "gg",
+    "label": "sohei-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\sohei-veryEasy-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.572 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\sohei-veryEasy-00.json"
+    ]
+  },
+  {
+    "id": "gg-sohei-veryEasy-05",
+    "phase": "gg",
+    "label": "sohei-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\sohei-veryEasy-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.563 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\sohei-veryEasy-05.json"
+    ]
+  },
+  {
+    "id": "gg-sohei-veryEasy-10",
+    "phase": "gg",
+    "label": "sohei-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\sohei-veryEasy-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.571 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\sohei-veryEasy-10.json"
+    ]
+  },
+  {
+    "id": "gg-sohei-veryEasy-15",
+    "phase": "gg",
+    "label": "sohei-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\sohei-veryEasy-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 7,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (0.581 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\sohei-veryEasy-15.json"
+    ]
+  },
+  {
+    "id": "gg-butterfly-normal-00",
+    "phase": "gg",
+    "label": "butterfly-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\butterfly-normal-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.32 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\butterfly-normal-00.json"
+    ]
+  },
+  {
+    "id": "gg-butterfly-normal-05",
+    "phase": "gg",
+    "label": "butterfly-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\butterfly-normal-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.012 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\butterfly-normal-05.json"
+    ]
+  },
+  {
+    "id": "gg-butterfly-normal-10",
+    "phase": "gg",
+    "label": "butterfly-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\butterfly-normal-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 9,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.524 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\butterfly-normal-10.json"
+    ]
+  },
+  {
+    "id": "gg-butterfly-normal-15",
+    "phase": "gg",
+    "label": "butterfly-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\butterfly-normal-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 10,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.414 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\butterfly-normal-15.json"
+    ]
+  },
+  {
+    "id": "gg-flower-normal-00",
+    "phase": "gg",
+    "label": "flower-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\flower-normal-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 10,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.348 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\flower-normal-00.json"
+    ]
+  },
+  {
+    "id": "gg-flower-normal-05",
+    "phase": "gg",
+    "label": "flower-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\flower-normal-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.043 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\flower-normal-05.json"
+    ]
+  },
+  {
+    "id": "gg-flower-normal-10",
+    "phase": "gg",
+    "label": "flower-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\flower-normal-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.324 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\flower-normal-10.json"
+    ]
+  },
+  {
+    "id": "gg-flower-normal-15",
+    "phase": "gg",
+    "label": "flower-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\flower-normal-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 10,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.152 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\flower-normal-15.json"
+    ]
+  },
+  {
+    "id": "gg-wordoku-normal-00",
+    "phase": "gg",
+    "label": "wordoku-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\wordoku-normal-00.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 10,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.062 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\wordoku-normal-00.json"
+    ]
+  },
+  {
+    "id": "gg-wordoku-normal-05",
+    "phase": "gg",
+    "label": "wordoku-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\wordoku-normal-05.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 8,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (1.202 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\wordoku-normal-05.json"
+    ]
+  },
+  {
+    "id": "gg-wordoku-normal-10",
+    "phase": "gg",
+    "label": "wordoku-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\wordoku-normal-10.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 10,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.06 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\wordoku-normal-10.json"
+    ]
+  },
+  {
+    "id": "gg-wordoku-normal-15",
+    "phase": "gg",
+    "label": "wordoku-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\wordoku-normal-15.json"
+    ],
+    "tee": null,
+    "allowExit1": false,
+    "projectionSeconds": 11,
+    "projectionBasis": "MEASURED at MS07c on the same 63 engine sources (2.507 s node); 2 x + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\hashes\\wordoku-normal-15.json"
+    ]
+  },
+  {
+    "id": "pilot-classic6",
+    "phase": "pilot",
+    "label": "projection pilot easy:3 normal:3 expert:3 master:3 nightmare:3 hell1:3 hell2:3 of classic6",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-classic6.json",
+      "--cells=classic6/easy:3,classic6/normal:3,classic6/expert:3,classic6/master:3,classic6/nightmare:3,classic6/hell1:3,classic6/hell2:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-classic6.txt",
+    "allowExit1": false,
+    "projectionSeconds": 25,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 9.9 s, + 3 s start-up, x 1.5 + 5 s = 25 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-classic6.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-classic6.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-classic9",
+    "phase": "pilot",
+    "label": "projection pilot hell1:2 hell2:2 of classic9",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-classic9.json",
+      "--cells=classic9/hell1:2,classic9/hell2:2",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-classic9.txt",
+    "allowExit1": false,
+    "projectionSeconds": 37,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 18.3 s, + 3 s start-up, x 1.5 + 5 s = 37 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-classic9.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-classic9.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-mega12",
+    "phase": "pilot",
+    "label": "projection pilot nightmare:2 hell1:1 hell2:3 of mega12",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-mega12.json",
+      "--cells=mega12/nightmare:2,mega12/hell1:1,mega12/hell2:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-mega12.txt",
+    "allowExit1": false,
+    "projectionSeconds": 136,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 83.9 s, + 3 s start-up, x 1.5 + 5 s = 136 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-mega12.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-mega12.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-mega16",
+    "phase": "pilot",
+    "label": "projection pilot master:3 nightmare:1 hell1:1 of mega16",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-mega16.json",
+      "--cells=mega16/master:3,mega16/nightmare:1,mega16/hell1:1",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-mega16.txt",
+    "allowExit1": false,
+    "projectionSeconds": 345,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 223.6 s, + 3 s start-up, x 1.5 + 5 s = 345 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-mega16.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-mega16.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-diagonalX",
+    "phase": "pilot",
+    "label": "projection pilot nightmare:2 hell1:3 of diagonalX",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-diagonalX.json",
+      "--cells=diagonalX/nightmare:2,diagonalX/hell1:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-diagonalX.txt",
+    "allowExit1": false,
+    "projectionSeconds": 33,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 15.1 s, + 3 s start-up, x 1.5 + 5 s = 33 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-diagonalX.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-diagonalX.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-hyper",
+    "phase": "pilot",
+    "label": "projection pilot nightmare:3 hell1:3 hell2:3 of hyper",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-hyper.json",
+      "--cells=hyper/nightmare:3,hyper/hell1:3,hyper/hell2:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-hyper.txt",
+    "allowExit1": false,
+    "projectionSeconds": 19,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 6.3 s, + 3 s start-up, x 1.5 + 5 s = 19 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-hyper.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-hyper.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-jigsaw9",
+    "phase": "pilot",
+    "label": "projection pilot expert:2 nightmare:3 hell1:3 of jigsaw9",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-jigsaw9.json",
+      "--cells=jigsaw9/expert:2,jigsaw9/nightmare:3,jigsaw9/hell1:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-jigsaw9.txt",
+    "allowExit1": false,
+    "projectionSeconds": 34,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 15.8 s, + 3 s start-up, x 1.5 + 5 s = 34 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-jigsaw9.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-jigsaw9.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-killer",
+    "phase": "pilot",
+    "label": "projection pilot hard:2 expert:2 master:2 nightmare:2 hell1:2 hell2:3 of killer",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-killer.json",
+      "--cells=killer/hard:2,killer/expert:2,killer/master:2,killer/nightmare:2,killer/hell1:2,killer/hell2:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-killer.txt",
+    "allowExit1": false,
+    "projectionSeconds": 173,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 108.5 s, + 3 s start-up, x 1.5 + 5 s = 173 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-killer.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-killer.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-greaterThan",
+    "phase": "pilot",
+    "label": "projection pilot normal:3 hard:3 expert:2 master:3 nightmare:2 hell1:3 hell2:3 of greaterThan",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-greaterThan.json",
+      "--cells=greaterThan/normal:3,greaterThan/hard:3,greaterThan/expert:2,greaterThan/master:3,greaterThan/nightmare:2,greaterThan/hell1:3,greaterThan/hell2:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-greaterThan.txt",
+    "allowExit1": false,
+    "projectionSeconds": 89,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 52.6 s, + 3 s start-up, x 1.5 + 5 s = 89 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-greaterThan.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-greaterThan.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-samurai",
+    "phase": "pilot",
+    "label": "projection pilot normal:3 nightmare:2 hell1:2 hell2:2 of samurai",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-samurai.json",
+      "--cells=samurai/normal:3,samurai/nightmare:2,samurai/hell1:2,samurai/hell2:2",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-samurai.txt",
+    "allowExit1": false,
+    "projectionSeconds": 147,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 91.6 s, + 3 s start-up, x 1.5 + 5 s = 147 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-samurai.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-samurai.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-sohei",
+    "phase": "pilot",
+    "label": "projection pilot nightmare:2 hell1:3 hell2:3 of sohei",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-sohei.json",
+      "--cells=sohei/nightmare:2,sohei/hell1:3,sohei/hell2:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-sohei.txt",
+    "allowExit1": false,
+    "projectionSeconds": 92,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 54.7 s, + 3 s start-up, x 1.5 + 5 s = 92 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-sohei.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-sohei.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-butterfly",
+    "phase": "pilot",
+    "label": "projection pilot easy:3 nightmare:1 hell1:3 hell2:3 of butterfly",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-butterfly.json",
+      "--cells=butterfly/easy:3,butterfly/nightmare:1,butterfly/hell1:3,butterfly/hell2:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-butterfly.txt",
+    "allowExit1": false,
+    "projectionSeconds": 78,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 45.2 s, + 3 s start-up, x 1.5 + 5 s = 78 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-butterfly.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-butterfly.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-flower",
+    "phase": "pilot",
+    "label": "projection pilot expert:3 master:3 nightmare:2 hell1:2 hell2:2 of flower",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-flower.json",
+      "--cells=flower/expert:3,flower/master:3,flower/nightmare:2,flower/hell1:2,flower/hell2:2",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-flower.txt",
+    "allowExit1": false,
+    "projectionSeconds": 136,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 83.9 s, + 3 s start-up, x 1.5 + 5 s = 136 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-flower.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-flower.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-wordoku",
+    "phase": "pilot",
+    "label": "projection pilot nightmare:2 hell1:3 hell2:2 of wordoku",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-wordoku.json",
+      "--cells=wordoku/nightmare:2,wordoku/hell1:3,wordoku/hell2:2",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-wordoku.txt",
+    "allowExit1": false,
+    "projectionSeconds": 50,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 26.5 s, + 3 s start-up, x 1.5 + 5 s = 50 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-wordoku.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-wordoku.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  }
+]

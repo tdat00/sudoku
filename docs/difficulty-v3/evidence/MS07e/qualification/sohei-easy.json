@@ -1,0 +1,47 @@
+{
+  "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+  "seedBase": 20260601,
+  "machine": {"cpu":"AMD EPYC 7763 64-Core Processor","logicalProcessors":16,"memoryGb":64,"platform":"win32 10.0.26300","node":"v26.13.0","jobs":4},
+  "engine": {"sources":"029720df77c6c12a","commit":"8b70875","dirty":true},
+  "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+  "acceptance": "canonical-required-tier",
+  "ratingVersion": 2,
+  "probe": 0,
+  "earlyStop": true,
+  "guardMs": 120000,
+  "attemptPolicy": {"function":"SG.digger.defaultMaxAttempts","explicitMaxAttempts":false,"sources":{"js/engine/digger.js":"c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786","js/engine/pipeline.js":"b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1","js/variants/registry.js":"967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"}},
+  "started": "2026-11-15T06:15:01.074Z",
+  "finished": "2026-11-15T06:15:04.329Z",
+  "seconds": 3,
+  "cells": [
+    {
+      "variant": "sohei",
+      "level": "easy",
+      "cellCount": 288,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {"n":18,"hits":4,"rate":0.2222222222222222,"p50":627.3443,"p95":837.0448,"max":837.0448,"verdict":"hidden","stopped":"misses","errors":0,"approximate":14,"invalid":0},
+      "requests": [
+        {"key":"sohei/easy","index":0,"seed":3895240776,"hit":false,"ms":837.0448,"achieved":"easy","score":67,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/easy","index":1,"seed":3912018395,"hit":true,"ms":590.2678,"achieved":"easy","score":131,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"sohei/easy","index":2,"seed":3928796014,"hit":false,"ms":770.5734,"achieved":"easy","score":68,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/easy","index":3,"seed":3945573633,"hit":false,"ms":825.4787,"achieved":"easy","score":67,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/easy","index":4,"seed":3962351252,"hit":false,"ms":660.2782,"achieved":"easy","score":68,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/easy","index":5,"seed":3979128871,"hit":true,"ms":134.9441,"achieved":"easy","score":133,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"sohei/easy","index":6,"seed":3995906490,"hit":false,"ms":721.9381,"achieved":"easy","score":68,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/easy","index":7,"seed":4012684109,"hit":false,"ms":750.772,"achieved":"easy","score":68,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/easy","index":8,"seed":3761019824,"hit":false,"ms":679.9603,"achieved":"easy","score":68,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/easy","index":9,"seed":3777797443,"hit":false,"ms":649.0812,"achieved":"easy","score":68,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/easy","index":10,"seed":4233067761,"hit":false,"ms":627.3443,"achieved":"easy","score":69,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/easy","index":11,"seed":4216290142,"hit":false,"ms":592.2861,"achieved":"easy","score":68,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/easy","index":12,"seed":4199512523,"hit":false,"ms":631.566,"achieved":"easy","score":67,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/easy","index":13,"seed":4182734904,"hit":true,"ms":122.2947,"achieved":"easy","score":130,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"sohei/easy","index":14,"seed":5210941,"hit":true,"ms":33.9505,"achieved":"easy","score":131,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"sohei/easy","index":15,"seed":4283400618,"hit":false,"ms":610.3862,"achieved":"easy","score":67,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/easy","index":16,"seed":4266622999,"hit":false,"ms":493.4074,"achieved":"easy","score":68,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/easy","index":17,"seed":4249845380,"hit":false,"ms":570.6328,"achieved":"easy","score":67,"solved":true,"approximate":true,"exact":false,"valid":true}
+      ]
+    }
+  ],
+  "support": {"sohei":[]}
+}

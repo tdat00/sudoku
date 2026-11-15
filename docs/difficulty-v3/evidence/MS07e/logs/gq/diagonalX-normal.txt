@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=diagonalX --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-normal.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+diagonalX/normal: 40/40 hits, p95 160 ms (budget 10.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| diagonalX | normal | 40 | 40 | 100 % | 19 ms | 160 ms | 207 ms | 10.0 s | offered |
+
+diagonalX: ["normal"]
+exit=0 seconds=1.044

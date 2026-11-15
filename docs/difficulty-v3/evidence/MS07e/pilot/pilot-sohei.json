@@ -1,0 +1,164 @@
+{
+  "schema": 1,
+  "kind": "ms07e-projection-pilot",
+  "task": "MS07e",
+  "argv": [
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-sohei.json",
+    "--cells=sohei/nightmare:2,sohei/hell1:3,sohei/hell2:3",
+    "--budget-seconds=420"
+  ],
+  "startedAt": "2026-11-15T05:09:39.270Z",
+  "identity": {
+    "sourceHash": "09f91d6db3fa3373307fed4bf175e9d48ce6cf0c0b98eccec1386dda7cb35ed9",
+    "node": "v26.13.0",
+    "commit": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "dirty": false
+  },
+  "machine": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64
+  },
+  "call": "SG.pipeline.run({ variantId, difficulty, seed, trace: \"off\" }, null, SG.budget.create({ ms: 120000 })), serial, one process; seed = FNV-1a(\"variant/level/index\") on 20260601 (qualify.js seedFor); no maxAttempts",
+  "budgetSeconds": 420,
+  "cells": {
+    "sohei/nightmare": {
+      "variant": "sohei",
+      "level": "nightmare",
+      "asked": 2,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 1981253693,
+          "hit": true,
+          "ms": 1467.9146,
+          "achieved": "nightmare",
+          "score": 2257,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 1964476074,
+          "hit": true,
+          "ms": 383.3004,
+          "achieved": "nightmare",
+          "score": 2328,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        }
+      ],
+      "n": 2,
+      "hits": 2,
+      "meanMs": 925.608,
+      "maxMs": 1467.9146
+    },
+    "sohei/hell1": {
+      "variant": "sohei",
+      "level": "hell1",
+      "asked": 3,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 3898108038,
+          "hit": false,
+          "ms": 23139.9738,
+          "achieved": "hell1",
+          "score": 3460,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 3914885657,
+          "hit": false,
+          "ms": 23914.0858,
+          "achieved": "hell1",
+          "score": 2503,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 3864552800,
+          "hit": false,
+          "ms": 22673.6817,
+          "achieved": "hell1",
+          "score": 3358,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 0,
+      "meanMs": 23242.58,
+      "maxMs": 23914.0858
+    },
+    "sohei/hell2": {
+      "variant": "sohei",
+      "level": "hell2",
+      "asked": 3,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 3083909031,
+          "hit": true,
+          "ms": 2833.3301,
+          "achieved": "hell2",
+          "score": 3834,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 3067131412,
+          "hit": true,
+          "ms": 1980.9324,
+          "achieved": "hell2",
+          "score": 3918,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 3117464269,
+          "hit": true,
+          "ms": 154.7418,
+          "achieved": "hell2",
+          "score": 3870,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 3,
+      "meanMs": 1656.335,
+      "maxMs": 2833.3301
+    }
+  },
+  "notReached": [],
+  "correctness": [],
+  "endedAt": "2026-11-15T05:10:55.830Z",
+  "seconds": 76.56
+}

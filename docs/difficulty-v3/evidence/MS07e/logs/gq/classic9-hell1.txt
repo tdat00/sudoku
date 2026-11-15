@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=classic9 --level=hell1 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-hell1.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-hell1.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+classic9/hell1: 0/14 hits, p95 8.07 s (budget 10.0 s), hidden (stopped: misses)
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| classic9 | hell1 | 14 | 0 | 0 % | 6.25 s | 8.07 s | 8.07 s | 10.0 s | hidden (stopped: misses) |
+
+classic9: []
+exit=0 seconds=24.298

@@ -1,0 +1,7 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-killer.json --cells=killer/nightmare:2@2,killer/hell1:2@2 --budget-seconds=420
+killer/nightmare #2: 871.1 ms, hit true, achieved nightmare, exact true, approximate false
+killer/nightmare #3: 923.9 ms, hit true, achieved nightmare, exact true, approximate false
+killer/hell1 #2: 25753.4 ms, hit false, achieved hell1, exact false, approximate true
+killer/hell1 #3: 31329.5 ms, hit false, achieved hell1, exact false, approximate true
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-killer.json (58.93 s)
+exit=0 seconds=59.431

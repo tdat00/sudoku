@@ -1,0 +1,10 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-wordoku.json --cells=wordoku/nightmare:2,wordoku/hell1:3,wordoku/hell2:2 --budget-seconds=420
+wordoku/nightmare #0: 253.9 ms, hit true, achieved nightmare, exact true, approximate false
+wordoku/nightmare #1: 84.4 ms, hit true, achieved nightmare, exact true, approximate false
+wordoku/hell1 #0: 6081.3 ms, hit false, achieved hell1, exact false, approximate true
+wordoku/hell1 #1: 6526.5 ms, hit false, achieved hell1, exact false, approximate true
+wordoku/hell1 #2: 7833.0 ms, hit false, achieved hell1, exact false, approximate true
+wordoku/hell2 #0: 4549.7 ms, hit false, achieved hell1, exact false, approximate true
+wordoku/hell2 #1: 4530.1 ms, hit false, achieved hell1, exact false, approximate true
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-wordoku.json (29.862 s)
+exit=0 seconds=30.379

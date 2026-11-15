@@ -1,0 +1,44 @@
+{
+  "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+  "seedBase": 20260601,
+  "machine": {"cpu":"AMD EPYC 7763 64-Core Processor","logicalProcessors":16,"memoryGb":64,"platform":"win32 10.0.26300","node":"v26.13.0","jobs":4},
+  "engine": {"sources":"029720df77c6c12a","commit":"8b70875","dirty":true},
+  "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+  "acceptance": "canonical-required-tier",
+  "ratingVersion": 2,
+  "probe": 0,
+  "earlyStop": true,
+  "guardMs": 120000,
+  "attemptPolicy": {"function":"SG.digger.defaultMaxAttempts","explicitMaxAttempts":false,"sources":{"js/engine/digger.js":"c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786","js/engine/pipeline.js":"b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1","js/variants/registry.js":"967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"}},
+  "started": "2026-11-15T06:14:40.815Z",
+  "finished": "2026-11-15T06:15:00.826Z",
+  "seconds": 20,
+  "cells": [
+    {
+      "variant": "classic9",
+      "level": "hell2",
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {"n":15,"hits":1,"rate":0.06666666666666667,"p50":5003.5349,"p95":5703.3744,"max":5703.3744,"verdict":"hidden","stopped":"misses","errors":0,"approximate":14,"invalid":0},
+      "requests": [
+        {"key":"classic9/hell2","index":0,"seed":3931817856,"hit":false,"ms":5703.3744,"achieved":"hell1","score":3559,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic9/hell2","index":1,"seed":3948595475,"hit":false,"ms":5152.1083,"achieved":"hell1","score":3521,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic9/hell2","index":2,"seed":3965373094,"hit":false,"ms":5259.0554,"achieved":"hell1","score":3556,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic9/hell2","index":3,"seed":3982150713,"hit":false,"ms":5003.5349,"achieved":"hell1","score":3462,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic9/hell2","index":4,"seed":3998928332,"hit":false,"ms":5127.5225,"achieved":"hell1","score":3590,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic9/hell2","index":5,"seed":4015705951,"hit":false,"ms":4618.2958,"achieved":"hell1","score":3577,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic9/hell2","index":6,"seed":4032483570,"hit":false,"ms":3777.399,"achieved":"hell1","score":3174,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic9/hell2","index":7,"seed":4049261189,"hit":false,"ms":5085.7517,"achieved":"hell1","score":3497,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic9/hell2","index":8,"seed":4066038808,"hit":false,"ms":3833.3119,"achieved":"hell1","score":3443,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic9/hell2","index":9,"seed":4082816427,"hit":false,"ms":4797.7601,"achieved":"hell1","score":3482,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic9/hell2","index":10,"seed":2733285913,"hit":false,"ms":4278.2694,"achieved":"hell1","score":3496,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic9/hell2","index":11,"seed":2716508294,"hit":false,"ms":4523.1459,"achieved":"hell1","score":3389,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic9/hell2","index":12,"seed":2699730675,"hit":true,"ms":1555.7269,"achieved":"hell2","score":3709,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"classic9/hell2","index":13,"seed":2682953056,"hit":false,"ms":5092.2667,"achieved":"hell1","score":3351,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic9/hell2","index":14,"seed":2800396389,"hit":false,"ms":5062.2622,"achieved":"hell1","score":3552,"solved":true,"approximate":true,"exact":false,"valid":true}
+      ]
+    }
+  ],
+  "support": {"classic9":[]}
+}

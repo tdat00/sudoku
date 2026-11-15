@@ -1,0 +1,11 @@
+$ node tests\artifacts\difficulty-v3\MS05r6b\gd-pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\gd\pilot.json --count=8
+veryEasy: 8 requests, mean 2.581 ms, median 1.394 ms, max 10.62 ms, exact 8
+easy: 8 requests, mean 183.89 ms, median 23.723 ms, max 1090.214 ms, exact 7
+normal: 8 requests, mean 197.001 ms, median 206.499 ms, max 659.158 ms, exact 7
+hard: 8 requests, mean 20.266 ms, median 21.034 ms, max 51.035 ms, exact 8
+expert: 8 requests, mean 16.184 ms, median 18.584 ms, max 36.561 ms, exact 8
+master: 8 requests, mean 43.776 ms, median 39.377 ms, max 81.255 ms, exact 8
+nightmare: 8 requests, mean 111.33 ms, median 114.932 ms, max 238.227 ms, exact 8
+hell1: 8 requests, mean 5932.67 ms, median 6106.278 ms, max 6567.979 ms, exact 0
+record: ..\docs\difficulty-v3\evidence\MS07e\gd\pilot.json
+exit=0 seconds=52.540

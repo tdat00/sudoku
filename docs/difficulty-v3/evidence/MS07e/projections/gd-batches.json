@@ -1,0 +1,50 @@
+[
+  {
+    "level": "nightmare",
+    "count": 100,
+    "meanMs": 111.33,
+    "projection": 33
+  },
+  {
+    "level": "hell1",
+    "count": 20,
+    "meanMs": 5932.67,
+    "projection": 248
+  },
+  {
+    "level": "veryEasy",
+    "count": 100,
+    "meanMs": 2.581,
+    "projection": 11
+  },
+  {
+    "level": "easy",
+    "count": 100,
+    "meanMs": 183.89,
+    "projection": 47
+  },
+  {
+    "level": "normal",
+    "count": 100,
+    "meanMs": 197.001,
+    "projection": 50
+  },
+  {
+    "level": "hard",
+    "count": 100,
+    "meanMs": 20.266,
+    "projection": 15
+  },
+  {
+    "level": "expert",
+    "count": 100,
+    "meanMs": 16.184,
+    "projection": 14
+  },
+  {
+    "level": "master",
+    "count": 100,
+    "meanMs": 43.776,
+    "projection": 19
+  }
+]

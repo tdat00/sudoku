@@ -1,0 +1,13 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-butterfly.json --cells=butterfly/easy:3,butterfly/nightmare:1,butterfly/hell1:3,butterfly/hell2:3 --budget-seconds=420
+butterfly/easy #0: 634.8 ms, hit true, achieved easy, exact true, approximate false
+butterfly/easy #1: 762.5 ms, hit false, achieved easy, exact false, approximate true
+butterfly/easy #2: 757.7 ms, hit false, achieved easy, exact false, approximate true
+butterfly/nightmare #0: 316.3 ms, hit true, achieved nightmare, exact true, approximate false
+butterfly/hell1 #0: 36623.7 ms, hit false, achieved hell1, exact false, approximate true
+butterfly/hell1 #1: 39490.8 ms, hit false, achieved hell1, exact false, approximate true
+butterfly/hell1 #2: 38865.1 ms, hit false, achieved hell1, exact false, approximate true
+butterfly/hell2 #0: 5319.8 ms, hit true, achieved hell2, exact true, approximate false
+butterfly/hell2 #1: 3807.0 ms, hit true, achieved hell2, exact true, approximate false
+butterfly/hell2 #2: 141.7 ms, hit true, achieved hell2, exact true, approximate false
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-butterfly.json (126.727 s)
+exit=0 seconds=127.228

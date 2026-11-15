@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=classic9 --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-hard.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+classic9/hard: 40/40 hits, p95 180 ms (budget 10.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| classic9 | hard | 40 | 40 | 100 % | 21 ms | 180 ms | 204 ms | 10.0 s | offered |
+
+classic9: ["hard"]
+exit=0 seconds=1.135

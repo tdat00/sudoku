@@ -1,0 +1,7 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-classic9.json --cells=classic9/hell1:2,classic9/hell2:2 --budget-seconds=420
+classic9/hell1 #0: 5990.1 ms, hit false, achieved hell1, exact false, approximate true
+classic9/hell1 #1: 7612.9 ms, hit false, achieved hell1, exact false, approximate true
+classic9/hell2 #0: 5443.9 ms, hit false, achieved hell1, exact false, approximate true
+classic9/hell2 #1: 5181.2 ms, hit false, achieved hell1, exact false, approximate true
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-classic9.json (24.231 s)
+exit=0 seconds=24.715
