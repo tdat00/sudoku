@@ -649,7 +649,20 @@ desired canonical change to the owning rating feature or a later separately appr
 boundary explicitly, with (b) as the safe fallback and (c) for actual intrinsic changes. Equal-result items
 still need check-site and cap-boundary parity, not only equal final scores.
 
-Plan-author answer:
+Plan-author answer: **(a) is the boundary, (b) the fallback, (c) the route for any intrinsic change. Section 9's
+rule does not replace IG-S-Q03 (b); it narrows it.**
+
+- *Intrinsic contract (the rating's):* a finder's findings, their order, its work units and its own caps
+  (`NEW_FINDER_WORK_LIMIT`, the chain kernels' work cap). They decide the canonical rating. No generator version
+  may change them; a wanted change goes to the feature that owns the rating (c).
+- *Generator-only contract:* the outer quotas the generator counts around the solver (`OBJECTIVE_STEPS`,
+  `ANALYSIS_NODES`, `UNIQUE_NODES`, `REPAIR_NODES`). These may move to another unit under `generatorVersion`,
+  as IG-S-Q03 (b) allowed, and every accepted puzzle keeps its canonical verification.
+- IG-S-Q03 (b) therefore covers the second contract only. I did not draw that line when I answered it.
+- *Where the two cannot be separated* (a check site that serves both, such as the inherited budget called
+  inside Nishio propagation), the family stays on its reference scan in this feature (b).
+- An equal-result item proves parity of check sites and cap boundaries, not only of final scores. A result
+  ended by a cap or a budget is never stored or reused as a completed negative.
 
 ---
 
@@ -673,7 +686,24 @@ with every cell shown separately. (c) A kernel-only speed target, explicitly rep
 optimisation. Report CPU and cold/ready wall separately. Do not substitute a kernel microbenchmark for the
 whole-request gate or require an unused kernel to speed a control.
 
-Plan-author answer:
+Plan-author answer: **(a).**
+
+- *Unit and comparator.* Each named target cell, paired on the same seeds, against the same post-phase-2
+  generator, quotas and pool (inner width four, outer `--jobs=1`). The two arms differ in the kernel only, so
+  S5's gain is not counted twice.
+- *Statistic.* Ready wall time of the request binds: the geometric mean of the per-request paired ratio, per
+  target cell. CPU and cold wall are reported apart, and CPU may not rise. A kernel microbenchmark is never the
+  gate.
+- *Controls.* Named cells that call the kernel must not be slower (ratio at least 0.95). A cell that never calls
+  it is checked for identical puzzles only; it is not asked to speed up.
+- *Order.* Targets, controls and the statistic are named after the frozen profile (F3) and before the
+  optimisation is evaluated.
+- *Admission from the profile.* By `F = 1/(1 - f + f/s)`, a whole-request 1.5 needs an eligible share `f` of at
+  least one third even for an unbounded kernel gain, and of two thirds at a kernel factor of 2. An item whose
+  profile cannot reach that is not built.
+- *My proposal on the threshold:* 1.5 stays for the large items (the chain work of S3, K1, S10). For a
+  medium-sized equal-result item with a complete equivalence proof (K2), 1.15 on the same statistic. A single
+  1.5 would rule K2 out before it is measured: its favourable case is about 1.17.
 
 ---
 
@@ -695,7 +725,15 @@ Derived or Projection label rather than a measured-band claim.
 **Recommendation.** Opus asks for the definition/source. Astra prefers (a), or considers a fully stated
 (b) sufficient without an additional design gate. Both agree that the literal score band did not widen.
 
-Plan-author answer:
+Plan-author answer: **(a): remove both figures.**
+
+- The Nightmare band is `[1500, 2400)` before and after MS07; it did not widen. The sentences in plan sections
+  0.2 and S1's version-2 note, and the same phrase in my answer to IG-S-Q08 above, are withdrawn.
+- The figures are consistent with the headroom above one required step, 275 at weight 1700 and 650 at 1400,
+  less an allowance of 55 to 60 points for `V` and the other deductions. I recorded no source or assumptions
+  for that allowance, and it depends on the board, so I do not keep it as an illustration.
+- Version 3 states the unchanged band and the 375-point change of the one-step lower bound, labelled Derived.
+  IG-S-Q08's instruction itself stands: the floor comparison runs on the frozen catalogue.
 
 ---
 
@@ -721,7 +759,13 @@ Q02 condition, including the serial/file-mode caveat. This is for improve-genera
 not amend difficulty-v3's final qualification or its populations. Do not mix concurrency cohorts into one
 unqualified p95.
 
-Plan-author answer:
+Plan-author answer: **(a): outer `--jobs=1`.**
+
+For this feature's paired timing and budget verdicts: inner width four at outer `--jobs=1`, and the serial
+control at width one and outer `--jobs=1`. Every condition of IG-S-Q02 stays, the serial `file://` caveat
+included. A throughput study at a higher outer count is labelled as one and never pooled into a p95 with these.
+The checkpoint's `--jobs=4` records are context, not matched timing controls. Nothing here changes difficulty-v3's
+qualification.
 
 ---
 
@@ -747,7 +791,18 @@ verification, content identity, novelty and exhaustion.
 after a priced root-supply/verification proposal. No bank design precedes the final catalogue; no requiredness,
 rating or offer threshold is weakened. S-OD7's separate Hard/Expert withholding is unchanged.
 
-Plan-author answer:
+Plan-author answer: **(a) first.**
+
+- Withdrawn from plan 9.2: S9 "if the owner wants Hell 1 before the finders arrive". A bank is not designed
+  before the final catalogue (the report's JV2-S14).
+- After the final catalogue: reconcile the baseline, run only the approved residual diagnostics, and keep
+  unqualified cells unoffered. The 0 of 112 are completed shallow results; making them faster does not make
+  them exact.
+- The floor diagnostic (K4, diagnostic only) is what would point to (b) or (c). If floor-stuck candidates turn
+  up but end above the band, unsolved or capped, there is a specific steering hypothesis for (b), with its own
+  yield, identity and budget gates. If almost none turn up, live search is not steering toward the tier, and
+  the question becomes (c), on a priced plan for distinct roots and verification.
+- No requiredness, rating or offer threshold is weakened, and S-OD7 is untouched.
 
 ---
 
@@ -775,7 +830,21 @@ prototype requests is a proposal to cost, not a substitute for official qualific
 round/possible expansion or an authorisation to launch the six omitted difficulty-v3 cells. Price commands,
 limits, validation and wrapper grace after the narrowed repair; no old allocation carries over.
 
-Plan-author answer:
+Plan-author answer: **(a).**
+
+- *Fields.* From the pipeline's existing output: `attempts`, `timings`, `work`. Added: the origin of the
+  selected candidate; attempts started, consumed and discarded; per-attempt and per-sample stages; quotas and
+  stop reasons; cold and ready wall time; host CPU with speculation; outer jobs and inner width. A missing
+  field stays missing; it is not read as zero or inferred for exact hits.
+- *Reuse.* A final record is reused only on a full match of source and catalogue identity, the complete
+  request and the protocol. Puzzles and exact flags do not depend on the outer concurrency, so matching final
+  records can serve for outcomes; their timings at another outer count are context only.
+- *Cells for the 20 or more paired requests,* named for good after F1's reconciliation. My proposal:
+  Greater-Than Master (the slow exact tail), Killer Nightmare and Killer Master, one classic-size Hell 1 cell
+  (diagonalX, the largest p95), one multigrid Hell 1 cell (Samurai), and mega16 Nightmare if it is still
+  unqualified. Classic9 and mega12 Nightmare are the early-hit controls for the pool.
+- This is a proposal to cost after the narrowed repair. It does not replace the official 40-request round and
+  launches none of the six omitted difficulty-v3 cells. The old full Nightmare screen is not repeated.
 
 ---
 
@@ -800,7 +869,16 @@ result would change a design decision enough to justify the extra work. Both req
 Neither architecture work nor this question authorises an engine run; (a) remains the default without a
 separate receipt.
 
-Plan-author answer:
+Plan-author answer: **(a): wait for the frozen source.**
+
+- A preliminary width sweep would change no design decision I can name. Under IG-S-D1 (B) the pool is built
+  with the early-hit path and the serial fallback whatever the numbers are; the numbers only tune them.
+- What SM5 measures (how often the first attempt hits, the CPU cost, the latency gain) moves with the runtime,
+  and MS08 to MS16 are still to come; the frozen recheck would be the measurement that counts.
+- The harness has no native or no-op puzzle parity on the current source. A run now pays for that on a source
+  that will change, while difficulty-v3 holds machine priority.
+- Exception: if the S5a design names a decision that width 1, 2 and 4 data would change, that question goes to
+  the owner as (b), with its source, scope and ceiling.
 
 ---
 
@@ -817,7 +895,15 @@ head start and a serial fallback; (C) serial until browser evidence. The observe
 individual pairs reached 4.39x and 4.13x. Analysts: **(B)**, default enablement only after frozen CPU, cold and
 ready-wall results, and a phone-class check before mobile enablement.
 
-Plan-author answer:
+Plan-author answer: **(B). This replaces my proposal in plan section 7 ("accept", up to 1.6 times).**
+
+- "Up to 1.6 times" was a cell median, not a bound: single early-exact pairs reached 4.39 and 4.13. Eager
+  pooling (A) therefore spends the most CPU exactly where the first attempt already hits.
+- Conditions: an early-hit path (a head start for attempt 1, or serial where the cell hits early), chosen per
+  cell from frozen data; the serial lane on `file://` and at width one; the same puzzle at every width. The
+  head start changes timing only, never the result.
+- Default enablement only after the frozen CPU, cold-wall and ready-wall results, and a phone-class check
+  before it is enabled on mobile.
 
 ### IG-S-D2 (D10/A8): harness repair before the frozen budget
 
@@ -825,7 +911,12 @@ Options: (A) repair the old full package now; (B) a separately costed, narrowed 
 frozen source, then price the measurement round; (C) defer the feature. Analysts: **(B)**, with actual loader parity
 and capability checks and never a fallback to the old engine; no provisional unused time carries over.
 
-Plan-author answer:
+Plan-author answer: **(B).**
+
+The repair is narrowed to the consumers the reduced round keeps (loaders, pool, telemetry, the full-grid hook
+and any approved diagnostic hook), on the attested frozen source, as its own costed task. It must show actual
+native and no-op puzzle parity; the smoke's textual applicability is not that. It never falls back to the old
+engine. The measurement round is priced only afterwards, and no provisional time carries over.
 
 ### IG-S-D3 (OD-S3): the Hell 1 route
 
@@ -834,7 +925,10 @@ If Hell 1 still lacks reliable exact yield on the final catalogue: (A) bounded d
 Analysts: **(A) first**; (B) only with a specific viable hypothesis; (C) only with a priced distinct-root supply and
 verification plan. No bank design or supply commitment precedes the final catalogue.
 
-Plan-author answer:
+Plan-author answer: **(A) first.**
+
+(B) only with a named hypothesis, which the floor diagnostic may or may not supply; (C) only with a priced plan
+for distinct roots and their verification. No bank is designed before the final catalogue. See IG-S-Q23.
 
 ### IG-S-D4: outer concurrency of the improve-generating qualification
 
@@ -843,7 +937,10 @@ outer `--jobs=1`; (B) another fixed, non-oversubscribed outer concurrency. Analy
 separate. It refines IG-S-Q02 and does not alter difficulty-v3's qualification, its sample counts or the 120 s
 request-wall guard. (See also IG-S-Q22.)
 
-Plan-author answer:
+Plan-author answer: **(A).**
+
+Inner width four and outer `--jobs=1` for paired timing and budget verdicts, serial controls at outer
+`--jobs=1`, and any throughput study kept apart. See IG-S-Q22.
 
 ### IG-S-D5: the reduced frozen-round scope
 
@@ -853,7 +950,12 @@ attempt sweep retired); (B) the old full package; (C) deferral. Analysts: **(A)*
 proposal, not a replacement for official qualification; machine time approved only after the repair. (See also
 IG-S-Q24.)
 
-Plan-author answer:
+Plan-author answer: **(A).**
+
+The reduced staged round, F0 to F6 of the joint report, each step with its stop condition. The passing-cell
+Nightmare screen and the attempt sweep are retired; they return only for a cell that fails on the final
+catalogue. Cohorts of 20 or more are a proposal to cost (IG-S-Q24), and machine time is approved only after the
+repair of IG-S-D2.
 
 ### IG-S-D6: an early SM5 run before the freeze (analysts disagree)
 
@@ -861,4 +963,7 @@ Options: (A) wait for the freeze (Astra; the default); (B) a separately approved
 current source with a mandatory frozen recheck (Opus, when resources permit). There is no joint request to execute
 it now. (See also IG-S-Q25.)
 
-Plan-author answer:
+Plan-author answer: **(A): wait for the freeze.**
+
+I side with Astra here; the reasons are under IG-S-Q25. (B) only if the pool design names a decision that the
+early numbers would change.
