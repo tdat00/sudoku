@@ -68,6 +68,14 @@ catalogue (`-Round frozen-gate`, with a freeze receipt and a budget receipt).
 | `ig08-run.cjs` | IG-S08 glue for `run.cjs` (`attemptDir` is passed to `prepare` and `execute`): the host-side recorder that journals stage markers and heartbeats of a worker (`stage-journal.jsonl`), probe, calibration, engine checks and the synthetic recovery test (`prepare`), the observed request (`execute`), the record additions reconciled from the journal alone, identity against the native control and the shard summary. |
 | `ig08-aggregate.cjs` | IG-S08 documents from evidence only: `tail-attribution.json`, `summary.json/md` (`--suffix=-r2 --revision=<text>` for a revision). |
 | `ig08-test.cjs` | IG-S08 tests: pure cases (beacon on a fake clock, transforms on the real sources, the patched layout and stage runner on a fake of the engine pieces, the recorder on fake workers, plan, glue, aggregator; `node ig08-test.cjs`, no engine, no thread) and the engine checks of the first command. |
+| `greater-than-diagnostic.cjs` | IG-S09: the capture runtime published as `SG.__igGt` for one request (setup reveals with their origin, sign passes, removals, samples, the internal count guard, physical countSolutions calls / search-loop budget checks / restricted solves), the arm G1 oracle (`solveFirst`, which stops on a solver failure instead of retrying), and the pure analysis: the named-trap predicate, the disjoint miss split, minimality judgement, the setup-probe rule, validation reuse digests and the G0/G1 comparison with `guard-binding-difference`. |
+| `adapters/gt-diagnostic.cjs` | IG-S09: the 23 in-memory transforms of `greater-than.js`, `digger.js` and `dfs-solver.js` that call the capture runtime (observation only; the native code when `SG.__igGt` is absent) and carry the G1 order of the oracle. |
+| `plans/ig-s09.cjs` | IG-S09: the ten shards (four Normal, five Nightmare, `observer-control`), 30 paired requests and two observer-free controls. |
+| `ig09-worker.cjs` | IG-S09 worker side (every job kind `ig09-`, one line in `worker.cjs`): the captured request of either arm (`ig09-g0-request`, `ig09-g1-request`) and the post-timing diagnosis on an unpatched instance (`ig09-diagnose`: independent rating, uniqueness and minimality of the cheap-clause samples, the setup probes). |
+| `ig09-run.cjs` | IG-S09 glue for `run.cjs`: the captured request (`execute`), the diagnosis host call with its own 30 s budget and the exact-input validation reuse, the capture consistency check, the record additions, identity of G0 against G1 and of the observer-free controls against the captured G0, the shard summary. |
+| `ig09-aggregate.cjs` | IG-S09 documents from evidence only: `samples.json`, `sign-passes.json`, `setup-probes.json`, `miss-split.json`, `order-parity.json`, `summary.json/md` (`--suffix=-r2 --revision=<text>` for a revision). |
+| `ig09-dev-check.cjs` | IG-S09: one wrapped development check (the whole per-job flow on the real engine for Normal seed 300: G0, G1 and the observer-free control) written beside the task evidence with its own `command.json` (the charge). |
+| `ig09-test.cjs` | IG-S09 tests: pure cases (the patched `greater-than.js` on a fake of the engine pieces, the oracle cases, the classification, the diagnosis on a fake instance, reuse, probes, plan, transforms, glue, aggregator; `node ig09-test.cjs`, no engine, no thread). |
 
 ## Commands
 
@@ -622,3 +630,79 @@ node generator\tests\artifacts\improve-generating\phase0\ig08-test.cjs
   answers, a 1.5 s Jigsaw guard): the host records the timeout and no result, the journal holds the stage markers, heartbeats whose counters move while
   the worker is blocked and the post-mortem read; the attribution is also recomputed from the last heartbeat (the host died before the final read) and
   from a journal whose last line was cut short. The same judge runs on fake workers in the pure tests.
+
+## IG-S09: Greater-Than miss predicate and solve-first diagnostic (pre-MS07)
+
+Test side only; every number is provisional (pre-freeze), pre-MS07, and a diagnostic: no guided sign pool, setup-clue policy change or IR29 adoption follows
+from it (IG-S-Q16). Ten fixed shards, 30 paired requests and two controls: Greater-Than Normal literal seeds 300-319 (`normal-300-304`, `-305-309`,
+`-310-314`, `-315-319`), Nightmare seeds 700-709 (`nightmare-700-701` ... `-708-709`), and `observer-control` (observer-free native Normal 300 and Nightmare
+700, inside the runner and the priority wrapper, compared with the captured G0 of the same seeds). Every request is trace **summary** (the historical
+diagnostic population; not comparable with a trace-off headline), the other options native; the arm order alternates by the index in the seed list (even index:
+G0 first).
+
+```powershell
+# the plan (no engine, nothing timed, nothing written)
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S09 -Round provisional-r1 -PlanOnly
+# the ten shards in order
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S09 -Round provisional-r1
+# the task documents (evidence only, no engine, written once; --suffix=-r2 --revision=<text> for a revision)
+node generator\tests\artifacts\improve-generating\phase0\ig09-aggregate.cjs --task=IG-S09 --round=provisional-r1
+# development only, no engine, no thread, nothing written: the pure cases
+node generator\tests\artifacts\improve-generating\phase0\ig09-test.cjs
+# the wrapped development check (charged like any command: occupied time plus the 45 s grace); pass the caller's own request time as
+# --requested-at=<ISO UTC> to record the priority wait, otherwise the wait is recorded as unknown (null), never 0
+Invoke-IgNode -Repo sudoku -Task 'IG-S09-dev' -NodeArgs @('generator\tests\artifacts\improve-generating\phase0\ig09-dev-check.cjs', '--round=provisional-r1', '--seed=300')
+```
+
+- **Arms.** G0 is the native first-allowed sign pass. G1 changes the oracle of the **first technique sign pass of every sample only**: the native restricted solve
+  (`assumeUniqueness: false`) runs first; a complete proof by techniques that do not assume uniqueness is the only thing that skips that candidate's DFS count; a
+  stuck result runs the native count and keeps the original reason (`ambiguous` or `techniques`); a contradiction, a thrown solver error, a proof that used a
+  uniqueness-assuming technique or a malformed report is never "stuck" and is **never retried through the native order** (r2): it is recorded with its code, site and
+  ordinal (`firstFailure`) and stops the request (`ig09.g1-contradiction`, `ig09.g1-unsound-proof`, `ig09.g1-malformed-report`, or the solver's own code); a count that
+  fails after a stuck solve propagates with its code. A report that claims a proof is audited before anything is skipped: its technique-count map must be a plain object of
+  non-negative integers (`{}` is valid); a missing, null, string, array, non-plain or bad-valued map is `ig09.g1-malformed-report`, and neither the count nor the semantic-question
+  callback runs for a malformed or unsound proof. The semantic "one oracle question"
+  counter (`stats.oracleCalls`) is preserved; actual restricted solves, countSolutions calls, search-loop budget checks and skipped counts are separate counters. The sign-minimal
+  pass, reveals, tuning, target handling, the keeper, the local search and every random draw are untouched. Both arms carry the same capture.
+- **The instrument.** The adapter `gt-diagnostic` (23 in-memory transforms; hashes in `command.json`) calls `SG.__igGt`, published only for the one pipeline call of a
+  request (`ig09-worker.cjs`, a `finally`). It records per sample: the attempt and sample ordinal, the kind (ordinary, proposal or local), the floor, every setup reveal
+  with its origin (clue-floor rule, unit-floor rule, solvability help, tune), the post-setup parent, each sign pass with its decisions (one character per removal), its
+  physical countSolutions calls and search-loop budget checks, restricted solves and skipped counts, the tuning reveals, the final state and canonical rating, exactness, and the local search's
+  entry and cap data. **Counter units (r2):** `dfsCalls` are calls of `countSolutions` (one per uniqueness count; the r1 records alias them to `counts.dfsEntries`, which is
+  therefore **not** a count of depth-first node entries; new records leave `counts.dfsEntries` null); `dfsChecks` are the search loop's budget checks; the `UNIQUE_NODES` slice
+  counts budget checks (search-loop and propagation), not search nodes; node entries, propagation checks and the solver's own budget checks are **not instrumented**.
+  `cpuTotalMs` (the CPU columns of the reports) is the request's total CPU from worker start to cleanup, startup and cleanup included, not the CPU from ready to decision.
+- **Guards.** The sign passes receive the request budget (null: no external budget); whether the count or the solver has an internal limit there is **not instrumented**
+  (the reports say "no external budget object reaches these calls", never "no guard exists"); the internal
+  `UNIQUE_NODES` count slice (keeper offers and the local search) is observed (calls, budget checks used, trips); the stage B `OBJECTIVE_STEPS` guard is not on the sign path
+  (entries observed, expected 0); the per-attempt caps come from `wire.work`. A shared external budget would bind differently in the two orders: the comparison
+  classifies the first differing event as `guard-binding-difference` only when an external budget was present **and** the first differing event is an error event whose
+  recorded first failure carries a recognised guard code (`budget.exceeded`, `budget.cancelled`, `digger.uniqueGuard`, `digger.objectiveGuard`); an arbitrary error, a solver
+  error or a G1 stop code is a mismatch, and every other uncensored difference is a mismatch too and stops the pack (a request whose first failure is not a recognised guard
+  is an identity violation of the request).
+- **Post-timing diagnosis** (own 30 s host allowance per request **counted from the start of the diagnosis** and bounded by the command deadline, a 2 s margin and the worker start
+  inside it; an unpatched instance, separate wall and CPU fields, never part of a generation time): the independent
+  canonical re-rating of the dug samples (the cheap clue-floor clause first), and only for a sample that satisfies the clue-floor clause **and** is below the band the
+  uniqueness and the minimality proof (removing each remaining sign admits another solution; a node-capped count is unknown, not minimal); then the probes of the first
+  missed sample of the request: at most the first three above-floor setup groups in their recorded order against the saved post-setup, full-signs parent (the pure
+  clue-floor / unit-floor rule, a bounded uniqueness count and the allowed-set solve after the removal). The worker reports each piece of work before it starts, so a row
+  without a result is `unfinished` (started, result unknown) or `unstarted` (never reported), never assumed, and rows that arrived survive a timeout. The G0 proof of a
+  sample is reused for the other arm only when the digest of the full canonical input (level, solution, givens, signs), the source fingerprint and the guard settings is
+  identical (`validationReusedFrom`); the arm that runs first in a pair is diagnosed in full. The probe rows follow the same rule: the second-running arm's rows are **reused
+  copies** of the first-running arm's executed group checks (`reusedFrom`); the reports list executed checks and reused copies apart and never call the sum independent
+  executions.
+- **The miss predicate.** The named trap is exactly: a complete canonical rating below the requested band AND `finalClues <= minClues + 1` AND an independently proved
+  minimal sign set. The disjoint split is exact; shallow in-band; above / not rated / stuck; below + named trap; below + post-setup tune reveal; below + no tune reveal +
+  setup at least two above the floor; other / unknown below; unconfirmed (no independent canonical rating). Lower and upper trap shares are reported with the minimality
+  coverage; an ending category is not an intervention coverage.
+- **Stage time.** The request's time is split into full-grid / model setup, sign placement, setup-clue placement, the first technique sign pass (the only stage G1 changes),
+  later technique passes, minimal passes, tuning, the part after the strategy (safety count, rate step), local search and the remainder; the measured local-stage time is
+  reported beside the old request-group share, by cohort and arm, with the engine wall of the same requests as denominator.
+- **Comparisons and controls.** Every ratio is G0 / G1 (below 1: G1 took longer); a ratio of cohort totals and a median of per-pair ratios are labelled apart and an unresolved CPU
+  interval is unknown (null). The two observer-free controls (`observer-control`) are singletons, time-separated from their G0 request and a separate population: they are checked for
+  source, trace, configuration and output-digest compatibility with the captured G0, do not establish population-wide overhead and correct no G1 timing.
+- **Report writer.** `ig09-aggregate.cjs` is a harness file, so a report written after the commands carries its own writer fingerprint (and revision label) beside the fingerprint the
+  commands recorded; `--dry-run` prints the summary markdown and writes nothing. A budget-limited run lists its never-started rows as unstarted (not excluded, failed or replaced).
+  The revision r2 (`--suffix=-r2 --revision=r2`) publishes beside the preserved r1 files: the counter units, the executed versus reused probe split, the failure accounting (a
+  recorded stop is never a met T01), the diagnosis allowance, and the wait provenance (the ledger-recorded waits of the shard / control commands are a known partial figure, not an
+  all-task total; the development check's wait is unknown; the charge is reconciled with the common budget reader, the development check charged once).

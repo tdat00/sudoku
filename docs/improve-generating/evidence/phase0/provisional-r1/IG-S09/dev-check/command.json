@@ -1,0 +1,24 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S09",
+  "shard": "dev-check",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "status": "dev-check-complete",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "wrapperTask": "IG-S09-dev",
+  "harnessFingerprint": "8b0d0d39a12c78e34de18b84f8a9a1699fc11afd23674024f8ffaceddb259f62",
+  "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+  "notes": [
+    "development check of the IG-S09 flow (normal seed 300); not part of any shard"
+  ],
+  "timing": {
+    "requestedAt": "2026-11-15T02:49:34.308Z",
+    "admittedAt": "2026-11-15T02:49:34.269Z",
+    "endedAt": "2026-11-15T02:49:41.304Z",
+    "occupiedMs": 7035,
+    "chargedGraceMs": 45000,
+    "priorityWaitMs": 0
+  },
+  "exit": 0
+}

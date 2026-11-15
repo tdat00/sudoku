@@ -1,0 +1,2631 @@
+{
+  "manifest": {
+    "schema": "ig-s-phase0/1",
+    "task": "IG-S09",
+    "round": "provisional-r1",
+    "evidenceStatus": "provisional (pre-freeze)",
+    "guards": {
+      "commandMs": 270000,
+      "requestMs": 180000,
+      "sampleMs": 45000,
+      "jigsawMs": 240000,
+      "validationMs": 60000,
+      "wrapperLimitMs": 300000,
+      "graceMs": 45000,
+      "finalizeReserveMs": 8000,
+      "startMarginMs": 2000,
+      "minWindowMs": 15000
+    },
+    "pairOrder": [
+      {
+        "pairId": "greaterThan:normal:300",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:301",
+        "seedIndex": 1,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:302",
+        "seedIndex": 2,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:303",
+        "seedIndex": 3,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:304",
+        "seedIndex": 4,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:305",
+        "seedIndex": 5,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:306",
+        "seedIndex": 6,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:307",
+        "seedIndex": 7,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:308",
+        "seedIndex": 8,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:309",
+        "seedIndex": 9,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:310",
+        "seedIndex": 10,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:311",
+        "seedIndex": 11,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:312",
+        "seedIndex": 12,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:313",
+        "seedIndex": 13,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:314",
+        "seedIndex": 14,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:315",
+        "seedIndex": 15,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:316",
+        "seedIndex": 16,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:317",
+        "seedIndex": 17,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:318",
+        "seedIndex": 18,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:319",
+        "seedIndex": 19,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:nightmare:700",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:nightmare:701",
+        "seedIndex": 1,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:nightmare:702",
+        "seedIndex": 2,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:nightmare:703",
+        "seedIndex": 3,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:nightmare:704",
+        "seedIndex": 4,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:nightmare:705",
+        "seedIndex": 5,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:nightmare:706",
+        "seedIndex": 6,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:nightmare:707",
+        "seedIndex": 7,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "greaterThan:nightmare:708",
+        "seedIndex": 8,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:nightmare:709",
+        "seedIndex": 9,
+        "order": [
+          "prototype",
+          "reference"
+        ]
+      },
+      {
+        "pairId": "control:greaterThan:normal:300",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "control:greaterThan:nightmare:700",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      }
+    ],
+    "shards": [
+      {
+        "shard": "normal-300-304",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S09/normal-300-304/greaterThan:normal:300",
+          "IG-S09/normal-300-304/greaterThan:normal:301",
+          "IG-S09/normal-300-304/greaterThan:normal:302",
+          "IG-S09/normal-300-304/greaterThan:normal:303",
+          "IG-S09/normal-300-304/greaterThan:normal:304"
+        ],
+        "jobKeys": [
+          "IG-S09/normal-300-304/greaterThan:normal:300/g0",
+          "IG-S09/normal-300-304/greaterThan:normal:300/g1",
+          "IG-S09/normal-300-304/greaterThan:normal:301/g1",
+          "IG-S09/normal-300-304/greaterThan:normal:301/g0",
+          "IG-S09/normal-300-304/greaterThan:normal:302/g0",
+          "IG-S09/normal-300-304/greaterThan:normal:302/g1",
+          "IG-S09/normal-300-304/greaterThan:normal:303/g1",
+          "IG-S09/normal-300-304/greaterThan:normal:303/g0",
+          "IG-S09/normal-300-304/greaterThan:normal:304/g0",
+          "IG-S09/normal-300-304/greaterThan:normal:304/g1"
+        ]
+      },
+      {
+        "shard": "normal-305-309",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S09/normal-305-309/greaterThan:normal:305",
+          "IG-S09/normal-305-309/greaterThan:normal:306",
+          "IG-S09/normal-305-309/greaterThan:normal:307",
+          "IG-S09/normal-305-309/greaterThan:normal:308",
+          "IG-S09/normal-305-309/greaterThan:normal:309"
+        ],
+        "jobKeys": [
+          "IG-S09/normal-305-309/greaterThan:normal:305/g1",
+          "IG-S09/normal-305-309/greaterThan:normal:305/g0",
+          "IG-S09/normal-305-309/greaterThan:normal:306/g0",
+          "IG-S09/normal-305-309/greaterThan:normal:306/g1",
+          "IG-S09/normal-305-309/greaterThan:normal:307/g1",
+          "IG-S09/normal-305-309/greaterThan:normal:307/g0",
+          "IG-S09/normal-305-309/greaterThan:normal:308/g0",
+          "IG-S09/normal-305-309/greaterThan:normal:308/g1",
+          "IG-S09/normal-305-309/greaterThan:normal:309/g1",
+          "IG-S09/normal-305-309/greaterThan:normal:309/g0"
+        ]
+      },
+      {
+        "shard": "normal-310-314",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S09/normal-310-314/greaterThan:normal:310",
+          "IG-S09/normal-310-314/greaterThan:normal:311",
+          "IG-S09/normal-310-314/greaterThan:normal:312",
+          "IG-S09/normal-310-314/greaterThan:normal:313",
+          "IG-S09/normal-310-314/greaterThan:normal:314"
+        ],
+        "jobKeys": [
+          "IG-S09/normal-310-314/greaterThan:normal:310/g0",
+          "IG-S09/normal-310-314/greaterThan:normal:310/g1",
+          "IG-S09/normal-310-314/greaterThan:normal:311/g1",
+          "IG-S09/normal-310-314/greaterThan:normal:311/g0",
+          "IG-S09/normal-310-314/greaterThan:normal:312/g0",
+          "IG-S09/normal-310-314/greaterThan:normal:312/g1",
+          "IG-S09/normal-310-314/greaterThan:normal:313/g1",
+          "IG-S09/normal-310-314/greaterThan:normal:313/g0",
+          "IG-S09/normal-310-314/greaterThan:normal:314/g0",
+          "IG-S09/normal-310-314/greaterThan:normal:314/g1"
+        ]
+      },
+      {
+        "shard": "normal-315-319",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S09/normal-315-319/greaterThan:normal:315",
+          "IG-S09/normal-315-319/greaterThan:normal:316",
+          "IG-S09/normal-315-319/greaterThan:normal:317",
+          "IG-S09/normal-315-319/greaterThan:normal:318",
+          "IG-S09/normal-315-319/greaterThan:normal:319"
+        ],
+        "jobKeys": [
+          "IG-S09/normal-315-319/greaterThan:normal:315/g1",
+          "IG-S09/normal-315-319/greaterThan:normal:315/g0",
+          "IG-S09/normal-315-319/greaterThan:normal:316/g0",
+          "IG-S09/normal-315-319/greaterThan:normal:316/g1",
+          "IG-S09/normal-315-319/greaterThan:normal:317/g1",
+          "IG-S09/normal-315-319/greaterThan:normal:317/g0",
+          "IG-S09/normal-315-319/greaterThan:normal:318/g0",
+          "IG-S09/normal-315-319/greaterThan:normal:318/g1",
+          "IG-S09/normal-315-319/greaterThan:normal:319/g1",
+          "IG-S09/normal-315-319/greaterThan:normal:319/g0"
+        ]
+      },
+      {
+        "shard": "nightmare-700-701",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S09/nightmare-700-701/greaterThan:nightmare:700",
+          "IG-S09/nightmare-700-701/greaterThan:nightmare:701"
+        ],
+        "jobKeys": [
+          "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g0",
+          "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g1",
+          "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g1",
+          "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g0"
+        ]
+      },
+      {
+        "shard": "nightmare-702-703",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S09/nightmare-702-703/greaterThan:nightmare:702",
+          "IG-S09/nightmare-702-703/greaterThan:nightmare:703"
+        ],
+        "jobKeys": [
+          "IG-S09/nightmare-702-703/greaterThan:nightmare:702/g0",
+          "IG-S09/nightmare-702-703/greaterThan:nightmare:702/g1",
+          "IG-S09/nightmare-702-703/greaterThan:nightmare:703/g1",
+          "IG-S09/nightmare-702-703/greaterThan:nightmare:703/g0"
+        ]
+      },
+      {
+        "shard": "nightmare-704-705",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S09/nightmare-704-705/greaterThan:nightmare:704",
+          "IG-S09/nightmare-704-705/greaterThan:nightmare:705"
+        ],
+        "jobKeys": [
+          "IG-S09/nightmare-704-705/greaterThan:nightmare:704/g0",
+          "IG-S09/nightmare-704-705/greaterThan:nightmare:704/g1",
+          "IG-S09/nightmare-704-705/greaterThan:nightmare:705/g1",
+          "IG-S09/nightmare-704-705/greaterThan:nightmare:705/g0"
+        ]
+      },
+      {
+        "shard": "nightmare-706-707",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S09/nightmare-706-707/greaterThan:nightmare:706",
+          "IG-S09/nightmare-706-707/greaterThan:nightmare:707"
+        ],
+        "jobKeys": [
+          "IG-S09/nightmare-706-707/greaterThan:nightmare:706/g0",
+          "IG-S09/nightmare-706-707/greaterThan:nightmare:706/g1",
+          "IG-S09/nightmare-706-707/greaterThan:nightmare:707/g1",
+          "IG-S09/nightmare-706-707/greaterThan:nightmare:707/g0"
+        ]
+      },
+      {
+        "shard": "nightmare-708-709",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S09/nightmare-708-709/greaterThan:nightmare:708",
+          "IG-S09/nightmare-708-709/greaterThan:nightmare:709"
+        ],
+        "jobKeys": [
+          "IG-S09/nightmare-708-709/greaterThan:nightmare:708/g0",
+          "IG-S09/nightmare-708-709/greaterThan:nightmare:708/g1",
+          "IG-S09/nightmare-708-709/greaterThan:nightmare:709/g1",
+          "IG-S09/nightmare-708-709/greaterThan:nightmare:709/g0"
+        ]
+      },
+      {
+        "shard": "observer-control",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S09/observer-control/greaterThan:normal:300",
+          "IG-S09/observer-control/greaterThan:nightmare:700"
+        ],
+        "jobKeys": [
+          "IG-S09/observer-control/greaterThan:normal:300/native",
+          "IG-S09/observer-control/greaterThan:nightmare:700/native"
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:300",
+        "shard": "normal-300-304",
+        "jobKeys": [
+          "IG-S09/normal-300-304/greaterThan:normal:300/g0",
+          "IG-S09/normal-300-304/greaterThan:normal:300/g1"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:301",
+        "shard": "normal-300-304",
+        "jobKeys": [
+          "IG-S09/normal-300-304/greaterThan:normal:301/g1",
+          "IG-S09/normal-300-304/greaterThan:normal:301/g0"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:302",
+        "shard": "normal-300-304",
+        "jobKeys": [
+          "IG-S09/normal-300-304/greaterThan:normal:302/g0",
+          "IG-S09/normal-300-304/greaterThan:normal:302/g1"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:303",
+        "shard": "normal-300-304",
+        "jobKeys": [
+          "IG-S09/normal-300-304/greaterThan:normal:303/g1",
+          "IG-S09/normal-300-304/greaterThan:normal:303/g0"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:304",
+        "shard": "normal-300-304",
+        "jobKeys": [
+          "IG-S09/normal-300-304/greaterThan:normal:304/g0",
+          "IG-S09/normal-300-304/greaterThan:normal:304/g1"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:305",
+        "shard": "normal-305-309",
+        "jobKeys": [
+          "IG-S09/normal-305-309/greaterThan:normal:305/g1",
+          "IG-S09/normal-305-309/greaterThan:normal:305/g0"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:306",
+        "shard": "normal-305-309",
+        "jobKeys": [
+          "IG-S09/normal-305-309/greaterThan:normal:306/g0",
+          "IG-S09/normal-305-309/greaterThan:normal:306/g1"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:307",
+        "shard": "normal-305-309",
+        "jobKeys": [
+          "IG-S09/normal-305-309/greaterThan:normal:307/g1",
+          "IG-S09/normal-305-309/greaterThan:normal:307/g0"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:308",
+        "shard": "normal-305-309",
+        "jobKeys": [
+          "IG-S09/normal-305-309/greaterThan:normal:308/g0",
+          "IG-S09/normal-305-309/greaterThan:normal:308/g1"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:309",
+        "shard": "normal-305-309",
+        "jobKeys": [
+          "IG-S09/normal-305-309/greaterThan:normal:309/g1",
+          "IG-S09/normal-305-309/greaterThan:normal:309/g0"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:310",
+        "shard": "normal-310-314",
+        "jobKeys": [
+          "IG-S09/normal-310-314/greaterThan:normal:310/g0",
+          "IG-S09/normal-310-314/greaterThan:normal:310/g1"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:311",
+        "shard": "normal-310-314",
+        "jobKeys": [
+          "IG-S09/normal-310-314/greaterThan:normal:311/g1",
+          "IG-S09/normal-310-314/greaterThan:normal:311/g0"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:312",
+        "shard": "normal-310-314",
+        "jobKeys": [
+          "IG-S09/normal-310-314/greaterThan:normal:312/g0",
+          "IG-S09/normal-310-314/greaterThan:normal:312/g1"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:313",
+        "shard": "normal-310-314",
+        "jobKeys": [
+          "IG-S09/normal-310-314/greaterThan:normal:313/g1",
+          "IG-S09/normal-310-314/greaterThan:normal:313/g0"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:314",
+        "shard": "normal-310-314",
+        "jobKeys": [
+          "IG-S09/normal-310-314/greaterThan:normal:314/g0",
+          "IG-S09/normal-310-314/greaterThan:normal:314/g1"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:315",
+        "shard": "normal-315-319",
+        "jobKeys": [
+          "IG-S09/normal-315-319/greaterThan:normal:315/g1",
+          "IG-S09/normal-315-319/greaterThan:normal:315/g0"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:316",
+        "shard": "normal-315-319",
+        "jobKeys": [
+          "IG-S09/normal-315-319/greaterThan:normal:316/g0",
+          "IG-S09/normal-315-319/greaterThan:normal:316/g1"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:317",
+        "shard": "normal-315-319",
+        "jobKeys": [
+          "IG-S09/normal-315-319/greaterThan:normal:317/g1",
+          "IG-S09/normal-315-319/greaterThan:normal:317/g0"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:318",
+        "shard": "normal-315-319",
+        "jobKeys": [
+          "IG-S09/normal-315-319/greaterThan:normal:318/g0",
+          "IG-S09/normal-315-319/greaterThan:normal:318/g1"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:319",
+        "shard": "normal-315-319",
+        "jobKeys": [
+          "IG-S09/normal-315-319/greaterThan:normal:319/g1",
+          "IG-S09/normal-315-319/greaterThan:normal:319/g0"
+        ],
+        "estimateMs": 16000
+      },
+      {
+        "blockKey": "IG-S09/nightmare-700-701/greaterThan:nightmare:700",
+        "shard": "nightmare-700-701",
+        "jobKeys": [
+          "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g0",
+          "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g1"
+        ],
+        "estimateMs": 48000
+      },
+      {
+        "blockKey": "IG-S09/nightmare-700-701/greaterThan:nightmare:701",
+        "shard": "nightmare-700-701",
+        "jobKeys": [
+          "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g1",
+          "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g0"
+        ],
+        "estimateMs": 48000
+      },
+      {
+        "blockKey": "IG-S09/nightmare-702-703/greaterThan:nightmare:702",
+        "shard": "nightmare-702-703",
+        "jobKeys": [
+          "IG-S09/nightmare-702-703/greaterThan:nightmare:702/g0",
+          "IG-S09/nightmare-702-703/greaterThan:nightmare:702/g1"
+        ],
+        "estimateMs": 48000
+      },
+      {
+        "blockKey": "IG-S09/nightmare-702-703/greaterThan:nightmare:703",
+        "shard": "nightmare-702-703",
+        "jobKeys": [
+          "IG-S09/nightmare-702-703/greaterThan:nightmare:703/g1",
+          "IG-S09/nightmare-702-703/greaterThan:nightmare:703/g0"
+        ],
+        "estimateMs": 48000
+      },
+      {
+        "blockKey": "IG-S09/nightmare-704-705/greaterThan:nightmare:704",
+        "shard": "nightmare-704-705",
+        "jobKeys": [
+          "IG-S09/nightmare-704-705/greaterThan:nightmare:704/g0",
+          "IG-S09/nightmare-704-705/greaterThan:nightmare:704/g1"
+        ],
+        "estimateMs": 48000
+      },
+      {
+        "blockKey": "IG-S09/nightmare-704-705/greaterThan:nightmare:705",
+        "shard": "nightmare-704-705",
+        "jobKeys": [
+          "IG-S09/nightmare-704-705/greaterThan:nightmare:705/g1",
+          "IG-S09/nightmare-704-705/greaterThan:nightmare:705/g0"
+        ],
+        "estimateMs": 48000
+      },
+      {
+        "blockKey": "IG-S09/nightmare-706-707/greaterThan:nightmare:706",
+        "shard": "nightmare-706-707",
+        "jobKeys": [
+          "IG-S09/nightmare-706-707/greaterThan:nightmare:706/g0",
+          "IG-S09/nightmare-706-707/greaterThan:nightmare:706/g1"
+        ],
+        "estimateMs": 48000
+      },
+      {
+        "blockKey": "IG-S09/nightmare-706-707/greaterThan:nightmare:707",
+        "shard": "nightmare-706-707",
+        "jobKeys": [
+          "IG-S09/nightmare-706-707/greaterThan:nightmare:707/g1",
+          "IG-S09/nightmare-706-707/greaterThan:nightmare:707/g0"
+        ],
+        "estimateMs": 48000
+      },
+      {
+        "blockKey": "IG-S09/nightmare-708-709/greaterThan:nightmare:708",
+        "shard": "nightmare-708-709",
+        "jobKeys": [
+          "IG-S09/nightmare-708-709/greaterThan:nightmare:708/g0",
+          "IG-S09/nightmare-708-709/greaterThan:nightmare:708/g1"
+        ],
+        "estimateMs": 48000
+      },
+      {
+        "blockKey": "IG-S09/nightmare-708-709/greaterThan:nightmare:709",
+        "shard": "nightmare-708-709",
+        "jobKeys": [
+          "IG-S09/nightmare-708-709/greaterThan:nightmare:709/g1",
+          "IG-S09/nightmare-708-709/greaterThan:nightmare:709/g0"
+        ],
+        "estimateMs": 48000
+      },
+      {
+        "blockKey": "IG-S09/observer-control/greaterThan:normal:300",
+        "shard": "observer-control",
+        "jobKeys": [
+          "IG-S09/observer-control/greaterThan:normal:300/native"
+        ],
+        "estimateMs": 8000
+      },
+      {
+        "blockKey": "IG-S09/observer-control/greaterThan:nightmare:700",
+        "shard": "observer-control",
+        "jobKeys": [
+          "IG-S09/observer-control/greaterThan:nightmare:700/native"
+        ],
+        "estimateMs": 24000
+      }
+    ],
+    "jobs": [
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:300/g0",
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:300",
+        "shard": "normal-300-304",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": "greaterThan:normal:300",
+        "gridCluster": null,
+        "requestSeed": 300,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 300,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:300/g1",
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:300",
+        "shard": "normal-300-304",
+        "order": 1,
+        "seedIndex": 0,
+        "pairId": "greaterThan:normal:300",
+        "gridCluster": null,
+        "requestSeed": 300,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 300,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:301/g1",
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:301",
+        "shard": "normal-300-304",
+        "order": 2,
+        "seedIndex": 1,
+        "pairId": "greaterThan:normal:301",
+        "gridCluster": null,
+        "requestSeed": 301,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 301,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:301/g0",
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:301",
+        "shard": "normal-300-304",
+        "order": 3,
+        "seedIndex": 1,
+        "pairId": "greaterThan:normal:301",
+        "gridCluster": null,
+        "requestSeed": 301,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 301,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:302/g0",
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:302",
+        "shard": "normal-300-304",
+        "order": 4,
+        "seedIndex": 2,
+        "pairId": "greaterThan:normal:302",
+        "gridCluster": null,
+        "requestSeed": 302,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 302,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:302/g1",
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:302",
+        "shard": "normal-300-304",
+        "order": 5,
+        "seedIndex": 2,
+        "pairId": "greaterThan:normal:302",
+        "gridCluster": null,
+        "requestSeed": 302,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 302,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:303/g1",
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:303",
+        "shard": "normal-300-304",
+        "order": 6,
+        "seedIndex": 3,
+        "pairId": "greaterThan:normal:303",
+        "gridCluster": null,
+        "requestSeed": 303,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 303,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:303/g0",
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:303",
+        "shard": "normal-300-304",
+        "order": 7,
+        "seedIndex": 3,
+        "pairId": "greaterThan:normal:303",
+        "gridCluster": null,
+        "requestSeed": 303,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 303,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:304/g0",
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:304",
+        "shard": "normal-300-304",
+        "order": 8,
+        "seedIndex": 4,
+        "pairId": "greaterThan:normal:304",
+        "gridCluster": null,
+        "requestSeed": 304,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 304,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:304/g1",
+        "blockKey": "IG-S09/normal-300-304/greaterThan:normal:304",
+        "shard": "normal-300-304",
+        "order": 9,
+        "seedIndex": 4,
+        "pairId": "greaterThan:normal:304",
+        "gridCluster": null,
+        "requestSeed": 304,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 304,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-305-309/greaterThan:normal:305/g1",
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:305",
+        "shard": "normal-305-309",
+        "order": 0,
+        "seedIndex": 5,
+        "pairId": "greaterThan:normal:305",
+        "gridCluster": null,
+        "requestSeed": 305,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 305,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-305-309/greaterThan:normal:305/g0",
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:305",
+        "shard": "normal-305-309",
+        "order": 1,
+        "seedIndex": 5,
+        "pairId": "greaterThan:normal:305",
+        "gridCluster": null,
+        "requestSeed": 305,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 305,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-305-309/greaterThan:normal:306/g0",
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:306",
+        "shard": "normal-305-309",
+        "order": 2,
+        "seedIndex": 6,
+        "pairId": "greaterThan:normal:306",
+        "gridCluster": null,
+        "requestSeed": 306,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 306,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-305-309/greaterThan:normal:306/g1",
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:306",
+        "shard": "normal-305-309",
+        "order": 3,
+        "seedIndex": 6,
+        "pairId": "greaterThan:normal:306",
+        "gridCluster": null,
+        "requestSeed": 306,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 306,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-305-309/greaterThan:normal:307/g1",
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:307",
+        "shard": "normal-305-309",
+        "order": 4,
+        "seedIndex": 7,
+        "pairId": "greaterThan:normal:307",
+        "gridCluster": null,
+        "requestSeed": 307,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 307,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-305-309/greaterThan:normal:307/g0",
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:307",
+        "shard": "normal-305-309",
+        "order": 5,
+        "seedIndex": 7,
+        "pairId": "greaterThan:normal:307",
+        "gridCluster": null,
+        "requestSeed": 307,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 307,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-305-309/greaterThan:normal:308/g0",
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:308",
+        "shard": "normal-305-309",
+        "order": 6,
+        "seedIndex": 8,
+        "pairId": "greaterThan:normal:308",
+        "gridCluster": null,
+        "requestSeed": 308,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 308,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-305-309/greaterThan:normal:308/g1",
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:308",
+        "shard": "normal-305-309",
+        "order": 7,
+        "seedIndex": 8,
+        "pairId": "greaterThan:normal:308",
+        "gridCluster": null,
+        "requestSeed": 308,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 308,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-305-309/greaterThan:normal:309/g1",
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:309",
+        "shard": "normal-305-309",
+        "order": 8,
+        "seedIndex": 9,
+        "pairId": "greaterThan:normal:309",
+        "gridCluster": null,
+        "requestSeed": 309,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 309,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-305-309/greaterThan:normal:309/g0",
+        "blockKey": "IG-S09/normal-305-309/greaterThan:normal:309",
+        "shard": "normal-305-309",
+        "order": 9,
+        "seedIndex": 9,
+        "pairId": "greaterThan:normal:309",
+        "gridCluster": null,
+        "requestSeed": 309,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 309,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-310-314/greaterThan:normal:310/g0",
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:310",
+        "shard": "normal-310-314",
+        "order": 0,
+        "seedIndex": 10,
+        "pairId": "greaterThan:normal:310",
+        "gridCluster": null,
+        "requestSeed": 310,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 310,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-310-314/greaterThan:normal:310/g1",
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:310",
+        "shard": "normal-310-314",
+        "order": 1,
+        "seedIndex": 10,
+        "pairId": "greaterThan:normal:310",
+        "gridCluster": null,
+        "requestSeed": 310,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 310,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-310-314/greaterThan:normal:311/g1",
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:311",
+        "shard": "normal-310-314",
+        "order": 2,
+        "seedIndex": 11,
+        "pairId": "greaterThan:normal:311",
+        "gridCluster": null,
+        "requestSeed": 311,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 311,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-310-314/greaterThan:normal:311/g0",
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:311",
+        "shard": "normal-310-314",
+        "order": 3,
+        "seedIndex": 11,
+        "pairId": "greaterThan:normal:311",
+        "gridCluster": null,
+        "requestSeed": 311,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 311,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-310-314/greaterThan:normal:312/g0",
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:312",
+        "shard": "normal-310-314",
+        "order": 4,
+        "seedIndex": 12,
+        "pairId": "greaterThan:normal:312",
+        "gridCluster": null,
+        "requestSeed": 312,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 312,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-310-314/greaterThan:normal:312/g1",
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:312",
+        "shard": "normal-310-314",
+        "order": 5,
+        "seedIndex": 12,
+        "pairId": "greaterThan:normal:312",
+        "gridCluster": null,
+        "requestSeed": 312,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 312,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-310-314/greaterThan:normal:313/g1",
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:313",
+        "shard": "normal-310-314",
+        "order": 6,
+        "seedIndex": 13,
+        "pairId": "greaterThan:normal:313",
+        "gridCluster": null,
+        "requestSeed": 313,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 313,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-310-314/greaterThan:normal:313/g0",
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:313",
+        "shard": "normal-310-314",
+        "order": 7,
+        "seedIndex": 13,
+        "pairId": "greaterThan:normal:313",
+        "gridCluster": null,
+        "requestSeed": 313,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 313,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-310-314/greaterThan:normal:314/g0",
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:314",
+        "shard": "normal-310-314",
+        "order": 8,
+        "seedIndex": 14,
+        "pairId": "greaterThan:normal:314",
+        "gridCluster": null,
+        "requestSeed": 314,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 314,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-310-314/greaterThan:normal:314/g1",
+        "blockKey": "IG-S09/normal-310-314/greaterThan:normal:314",
+        "shard": "normal-310-314",
+        "order": 9,
+        "seedIndex": 14,
+        "pairId": "greaterThan:normal:314",
+        "gridCluster": null,
+        "requestSeed": 314,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 314,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-315-319/greaterThan:normal:315/g1",
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:315",
+        "shard": "normal-315-319",
+        "order": 0,
+        "seedIndex": 15,
+        "pairId": "greaterThan:normal:315",
+        "gridCluster": null,
+        "requestSeed": 315,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 315,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-315-319/greaterThan:normal:315/g0",
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:315",
+        "shard": "normal-315-319",
+        "order": 1,
+        "seedIndex": 15,
+        "pairId": "greaterThan:normal:315",
+        "gridCluster": null,
+        "requestSeed": 315,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 315,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-315-319/greaterThan:normal:316/g0",
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:316",
+        "shard": "normal-315-319",
+        "order": 2,
+        "seedIndex": 16,
+        "pairId": "greaterThan:normal:316",
+        "gridCluster": null,
+        "requestSeed": 316,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 316,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-315-319/greaterThan:normal:316/g1",
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:316",
+        "shard": "normal-315-319",
+        "order": 3,
+        "seedIndex": 16,
+        "pairId": "greaterThan:normal:316",
+        "gridCluster": null,
+        "requestSeed": 316,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 316,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-315-319/greaterThan:normal:317/g1",
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:317",
+        "shard": "normal-315-319",
+        "order": 4,
+        "seedIndex": 17,
+        "pairId": "greaterThan:normal:317",
+        "gridCluster": null,
+        "requestSeed": 317,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 317,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-315-319/greaterThan:normal:317/g0",
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:317",
+        "shard": "normal-315-319",
+        "order": 5,
+        "seedIndex": 17,
+        "pairId": "greaterThan:normal:317",
+        "gridCluster": null,
+        "requestSeed": 317,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 317,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-315-319/greaterThan:normal:318/g0",
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:318",
+        "shard": "normal-315-319",
+        "order": 6,
+        "seedIndex": 18,
+        "pairId": "greaterThan:normal:318",
+        "gridCluster": null,
+        "requestSeed": 318,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 318,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-315-319/greaterThan:normal:318/g1",
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:318",
+        "shard": "normal-315-319",
+        "order": 7,
+        "seedIndex": 18,
+        "pairId": "greaterThan:normal:318",
+        "gridCluster": null,
+        "requestSeed": 318,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 318,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-315-319/greaterThan:normal:319/g1",
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:319",
+        "shard": "normal-315-319",
+        "order": 8,
+        "seedIndex": 19,
+        "pairId": "greaterThan:normal:319",
+        "gridCluster": null,
+        "requestSeed": 319,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 319,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/normal-315-319/greaterThan:normal:319/g0",
+        "blockKey": "IG-S09/normal-315-319/greaterThan:normal:319",
+        "shard": "normal-315-319",
+        "order": 9,
+        "seedIndex": 19,
+        "pairId": "greaterThan:normal:319",
+        "gridCluster": null,
+        "requestSeed": 319,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 319,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g0",
+        "blockKey": "IG-S09/nightmare-700-701/greaterThan:nightmare:700",
+        "shard": "nightmare-700-701",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": "greaterThan:nightmare:700",
+        "gridCluster": null,
+        "requestSeed": 700,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 700,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g1",
+        "blockKey": "IG-S09/nightmare-700-701/greaterThan:nightmare:700",
+        "shard": "nightmare-700-701",
+        "order": 1,
+        "seedIndex": 0,
+        "pairId": "greaterThan:nightmare:700",
+        "gridCluster": null,
+        "requestSeed": 700,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 700,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g1",
+        "blockKey": "IG-S09/nightmare-700-701/greaterThan:nightmare:701",
+        "shard": "nightmare-700-701",
+        "order": 2,
+        "seedIndex": 1,
+        "pairId": "greaterThan:nightmare:701",
+        "gridCluster": null,
+        "requestSeed": 701,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 701,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g0",
+        "blockKey": "IG-S09/nightmare-700-701/greaterThan:nightmare:701",
+        "shard": "nightmare-700-701",
+        "order": 3,
+        "seedIndex": 1,
+        "pairId": "greaterThan:nightmare:701",
+        "gridCluster": null,
+        "requestSeed": 701,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 701,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-702-703/greaterThan:nightmare:702/g0",
+        "blockKey": "IG-S09/nightmare-702-703/greaterThan:nightmare:702",
+        "shard": "nightmare-702-703",
+        "order": 0,
+        "seedIndex": 2,
+        "pairId": "greaterThan:nightmare:702",
+        "gridCluster": null,
+        "requestSeed": 702,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 702,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-702-703/greaterThan:nightmare:702/g1",
+        "blockKey": "IG-S09/nightmare-702-703/greaterThan:nightmare:702",
+        "shard": "nightmare-702-703",
+        "order": 1,
+        "seedIndex": 2,
+        "pairId": "greaterThan:nightmare:702",
+        "gridCluster": null,
+        "requestSeed": 702,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 702,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-702-703/greaterThan:nightmare:703/g1",
+        "blockKey": "IG-S09/nightmare-702-703/greaterThan:nightmare:703",
+        "shard": "nightmare-702-703",
+        "order": 2,
+        "seedIndex": 3,
+        "pairId": "greaterThan:nightmare:703",
+        "gridCluster": null,
+        "requestSeed": 703,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 703,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-702-703/greaterThan:nightmare:703/g0",
+        "blockKey": "IG-S09/nightmare-702-703/greaterThan:nightmare:703",
+        "shard": "nightmare-702-703",
+        "order": 3,
+        "seedIndex": 3,
+        "pairId": "greaterThan:nightmare:703",
+        "gridCluster": null,
+        "requestSeed": 703,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 703,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-704-705/greaterThan:nightmare:704/g0",
+        "blockKey": "IG-S09/nightmare-704-705/greaterThan:nightmare:704",
+        "shard": "nightmare-704-705",
+        "order": 0,
+        "seedIndex": 4,
+        "pairId": "greaterThan:nightmare:704",
+        "gridCluster": null,
+        "requestSeed": 704,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 704,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-704-705/greaterThan:nightmare:704/g1",
+        "blockKey": "IG-S09/nightmare-704-705/greaterThan:nightmare:704",
+        "shard": "nightmare-704-705",
+        "order": 1,
+        "seedIndex": 4,
+        "pairId": "greaterThan:nightmare:704",
+        "gridCluster": null,
+        "requestSeed": 704,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 704,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-704-705/greaterThan:nightmare:705/g1",
+        "blockKey": "IG-S09/nightmare-704-705/greaterThan:nightmare:705",
+        "shard": "nightmare-704-705",
+        "order": 2,
+        "seedIndex": 5,
+        "pairId": "greaterThan:nightmare:705",
+        "gridCluster": null,
+        "requestSeed": 705,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 705,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-704-705/greaterThan:nightmare:705/g0",
+        "blockKey": "IG-S09/nightmare-704-705/greaterThan:nightmare:705",
+        "shard": "nightmare-704-705",
+        "order": 3,
+        "seedIndex": 5,
+        "pairId": "greaterThan:nightmare:705",
+        "gridCluster": null,
+        "requestSeed": 705,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 705,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-706-707/greaterThan:nightmare:706/g0",
+        "blockKey": "IG-S09/nightmare-706-707/greaterThan:nightmare:706",
+        "shard": "nightmare-706-707",
+        "order": 0,
+        "seedIndex": 6,
+        "pairId": "greaterThan:nightmare:706",
+        "gridCluster": null,
+        "requestSeed": 706,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 706,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-706-707/greaterThan:nightmare:706/g1",
+        "blockKey": "IG-S09/nightmare-706-707/greaterThan:nightmare:706",
+        "shard": "nightmare-706-707",
+        "order": 1,
+        "seedIndex": 6,
+        "pairId": "greaterThan:nightmare:706",
+        "gridCluster": null,
+        "requestSeed": 706,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 706,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-706-707/greaterThan:nightmare:707/g1",
+        "blockKey": "IG-S09/nightmare-706-707/greaterThan:nightmare:707",
+        "shard": "nightmare-706-707",
+        "order": 2,
+        "seedIndex": 7,
+        "pairId": "greaterThan:nightmare:707",
+        "gridCluster": null,
+        "requestSeed": 707,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 707,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-706-707/greaterThan:nightmare:707/g0",
+        "blockKey": "IG-S09/nightmare-706-707/greaterThan:nightmare:707",
+        "shard": "nightmare-706-707",
+        "order": 3,
+        "seedIndex": 7,
+        "pairId": "greaterThan:nightmare:707",
+        "gridCluster": null,
+        "requestSeed": 707,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 707,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-708-709/greaterThan:nightmare:708/g0",
+        "blockKey": "IG-S09/nightmare-708-709/greaterThan:nightmare:708",
+        "shard": "nightmare-708-709",
+        "order": 0,
+        "seedIndex": 8,
+        "pairId": "greaterThan:nightmare:708",
+        "gridCluster": null,
+        "requestSeed": 708,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 708,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-708-709/greaterThan:nightmare:708/g1",
+        "blockKey": "IG-S09/nightmare-708-709/greaterThan:nightmare:708",
+        "shard": "nightmare-708-709",
+        "order": 1,
+        "seedIndex": 8,
+        "pairId": "greaterThan:nightmare:708",
+        "gridCluster": null,
+        "requestSeed": 708,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 708,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-708-709/greaterThan:nightmare:709/g1",
+        "blockKey": "IG-S09/nightmare-708-709/greaterThan:nightmare:709",
+        "shard": "nightmare-708-709",
+        "order": 2,
+        "seedIndex": 9,
+        "pairId": "greaterThan:nightmare:709",
+        "gridCluster": null,
+        "requestSeed": 709,
+        "variantId": "g1",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "gtArm": "g1",
+        "solverMode": "gt-g1 (solve first in the first technique pass, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 709,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/nightmare-708-709/greaterThan:nightmare:709/g0",
+        "blockKey": "IG-S09/nightmare-708-709/greaterThan:nightmare:709",
+        "shard": "nightmare-708-709",
+        "order": 3,
+        "seedIndex": 9,
+        "pairId": "greaterThan:nightmare:709",
+        "gridCluster": null,
+        "requestSeed": 709,
+        "variantId": "g0",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": "g0",
+        "solverMode": "gt-g0 (native order, capture)",
+        "executor": "gt",
+        "adapterIds": [
+          "gt-diagnostic"
+        ],
+        "cellKind": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 709,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/observer-control/greaterThan:normal:300/native",
+        "blockKey": "IG-S09/observer-control/greaterThan:normal:300",
+        "shard": "observer-control",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": "control:greaterThan:normal:300",
+        "gridCluster": null,
+        "requestSeed": 300,
+        "variantId": "native-observer-free",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": null,
+        "solverMode": "native-w1 (observer-free, no capture hooks)",
+        "executor": null,
+        "adapterIds": [],
+        "cellKind": "control",
+        "controlOf": "normal",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 300,
+          "trace": "summary"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S09/observer-control/greaterThan:nightmare:700/native",
+        "blockKey": "IG-S09/observer-control/greaterThan:nightmare:700",
+        "shard": "observer-control",
+        "order": 1,
+        "seedIndex": 0,
+        "pairId": "control:greaterThan:nightmare:700",
+        "gridCluster": null,
+        "requestSeed": 700,
+        "variantId": "native-observer-free",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "reference",
+        "gtArm": null,
+        "solverMode": "native-w1 (observer-free, no capture hooks)",
+        "executor": null,
+        "adapterIds": [],
+        "cellKind": "control",
+        "controlOf": "nightmare",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 700,
+          "trace": "summary"
+        },
+        "estimateMs": 24000,
+        "guardScope": "request"
+      }
+    ],
+    "manifestHash": "6228c6853ae720dbb1f3f05e72475860d937046cbb57a0a01c291cf65a23108f"
+  },
+  "attemptKeys": [
+    "IG-S09/observer-control/greaterThan:normal:300/native",
+    "IG-S09/observer-control/greaterThan:nightmare:700/native"
+  ],
+  "runKeys": [
+    "IG-S09/observer-control/greaterThan:normal:300/native",
+    "IG-S09/observer-control/greaterThan:nightmare:700/native"
+  ],
+  "physicalPlan": {
+    "windowMs": 99674,
+    "commands": [
+      {
+        "index": 0,
+        "blockKeys": [
+          "IG-S09/observer-control/greaterThan:normal:300",
+          "IG-S09/observer-control/greaterThan:nightmare:700"
+        ],
+        "jobKeys": [
+          "IG-S09/observer-control/greaterThan:normal:300/native",
+          "IG-S09/observer-control/greaterThan:nightmare:700/native"
+        ],
+        "estimateMs": 32000,
+        "split": false
+      }
+    ],
+    "oversize": [],
+    "hash": "3c359723bae744ef269fecc34b02f4b66b1db7c7956982d5f4359780a0045b88"
+  }
+}

@@ -1,0 +1,257 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S09",
+  "shard": "observer-control",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "formalGate": "not-evaluable-pre-freeze",
+  "status": "complete",
+  "exit": 0,
+  "coverage": {
+    "planned": 2,
+    "completed": 2,
+    "censored": 0,
+    "errors": 0,
+    "unstarted": 0,
+    "complete": true,
+    "exclusions": [
+      "a captured request is a diagnostic run with observation hooks and trace summary: never an uninstrumented headline",
+      "the post-timing diagnosis (independent rating, minimality, probes) and the harness validation are outside every generation time",
+      "the observer-free controls are overhead comparators, not new headline measurements"
+    ]
+  },
+  "sources": {
+    "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "files": 63,
+    "harnessFingerprint": "9da69f60fbd2d71eeaec2949f805ba8fac3c6f2c6bf88b5848398e5b16c128ed",
+    "adapterIds": [],
+    "adapterHashes": [],
+    "sourceStable": true,
+    "firewallClean": true
+  },
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 71.16809999999998,
+      "changesSeen": 7,
+      "incrementsMs": [
+        16,
+        15,
+        16,
+        16,
+        16,
+        16
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    },
+    "commandCpuMs": 20798,
+    "processAgeAtHostMs": 568.7973
+  },
+  "pairedRows": [
+    {
+      "pairId": "control:greaterThan:normal:300",
+      "reference": {
+        "key": "IG-S09/observer-control/greaterThan:normal:300/native",
+        "outcome": "complete",
+        "readyWallMs": 2087.3855000000003,
+        "coldWallMs": 2186.342,
+        "cpuTotalMs": 3515,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "ec8e1f4c4cc71276ccdfba087208b380d504108e01083d8d4057780531d98505"
+      },
+      "prototype": null,
+      "cpuFactor": null,
+      "readyWallFactor": null,
+      "coldWallFactor": null
+    },
+    {
+      "pairId": "control:greaterThan:nightmare:700",
+      "reference": {
+        "key": "IG-S09/observer-control/greaterThan:nightmare:700/native",
+        "outcome": "complete",
+        "readyWallMs": 12173.0213,
+        "coldWallMs": 12260.0515,
+        "cpuTotalMs": 16610,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "c3ad877f41c966b9af26fca5f285dfceb46ab07100ebba1d60c82e8f0278587b"
+      },
+      "prototype": null,
+      "cpuFactor": null,
+      "readyWallFactor": null,
+      "coldWallFactor": null
+    }
+  ],
+  "arms": {
+    "reference": {
+      "requests": 2,
+      "complete": 2,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 0,
+      "readyWallMs": {
+        "n": 2,
+        "p50": 2087.3855000000003,
+        "p95": 12173.0213,
+        "max": 12173.0213,
+        "upperMedian": 12173.0213,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 2,
+        "p50": 2186.342,
+        "p95": 12260.0515,
+        "max": 12260.0515,
+        "upperMedian": 12260.0515,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 2,
+        "p50": 3515,
+        "p95": 16610,
+        "max": 16610,
+        "upperMedian": 16610,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 2,
+          "cpuMs": 20125,
+          "wallMs": 14482.9234
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 2,
+          "cpuMs": 20125,
+          "wallMs": 14482.9234
+        }
+      },
+      "cpuTotalAggregateMs": 20125,
+      "cpuAggregateStatus": "resolved",
+      "wallChargedMs": 14482.9234,
+      "verifiedHits": 2,
+      "hitsPerCpuSecond": 0.09937888198757765,
+      "hitsPerColdWallSecond": 0.13809366691810301
+    }
+  },
+  "estimateVerdict": "diagnostic only: no guided pool, setup-clue policy change or IR29 adoption follows from it (IG-S-Q16, B03)",
+  "extra": {
+    "arms": {
+      "reference": "G0: the native first-allowed sign pass, with capture",
+      "prototype": "G1: native restricted solve first in the first technique sign pass, with the same capture",
+      "control": "observer-free native request (no capture hooks)"
+    },
+    "identity": {
+      "pairs": [
+        {
+          "pairId": "control:greaterThan:normal:300",
+          "kind": "control",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "g0Key": "IG-S09/normal-300-304/greaterThan:normal:300/g0",
+          "g0Digest": "9f44a498a2d5566979b710d072363674a102a5df092e1d2c8b19335506d6d23f",
+          "controlDigest": "9f44a498a2d5566979b710d072363674a102a5df092e1d2c8b19335506d6d23f"
+        },
+        {
+          "pairId": "control:greaterThan:nightmare:700",
+          "kind": "control",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "g0Key": "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g0",
+          "g0Digest": "6332da1ef85c61f60c3de47e49ea733178337a4f43de584e93b394cdec6a64d9",
+          "controlDigest": "6332da1ef85c61f60c3de47e49ea733178337a4f43de584e93b394cdec6a64d9"
+        }
+      ],
+      "failed": 0,
+      "ok": 2,
+      "guardBinding": 0,
+      "notComparable": 0,
+      "deferred": 0,
+      "complete": true
+    },
+    "requests": [
+      {
+        "key": "IG-S09/observer-control/greaterThan:normal:300/native",
+        "arm": "native-observer-free",
+        "outcome": "complete",
+        "readyWallMs": 2087.3855000000003,
+        "cpuTotalMs": 3515,
+        "samples": null,
+        "dfsCalls": null,
+        "dfsChecks": null,
+        "diagStatus": null,
+        "diagWallMs": null,
+        "problems": null
+      },
+      {
+        "key": "IG-S09/observer-control/greaterThan:nightmare:700/native",
+        "arm": "native-observer-free",
+        "outcome": "complete",
+        "readyWallMs": 12173.0213,
+        "cpuTotalMs": 16610,
+        "samples": null,
+        "dfsCalls": null,
+        "dfsChecks": null,
+        "diagStatus": null,
+        "diagWallMs": null,
+        "problems": null
+      }
+    ],
+    "guardSettings": {
+      "minimalNodeCap": 200000,
+      "probeNodeCap": 200000,
+      "probeStepCap": 100000,
+      "probeGroups": 3,
+      "diagBudgetMs": 30000
+    },
+    "chain": {
+      "attempts": [
+        "a1"
+      ],
+      "resumed": false,
+      "startedBefore": [],
+      "startedHere": [
+        "IG-S09/observer-control/greaterThan:normal:300/native",
+        "IG-S09/observer-control/greaterThan:nightmare:700/native"
+      ],
+      "rerunKeys": [],
+      "noRerun": true,
+      "unstartedAfter": []
+    }
+  },
+  "notes": []
+}

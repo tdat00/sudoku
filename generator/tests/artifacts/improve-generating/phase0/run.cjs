@@ -30,7 +30,7 @@ const SELF_TEST_ESTIMATE_MS = 15000;
 
 // Task glue loaded lazily: a task that runs its own kind of request (IG-S02: a pool) registers its module here.
 const TASK_HOOKS = { 'IG-S02': './ig02-run.cjs', 'IG-S03': './ig03-run.cjs', 'IG-S04': './ig04-run.cjs',
-  'IG-S05': './ig05-run.cjs', 'IG-S07': './ig07-run.cjs', 'IG-S08': './ig08-run.cjs' };
+  'IG-S05': './ig05-run.cjs', 'IG-S07': './ig07-run.cjs', 'IG-S08': './ig08-run.cjs', 'IG-S09': './ig09-run.cjs' };
 
 function taskHooks(task) {
   return Object.prototype.hasOwnProperty.call(TASK_HOOKS, task) ? require(TASK_HOOKS[task]) : null;

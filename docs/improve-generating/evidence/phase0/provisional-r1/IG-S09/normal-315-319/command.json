@@ -1,0 +1,3944 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S09",
+  "shard": "normal-315-319",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "status": "complete",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+  "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+  "runtimeFiles": [
+    {
+      "rel": "../core/js/engine/ns.js",
+      "bytes": 891,
+      "sha256": "1c2785c1ddf7c5aea42c5633d54828711cca9901adb44211e1250654a1e6ddaa"
+    },
+    {
+      "rel": "../core/js/engine/errors.js",
+      "bytes": 805,
+      "sha256": "985557361062e6340440d1c39112d93821af6596d9fac14ebabcd157e304b69d"
+    },
+    {
+      "rel": "../core/js/engine/bits.js",
+      "bytes": 1490,
+      "sha256": "3033916f7b22241d365f25feeb4a44181e58cc05c7ce425d325938e772f69c03"
+    },
+    {
+      "rel": "../core/js/engine/budget.js",
+      "bytes": 5113,
+      "sha256": "708cd8694569b5496de038aa4c1a968543c64406ec84fa08b6689301362169b5"
+    },
+    {
+      "rel": "js/engine/rng.js",
+      "bytes": 2592,
+      "sha256": "f9f01a1c5fc380dc919ebde3c5fa3b73648dd9347a3bd1b04240aa09ccf7683c"
+    },
+    {
+      "rel": "../core/js/engine/model.js",
+      "bytes": 19968,
+      "sha256": "39312f91cdc2046aad0dd55423eaa4ceddbe7a4503b0570fe79bcef69618343e"
+    },
+    {
+      "rel": "../core/js/engine/constraints.js",
+      "bytes": 15954,
+      "sha256": "d614fa9242eeb883a88b60f2789090b47ab22425901f186261176e1421d8f729"
+    },
+    {
+      "rel": "../core/js/engine/combo-table.js",
+      "bytes": 11378,
+      "sha256": "cf25a8bf8d3e215c10a684a0378b3c00edfeaef58371fe309b17b689aa063f7a"
+    },
+    {
+      "rel": "../core/js/engine/dfs-solver.js",
+      "bytes": 13164,
+      "sha256": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d"
+    },
+    {
+      "rel": "../core/js/engine/techniques.js",
+      "bytes": 10884,
+      "sha256": "96e98414a205e6bdb872db3b951f41d9ba052fe30df15f419addd61b60aa76ad"
+    },
+    {
+      "rel": "../core/js/engine/logical-solver.js",
+      "bytes": 15719,
+      "sha256": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed"
+    },
+    {
+      "rel": "../core/js/engine/tech-basic.js",
+      "bytes": 12628,
+      "sha256": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23"
+    },
+    {
+      "rel": "../core/js/engine/tech-subset.js",
+      "bytes": 9768,
+      "sha256": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202"
+    },
+    {
+      "rel": "../core/js/engine/tech-fish.js",
+      "bytes": 19567,
+      "sha256": "2ae9e583216d0206e1404dc8774a61a83082f0ecf72dba195501c7cb5077db79"
+    },
+    {
+      "rel": "../core/js/engine/tech-wing.js",
+      "bytes": 20360,
+      "sha256": "931a1afde17bd10f9f60c930820d56844dd8fb24fbb34bba34c83d47ef15f1c1"
+    },
+    {
+      "rel": "../core/js/engine/tech-chain.js",
+      "bytes": 20563,
+      "sha256": "02733d67c0c41d98423a702c2de8bc690d9fe406f8284bcdbe6787cebb785c8d"
+    },
+    {
+      "rel": "../core/js/engine/tech-cage.js",
+      "bytes": 23602,
+      "sha256": "584bad5795d09929860364e1a1eff145d65264698064bba2ae2d5538856a7c2b"
+    },
+    {
+      "rel": "../core/js/engine/tech-ineq.js",
+      "bytes": 20123,
+      "sha256": "73a7ea3cdb69eadb2773a6465ef4b2a4dcdb99e7846358f916d06d95175281d3"
+    },
+    {
+      "rel": "../core/js/engine/classic-model.js",
+      "bytes": 8399,
+      "sha256": "2ff7a47b80172aa6e53dfaf2aad081d0dbf6e86fe44b8c6a773ba935f18c82f8"
+    },
+    {
+      "rel": "../core/js/engine/model-aids.js",
+      "bytes": 4495,
+      "sha256": "ded046d761fcddd9379d4e240d5ae1f4648ece1b899cdd0975f57bb83b25e8eb"
+    },
+    {
+      "rel": "js/engine/difficulty.js",
+      "bytes": 28742,
+      "sha256": "c37964c9b3943bde329bf9299be3d0f2f7802bb2b739366b710a2b5496368e89"
+    },
+    {
+      "rel": "js/engine/full-grid.js",
+      "bytes": 11813,
+      "sha256": "9f633b4f150ef8e12c7cfbe4c64dd98e60d4a9d5ea8d878754d705c508f06889"
+    },
+    {
+      "rel": "js/engine/symmetry.js",
+      "bytes": 3428,
+      "sha256": "661dda3ec10fbac8825ef972d76c220ceae7f37aad652359e1e9a00158321002"
+    },
+    {
+      "rel": "js/engine/digger.js",
+      "bytes": 103102,
+      "sha256": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b"
+    },
+    {
+      "rel": "js/engine/events.js",
+      "bytes": 42001,
+      "sha256": "465314061967b57ffcacf704c2bd3caf710e675f1dc9703d0e5929cc9c9d0c1a"
+    },
+    {
+      "rel": "js/engine/explain-data.js",
+      "bytes": 7355,
+      "sha256": "6919e941b7b1bb43b85ee826d878bc62334ad7dabcd72c83ab291c9fd62520d0"
+    },
+    {
+      "rel": "js/engine/pipeline.js",
+      "bytes": 18399,
+      "sha256": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406"
+    },
+    {
+      "rel": "js/engine/replay.js",
+      "bytes": 57960,
+      "sha256": "0279bccb518796fe207774fc7a599d5defb1f4d1120a5fb02434b6d634936d1d"
+    },
+    {
+      "rel": "js/variants/registry.js",
+      "bytes": 19859,
+      "sha256": "967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"
+    },
+    {
+      "rel": "js/variants/classic.js",
+      "bytes": 2583,
+      "sha256": "156d3709567831cc3c6de42952d19063182ecb41b645666727826e1d47acd7d4"
+    },
+    {
+      "rel": "js/variants/mega.js",
+      "bytes": 12081,
+      "sha256": "e5c88c313d192beb61d0318e6e219c7fe537b116846f6891970254c2202e6b5c"
+    },
+    {
+      "rel": "js/variants/extra-regions.js",
+      "bytes": 9114,
+      "sha256": "81a9242715f0cc0348b6e9eb9643faf1375b192df37ce0817abfb01485d49edc"
+    },
+    {
+      "rel": "js/variants/jigsaw.js",
+      "bytes": 31245,
+      "sha256": "0826ded674ccf417c20216b2ac7b54ce5eadb972390843b62646c0338418faa2"
+    },
+    {
+      "rel": "js/variants/killer.js",
+      "bytes": 55236,
+      "sha256": "885e3984da972b4e464bdbfb85b336988787ca2e56788feee80fc6458f8df7e8"
+    },
+    {
+      "rel": "js/variants/greater-than.js",
+      "bytes": 20708,
+      "sha256": "e4e6de520d46ce1ed74730e538fcaa983274ae28836a9542a33a016272e1fb88"
+    },
+    {
+      "rel": "js/variants/multigrid.js",
+      "bytes": 16594,
+      "sha256": "45587c628ad2f2b43e24e25790c709da6131d12a444a0246b78de1aded6c61a0"
+    },
+    {
+      "rel": "js/variants/wordoku.js",
+      "bytes": 23725,
+      "sha256": "2943caa2fb2d266368ed284225991104ed9617288da087e97aa19278c3e529ef"
+    },
+    {
+      "rel": "assets/wordlists/isograms.en.js",
+      "bytes": 7323,
+      "sha256": "eac38a7aa77efa7a7c3e5bc24fa1318ed445544d26870f8f668be28418a4b50c"
+    },
+    {
+      "rel": "assets/wordlists/isograms.vi.js",
+      "bytes": 7606,
+      "sha256": "7cb41ffae3655631b7ae04c501f43a336f4376fad5497d50965595a9572ce6a6"
+    },
+    {
+      "rel": "js/worker/worker-client.js",
+      "bytes": 27267,
+      "sha256": "f9f8b73312f8218ab5ba71b406c86b60bb252891371649a051d966e1f8dbe942"
+    },
+    {
+      "rel": "../core/js/ui/exchange.js",
+      "bytes": 9808,
+      "sha256": "ca950e7169f29fc42145c1489c131de70a01bdd1be00d8582bbe311f18a5ec39"
+    },
+    {
+      "rel": "js/ui/i18n.js",
+      "bytes": 21611,
+      "sha256": "403c87939a12b7bbef0fc56048c62ffe9065ff96767b6a006fd85c3268c36b20"
+    },
+    {
+      "rel": "js/ui/locale.en.js",
+      "bytes": 40262,
+      "sha256": "19c90504499dff9d75b16f918f531bfd3014b635f5d5ed265afaf46db3b25818"
+    },
+    {
+      "rel": "js/ui/locale.vi.js",
+      "bytes": 46248,
+      "sha256": "e645f65023c509212b17802550368e7c2bf070bb9eb21579b202b8bb5c3a2dbf"
+    },
+    {
+      "rel": "js/ui/locale.shell.js",
+      "bytes": 6526,
+      "sha256": "783cd033872ebca04c10d33f6231e25059c8cba24e0aa3828f60ba5af39e6ece"
+    },
+    {
+      "rel": "../core/js/ui/symbols.js",
+      "bytes": 15679,
+      "sha256": "6143620911169d99775f00c00995916527976cbd4112b4f40765bb36ddd84e30"
+    },
+    {
+      "rel": "../core/js/ui/board-view.js",
+      "bytes": 55228,
+      "sha256": "80dc2e13041d0732c997d32061875901e94bbdfa3e482c9d642fefade8243353"
+    },
+    {
+      "rel": "js/ui/store.js",
+      "bytes": 34318,
+      "sha256": "818d5db957414436efc822e7684a5e2cdd2980cec8c9f4d273ffcd19f4382917"
+    },
+    {
+      "rel": "js/ui/controls.js",
+      "bytes": 46029,
+      "sha256": "56fdd4ab13bf97cf47a1a8a850d6a5309679fb35d110902eac9880f45a5afe88"
+    },
+    {
+      "rel": "js/ui/step-view.js",
+      "bytes": 70210,
+      "sha256": "c621d33b3cc5ac9c12d1ec6feaa391f0ba43f95a97ec98d04a2c98357e482cc2"
+    },
+    {
+      "rel": "js/ui/explain.js",
+      "bytes": 10877,
+      "sha256": "1fe9be7938fa4b9994f86b84e14c6237f5fe06f875429e6059adfd95c5b94363"
+    },
+    {
+      "rel": "js/ui/player.js",
+      "bytes": 65523,
+      "sha256": "a37854d4891fb0a2d3524159ad1f00708a49e2a8bcf35741675a38c41d141205"
+    },
+    {
+      "rel": "../core/assets/wordbook/words.vi.js",
+      "bytes": 23740,
+      "sha256": "af5e6905bd129231f56d1a74a30af8653053504521c5a3c9d341fa0c8453825f"
+    },
+    {
+      "rel": "../core/assets/wordbook/words.en.js",
+      "bytes": 84895,
+      "sha256": "999b36d06c1b5d00908111a67f73e08aeeaa3ae627da7da4782ed722ed14c994"
+    },
+    {
+      "rel": "../core/js/ui/wordbook.js",
+      "bytes": 2205,
+      "sha256": "7ed839b35df49e0981aa333090e88ea94c867c6e346936e2cc3843b35602049c"
+    },
+    {
+      "rel": "js/ui/result-view.js",
+      "bytes": 29659,
+      "sha256": "e0b9e68c1ea66dacb85290469a67908ed2040140a55fe466da7b480d8d2df71e"
+    },
+    {
+      "rel": "js/ui/cache.js",
+      "bytes": 52724,
+      "sha256": "f0eddf4cd5fcce479d27e46432d41ffdb15e91c7a1964a3d5e7015f14be48bdb"
+    },
+    {
+      "rel": "js/ui/history.js",
+      "bytes": 16329,
+      "sha256": "79fe37f362fecf8324e9c25c7a35256bfae21f64306786355f5faccfd21057dd"
+    },
+    {
+      "rel": "js/ui/export.js",
+      "bytes": 57870,
+      "sha256": "71c6eb6f8d72ae84ec383ec7abb7cd08895232cb3b5de075d891b01571bbe73e"
+    },
+    {
+      "rel": "js/ui/a11y.js",
+      "bytes": 42244,
+      "sha256": "e33fb0318961e213262050cd99e83d97d4b50e8750899da2f64bc092a81438ae"
+    },
+    {
+      "rel": "js/ui/theme.js",
+      "bytes": 13189,
+      "sha256": "0e7b440b69003ebb3bffda0cb5668365de4e9797b702f67f03fedfa67c9da99f"
+    },
+    {
+      "rel": "js/ui/help.js",
+      "bytes": 95317,
+      "sha256": "67689988c05de721590765ebb27e371f882b97587a608524ef7d0ea753f5af05"
+    },
+    {
+      "rel": "js/ui/app.js",
+      "bytes": 53616,
+      "sha256": "811e1a4ea0d027db9ebc0f80d5b07c7b13497a8bde87370cd7ad4b713ad82feb"
+    }
+  ],
+  "sourceStable": true,
+  "harnessFingerprint": "9da69f60fbd2d71eeaec2949f805ba8fac3c6f2c6bf88b5848398e5b16c128ed",
+  "adapterIds": [
+    "gt-diagnostic"
+  ],
+  "adapterHashes": [
+    "d5fd6349b824de98223eecbbb001327e08b6ece223d95fb1b5d33842e465eaae"
+  ],
+  "catalogueSnapshot": {
+    "ratingVersion": 2,
+    "levels": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1",
+      "hell2"
+    ],
+    "scoring": {
+      "emptyCellMax": 80,
+      "emptyCellHalf": 40,
+      "workFactor": 0.25,
+      "peakBound": 1.25
+    },
+    "weights": {
+      "nakedSingle": 1,
+      "hiddenSingleBox": 1.25,
+      "hiddenSingleLine": 1.5,
+      "pointing": 40,
+      "boxLine": 50,
+      "nakedPair": 120,
+      "hiddenPair": 145,
+      "nakedTriple": 180,
+      "hiddenTriple": 220,
+      "nakedQuad": 260,
+      "hiddenQuad": 300,
+      "xWing": 320,
+      "simpleColouring": 360,
+      "swordfish": 420,
+      "jellyfish": 520,
+      "xyWing": 650,
+      "xyzWing": 750,
+      "wWing": 850,
+      "uniqueRectangle": 900,
+      "forcingChain": 1100,
+      "nishio": 1700,
+      "cageCombo": 40,
+      "ruleOf45": 260,
+      "cageSplit": 520,
+      "ineqChain": 40,
+      "minMaxForcing": 180
+    },
+    "table": [
+      {
+        "level": "veryEasy",
+        "min": 0,
+        "minClues": 40,
+        "maxClues": 50,
+        "minCluesPerUnit": 2,
+        "extraPasses": 1
+      },
+      {
+        "level": "easy",
+        "min": 45,
+        "minClues": 34,
+        "maxClues": 40,
+        "minCluesPerUnit": 2,
+        "extraPasses": 1
+      },
+      {
+        "level": "normal",
+        "min": 180,
+        "minClues": 29,
+        "maxClues": 34,
+        "minCluesPerUnit": 1,
+        "extraPasses": 1
+      },
+      {
+        "level": "hard",
+        "min": 400,
+        "minClues": 25,
+        "maxClues": 30,
+        "minCluesPerUnit": 1,
+        "extraPasses": 1
+      },
+      {
+        "level": "expert",
+        "min": 700,
+        "minClues": 25,
+        "maxClues": 30,
+        "minCluesPerUnit": 1,
+        "extraPasses": 1
+      },
+      {
+        "level": "master",
+        "min": 1000,
+        "minClues": 22,
+        "maxClues": 27,
+        "minCluesPerUnit": 0,
+        "extraPasses": 1
+      },
+      {
+        "level": "nightmare",
+        "min": 1500,
+        "minClues": 17,
+        "maxClues": 24,
+        "minCluesPerUnit": 0,
+        "extraPasses": 1
+      },
+      {
+        "level": "hell1",
+        "min": 2400,
+        "minClues": 17,
+        "maxClues": 24,
+        "minCluesPerUnit": 0,
+        "extraPasses": 1
+      },
+      {
+        "level": "hell2",
+        "min": 3600,
+        "minClues": 17,
+        "maxClues": 24,
+        "minCluesPerUnit": 0,
+        "extraPasses": 1
+      }
+    ],
+    "techniques": [
+      {
+        "id": "nakedSingle",
+        "group": "basic",
+        "order": 10,
+        "baseCost": 1,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "hiddenSingleBox",
+        "group": "basic",
+        "order": 20,
+        "baseCost": 2,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "hiddenSingleLine",
+        "group": "basic",
+        "order": 30,
+        "baseCost": 3,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "pointing",
+        "group": "locked",
+        "order": 40,
+        "baseCost": 7,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "cageCombo",
+        "group": "cage",
+        "order": 44,
+        "baseCost": 10,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "ineqChain",
+        "group": "ineq",
+        "order": 46,
+        "baseCost": 12,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "boxLine",
+        "group": "locked",
+        "order": 50,
+        "baseCost": 7,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "nakedPair",
+        "group": "subset",
+        "order": 60,
+        "baseCost": 9,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "hiddenPair",
+        "group": "subset",
+        "order": 70,
+        "baseCost": 11,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "nakedTriple",
+        "group": "subset",
+        "order": 80,
+        "baseCost": 15,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "minMaxForcing",
+        "group": "ineq",
+        "order": 85,
+        "baseCost": 22,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "hiddenTriple",
+        "group": "subset",
+        "order": 90,
+        "baseCost": 18,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "ruleOf45",
+        "group": "cage",
+        "order": 95,
+        "baseCost": 28,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "nakedQuad",
+        "group": "subset",
+        "order": 100,
+        "baseCost": 24,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "hiddenQuad",
+        "group": "subset",
+        "order": 105,
+        "baseCost": 24,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "xWing",
+        "group": "fish",
+        "order": 110,
+        "baseCost": 32,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "simpleColouring",
+        "group": "fish",
+        "order": 120,
+        "baseCost": 36,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "swordfish",
+        "group": "fish",
+        "order": 130,
+        "baseCost": 42,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "cageSplit",
+        "group": "cage",
+        "order": 135,
+        "baseCost": 40,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "jellyfish",
+        "group": "fish",
+        "order": 137,
+        "baseCost": 56,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "xyWing",
+        "group": "wing",
+        "order": 140,
+        "baseCost": 48,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "xyzWing",
+        "group": "wing",
+        "order": 150,
+        "baseCost": 54,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "wWing",
+        "group": "wing",
+        "order": 170,
+        "baseCost": 60,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "uniqueRectangle",
+        "group": "wing",
+        "order": 180,
+        "baseCost": 66,
+        "assumesUniqueness": true
+      },
+      {
+        "id": "forcingChain",
+        "group": "chain",
+        "order": 190,
+        "baseCost": 90,
+        "assumesUniqueness": false
+      },
+      {
+        "id": "nishio",
+        "group": "chain",
+        "order": 200,
+        "baseCost": 140,
+        "assumesUniqueness": false
+      }
+    ],
+    "variants": [
+      {
+        "id": "classic4",
+        "group": "classic",
+        "digits": 4,
+        "cellCount": 16,
+        "levels": [
+          "veryEasy"
+        ],
+        "digStrategy": null,
+        "hasPostGenerate": false,
+        "defaultMaxAttempts": 8
+      },
+      {
+        "id": "classic6",
+        "group": "classic",
+        "digits": 6,
+        "cellCount": 36,
+        "levels": [
+          "veryEasy",
+          "hard"
+        ],
+        "digStrategy": null,
+        "hasPostGenerate": false,
+        "defaultMaxAttempts": 8
+      },
+      {
+        "id": "classic9",
+        "group": "classic",
+        "digits": 9,
+        "cellCount": 81,
+        "levels": [
+          "veryEasy",
+          "easy",
+          "normal",
+          "hard",
+          "expert",
+          "master",
+          "nightmare",
+          "hell1"
+        ],
+        "digStrategy": null,
+        "hasPostGenerate": false,
+        "defaultMaxAttempts": 8
+      },
+      {
+        "id": "mega12",
+        "group": "mega",
+        "digits": 12,
+        "cellCount": 144,
+        "levels": [
+          "veryEasy",
+          "easy",
+          "normal",
+          "hard",
+          "expert",
+          "master",
+          "nightmare",
+          "hell1",
+          "hell2"
+        ],
+        "digStrategy": null,
+        "hasPostGenerate": false,
+        "defaultMaxAttempts": 4
+      },
+      {
+        "id": "mega16",
+        "group": "mega",
+        "digits": 16,
+        "cellCount": 256,
+        "levels": [
+          "veryEasy",
+          "easy",
+          "normal",
+          "hard",
+          "expert",
+          "master",
+          "nightmare",
+          "hell1",
+          "hell2"
+        ],
+        "digStrategy": null,
+        "hasPostGenerate": false,
+        "defaultMaxAttempts": 2
+      },
+      {
+        "id": "diagonalX",
+        "group": "extraRegions",
+        "digits": 9,
+        "cellCount": 81,
+        "levels": [
+          "veryEasy",
+          "easy",
+          "normal",
+          "hard",
+          "expert",
+          "master",
+          "nightmare",
+          "hell1",
+          "hell2"
+        ],
+        "digStrategy": null,
+        "hasPostGenerate": false,
+        "defaultMaxAttempts": 8
+      },
+      {
+        "id": "hyper",
+        "group": "extraRegions",
+        "digits": 9,
+        "cellCount": 81,
+        "levels": [
+          "veryEasy",
+          "easy",
+          "normal",
+          "hard",
+          "expert",
+          "master",
+          "nightmare",
+          "hell1",
+          "hell2"
+        ],
+        "digStrategy": null,
+        "hasPostGenerate": false,
+        "defaultMaxAttempts": 8
+      },
+      {
+        "id": "jigsaw9",
+        "group": "regions",
+        "digits": 9,
+        "cellCount": 81,
+        "levels": [
+          "veryEasy",
+          "easy",
+          "normal",
+          "hard",
+          "expert",
+          "master",
+          "nightmare",
+          "hell1",
+          "hell2"
+        ],
+        "digStrategy": null,
+        "hasPostGenerate": false,
+        "defaultMaxAttempts": 8
+      },
+      {
+        "id": "killer",
+        "group": "killer",
+        "digits": 9,
+        "cellCount": 81,
+        "levels": [
+          "veryEasy",
+          "easy",
+          "normal",
+          "hard",
+          "expert",
+          "master",
+          "nightmare",
+          "hell1",
+          "hell2"
+        ],
+        "digStrategy": "killer",
+        "hasPostGenerate": true,
+        "defaultMaxAttempts": 8
+      },
+      {
+        "id": "greaterThan",
+        "group": "inequality",
+        "digits": 9,
+        "cellCount": 81,
+        "levels": [
+          "veryEasy",
+          "easy",
+          "normal",
+          "hard",
+          "expert",
+          "master",
+          "nightmare",
+          "hell1",
+          "hell2"
+        ],
+        "digStrategy": "signs",
+        "hasPostGenerate": true,
+        "defaultMaxAttempts": 8
+      },
+      {
+        "id": "samurai",
+        "group": "multigrid",
+        "digits": 9,
+        "cellCount": 369,
+        "levels": [
+          "veryEasy",
+          "easy",
+          "normal",
+          "hard",
+          "expert",
+          "master",
+          "nightmare",
+          "hell1",
+          "hell2"
+        ],
+        "digStrategy": null,
+        "hasPostGenerate": false,
+        "defaultMaxAttempts": 2
+      },
+      {
+        "id": "sohei",
+        "group": "multigrid",
+        "digits": 9,
+        "cellCount": 288,
+        "levels": [
+          "veryEasy",
+          "easy",
+          "normal",
+          "hard",
+          "expert",
+          "master",
+          "nightmare",
+          "hell1",
+          "hell2"
+        ],
+        "digStrategy": null,
+        "hasPostGenerate": false,
+        "defaultMaxAttempts": 2
+      },
+      {
+        "id": "butterfly",
+        "group": "multigrid",
+        "digits": 9,
+        "cellCount": 144,
+        "levels": [
+          "veryEasy",
+          "easy",
+          "normal",
+          "hard",
+          "expert",
+          "master",
+          "nightmare",
+          "hell1",
+          "hell2"
+        ],
+        "digStrategy": null,
+        "hasPostGenerate": false,
+        "defaultMaxAttempts": 4
+      },
+      {
+        "id": "flower",
+        "group": "multigrid",
+        "digits": 9,
+        "cellCount": 189,
+        "levels": [
+          "veryEasy",
+          "easy",
+          "normal",
+          "hard",
+          "expert",
+          "master",
+          "nightmare",
+          "hell1",
+          "hell2"
+        ],
+        "digStrategy": null,
+        "hasPostGenerate": false,
+        "defaultMaxAttempts": 2
+      },
+      {
+        "id": "wordoku",
+        "group": "wordoku",
+        "digits": 9,
+        "cellCount": 81,
+        "levels": [
+          "veryEasy",
+          "easy",
+          "normal",
+          "hard",
+          "expert",
+          "master",
+          "nightmare",
+          "hell1"
+        ],
+        "digStrategy": null,
+        "hasPostGenerate": true,
+        "defaultMaxAttempts": 8
+      }
+    ],
+    "floors": {
+      "classic4": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        }
+      },
+      "classic6": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        },
+        "hard": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ],
+          "tier": [
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ]
+        }
+      },
+      "classic9": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        },
+        "easy": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ],
+          "tier": [
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ]
+        },
+        "normal": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ],
+          "tier": [
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ]
+        },
+        "hard": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ],
+          "tier": [
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ]
+        },
+        "expert": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ],
+          "tier": [
+            "xyWing",
+            "xyzWing"
+          ]
+        },
+        "master": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing"
+          ],
+          "tier": [
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        },
+        "nightmare": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ],
+          "tier": [
+            "nishio"
+          ]
+        },
+        "hell1": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        }
+      },
+      "mega12": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        },
+        "easy": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ],
+          "tier": [
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ]
+        },
+        "normal": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ],
+          "tier": [
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ]
+        },
+        "hard": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ],
+          "tier": [
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ]
+        },
+        "expert": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ],
+          "tier": [
+            "xyWing",
+            "xyzWing"
+          ]
+        },
+        "master": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing"
+          ],
+          "tier": [
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        },
+        "nightmare": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ],
+          "tier": [
+            "nishio"
+          ]
+        },
+        "hell1": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        },
+        "hell2": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        }
+      },
+      "mega16": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        },
+        "easy": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ],
+          "tier": [
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ]
+        },
+        "normal": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ],
+          "tier": [
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ]
+        },
+        "hard": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ],
+          "tier": [
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ]
+        },
+        "expert": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ],
+          "tier": [
+            "xyWing",
+            "xyzWing"
+          ]
+        },
+        "master": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing"
+          ],
+          "tier": [
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        },
+        "nightmare": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ],
+          "tier": [
+            "nishio"
+          ]
+        },
+        "hell1": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        },
+        "hell2": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        }
+      },
+      "diagonalX": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        },
+        "easy": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ],
+          "tier": [
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ]
+        },
+        "normal": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ],
+          "tier": [
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ]
+        },
+        "hard": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ],
+          "tier": [
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ]
+        },
+        "expert": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ],
+          "tier": [
+            "xyWing",
+            "xyzWing"
+          ]
+        },
+        "master": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing"
+          ],
+          "tier": [
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        },
+        "nightmare": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ],
+          "tier": [
+            "nishio"
+          ]
+        },
+        "hell1": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        },
+        "hell2": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        }
+      },
+      "hyper": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        },
+        "easy": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ],
+          "tier": [
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ]
+        },
+        "normal": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ],
+          "tier": [
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ]
+        },
+        "hard": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ],
+          "tier": [
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ]
+        },
+        "expert": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ],
+          "tier": [
+            "xyWing",
+            "xyzWing"
+          ]
+        },
+        "master": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing"
+          ],
+          "tier": [
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        },
+        "nightmare": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ],
+          "tier": [
+            "nishio"
+          ]
+        },
+        "hell1": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        },
+        "hell2": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        }
+      },
+      "jigsaw9": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        },
+        "easy": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ],
+          "tier": [
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ]
+        },
+        "normal": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ],
+          "tier": [
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ]
+        },
+        "hard": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ],
+          "tier": [
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ]
+        },
+        "expert": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ],
+          "tier": [
+            "xyWing",
+            "xyzWing"
+          ]
+        },
+        "master": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing"
+          ],
+          "tier": [
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        },
+        "nightmare": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ],
+          "tier": [
+            "nishio"
+          ]
+        },
+        "hell1": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        },
+        "hell2": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        }
+      },
+      "killer": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        },
+        "easy": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ],
+          "tier": [
+            "pointing",
+            "cageCombo",
+            "boxLine",
+            "nakedPair"
+          ]
+        },
+        "normal": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "cageCombo",
+            "boxLine",
+            "nakedPair"
+          ],
+          "tier": [
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "ruleOf45",
+            "nakedQuad",
+            "hiddenQuad"
+          ]
+        },
+        "hard": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "cageCombo",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "ruleOf45",
+            "nakedQuad",
+            "hiddenQuad"
+          ],
+          "tier": [
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "cageSplit",
+            "jellyfish"
+          ]
+        },
+        "expert": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "cageCombo",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "ruleOf45",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "cageSplit",
+            "jellyfish"
+          ],
+          "tier": [
+            "xyWing",
+            "xyzWing"
+          ]
+        },
+        "master": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "cageCombo",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "ruleOf45",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "cageSplit",
+            "jellyfish",
+            "xyWing",
+            "xyzWing"
+          ],
+          "tier": [
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        },
+        "nightmare": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "cageCombo",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "ruleOf45",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "cageSplit",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ],
+          "tier": [
+            "nishio"
+          ]
+        },
+        "hell1": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "cageCombo",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "ruleOf45",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "cageSplit",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        },
+        "hell2": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "cageCombo",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "ruleOf45",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "cageSplit",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        }
+      },
+      "greaterThan": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        },
+        "easy": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ],
+          "tier": [
+            "pointing",
+            "ineqChain",
+            "boxLine",
+            "nakedPair"
+          ]
+        },
+        "normal": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "ineqChain",
+            "boxLine",
+            "nakedPair"
+          ],
+          "tier": [
+            "hiddenPair",
+            "nakedTriple",
+            "minMaxForcing",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ]
+        },
+        "hard": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "ineqChain",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "minMaxForcing",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ],
+          "tier": [
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ]
+        },
+        "expert": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "ineqChain",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "minMaxForcing",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ],
+          "tier": [
+            "xyWing",
+            "xyzWing"
+          ]
+        },
+        "master": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "ineqChain",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "minMaxForcing",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing"
+          ],
+          "tier": [
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        },
+        "nightmare": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "ineqChain",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "minMaxForcing",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ],
+          "tier": [
+            "nishio"
+          ]
+        },
+        "hell1": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "ineqChain",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "minMaxForcing",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        },
+        "hell2": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "ineqChain",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "minMaxForcing",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        }
+      },
+      "samurai": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        },
+        "easy": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ],
+          "tier": [
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ]
+        },
+        "normal": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ],
+          "tier": [
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ]
+        },
+        "hard": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ],
+          "tier": [
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ]
+        },
+        "expert": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ],
+          "tier": [
+            "xyWing",
+            "xyzWing"
+          ]
+        },
+        "master": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing"
+          ],
+          "tier": [
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        },
+        "nightmare": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ],
+          "tier": [
+            "nishio"
+          ]
+        },
+        "hell1": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        },
+        "hell2": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        }
+      },
+      "sohei": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        },
+        "easy": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ],
+          "tier": [
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ]
+        },
+        "normal": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ],
+          "tier": [
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ]
+        },
+        "hard": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ],
+          "tier": [
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ]
+        },
+        "expert": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ],
+          "tier": [
+            "xyWing",
+            "xyzWing"
+          ]
+        },
+        "master": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing"
+          ],
+          "tier": [
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        },
+        "nightmare": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ],
+          "tier": [
+            "nishio"
+          ]
+        },
+        "hell1": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        },
+        "hell2": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        }
+      },
+      "butterfly": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        },
+        "easy": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ],
+          "tier": [
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ]
+        },
+        "normal": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ],
+          "tier": [
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ]
+        },
+        "hard": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ],
+          "tier": [
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ]
+        },
+        "expert": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ],
+          "tier": [
+            "xyWing",
+            "xyzWing"
+          ]
+        },
+        "master": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing"
+          ],
+          "tier": [
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        },
+        "nightmare": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ],
+          "tier": [
+            "nishio"
+          ]
+        },
+        "hell1": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        },
+        "hell2": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        }
+      },
+      "flower": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        },
+        "easy": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ],
+          "tier": [
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ]
+        },
+        "normal": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ],
+          "tier": [
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ]
+        },
+        "hard": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ],
+          "tier": [
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ]
+        },
+        "expert": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ],
+          "tier": [
+            "xyWing",
+            "xyzWing"
+          ]
+        },
+        "master": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing"
+          ],
+          "tier": [
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        },
+        "nightmare": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ],
+          "tier": [
+            "nishio"
+          ]
+        },
+        "hell1": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        },
+        "hell2": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        }
+      },
+      "wordoku": {
+        "veryEasy": {
+          "floor": [],
+          "tier": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ]
+        },
+        "easy": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine"
+          ],
+          "tier": [
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ]
+        },
+        "normal": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair"
+          ],
+          "tier": [
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ]
+        },
+        "hard": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad"
+          ],
+          "tier": [
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ]
+        },
+        "expert": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish"
+          ],
+          "tier": [
+            "xyWing",
+            "xyzWing"
+          ]
+        },
+        "master": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing"
+          ],
+          "tier": [
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ]
+        },
+        "nightmare": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain"
+          ],
+          "tier": [
+            "nishio"
+          ]
+        },
+        "hell1": {
+          "floor": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "hiddenTriple",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ],
+          "tier": []
+        }
+      }
+    },
+    "defaults": {
+      "pipelineDefaultMaxAttempts": 8,
+      "pipelineSteps": [
+        "configure",
+        "buildModel",
+        "fullGrid",
+        "extraStructure",
+        "dig",
+        "rate",
+        "tune"
+      ],
+      "fullTraceMaxCells": 300,
+      "smallBoardCells": 81,
+      "capRatings": 1024,
+      "shallowSearchRatings": 256,
+      "digOrders": [
+        "random",
+        "rowByRow",
+        "snake",
+        "spiral",
+        "jumpOne"
+      ],
+      "symmetryKinds": [
+        "none",
+        "rotational180",
+        "rotational90",
+        "mirrorH",
+        "mirrorV",
+        "mirrorBoth",
+        "diagonal",
+        "antiDiagonal"
+      ]
+    }
+  },
+  "catalogueFingerprint": "d035b740ff3ad78310773050a53f0633ca6ac4e4b38e68df173c19befef9fb3e",
+  "machine": {
+    "node": "v26.13.0",
+    "execArgv": [],
+    "platform": "win32 10.0.26300 x64",
+    "cpuModel": "AMD EPYC 7763 64-Core Processor",
+    "logicalProcessors": 16,
+    "memoryGiB": 64
+  },
+  "manifestHash": "6228c6853ae720dbb1f3f05e72475860d937046cbb57a0a01c291cf65a23108f",
+  "pairOrder": [
+    {
+      "pairId": "greaterThan:normal:300",
+      "seedIndex": 0,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:301",
+      "seedIndex": 1,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:302",
+      "seedIndex": 2,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:303",
+      "seedIndex": 3,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:304",
+      "seedIndex": 4,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:305",
+      "seedIndex": 5,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:306",
+      "seedIndex": 6,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:307",
+      "seedIndex": 7,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:308",
+      "seedIndex": 8,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:309",
+      "seedIndex": 9,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:310",
+      "seedIndex": 10,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:311",
+      "seedIndex": 11,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:312",
+      "seedIndex": 12,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:313",
+      "seedIndex": 13,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:314",
+      "seedIndex": 14,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:315",
+      "seedIndex": 15,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:316",
+      "seedIndex": 16,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:317",
+      "seedIndex": 17,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:318",
+      "seedIndex": 18,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:normal:319",
+      "seedIndex": 19,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "greaterThan:nightmare:700",
+      "seedIndex": 0,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:nightmare:701",
+      "seedIndex": 1,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "greaterThan:nightmare:702",
+      "seedIndex": 2,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:nightmare:703",
+      "seedIndex": 3,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "greaterThan:nightmare:704",
+      "seedIndex": 4,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:nightmare:705",
+      "seedIndex": 5,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "greaterThan:nightmare:706",
+      "seedIndex": 6,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:nightmare:707",
+      "seedIndex": 7,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "greaterThan:nightmare:708",
+      "seedIndex": 8,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "greaterThan:nightmare:709",
+      "seedIndex": 9,
+      "order": [
+        "prototype",
+        "reference"
+      ]
+    },
+    {
+      "pairId": "control:greaterThan:normal:300",
+      "seedIndex": 0,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    },
+    {
+      "pairId": "control:greaterThan:nightmare:700",
+      "seedIndex": 0,
+      "order": [
+        "reference",
+        "prototype"
+      ]
+    }
+  ],
+  "plannedKeys": [
+    "IG-S09/normal-315-319/greaterThan:normal:315/g1",
+    "IG-S09/normal-315-319/greaterThan:normal:315/g0",
+    "IG-S09/normal-315-319/greaterThan:normal:316/g0",
+    "IG-S09/normal-315-319/greaterThan:normal:316/g1",
+    "IG-S09/normal-315-319/greaterThan:normal:317/g1",
+    "IG-S09/normal-315-319/greaterThan:normal:317/g0",
+    "IG-S09/normal-315-319/greaterThan:normal:318/g0",
+    "IG-S09/normal-315-319/greaterThan:normal:318/g1",
+    "IG-S09/normal-315-319/greaterThan:normal:319/g1",
+    "IG-S09/normal-315-319/greaterThan:normal:319/g0"
+  ],
+  "completedKeys": [
+    "IG-S09/normal-315-319/greaterThan:normal:315/g1",
+    "IG-S09/normal-315-319/greaterThan:normal:315/g0",
+    "IG-S09/normal-315-319/greaterThan:normal:316/g0",
+    "IG-S09/normal-315-319/greaterThan:normal:316/g1",
+    "IG-S09/normal-315-319/greaterThan:normal:317/g1",
+    "IG-S09/normal-315-319/greaterThan:normal:317/g0",
+    "IG-S09/normal-315-319/greaterThan:normal:318/g0",
+    "IG-S09/normal-315-319/greaterThan:normal:318/g1",
+    "IG-S09/normal-315-319/greaterThan:normal:319/g1",
+    "IG-S09/normal-315-319/greaterThan:normal:319/g0"
+  ],
+  "censoredKeys": [],
+  "errorKeys": [],
+  "startedUnfinishedKeys": [],
+  "unstartedKeys": [],
+  "logicalBlockKeys": [
+    "IG-S09/normal-315-319/greaterThan:normal:315",
+    "IG-S09/normal-315-319/greaterThan:normal:316",
+    "IG-S09/normal-315-319/greaterThan:normal:317",
+    "IG-S09/normal-315-319/greaterThan:normal:318",
+    "IG-S09/normal-315-319/greaterThan:normal:319"
+  ],
+  "physicalPlanHash": "e787e57bc2c4e3f616edb2262997cf69b8e4e5b16cd41828e8920e0f691565a5",
+  "physicalPlan": {
+    "windowMs": 258000,
+    "commands": 1,
+    "thisCommandKeys": [
+      "IG-S09/normal-315-319/greaterThan:normal:315/g1",
+      "IG-S09/normal-315-319/greaterThan:normal:315/g0",
+      "IG-S09/normal-315-319/greaterThan:normal:316/g0",
+      "IG-S09/normal-315-319/greaterThan:normal:316/g1",
+      "IG-S09/normal-315-319/greaterThan:normal:317/g1",
+      "IG-S09/normal-315-319/greaterThan:normal:317/g0",
+      "IG-S09/normal-315-319/greaterThan:normal:318/g0",
+      "IG-S09/normal-315-319/greaterThan:normal:318/g1",
+      "IG-S09/normal-315-319/greaterThan:normal:319/g1",
+      "IG-S09/normal-315-319/greaterThan:normal:319/g0"
+    ],
+    "oversize": []
+  },
+  "guards": {
+    "commandMs": 270000,
+    "requestMs": 180000,
+    "sampleMs": 45000,
+    "jigsawMs": 240000,
+    "validationMs": 60000,
+    "wrapperLimitMs": 300000,
+    "graceMs": 45000,
+    "finalizeReserveMs": 8000,
+    "startMarginMs": 2000,
+    "minWindowMs": 15000
+  },
+  "lock": {
+    "wrapperPath": "C:\\Users\\ledat\\.copilot\\session-state\\c2f29688-8568-4f25-bace-e644d381e5f9\\files\\ig-lock.ps1",
+    "ownerText": "IG IG-S09/normal-315-319",
+    "expectedTask": "IG-S09/normal-315-319",
+    "observed": {
+      "file": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-sudoku.lock",
+      "content": "2984|IG IG-S09/normal-315-319|2026-11-15T02:55:48.8071559Z",
+      "expectedOwner": "IG IG-S09/normal-315-319",
+      "ownerMatches": true
+    }
+  },
+  "timing": {
+    "requestedAt": "2026-11-15T02:54:24.5988744Z",
+    "admittedAt": "2026-11-15T02:55:49.155Z",
+    "endedAt": "2026-11-15T02:56:23.155Z",
+    "occupiedMs": 33999,
+    "chargedGraceMs": 45000,
+    "priorityWaitMs": 84557
+  },
+  "exit": 0,
+  "error": null,
+  "budgetLedgerReference": {
+    "ledger": "docs/improve-generating/evidence/phase0/provisional-r1/ledger.json",
+    "stateBefore": {
+      "task": "IG-S09",
+      "round": "provisional-r1",
+      "allocationMs": 900000,
+      "approvedExtraMs": 0,
+      "chargedMs": 252768,
+      "remainingTaskMs": 647232,
+      "roundAllocationMs": 10800000,
+      "roundApprovedMs": 0,
+      "roundChargedMs": 5913503,
+      "remainingRoundMs": 4886497,
+      "effectiveDeadlineMs": 270000,
+      "canAdmit": true
+    }
+  },
+  "gate": {
+    "round": "provisional-r1",
+    "formalGateEnabled": false,
+    "projection": "projection-awaits-author-review",
+    "reasons": [
+      "pre-freeze round: no gate is evaluated whatever the numbers or a frozen flag say"
+    ],
+    "state": "not-evaluable-pre-freeze"
+  },
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 81.80200000000002,
+      "changesSeen": 7,
+      "incrementsMs": [
+        15,
+        16,
+        15,
+        16,
+        15,
+        16
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    },
+    "commandCpuMs": 52266,
+    "processAgeAtHostMs": 577.2633
+  },
+  "firewallClean": true,
+  "firewallDiff": {
+    "added": [],
+    "removed": [],
+    "changed": []
+  },
+  "resumeOf": null,
+  "chain": {
+    "attempts": [
+      "a1"
+    ],
+    "resumed": false,
+    "startedBefore": [],
+    "startedHere": [
+      "IG-S09/normal-315-319/greaterThan:normal:315/g1",
+      "IG-S09/normal-315-319/greaterThan:normal:315/g0",
+      "IG-S09/normal-315-319/greaterThan:normal:316/g0",
+      "IG-S09/normal-315-319/greaterThan:normal:316/g1",
+      "IG-S09/normal-315-319/greaterThan:normal:317/g1",
+      "IG-S09/normal-315-319/greaterThan:normal:317/g0",
+      "IG-S09/normal-315-319/greaterThan:normal:318/g0",
+      "IG-S09/normal-315-319/greaterThan:normal:318/g1",
+      "IG-S09/normal-315-319/greaterThan:normal:319/g1",
+      "IG-S09/normal-315-319/greaterThan:normal:319/g0"
+    ],
+    "rerunKeys": [],
+    "noRerun": true,
+    "unstartedAfter": []
+  },
+  "pause": null,
+  "parity": {
+    "pairs": [
+      {
+        "pairId": "greaterThan:normal:315",
+        "kind": "arms",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "samples": 36,
+        "passes": 78,
+        "removals": 3895,
+        "budgetPresent": false,
+        "firstDifference": null,
+        "g0Digest": "11418e4ce97927a781b54b3283b65836e1b5a3f68abe37c7eac576b440b61430",
+        "g1Digest": "11418e4ce97927a781b54b3283b65836e1b5a3f68abe37c7eac576b440b61430"
+      },
+      {
+        "pairId": "greaterThan:normal:316",
+        "kind": "arms",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "samples": 32,
+        "passes": 76,
+        "removals": 3534,
+        "budgetPresent": false,
+        "firstDifference": null,
+        "g0Digest": "70950a0faaf5eb6828dfa19f219d3319c570d26773c39910e2a393ece5041ed0",
+        "g1Digest": "70950a0faaf5eb6828dfa19f219d3319c570d26773c39910e2a393ece5041ed0"
+      },
+      {
+        "pairId": "greaterThan:normal:317",
+        "kind": "arms",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "samples": 14,
+        "passes": 48,
+        "removals": 1619,
+        "budgetPresent": false,
+        "firstDifference": null,
+        "g0Digest": "24aca0a48d2f96f03944994533f4b0c8a3584d2a3e19b7966b5763d98fd1bdf8",
+        "g1Digest": "24aca0a48d2f96f03944994533f4b0c8a3584d2a3e19b7966b5763d98fd1bdf8"
+      },
+      {
+        "pairId": "greaterThan:normal:318",
+        "kind": "arms",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "samples": 52,
+        "passes": 146,
+        "removals": 5673,
+        "budgetPresent": false,
+        "firstDifference": null,
+        "g0Digest": "de33dd5a90b21633dae58e59356e05b459aa009f30be3afd39dbd54a3a644f3c",
+        "g1Digest": "de33dd5a90b21633dae58e59356e05b459aa009f30be3afd39dbd54a3a644f3c"
+      },
+      {
+        "pairId": "greaterThan:normal:319",
+        "kind": "arms",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "samples": 13,
+        "passes": 46,
+        "removals": 1495,
+        "budgetPresent": false,
+        "firstDifference": null,
+        "g0Digest": "793dd97dd5cf9a93d9f9d53c3711a22d36b6a59f66acb4a4d1024afb7deab73d",
+        "g1Digest": "793dd97dd5cf9a93d9f9d53c3711a22d36b6a59f66acb4a4d1024afb7deab73d"
+      }
+    ],
+    "failed": 0,
+    "ok": 5,
+    "guardBinding": 0,
+    "notComparable": 0,
+    "deferred": 0,
+    "complete": true
+  },
+  "selfTestPassed": null,
+  "notes": []
+}
