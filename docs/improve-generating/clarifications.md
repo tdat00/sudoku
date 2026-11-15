@@ -560,3 +560,36 @@ Future work requires A1-A6 as applicable: freeze attestation, budget approval, a
 separate IG-S06 approval, each extension's approval, and a decision on the missing Nightmare pairs.
 All findings remain provisional: the gate is `not-evaluable-pre-freeze`, and no qualification, default,
 bank-route or production decision follows.
+
+## Cover note for provisional review (2026-11-15)
+
+The [r3 measurement report](evidence/phase0/provisional-r1/report-r3.md) supersedes r2's interpretations,
+not its measurements. This package supports provisional design review; it is not an official gate
+or a source-current measurement basis for plan-v2 performance and yield forecasts.
+
+The measurements use the MS05e-era runtime (f7be90f, unchanged by ef8a9cc; fingerprint 36b2b832…).
+The audit/smoke snapshot, rating-v3 8b70875, includes MS06a-d and MS07a-d: 11 runtime files changed
+(+808/-208), including windowed chain kernels with SHORT_MAX = 4. The canonical-rating technique
+weights are 1400 for forcingChainLong and 2600 for nishioDeep, not complete puzzle scores.
+The reported MS07c classic9 Nightmare experiment at C = 4 achieved 12/12 exact, p50 0.15 s and
+p95 0.51 s; G13 samurai/42 became exact at attempt 1, G10 Killer/42 changed from shallow to exact,
+and Hell 1 became non-vacuous. These are different source/cohort/cap observations, not paired
+improvements over this package. MS08-MS16 are expected to add about 14 further finders.
+
+Errata E1-E10 correct the baseline statistics and sample-mix wording, distinguish cheap unsuccessful
+sample processing from exact yield, report isolated S2 costs, correct the first-phase formula and
+S4's placement, withdraw representative 1,296/10x costing, and identify missing measurements and
+source-preparation costs. Killer's comparison remains three-pair evidence; unstarted requests are
+not censored requests.
+
+Compatibility smoke ([report](evidence/phase0/smoke-rating-v3-8b70875/smoke-report-r2.md)): harness
+`8f0018b5c36d…` against rating-v3 `8b70875`: self-test 36/36; 5/8 adapters apply textually, while
+`profile`, `jigsaw-profile` and `gt-diagnostic` fail at digger anchors, and `frontier-hooks` has a stale
+`refusalReason` exposure; two pure suites timed out and native/no-op puzzle parity remains untested
+(1/4 loader rows completed); 144.472 s separately charged, with no adapter repairs or performance
+conclusions. Compatibility only; no repair or performance conclusion.
+
+Decisions D1-D10 and applicable approvals A1-A8 remain pending. D9/A7 adds the missing width sweep
+and restricted-floor probes; D10/A8 adds frozen-source preparation, repairs, reproof and recalibration.
+Apart from the separately authorised compatibility smoke, no new measurements, IG-S06,
+Nightmare 706-709 catch-up or frozen round are authorised. The gate remains `not-evaluable-pre-freeze`.

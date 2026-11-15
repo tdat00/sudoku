@@ -37,8 +37,9 @@ function s5aText(h) {
   if (verdict === 'supported') return 'supported (median x' + f2(f.p50) + ' reaches the low end of the planning range ' + planned + ')';
   if (verdict === 'inconclusive') return 'inconclusive (median x' + f2(f.p50) + ' is below the low end of ' + planned +
     ' but at least one pair reaches it, up to x' + f2(f.max) + ')';
-  return 'planning-factor estimate refuted on these ' + f.n + ' pairs (x' + f2(f.min) + '-' + f2(f.max) + ' versus ' + planned +
-    '); this does not refute the usefulness of the x' + f2(f.p50) + ' (median) pool improvement';
+  return 'below the planning range on all ' + f.n + ' observed pairs (x' + f2(f.min) + '-' + f2(f.max) + ' versus ' + planned +
+    '); no general refutation: the x' + f2(f.p50) + ' (median) pool improvement stands, and the original IG-S02 verdict (' +
+    h.acceptedS5aVerdict + ') is kept as historical evidence in IG-S02/summary-r2';
 }
 
 // --- the six headline rows ----------------------------------------------------------------------------------------------------
@@ -50,7 +51,14 @@ function headlineRow(h) {
   const sp = h.arms['scoped-attempts-w4'];
   const ss = h.arms['scoped-native-w1'];
   const f = h.factors;
-  const diff = RP.descriptiveDifference(n.readyWallS.p50, a.today.median);
+  // a descriptive comparison of like statistics: a maximum of two requests is compared with the new maximum, never with a median
+  const todayIsMax = /^maximum/.test(a.today.statistic);
+  const measuredToday = todayIsMax ? n.readyWallS.max : n.readyWallS.p50;
+  const diff = RP.descriptiveDifference(measuredToday, a.today.value);
+  diff.statistic = todayIsMax ? 'maximum of the 3 native-w1 ready walls against the ' + a.today.statistic + ' (' + a.today.basis + ')' :
+    'median of the 3 native-w1 ready walls against the ' + a.today.statistic.split(' / ')[0] + ' (' + a.today.basis + ')';
+  diff.measuredMedianS = n.readyWallS.p50;
+  diff.measuredMaxS = n.readyWallS.max;
   const verdicts = {
     today: 'descriptive-difference',
     s5a: RP.s5aVerdict(f, a.s5a[0]),
@@ -66,8 +74,9 @@ function headlineRow(h) {
   return {
     id: h.cell, rowKind: 'headline', report: a.label,
     anchorChecklist: a.checklist, todayDifference: diff,
-    P: 'Today ' + a.today.median + ' / ' + (a.today.p95 === null ? 'n/a' : a.today.p95) + ' s (report, Measured); first phases ' +
-      a.first.median + ' / ' + a.first.p95 + ' s (P, equal results); all phases ' + a.all.median + ' / ' + a.all.p95 + ' s, envelope ' +
+    P: 'Today ' + a.today.value + (a.today.p95 === null ? '' : ' / ' + a.today.p95) + ' s (' + a.today.statistic + ': ' + a.today.basis +
+      '; report, Measured); first phases ' + a.first.median + ' / ' + a.first.p95 + ' s (P: full S3 x S4 x S5a, S3 alone on the ' +
+      'local continuation; equal results); all phases ' + a.all.median + ' / ' + a.all.p95 + ' s, envelope ' +
       a.all.envelope[0] + '-' + a.all.envelope[1] + ' s (P); S5a x' + f1(a.s5a[0]) + '-' + f1(a.s5a[1]) + '; no forecast was assigned to the partial S3',
     before: 'native-w1, n = ' + n.requests + ', trace off: ready p50 ' + f2(n.readyWallS.p50) + ' / max ' + f2(n.readyWallS.max) +
       ' s; cold p50 ' + f2(n.coldWallS.p50) + ' s; CPU p50 ' + f2(n.cpuTotalS.p50) + ' s',
@@ -79,16 +88,21 @@ function headlineRow(h) {
       f2(f.partialS3Incremental.p50) + ' (' + range(f.partialS3Incremental) + '), CPU x' + f2(f.combinedCpu.p50) +
       ' (S5a+S3 / native; median combined ready x' + f2(f.combinedReady.p50) + ')',
     hits: hitText(n, 'native') + '; ' + hitText(p, 'S5a') + '; ' + hitText(sp, 'S5a+S3'),
-    scope: 'S5a (min(4, A) workers) and partial S3 (singles and subsets) on 3 paired seeds; S1/S2 composition (IG-S06 deferred), ' +
-      'S4, S5b, full S3 and S7 NOT implemented; ' + n.censored + '+' + p.censored + '+' + sp.censored + ' censored, ' +
+    scope: 'measured: S5a (min(4, A) workers) and partial S3 (singles and subsets) on 3 paired seeds; first-phase components not ' +
+      'implemented: full S3 and S4 (S4 moves to phase 3 under the new generator version, Q04); phase-3 components not composed: ' +
+      'S1/S2/S5b (IG-S06 deferred); S7 not implemented; ' + n.censored + '+' + p.censored + '+' + sp.censored + ' censored, ' +
       (n.errors + p.errors + sp.errors) + ' errors' + (h.cell === 'killer' ? '; Killer rows by hash-linked audit overlay' : '') +
       '; n = 3 descriptive',
     verdicts: verdicts,
-    verdict: 'Today: no verdict, descriptive difference: measured median ' + f2(n.readyWallS.p50) + ' s against ' + a.today.median +
-      ' s (' + signed(diff.absolute, 2) + ' s, ' + signed(diff.relative * 100, 1) + ' %); S5a: ' + s5aText(h) + '; partial S3: no material ' +
-      'net gain demonstrated (median paired incremental ratio x' + f2(f.partialS3Incremental.p50) + ', range ' + range(f.partialS3Incremental) +
-      '), full-S3 forecast untested/inconclusive; first and all phases inconclusive (S1/S2, S4, S5b, full S3 unimplemented or ' +
-      'deferred; implemented scope reaches ' + f2(sp.readyWallS.p50) + ' s ready)'
+    verdict: 'Today: no verdict, descriptive difference: measured ' + (todayIsMax ? 'maximum ' + f2(n.readyWallS.max) + ' s against the ' +
+      'CV3 maximum of two requests ' : 'median ' + f2(n.readyWallS.p50) + ' s against the ' + a.today.statistic.split(' / ')[0] + ' ') + a.today.value +
+      ' s (' + signed(diff.absolute, 2) + ' s, ' + signed(diff.relative * 100, 1) + ' %)' + (todayIsMax ? '; the measured median is ' +
+      f2(n.readyWallS.p50) + ' s (shown separately, not compared with a maximum)' : '') + '; S5a: ' + s5aText(h) + '; partial S3: no ' +
+      'material net gain demonstrated (median paired incremental ratio x' + f2(f.partialS3Incremental.p50) + ', range ' +
+      range(f.partialS3Incremental) + '), full-S3 forecast untested/inconclusive; first phases (original formula: full S3 x S4 x S5a, ' +
+      'S3 alone on the local continuation): S5a and partial S3 measured, full S3 unmeasured, S4 unimplemented (Q04 moves it to phase 3 ' +
+      'under the new generator version): inconclusive; all phases add S1/S2/S5b (phase 3, new generator version): grid-trial ' +
+      'prototype only, composition deferred (IG-S06): inconclusive; implemented scope reaches ' + f2(sp.readyWallS.p50) + ' s ready'
   };
 }
 
@@ -160,34 +174,111 @@ function s1s2Row(sm2) {
     function (k, m) { return k + m.trials; }, 0); }, 0);
   const per = sm2.cells.map(function (c) {
     const f1 = c.f1SampleCostVsNative;
-    return c.cell + ' F1/ordinary x' + f2(f1.f1OverOrdinary) + ', F1/proposal x' + f2(f1.f1OverProposal) + ', F1/equal-weight mix x' +
-      f2(f1.f1OverEqualWeightMix);
+    return c.cell + ' x' + f2(f1.f1OverEqualWeightMix) + ' (F1/ordinary x' + f2(f1.f1OverOrdinary) + ', F1/proposal x' + f2(f1.f1OverProposal) + ')';
   });
+  const outcomes = sm2.cells.map(function (c) {
+    const o = c.s1CostVsYield.outcomesOfTheCheapWork;
+    return c.cell + ' ' + o.emptyUniqueFrontier + '/' + o.samples + ' empty unique frontiers, ' + o.candidatesAboveBand + ' above-band candidates' +
+      (o.budgetStopSamples > 0 ? ', ' + o.budgetStopSamples + ' count-budget stops' : '');
+  });
+  const mix = sm2.sampleMixInSm1.filter(function (m) { return m.fourSm1Request; }).map(function (m) {
+    return m.ordinarySamples + '/' + m.proposalSamples; });
   const budgetEnded = sm2.cells.map(function (c) {
     return c.cell + ' ' + c.modes.filter(function (m) { return m.kind === 'frontier'; }).reduce(function (n, m) {
       return n + m.outcomes.budgetEnded; }, 0);
   });
+  const allHits = sm2.verifiedHits;
+  const mixText = sm2.cells.map(function (c) { return f2(c.f1SampleCostVsNative.f1OverEqualWeightMix); }).join(' / ');
   return {
-    id: 's1s2', rowKind: 'multiplier', report: 'S1/S2 F0/F1/FC/FM/FU/FS',
-    P: 'yield, not an assumed 10x solve saving; per-sample divisor about 1 (81 cells), 1.2 (144), 1.5-2 (multigrids), 3 (mega16)',
+    id: 's1s2', rowKind: 'multiplier', report: 'S1 F0/F1/FC/FM/FU/FS: sample cost and yield kept apart',
+    P: 'a hit-rate lever, not a speed lever: a near-constant per-sample cost, time per sample divided by about 1 (81 cells), 1.2 (144), ' +
+      '1.5-2 (multigrids), 3 (mega16) (report.md:35-36, 108); yield (p) unmeasured, decided by SM2',
     before: 'native kinds, 8 grid clusters per cell: proposal-only and ordinary-only, ' + sm2.cells.reduce(function (n, c) {
       return n + c.modes.filter(function (m) { return m.kind === 'native'; }).reduce(function (k, m) { return k + m.verifiedHits; }, 0);
     }, 0) + ' verified hits in ' + nativeTrials + ' trials; ' + nativeExact + ' exact of ' + nativeSamples + ' native samples (' + nativeShallow + ' shallow)',
     after: 'six frontier variants x 4 cells x 8 clusters = ' + frontierTrials + ' trials: ' + sm2.cells.reduce(function (n, c) {
       return n + c.modes.filter(function (m) { return m.kind === 'frontier'; }).reduce(function (k, m) { return k + m.verifiedHits; }, 0);
     }, 0) + ' verified hits; budget-ended frontier trials per cell: ' + budgetEnded.join(', '),
-    ratios: 'Derived sample cost (mean CPU of the same grids): ' + per.join('; '),
-    hits: 'every mode, every cell: ' + (sm2.verifiedHits === 0 ? '0 verified hits' : sm2.verifiedHits + ' verified hits') + ' per CPU and per wall second (rates and all ' +
-      sm2.intervals.rows + ' paired intervals: ' + sm2.intervals.degenerate + ' degenerate, 0 [0, 0]); sample-origin 0, local-origin not measured (no local continuation in these trials)',
+    ratios: 'COST (separate from yield), F1 sample CPU over the equal-weight native mix of the same grids: ' + per.join('; ') +
+      '. The near-constant-cost planning expectation was not observed for this prototype and cohort; ' +
+      'the cheap work is attributable to unsuccessful, empty or above-band outcomes: ' + outcomes.join('; ') + '; no exact, shallow or below-band ' +
+      'candidate in any cell. Equal weighting matches the observed ordinary/proposal counts of the four SM1 requests (' + mix.join(', ') +
+      '; IG-S07/summary-r2.md lines 78-88); it remains a sample-cost comparator, not whole-request throughput, and early stopping can ' +
+      'change the realised mix',
+    hits: 'YIELD: ' + (allHits === 0 ? '0 verified hits' : allHits + ' verified hits') + ' in every mode and cell, native controls included ' +
+      '(rates and all ' + sm2.intervals.rows + ' paired intervals: ' + sm2.intervals.degenerate + ' degenerate, 0 [0, 0]); sample-origin 0, ' +
+      'local-origin not measured (no local continuation in these trials). Cost per verified exact puzzle is unestablished (no hit to divide by)',
     scope: 'two-sample grid trials on the pre-MS07 catalogue, reference solver, width 1; whole-request recovery and local search ' +
-      'excluded; classic9, mega12, mega16, samurai only (wordoku, sohei, flower, butterfly: not measured); S2 audited on the pilot ' +
-      '(' + get(sm2.s2Audit, 'trialsAudited') + ' trials, ' + get(sm2.s2Audit, 'auditedRemovals') + ' removals, ' +
-      get(sm2.s2Audit, 'correctnessProblems') + ' correctness problems); selection F1 is a non-winning diagnostic default in all ' +
-      'four cells; held-out outcomes unmeasured',
-    verdicts: { yield: 'inconclusive', perSampleCost: 'inconclusive' },
-    verdict: 'inconclusive in all four cells: no demonstrated exact-yield benefit, and no refutation (0 hits include the native ' +
-      'controls); separate problems kept apart (empty unique frontiers, shallow or above-band candidates, count-budget stops); ' +
+      'excluded; classic9, mega12, mega16, samurai only (wordoku, sohei, flower, butterfly: not measured); selection F1 is a ' +
+      'non-winning diagnostic default in all four cells; held-out outcomes unmeasured; the S2 isolation is the next row',
+    verdicts: { sampleCost: 'planning-expectation-not-observed', costPerVerifiedExactPuzzle: 'unestablished', yield: 'inconclusive' },
+    verdict: 'cost: F1 samples cost ' + mixText + ' of the native mix on classic9 / mega12 / mega16 / samurai, not the near-constant ' +
+      'cost the planning expectation gave, and the cheap work belongs to unsuccessful, empty or above-band outcomes; yield: inconclusive ' +
+      '(no demonstrated exact-yield benefit and no refutation: 0 hits include the native controls); cost per verified exact puzzle ' +
+      'unestablished; separate problems kept apart (empty unique frontiers, shallow or above-band candidates, count-budget stops); ' +
       'formal gate not-evaluable-pre-freeze; no S1 drop and no S9 routing implied'
+  };
+}
+
+function s2Row(sm2) {
+  const iso = sm2.cells.map(function (c) { return { cell: c.cell, s: c.s2Isolated }; });
+  const bits = function (key) { return iso.map(function (x) { return x.cell + ' x' + f2(x.s[key]); }).join(', '); };
+  const paired = iso.map(function (x) {
+    return x.cell + ' x' + f2(x.s.pairedClusterReadyCpuRatio.median) + ' (' + f2(x.s.pairedClusterReadyCpuRatio.min) + '-' + f2(x.s.pairedClusterReadyCpuRatio.max) + ')';
+  }).join(', ');
+  const ratios = iso.map(function (x) { return x.s.f1OverF0MeanSampleCpu; });
+  const lo = Math.min.apply(null, ratios);
+  const hi = Math.max.apply(null, ratios);
+  const deduction = iso.map(function (x) {
+    return x.cell + ' ' + x.s.deductionSaving.f1AcceptedByRederivation + ' of ' + (x.s.deductionSaving.f1AcceptedByRederivation +
+      x.s.deductionSaving.f1AcceptedByFullProof) + ' (' + pct(x.s.deductionSaving.rederivationShareOfF1Accepted) + ')';
+  }).join('; ');
+  return {
+    id: 's2', rowKind: 'multiplier', report: 'S2 isolated: F0 versus F1',
+    P: 'S2 re-derivation early exit of removal tests: "a removal test costs a few deductions, not a solve" (plan.md:99), part of the S1 + S2 ' +
+      'per-sample divisor (report.md:107-108)',
+    before: 'F0 (frontier without the re-derivation): mean sample CPU ms ' + iso.map(function (x) { return x.cell + ' ' + f2(x.s.f0MeanSampleCpuMs); }).join(', '),
+    after: 'F1 (with the re-derivation), the same grids and samples: mean sample CPU ms ' + iso.map(function (x) { return x.cell + ' ' + f2(x.s.f1MeanSampleCpuMs); }).join(', '),
+    ratios: 'F1/F0 CPU, statistic: ratio of the mean sample CPU over the same samples of the same 8 grid clusters per cell (' + iso[0].s.pairedPopulation +
+      '): ' + bits('f1OverF0MeanSampleCpu') + ' (' + f2(lo) + '-' + f2(hi) + '); ratio of the cohort totals of ready CPU: ' + bits('f1OverF0ReadyCpuOfClusterTotals') +
+      '; median of the 8 paired per-cluster ready-CPU ratios (min-max): ' + paired + ' (dispersed at n = 8)',
+    hits: 'n/a (cost row); F0 and F1 take the same decisions in every cell (floor tests, candidates, outcomes equal): ' +
+      iso.map(function (x) { return x.cell + ' ' + x.s.sameDecisions; }).join(', ') + '; 0 verified hits in both',
+    scope: 'paired population: ' + iso[0].s.pairedPopulation + '; KEPT SEPARATE: correctness and deduction-saving evidence (F1 accepted removals by ' +
+      're-derivation instead of a full proof: ' + deduction + '; S2 audited on the IG-S04 pilot: ' + get(sm2.s2Audit, 'trialsAudited') +
+      ' trials, ' + get(sm2.s2Audit, 'auditedRemovals') + ' removals, ' + get(sm2.s2Audit, 'correctnessProblems') + ' correctness problems); not ' +
+      'generalised: whole requests, other cells, larger floors and the deduction-saving mechanism are not isolated here',
+    verdicts: { cpuSaving: 'none-observed-on-this-cohort', correctnessAndDeductionSaving: 'reported-separately', generalisation: 'not-claimed' },
+    verdict: 'no CPU saving on this cohort: F1/F0 CPU x' + f2(lo) + '-' + f2(hi) + ' (mean sample CPU, same 16 samples per cell); correctness and ' +
+      'deduction-saving evidence is reported separately and is not contradicted by this; not generalised to "S2 never helps"'
+  };
+}
+
+function sm5Row() {
+  return {
+    id: 'sm5', rowKind: 'multiplier', report: 'SM5 pool width sweep 1 / 2 / 4',
+    P: 'S5a in Node worker_threads with 1, 2 and 4 workers on mega12 and classic9 Nightmare: identical puzzles and wall time; decides the pool ' +
+      'design and the message cost (plan.md:366)',
+    before: 'not measured', after: 'not measured', ratios: 'n/a', hits: 'n/a',
+    scope: 'UNMEASURED: no 1 / 2 / 4-width sweep exists for classic9 or mega12. IG-S02 compared the serial native run (width 1) with the pool at ' +
+      'width min(4, A) on six cells and 3 seeds; the effective two-worker operation on the two-attempt boards (mega16, samurai) is not the missing ' +
+      'width-two comparison on classic9 and mega12',
+    verdicts: { sweep: 'unmeasured' },
+    verdict: 'unmeasured (not passed, not refuted); added to the frozen proposal (D9, A7) and no run is authorised'
+  };
+}
+
+function floorProbesRow() {
+  return {
+    id: 'floor-probes', rowKind: 'multiplier', report: 'Restricted-floor performance probes',
+    P: 'restricted-floor (and prefix) probes of the new test costs: an accepted floor test, a refused floor test at each floor level, a DFS ' +
+      'uniqueness check, a full solve (clarifications.md:186, 503; report.md:42, 136, 263)',
+    before: 'not measured', after: 'not measured', ratios: 'n/a', hits: 'n/a',
+    scope: 'UNMEASURED: no probe times these operations in isolation. The existing floor parity evidence (equal floor decisions of the equal-result ' +
+      'checks and the F0/F1 comparison) is not that experiment; the frontier trials count floor tests and report a phase-A wall share, not a ' +
+      'cost per operation kind',
+    verdicts: { probes: 'unmeasured' },
+    verdict: 'unmeasured (not passed, not refuted); added to the frozen proposal (D9, A7) and no run is authorised'
   };
 }
 
@@ -228,7 +319,9 @@ function sm1Row(sm1, headline) {
     hits: 'n/a (attribution); sample / local share of the Nightmare profiles without an anchor: ' + others.join('; '),
     scope: 'n = 1 per cell; Killer and Greater-Than have large non-finder shares (Killer DFS 45 %, Greater-Than local search own ' +
       'code 25 %); S3 scenarios are CONDITIONAL zero-cost figures, not full-S3 ceilings; frontier phase A per-finder wall ' +
-      'unmeasured (counts and phase wall only); pre-MS07',
+      'unmeasured (counts and phase wall only); pre-MS07; observed ' + sm1.solvesPerOrdinarySample.min + '-' + sm1.solvesPerOrdinarySample.max +
+      ' solves per ordinary sample in the four SM1 requests, so the plan\'s 1,296 solves per sample and its "10x fewer solves per ' +
+      'sample" are withdrawn as representative costing and speed-up premises (section 7)',
     verdicts: { descriptive: 'no verdict; differences in percentage points beside each cell' },
     differences: differences,
     verdict: 'descriptive, no verdict (n = 1 per cell, no threshold is set by the pack): sample-share differences to the report in ' +
@@ -276,7 +369,8 @@ function gtRow(gt) {
       m.missSplit.g0.exact + ' of ' + m.missSplit.g0.samples + ' (the split is identical in G0 and G1: ' + (C.canonicalJson(n.missSplit.g0.buckets) ===
       C.canonicalJson(n.missSplit.g1.buckets) && C.canonicalJson(m.missSplit.g0.buckets) === C.canonicalJson(m.missSplit.g1.buckets)) + '); named trap ' +
       trapN.numerator + '/' + trapN.denominator + ' of Normal misses, ' + trapM.numerator + '/' + trapM.denominator + ' of Nightmare misses',
-    scope: 'trace SUMMARY cohort, never the trace-off headline; Normal 20/20 pairs, Nightmare 6/10 (706-709 UNSTARTED, eight rows); ' +
+    scope: 'trace SUMMARY cohort, never the trace-off headline; Normal 20/20 pairs, Nightmare 6/10 (a partial, budget-limited cohort: ' +
+      '706-709 UNSTARTED, eight rows; the recorded requests completed); ' +
       '26/26 pairs identical (digests, ratings, sign decisions, semantic counters), no guard-binding difference; `counts.dfsEntries` ' +
       'in the records are countSolutions CALLS (erratum applied); probes: ' + gt.probes.executedGroupChecks + ' executed group checks ' +
       'plus ' + gt.probes.reusedRows + ' reused rows; two singleton observer controls; no global G1 winner, no production adoption',
@@ -286,14 +380,14 @@ function gtRow(gt) {
       pct(get(n.localStage, 'g0.requestGroupShareOfTimeOfRequestsWithACappedLocal.share')) +
       ' here) while the measured local-stage share is ' + pct(get(n.localStage, 'g0.measuredLocalStageShareOfAllRequestTime.share')) +
       '; G1: modest Normal benefit (x' + f3(n.readyRatioOfTotalsG0OverG1) + '), substantial Nightmare regression (x' + f3(m.readyRatioOfTotalsG0OverG1) +
-      ', six pairs, censored cohort); no global winner (cohorts differ) and no production adoption'
+      ', six pairs, a partial, budget-limited cohort: its recorded requests completed and eight rows were unstarted); no global winner (cohorts differ) and no production adoption'
   };
 }
 
 function estimateTable(ctx) {
   const rows = ctx.headline.map(headlineRow);
-  rows.push(s5aRow(ctx.headline), s3Row(ctx.headline, ctx), s1s2Row(ctx.sm2), s5bRow(), sm1Row(ctx.sm1, ctx.headline), sm3Row(ctx.sm3),
-    gtRow(ctx.gt));
+  rows.push(s5aRow(ctx.headline), s3Row(ctx.headline, ctx), s1s2Row(ctx.sm2), s2Row(ctx.sm2), s5bRow(), sm1Row(ctx.sm1, ctx.headline),
+    sm3Row(ctx.sm3), gtRow(ctx.gt), sm5Row(), floorProbesRow());
   return rows;
 }
 
@@ -370,5 +464,5 @@ function machineBlock(b) {
   };
 }
 
-module.exports = { headlineRow, s5aRow, s3Row, s1s2Row, s5bRow, sm1Row, sm3Row, gtRow, estimateTable, provenance, machineBlock,
+module.exports = { headlineRow, s5aRow, s3Row, s1s2Row, s2Row, s5bRow, sm1Row, sm3Row, gtRow, sm5Row, floorProbesRow, estimateTable, provenance, machineBlock,
   f2, f3, f4, pct, range };

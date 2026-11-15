@@ -1,0 +1,58 @@
+{
+  "schema": "ig-smoke-postflight/1",
+  "round": "smoke-rating-v3-8b70875",
+  "endedAt": "2026-11-15T07:14:58.5682333Z",
+  "fatal": null,
+  "git": {
+    "smokeWorktreeAfter": {
+      "root": "Q:\\git\\sudoku.ig-smoke-8b70875",
+      "head": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+      "statusShort": [
+        "?? docs/improve-generating/evidence/",
+        "?? generator/tests/artifacts/improve-generating/"
+      ],
+      "trackedChanges": [],
+      "untracked": [
+        "?? docs/improve-generating/evidence/",
+        "?? generator/tests/artifacts/improve-generating/"
+      ]
+    },
+    "headUnchanged": true,
+    "trackedFilesUnchanged": true,
+    "statusBeforeUntracked": [
+      "?? generator/tests/artifacts/improve-generating/"
+    ]
+  },
+  "driverUnchanged": [
+    {
+      "file": "Invoke-IgSmoke.ps1",
+      "sourceSha256": "90d608873a96186f18e80dcbc62fc7d7fec00043c4b217ceed4536141579c666",
+      "archiveSha256": "90d608873a96186f18e80dcbc62fc7d7fec00043c4b217ceed4536141579c666"
+    },
+    {
+      "file": "smoke-inventory.cjs",
+      "sourceSha256": "ac4bcd241533345e9488acb19940267eb25fe9526373865e1b6f8b19962dd977",
+      "archiveSha256": "ac4bcd241533345e9488acb19940267eb25fe9526373865e1b6f8b19962dd977"
+    },
+    {
+      "file": "smoke-lib.cjs",
+      "sourceSha256": "fe14bb322431308995c198a093ae7e9c8b3bd8632219411ee21b1c6dbd1a27c8",
+      "archiveSha256": "fe14bb322431308995c198a093ae7e9c8b3bd8632219411ee21b1c6dbd1a27c8"
+    },
+    {
+      "file": "smoke-probe.cjs",
+      "sourceSha256": "910be7225b09c7da7084c64d8867ab2b151380e15fdd1b40ffe51844f9e79a5d",
+      "archiveSha256": "910be7225b09c7da7084c64d8867ab2b151380e15fdd1b40ffe51844f9e79a5d"
+    },
+    {
+      "file": "smoke-report.cjs",
+      "sourceSha256": "34bc747668c2a35d165670edd3ad0e139ce7bdf1aa7e018c3051d9a2380c19ce",
+      "archiveSha256": "34bc747668c2a35d165670edd3ad0e139ce7bdf1aa7e018c3051d9a2380c19ce"
+    },
+    {
+      "file": "smoke-supervise.cjs",
+      "sourceSha256": "63460fcfd3fc584e17d35b631764e4fb210baee97f93d4e67e3169bb94c81b12",
+      "archiveSha256": "63460fcfd3fc584e17d35b631764e4fb210baee97f93d4e67e3169bb94c81b12"
+    }
+  ]
+}

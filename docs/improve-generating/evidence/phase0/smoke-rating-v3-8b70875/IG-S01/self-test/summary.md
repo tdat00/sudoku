@@ -1,0 +1,377 @@
+# IG-S01 / self-test (smoke-rating-v3-8b70875, a1)
+
+**PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.**
+
+Evidence status: **provisional (pre-freeze)**. Formal gate: **not-evaluable-pre-freeze**.
+Command status: **complete** (exit 0). Estimate verdict: not applicable: IG-S01 is infrastructure only and confirms no speed estimate.
+
+## Coverage
+
+| planned | completed | censored | errors | unstarted | coverage complete |
+|---|---|---|---|---|---|
+| 36 | 36 | 0 | 0 | 0 | true |
+
+Exclusions: synthetic cases, not timing observations
+
+## Sources
+
+| item | value |
+|---|---|
+| runtime label (supplied) | 1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc) |
+| runtime fingerprint | bad5fb5040b7666a3a226158e82dcd62a81afe5e93bd16613adce8d6db98a3c1 |
+| runtime files | 63 |
+| harness fingerprint | c961af25bc432e02854fda27db1508498ec72647bd00a02c0ba3a1c0727cc171 |
+| adapters | noop-expose |
+| sources stable | true |
+| firewall clean | true |
+
+CPU: process.cpuUsage (user+system of the host process, worker threads included; read once at the host); observed quantum 16 ms. A value below the quantum is unresolved and gives no rate or factor.
+
+## Task details
+
+```json
+{
+  "cases": [
+    {
+      "id": "source-list-corruption",
+      "group": "pure",
+      "ok": true,
+      "ms": 0.9,
+      "detail": {
+        "realSources": 63
+      }
+    },
+    {
+      "id": "source-path-escape-and-missing",
+      "group": "pure",
+      "ok": true,
+      "ms": 0.7,
+      "detail": null
+    },
+    {
+      "id": "duplicate-key-and-output",
+      "group": "pure",
+      "ok": true,
+      "ms": 9.1,
+      "detail": null
+    },
+    {
+      "id": "incompatible-hashes",
+      "group": "pure",
+      "ok": true,
+      "ms": 0.2,
+      "detail": null
+    },
+    {
+      "id": "missing-and-unstarted-row",
+      "group": "pure",
+      "ok": true,
+      "ms": 0.5,
+      "detail": null
+    },
+    {
+      "id": "started-timeout-children-not-resumable",
+      "group": "pure",
+      "ok": true,
+      "ms": 0.2,
+      "detail": null
+    },
+    {
+      "id": "immutable-attempt-output",
+      "group": "pure",
+      "ok": true,
+      "ms": 41.8,
+      "detail": null
+    },
+    {
+      "id": "productive-pause-exit0-incomplete",
+      "group": "pure",
+      "ok": true,
+      "ms": 1.2,
+      "detail": null
+    },
+    {
+      "id": "zero-or-quantised-cpu-never-infinite",
+      "group": "pure",
+      "ok": true,
+      "ms": 2,
+      "detail": null
+    },
+    {
+      "id": "cold-ready-separation",
+      "group": "pure",
+      "ok": true,
+      "ms": 0.1,
+      "detail": null
+    },
+    {
+      "id": "logical-block-packing-and-deadline",
+      "group": "pure",
+      "ok": true,
+      "ms": 1.3,
+      "detail": null
+    },
+    {
+      "id": "one-sided-lower-bound-edges",
+      "group": "pure",
+      "ok": true,
+      "ms": 1.1,
+      "detail": null
+    },
+    {
+      "id": "cluster-resampling-keeps-pairs",
+      "group": "pure",
+      "ok": true,
+      "ms": 6.7,
+      "detail": null
+    },
+    {
+      "id": "transform-validation",
+      "group": "pure",
+      "ok": true,
+      "ms": 36.2,
+      "detail": {
+        "transformHash": "807e0597ca8f11168bd6e682f2b8b472b982abee6658213a6d5d02fb3d48d9e2",
+        "afterTextHash": "f005ca7794f0f22c3e47a4ce1659fa01bd11cc0c91e293247e3ffd4359423e27"
+      }
+    },
+    {
+      "id": "source-change-detected",
+      "group": "pure",
+      "ok": true,
+      "ms": 1,
+      "detail": null
+    },
+    {
+      "id": "gate-states",
+      "group": "pure",
+      "ok": true,
+      "ms": 0.5,
+      "detail": null
+    },
+    {
+      "id": "receipts-validated-before-frozen-generation",
+      "group": "pure",
+      "ok": true,
+      "ms": 138.3,
+      "detail": null
+    },
+    {
+      "id": "lock-owner-must-be-proved",
+      "group": "pure",
+      "ok": true,
+      "ms": 1,
+      "detail": null
+    },
+    {
+      "id": "rates-charge-all-spent-work",
+      "group": "pure",
+      "ok": true,
+      "ms": 1.2,
+      "detail": null
+    },
+    {
+      "id": "host-deadline-late-decision-and-termination",
+      "group": "pure",
+      "ok": true,
+      "ms": 72.4,
+      "detail": null
+    },
+    {
+      "id": "parity-defers-and-resume-chain-reconciles",
+      "group": "pure",
+      "ok": true,
+      "ms": 16.1,
+      "detail": null
+    },
+    {
+      "id": "dispatcher-uses-only-the-wrapper",
+      "group": "pure",
+      "ok": true,
+      "ms": 1.1,
+      "detail": null
+    },
+    {
+      "id": "test-only-cannot-leak",
+      "group": "pure",
+      "ok": true,
+      "ms": 0.7,
+      "detail": null
+    },
+    {
+      "id": "harness-text-format",
+      "group": "pure",
+      "ok": true,
+      "ms": 42.1,
+      "detail": null
+    },
+    {
+      "id": "descriptive-statistics",
+      "group": "pure",
+      "ok": true,
+      "ms": 0.1,
+      "detail": null
+    },
+    {
+      "id": "firewall-detects-changes",
+      "group": "pure",
+      "ok": true,
+      "ms": 3,
+      "detail": null
+    },
+    {
+      "id": "normalised-digest-includes-structure",
+      "group": "pure",
+      "ok": true,
+      "ms": 1.1,
+      "detail": null
+    },
+    {
+      "id": "record-schema-unknown-is-null",
+      "group": "pure",
+      "ok": true,
+      "ms": 0.5,
+      "detail": null
+    },
+    {
+      "id": "ledger-charges-and-shard-status",
+      "group": "pure",
+      "ok": true,
+      "ms": 13.6,
+      "detail": null
+    },
+    {
+      "id": "plan-only-loads-no-engine",
+      "group": "pure",
+      "ok": true,
+      "ms": 79.2,
+      "detail": null
+    },
+    {
+      "id": "busy-worker-request-timeout",
+      "group": "worker",
+      "ok": true,
+      "ms": 303.8,
+      "detail": {
+        "coldWallMs": 300.78559999999993,
+        "cpuToDecisionMs": 313,
+        "cpuTotalMs": 313,
+        "cleanupMs": 2.5685000000000855,
+        "quantumMs": 16,
+        "tickMs": 110.76750000000015
+      }
+    },
+    {
+      "id": "busy-worker-command-timeout",
+      "group": "worker",
+      "ok": true,
+      "ms": 457.7,
+      "detail": {
+        "coldWallMs": 456.02020000000016
+      }
+    },
+    {
+      "id": "real-worker-cold-ready-intervals",
+      "group": "worker",
+      "ok": true,
+      "ms": 81.3,
+      "detail": {
+        "readyWallMs": 60.9239,
+        "startupMs": 18.612800000000107,
+        "cleanupMs": 1.5920999999998457
+      }
+    },
+    {
+      "id": "worker-fails-closed",
+      "group": "worker",
+      "ok": true,
+      "ms": 144,
+      "detail": null
+    },
+    {
+      "id": "engine-loads-and-discovers-catalogue",
+      "group": "worker",
+      "ok": true,
+      "ms": 190.4,
+      "detail": {
+        "nativeLoadMs": 75.5666,
+        "noopLoadMs": 70.2772,
+        "catalogueFingerprint": "6fea11d2ae1b2d2f369cc7132010d1a17ce0037d3b141bbf62e94db59945c7b7",
+        "ratingVersion": 2,
+        "levels": [
+          "veryEasy",
+          "easy",
+          "normal",
+          "hard",
+          "expert",
+          "master",
+          "nightmare",
+          "hell1",
+          "hell2"
+        ],
+        "variants": 15,
+        "techniques": 28,
+        "defaults": {
+          "pipelineDefaultMaxAttempts": 8,
+          "pipelineSteps": [
+            "configure",
+            "buildModel",
+            "fullGrid",
+            "extraStructure",
+            "dig",
+            "rate",
+            "tune"
+          ],
+          "fullTraceMaxCells": 300,
+          "smallBoardCells": 81,
+          "capRatings": 1024,
+          "shallowSearchRatings": 256,
+          "digOrders": [
+            "random",
+            "rowByRow",
+            "snake",
+            "spiral",
+            "jumpOne"
+          ],
+          "symmetryKinds": [
+            "none",
+            "rotational180",
+            "rotational90",
+            "mirrorH",
+            "mirrorV",
+            "mirrorBoth",
+            "diagonal",
+            "antiDiagonal"
+          ]
+        }
+      }
+    },
+    {
+      "id": "verifier-audits-a-handmade-puzzle",
+      "group": "worker",
+      "ok": true,
+      "ms": 477.9,
+      "detail": {
+        "goodWallMs": 93.0590000000002,
+        "goodCpuMs": 94,
+        "cpuStatus": "resolved"
+      }
+    }
+  ],
+  "cpuProbe": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "probeWallMs": 78.45920000000001,
+    "changesSeen": 7,
+    "incrementsMs": [
+      16,
+      15,
+      16,
+      15,
+      16,
+      16
+    ],
+    "minIncrementMs": 15,
+    "quantumMs": 16
+  }
+}
+```

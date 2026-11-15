@@ -299,13 +299,17 @@ function buildFrozenPlan(ctx) {
   Object.keys(coldWall).forEach(function (cell) { trialMs[cell] = coldWall[cell] * overhead / 64; });
   const proxyOf = {
     wordoku: { proxy: 'classic9', scale: 4.96 / 4.91, basis: 'same 81-cell geometry and 8 attempts; historical Nightmare I5 4.96 s ' +
-      'against classic9 R5 4.91 s' },
-    sohei: { proxy: 'samurai', scale: 27.49 / 26.74, basis: 'two-attempt multigrid; CV3 Nightmare 27.49 s against samurai 26.74 s ' +
-      '(288 against 369 cells)' },
-    flower: { proxy: 'samurai', scale: 23.07 / 26.74, basis: 'two-attempt multigrid; CV3 Nightmare 23.07 s against samurai 26.74 s ' +
-      '(189 against 369 cells)' },
-    butterfly: { proxy: 'mega12', scale: 32.82 / 23.72, basis: 'four attempts and 144 cells like mega12; CV3 Nightmare 32.82 s ' +
-      'against mega12 deep 23.72 s' }
+      '(I5 per-request median) against classic9 R5 4.91 s (R5 median, n = 12)',
+    statistics: 'median over median' },
+    sohei: { proxy: 'samurai', scale: 27.49 / 26.74, basis: 'two-attempt multigrid; CV3 Nightmare 27.49 s (maximum of two requests) against ' +
+      'samurai CV3 26.74 s (maximum of two requests) (288 against 369 cells); applied to the measured samurai pooled cold wall',
+    statistics: 'maximum of two over maximum of two (like statistics)' },
+    flower: { proxy: 'samurai', scale: 23.07 / 26.74, basis: 'two-attempt multigrid; CV3 Nightmare 23.07 s (maximum of two requests) against ' +
+      'samurai CV3 26.74 s (maximum of two requests) (189 against 369 cells); applied to the measured samurai pooled cold wall',
+    statistics: 'maximum of two over maximum of two (like statistics)' },
+    butterfly: { proxy: 'mega12', scale: 32.82 / 23.72, basis: 'four attempts and 144 cells like mega12; CV3 Nightmare 32.82 s (maximum of ' +
+      'two requests) against mega12 deep 23.72 s (median of 7)',
+    statistics: 'a maximum of two over a median of seven (UNLIKE statistics: the scale is likely biased high)' }
   };
   const extensions = Object.keys(proxyOf).map(function (cell) {
     const p = proxyOf[cell];
@@ -318,7 +322,7 @@ function buildFrozenPlan(ctx) {
       cells: { variantId: cell },
       populations: { pilot: { gridSeeds: [11, 12], modes: 8, trials: 16 }, sm2: { gridSeeds: '101-140', modes: 8, trials: 320 },
         requests: { seeds: '201-240', modes: ['native-mixed', 'selected-frontier'], requests: 80 } },
-      proxy: p.proxy, proxyScale: Math.round(p.scale * 1000) / 1000, proxyBasis: p.basis,
+      proxy: p.proxy, proxyScale: Math.round(p.scale * 1000) / 1000, proxyBasis: p.basis, proxyStatistics: p.statistics,
       confidence: 'very low (the report: no measurement of this cell\'s frontier or request exists in this pack)',
       projection: {
         label: 'PLANNING SCENARIOS with an incomplete upper bound (validation, cleanup, diagnostics and retries are not all included)',
@@ -360,13 +364,44 @@ function buildFrozenPlan(ctx) {
     { id: 'A5', who: 'plan author (Fable) with the pack author (Astra)', what: 'each of the four Nightmare extensions separately ' +
       '(wordoku, sohei, flower, butterfly); none is covered by classic9 or samurai' },
     { id: 'A6', who: 'pack author (Astra)', what: 'IG-S09 Nightmare 706-709 (eight rows unstarted in the first round): whether the frozen ' +
-      'run includes them; no catch-up run is authorised before the freeze' }
+      'run includes them; no catch-up run is authorised before the freeze' },
+    { id: 'A7', who: 'plan author (Fable) with the pack author (Astra)', what: 'whether the SM5 pool-width sweep (1, 2 and 4 workers on classic9 ' +
+      'and mega12 Nightmare) and the restricted-floor performance probes join the frozen scope: two measurements the first round never made, ' +
+      'uncosted here, no run authorised' },
+    { id: 'A8', who: 'plan author (Fable) with the pack author (Astra)', what: 'the source preparation of the frozen rerun and the work it may ' +
+      'expose (adapter repairs and their reproof, recalibration): uncosted, approval-dependent, outside every runtime projection' }
+  ];
+  const prerequisites = {
+    status: 'a proposal; authorises nothing and is not costed',
+    steps: [
+      { order: 1, what: 'prepare a dedicated worktree at the ATTESTED frozen commit (the commit the freeze receipt names), never the development worktree' },
+      { order: 2, what: 'install the pinned harness (the files of the harness fingerprint the freeze receipt pins) into that worktree' },
+      { order: 3, what: 'fingerprint the installed harness and the loaded runtime and compare both with the receipts' },
+      { order: 4, what: 'inventory the capabilities on that source: every adapter, hook contract, guard and the catalogue (the -PlanOnly and dry-run forms)' }
+    ],
+    neverFallBack: 'if a capability is missing or a hook contract changed the run stops with unsupported-source (exit 2) for the author; the harness never ' +
+      'falls back to the old engine',
+    uncostedApprovalDependentWork: [
+      'adapter repairs and their reproof on the frozen source',
+      'recalibration (count budgets, the CPU quantum, the guards) on the frozen source',
+      'any rerun the above requires'
+    ],
+    costing: 'none of this is in any runtime projection of this plan (they price the frozen commands only)'
+  };
+  const gaps = [
+    { id: 'GAP-SM5', what: 'the SM5 pool-width sweep: 1, 2 and 4 workers on classic9 and mega12 Nightmare (plan.md:366)',
+      notTheSame: 'the IG-S02 pool at width min(4, A) against the serial run, and the effective two-worker operation on the two-attempt boards, are not the ' +
+        'missing width-two comparison', status: 'UNMEASURED, uncosted, no run authorised' },
+    { id: 'GAP-FLOOR', what: 'the restricted-floor performance probes: an accepted floor test, a refused floor test at each floor level, a DFS uniqueness ' +
+      'check and a full solve, each timed in isolation',
+    notTheSame: 'the existing floor parity evidence is not that experiment', status: 'UNMEASURED, uncosted, no run authorised' }
   ];
   return {
     schema: 'ig-s-frozen-plan/1', task: 'IG-S10', round: RC.ROUND, evidenceStatus: C.EVIDENCE_PROVISIONAL,
     provisionalNotice: RC.NOTE_PROVISIONAL,
     status: 'PROPOSAL - grants no execution authority. Every frozen run needs the receipts and approvals below, and its own ' +
-      'budget; nothing here is charged to the first round. Every cost figure is a planning scenario: none is a guaranteed upper bound.',
+      'budget; nothing here is charged to the first round. Every cost figure is a planning scenario: none is a guaranteed upper bound, and ' +
+      'the source preparation of the prerequisites (and any adapter repair, reproof or recalibration) is uncosted.',
     runtimeFingerprintToday: ctx.runtimeFingerprint,
     receipts: { freeze: { path: FREEZE_REL, schema: 'ig-s-freeze/1' }, budget: { path: BUDGET_REL, schema: 'ig-s-budget/1' },
       note: 'both receipts must fingerprint the runtime that is loaded at rerun time; the fingerprint above is only today\'s ' +
@@ -374,6 +409,8 @@ function buildFrozenPlan(ctx) {
     window: { commandMs: C.GUARDS.commandMs, windowMs: WINDOW, graceMsPerCommand: GRACE,
       note: 'the same low-priority wrapper, 45 s quiet period charged per command, 300 s backstop, difficulty-v3 priority' },
     steps: steps,
+    prerequisites: prerequisites,
+    gaps: gaps,
     ig06: s06,
     extensions: { status: 'four UNAPPROVED Nightmare extensions; none is allowlisted by this pack', cells: extensions,
       combinedChargedMs: extCharged, combinedScenarioBandMs: { low: extLow, high: extHigh },
@@ -387,7 +424,9 @@ function buildFrozenPlan(ctx) {
         'planning scenario with an incomplete upper bound; IG-S06 and the extensions are separate lines with their own approvals' },
     approvalsNeeded: approvals,
     unmeasured: ['the frontier request cost (IG-S06)', 'the cost of the eight IG-S09 rows left unstarted (priced from the ' +
-      'observed pairs, not measured)', 'frontier phase-A per-finder wall time', 'wordoku, sohei, flower and butterfly in every population'],
+      'observed pairs, not measured)', 'frontier phase-A per-finder wall time', 'wordoku, sohei, flower and butterfly in every population',
+    'the SM5 pool-width sweep (1, 2, 4 workers on classic9 and mega12)', 'the restricted-floor performance probes',
+    'the cost of source preparation, adapter repair, reproof and recalibration (uncosted, approval-dependent)'],
     assumptions: ['the frozen catalogue may change the window, floors and search (MS07): every projection is from the pre-MS07 ' +
       'catalogue; the 270 s window, 45 s grace and the 258 s packing window are the harness\'s', 'a frozen run that exceeds its ' +
       'receipt stops; none is retried automatically']

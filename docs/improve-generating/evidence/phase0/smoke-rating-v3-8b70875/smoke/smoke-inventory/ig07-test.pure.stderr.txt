@@ -1,0 +1,20 @@
+Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255
+    if (found === 0) throw new HarnessError('anchor-missing', 'replaced text not found in ' + entry.rel + ': ' + t.id);
+                     ^
+
+HarnessError: replaced text not found in js/engine/digger.js: profile.objective
+    at applyTransform (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:255:28)
+    at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:319:19
+    at Array.forEach (<anonymous>)
+    at Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:314:32
+    at Array.forEach (<anonymous>)
+    at Object.buildLoadPlan (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\loader.cjs:313:20)
+    at realPlan (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\ig07-test.cjs:381:48)
+    at fakeEngine (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\ig07-test.cjs:438:13)
+    at fakeLoopRows (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\ig07-test.cjs:587:18)
+    at Object.onJob (Q:\git\sudoku.ig-smoke-8b70875\generator\tests\artifacts\improve-generating\phase0\ig07-test.cjs:853:20) {
+  code: 'anchor-missing',
+  details: null
+}
+
+Node.js v26.13.0

@@ -1,0 +1,76 @@
+{
+  "schema": "ig-smoke-preflight/1",
+  "round": "smoke-rating-v3-8b70875",
+  "startedAt": "2026-11-15T07:07:27.8238666Z",
+  "parameters": {
+    "budgetMs": 180000,
+    "maxPayloadMs": 25000,
+    "lockHelper": "C:\\Users\\ledat\\.copilot\\session-state\\c2f29688-8568-4f25-bace-e644d381e5f9\\files\\ig-lock.ps1",
+    "targetCommit": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "archive": "Q:\\git\\sudoku.improve-generating\\docs\\improve-generating\\evidence\\phase0\\smoke-rating-v3-8b70875",
+    "referenceRoot": "Q:\\git\\sudoku.improve-generating",
+    "forbiddenRoot": "Q:\\git\\sudoku",
+    "runtimeLabel": "rating-v3@8b70875e1839d7f2753d20853a4a0c9226cf2035"
+  },
+  "paths": {
+    "harness": "Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0",
+    "smokeRoot": "Q:\\git\\sudoku.ig-smoke-8b70875",
+    "smokeRound": "Q:\\git\\sudoku.ig-smoke-8b70875\\docs\\improve-generating\\evidence\\phase0\\smoke-rating-v3-8b70875"
+  },
+  "machine": {
+    "processors": 16,
+    "os": "Microsoft Windows NT 10.0.26300.0",
+    "powershell": "7.6.10"
+  },
+  "git": {
+    "smokeWorktreeBefore": {
+      "root": "Q:\\git\\sudoku.ig-smoke-8b70875",
+      "head": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+      "statusShort": [
+        "?? generator/tests/artifacts/improve-generating/"
+      ],
+      "trackedChanges": [],
+      "untracked": [
+        "?? generator/tests/artifacts/improve-generating/"
+      ]
+    },
+    "referenceHead": "93b1bdcbbc08ab82bcdcb21a51b0cd5e2e099875"
+  },
+  "accounting": {
+    "graceMs": 45000,
+    "cleanupReserveMs": 1000,
+    "maxAdmissions": 3,
+    "minPayloadMs": {
+      "smoke-inventory": 2000,
+      "self-test": 15000,
+      "loader-parity": 23000
+    },
+    "basis": "self-test: SELF_TEST_ESTIMATE_MS of run.cjs; loader-parity: GUARDS.minWindowMs + GUARDS.finalizeReserveMs, the smallest --deadline-ms run.cjs accepts"
+  },
+  "driverFiles": [
+    {
+      "file": "Invoke-IgSmoke.ps1",
+      "sha256": "90d608873a96186f18e80dcbc62fc7d7fec00043c4b217ceed4536141579c666"
+    },
+    {
+      "file": "smoke-inventory.cjs",
+      "sha256": "ac4bcd241533345e9488acb19940267eb25fe9526373865e1b6f8b19962dd977"
+    },
+    {
+      "file": "smoke-lib.cjs",
+      "sha256": "fe14bb322431308995c198a093ae7e9c8b3bd8632219411ee21b1c6dbd1a27c8"
+    },
+    {
+      "file": "smoke-probe.cjs",
+      "sha256": "910be7225b09c7da7084c64d8867ab2b151380e15fdd1b40ffe51844f9e79a5d"
+    },
+    {
+      "file": "smoke-report.cjs",
+      "sha256": "34bc747668c2a35d165670edd3ad0e139ce7bdf1aa7e018c3051d9a2380c19ce"
+    },
+    {
+      "file": "smoke-supervise.cjs",
+      "sha256": "63460fcfd3fc584e17d35b631764e4fb210baee97f93d4e67e3169bb94c81b12"
+    }
+  ]
+}

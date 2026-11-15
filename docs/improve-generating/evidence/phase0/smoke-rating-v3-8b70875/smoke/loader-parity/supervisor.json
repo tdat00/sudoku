@@ -1,0 +1,88 @@
+{
+  "schema": "ig-smoke-supervisor/1",
+  "phase": "loader-parity",
+  "wrapperTask": "IG-S01/loader-parity",
+  "round": "smoke-rating-v3-8b70875",
+  "process": {
+    "pid": 22416,
+    "ppid": 11244,
+    "node": "v26.13.0",
+    "platform": "win32",
+    "startedAt": "2026-11-15T07:14:56.216Z",
+    "script": "Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\smoke-supervise.cjs"
+  },
+  "lockAtStart": {
+    "file": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-sudoku.lock",
+    "content": "11244|IG IG-S01/loader-parity|2026-11-15T07:14:55.9360234Z",
+    "ownerPid": 11244,
+    "ownerText": "IG IG-S01/loader-parity",
+    "ownerPidIsParent": true,
+    "parentPid": 11244
+  },
+  "lockAtEnd": {
+    "file": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-sudoku.lock",
+    "content": "11244|IG IG-S01/loader-parity|2026-11-15T07:14:55.9360234Z",
+    "ownerPid": 11244,
+    "ownerText": "IG IG-S01/loader-parity",
+    "ownerPidIsParent": true,
+    "parentPid": 11244
+  },
+  "payload": {
+    "payloadMs": 25000,
+    "concurrency": 1,
+    "deadlineAt": "2026-11-15T07:15:21.216Z"
+  },
+  "units": [
+    {
+      "id": "child",
+      "kind": "harness-command",
+      "script": "Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\run.cjs",
+      "args": [
+        "--task=IG-S01",
+        "--round=smoke-rating-v3-8b70875",
+        "--shard=loader-parity",
+        "--attempt=a1",
+        "--deadline-ms=25000",
+        "--runtime-label=rating-v3@8b70875e1839d7f2753d20853a4a0c9226cf2035",
+        "--lock-helper=C:\\Users\\ledat\\.copilot\\session-state\\c2f29688-8568-4f25-bace-e644d381e5f9\\files\\ig-lock.ps1",
+        "--requested-at=2026-11-15T07:14:10.8335756Z"
+      ],
+      "status": "passed",
+      "reason": null,
+      "pid": 9424,
+      "startedAtMs": 37.7,
+      "endedAtMs": 1476.1,
+      "wallMs": 1438.4,
+      "exitCode": 0,
+      "signal": null,
+      "killedByDeadline": false,
+      "termination": null,
+      "stdout": {
+        "file": "child.stdout.txt",
+        "bytes": 210,
+        "sha256": "983db328bbe660ff7dd557cb7f18936da88e7e4dbc11606c528b30241de4919b",
+        "truncated": false
+      },
+      "stderr": null,
+      "parsed": null
+    }
+  ],
+  "summary": {
+    "planned": 1,
+    "passed": 1,
+    "failed": 0,
+    "timedOut": 0,
+    "unstarted": 0,
+    "spawnErrors": 0,
+    "terminations": 0,
+    "terminationsVerified": 0
+  },
+  "timing": {
+    "startedAt": "2026-11-15T07:14:56.216Z",
+    "payloadMs": 25000,
+    "deadlineHit": false,
+    "deadlineHitAtMs": null,
+    "endedAtMs": 1478.3,
+    "endedAt": "2026-11-15T07:14:57.695Z"
+  }
+}

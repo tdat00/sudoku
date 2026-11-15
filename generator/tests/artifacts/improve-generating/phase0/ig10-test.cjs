@@ -578,11 +578,11 @@ add('reconcile', 'r07-machine-accounting', 'the budget is charged once, waits ar
 add('reconcile', 'r08-estimate-table-and-interpretation', 'the estimate table has thirteen rows; cohorts, scope and censoring are kept apart', function () {
   const b = built_();
   const rows = b.report.estimateTable;
-  eq(rows.length, 13);
+  eq(rows.length, 16, 'the check-list\'s 13 rows, the isolated S2 comparison and the two unmeasured rows');
   ok(rows.every(function (r) { return r.P && r.verdict && r.scope && r.verdicts; }));
   eq(rows.slice(0, 6).map(function (r) { return r.id; }), ['mega16', 'mega12', 'samurai', 'classic9', 'killer', 'greaterThan']);
   eq(rows.find(function (r) { return r.id === 'mega16'; }).verdicts.s5a, 'supported');
-  eq(rows.find(function (r) { return r.id === 'killer'; }).verdicts.s5a, 'planning-factor-refuted-on-these-pairs');
+  eq(rows.find(function (r) { return r.id === 'killer'; }).verdicts.s5a, 'below-planning-range-on-all-observed-pairs');
   eq(rows.find(function (r) { return r.id === 'greaterThan'; }).verdicts.s5a, 'inconclusive');
   ok(rows.slice(0, 6).every(function (r) { return r.verdicts.allPhases === 'inconclusive' && r.verdicts.firstPhases === 'inconclusive'; }),
     'a partial implementation never decides the all-phase estimates');
@@ -620,21 +620,142 @@ add('reconcile', 'r17-verdict-scope-and-statistics', 'no invented thresholds; th
     eq(row.verdicts.fullS3, 'untested-inconclusive');
     ok(row.verdict.indexOf('median paired incremental ratio x' + f2(h.factors.partialS3Incremental.p50)) >= 0,
       h.cell + ': the median of the paired incremental ratios is quoted');
-    near(row.todayDifference.absolute, h.arms['native-w1'].readyWallS.p50 - h.anchors.today.median, 1e-9);
+    near(row.todayDifference.absolute, (h.cell === 'samurai' ? h.arms['native-w1'].readyWallS.max : h.arms['native-w1'].readyWallS.p50) - h.anchors.today.value, 1e-9);
     ok(/Today: no verdict, descriptive difference/.test(row.verdict));
     ok(/no material net gain demonstrated/.test(row.verdict) && !/partial S3 refuted/.test(row.verdict));
   });
   const killer = rows.find(function (r) { return r.id === 'killer'; });
-  ok(/planning-factor estimate refuted on these 3 pairs/.test(killer.verdict) && /2\.07-2\.65 versus x2\.8-3\.0/.test(killer.verdict) &&
-    /does not refute the usefulness/.test(killer.verdict), 'the Killer S5a label is scoped to the planning factor');
+  ok(/below the planning range on all 3 observed pairs/.test(killer.verdict) && /2\.07-2\.65 versus x2\.8-3\.0/.test(killer.verdict) &&
+    /no general refutation/.test(killer.verdict) && /x2\.55 \(median\) pool improvement stands/.test(killer.verdict) &&
+    /original IG-S02 verdict \(estimate-refuted \(no pair reaches 2\.8\)\) is kept as historical evidence/.test(killer.verdict),
+  'the Killer S5a label is below the planning range, not refuted in general, and keeps the historical verdict');
   const s5a = rows.find(function (r) { return r.id === 's5a'; });
-  ok(/planning-factor estimate refuted on these 3 pairs/.test(s5a.verdict) && !/refuted on Killer/.test(s5a.verdict));
+  ok(/below the planning range on all 3 observed pairs/.test(s5a.verdict) && !/refuted on Killer/.test(s5a.verdict));
   const sm1 = rows.find(function (r) { return r.id === 'sm1'; });
   eq(Object.keys(sm1.differences), ['mega16', 'mega12', 'samurai', 'classic9']);
   ok(typeof sm1.differences.classic9.differencePoints === 'number' && /descriptive, no verdict/.test(sm1.verdict));
   ok(!/supported|inconclusive/.test(sm1.verdict), 'SM1 shows differences, not verdicts');
-  ok(rows.filter(function (r) { return /(?<!not )refuted/.test(r.verdict); }).map(function (r) { return r.id; }).join() === 'killer,s5a',
-    'refuted appears only in the scoped Killer S5a planning-factor label');
+  ok(rows.every(function (r) { return !/(?<!not |estimate-)refuted/.test(r.verdict); }),
+    'no bare "refuted" remains in any row (the historical IG-S02 verdict is quoted as such, "not refuted" is a negation)');
+});
+
+add('reconcile', 'r20-baseline-statistics-and-first-phases', 'the samurai baseline is a maximum compared with a maximum; the first-phase formula and the premises are corrected', function () {
+  const b = built_();
+  const rows = b.report.estimateTable;
+  const sam = rows.find(function (r) { return r.id === 'samurai'; });
+  const h = b.report.headline.find(function (x) { return x.cell === 'samurai'; });
+  eq(h.anchors.today.statistic, 'maximum of two requests');
+  ok(/larger of two requests, not a median/.test(h.anchors.today.basis));
+  near(h.arms['native-w1'].readyWallS.max, 26.53, 0.005);
+  near(sam.todayDifference.relative * 100, -0.8, 0.05);
+  near(sam.todayDifference.measuredMedianS, 24.93, 0.005);
+  ok(/measured maximum 26\.53 s against the CV3 maximum of two requests 26\.74 s \(-0\.21 s, -0\.8 %\)/.test(sam.verdict) &&
+    /measured median is 24\.93 s \(shown separately/.test(sam.verdict));
+  ok(/maximum of two requests/.test(sam.P) && !/median.*26\.74/.test(sam.verdict));
+  ['mega16', 'mega12', 'classic9', 'killer', 'greaterThan'].forEach(function (cell) {
+    ok(/median \/ p95/.test(b.report.headline.find(function (x) { return x.cell === cell; }).anchors.today.statistic), cell + ' anchor is a median');
+  });
+  // the first-phase formula and its verdict
+  rows.slice(0, 6).forEach(function (r) {
+    ok(/full S3 x S4 x S5a, S3 alone on the local continuation/.test(r.P), r.id + ': the original formula');
+    ok(/S5a and partial S3 measured, full S3 unmeasured, S4 unimplemented \(Q04 moves it to phase 3 under the new generator version\): inconclusive/.test(r.verdict));
+    ok(/all phases add S1\/S2\/S5b \(phase 3, new generator version\)/.test(r.verdict));
+    ok(!/S1\/S2, S4, S5b, full S3 unimplemented/.test(r.verdict), 'S1/S2/S5b are not missing components of the first-phase formula');
+    ok(/S4 moves to phase 3 under the new generator version, Q04/.test(r.scope));
+  });
+  // the withdrawn premises
+  const wp = b.report.withdrawnPremises;
+  ok(/withdrawn as representative costing and speed-up premises/.test(wp.status));
+  eq([wp.observed.min, wp.observed.max], [74, 331]);
+  ok(/does not refute a mathematical upper bound/.test(wp.boundReading) && /separately justified loose bound/.test(wp.boundReading));
+  ok(/1,296/.test(wp.premises[0]) && /10x fewer solves/.test(wp.premises[1]));
+  ok(/withdrawn/.test(rows.find(function (r) { return r.id === 'sm1'; }).scope));
+  // the Greater-Than cohort
+  const gt = rows.find(function (r) { return r.id === 'gt'; });
+  ok(/partial, budget-limited cohort/.test(gt.verdict) && /partial, budget-limited cohort/.test(gt.scope) && !/censored cohort/.test(gt.verdict + gt.scope));
+  ok(/a partial, budget-limited cohort/.test(b.markdown) && !/censored cohort/.test(b.markdown));
+});
+
+add('reconcile', 'r21-s1-s2-rows-and-unmeasured-gaps', 'S1 cost and yield are separate, S2 is isolated, the native mix is stated, two measurements are explicitly unmeasured', function () {
+  const b = built_();
+  const rows = b.report.estimateTable;
+  const s1 = rows.find(function (r) { return r.id === 's1s2'; });
+  const ratios = b.report.sm2.cells.map(function (c) { return Math.round(c.f1SampleCostVsNative.f1OverEqualWeightMix * 100) / 100; });
+  eq(ratios, [0.38, 0.28, 0.12, 0.23], 'F1 / equal-weight mix, classic9 / mega12 / mega16 / samurai');
+  ok(/near-constant-cost planning expectation was not observed for this prototype and cohort/.test(s1.ratios));
+  ok(/unsuccessful, empty or above-band outcomes/.test(s1.ratios) && /16\/16 empty unique frontiers/.test(s1.ratios));
+  ok(/Cost per verified exact puzzle is unestablished/.test(s1.hits) && /0 verified hits in every mode and cell, native controls included/.test(s1.hits));
+  eq(s1.verdicts.costPerVerifiedExactPuzzle, 'unestablished');
+  eq(s1.verdicts.yield, 'inconclusive');
+  ok(/matches the observed ordinary\/proposal counts of the four SM1 requests \(48\/48, 12\/12, 24\/24, 12\/12; IG-S07\/summary-r2\.md lines 78-88\)/.test(s1.ratios) ||
+    (/matches the observed ordinary\/proposal counts of the four SM1 requests/.test(s1.ratios) && /48\/48/.test(s1.ratios)), 'the native mix is stated from the observed counts');
+  ok(!/NOT the native request mix/.test(JSON.stringify(b.report.sm2) + JSON.stringify(rows)), 'the "native mix unknown" wording is gone (it is only quoted in the errata table)');
+  ok(/remains a sample-cost comparator, not whole-request throughput/.test(b.report.sm2.cells[0].f1SampleCostVsNative.label) &&
+    /early stopping can change the realised mix/.test(b.report.sm2.cells[0].f1SampleCostVsNative.label));
+  b.report.sm2.sampleMixInSm1.filter(function (m) { return m.fourSm1Request; }).forEach(function (m) { eq(m.ordinarySamples, m.proposalSamples); });
+  const s2 = rows.find(function (r) { return r.id === 's2'; });
+  b.report.sm2.cells.forEach(function (c) {
+    const x = c.s2Isolated.f1OverF0MeanSampleCpu;
+    ok(x >= 1.005 && x <= 1.125, c.cell + ': F1/F0 mean sample CPU ' + x);
+    eq(c.s2Isolated.sameDecisions, true);
+  });
+  ok(/\(1\.01-1\.12\)/.test(s2.ratios) && /ratio of the mean sample CPU over the same samples of the same 8 grid clusters/.test(s2.ratios));
+  ok(/no CPU saving on this cohort/.test(s2.verdict) && /not generalised to "S2 never helps"/.test(s2.verdict));
+  ok(/KEPT SEPARATE: correctness and deduction-saving evidence/.test(s2.scope) && /correctness problems/.test(s2.scope));
+  eq(s2.verdicts.cpuSaving, 'none-observed-on-this-cohort');
+  // two explicit unmeasured rows
+  const sm5 = rows.find(function (r) { return r.id === 'sm5'; });
+  const probes = rows.find(function (r) { return r.id === 'floor-probes'; });
+  eq([sm5.verdicts.sweep, probes.verdicts.probes], ['unmeasured', 'unmeasured']);
+  ok(/UNMEASURED/.test(sm5.scope) && /not the missing width-two comparison/.test(sm5.scope) && /plan\.md:366/.test(sm5.P));
+  ok(/UNMEASURED/.test(probes.scope) && /existing floor parity evidence/.test(probes.scope) && /is not that experiment/.test(probes.scope));
+  const plan = b.frozenPlan;
+  eq(plan.gaps.map(function (g) { return g.id; }), ['GAP-SM5', 'GAP-FLOOR']);
+  ok(plan.approvalsNeeded.some(function (a) { return a.id === 'A7' && /SM5/.test(a.what) && /no run authorised/.test(a.what); }));
+  ok(b.report.decisions.some(function (d) { return d.id === 'D9' && /SM5/.test(d.text) && /restricted-floor/.test(d.text); }));
+  // source preparation
+  const pre = plan.prerequisites;
+  ok(/dedicated worktree at the ATTESTED frozen commit/.test(pre.steps[0].what) && /pinned harness/.test(pre.steps[1].what) &&
+    /fingerprint/.test(pre.steps[2].what) && /inventory the capabilities/.test(pre.steps[3].what));
+  ok(/never falls back to the old engine/.test(pre.neverFallBack));
+  ok(pre.uncostedApprovalDependentWork.some(function (x) { return /adapter repairs and their reproof/.test(x); }) &&
+    pre.uncostedApprovalDependentWork.some(function (x) { return /recalibration/.test(x); }));
+  ok(plan.approvalsNeeded.some(function (a) { return a.id === 'A8' && /uncosted, approval-dependent/.test(a.what); }));
+  ok(b.report.decisions.some(function (d) { return d.id === 'D10' && /dedicated worktree/.test(d.text); }));
+  plan.extensions.cells.forEach(function (e) { ok(typeof e.proxyStatistics === 'string' && e.proxyStatistics.length > 0); });
+  ok(/UNLIKE statistics/.test(plan.extensions.cells.find(function (e) { return e.cell === 'butterfly'; }).proxyStatistics));
+  ok(/maximum of two requests/.test(plan.extensions.cells.find(function (e) { return e.cell === 'sohei'; }).proxyBasis));
+});
+
+add('reconcile', 'r22-errata-and-staleness', 'the errata table locates every affected passage in the files; the staleness section and the smoke placeholder are present', function () {
+  const b = built_();
+  const errata = b.report.errata;
+  eq(errata.map(function (e) { return e.ruling; }), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  ok(errata.every(function (e) { return e.located; }), 'every entry locates its passages: ' + errata.filter(function (e) { return !e.located; }).map(function (e) { return e.id; }));
+  const lines = function (id, doc) {
+    const p = errata.find(function (e) { return e.id === id; }).passages.find(function (x) { return x.document === doc; });
+    return p ? p.lines : [];
+  };
+  const has = function (arr, list) { list.forEach(function (n) { ok(arr.indexOf(n) >= 0, 'line ' + n + ' is cited in ' + arr.join(',')); }); };
+  has(lines('E3', 'report.md (joint report)'), [35, 36, 108]);
+  has(lines('E5', 'report.md (joint report)'), [65]);
+  has(lines('E6', 'plan.md (joint plan)'), [67, 98]);
+  has(lines('E7', 'plan.md (joint plan)'), [366]);
+  has(lines('E1', 'report.md (joint report)'), [64]);
+  has(lines('E5', 'IG-S10 report-r2.md'), [132, 137]);
+  ok(errata.every(function (e) { return e.passages.every(function (p) { return p.lines.length === 0 || p.quoted; }); }));
+  ok(b.markdown.indexOf('## 0. Errata to the joint report, the plan and the earlier IG-S10 reports') > 0);
+  ok(/report\.md \(joint report\): 35-36, 108/.test(b.markdown) && /plan\.md \(joint plan\): 67, 74, 98, 154, 338, 350/.test(b.markdown));
+  const st = b.report.staleness;
+  ok(/`ef8a9cc`/.test(st.facts[0]) && /`36b2b832\.\.\.`/.test(st.facts[0]));
+  ok(/8b70875/.test(st.facts[1]) && /11 runtime files/.test(st.facts[1]) && /\+808 \/ -208/.test(st.facts[1]) && /SHORT_MAX/.test(st.facts[1]) &&
+    /forcingChainLong/.test(st.facts[1]) && /1400/.test(st.facts[1]) && /nishioDeep/.test(st.facts[1]) && /2600/.test(st.facts[1]));
+  ok(/12 of 12 exact, p50 0\.15 s, p95 0\.51 s/.test(st.facts[2]) && /G13 samurai\/42 exact at attempt 1/.test(st.facts[2]) &&
+    /G10 Killer\/42 shallow to exact/.test(st.facts[2]) && /Hell 1 non-vacuous/.test(st.facts[2]));
+  ok(/about 14 finders/.test(st.facts[3]) && /MS08 to MS16/.test(st.facts[3]));
+  ok(/not paired improvements/.test(st.reading));
+  eq(st.compatibilitySmoke, 'Compatibility smoke: see `evidence/phase0/smoke-rating-v3-8b70875/`');
+  ok(b.markdown.indexOf('## 15. Staleness of the measurements') > 0 && b.markdown.indexOf(st.compatibilitySmoke) > 0);
 });
 
 add('reconcile', 'r09-greater-than-accounting', 'the counter erratum, the executed/reused probe split, CPU against ready wall and the unstarted rows are reported', function () {
@@ -785,7 +906,7 @@ add('reconcile', 'r13-plan-and-no-engine', 'the shard plan fits the 4-minute all
   eq(M.projectedMachineMs(physical), 225000, 'three minutes of work plus the 45 s grace stay inside the 4-minute allocation');
   ok(M.projectedMachineMs(physical) <= M.ALLOCATIONS_MS['IG-S10']);
   eq(M.ALLOCATIONS_MS['IG-S10'], 240000);
-  const files = ['gate.cjs', 'reconcile.cjs', 'reconcile-report.cjs', 'reconcile-build.cjs', 'reconcile-render.cjs', 'frozen-plan.cjs', 'ig10-run.cjs',
+  const files = ['gate.cjs', 'reconcile.cjs', 'reconcile-report.cjs', 'reconcile-build.cjs', 'reconcile-render.cjs', 'reconcile-errata.cjs', 'frozen-plan.cjs', 'ig10-run.cjs',
     'ig10-test.cjs', 'plans/ig-s10.cjs'];
   files.forEach(function (f) {
     const text = fs.readFileSync(path.join(C.HARNESS_DIR, f), 'utf8');
@@ -833,33 +954,50 @@ add('reconcile', 'r15-frozen-closure-inputs', 'the frozen closure compares the r
   eq(IG10.OUTPUTS.length, 6);
 });
 
-add('reconcile', 'r19-r2-revision-bundle', 'the r2 bundle names itself consistently, carries the superseded r1 hashes and distinguishes the writer from the r1 command', function () {
+add('reconcile', 'r19-r3-revision-bundle', 'the r3 bundle names itself consistently, carries the superseded r1 and r2 hashes and distinguishes the writer from the r1 command and the r2 writer', function () {
   const IG10 = require('./ig10-run.cjs');
   const roundDir = path.join(RUN.evidenceRootOf(C.DEFAULT_REPO_ROOT), RC.ROUND);
-  const snap = IG10.r1Snapshot(roundDir);
-  eq(snap.slice(0, 6).map(function (f) { return f.file; }), ['report.json', 'report.md', 'coverage.json', 'budget-summary.json', 'gate.json',
+  const r1 = IG10.r1Snapshot(roundDir);
+  eq(r1.slice(0, 6).map(function (f) { return f.file; }), ['report.json', 'report.md', 'coverage.json', 'budget-summary.json', 'gate.json',
     'frozen-rerun-plan.json']);
-  eq(snap.length, 7);
-  ok(/IG-S10\/reconcile\/command\.json$/.test(snap[6].file), 'the r1 wrapped command is superseded by hash too');
-  ok(snap.every(function (f) { return /^[0-9a-f]{64}$/.test(f.sha256); }));
+  eq(r1.length, 7);
+  ok(/IG-S10\/reconcile\/command\.json$/.test(r1[6].file), 'the r1 wrapped command is superseded by hash too');
+  const r2 = IG10.r2Snapshot(roundDir);
+  eq(r2.files.map(function (f) { return f.file; }), ['coverage-r2.json', 'budget-summary-r2.json', 'gate-r2.json', 'frozen-rerun-plan-r2.json',
+    'report-r2.json', 'report-r2.md']);
+  ok(/^[0-9a-f]{64}$/.test(r2.writerHarnessFingerprint), 'the r2 writer fingerprint is read from report-r2.json');
+  const snap = r1.concat(r2.files);
+  ok(snap.every(function (f) { return /^[0-9a-f]{64}$/.test(f.sha256) && (f.revision === 'r1' || f.revision === 'r2'); }));
+  eq(IG10.revisionOutputs('-r3'), ['coverage-r3.json', 'budget-summary-r3.json', 'gate-r3.json', 'frozen-rerun-plan-r3.json', 'report-r3.json', 'report-r3.md']);
   const writer = 'w'.repeat(64);
-  const revision = { id: 'r2', reason: 'test', supersedes: snap, r1CommandHarnessFingerprint: snap[6].harnessFingerprint, writerHarnessFingerprint: writer,
-    writerRole: 'test' };
-  const r = IG10.buildAll({ suffix: '-r2', revision: revision, harnessFingerprint: writer });
-  eq(r.report.outputs.map(function (o) { return o.file; }), ['coverage-r2.json', 'budget-summary-r2.json', 'gate-r2.json', 'frozen-rerun-plan-r2.json',
-    'report-r2.md']);
-  eq(r.report.gate.reference, 'gate-r2.json');
-  eq(r.report.machine.reference, 'budget-summary-r2.json');
-  eq(r.report.frozen.reference, 'frozen-rerun-plan-r2.json');
-  [r.coverage, r.budget, r.gate, r.frozenPlan, r.report].forEach(function (d) { eq(d.revision.id, 'r2'); });
+  const revision = { id: 'r3', reason: 'test', supersedes: snap, r1CommandHarnessFingerprint: r1[6].harnessFingerprint,
+    r2WriterHarnessFingerprint: r2.writerHarnessFingerprint, writerHarnessFingerprint: writer, writerRole: 'test' };
+  const r = IG10.buildAll({ suffix: '-r3', revision: revision, harnessFingerprint: writer });
+  eq(r.report.outputs.map(function (o) { return o.file; }), ['coverage-r3.json', 'budget-summary-r3.json', 'gate-r3.json', 'frozen-rerun-plan-r3.json',
+    'report-r3.md']);
+  eq(r.report.gate.reference, 'gate-r3.json');
+  eq(r.report.machine.reference, 'budget-summary-r3.json');
+  eq(r.report.frozen.reference, 'frozen-rerun-plan-r3.json');
+  [r.coverage, r.budget, r.gate, r.frozenPlan, r.report].forEach(function (d) { eq(d.revision.id, 'r3'); });
   const hashOf = function (doc) { return C.sha256(C.jsonText(doc)); };
   eq(r.report.outputs.map(function (o) { return o.sha256; }), [hashOf(r.coverage), hashOf(r.budget), hashOf(r.gate), hashOf(r.frozenPlan),
-    C.sha256(r.markdown)], 'the report carries the hash of every r2 document');
-  ok(r.report.revision.writerHarnessFingerprint !== r.report.revision.r1CommandHarnessFingerprint, 'writer and r1 command fingerprints are distinct');
-  ok(r.markdown.indexOf('revision r2') > 0 && r.markdown.indexOf(writer) > 0 && r.markdown.indexOf('gate-r2.json') > 0);
+    C.sha256(r.markdown)], 'the report carries the hash of every r3 document');
+  const ids = [r.report.revision.writerHarnessFingerprint, r.report.revision.r2WriterHarnessFingerprint, r.report.revision.r1CommandHarnessFingerprint];
+  eq(new Set(ids).size, 3, 'the r3 writer, the r2 writer and the r1 command are three distinct identities');
+  ok(r.markdown.indexOf('revision r3') > 0 && r.markdown.indexOf(writer) > 0 && r.markdown.indexOf('gate-r3.json') > 0);
   eq(r.gate.state, 'not-evaluable-pre-freeze');
   eq(r.gate.formalGateEnabled, false);
-  ok(/unwrapped, read-only aggregation/.test(r.report.deviations.join(' ')), 'the unwrapped r2 aggregation is disclosed');
+  ok(/unwrapped, read-only aggregations/.test(r.report.deviations.join(' ')), 'the unwrapped aggregations are disclosed');
+  ok(/no measured record, coverage figure, accounting figure or gate state changed/.test(r.report.deviations.join(' ')));
+  // the unchanged documents are unchanged in substance: the comparison used for the revision header
+  const before = C.readJson(path.join(roundDir, 'gate-r2.json'));
+  eq(IG10.comparable('gate', before), IG10.comparable('gate', r.gate), 'the gate document equals its r2 counterpart apart from the revision header and test counts');
+  const cov = C.readJson(path.join(roundDir, 'coverage-r2.json'));
+  eq(IG10.comparable('coverage', cov), IG10.comparable('coverage', r.coverage));
+  const bud = C.readJson(path.join(roundDir, 'budget-summary-r2.json'));
+  eq(IG10.comparable('budget-summary', bud), IG10.comparable('budget-summary', r.budget), 'the accounting is unchanged');
+  ok(IG10.comparable('frozen-rerun-plan', C.readJson(path.join(roundDir, 'frozen-rerun-plan-r2.json'))) !== IG10.comparable('frozen-rerun-plan', r.frozenPlan),
+    'the frozen plan changed (prerequisites, gaps, approvals, proxy statistics)');
 });
 
 // --- running -------------------------------------------------------------------------------------------------------------------

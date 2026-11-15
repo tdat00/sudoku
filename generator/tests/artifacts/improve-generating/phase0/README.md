@@ -77,14 +77,15 @@ catalogue (`-Round frozen-gate`, with a freeze receipt and a budget receipt).
 | `ig09-dev-check.cjs` | IG-S09: one wrapped development check (the whole per-job flow on the real engine for Normal seed 300: G0, G1 and the observer-free control) written beside the task evidence with its own `command.json` (the charge). |
 | `ig09-test.cjs` | IG-S09 tests: pure cases (the patched `greater-than.js` on a fake of the engine pieces, the oracle cases, the classification, the diagnosis on a fake instance, reuse, probes, plan, transforms, glue, aggregator; `node ig09-test.cjs`, no engine, no thread). |
 | `plans/ig-s10.cjs` | IG-S10: the one analysis shard `reconcile` (kind `analysis`, one logical job, 180 s admission estimate: 225 s of the 240 s allocation with the grace). |
-| `ig10-run.cjs` | IG-S10 glue for `run.cjs` (`runAnalysis`, no engine and no worker): the synthetic tests, `buildAll` (every round-level document in memory), the write-once outputs and the frozen closure; `--dry-run` builds everything in memory; `--write-r2` writes the r2 revision (unwrapped, read-only). |
+| `ig10-run.cjs` | IG-S10 glue for `run.cjs` (`runAnalysis`, no engine and no worker): the synthetic tests, `buildAll` (every round-level document in memory), the write-once outputs and the frozen closure; `--dry-run` builds everything in memory; `--write-r3` writes the r3 revision (unwrapped, read-only). |
 | `reconcile.cjs` | IG-S10: the accepted evidence read back (hashes, parsed summaries), the coverage reconciliation (classification, duplicate / silent-exclusion / identity rules, the Killer audit overlay, auxiliary commands, excluded observations) and the machine accounting of the whole round. |
 | `reconcile-report.cjs` | IG-S10: the headline cohort recomputed from the raw records (per-seed rows, cohort summaries, paired seed-cluster intervals, on-time lower bounds), the SM2, SM1, SM3 and Greater-Than sections, the cross-checks against the accepted summaries, the decisions for the author. |
-| `reconcile-build.cjs` | IG-S10: the thirteen-row estimate table (no numeric verdict threshold: descriptive differences, the IG-S02 S5a rule, partial S3 "no material net gain demonstrated"), the provenance block (measurement, report-writer and corrected-harness fingerprints apart) and the machine block. |
+| `reconcile-build.cjs` | IG-S10: the sixteen-row estimate table (the check-list's thirteen, the isolated S2 comparison and two unmeasured rows; no numeric verdict threshold: descriptive differences, the IG-S02 S5a rule, partial S3 "no material net gain demonstrated"), the provenance block (measurement, report-writer and corrected-harness fingerprints apart) and the machine block. |
+| `reconcile-errata.cjs` | IG-S10 r3: the errata table (the passages of the joint report, the plan, the clarifications and the r1 / r2 reports that a ruling corrects; line numbers are located in the files at build time, nothing is edited) and the staleness facts. |
 | `reconcile-render.cjs` | IG-S10: the report markdown, rendered from the report JSON alone. |
 | `frozen-plan.cjs` | IG-S10: the frozen-rerun plan: the one-command frozen rerun of every task, populations, 40-seed expansions, adapter dry runs on the current source, planning-scenario costs (formula, proxy, grace, per-phase command counts, unknown and censored bounds; none a guaranteed upper bound), IG-S06 and the four unapproved Nightmare extensions, the approvals needed. |
 | `gate.cjs` | IG-S10: the frozen-gate evaluator (pure): receipts, limits, 40-cluster coverage, distinct grid and request seed populations, paired bootstrap, non-inferiority, the on-time exact lower bound, request level (a claimed-exact request that failed verification is invalid evidence); it publishes inputs and never a go or a no-go. |
-| `ig10-test.cjs` | IG-S10 tests: 14 synthetic gate cases on 40-cluster fixtures and 19 reconciliation cases (rules on synthetic inputs; the accepted evidence reconciled; accounting invariants before and after the command; verdict scope; projection packing; populations; formats; the r2 bundle; no engine); `node ig10-test.cjs`, no engine, no thread. |
+| `ig10-test.cjs` | IG-S10 tests: 14 synthetic gate cases on 40-cluster fixtures and 22 reconciliation cases (rules on synthetic inputs; the accepted evidence reconciled; accounting invariants before and after the command; verdict scope; baseline statistics and first-phase formula; S1/S2 rows and unmeasured gaps; errata and staleness; projection packing; populations; formats; the r3 bundle; no engine); `node ig10-test.cjs`, no engine, no thread. |
 
 ## Commands
 
@@ -727,11 +728,11 @@ is provisional (pre-freeze); the real `gate.json` stays `not-evaluable-pre-freez
 & '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S10 -Round provisional-r1 -PlanOnly
 # the one reconciliation shard (the synthetic tests first; nothing is written if one fails)
 & '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S10 -Round provisional-r1
-# development only, no engine, no thread, nothing written: the 33 pure cases, and the whole build in memory
+# development only, no engine, no thread, nothing written: the 36 pure cases, and the whole build in memory
 node generator\tests\artifacts\improve-generating\phase0\ig10-test.cjs
 node generator\tests\artifacts\improve-generating\phase0\ig10-run.cjs --dry-run [--no-tests] [--out=<folder inside the harness>]
-# revision r2 (after the pack author's review of r1): unwrapped and read-only, no engine, no worker, no ledger entry; writes the six r2 files once beside the unchanged r1 files
-node generator\tests\artifacts\improve-generating\phase0\ig10-run.cjs --write-r2
+# revision r3 (the pack author's report-only rulings after the audit): unwrapped and read-only, no engine, no worker, no ledger entry; writes the six r3 files once beside the unchanged r1 and r2 files (r2 was written the same way by the code of its day)
+node generator\tests\artifacts\improve-generating\phase0\ig10-run.cjs --write-r3
 # frozen closure, after the separately approved frozen tasks and both receipts (gate.json, coverage.json and budget-summary.json of the frozen round)
 & '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S10 -Round frozen-gate -FreezeReceipt '.\docs\improve-generating\evidence\phase0\freeze.json' -BudgetReceipt '.\docs\improve-generating\evidence\phase0\frozen-budget.json'
 ```
@@ -741,7 +742,13 @@ node generator\tests\artifacts\improve-generating\phase0\ig10-run.cjs --write-r2
   journal, firewall) is the usual one. **Revision r2** adds `coverage-r2.json`, `budget-summary-r2.json`, `gate-r2.json`, `frozen-rerun-plan-r2.json`, `report-r2.json` and
   `report-r2.md` beside them (the r1 files stay unchanged; every r2 document carries `revision.supersedes` with the r1 hashes, the r1 command's harness fingerprint and the r2 writer's
   distinct harness fingerprint; `report-r2.json` carries the hashes of the others). r2 corrects the verdict scope and statistics, the final accounting (IG-S10's own ledger entry and the
-  0.470 s IG-S07 pre-check debit, kept apart from the wrapped-command counts), the projection packing and the frozen-input validation.
+  0.470 s IG-S07 pre-check debit, kept apart from the wrapped-command counts), the projection packing and the frozen-input validation. **Revision r3** adds `coverage-r3.json`,
+  `budget-summary-r3.json`, `gate-r3.json`, `frozen-rerun-plan-r3.json`, `report-r3.json` and `report-r3.md` (the r1 and r2 files stay unchanged; the revision header lists the r1 and r2
+  hashes, the r1 command's, the r2 writer's and the r3 writer's harness fingerprints, and whether each document equals its r2 counterpart apart from the header, test counts and
+  disclosures). r3 is report-only: an errata table (section 0 of `report-r3.md`: the passages of the joint report, the plan and the earlier reports that the rulings correct, located by
+  pattern at build time), statistic labels (the samurai CV3 anchor is a maximum of two requests), S1 cost kept apart from yield, an isolated S2 row, the corrected first-phase
+  formula, the withdrawn 1,296-solve premises, two unmeasured rows (the SM5 width sweep and the restricted-floor probes), the frozen-rerun prerequisites (a dedicated worktree at the
+  attested frozen commit, a pinned and fingerprinted harness, a capability inventory; adapter repair, reproof and recalibration are uncosted) and a staleness section.
 - **Inputs.** The accepted revisions only (IG-S02 `summary-r2` with the Killer audit sidecar, IG-S03 `summary-r3`, IG-S04 `summary-r2` and `budgets-r2`, IG-S05 `summary-r2`, IG-S07
   `summary-r2`, IG-S08 `summary-r3`, IG-S09 `summary-r2`), each hashed; the raw records behind the headline pairs, the grid trials and the Greater-Than pairs are recomputed and
   checked against the summaries (a cross-check that disagrees stops the shard). A missing document stops: absent evidence is never a silent exclusion.
@@ -749,10 +756,11 @@ node generator\tests\artifacts\improve-generating\phase0\ig10-run.cjs --write-r2
   an error, validation unknown or explicitly unstarted; IG-S06 is deferred (no manifest). Duplicate keys, a record outside the manifest, a lost key, another runtime, changed sources, a
   firewall difference, a label other than provisional or a gate state other than `not-evaluable-pre-freeze` are problems and stop the shard. Commands outside every shard (audit, retest,
   development check) and observations that enter no count are listed. The harness never runs git.
-- **Estimate table.** The check-list's thirteen rows with original estimates labelled P. No numeric verdict threshold is used (the pack names none): a "Today" anchor and an SM1 share are
-  shown with their descriptive difference; the S5a factor follows the IG-S02 rule against the report's planning range (no pair reaching it is labelled "planning-factor estimate refuted
-  on these pairs", which does not refute the usefulness of the improvement); partial S3 had no assigned gain forecast and reads "no material net gain demonstrated" (the median of the
-  paired incremental ratios) with the full-S3 forecast untested/inconclusive.
+- **Estimate table.** The check-list's thirteen rows (plus the isolated S2 row and two unmeasured rows) with original estimates labelled P. No numeric verdict threshold is used (the pack names
+  none): a "Today" anchor and an SM1 share are shown with their descriptive difference (a maximum is compared with a maximum: the samurai CV3 anchor is the larger of two requests); the S5a
+  factor follows the IG-S02 rule against the report's planning range (no pair reaching it is labelled "below the planning range on all observed pairs; no general refutation", which does
+  not refute the usefulness of the improvement); partial S3 had no assigned gain forecast and reads "no material net gain demonstrated" (the median of the paired incremental ratios)
+  with the full-S3 forecast untested/inconclusive; the first-phase formula is full S3 x S4 x S5a (S3 alone on the local continuation) and S1/S2/S5b are phase-3 items.
   Cohorts are never mixed: trace-off headline pairs (IG-S02/S03), two-sample grid trials (IG-S04/S05), profiled requests (IG-S07), the censored attribution (IG-S08), the trace-summary
   Greater-Than cohort (IG-S09). The IG-S09 counter erratum (`counts.dfsEntries` are `countSolutions` calls) is applied everywhere.
 - **Gate evaluator** (`gate.cjs`, pure): input is records; it returns the receipts' state, the limits comparison, per decision cell the 40-cluster coverage, verified hit rates per CPU
@@ -770,4 +778,5 @@ node generator\tests\artifacts\improve-generating\phase0\ig10-run.cjs --write-r2
   population), formula, per-phase command counts and a guard scenario (one command per request at the 180 s request guard plus the 60 s validation guard; omitted components listed, so an
   incomplete upper bound) and a conditional proposal are listed. Wordoku, sohei, flower and butterfly are four separate unapproved Nightmare extensions (pilot 11, 12, SM2 101-140,
   requests 201-240) priced from named proxies with a scenario band; the pilot, the screen and the requests are separate commands (each at least one, recomputed for the low, central and
-  high scenario).
+  high scenario). A prerequisite precedes every frozen command (a dedicated worktree at the attested frozen commit, a pinned and fingerprinted harness, a capability inventory; never a
+  fallback to the old engine) and is uncosted together with any adapter repair, reproof and recalibration; the SM5 width sweep and the restricted-floor probes are listed as unmeasured gaps.

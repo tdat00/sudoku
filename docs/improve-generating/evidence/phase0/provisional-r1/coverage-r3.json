@@ -1,0 +1,2832 @@
+{
+  "schema": "ig-s-coverage/1",
+  "task": "IG-S10",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance, changes a default or authorises the bank route.",
+  "summary": {
+    "tasksReconciled": 8,
+    "tasksDeferred": 1,
+    "plannedKeys": 480,
+    "completed": 452,
+    "completedByAuditOverlay": 6,
+    "budgetEnded": 13,
+    "censored": 1,
+    "error": 0,
+    "validationUnknown": 0,
+    "unstarted": 8,
+    "observedKeys": 472,
+    "earlyExactSkipped": 0,
+    "aliases": 0,
+    "blocked": 0,
+    "deferredTasks": [
+      "IG-S06"
+    ],
+    "populationsEqualToThePreregistered": true,
+    "problems": 0
+  },
+  "tasks": [
+    {
+      "task": "IG-S01",
+      "title": "Isolated loader, manifests, safety and records",
+      "status": "accepted",
+      "acceptance": "accepted after one fix round (harness 64b1e386); infrastructure only, no estimate",
+      "planned": {
+        "keys": 4,
+        "shards": 2,
+        "manifestHash": "309948fc333d6ef48697dd8701c5c20e90f585b7679c6a3d7929f1bb1e179ab2"
+      },
+      "observed": {
+        "completed": 4,
+        "completedByAuditOverlay": 0,
+        "budgetEnded": 0,
+        "censored": 0,
+        "error": 0,
+        "validationUnknown": 0,
+        "unstarted": 0
+      },
+      "shards": [
+        {
+          "shard": "self-test",
+          "kind": "synthetic",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 0,
+          "outcomes": {
+            "completed": 0,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": {
+            "total": 36,
+            "passed": 36,
+            "failed": 0
+          },
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S01/self-test/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 3226,
+              "inFinalChain": false
+            },
+            {
+              "attemptId": "a2",
+              "rel": "IG-S01/self-test/a2/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 2816,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a2"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "loader-parity",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 4,
+          "outcomes": {
+            "completed": 4,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S01/loader-parity/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 1866,
+              "inFinalChain": false
+            },
+            {
+              "attemptId": "a2",
+              "rel": "IG-S01/loader-parity/a2/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 1247,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a3",
+              "rel": "IG-S01/loader-parity/a3/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 1321,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a2",
+            "a3"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        }
+      ],
+      "unstarted": [],
+      "censored": [],
+      "auditOverlay": null,
+      "aliases": [],
+      "blocked": [],
+      "population": {
+        "equalToThePreregisteredPopulation": true,
+        "expected": 4,
+        "observed": 4,
+        "duplicates": 0,
+        "missing": [],
+        "extra": []
+      },
+      "identity": {
+        "runtimeFingerprints": [
+          "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a"
+        ],
+        "runtimeMatchesCurrent": true,
+        "harnessFingerprintsOfCommands": [
+          "64b1e3869d7e0869090aa0f258c596b72782c107bfe63146f3eb3f1a16e6d3eb"
+        ],
+        "harnessFingerprintsOfEveryAttempt": [
+          "9c2facb6fd74275f048b56b3135d0e5411b5bb2ae36a328f1994a2f824aa23ea",
+          "64b1e3869d7e0869090aa0f258c596b72782c107bfe63146f3eb3f1a16e6d3eb"
+        ],
+        "adapterHashes": [
+          "f73aa49991cc0141ef7f9bfe34fc0df39d936e122d600ed2ddf2a59a8f2a2c85"
+        ],
+        "manifestHashesRecorded": [
+          "309948fc333d6ef48697dd8701c5c20e90f585b7679c6a3d7929f1bb1e179ab2"
+        ],
+        "manifestHashNow": "309948fc333d6ef48697dd8701c5c20e90f585b7679c6a3d7929f1bb1e179ab2",
+        "manifestHashChanged": false,
+        "plannedKeysOutsideTheManifest": [],
+        "plannedKeysEqualTheManifestKeys": true,
+        "manifestHashNote": null,
+        "sourceStable": true,
+        "firewallClean": true,
+        "evidenceStatuses": [
+          "provisional (pre-freeze)"
+        ],
+        "gateStates": [
+          "not-evaluable-pre-freeze"
+        ],
+        "commandStatuses": [
+          "self-test:a2:complete",
+          "loader-parity:a2:paused-unstarted",
+          "loader-parity:a3:complete"
+        ]
+      }
+    },
+    {
+      "task": "IG-S02",
+      "title": "Paired headline baseline and S5a width-4 attempt pool",
+      "status": "accepted",
+      "acceptance": "accepted after the Killer audit (summary-r2 with the hash-linked sidecar)",
+      "planned": {
+        "keys": 36,
+        "shards": 8,
+        "manifestHash": "a5acbdfb822ec317db53c2e8147e3a463e33ee4545c9170bb3f687cfc6d64fc7"
+      },
+      "observed": {
+        "completed": 30,
+        "completedByAuditOverlay": 6,
+        "budgetEnded": 0,
+        "censored": 0,
+        "error": 0,
+        "validationUnknown": 0,
+        "unstarted": 0
+      },
+      "shards": [
+        {
+          "shard": "m16-1",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 2,
+          "outcomes": {
+            "completed": 2,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S02/m16-1/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 187560,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "m16-2",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 2,
+          "outcomes": {
+            "completed": 2,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S02/m16-2/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 156628,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "m16-3",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 2,
+          "outcomes": {
+            "completed": 2,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S02/m16-3/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 164973,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "m12",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 6,
+          "outcomes": {
+            "completed": 6,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S02/m12/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 93721,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "sam",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 6,
+          "outcomes": {
+            "completed": 6,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S02/sam/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 117187,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "c9",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 6,
+          "outcomes": {
+            "completed": 6,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S02/c9/command.json",
+              "status": "error",
+              "exit": 1,
+              "occupiedMs": 2138,
+              "inFinalChain": false
+            },
+            {
+              "attemptId": "a2",
+              "rel": "IG-S02/c9/a2/command.json",
+              "status": "error",
+              "exit": 1,
+              "occupiedMs": 2053,
+              "inFinalChain": false
+            },
+            {
+              "attemptId": "a3",
+              "rel": "IG-S02/c9/a3/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 18764,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a3"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "killer",
+          "kind": "pipeline",
+          "status": "failed",
+          "reason": "validation-failed",
+          "plannedKeys": 6,
+          "outcomes": {
+            "completed": 0,
+            "completedByAuditOverlay": 6,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S02/killer/command.json",
+              "status": "validation-failed",
+              "exit": 1,
+              "occupiedMs": 101873,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": "the stored records stay \"error\" (the shared verifier lacked a Killer rule); the hash-linked re-audit verified all six saved puzzles: counted as completed by audit overlay",
+          "censoredRows": []
+        },
+        {
+          "shard": "gt",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 6,
+          "outcomes": {
+            "completed": 6,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S02/gt/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 46420,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        }
+      ],
+      "unstarted": [],
+      "censored": [],
+      "auditOverlay": {
+        "file": "provisional-r1/IG-S02/killer/audit-a1/audit.json",
+        "fileSha256": "28b1f1fa36bf7e69029f7e5bb99b0f09b7206be69e7e5212c1e2ed36ca4a3738",
+        "rows": [
+          {
+            "key": "IG-S02/killer/killer:nightmare:1/native-w1",
+            "originalOutcome": "error",
+            "newOutcome": "complete",
+            "verifiedExact": false,
+            "linkHash": "fb57cb61b5da8d22423953c07e49c38b82eea30b5197eb203e90beaf71eac7f6"
+          },
+          {
+            "key": "IG-S02/killer/killer:nightmare:1/attempts-w4",
+            "originalOutcome": "error",
+            "newOutcome": "complete",
+            "verifiedExact": false,
+            "linkHash": "f1250ccf64f073f8dd59acd7028813dec21058bf1159442f1920e0938c88eb93"
+          },
+          {
+            "key": "IG-S02/killer/killer:nightmare:2/attempts-w4",
+            "originalOutcome": "error",
+            "newOutcome": "complete",
+            "verifiedExact": false,
+            "linkHash": "3555ec29bcdc146217ac7445ed07612aaca3458150f0845e889cff433242a1ca"
+          },
+          {
+            "key": "IG-S02/killer/killer:nightmare:2/native-w1",
+            "originalOutcome": "error",
+            "newOutcome": "complete",
+            "verifiedExact": false,
+            "linkHash": "fb056581b0e4c46583820ce484458daa7a32cbc4c94c73f6d6deee93577bd5e9"
+          },
+          {
+            "key": "IG-S02/killer/killer:nightmare:3/native-w1",
+            "originalOutcome": "error",
+            "newOutcome": "complete",
+            "verifiedExact": false,
+            "linkHash": "2a8d42cb4c2cd31d7b47e4edcc21b3084258111cbd37f0496a74f718332ae36d"
+          },
+          {
+            "key": "IG-S02/killer/killer:nightmare:3/attempts-w4",
+            "originalOutcome": "error",
+            "newOutcome": "complete",
+            "verifiedExact": false,
+            "linkHash": "8ad87991c43681140756678ee0c336e8e4d29a6d4f6c0a150d31421e8d7a6978"
+          }
+        ]
+      },
+      "aliases": [],
+      "blocked": [],
+      "population": {
+        "equalToThePreregisteredPopulation": true,
+        "expected": 36,
+        "observed": 36,
+        "duplicates": 0,
+        "missing": [],
+        "extra": []
+      },
+      "identity": {
+        "runtimeFingerprints": [
+          "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a"
+        ],
+        "runtimeMatchesCurrent": true,
+        "harnessFingerprintsOfCommands": [
+          "dd759a22bf13b732face5b950b3e3054cf12e79115f0f5eed536e74f306406fd"
+        ],
+        "harnessFingerprintsOfEveryAttempt": [
+          "dd759a22bf13b732face5b950b3e3054cf12e79115f0f5eed536e74f306406fd",
+          "7cff39b1cce741ff9a3fdbddfacd327fd35bb8bbb3d2b147a2f39f62a89034b1",
+          "cb21d9b6b9f18b4ac7857876a8808168de095d85196841afb4607bff3ef09aa5"
+        ],
+        "adapterHashes": [
+          "3813bdb06e947a014f06c6601a017c52870527f0b15fcfa4a455f648acc7bf06"
+        ],
+        "manifestHashesRecorded": [
+          "a5acbdfb822ec317db53c2e8147e3a463e33ee4545c9170bb3f687cfc6d64fc7"
+        ],
+        "manifestHashNow": "a5acbdfb822ec317db53c2e8147e3a463e33ee4545c9170bb3f687cfc6d64fc7",
+        "manifestHashChanged": false,
+        "plannedKeysOutsideTheManifest": [],
+        "plannedKeysEqualTheManifestKeys": true,
+        "manifestHashNote": null,
+        "sourceStable": true,
+        "firewallClean": true,
+        "evidenceStatuses": [
+          "provisional (pre-freeze)"
+        ],
+        "gateStates": [
+          "not-evaluable-pre-freeze"
+        ],
+        "commandStatuses": [
+          "m16-1:a1:complete",
+          "m16-2:a1:complete",
+          "m16-3:a1:complete",
+          "m12:a1:complete",
+          "sam:a1:complete",
+          "c9:a3:complete",
+          "killer:a1:validation-failed",
+          "gt:a1:complete"
+        ]
+      }
+    },
+    {
+      "task": "IG-S03",
+      "title": "Small S3 prototype (partial) with virtual-check parity",
+      "status": "accepted",
+      "acceptance": "accepted (summary-r3): SM4 parity sufficient for these families; no material net gain from the partial S3",
+      "planned": {
+        "keys": 43,
+        "shards": 11,
+        "manifestHash": "38862b3141574728056c2289c25bd8aeeb724fa4ddae47a0825ce7289801e22f"
+      },
+      "observed": {
+        "completed": 43,
+        "completedByAuditOverlay": 0,
+        "budgetEnded": 0,
+        "censored": 0,
+        "error": 0,
+        "validationUnknown": 0,
+        "unstarted": 0
+      },
+      "shards": [
+        {
+          "shard": "audit-1",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 10,
+          "outcomes": {
+            "completed": 10,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S03/audit-1/command.json",
+              "status": "parity-failed",
+              "exit": 1,
+              "occupiedMs": 262449,
+              "inFinalChain": false
+            },
+            {
+              "attemptId": "a2",
+              "rel": "IG-S03/audit-1/a2/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 2029,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a2"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "audit-2",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 9,
+          "outcomes": {
+            "completed": 9,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S03/audit-2/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 3931,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "sc-c9",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 3,
+          "outcomes": {
+            "completed": 3,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S03/sc-c9/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 6142,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "sc-gt",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 3,
+          "outcomes": {
+            "completed": 3,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S03/sc-gt/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 15096,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "sc-killer",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 3,
+          "outcomes": {
+            "completed": 3,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S03/sc-killer/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 32742,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "sc-m12",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 3,
+          "outcomes": {
+            "completed": 3,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S03/sc-m12/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 23414,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "sc-sam",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 3,
+          "outcomes": {
+            "completed": 3,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S03/sc-sam/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 43007,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "sc-m16",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 3,
+          "outcomes": {
+            "completed": 3,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S03/sc-m16/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 178455,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "ser-small",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 3,
+          "outcomes": {
+            "completed": 3,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S03/ser-small/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 41513,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "ser-m12-sam",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 2,
+          "outcomes": {
+            "completed": 2,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S03/ser-m12-sam/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 46385,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "ser-m16",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 1,
+          "outcomes": {
+            "completed": 1,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S03/ser-m16/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 105894,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        }
+      ],
+      "unstarted": [],
+      "censored": [],
+      "auditOverlay": null,
+      "aliases": [],
+      "blocked": [],
+      "population": {
+        "equalToThePreregisteredPopulation": true,
+        "expected": 43,
+        "observed": 43,
+        "duplicates": 0,
+        "missing": [],
+        "extra": []
+      },
+      "identity": {
+        "runtimeFingerprints": [
+          "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a"
+        ],
+        "runtimeMatchesCurrent": true,
+        "harnessFingerprintsOfCommands": [
+          "baeb9ea2c1ae6477e2b9a83efc57d73975a204b450b95f7b80e76f1706a20944",
+          "dedddaef9979cddbc692430588e0962ae9c5a8926d1e599c05b537ca4d80e58c"
+        ],
+        "harnessFingerprintsOfEveryAttempt": [
+          "e4182bd7ee327baeed99c577038ba44238afdac649e37292622e42947b548270",
+          "baeb9ea2c1ae6477e2b9a83efc57d73975a204b450b95f7b80e76f1706a20944",
+          "dedddaef9979cddbc692430588e0962ae9c5a8926d1e599c05b537ca4d80e58c"
+        ],
+        "adapterHashes": [
+          "965743b9c8e218708d81db314db78b19cdcba1563de8418aa4cba78562f8c90f",
+          "df76326083d5e98de7e55bea3d8a2c45106c8a62ae46f30481adbd25b5b20d8f",
+          "3813bdb06e947a014f06c6601a017c52870527f0b15fcfa4a455f648acc7bf06"
+        ],
+        "manifestHashesRecorded": [
+          "38862b3141574728056c2289c25bd8aeeb724fa4ddae47a0825ce7289801e22f"
+        ],
+        "manifestHashNow": "38862b3141574728056c2289c25bd8aeeb724fa4ddae47a0825ce7289801e22f",
+        "manifestHashChanged": false,
+        "plannedKeysOutsideTheManifest": [],
+        "plannedKeysEqualTheManifestKeys": true,
+        "manifestHashNote": null,
+        "sourceStable": true,
+        "firewallClean": true,
+        "evidenceStatuses": [
+          "provisional (pre-freeze)"
+        ],
+        "gateStates": [
+          "not-evaluable-pre-freeze"
+        ],
+        "commandStatuses": [
+          "audit-1:a2:complete",
+          "audit-2:a1:complete",
+          "sc-c9:a1:complete",
+          "sc-gt:a1:complete",
+          "sc-killer:a1:complete",
+          "sc-m12:a1:complete",
+          "sc-sam:a1:complete",
+          "sc-m16:a1:complete",
+          "ser-small:a1:complete",
+          "ser-m12-sam:a1:complete",
+          "ser-m16:a1:complete"
+        ]
+      }
+    },
+    {
+      "task": "IG-S04",
+      "title": "S1/S2 frontier variants and the staged budget pilot",
+      "status": "accepted",
+      "acceptance": "accepted after the six-key completion and one correction round (summary-r2, budgets-r2)",
+      "planned": {
+        "keys": 64,
+        "shards": 6,
+        "manifestHash": "f197c9cab708af392e23942709d088fb2acc6e852b6252955afdb6e4a0d15dcf"
+      },
+      "observed": {
+        "completed": 64,
+        "completedByAuditOverlay": 0,
+        "budgetEnded": 0,
+        "censored": 0,
+        "error": 0,
+        "validationUnknown": 0,
+        "unstarted": 0
+      },
+      "shards": [
+        {
+          "shard": "s1-large-controls",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 6,
+          "outcomes": {
+            "completed": 6,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S04/s1-large-controls/command.json",
+              "status": "error",
+              "exit": 1,
+              "occupiedMs": 1663,
+              "inFinalChain": false
+            },
+            {
+              "attemptId": "a2",
+              "rel": "IG-S04/s1-large-controls/a2/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 12856,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a2"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "s2-small-all",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 32,
+          "outcomes": {
+            "completed": 32,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S04/s2-small-all/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 6068,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a2",
+              "rel": "IG-S04/s2-small-all/a2/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 28888,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a3",
+              "rel": "IG-S04/s2-small-all/a3/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 5700,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1",
+            "a2",
+            "a3"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "s3-large-native-f1",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 6,
+          "outcomes": {
+            "completed": 6,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S04/s3-large-native-f1/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 15227,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "s4-large-floors",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 8,
+          "outcomes": {
+            "completed": 8,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S04/s4-large-floors/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 3990,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a2",
+              "rel": "IG-S04/s4-large-floors/a2/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 8711,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1",
+            "a2"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "s5-large-reference",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 8,
+          "outcomes": {
+            "completed": 8,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S04/s5-large-reference/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 2491,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a2",
+              "rel": "IG-S04/s5-large-reference/a2/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 1978,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a3",
+              "rel": "IG-S04/s5-large-reference/a3/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 1636,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a4",
+              "rel": "IG-S04/s5-large-reference/a4/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 1748,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a5",
+              "rel": "IG-S04/s5-large-reference/a5/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 1199,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a6",
+              "rel": "IG-S04/s5-large-reference/a6/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 2492,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1",
+            "a2",
+            "a3",
+            "a4",
+            "a5",
+            "a6"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "s6-large-s2-control",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 4,
+          "outcomes": {
+            "completed": 4,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S04/s6-large-s2-control/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 3422,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        }
+      ],
+      "unstarted": [],
+      "censored": [],
+      "auditOverlay": null,
+      "aliases": [],
+      "blocked": [],
+      "population": {
+        "equalToThePreregisteredPopulation": true,
+        "expected": 64,
+        "observed": 64,
+        "duplicates": 0,
+        "missing": [],
+        "extra": []
+      },
+      "identity": {
+        "runtimeFingerprints": [
+          "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a"
+        ],
+        "runtimeMatchesCurrent": true,
+        "harnessFingerprintsOfCommands": [
+          "694eea9bf608f949a057eb7262cd257445429ed1e86bb8e486e39ea539cf6401"
+        ],
+        "harnessFingerprintsOfEveryAttempt": [
+          "0db69e8d2e51abc30117a9d405caa7f39893bd3e20c8c2de47504484533049d6",
+          "694eea9bf608f949a057eb7262cd257445429ed1e86bb8e486e39ea539cf6401"
+        ],
+        "adapterHashes": [
+          "424efd29f49f1c93001074a760b1d898acb3f2eee9aaa791477a32ec68b98143"
+        ],
+        "manifestHashesRecorded": [
+          "f197c9cab708af392e23942709d088fb2acc6e852b6252955afdb6e4a0d15dcf"
+        ],
+        "manifestHashNow": "f197c9cab708af392e23942709d088fb2acc6e852b6252955afdb6e4a0d15dcf",
+        "manifestHashChanged": false,
+        "plannedKeysOutsideTheManifest": [],
+        "plannedKeysEqualTheManifestKeys": true,
+        "manifestHashNote": null,
+        "sourceStable": true,
+        "firewallClean": true,
+        "evidenceStatuses": [
+          "provisional (pre-freeze)"
+        ],
+        "gateStates": [
+          "not-evaluable-pre-freeze"
+        ],
+        "commandStatuses": [
+          "s1-large-controls:a2:complete",
+          "s2-small-all:a1:paused-unstarted",
+          "s2-small-all:a2:paused-unstarted",
+          "s2-small-all:a3:complete",
+          "s3-large-native-f1:a1:complete",
+          "s4-large-floors:a1:paused-unstarted",
+          "s4-large-floors:a2:complete",
+          "s5-large-reference:a1:paused-unstarted",
+          "s5-large-reference:a2:paused-unstarted",
+          "s5-large-reference:a3:paused-unstarted",
+          "s5-large-reference:a4:paused-unstarted",
+          "s5-large-reference:a5:paused-unstarted",
+          "s5-large-reference:a6:complete",
+          "s6-large-s2-control:a1:complete"
+        ]
+      }
+    },
+    {
+      "task": "IG-S05",
+      "title": "Paired SM2 grid screen and yield rates",
+      "status": "accepted-inconclusive",
+      "acceptance": "accepted, inconclusive by the preregistered rule (summary-r2)",
+      "planned": {
+        "keys": 256,
+        "shards": 1,
+        "manifestHash": "e0815e48be61b3bc2eff6cc58a123cf6d6ea911122e8b38fbb837419f0375092"
+      },
+      "observed": {
+        "completed": 243,
+        "completedByAuditOverlay": 0,
+        "budgetEnded": 13,
+        "censored": 0,
+        "error": 0,
+        "validationUnknown": 0,
+        "unstarted": 0
+      },
+      "shards": [
+        {
+          "shard": "screen",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 256,
+          "outcomes": {
+            "completed": 243,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 13,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S05/screen/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 88201,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a2",
+              "rel": "IG-S05/screen/a2/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 29409,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a3",
+              "rel": "IG-S05/screen/a3/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 94312,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a4",
+              "rel": "IG-S05/screen/a4/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 15483,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a5",
+              "rel": "IG-S05/screen/a5/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 17570,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a6",
+              "rel": "IG-S05/screen/a6/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 20050,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a7",
+              "rel": "IG-S05/screen/a7/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 12124,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a8",
+              "rel": "IG-S05/screen/a8/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 10713,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a9",
+              "rel": "IG-S05/screen/a9/command.json",
+              "status": "paused-unstarted",
+              "exit": 0,
+              "occupiedMs": 23604,
+              "inFinalChain": true
+            },
+            {
+              "attemptId": "a10",
+              "rel": "IG-S05/screen/a10/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 14615,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1",
+            "a2",
+            "a3",
+            "a4",
+            "a5",
+            "a6",
+            "a7",
+            "a8",
+            "a9",
+            "a10"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        }
+      ],
+      "unstarted": [],
+      "censored": [],
+      "auditOverlay": null,
+      "aliases": [],
+      "blocked": [],
+      "population": {
+        "equalToThePreregisteredPopulation": true,
+        "expected": 256,
+        "observed": 256,
+        "duplicates": 0,
+        "missing": [],
+        "extra": []
+      },
+      "identity": {
+        "runtimeFingerprints": [
+          "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a"
+        ],
+        "runtimeMatchesCurrent": true,
+        "harnessFingerprintsOfCommands": [
+          "58c583c213f125117d72fa89db558c9ac887c43a95152c455d15b850a165ebdc"
+        ],
+        "harnessFingerprintsOfEveryAttempt": [
+          "58c583c213f125117d72fa89db558c9ac887c43a95152c455d15b850a165ebdc"
+        ],
+        "adapterHashes": [
+          "424efd29f49f1c93001074a760b1d898acb3f2eee9aaa791477a32ec68b98143"
+        ],
+        "manifestHashesRecorded": [
+          "e0815e48be61b3bc2eff6cc58a123cf6d6ea911122e8b38fbb837419f0375092"
+        ],
+        "manifestHashNow": "e0815e48be61b3bc2eff6cc58a123cf6d6ea911122e8b38fbb837419f0375092",
+        "manifestHashChanged": false,
+        "plannedKeysOutsideTheManifest": [],
+        "plannedKeysEqualTheManifestKeys": true,
+        "manifestHashNote": null,
+        "sourceStable": true,
+        "firewallClean": true,
+        "evidenceStatuses": [
+          "provisional (pre-freeze)"
+        ],
+        "gateStates": [
+          "not-evaluable-pre-freeze"
+        ],
+        "commandStatuses": [
+          "screen:a1:paused-unstarted",
+          "screen:a2:paused-unstarted",
+          "screen:a3:paused-unstarted",
+          "screen:a4:paused-unstarted",
+          "screen:a5:paused-unstarted",
+          "screen:a6:paused-unstarted",
+          "screen:a7:paused-unstarted",
+          "screen:a8:paused-unstarted",
+          "screen:a9:paused-unstarted",
+          "screen:a10:complete"
+        ]
+      },
+      "sampleOrdinals": {
+        "returned": 499,
+        "sample-budget": 13,
+        "censored": 0,
+        "error": 0,
+        "not-reached": 0,
+        "unstarted": 0
+      },
+      "earlyExactSkipped": 0
+    },
+    {
+      "task": "IG-S07",
+      "title": "SM1 stage and finder profiles",
+      "status": "accepted",
+      "acceptance": "accepted after one fix round (summary-r2): provisional attribution, not complete solver-check accounting",
+      "planned": {
+        "keys": 12,
+        "shards": 10,
+        "manifestHash": "a02b3f0ae47e667679888fa5429030db936efd3c0f379dd0e16254ad8a028f55"
+      },
+      "observed": {
+        "completed": 12,
+        "completedByAuditOverlay": 0,
+        "budgetEnded": 0,
+        "censored": 0,
+        "error": 0,
+        "validationUnknown": 0,
+        "unstarted": 0
+      },
+      "shards": [
+        {
+          "shard": "c9",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 1,
+          "outcomes": {
+            "completed": 1,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S07/c9/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 11145,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "m16",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 1,
+          "outcomes": {
+            "completed": 1,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S07/m16/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 108607,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "m12",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 1,
+          "outcomes": {
+            "completed": 1,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S07/m12/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 26215,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "sam",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 1,
+          "outcomes": {
+            "completed": 1,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S07/sam/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 24320,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "killer-n",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 1,
+          "outcomes": {
+            "completed": 1,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S07/killer-n/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 24128,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "gt-n",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 1,
+          "outcomes": {
+            "completed": 1,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S07/gt-n/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 14246,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "killer-h",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 2,
+          "outcomes": {
+            "completed": 2,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S07/killer-h/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 13661,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "killer-e",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 2,
+          "outcomes": {
+            "completed": 2,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S07/killer-e/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 24569,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "gt-normal",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 2,
+          "outcomes": {
+            "completed": 2,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S07/gt-normal/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 6322,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "lc",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 0,
+          "outcomes": {
+            "completed": 0,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S07/lc/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 1347,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        }
+      ],
+      "unstarted": [],
+      "censored": [],
+      "auditOverlay": null,
+      "aliases": [],
+      "blocked": [],
+      "population": {
+        "equalToThePreregisteredPopulation": true,
+        "expected": 12,
+        "observed": 12,
+        "duplicates": 0,
+        "missing": [],
+        "extra": []
+      },
+      "identity": {
+        "runtimeFingerprints": [
+          "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a"
+        ],
+        "runtimeMatchesCurrent": true,
+        "harnessFingerprintsOfCommands": [
+          "0feb1ea57bd481a17889f3e678143ce55574691748f44cae486be1e51c307225",
+          "062742c330eb9e999ac47ce72393df2ad89bdf31ffa03da5793682098d98d14a"
+        ],
+        "harnessFingerprintsOfEveryAttempt": [
+          "0feb1ea57bd481a17889f3e678143ce55574691748f44cae486be1e51c307225",
+          "062742c330eb9e999ac47ce72393df2ad89bdf31ffa03da5793682098d98d14a"
+        ],
+        "adapterHashes": [
+          "1e6f4df1909ebe02c680f850acb281c02b529ad53dbe0be96f14b7badcac2a03"
+        ],
+        "manifestHashesRecorded": [
+          "7d4d096c96bb7d6a16052fdbef7c56880d5ae9555bda67e9b3f69a747edf9db6",
+          "a02b3f0ae47e667679888fa5429030db936efd3c0f379dd0e16254ad8a028f55"
+        ],
+        "manifestHashNow": "a02b3f0ae47e667679888fa5429030db936efd3c0f379dd0e16254ad8a028f55",
+        "manifestHashChanged": true,
+        "plannedKeysOutsideTheManifest": [],
+        "plannedKeysEqualTheManifestKeys": true,
+        "manifestHashNote": "the manifest hash differs from the recorded one because the plan was extended after the run (a request-free shard); every planned request key is identical",
+        "sourceStable": true,
+        "firewallClean": true,
+        "evidenceStatuses": [
+          "provisional (pre-freeze)"
+        ],
+        "gateStates": [
+          "not-evaluable-pre-freeze"
+        ],
+        "commandStatuses": [
+          "c9:a1:complete",
+          "m16:a1:complete",
+          "m12:a1:complete",
+          "sam:a1:complete",
+          "killer-n:a1:complete",
+          "gt-n:a1:complete",
+          "killer-h:a1:complete",
+          "killer-e:a1:complete",
+          "gt-normal:a1:complete",
+          "lc:a1:complete"
+        ]
+      }
+    },
+    {
+      "task": "IG-S08",
+      "title": "Bounded SM3 attribution of Jigsaw Expert seed 1111",
+      "status": "accepted",
+      "acceptance": "accepted after one reporting-only round (summary-r3): a censored lower bound, not a latency gate",
+      "planned": {
+        "keys": 3,
+        "shards": 2,
+        "manifestHash": "909ad60160328f6759f6e72042ea239a066b27e5eb2ba8972c624c3448eedc54"
+      },
+      "observed": {
+        "completed": 2,
+        "completedByAuditOverlay": 0,
+        "budgetEnded": 0,
+        "censored": 1,
+        "error": 0,
+        "validationUnknown": 0,
+        "unstarted": 0
+      },
+      "shards": [
+        {
+          "shard": "control",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 2,
+          "outcomes": {
+            "completed": 2,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S08/control/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 4885,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "tail",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 1,
+          "outcomes": {
+            "completed": 0,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 1,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S08/tail/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 241144,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": [
+            {
+              "key": "IG-S08/tail/jigsaw9:expert:1111/profiled",
+              "outcome": "request-timeout",
+              "timeoutScope": "request",
+              "coldWallMsLowerBound": 240014.5519,
+              "cpuTotalMs": 238562
+            }
+          ]
+        }
+      ],
+      "unstarted": [],
+      "censored": [
+        {
+          "key": "IG-S08/tail/jigsaw9:expert:1111/profiled",
+          "outcome": "request-timeout",
+          "timeoutScope": "request",
+          "coldWallMsLowerBound": 240014.5519,
+          "cpuTotalMs": 238562
+        }
+      ],
+      "auditOverlay": null,
+      "aliases": [],
+      "blocked": [],
+      "population": {
+        "equalToThePreregisteredPopulation": true,
+        "expected": 3,
+        "observed": 3,
+        "duplicates": 0,
+        "missing": [],
+        "extra": []
+      },
+      "identity": {
+        "runtimeFingerprints": [
+          "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a"
+        ],
+        "runtimeMatchesCurrent": true,
+        "harnessFingerprintsOfCommands": [
+          "fe2bae1efce6bf8df07ff7020a0ca422c10e9b4d3579378387cc6cc2ae743fce"
+        ],
+        "harnessFingerprintsOfEveryAttempt": [
+          "fe2bae1efce6bf8df07ff7020a0ca422c10e9b4d3579378387cc6cc2ae743fce"
+        ],
+        "adapterHashes": [
+          "69890fe8acaef852f6c19acb10985041a335e8ac55e3f6551bca1b4f6b6e2c62"
+        ],
+        "manifestHashesRecorded": [
+          "909ad60160328f6759f6e72042ea239a066b27e5eb2ba8972c624c3448eedc54"
+        ],
+        "manifestHashNow": "909ad60160328f6759f6e72042ea239a066b27e5eb2ba8972c624c3448eedc54",
+        "manifestHashChanged": false,
+        "plannedKeysOutsideTheManifest": [],
+        "plannedKeysEqualTheManifestKeys": true,
+        "manifestHashNote": null,
+        "sourceStable": true,
+        "firewallClean": true,
+        "evidenceStatuses": [
+          "provisional (pre-freeze)"
+        ],
+        "gateStates": [
+          "not-evaluable-pre-freeze"
+        ],
+        "commandStatuses": [
+          "control:a1:complete",
+          "tail:a1:complete"
+        ]
+      }
+    },
+    {
+      "task": "IG-S09",
+      "title": "Greater-Than miss split and solve-first diagnostic",
+      "status": "accepted-partial",
+      "acceptance": "accepted as an authorised partial diagnostic (summary-r2, F1-F5 closed): Nightmare 706-709 unstarted",
+      "planned": {
+        "keys": 62,
+        "shards": 10,
+        "manifestHash": "6228c6853ae720dbb1f3f05e72475860d937046cbb57a0a01c291cf65a23108f"
+      },
+      "observed": {
+        "completed": 54,
+        "completedByAuditOverlay": 0,
+        "budgetEnded": 0,
+        "censored": 0,
+        "error": 0,
+        "validationUnknown": 0,
+        "unstarted": 8
+      },
+      "shards": [
+        {
+          "shard": "normal-300-304",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 10,
+          "outcomes": {
+            "completed": 10,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S09/normal-300-304/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 16586,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "normal-305-309",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 10,
+          "outcomes": {
+            "completed": 10,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S09/normal-305-309/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 19248,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "normal-310-314",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 10,
+          "outcomes": {
+            "completed": 10,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S09/normal-310-314/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 27497,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "normal-315-319",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 10,
+          "outcomes": {
+            "completed": 10,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S09/normal-315-319/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 33999,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "nightmare-700-701",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 4,
+          "outcomes": {
+            "completed": 4,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S09/nightmare-700-701/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 199510,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "nightmare-702-703",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 4,
+          "outcomes": {
+            "completed": 4,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S09/nightmare-702-703/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 89950,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "nightmare-704-705",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 4,
+          "outcomes": {
+            "completed": 4,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S09/nightmare-704-705/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 75636,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "nightmare-706-707",
+          "kind": "pipeline",
+          "status": "not-run",
+          "reason": null,
+          "plannedKeys": 4,
+          "outcomes": {
+            "completed": 0,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 4
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [
+            "IG-S09/nightmare-706-707/greaterThan:nightmare:706/g0",
+            "IG-S09/nightmare-706-707/greaterThan:nightmare:706/g1",
+            "IG-S09/nightmare-706-707/greaterThan:nightmare:707/g1",
+            "IG-S09/nightmare-706-707/greaterThan:nightmare:707/g0"
+          ],
+          "attempts": [],
+          "finalChain": [],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "nightmare-708-709",
+          "kind": "pipeline",
+          "status": "not-run",
+          "reason": null,
+          "plannedKeys": 4,
+          "outcomes": {
+            "completed": 0,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 4
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [
+            "IG-S09/nightmare-708-709/greaterThan:nightmare:708/g0",
+            "IG-S09/nightmare-708-709/greaterThan:nightmare:708/g1",
+            "IG-S09/nightmare-708-709/greaterThan:nightmare:709/g1",
+            "IG-S09/nightmare-708-709/greaterThan:nightmare:709/g0"
+          ],
+          "attempts": [],
+          "finalChain": [],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        },
+        {
+          "shard": "observer-control",
+          "kind": "pipeline",
+          "status": "recorded",
+          "reason": null,
+          "plannedKeys": 2,
+          "outcomes": {
+            "completed": 2,
+            "completedByAuditOverlay": 0,
+            "budgetEnded": 0,
+            "censored": 0,
+            "error": 0,
+            "validationUnknown": 0,
+            "unstarted": 0
+          },
+          "syntheticCases": null,
+          "unstartedKeys": [],
+          "attempts": [
+            {
+              "attemptId": "a1",
+              "rel": "IG-S09/observer-control/command.json",
+              "status": "complete",
+              "exit": 0,
+              "occupiedMs": 15767,
+              "inFinalChain": true
+            }
+          ],
+          "finalChain": [
+            "a1"
+          ],
+          "harnessStatusNote": null,
+          "censoredRows": []
+        }
+      ],
+      "unstarted": [
+        "IG-S09/nightmare-706-707/greaterThan:nightmare:706/g0",
+        "IG-S09/nightmare-706-707/greaterThan:nightmare:706/g1",
+        "IG-S09/nightmare-706-707/greaterThan:nightmare:707/g1",
+        "IG-S09/nightmare-706-707/greaterThan:nightmare:707/g0",
+        "IG-S09/nightmare-708-709/greaterThan:nightmare:708/g0",
+        "IG-S09/nightmare-708-709/greaterThan:nightmare:708/g1",
+        "IG-S09/nightmare-708-709/greaterThan:nightmare:709/g1",
+        "IG-S09/nightmare-708-709/greaterThan:nightmare:709/g0"
+      ],
+      "censored": [],
+      "auditOverlay": null,
+      "aliases": [],
+      "blocked": [],
+      "population": {
+        "equalToThePreregisteredPopulation": true,
+        "expected": 62,
+        "observed": 62,
+        "duplicates": 0,
+        "missing": [],
+        "extra": []
+      },
+      "identity": {
+        "runtimeFingerprints": [
+          "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a"
+        ],
+        "runtimeMatchesCurrent": true,
+        "harnessFingerprintsOfCommands": [
+          "9da69f60fbd2d71eeaec2949f805ba8fac3c6f2c6bf88b5848398e5b16c128ed"
+        ],
+        "harnessFingerprintsOfEveryAttempt": [
+          "9da69f60fbd2d71eeaec2949f805ba8fac3c6f2c6bf88b5848398e5b16c128ed"
+        ],
+        "adapterHashes": [
+          "d5fd6349b824de98223eecbbb001327e08b6ece223d95fb1b5d33842e465eaae"
+        ],
+        "manifestHashesRecorded": [
+          "6228c6853ae720dbb1f3f05e72475860d937046cbb57a0a01c291cf65a23108f"
+        ],
+        "manifestHashNow": "6228c6853ae720dbb1f3f05e72475860d937046cbb57a0a01c291cf65a23108f",
+        "manifestHashChanged": false,
+        "plannedKeysOutsideTheManifest": [],
+        "plannedKeysEqualTheManifestKeys": false,
+        "manifestHashNote": null,
+        "sourceStable": true,
+        "firewallClean": true,
+        "evidenceStatuses": [
+          "provisional (pre-freeze)"
+        ],
+        "gateStates": [
+          "not-evaluable-pre-freeze"
+        ],
+        "commandStatuses": [
+          "normal-300-304:a1:complete",
+          "normal-305-309:a1:complete",
+          "normal-310-314:a1:complete",
+          "normal-315-319:a1:complete",
+          "nightmare-700-701:a1:complete",
+          "nightmare-702-703:a1:complete",
+          "nightmare-704-705:a1:complete",
+          "observer-control:a1:complete"
+        ]
+      },
+      "rowsNeverStarted": [
+        "IG-S09/nightmare-706-707/greaterThan:nightmare:706/g0",
+        "IG-S09/nightmare-706-707/greaterThan:nightmare:706/g1",
+        "IG-S09/nightmare-706-707/greaterThan:nightmare:707/g1",
+        "IG-S09/nightmare-706-707/greaterThan:nightmare:707/g0",
+        "IG-S09/nightmare-708-709/greaterThan:nightmare:708/g0",
+        "IG-S09/nightmare-708-709/greaterThan:nightmare:708/g1",
+        "IG-S09/nightmare-708-709/greaterThan:nightmare:709/g1",
+        "IG-S09/nightmare-708-709/greaterThan:nightmare:709/g0"
+      ],
+      "shardsNeverRun": [
+        "nightmare-706-707",
+        "nightmare-708-709"
+      ]
+    }
+  ],
+  "deferred": [
+    {
+      "task": "IG-S06",
+      "title": "Held-out requests and ordered sample composition",
+      "status": "deferred",
+      "acceptance": "DEFERRED this pre-freeze round (2026-11-15 scheduling decision): not passed, not refuted, not run",
+      "planned": {
+        "keys": null,
+        "shards": null,
+        "manifestHash": null,
+        "note": "not planned in this round: no manifest or plan exists (plans/ig-s06.cjs is added by the task when it is implemented)"
+      },
+      "observed": {
+        "completed": 0,
+        "censored": 0,
+        "error": 0,
+        "unstarted": 0,
+        "note": "no IG-S06 measurement exists"
+      },
+      "reason": "IG-S05 found no verified exact hit in any mode, native controls included; F1 is a non-winning diagnostic default, not a selected strategy to compose; the pre-MS07 catalogue may change",
+      "consequence": "full-request composition (S1/S2 plus S5b, held-out requests 201/202, N1/CA4/CQ1/CQ4) is UNMEASURED: not passed, not refuted; the 24-minute allocation was not run and is not an automatic transfer"
+    }
+  ],
+  "auxiliaryCommands": [
+    {
+      "rel": "IG-S02/killer/audit-a1/command.json",
+      "task": "IG-S02",
+      "shard": "killer/audit-a1",
+      "status": "complete",
+      "occupiedMs": 2901,
+      "role": "re-audit sidecar of the six saved Killer puzzles (no generation)"
+    },
+    {
+      "rel": "IG-S04/engine-retest-r2/command.json",
+      "task": "IG-S04",
+      "shard": "engine-retest-r2",
+      "status": "complete",
+      "occupiedMs": 1592,
+      "role": "real-engine retest of the corrected frontier code (no trial, nothing timed)"
+    },
+    {
+      "rel": "IG-S09/dev-check/command.json",
+      "task": "IG-S09",
+      "shard": "dev-check",
+      "status": "dev-check-complete",
+      "occupiedMs": 7035,
+      "role": "development check of the per-job flow (not part of any shard; its requests are excluded)"
+    }
+  ],
+  "ownCommands": [
+    {
+      "rel": "IG-S10/reconcile/command.json",
+      "task": "IG-S10",
+      "shard": "reconcile",
+      "attemptId": "a1",
+      "status": "complete",
+      "occupiedMs": 6798,
+      "role": "the one wrapped reconciliation command of this task (r1); the r2 and r3 documents are unwrapped read-only aggregations"
+    }
+  ],
+  "excludedObservations": [
+    {
+      "task": "IG-S05",
+      "what": "dev-check (dev-check-a1.json)",
+      "observations": 16,
+      "why": "the 16 keys are identical to the screen's (earlier harness and manifest, admission rule only); stay excluded from every count, rate, interval and selection",
+      "source": "IG-S05/summary-r2.json closure.devChecks"
+    },
+    {
+      "task": "IG-S09",
+      "what": "dev-check (IG-S09/dev-check)",
+      "observations": 3,
+      "why": "three disclosed development requests (Normal seed 300: G0, G1 and the observer-free control); excluded from every count; its machine time is charged once (52.035 s) and it is a command outside every shard",
+      "source": "IG-S09 Execution log; IG-S09/summary-r2.json"
+    },
+    {
+      "task": "IG-S07",
+      "what": "unwrapped pre-check (disclosed)",
+      "observations": 2,
+      "why": "0.47 s and 0.41 s CPU on a puzzle later replaced by Escargot; not a profile row; the 0.470 s is debited once as a manual adjustment without grace (see the budget summary), the 0.41 s is not added",
+      "source": "IG-S07 Execution log (disclosed deviation)"
+    },
+    {
+      "task": "IG-S02",
+      "what": "Killer re-audit sidecar (audit-a1)",
+      "observations": 6,
+      "why": "verification of six saved puzzles, no generation; the six stored rows keep their original error outcome and are counted as completed by audit overlay",
+      "source": "IG-S02/killer/audit-a1/audit.json"
+    },
+    {
+      "task": "IG-S04",
+      "what": "engine retest r2 (engine-retest-r2)",
+      "observations": 15,
+      "why": "a retest of the corrected frontier code on the real engine: 15 checks, no trial, nothing timed",
+      "source": "IG-S04/engine-retest-r2.json"
+    }
+  ],
+  "problems": [],
+  "ok": true,
+  "rules": [
+    "every declared manifest key is completed, completed by audit overlay, budget-ended, censored, an error, validation-unknown or explicitly unstarted; none is dropped",
+    "a stored record is never modified: an overlay is a hash-linked copy",
+    "a key started once is never counted twice: duplicate keys across tasks stop the reconciliation",
+    "IG-S06 is deferred and unmeasured: not passed, not refuted; IG-S09 Nightmare 706-709 are unstarted, not excluded, failed or replaced; no automatic catch-up run"
+  ],
+  "revision": {
+    "id": "r3",
+    "reason": "pack-author report-only rulings after the owner's audit (statistic labels, S1/S2 cost and yield, first-phase formula, withdrawn costing premises, two unmeasured rows, source preparation, Killer and Greater-Than wording, staleness)",
+    "supersedes": [
+      {
+        "revision": "r1",
+        "file": "report.json",
+        "sha256": "f4594501127300e395f840213eb90a764c66ec4c31eedb75e5b5c199af1f574f",
+        "bytes": 658187
+      },
+      {
+        "revision": "r1",
+        "file": "report.md",
+        "sha256": "4a291f9bb5a699714994dcb6ac28c342caed4ee85e6c58092817e4c5e6587092",
+        "bytes": 86574
+      },
+      {
+        "revision": "r1",
+        "file": "coverage.json",
+        "sha256": "3faf6a8cc9caeed6143567d8bc6d3c70e0f5b776b28f3a1c19afe017148e82a7",
+        "bytes": 83671
+      },
+      {
+        "revision": "r1",
+        "file": "budget-summary.json",
+        "sha256": "c4d9bcdfd4e815deb239bdd8dbc6b2cf67a85bc9a899c908f1b2970bb7ca0320",
+        "bytes": 41085
+      },
+      {
+        "revision": "r1",
+        "file": "gate.json",
+        "sha256": "86713925f30f89d52b9d5bfa124644104f643565f0b7773f61788d8f75999cc9",
+        "bytes": 3764
+      },
+      {
+        "revision": "r1",
+        "file": "frozen-rerun-plan.json",
+        "sha256": "caa2c4855a69ebc5f3cbf6c717d6416a72919d68fc9d7813036031ca6f6b4e08",
+        "bytes": 59470
+      },
+      {
+        "revision": "r1",
+        "file": "IG-S10/reconcile/command.json",
+        "sha256": "92a1a5b3a88ff3ee953099d0551c1933a844dccedfa14ec5d45ff4d014530866",
+        "bytes": 14560,
+        "status": "complete",
+        "harnessFingerprint": "9a8afa85b3ff9165648fe6e1267a567c4c62e95ad9126a43e76db2d1ecb364c2"
+      },
+      {
+        "revision": "r2",
+        "file": "coverage-r2.json",
+        "sha256": "e470a93cbab8ab56cbf04e3178486c68256945ffe942ff68e5fb1edd8d76de3a",
+        "bytes": 86004
+      },
+      {
+        "revision": "r2",
+        "file": "budget-summary-r2.json",
+        "sha256": "a58f5eabc567435461de7096a9bdfe75fb52d969ca0e5d7c88913492fd797f90",
+        "bytes": 45138
+      },
+      {
+        "revision": "r2",
+        "file": "gate-r2.json",
+        "sha256": "fc006176b961a4384fa19ddc23aba3c24f5467118679ad1edd7944ef6cc0d058",
+        "bytes": 5665
+      },
+      {
+        "revision": "r2",
+        "file": "frozen-rerun-plan-r2.json",
+        "sha256": "a16174f19beebd9286f80d550e0481fbb8dfa6fde7772202056077757f4feb54",
+        "bytes": 75188
+      },
+      {
+        "revision": "r2",
+        "file": "report-r2.json",
+        "sha256": "b3672709496763487c120c6f2f9871cc49eeae1ad15541073f384942b783e720",
+        "bytes": 670486
+      },
+      {
+        "revision": "r2",
+        "file": "report-r2.md",
+        "sha256": "9088fea96dba06e278661b410243898cf837def61542e8dfdd502ce72d694317",
+        "bytes": 93840
+      }
+    ],
+    "r1CommandHarnessFingerprint": "9a8afa85b3ff9165648fe6e1267a567c4c62e95ad9126a43e76db2d1ecb364c2",
+    "r2WriterHarnessFingerprint": "8f0018b5c36db04a16707d44fd3c3f011ff3a75321c6d9c81e539beb283bd901",
+    "writerHarnessFingerprint": "53e7acbc62e6fd45bde6999f30c9861455065e2980267d9c437e659466f59372",
+    "writerRole": "the r3 aggregation (ig10-run.cjs --write-r3): unwrapped, read-only, no engine, no worker, no generation, not charged",
+    "comparisonToR2": [
+      {
+        "file": "coverage-r3.json",
+        "comparedWith": "coverage-r2.json",
+        "materiallyEqual": true,
+        "ignoredFields": [
+          "revision",
+          "ownCommands"
+        ]
+      },
+      {
+        "file": "budget-summary-r3.json",
+        "comparedWith": "budget-summary-r2.json",
+        "materiallyEqual": true,
+        "ignoredFields": [
+          "revision",
+          "disclosures",
+          "ig10"
+        ]
+      },
+      {
+        "file": "gate-r3.json",
+        "comparedWith": "gate-r2.json",
+        "materiallyEqual": true,
+        "ignoredFields": [
+          "revision",
+          "syntheticTests"
+        ]
+      },
+      {
+        "file": "frozen-rerun-plan-r3.json",
+        "comparedWith": "frozen-rerun-plan-r2.json",
+        "materiallyEqual": false,
+        "ignoredFields": [
+          "revision"
+        ]
+      }
+    ]
+  }
+}

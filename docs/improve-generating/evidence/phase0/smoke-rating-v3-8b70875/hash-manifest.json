@@ -1,0 +1,242 @@
+{
+  "schema": "ig-smoke-hash-manifest/1",
+  "round": "smoke-rating-v3-8b70875",
+  "algorithm": "SHA-256",
+  "revision": 2,
+  "fileCount": 45,
+  "note": "every archive file except this manifest (the first manifest is kept as hash-manifest-asrun.json); the manifest hash is reported out of band",
+  "verification": {
+    "childRecordCopiesComparedWithSource": 30,
+    "asRunDriverCopiesCheckedAgainstPreflight": 6,
+    "revisedDriverCopiesComparedWithSource": 2,
+    "problems": [],
+    "ok": true
+  },
+  "files": [
+    {
+      "file": "driver/Invoke-IgSmoke.ps1",
+      "bytes": 24561,
+      "sha256": "90d608873a96186f18e80dcbc62fc7d7fec00043c4b217ceed4536141579c666"
+    },
+    {
+      "file": "driver/revised/Invoke-IgSmokeFinalize.ps1",
+      "bytes": 7099,
+      "sha256": "8fb88a391e82f6a3f142c77769f9c0dd27c7c380ead231e158ec331f92d1f5db"
+    },
+    {
+      "file": "driver/revised/smoke-report.cjs",
+      "bytes": 42397,
+      "sha256": "1a62aaebb2bb4da5ad77b8fb9b9edfc1a4584f4cfc542d4f7005d0d6571a8e50"
+    },
+    {
+      "file": "driver/smoke-inventory.cjs",
+      "bytes": 4792,
+      "sha256": "ac4bcd241533345e9488acb19940267eb25fe9526373865e1b6f8b19962dd977"
+    },
+    {
+      "file": "driver/smoke-lib.cjs",
+      "bytes": 15960,
+      "sha256": "fe14bb322431308995c198a093ae7e9c8b3bd8632219411ee21b1c6dbd1a27c8"
+    },
+    {
+      "file": "driver/smoke-probe.cjs",
+      "bytes": 16518,
+      "sha256": "910be7225b09c7da7084c64d8867ab2b151380e15fdd1b40ffe51844f9e79a5d"
+    },
+    {
+      "file": "driver/smoke-report.cjs",
+      "bytes": 31823,
+      "sha256": "34bc747668c2a35d165670edd3ad0e139ce7bdf1aa7e018c3051d9a2380c19ce"
+    },
+    {
+      "file": "driver/smoke-supervise.cjs",
+      "bytes": 2968,
+      "sha256": "63460fcfd3fc584e17d35b631764e4fb210baee97f93d4e67e3169bb94c81b12"
+    },
+    {
+      "file": "finalize.json",
+      "bytes": 683,
+      "sha256": "6af9c07c02c6b787a70184a816892be52d8fa4d3780558b6eb842d6fee5a1eab"
+    },
+    {
+      "file": "hash-manifest-asrun.json",
+      "bytes": 7491,
+      "sha256": "06b64383577acca84bb5df704540121ccab7e709a6c9267e357e2b5c165e1bc9"
+    },
+    {
+      "file": "IG-S01/loader-parity/command.json",
+      "bytes": 92577,
+      "sha256": "9f6005255a00334c0b21f3be4dbad9bc8ae788003c6d800abe184e279a315277"
+    },
+    {
+      "file": "IG-S01/loader-parity/firewall-after.json",
+      "bytes": 90982,
+      "sha256": "5e419eab53a4cc4dbbeba0553358f11f46ce2c790ed610c644e154c4db6952d0"
+    },
+    {
+      "file": "IG-S01/loader-parity/firewall-before.json",
+      "bytes": 90886,
+      "sha256": "5cffa73e92d0365be6cc5cae6a39a2f7c8d82a0f1ab369d902663503f169c8dc"
+    },
+    {
+      "file": "IG-S01/loader-parity/journal.jsonl",
+      "bytes": 4469,
+      "sha256": "bb4921f5a0ee9518dbbc5e31a495cb53d7287af8360dad4cdf8fd6d109bb4fb8"
+    },
+    {
+      "file": "IG-S01/loader-parity/manifest.json",
+      "bytes": 6863,
+      "sha256": "69a1cc7288b488bb92a1611d8d457ece7b021cf42500c8c10b90af6b8cfb2420"
+    },
+    {
+      "file": "IG-S01/loader-parity/records.json",
+      "bytes": 12792,
+      "sha256": "c93a39fed9e34d279ce807f464acd77cb91b1da0d876438df622b1b34eb18315"
+    },
+    {
+      "file": "IG-S01/loader-parity/source-manifest.json",
+      "bytes": 25023,
+      "sha256": "847ec85a01f94ec3b785f605ffe76ff3422a7173e1e67b64759d1640de814bec"
+    },
+    {
+      "file": "IG-S01/loader-parity/summary.json",
+      "bytes": 8211,
+      "sha256": "f08490458e810ee0c00e75ab5a365633cb1f773f8290c83310805b1710a2186d"
+    },
+    {
+      "file": "IG-S01/loader-parity/summary.md",
+      "bytes": 4222,
+      "sha256": "aa2954262f4dcbed689b73678cb46cc7d7be469ae78dbcb43613a82dc6a18363"
+    },
+    {
+      "file": "IG-S01/self-test/command.json",
+      "bytes": 18482,
+      "sha256": "3d051b232586679f1ff1a70d60c5171ac993278f01fea3695463fbedc890e7bf"
+    },
+    {
+      "file": "IG-S01/self-test/firewall-after.json",
+      "bytes": 90982,
+      "sha256": "c1976147ef2e6b2a1e80ed5e07c371bfbdad78a87a3bec6f55e2f7e01f586ed0"
+    },
+    {
+      "file": "IG-S01/self-test/firewall-before.json",
+      "bytes": 90886,
+      "sha256": "0bfed32eccabe0fdc927c0b35409195d566a3476fcc6269523f95c9fc0995e07"
+    },
+    {
+      "file": "IG-S01/self-test/records.json",
+      "bytes": 88759,
+      "sha256": "fa1af56b63d951e8aab7e2da77fc35f179514c1b2403f04ba758cf3eb146514f"
+    },
+    {
+      "file": "IG-S01/self-test/source-manifest.json",
+      "bytes": 24746,
+      "sha256": "1a0c245b7aadf9240007450268f7a85acfdf45ca688245d71a8e589b654259be"
+    },
+    {
+      "file": "IG-S01/self-test/summary.json",
+      "bytes": 10181,
+      "sha256": "256298acbedd5b1e67d10923c96bb65572d49aa803bf506ab5f30ffc9acf5f1e"
+    },
+    {
+      "file": "IG-S01/self-test/summary.md",
+      "bytes": 8888,
+      "sha256": "e6c6faf119976dfd63cc46f1be25c60e0a4321f36ba7beeb230560b5798fc89d"
+    },
+    {
+      "file": "ledger.json",
+      "bytes": 5382,
+      "sha256": "b0f839c54d4dddd1d6df04f01987b08a5a237bfea7626d66f4804a47cb89a92a"
+    },
+    {
+      "file": "postflight.json",
+      "bytes": 2209,
+      "sha256": "35e86277a431dd663e363e943a4e654d3570bb565c4661b42867e0438bf9ee21"
+    },
+    {
+      "file": "preflight.json",
+      "bytes": 2787,
+      "sha256": "7a934665494be348b853211a1e89886927e02be512b29574ad3f2af8d2a012b6"
+    },
+    {
+      "file": "smoke-report.json",
+      "bytes": 82158,
+      "sha256": "ae438240c5be3fcae97a47358122485f408824da28f7a1b54254bd3a94263e4e"
+    },
+    {
+      "file": "smoke-report.md",
+      "bytes": 20308,
+      "sha256": "52dad798b83e957a918fcc2178854a606bd41a83f0019c276c9afb547c1576e7"
+    },
+    {
+      "file": "smoke/loader-parity/child.stdout.txt",
+      "bytes": 210,
+      "sha256": "983db328bbe660ff7dd557cb7f18936da88e7e4dbc11606c528b30241de4919b"
+    },
+    {
+      "file": "smoke/loader-parity/supervisor.json",
+      "bytes": 2731,
+      "sha256": "ff286bfa19c8558dc69298d0c6b9e191559252b1af5eeef66d687d85b1c4c50c"
+    },
+    {
+      "file": "smoke/self-test/child.stdout.txt",
+      "bytes": 1663,
+      "sha256": "d11e7a3ec8c4bbc5dbdead189526d31cf06e29f47487a7e9d502225c972a63c4"
+    },
+    {
+      "file": "smoke/self-test/supervisor.json",
+      "bytes": 2386,
+      "sha256": "06291b6f51b9f3b53f7b788351be055ab89f0018a82f41ca5100d3be79639f78"
+    },
+    {
+      "file": "smoke/smoke-inventory/analyze.stdout.txt",
+      "bytes": 41367,
+      "sha256": "60186750ae930715595c44968881c9072b5dc78b10a088e269255c385392e515"
+    },
+    {
+      "file": "smoke/smoke-inventory/frontier-test.pure.stdout.txt",
+      "bytes": 1760,
+      "sha256": "b7fba72f18d637b6e735822c169c949b5f64992f59285da3de4686da3f4c3c5f"
+    },
+    {
+      "file": "smoke/smoke-inventory/ig07-test.pure.stderr.txt",
+      "bytes": 1446,
+      "sha256": "ba3af0a0dfe78b95b4fd9b8e69a17af1ff451c9ecdd3fbcc215b3697069d687c"
+    },
+    {
+      "file": "smoke/smoke-inventory/ig08-test.pure.stdout.txt",
+      "bytes": 2884,
+      "sha256": "4ffd4ea58086728eb121c9c875bed98b77a18c1b14862d3e1af3d1c5b80e84a0"
+    },
+    {
+      "file": "smoke/smoke-inventory/ig09-test.pure.stdout.txt",
+      "bytes": 11396,
+      "sha256": "c764131d65d44940fbdd94c3322ce7d05713ed8629ead213e2b2036ad886378c"
+    },
+    {
+      "file": "smoke/smoke-inventory/inspect.stdout.txt",
+      "bytes": 12361,
+      "sha256": "f948b0710a4dc90e127cabea8648be776859e93100a0dce0433bf3245308498d"
+    },
+    {
+      "file": "smoke/smoke-inventory/killer-audit-test.pure.stdout.txt",
+      "bytes": 510,
+      "sha256": "beec4c39d306767d8481c139a52c0430e65f8b24af9834d84cefd2500860a62f"
+    },
+    {
+      "file": "smoke/smoke-inventory/pool-test.pure.stdout.txt",
+      "bytes": 880,
+      "sha256": "ca6c85bc8973e08f8c17334493e3dbd7c73e7d683c8d12d697ba17c8ad2f9077"
+    },
+    {
+      "file": "smoke/smoke-inventory/scoped-test.pure.stdout.txt",
+      "bytes": 2014,
+      "sha256": "0d8f2e8a0016e8a1383ce1463ebb6aaca0df5aa0d5f526e263c5e1ec24b5256c"
+    },
+    {
+      "file": "smoke/smoke-inventory/supervisor.json",
+      "bytes": 121456,
+      "sha256": "39ae5ebc20b3b81d436ac438cd32d8444f521314a773c46f96bcb43f09602604"
+    }
+  ]
+}

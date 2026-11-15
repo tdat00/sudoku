@@ -1,0 +1,248 @@
+{
+  "schema": "ig-s-gate/1",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "state": "not-evaluable-pre-freeze",
+  "formalGateEnabled": false,
+  "formalVerdict": null,
+  "decisionOwner": "the plan author (Fable), advised by the pack author (Astra): this evaluator publishes inputs and never a go or a no-go",
+  "projection": "projection-awaits-author-review",
+  "requestLevel": "not-established",
+  "reasons": [
+    "pre-freeze round: no gate is evaluated whatever the numbers or a frozen flag say"
+  ],
+  "limits": null,
+  "cells": {},
+  "notes": [
+    "no automatic go or no-go: the plan author decides the feasibility from the published inputs",
+    "pre-freeze observations are descriptive only: they cannot enable a cell, select an allowance, change a default or authorise the bank route"
+  ],
+  "usedAsFormalGate": false,
+  "task": "IG-S10",
+  "descriptiveInputs": {
+    "classic9": {
+      "clusters": 8,
+      "modesWithAllTrials": 8,
+      "verifiedHitsByMode": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      },
+      "ratesPerCpuAndWallSecond": "all zero",
+      "paired": "all intervals degenerate [0, 0]",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      }
+    },
+    "mega12": {
+      "clusters": 8,
+      "modesWithAllTrials": 8,
+      "verifiedHitsByMode": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      },
+      "ratesPerCpuAndWallSecond": "all zero",
+      "paired": "all intervals degenerate [0, 0]",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      }
+    },
+    "mega16": {
+      "clusters": 8,
+      "modesWithAllTrials": 8,
+      "verifiedHitsByMode": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      },
+      "ratesPerCpuAndWallSecond": "all zero",
+      "paired": "all intervals degenerate [0, 0]",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      }
+    },
+    "samurai": {
+      "clusters": 8,
+      "modesWithAllTrials": 8,
+      "verifiedHitsByMode": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      },
+      "ratesPerCpuAndWallSecond": "all zero",
+      "paired": "all intervals degenerate [0, 0]",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      }
+    }
+  },
+  "coverageOfTheInputs": {
+    "sm2": "eight grid clusters per cell, all eight modes, 256 trials, 0 verified hits in every mode; descriptive only",
+    "requests": "no full-request evidence: IG-S06 deferred (sample-only evidence cannot establish a request-level qualification)",
+    "headline": "three paired seeds per cell: the on-time lower bound cannot exceed 0.368 (not a gate input)"
+  },
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance, changes a default or authorises the bank route.",
+  "zeroBaselineFeasibility": "projection-awaits-author-review",
+  "syntheticTests": {
+    "passed": 14,
+    "total": 14,
+    "note": "synthetic 40-cluster fixtures only; not a real frozen decision"
+  },
+  "revision": {
+    "id": "r3",
+    "reason": "pack-author report-only rulings after the owner's audit (statistic labels, S1/S2 cost and yield, first-phase formula, withdrawn costing premises, two unmeasured rows, source preparation, Killer and Greater-Than wording, staleness)",
+    "supersedes": [
+      {
+        "revision": "r1",
+        "file": "report.json",
+        "sha256": "f4594501127300e395f840213eb90a764c66ec4c31eedb75e5b5c199af1f574f",
+        "bytes": 658187
+      },
+      {
+        "revision": "r1",
+        "file": "report.md",
+        "sha256": "4a291f9bb5a699714994dcb6ac28c342caed4ee85e6c58092817e4c5e6587092",
+        "bytes": 86574
+      },
+      {
+        "revision": "r1",
+        "file": "coverage.json",
+        "sha256": "3faf6a8cc9caeed6143567d8bc6d3c70e0f5b776b28f3a1c19afe017148e82a7",
+        "bytes": 83671
+      },
+      {
+        "revision": "r1",
+        "file": "budget-summary.json",
+        "sha256": "c4d9bcdfd4e815deb239bdd8dbc6b2cf67a85bc9a899c908f1b2970bb7ca0320",
+        "bytes": 41085
+      },
+      {
+        "revision": "r1",
+        "file": "gate.json",
+        "sha256": "86713925f30f89d52b9d5bfa124644104f643565f0b7773f61788d8f75999cc9",
+        "bytes": 3764
+      },
+      {
+        "revision": "r1",
+        "file": "frozen-rerun-plan.json",
+        "sha256": "caa2c4855a69ebc5f3cbf6c717d6416a72919d68fc9d7813036031ca6f6b4e08",
+        "bytes": 59470
+      },
+      {
+        "revision": "r1",
+        "file": "IG-S10/reconcile/command.json",
+        "sha256": "92a1a5b3a88ff3ee953099d0551c1933a844dccedfa14ec5d45ff4d014530866",
+        "bytes": 14560,
+        "status": "complete",
+        "harnessFingerprint": "9a8afa85b3ff9165648fe6e1267a567c4c62e95ad9126a43e76db2d1ecb364c2"
+      },
+      {
+        "revision": "r2",
+        "file": "coverage-r2.json",
+        "sha256": "e470a93cbab8ab56cbf04e3178486c68256945ffe942ff68e5fb1edd8d76de3a",
+        "bytes": 86004
+      },
+      {
+        "revision": "r2",
+        "file": "budget-summary-r2.json",
+        "sha256": "a58f5eabc567435461de7096a9bdfe75fb52d969ca0e5d7c88913492fd797f90",
+        "bytes": 45138
+      },
+      {
+        "revision": "r2",
+        "file": "gate-r2.json",
+        "sha256": "fc006176b961a4384fa19ddc23aba3c24f5467118679ad1edd7944ef6cc0d058",
+        "bytes": 5665
+      },
+      {
+        "revision": "r2",
+        "file": "frozen-rerun-plan-r2.json",
+        "sha256": "a16174f19beebd9286f80d550e0481fbb8dfa6fde7772202056077757f4feb54",
+        "bytes": 75188
+      },
+      {
+        "revision": "r2",
+        "file": "report-r2.json",
+        "sha256": "b3672709496763487c120c6f2f9871cc49eeae1ad15541073f384942b783e720",
+        "bytes": 670486
+      },
+      {
+        "revision": "r2",
+        "file": "report-r2.md",
+        "sha256": "9088fea96dba06e278661b410243898cf837def61542e8dfdd502ce72d694317",
+        "bytes": 93840
+      }
+    ],
+    "r1CommandHarnessFingerprint": "9a8afa85b3ff9165648fe6e1267a567c4c62e95ad9126a43e76db2d1ecb364c2",
+    "r2WriterHarnessFingerprint": "8f0018b5c36db04a16707d44fd3c3f011ff3a75321c6d9c81e539beb283bd901",
+    "writerHarnessFingerprint": "53e7acbc62e6fd45bde6999f30c9861455065e2980267d9c437e659466f59372",
+    "writerRole": "the r3 aggregation (ig10-run.cjs --write-r3): unwrapped, read-only, no engine, no worker, no generation, not charged",
+    "comparisonToR2": [
+      {
+        "file": "coverage-r3.json",
+        "comparedWith": "coverage-r2.json",
+        "materiallyEqual": true,
+        "ignoredFields": [
+          "revision",
+          "ownCommands"
+        ]
+      },
+      {
+        "file": "budget-summary-r3.json",
+        "comparedWith": "budget-summary-r2.json",
+        "materiallyEqual": true,
+        "ignoredFields": [
+          "revision",
+          "disclosures",
+          "ig10"
+        ]
+      },
+      {
+        "file": "gate-r3.json",
+        "comparedWith": "gate-r2.json",
+        "materiallyEqual": true,
+        "ignoredFields": [
+          "revision",
+          "syntheticTests"
+        ]
+      },
+      {
+        "file": "frozen-rerun-plan-r3.json",
+        "comparedWith": "frozen-rerun-plan-r2.json",
+        "materiallyEqual": false,
+        "ignoredFields": [
+          "revision"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "schema": "ig-smoke-supervisor/1",
+  "phase": "self-test",
+  "wrapperTask": "IG-S01/self-test",
+  "round": "smoke-rating-v3-8b70875",
+  "process": {
+    "pid": 20908,
+    "ppid": 11244,
+    "node": "v26.13.0",
+    "platform": "win32",
+    "startedAt": "2026-11-15T07:14:07.357Z",
+    "script": "Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\smoke-supervise.cjs"
+  },
+  "lockAtStart": {
+    "file": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-sudoku.lock",
+    "content": "11244|IG IG-S01/self-test|2026-11-15T07:14:07.1406476Z",
+    "ownerPid": 11244,
+    "ownerText": "IG IG-S01/self-test",
+    "ownerPidIsParent": true,
+    "parentPid": 11244
+  },
+  "lockAtEnd": {
+    "file": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-sudoku.lock",
+    "content": "11244|IG IG-S01/self-test|2026-11-15T07:14:07.1406476Z",
+    "ownerPid": 11244,
+    "ownerText": "IG IG-S01/self-test",
+    "ownerPidIsParent": true,
+    "parentPid": 11244
+  },
+  "payload": {
+    "payloadMs": 15921,
+    "concurrency": 1,
+    "deadlineAt": "2026-11-15T07:14:23.278Z"
+  },
+  "units": [
+    {
+      "id": "child",
+      "kind": "harness-command",
+      "script": "Q:\\git\\sudoku.ig-smoke-8b70875\\generator\\tests\\artifacts\\improve-generating\\phase0\\self-test.cjs",
+      "args": [
+        "--task=IG-S01",
+        "--round=smoke-rating-v3-8b70875",
+        "--attempt=a1"
+      ],
+      "status": "passed",
+      "reason": null,
+      "pid": 23928,
+      "startedAtMs": 37.8,
+      "endedAtMs": 3387.6,
+      "wallMs": 3349.8,
+      "exitCode": 0,
+      "signal": null,
+      "killedByDeadline": false,
+      "termination": null,
+      "stdout": {
+        "file": "child.stdout.txt",
+        "bytes": 1663,
+        "sha256": "d11e7a3ec8c4bbc5dbdead189526d31cf06e29f47487a7e9d502225c972a63c4",
+        "truncated": false
+      },
+      "stderr": null,
+      "parsed": null
+    }
+  ],
+  "summary": {
+    "planned": 1,
+    "passed": 1,
+    "failed": 0,
+    "timedOut": 0,
+    "unstarted": 0,
+    "spawnErrors": 0,
+    "terminations": 0,
+    "terminationsVerified": 0
+  },
+  "timing": {
+    "startedAt": "2026-11-15T07:14:07.357Z",
+    "payloadMs": 15921,
+    "deadlineHit": false,
+    "deadlineHitAtMs": null,
+    "endedAtMs": 3390,
+    "endedAt": "2026-11-15T07:14:10.748Z"
+  }
+}
