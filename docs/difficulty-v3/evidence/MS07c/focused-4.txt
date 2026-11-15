@@ -1,0 +1,14 @@
+$ node tests\node-runner.js --suite=cache,worker,player
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   cache: 106 passed  (9.11 s)
+(node:19516) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   player: 69 passed  (135.50 s)
+ok   worker: 144 passed  (44.80 s)
+
+Suites: 3
+Tests:  319 total, 319 passed, 0 failed, 0 skipped
+Time:   189.41 s running tests, 189.51 s total
+exit=0 seconds=189.628

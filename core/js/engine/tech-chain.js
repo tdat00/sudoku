@@ -4,7 +4,7 @@
  * `budget.exceeded` into "nothing found" (other errors, e.g. `budget.cancelled`, propagate).
  *
  *   id                baseCost  order  window of the shortest proof
- *   forcingChain          90     190   1 .. C links (C = SG.chainSearch.SHORT_MAX, 6)
+ *   forcingChain          90     190   1 .. C links (C = SG.chainSearch.SHORT_MAX, 4)
  *   forcingChainLong     118     198   C + 1 .. 12 links
  *   nishio               140     200   depth 1
  *   nishioDeep           210     202   depth 2 (default maximum) .. 3 (explicit maximum)
@@ -111,8 +111,9 @@
   })) return;
 
   // R9: the short window of forcingChain is 1..C links (C is `SG.chainSearch.SHORT_MAX`, read at every call,
-  // initially 6) and forcingChainLong takes C + 1 up to the old ceiling of 12.
-  const INITIAL_SHORT_MAX = 6;
+  // initially 4, selected by MS07c: 36 of 36 Nightmare requests exact against 24 of 36 for 6) and
+  // forcingChainLong takes C + 1 up to the old ceiling of 12.
+  const INITIAL_SHORT_MAX = 4;
   const LONG_MAX_CHAIN_LENGTH = 12;
 
   // Windows of nishio (depth 1) and nishioDeep (from 2, default maximum 2, explicit maximum at most 3);

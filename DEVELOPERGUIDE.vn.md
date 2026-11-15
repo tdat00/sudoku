@@ -599,7 +599,9 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    rộng lớn hơn thành các đoạn tối đa 256 cạnh; lần gọi không giới hạn giữ nhịp cũ). Bốn kỹ thuật chuỗi đã đăng ký là
    các lớp bao truyền id, cả hai cận và giới hạn công việc của mình một cách tường minh, nên mỗi chứng minh thuộc đúng
    một id: `forcingChain` từ 1 đến C cạnh và `nishio` độ sâu 1 (cả hai không giới hạn), `forcingChainLong` từ C + 1 đến
-   12 cạnh và `nishioDeep` độ sâu 2 (tối đa 3; cả hai ở mức 50.000). C là `SG.chainSearch.SHORT_MAX` (tạm là 6), đọc ở
+   12 cạnh và `nishioDeep` độ sâu 2 (tối đa 3; cả hai ở mức 50.000). C là `SG.chainSearch.SHORT_MAX` (4, do nhiệm vụ MS07c
+   chọn từ số lần đạt chính xác của 72 yêu cầu Nightmare mới, 36 so với 24 của 6:
+   [docs/difficulty-v3/chain-window-2026-11-15.md](docs/difficulty-v3/chain-window-2026-11-15.md)), đọc ở
    mỗi lần gọi. Tùy chọn `maxChainLength` và `maxNishioDepth` của người gọi chỉ có thể thu hẹp một khoảng, không bao
    giờ mở rộng, và lớp bao lấy giao của khoảng của nó với tùy chọn đó.
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
@@ -834,10 +836,19 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   `unavailable`, không bao giờ là số không. `--shallow-cap=64|128|256|none` chạy soak với hạn mức tìm kiếm nông đó
   (`SG.digger.SHALLOW_SEARCH_RATINGS`; `none` là `Infinity`; mặc định của mã nguồn là 256, do phép so sánh R5 của
   nhiệm vụ MS05r4 chọn, xem [docs/difficulty-v3/shallow-cap-2026-11-13.md](docs/difficulty-v3/shallow-cap-2026-11-13.md)),
+  `--chain-window=4|6` chạy soak với ngưỡng chuỗi ngắn C đó (`SG.chainSearch.SHORT_MAX`: `forcingChain` có từ 1 đến C
+  cạnh, `forcingChainLong` từ C + 1 đến 12; một công cụ chẩn đoán, không phải thiết lập của sản phẩm hay của người
+  dùng; mặc định của mã nguồn là 4, do nhiệm vụ MS07c chọn, xem
+  [docs/difficulty-v3/chain-window-2026-11-15.md](docs/difficulty-v3/chain-window-2026-11-15.md)): giá trị được đặt một
+  lần, trước kiểm tra tiền tố có thứ tự, các phép tham chiếu mẫu và mọi yêu cầu, và được trả lại khi lần chạy kết thúc;
+  mọi giá trị khác là lỗi dùng sai (mã thoát 2, trước khi sinh bất cứ thứ gì, kể cả khi có `--no-gate`), và sổ ghi cho
+  biết ngưỡng nào đã có hiệu lực (`meta.chainShortMax`) và có được yêu cầu hay không (`meta.chainWindow`, `null` khi
+  không),
   và `--from=<k> --count=<n> --total-count=<N>` chạy các yêu cầu từ k đến k+n−1 của một ô logic gồm N yêu cầu (một biến
   thể và một mức; không dùng chung với `--quick`, `--full` hay `--per-combo`) với đúng thẻ và seed của cả ô, nên một ô
   dài có thể chia thành các lệnh có giới hạn; `mergeShards` của bộ trợ giúp từ chối các sổ có chỗ hở, chỗ trùng hoặc
-  khác mã nguồn, công cụ, seed hay thiết lập.
+  khác mã nguồn, công cụ, seed, ngưỡng hay thiết lập (các phần của C = 4 và C = 6 không bao giờ được ghép). Thống kê
+  chuỗi của một sổ đếm chứng minh của cả hai khoảng, `forcingChain` và `forcingChainLong`, `nishio` và `nishioDeep`.
 - **Hồ sơ phục hồi (độ khó v3)** — chẩn đoán một yêu cầu cố định, không phải một thiết lập của sản phẩm và không phải
   một cổng hiệu năng đã đạt: `node tests/difficulty-recovery.js` sinh yêu cầu đó đúng một lần và ghi lại thời gian đã
   đi đâu, vào các mẫu đào thường hay vào phần tìm cục bộ kế tiếp (phần mà một hạn mức của tìm kiếm nông có thể giới

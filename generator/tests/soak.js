@@ -7,8 +7,8 @@
  *
  *   node tests/soak.js [--quick | --full] [--count=N] [--per-combo=N] [--seed=N] [--variant=id[,id]]
  *                      [--level=id[,id]] [--weights=JSON] [--bands=a,b,c,d,e,f,g,h,i] [--no-gate]
- *                      [--shallow-cap=64|128|256|none] [--from=k --total-count=N --count=n]
- *                      [--json=<file>] [--verbose] [--help]
+ *                      [--shallow-cap=64|128|256|none] [--chain-window=4|6]
+ *                      [--from=k --total-count=N --count=n] [--json=<file>] [--verbose] [--help]
  *
  * It generates puzzles for every (variant x difficulty) combination of the registered variants, checks the
  * invariants I1-I7 of design.md section 15.3 on every one of them, and prints
@@ -76,6 +76,13 @@
  * the run; absent keeps the engine's default. `--from=k --total-count=N --count=n` runs the requests k to
  * k+n-1 of a logical cell of N: the tags (`variant:level:absoluteIndex`), seeds and references are those of
  * the whole cell, so shards join into it; each file describes only what it executed.
+ * `--chain-window=4|6` (difficulty v3, MS07c; a diagnostic, never a production or user setting) sets the
+ * short-chain cutoff C of the run, `SG.chainSearch.SHORT_MAX` (R9: `forcingChain` has 1 to C links and
+ * `forcingChainLong` C + 1 to 12), once, right after the sources are loaded and before the ordered-prefix
+ * check, the references and every request, and puts the previous value back when the run ends; any other
+ * value is a usage error (exit 2), also with `--no-gate`. Absent keeps the cutoff of the source. The ledger
+ * says which cutoff was in force (`meta.chainShortMax`) and whether it was asked for (`meta.chainWindow`, null
+ * when not), and `mergeShards` refuses shards of different cutoffs, so C = 4 and C = 6 never mix in one cell.
  *
  * Calibration workflow: change SG.difficulty.WEIGHTS / SG.difficulty.TABLE in js/engine/difficulty.js, run
  * this, read the matrix. `--weights='{"ruleOf45":145}'` and `--bands=0,45,180,400,700,1000,1500,2400,3600`
@@ -113,6 +120,8 @@ const USAGE = [
   '  --bands=a,...,i    override the lower score bound of the nine bands for this run (same check)',
   '  --shallow-cap=c    the shallow-search allowance of the local search for this run: 64, 128, 256 or none',
   '                     (none: Infinity); absent: the default of the engine',
+  '  --chain-window=c   the short-chain cutoff C of the run (a forcingChain has 1 to C links, a',
+  '                     forcingChainLong C + 1 to 12): 4 or 6, nothing else; absent: the cutoff of the engine',
   '  --from=k --total-count=N --count=n   one shard of a cell: the requests k..k+n-1 of a logical cell of N',
   '                     (absolute indexes in the tags and seeds, so shards of one cell join into the whole);',
   '                     needs exactly one --variant and --level, a --count, and --total-count when --from > 0;',
@@ -126,12 +135,14 @@ const USAGE = [
 ].join('\n');
 
 const SHALLOW_CAPS = ['64', '128', '256', 'none'];
+/** The only cutoffs R9 compares; the text of the flag must be exactly one of them. */
+const CHAIN_WINDOWS = ['4', '6'];
 
 function parseArgs(argv) {
   const opts = {
     quick: false, count: 500, countGiven: false, perCombo: 0, seed: 20260101, variants: null, levels: null,
     weights: null, bands: null, gate: true, verbose: false, help: false, includeUnsupported: false, json: null,
-    shallowCap: null, from: null, totalCount: null
+    shallowCap: null, chainWindow: null, from: null, totalCount: null
   };
   for (const arg of argv) {
     let m;
@@ -153,6 +164,11 @@ function parseArgs(argv) {
         throw new Error('--shallow-cap needs one of ' + SHALLOW_CAPS.join(', ') + ', not "' + m[1] + '"');
       }
       opts.shallowCap = m[1];
+    } else if ((m = /^--chain-window=(.*)$/.exec(arg))) {
+      if (CHAIN_WINDOWS.indexOf(m[1]) === -1) {
+        throw new Error('--chain-window needs one of ' + CHAIN_WINDOWS.join(', ') + ', not "' + m[1] + '"');
+      }
+      opts.chainWindow = Number(m[1]);
     } else if ((m = /^--variant=(.+)$/.exec(arg))) opts.variants = m[1].split(',');
     else if ((m = /^--level=(.+)$/.exec(arg))) opts.levels = m[1].split(',');
     else if ((m = /^--weights=(.+)$/.exec(arg))) opts.weights = JSON.parse(m[1]);
@@ -274,6 +290,37 @@ function main() {
   }
 
   const SG = loadSources();
+  const restoreChainWindow = applyChainWindow(SG, opts.chainWindow);
+  if (restoreChainWindow === null) {
+    console.error('--chain-window needs SG.chainSearch.SHORT_MAX, which this source does not have');
+    return 2;
+  }
+  try {
+    return execute(SG, opts, shard, jsonFile);
+  } finally {
+    restoreChainWindow();
+  }
+}
+
+/**
+ * Sets the short-chain cutoff C of the run (`SG.chainSearch.SHORT_MAX`, which the engine reads at every call),
+ * once, before anything is checked or generated. Returns the function that puts the previous value back, or
+ * null when the source has no such setting; without a window nothing is touched. Only 4 and 6 are accepted
+ * (R9), which also leaves both windows, 1 to C and C + 1 to 12, non-empty.
+ */
+function applyChainWindow(SG, window) {
+  if (window === null) return () => {};
+  if (CHAIN_WINDOWS.indexOf(String(window)) === -1) {
+    throw new Error('--chain-window needs one of ' + CHAIN_WINDOWS.join(', ') + ', not "' + window + '"');
+  }
+  const search = SG.chainSearch;
+  if (!search || !('SHORT_MAX' in search)) return null;
+  const previous = search.SHORT_MAX;
+  search.SHORT_MAX = window;
+  return () => { search.SHORT_MAX = previous; };
+}
+
+function execute(SG, opts, shard, jsonFile) {
   const D = SG.difficulty;
   const LEVELS = D.LEVELS;
   if (opts.weights) Object.assign(D.WEIGHTS, opts.weights);
@@ -635,6 +682,10 @@ function main() {
     out.push('Shallow-search allowance: ' + (opts.shallowCap === 'none' ? 'none (Infinity)' :
       opts.shallowCap + ' full ratings') + ' (--shallow-cap)');
   }
+  if (opts.chainWindow !== null) {
+    out.push('Short-chain cutoff C: ' + opts.chainWindow + ' (--chain-window; forcingChain 1 to ' +
+      opts.chainWindow + ' links, forcingChainLong ' + (opts.chainWindow + 1) + ' to 12)');
+  }
   if (shard !== null) {
     const first = combos[0];
     out.push('Shard of ' + first.id + '/' + first.level + ': requests ' + first.from + ' to ' +
@@ -815,13 +866,16 @@ function machineInfo() {
  * The `meta` of the ledger: source identity, state, machine, command line and the manifest of the run.
  * `acceptance` marks a ledger whose requiredness and hits come from the derived certificate of the returned
  * canonical rating (rows of MS02 carry no such marker: their verdicts came from the reference); `shallowCap`
- * and `shallowSearchRatings` (null: Infinity) say which allowance the run generated with. `sourceHash` is the
- * identity of the engine sources and `toolHash` that of this script and its two helpers: the shards of one
- * logical cell must agree on both (`mergeShards` of the diagnostics helper checks it).
+ * and `shallowSearchRatings` (null: Infinity) say which allowance the run generated with; `chainWindow` is
+ * the `--chain-window` of the run (null: not asked for) and `chainShortMax` the short-chain cutoff C in force
+ * (null: the source has none). `sourceHash` is the identity of the engine sources and `toolHash` that of this
+ * script and its two helpers: the shards of one logical cell must agree on both, and on the cutoff
+ * (`mergeShards` of the diagnostics helper checks it).
  */
 function metaOf(opts, combos, total, SG, shard) {
   const git = gitState();
   const limit = SG.digger.SHALLOW_SEARCH_RATINGS;
+  const shortMax = SG.chainSearch ? SG.chainSearch.SHORT_MAX : undefined;
   return {
     acceptance: 'canonical-required-tier',
     sourceHash: sourceIdentity.hash,
@@ -837,6 +891,8 @@ function metaOf(opts, combos, total, SG, shard) {
     seedBase: opts.seed,
     shallowCap: opts.shallowCap,
     shallowSearchRatings: limit === undefined ? null : limit === Infinity ? null : limit,
+    chainWindow: opts.chainWindow,
+    chainShortMax: shortMax === undefined ? null : shortMax,
     manifest: {
       requests: total,
       logicalRequests: combos.reduce((a, c) => a + c.logicalTotal, 0),

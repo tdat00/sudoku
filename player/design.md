@@ -390,7 +390,9 @@ hand to the rating v2 levels (the puzzles and hints are unchanged). Those puzzle
 `--check` still reproduces the committed examples; a discovery with the current generator (`--discover`) may give
 other examples. **Difficulty v3, MS07b:** the catalogue holds 28 examples. The existing `forcingChain` and `nishio`
 examples keep their old real sources (the long and deep windows do not change them: they are the short and the
-shallow proofs); `forcingChainLong` comes from a discovery on 12 Nightmare Classic 9×9 puzzles and `nishioDeep` from the
+shallow proofs); `forcingChainLong` comes from a discovery on 12 Nightmare Classic 9×9 puzzles (a 7-link forced chain
+at C = 6; the same puzzle gives a 6-link contradiction since MS07c selected C = 4, and the example was written again)
+and `nishioDeep` from the
 published puzzle Escargot, replayed with the hint code of the player, because a second discovery of 12 Hell 1 puzzles
 met no depth-2 proof (the helper never synthesises an example). The combined source map of the four chain ids is
 `player/tests/artifacts/difficulty-v3/MS07b/sources.json`; `--check` with it reproduces the committed file.

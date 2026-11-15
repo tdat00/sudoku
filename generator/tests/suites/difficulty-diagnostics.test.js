@@ -576,6 +576,22 @@
       var row = diagnosed(rowFor('hard', { score: 520 }), STUCK, steps);
       expect([row.chainLengths, row.nishioDepths, row.pathCheck.status]).toEqual([[4, 6], [1, 2], 'ok']);
     });
+
+    it('MS07c: counts the proofs of the long window and of deep Nishio with the short ones, by their own length',
+      function () {
+        var steps = [
+          { technique: 'forcingChain', i18nArgs: { kind: 'endpoints', length: 4, chains: [] } },
+          { technique: 'forcingChainLong', i18nArgs: { kind: 'contradiction', length: 7, chains: [] } },
+          { technique: 'forcingChainLong', i18nArgs: { kind: 'forced', length: 5, chains: [] } },
+          { technique: 'nishio', i18nArgs: { cell: 3, depth: 1 } },
+          { technique: 'nishioDeep', i18nArgs: { cell: 9, depth: 2 } },
+          { technique: 'nishioDeep', i18nArgs: { cell: 9, depth: 3 } },
+          { technique: 'forcingChainLong', i18nArgs: { kind: 'forced' } }
+        ];
+        expect(F.chainsOf(steps)).toEqual({ lengths: [4, 7, 5], depths: [1, 2, 3] });
+        var row = diagnosed(rowFor('hard', { score: 520 }), STUCK, steps);
+        expect([row.chainLengths, row.nishioDepths]).toEqual([[4, 7, 5], [1, 2, 3]]);
+      });
   });
 
   describe('difficulty diagnostics: the summary', function () {
@@ -805,7 +821,7 @@
         meta: {
           acceptance: 'canonical-required-tier', sourceHash: 'a'.repeat(64), sourceFiles: 63,
           toolHash: 'b'.repeat(64), node: 'v26.0.0', seedBase: 20260101, shallowCap: null,
-          shallowSearchRatings: null,
+          shallowSearchRatings: null, chainWindow: null, chainShortMax: 6,
           manifest: {
             quick: false, perCombo: 0, includeUnsupported: false, weights: null, bands: null, gate: false,
             ratingVersion: 3, referenceBudgetMs: 120000,
@@ -863,6 +879,8 @@
         node: function (m) { m.node = 'v26.0.1'; },
         seedBase: function (m) { m.seedBase = 1; },
         shallowCap: function (m) { m.shallowCap = '64'; m.shallowSearchRatings = 64; },
+        chainWindow: function (m) { m.chainWindow = 4; },
+        chainShortMax: function (m) { m.chainShortMax = 4; },
         weights: function (m) { m.manifest.weights = { nishio: 1 }; },
         bands: function (m) { m.manifest.bands = [0, 1]; },
         ratingVersion: function (m) { m.manifest.ratingVersion = 4; },
@@ -882,6 +900,25 @@
       })]);
       expect(other.problems).toEqual(['ledger 1 differs from ledger 0 in shallowCap']);
     });
+
+    it('MS07c: refuses otherwise compatible shards of C = 4 and C = 6, and an explicit window against none',
+      function () {
+        function cutoff(window, shortMax) {
+          return function (ledger) {
+            ledger.meta.chainWindow = window;
+            ledger.meta.chainShortMax = shortMax;
+          };
+        }
+        var mixed = F.mergeShards([shard(0, 6, 12, cutoff(4, 4)), shard(6, 6, 12, cutoff(6, 6))]);
+        expect([mixed.ok, mixed.rows]).toEqual([false, null]);
+        expect(mixed.problems).toEqual(['ledger 1 differs from ledger 0 in chainWindow',
+          'ledger 1 differs from ledger 0 in chainShortMax']);
+        // the same effective cutoff, asked for in one shard and left to the source in the other
+        var asked = F.mergeShards([shard(0, 6, 12, cutoff(6, 6)), shard(6, 6, 12, cutoff(null, 6))]);
+        expect([asked.ok, asked.problems]).toEqual([false, ['ledger 1 differs from ledger 0 in chainWindow']]);
+        var same = F.mergeShards([shard(0, 6, 12, cutoff(4, 4)), shard(6, 6, 12, cutoff(4, 4))]);
+        expect([same.problems, same.ok]).toEqual([[], true]);
+      });
 
     it('refuses a ledger that is not complete, not current, not of one cell or has a row out of its span',
       function () {
@@ -1716,6 +1753,158 @@
           var control = ledgerOf(runSoak(CELL4.concat(['--count=1', '--from=0', JSON_ARG])));
           expect(control.summary.checks.invariantViolations.I5).toBe(0);
         });
+    });
+
+    describe('MS07c: the short-chain cutoff of a run (--chain-window)', function () {
+      var CELL4 = ['--variant=classic4', '--level=veryEasy', '--seed=20260101', '--no-gate'];
+      // The cutoff C of the engine before any run asks for another one: the default selected by MS07c.
+      var SELECTED_C = 4;
+
+      /**
+       * Runs the soak and logs the cutoff where it matters: every write to `SG.chainSearch.SHORT_MAX`, its value
+       * at the ordered-prefix check, at every sampled reference and at every generation, and the value the
+       * registry had before the run. `after(sg)` may change the registry once these logs are in place.
+       */
+      function observed(args, after) {
+        var log = { initial: null, writes: [], atPrefix: [], atReference: [], atRequest: [], sg: null, run: null };
+        log.run = runSoak(args, function (sg) {
+          var search = sg.chainSearch;
+          var value = search.SHORT_MAX;
+          log.sg = sg;
+          log.initial = value;
+          Object.defineProperty(search, 'SHORT_MAX', { enumerable: true, configurable: true,
+            get: function () { return value; },
+            set: function (next) {
+              log.writes.push(next);
+              value = next;
+            } });
+          var diagnostics = sg.fixtures.difficultyDiagnostics;
+          var prefix = diagnostics.prefixViolationOf;
+          diagnostics.prefixViolationOf = function () {
+            log.atPrefix.push(search.SHORT_MAX);
+            return prefix.apply(this, arguments);
+          };
+          var certify = sg.difficulty.certifyFloor;
+          sg.difficulty.certifyFloor = function () {
+            log.atReference.push(search.SHORT_MAX);
+            return certify.apply(this, arguments);
+          };
+          var generate = sg.digger.generate;
+          sg.digger.generate = function () {
+            log.atRequest.push(search.SHORT_MAX);
+            return generate.apply(this, arguments);
+          };
+          if (after) after(sg);
+        });
+        return log;
+      }
+
+      function allEqual(list, value) {
+        return list.length > 0 && list.every(function (item) { return item === value; });
+      }
+
+      function usageError(args, text) {
+        var run = runSoak(args);
+        expect(run.thrown).toBeNull();
+        expect([args.join(' '), run.code]).toEqual([args.join(' '), 2]);
+        expect(run.err.join('\n')).toContain(text);
+        expect(run.events).toEqual([]);
+        expect(run.writes).toEqual([]);
+        expect(run.out).toEqual([]);
+        return run;
+      }
+
+      it('starts at the selected default and, without --chain-window, leaves it alone and says it was not asked for',
+        function () {
+          var seen = observed(CELL4.concat(['--count=1', JSON_ARG]));
+          expect([seen.run.thrown, seen.run.code]).toEqual([null, 0]);
+          expect(seen.initial).toBe(SELECTED_C);
+          expect(seen.writes).toEqual([]);
+          expect(seen.atPrefix).toEqual([SELECTED_C]);
+          expect(allEqual(seen.atReference, SELECTED_C)).toBe(true);
+          expect(allEqual(seen.atRequest, SELECTED_C)).toBe(true);
+          var meta = ledgerOf(seen.run).meta;
+          expect([meta.chainWindow, meta.chainShortMax]).toEqual([null, SELECTED_C]);
+          expect(seen.run.text).not.toContain('Short-chain cutoff');
+        });
+
+      [4, 6].forEach(function (c) {
+        it('--chain-window=' + c + ' sets C once, before the prefix check, the references and every request, ' +
+          'and puts the previous value back', function () {
+          var seen = observed(CELL4.concat(['--count=2', '--chain-window=' + c, JSON_ARG]));
+          expect([seen.run.thrown, seen.run.code]).toEqual([null, 0]);
+          expect(seen.writes).toEqual([c, SELECTED_C]);
+          expect(seen.atPrefix).toEqual([c]);
+          expect(allEqual(seen.atReference, c)).toBe(true);
+          expect(allEqual(seen.atRequest, c)).toBe(true);
+          expect(seen.sg.chainSearch.SHORT_MAX).toBe(SELECTED_C);
+          var meta = ledgerOf(seen.run).meta;
+          expect([meta.chainWindow, meta.chainShortMax]).toEqual([c, c]);
+          expect(meta.argv).toContain('--chain-window=' + c);
+          expect(seen.run.text).toContain('Short-chain cutoff C: ' + c + ' (--chain-window; forcingChain 1 to ' + c +
+            ' links, forcingChainLong ' + (c + 1) + ' to 12)');
+        });
+      });
+
+      it('puts the previous value back when the run ends with an error or with a refusal of the weights',
+        function () {
+          var failed = observed(CELL4.concat(['--count=1', '--chain-window=4']), function (sg) {
+            sg.digger.generate = function () { throw new sg.errors.GenerationError('budget.exceeded', {}); };
+          });
+          expect(failed.run.thrown.code).toBe('budget.exceeded');
+          expect(failed.writes).toEqual([4, SELECTED_C]);
+          expect(failed.sg.chainSearch.SHORT_MAX).toBe(SELECTED_C);
+          var refused = observed(CELL4.concat(['--count=1', '--chain-window=4', '--weights={"nishio":1}']));
+          expect([refused.run.thrown, refused.run.code]).toEqual([null, 2]);
+          expect(refused.atPrefix).toEqual([4]);
+          expect(refused.writes).toEqual([4, SELECTED_C]);
+          expect(refused.atRequest).toEqual([]);
+        });
+
+      it('rejects every other value before any request, --no-gate included', function () {
+        ['', '3', '5', '0', '1', '11', '12', '4.0', '04', '+4', ' 4', '4 ', 'four', '4,6', '-4', '6.5',
+          'Infinity', '1e1', 'NaN'].forEach(function (value) {
+          [CELL4, CELL4.filter(function (arg) { return arg !== '--no-gate'; })].forEach(function (cell) {
+            var run = usageError(cell.concat(['--count=1', '--chain-window=' + value, JSON_ARG]),
+              '--chain-window needs one of 4, 6, not "' + value + '"');
+            expect(run.err.join('\n')).toContain('Usage: node tests/soak.js');
+          });
+        });
+        usageError(CELL4.concat(['--chain-window']), 'Unknown argument: --chain-window');
+      });
+
+      it('refuses --chain-window with a source that has no cutoff to set, before any generation', function () {
+        var run = runSoak(CELL4.concat(['--count=1', '--chain-window=4']), function (sg) {
+          delete sg.chainSearch.SHORT_MAX;
+        });
+        expect([run.thrown, run.code]).toEqual([null, 2]);
+        expect(run.err.join('\n')).toContain('--chain-window needs SG.chainSearch.SHORT_MAX');
+        expect(run.events).toEqual([]);
+        expect(run.writes).toEqual([]);
+      });
+
+      it('records the cutoff of each shard and refuses to merge shards of different cutoffs', function () {
+        function shardOf(flags, from) {
+          return ledgerOf(runSoak(CELL4.concat(['--count=2', '--from=' + from, '--total-count=4'], flags,
+            [JSON_ARG])));
+        }
+        var low4 = shardOf(['--chain-window=4'], 0);
+        var high4 = shardOf(['--chain-window=4'], 2);
+        var high6 = shardOf(['--chain-window=6'], 2);
+        var highNone = shardOf([], 2);
+        expect([low4.meta.chainWindow, low4.meta.chainShortMax]).toEqual([4, 4]);
+        expect([high6.meta.chainWindow, high6.meta.chainShortMax]).toEqual([6, 6]);
+        expect([highNone.meta.chainWindow, highNone.meta.chainShortMax]).toEqual([null, SELECTED_C]);
+        var joined = F.mergeShards([low4, high4]);
+        expect([joined.problems, joined.ok, joined.rows.length]).toEqual([[], true, 4]);
+        var mixed = F.mergeShards([low4, high6]);
+        expect([mixed.ok, mixed.rows]).toEqual([false, null]);
+        expect(mixed.problems).toEqual(['ledger 1 differs from ledger 0 in chainWindow',
+          'ledger 1 differs from ledger 0 in chainShortMax']);
+        var asked = F.mergeShards([low4, highNone]);
+        expect(asked.ok).toBe(false);
+        expect(asked.problems).toContain('ledger 1 differs from ledger 0 in chainWindow');
+      });
     });
 
     describe('the exact flag, not the level names, decides a hit on either route', function () {

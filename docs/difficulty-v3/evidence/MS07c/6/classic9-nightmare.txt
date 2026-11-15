@@ -1,0 +1,61 @@
+$ node --require Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS07c\guard-probe.js tests\soak.js --variant=classic9 --level=nightmare --count=12 --seed=20260101 --no-gate --chain-window=6 --json=..\docs\difficulty-v3\evidence\MS07c\6\classic9-nightmare.json
+Sudoku Generator soak test  (node v26.13.0, seed 20260101, 12 puzzles in 37.9 s)
+
+Calibration in force (score bands, lower bound of each level, the same on every board):
+  veryEasy 0 | easy 45 | normal 180 | hard 400 | expert 700 | master 1000 | nightmare 1500 | hell1 2400 | hell2 3600
+Technique weights: nakedSingle 1, hiddenSingleBox 1.25, hiddenSingleLine 1.5, pointing 40, boxLine 50, nakedPair 120, hiddenPair 145, nakedTriple 180, hiddenTriple 220, nakedQuad 260, hiddenQuad 300, xWing 320, simpleColouring 360, swordfish 420, jellyfish 520, xyWing 650, xyzWing 750, wWing 850, uniqueRectangle 900, forcingChain 1100, forcingChainLong 1400, nishio 1700, nishioDeep 2600, cageCombo 40, ruleOf45 260, cageSplit 520, ineqChain 40, minMaxForcing 180
+Short-chain cutoff C: 6 (--chain-window; forcingChain 1 to 6 links, forcingChainLong 7 to 12)
+
+== classic9 (81 cells) ==
+requested     veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2    n    hit  samples  ms p50     p95     max  budget
+nightmare            .          .          .          .          .          .         12          .          .   12    17%     82.3    3050    3369    33692500 SLOW
+exact: 2 of 12 (16.7%)
+
+group of the hardest technique per requested level (share of puzzles):
+  nightmare  chain 100%
+
+Score histogram (the bands of every board), all puzzles, by requested level:
+bin            veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2   all
+0-45                  .          .          .          .          .          .          .          .          .      0
+45-180                .          .          .          .          .          .          .          .          .      0
+180-400               .          .          .          .          .          .          .          .          .      0
+400-700               .          .          .          .          .          .          .          .          .      0
+700-1000              .          .          .          .          .          .          .          .          .      0
+1000-1500             .          .          .          .          .          .          .          .          .      0
+1500-2400             .          .          .          .          .          .         12          .          .     12 ##############################
+2400-3600             .          .          .          .          .          .          .          .          .      0
+3600-5400             .          .          .          .          .          .          .          .          .      0
+5400+                 .          .          .          .          .          .          .          .          .      0
+
+Invariants over 12 puzzles:
+  I1 ok
+  I2 ok
+  I3 ok
+  I4 ok
+  I5 ok
+  I6 ok
+  I7 ok
+
+classic9 hit rate per level: nightmare 17%
+RESULT: FAIL (classic9 below 90%: nightmare)
+
+Difficulty diagnostics (docs/difficulty-v3/evidence/MS07c/6/classic9-nightmare.json): 12 of 12 requests recorded; the diagnostic solves took 0.1 s after the generation and the checks
+
+== classic9/nightmare: 12 requests, 0 errors, 0 unrated, 12 solved in band ==
+  old hits 2/12 (17%), qualified hits 2/12 (17%), shallow 10/12 (83%; 12 with a derived verdict); exact flag against the derived verdict: 0 disagreements
+  sampled reference: ok 2, vacuous 0, error 0, skipped 0, notSelected 10, notRun 0; final path: ok 12, mismatch 0, error 0, notRun 0
+  work: ok 12, mismatch 0, unavailable 0; local searches ended by shallow 22, ratings 0, proposals 59
+    full ratings (n=12): min 31, p10 60, p50 1462, p90 1687, max 1727, upper median 1462
+  cohort exact (old hits): 2 puzzles, peak nishio 1, forcingChainLong 1
+    raw position (n=2): min 0.904, p10 0.904, p50 0.961, p90 0.961, max 0.961, upper median 0.961
+    adjusted position (n=2): min 0.858, p10 0.858, p50 0.942, p90 0.942, max 0.942, upper median 0.942
+    adjusted undefined: -
+  cohort all in band: 12 puzzles, peak nishio 1, forcingChain 10, forcingChainLong 1
+    raw position (n=12): min 0.124, p10 0.326, p50 0.497, p90 0.904, max 0.961, upper median 0.497
+    adjusted position (n=12): min -0.303, p10 -0.004, p50 0.251, p90 0.858, max 0.942, upper median 0.251
+    adjusted undefined: -
+  forcing-chain steps (12 of 12 rated paths): length 3 7, 4 24, 5 18, 6 5, 7 1; per-puzzle maximum 3 1, 4 4, 5 4, 6 2, 7 1
+  nishio steps (1 of 12 rated paths): depth 1 1; per-puzzle maximum 1 1
+
+DIAGNOSTICS: PASS (request errors 0, invariant violations 0, check errors 0, reference errors 0, final-path errors 0, final-path mismatches 0, work unavailable 0)
+exit=0 seconds=38.412

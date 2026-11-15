@@ -1,0 +1,52 @@
+[
+  {
+    "label": "g-wire-G09",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07c\\wire\\G09.json"
+    ],
+    "projectionSeconds": 34,
+    "projectionBasis": "MS07b g-wire-G09 14.014 s at C = 6; 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G10",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07c\\wire\\G10.json"
+    ],
+    "projectionSeconds": 56,
+    "projectionBasis": "MS07b g-wire-G10 25.068 s at C = 6; 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G11",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07c\\wire\\G11.json"
+    ],
+    "projectionSeconds": 22,
+    "projectionBasis": "MS07b g-wire-G11 8.26 s at C = 6; 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G12",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07c\\wire\\G12.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS07b g-wire-G12 4.295 s at C = 6; 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G13",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07c\\wire\\G13.json"
+    ],
+    "projectionSeconds": 33,
+    "projectionBasis": "MS07b g-wire-G13 13.786 s at C = 6; 2 x + 5 s"
+  }
+]

@@ -844,7 +844,9 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    old cadence). The four registered chain techniques are wrappers that pass their id, both bounds and their work
    limit explicitly, so every proof belongs to exactly one id: `forcingChain` 1 to C links and `nishio` depth 1 (both
    unbounded), `forcingChainLong` C + 1 to 12 links and `nishioDeep` depth 2 (at most 3; both at 50,000). C is
-   `SG.chainSearch.SHORT_MAX` (6 provisionally), read at every call. A caller's `maxChainLength` and
+   `SG.chainSearch.SHORT_MAX` (4, selected by task MS07c from the exact hits of 72 fresh Nightmare requests, 36 against
+   24 for 6: [docs/difficulty-v3/chain-window-2026-11-15.md](docs/difficulty-v3/chain-window-2026-11-15.md)), read at
+   every call. A caller's `maxChainLength` and
    `maxNishioDepth` option can only narrow a window, never widen it, and a wrapper intersects its own range with it.
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
@@ -1082,11 +1084,20 @@ on the reference machine and measured by `node tests/perf.js`.
   the run, and missing work is `unavailable`, never zero. `--shallow-cap=64|128|256|none` runs the soak with that
   shallow-search allowance (`SG.digger.SHALLOW_SEARCH_RATINGS`; `none` is `Infinity`; the default of the source is 256,
   selected by the R5 comparison of task MS05r4, see
-  [docs/difficulty-v3/shallow-cap-2026-11-13.md](docs/difficulty-v3/shallow-cap-2026-11-13.md)), and
+  [docs/difficulty-v3/shallow-cap-2026-11-13.md](docs/difficulty-v3/shallow-cap-2026-11-13.md)),
+  `--chain-window=4|6` runs it with that short-chain cutoff C (`SG.chainSearch.SHORT_MAX`: `forcingChain` has 1 to C
+  links, `forcingChainLong` C + 1 to 12; a diagnostic, not a production or user setting; the default of the source is 4,
+  selected by task MS07c, see [docs/difficulty-v3/chain-window-2026-11-15.md](docs/difficulty-v3/chain-window-2026-11-15.md)):
+  the value is set once, before the ordered-prefix check, the sampled references and every request, and put back when
+  the run ends; any other value is a usage error (exit code 2, before anything is generated, also with `--no-gate`), and
+  the ledger says which cutoff was in force (`meta.chainShortMax`) and whether it was asked for (`meta.chainWindow`,
+  `null` when not), and
   `--from=<k> --count=<n> --total-count=<N>` runs the requests k to k+n−1 of one logical cell of N
   requests (one variant and level; not with `--quick`, `--full` or `--per-combo`) with the tags and seeds of the whole
   cell, so a long cell can be split into bounded commands; `mergeShards` of the helper refuses ledgers with a gap, a
-  duplicate or a different source, tool, seed or setting.
+  duplicate or a different source, tool, seed, cutoff or setting (shards of C = 4 and C = 6 never join). The chain
+  statistics of a ledger count the proofs of both windows, `forcingChain` and `forcingChainLong`, `nishio` and
+  `nishioDeep`.
 - **Recovery profile (difficulty v3)** — a diagnostic of one fixed request, not a production setting and not a passing
   performance gate: `node tests/difficulty-recovery.js` generates it once and records where the time went, in the
   ordinary dig samples or in the local continuation that follows them (the part a shallow-search allowance can

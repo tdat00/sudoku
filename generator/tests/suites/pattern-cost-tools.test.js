@@ -403,7 +403,8 @@
         expect(run.problems).toEqual([]);
         expect(run.records.map(function (r) { return r.key; })).toEqual([
           'forcingChain:positive:1', 'forcingChain:positive:2', 'forcingChain:negative:1',
-          'nishio:positive:1', 'nishio:positive:2', 'nishio:negative:1', 'nishio:negative:2']);
+          'forcingChain:negative:2', 'nishio:positive:1', 'nishio:positive:2', 'nishio:negative:1',
+          'nishio:negative:2']);
         run.records.forEach(function (r) {
           expect(r.runs).toBe(3);
           expect(r.samplesMs).toHaveLength(3);
@@ -422,8 +423,9 @@
         expect(positive.finding.technique).toBe('forcingChain');
         expect(positive.findingDigest).toBe('digest:' + P.canonical(positive.finding).length);
         expect(run.records[2].outcome).toBe('none');
-        expect(run.records[5].outcome).toBe('none');
+        expect(run.records[3].outcome).toBe('none');
         expect(run.records[6].outcome).toBe('none');
+        expect(run.records[7].outcome).toBe('none');
       });
 
     it('measures identical work and Findings in two runs: only the time may differ', function () {
@@ -576,7 +578,7 @@
       expect(help.out).toContain('Usage: node tests/pattern-cost.js --ids=<id>[,<id>] --json=<new.json>');
       var list = tool(['--ids=forcingChain,nishio', '--list']);
       expect(list.code).toBe(0);
-      expect(list.out.split('\n').filter(function (line) { return line.indexOf(':') !== -1; })).toHaveLength(7);
+      expect(list.out.split('\n').filter(function (line) { return line.indexOf(':') !== -1; })).toHaveLength(8);
       expect(list.out).toContain('forcingChain:positive:1  forcingChain contradiction of 4 links on puzzle 2');
       expect(list.out).toContain('nishio:negative:1');
       var one = tool(['--ids=nishio', '--list', '--case=positive:2']);

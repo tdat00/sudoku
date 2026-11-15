@@ -762,8 +762,10 @@
   var THROUGH_NISHIO = THROUGH_LONG_CHAIN.concat(['nishio']);
 
   // Real unique puzzles. The first two are the puzzles of the v2 chain fixtures; the next three are famous
-  // puzzles of tests/fixtures/classic.js; the last two are minimal puzzles dug by SG.testkit.dig from the
-  // seeded stream 161 (fork 'minimal.<i>'), the ones whose first long chain has 7 and 8 links.
+  // puzzles of tests/fixtures/classic.js; the last three are minimal puzzles dug by SG.testkit.dig from the
+  // seeded stream 161 (fork 'minimal.<i>'): #24, #379 and #155, whose first long chains have 7, 8 and 7 links once
+  // forcingChain has exhausted every chain of up to 6 links (C = 6). Under the selected C = 4 the position where
+  // forcingChain is stuck still has chains of 5 and 6 links, which are the first proofs of forcingChainLong.
   var V2_PUZZLE_1 = '2.6...8.......357...59....1...2..41..5..8.3..1...4...6.2..157...8..........7...6.';
   var V2_PUZZLE_2 = '.6125...3..5.......9...81.....8...469....672.....3..8..7.3......5....6..6.....234';
   var ESCARGOT = '1....7.9..3..2...8..96..5....53..9...1..8...26....4...3......1..4......7..7...3..';
@@ -771,14 +773,16 @@
   var PLATINUM = '.......12........3..23..4....18....5.6..7.8.......9.....85.....9...4.5..47...6...';
   var WORLDS_HARDEST = '8..........36......7..9.2...5...7.......457.....1...3...1....68..85...1..9....4..';
   var NUGGET = '.......39.....1..5..3.5.8....8.9...6.7...2...1..4.......9.8..5..2....6..4..7.....';
-  var LONG_7 = '..7..1..6.8....1..5..6.78.3..65..7.......8..2.9..6....459........2...5......1..9.';
-  var LONG_8 = '......4..4..8...15.5...7....8...19....23.8.......64.7........8614.........9.2...3';
-  var LONG_7B = '...284.....51..83.....53....9.........8.....6.6..351.437.....6....4.2..88.......7';
+  var DUG_24 = '..7..1..6.8....1..5..6.78.3..65..7.......8..2.9..6....459........2...5......1..9.';
+  var DUG_379 = '......4..4..8...15.5...7....8...19....23.8.......64.7........8614.........9.2...3';
+  var DUG_155 = '...284.....51..83.....53....9.........8.....6.6..351.437.....6....4.2..88.......7';
 
   /**
    * Current fixtures that replace a historical entry, in the shape of the entries of the map. The short chain
-   * fixtures have at most 4 links and the long ones at least 7, so that a cutoff of C = 4 or C = 6 (R9) keeps
-   * every one of them in its ID. The negatives include a position where a shorter ID owns the proof.
+   * fixtures have at most 4 links, so that they are forcingChain's under C = 4 and C = 6 alike. The long ones
+   * are the 5- and 6-link shortest proofs of two dug puzzles: forcingChainLong's under the selected C = 4
+   * (MS07c; under C = 6 they would be forcingChain's). The negatives include positions where a shorter ID owns
+   * the proof, one of them at the window boundary: a chain of 5 links is not forcingChain's.
    */
   var CURRENT = {
     forcingChain: {
@@ -810,29 +814,35 @@
           puzzle: V2_PUZZLE_1,
           after: THROUGH_SHORT_CHAIN,
           propagate: true
+        },
+        {
+          name: 'forcingChain leaves a chain of 5 links to forcingChainLong (the window ends at C = 4)',
+          puzzle: DUG_24,
+          after: THROUGH_SHORT_CHAIN,
+          propagate: true
         }
       ]
     },
     forcingChainLong: {
       positive: [
         {
-          name: 'forcingChainLong contradiction of 7 links on a dug puzzle',
-          puzzle: LONG_7,
+          name: 'forcingChainLong contradiction of 5 links on a dug puzzle',
+          puzzle: DUG_24,
           after: THROUGH_SHORT_CHAIN,
           propagate: true,
           expect: {
             placements: [],
-            eliminations: [[48, 3]]
+            eliminations: [[14, 3]]
           }
         },
         {
-          name: 'forcingChainLong contradiction of 8 links on a dug puzzle',
-          puzzle: LONG_8,
+          name: 'forcingChainLong contradiction of 6 links on a dug puzzle',
+          puzzle: DUG_379,
           after: THROUGH_SHORT_CHAIN,
           propagate: true,
           expect: {
             placements: [],
-            eliminations: [[1, 9]]
+            eliminations: [[10, 2]]
           }
         }
       ],
@@ -930,15 +940,17 @@
    * positions without weakening or replacing the random ones. An entry is a list of positions in the shape of
    * the positive fixtures above ({ name, puzzle, after, propagate }): a real puzzle with exactly one solution,
    * and an explicit `after` array of registered ids (or null), never the `before(id)` / `through(id)` of an id
-   * that is not in LADDER. MS07b: the random population never reaches a chain of 7 or more links nor a guess
-   * inside a guess (0 firings in 120 states), so the two new chain IDs get three real positions each.
+   * that is not in LADDER. MS07b (measured at C = 6): the random population never reaches a chain of 7 or more
+   * links nor a guess inside a guess (0 firings in 120 states), so the two new chain IDs get three real
+   * positions each. The dug puzzles are the stuck positions of forcingChain under the selected C = 4: the
+   * shortest chains of the first two have 5 and 6 links (7 and 8 once forcingChain had exhausted every chain of
+   * up to 6 links).
    */
   var SUPPLEMENTS = {
     forcingChainLong: [
-      { name: 'a long chain of 7 links (dug puzzle)', puzzle: LONG_7, after: THROUGH_SHORT_CHAIN, propagate: true },
-      { name: 'a long chain of 8 links (dug puzzle)', puzzle: LONG_8, after: THROUGH_SHORT_CHAIN, propagate: true },
-      { name: 'a second chain of 7 links (dug puzzle)', puzzle: LONG_7B, after: THROUGH_SHORT_CHAIN,
-        propagate: true }
+      { name: 'a long chain of 5 links (dug puzzle)', puzzle: DUG_24, after: THROUGH_SHORT_CHAIN, propagate: true },
+      { name: 'a long chain of 6 links (dug puzzle)', puzzle: DUG_379, after: THROUGH_SHORT_CHAIN, propagate: true },
+      { name: 'a second long chain (dug puzzle)', puzzle: DUG_155, after: THROUGH_SHORT_CHAIN, propagate: true }
     ],
     nishioDeep: [
       { name: 'depth 2 on hard-platinum', puzzle: PLATINUM, after: THROUGH_NISHIO, propagate: true },

@@ -251,6 +251,10 @@
     return lines;
   }
 
+  // The longest line of the fixture: a jump's first use and key go on one line unless they do not fit (the key of
+  // forcingChainLong and nishioDeep is the longest).
+  var MAX_LINE = 120;
+
   function jumpLines(j) {
     var lines = ['        {', '          step: ' + literal(j.step) + ', from: ' + literal(j.from) + ', to: ' +
       literal(j.to) + ',',
@@ -258,9 +262,14 @@
     '          choice: ' + literal(j.choice) + ','];
     if (j.singles.length <= 2) lines.push('          singles: ' + literal(j.singles) + ',');
     else lines = lines.concat(listOf('singles', '          ', j.singles, false));
-    lines.push('          cause: ' + literal(j.cause) + ', frame: ' + literal(j.frame) + ',',
-      '          firstUse: ' + literal(j.firstUse) + ', key: ' + literal(j.key) + ',',
-      '          effects: ' + literal(j.effects), '        }');
+    lines.push('          cause: ' + literal(j.cause) + ', frame: ' + literal(j.frame) + ',');
+    var use = '          firstUse: ' + literal(j.firstUse) + ', key: ' + literal(j.key) + ',';
+    if (use.length <= MAX_LINE) {
+      lines.push(use);
+    } else {
+      lines.push('          firstUse: ' + literal(j.firstUse) + ',', '          key: ' + literal(j.key) + ',');
+    }
+    lines.push('          effects: ' + literal(j.effects), '        }');
     return lines;
   }
 

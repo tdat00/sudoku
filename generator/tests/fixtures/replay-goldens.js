@@ -88,11 +88,11 @@
         [2, 8, 'D/Dig', 16, 25, 25, 'nakedSingle', '—', '—', 'F'],
         [3, 22, 'D/Dig', 43, 44, 19, 'nakedSingle', '—', '—', '—'],
         [4, 23, 'G/Choose', 45, 870, 826, 'xyWing', 'Y', '—', '—'],
-        [5, 27, 'G/Choose', 53, 1572, 702, 'forcingChain', '—', '—', 'N'],
-        [6, 27, 'F/Final', 53, 1572, 0, 'forcingChain', '—', '—', '—']
+        [5, 27, 'G/Choose', 53, 1953, 1083, 'forcingChainLong', '—', '—', 'N'],
+        [6, 27, 'F/Final', 53, 1953, 0, 'forcingChainLong', '—', '—', '—']
       ],
       details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 28, 30, 31, 33, 34, 36, 37, 38, 40, 41, 42, 43, 44, 870, 1234,
-        1570, 1571, 1572, 1572],
+        1950, 1951, 1953, 1953],
       alive: null,
       folds: [],
       jumps: [
@@ -117,140 +117,132 @@
         [1, 0, 'S/Sol', 0, 0, 0, '—', '—', '—', '—'],
         [2, 9, 'D/Dig', 18, 27, 27, 'nakedSingle', '—', '—', 'F'],
         [3, 22, 'D/Dig', 43, 44, 17, 'nakedSingle', '—', '—', '—'],
-        [4, 23, 'G/Choose', 45, 877, 833, 'xyWing', 'Y', 'R2C8', '—'],
-        [5, 26, 'G/Choose', 51, 1337, 460, 'wWing', '—', '—', 'N'],
-        [6, 27, 'G/Choose', 53, 2916, 1579, 'nishio', '—', '—', 'N'],
-        [7, 27, 'F/Final', 53, 2916, 0, 'nishio', '—', '—', '—']
+        [4, 25, 'G/Choose', 49, 47, 3, 'hiddenSingleBox', '—', '—', 'N'],
+        [5, 26, 'G/Choose', 51, 1206, 1159, 'wWing', 'Y', 'R6C5', '—'],
+        [6, 27, 'X/Adjust', 51, 2565, 1359, 'forcingChainLong', '—', '—', 'N'],
+        [7, 27, 'F/Final', 51, 2565, 0, 'forcingChainLong', '—', '—', '—']
       ],
-      details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 877, 878,
-        1336, 1337, 2916, 2916],
+      details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
+        1206, 2565, 2565],
       alive: null,
       folds: [],
       jumps: [
         {
-          step: 4, from: 44, to: 877,
-          before: { P: 1, W: 43, R: 1.364858, V: 41.445783, E: 43, level: 'veryEasy' },
-          after: { P: 650, W: 778, R: 184.516208, V: 42.352941, E: 45, level: 'expert' },
-          choice: { chosen: 877, others: 13, nulls: 0, max: 46, at: 43, rated: 18, refused: 4 },
-          singles: [{ op: 'remove', cell: 'R2C8', score: 876 }, { op: 'remove', cell: 'R8C2', score: 44 }],
-          cause: 'single-culprit', frame: 'R2C8',
-          firstUse: { k: 27, n: 48, technique: 'xyWing' }, key: 'technique.xyWing.step',
-          effects: 'remove candidate 5@R9C5'
+          step: 5, from: 47, to: 1206,
+          before: { P: 1.25, W: 49.75, R: 1.67203, V: 44.044944, E: 49, level: 'easy' },
+          after: { P: 850, W: 1493, R: 310.849719, V: 44.835165, E: 51, level: 'master' },
+          choice: { chosen: 1206, others: 1, nulls: 0, max: 48, at: 66, rated: 4, refused: 2 },
+          singles: [{ op: 'remove', cell: 'R4C5', score: 47 }, { op: 'remove', cell: 'R6C5', score: 1205 }],
+          cause: 'single-culprit', frame: 'R6C5',
+          firstUse: { k: 22, n: 60, technique: 'wWing' }, key: 'technique.wWing.step',
+          effects: 'remove candidate 2@R2C2, 2@R8C1, 2@R9C1'
         }
       ]
     },
     {
       id: 'G05', request: { variantId: 'classic9', difficulty: 'hell1', seed: '2299986211' },
-      today: { steps: 106, missing: 50 }, counts: { compact: 7, details: 29 },
+      today: { steps: 106, missing: 50 }, counts: { compact: 6, details: 31 },
       board: { cells: 81, cages: 0, signsFrom: 0, signsTo: 0, log: 'normal' },
       // [#, m, phase, E, score, delta, hardest, J, culprit, line]
       rows: [
         [1, 0, 'S/Sol', 0, 0, 0, '—', '—', '—', '—'],
-        [2, 9, 'D/Dig', 17, 26, 26, 'nakedSingle', '—', '—', 'F'],
-        [3, 22, 'D/Dig', 43, 44, 18, 'nakedSingle', '—', '—', '—'],
-        [4, 23, 'G/Choose', 45, 550, 506, 'simpleColouring', 'Y', '—', '—'],
-        [5, 24, 'G/Choose', 47, 1993, 1443, 'forcingChain', 'Y', 'R3C9', '—'],
-        [6, 27, 'G/Choose', 53, 2942, 949, 'nishio', '—', '—', 'N'],
-        [7, 27, 'F/Final', 53, 2942, 0, 'nishio', '—', '—', '—']
+        [2, 9, 'D/Dig', 18, 27, 27, 'nakedSingle', '—', '—', 'F'],
+        [3, 22, 'D/Dig', 43, 44, 17, 'nakedSingle', '—', '—', '—'],
+        [4, 28, 'G/Choose', 55, 50, 6, 'hiddenSingleLine', '—', '—', 'N'],
+        [5, 29, 'G/Choose', 57, 2497, 2447, 'forcingChainLong', 'Y', '—', '—'],
+        [6, 29, 'F/Final', 57, 2497, 0, 'forcingChainLong', '—', '—', '—']
       ],
-      details: [0, 5, 9, 11, 14, 17, 19, 22, 24, 26, 28, 30, 31, 33, 34, 36, 37, 38, 40, 41, 42, 43, 44, 550, 1993,
-        1993, 2207, 2942, 2942],
+      details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 33, 34, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47,
+        48, 49, 50, 2497, 2497],
       alive: null,
       folds: [],
       jumps: [
         {
-          step: 4, from: 44, to: 550,
-          before: { P: 1, W: 43, R: 1.364858, V: 41.445783, E: 43, level: 'veryEasy' },
-          after: { P: 360, W: 766.25, R: 148.091246, V: 42.352941, E: 45, level: 'hard' },
-          choice: { chosen: 550, others: 10, nulls: 0, max: 45, at: 43, rated: 19, refused: 8 },
-          singles: [{ op: 'remove', cell: 'R2C6', score: 44 }, { op: 'remove', cell: 'R8C4', score: 45 }],
+          step: 5, from: 50, to: 2497,
+          before: { P: 1.5, W: 60.5, R: 2.013463, V: 46.315789, E: 55, level: 'easy' },
+          after: { P: 1400, W: 9794.25, R: 1049.740699, V: 47.010309, E: 57, level: 'hell1' },
+          choice: { chosen: 2497, others: 0, nulls: 0, max: null, at: 77, rated: 1, refused: 0 },
+          singles: [{ op: 'remove', cell: 'R2C1', score: 50 }, { op: 'remove', cell: 'R8C9', score: 50 }],
           cause: 'together', frame: null,
-          firstUse: { k: 21, n: 51, technique: 'simpleColouring' }, key: 'technique.simpleColouring.step',
-          effects: 'remove candidate 7@R8C1'
-        },
-        {
-          step: 5, from: 550, to: 1993,
-          before: { P: 360, W: 766.25, R: 148.091246, V: 42.352941, E: 45, level: 'hard' },
-          after: { P: 1100, W: 8257.25, R: 849.359796, V: 43.218391, E: 47, level: 'nightmare' },
-          choice: { chosen: null, others: 4, nulls: 1, max: 552, at: 54, rated: 10, refused: 4 },
-          singles: [{ op: 'remove', cell: 'R3C9', score: 1992 }, { op: 'remove', cell: 'R7C1', score: 551 }],
-          cause: 'single-culprit', frame: 'R3C9',
-          firstUse: { k: 15, n: 60, technique: 'forcingChain' }, key: 'technique.forcingChain.step.endpoints',
-          effects: 'remove candidate 5@R2C7'
+          firstUse: { k: 14, n: 77, technique: 'forcingChainLong' },
+          key: 'technique.forcingChainLong.step.contradiction',
+          effects: 'remove candidate 6@R4C2'
         }
       ]
     },
     {
       id: 'G06', request: { variantId: 'jigsaw9', difficulty: 'nightmare', seed: '42' },
-      today: { steps: 16, missing: 2 }, counts: { compact: 7, details: 30 },
+      today: { steps: 16, missing: 2 }, counts: { compact: 8, details: 32 },
+      board: { cells: 81, cages: 0, signsFrom: 0, signsTo: 0, log: 'normal' },
+      // [#, m, phase, E, score, delta, hardest, J, culprit, line]
+      rows: [
+        [1, 0, 'S/Sol', 0, 0, 0, '—', '—', '—', '—'],
+        [2, 8, 'D/Dig', 16, 25, 25, 'nakedSingle', '—', '—', 'F'],
+        [3, 22, 'D/Dig', 43, 44, 19, 'hiddenSingleBox', '—', '—', 'N'],
+        [4, 26, 'G/Choose', 51, 48, 4, 'hiddenSingleBox', '—', '—', '—'],
+        [5, 27, 'G/Choose', 53, 530, 482, 'simpleColouring', 'Y', 'R5C9', '—'],
+        [6, 29, 'G/Choose', 57, 711, 181, 'simpleColouring', '—', '—', '—'],
+        [7, 30, 'G/Choose', 59, 2330, 1619, 'forcingChainLong', 'Y', 'R8C9', '—'],
+        [8, 30, 'F/Final', 59, 2330, 0, 'forcingChainLong', '—', '—', '—']
+      ],
+      details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 39, 40, 41, 42, 44, 44, 45, 46, 47,
+        48, 530, 657, 711, 2330, 2330],
+      alive: null,
+      folds: [],
+      jumps: [
+        {
+          step: 5, from: 48, to: 530,
+          before: { P: 1.25, W: 54.75, R: 1.714196, V: 44.835165, E: 51, level: 'easy' },
+          after: { P: 360, W: 580, R: 124.619747, V: 45.591398, E: 53, level: 'hard' },
+          choice: { chosen: 530, others: 7, nulls: 0, max: 49, at: 94, rated: 9, refused: 1 },
+          singles: [{ op: 'remove', cell: 'R5C1', score: 48 }, { op: 'remove', cell: 'R5C9', score: 530 }],
+          cause: 'single-culprit', frame: 'R5C9',
+          firstUse: { k: 31, n: 56, technique: 'simpleColouring' }, key: 'technique.simpleColouring.step',
+          effects: 'remove candidate 4@R1C2, 4@R2C9, 4@R4C3, 4@R5C4, 4@R5C8, 4@R6C1'
+        },
+        {
+          step: 7, from: 711, to: 2330,
+          before: { P: 360, W: 3389.25, R: 304.247989, V: 47.010309, E: 57, level: 'expert' },
+          after: { P: 1400, W: 6642.25, R: 882.760325, V: 47.676768, E: 59, level: 'nightmare' },
+          choice: { chosen: 2330, others: 1, nulls: 0, max: 726, at: 109, rated: 2, refused: 0 },
+          singles: [{ op: 'remove', cell: 'R2C1', score: 712 }, { op: 'remove', cell: 'R8C9', score: 2330 }],
+          cause: 'single-culprit', frame: 'R8C9',
+          firstUse: { k: 25, n: 85, technique: 'forcingChainLong' },
+          key: 'technique.forcingChainLong.step.contradiction',
+          effects: 'remove candidate 6@R5C8'
+        }
+      ]
+    },
+    {
+      id: 'G07', request: { variantId: 'jigsaw9', difficulty: 'nightmare', seed: '3962167687' },
+      today: { steps: 17, missing: 2 }, counts: { compact: 6, details: 42 },
       board: { cells: 81, cages: 0, signsFrom: 0, signsTo: 0, log: 'normal' },
       // [#, m, phase, E, score, delta, hardest, J, culprit, line]
       rows: [
         [1, 0, 'S/Sol', 0, 0, 0, '—', '—', '—', '—'],
         [2, 8, 'D/Dig', 16, 25, 25, 'nakedSingle', '—', '—', 'F'],
         [3, 22, 'D/Dig', 43, 44, 19, 'nakedSingle', '—', '—', '—'],
-        [4, 26, 'G/Choose', 51, 106, 62, 'pointing', '—', '—', 'N'],
-        [5, 27, 'G/Choose', 53, 1697, 1591, 'forcingChain', 'Y', 'R8C4', '—'],
-        [6, 28, 'G/Choose', 55, 2336, 639, 'nishio', '—', '—', 'N'],
-        [7, 28, 'F/Final', 55, 2336, 0, 'nishio', '—', '—', '—']
+        [4, 26, 'G/Choose', 51, 48, 4, 'hiddenSingleLine', '—', '—', 'N'],
+        [5, 40, 'G+A/Mixed', 39, 1797, 1749, 'forcingChainLong', 'Y', '—', '—'],
+        [6, 40, 'F/Final', 39, 1797, 0, 'forcingChainLong', '—', '—', '—']
       ],
-      details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
-        106, 1697, 2336, 2336],
+      details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 38, 40, 41, 42, 43, 44, 45, 46, 47,
+        48, 1999, 3043, 3089, 3091, 2020, 1873, 1872, 1871, 1863, 1862, 1861, 1859, 1858, 1797, 1797],
       alive: null,
-      folds: [],
+      folds: [
+        { step: 5, peak: 3091, end: 1797, removed: 8, restored: 20, signs: 0, opening: false }
+      ],
       jumps: [
         {
-          step: 5, from: 106, to: 1697,
-          before: { P: 40, W: 135.5, R: 21.333991, V: 44.835165, E: 51, level: 'easy' },
-          after: { P: 1100, W: 3317.25, R: 551.552365, V: 45.591398, E: 53, level: 'nightmare' },
-          choice: { chosen: 1697, others: 9, nulls: 0, max: 129, at: 96, rated: 10, refused: 0 },
-          singles: [{ op: 'remove', cell: 'R2C6', score: 107 }, { op: 'remove', cell: 'R8C4', score: 1697 }],
-          cause: 'single-culprit', frame: 'R8C4',
-          firstUse: { k: 24, n: 63, technique: 'forcingChain' }, key: 'technique.forcingChain.step.endpoints',
-          effects: 'remove candidate 4@R5C5, 4@R6C5, 4@R8C5, 4@R9C5'
-        }
-      ]
-    },
-    {
-      id: 'G07', request: { variantId: 'jigsaw9', difficulty: 'nightmare', seed: '3962167687' },
-      today: { steps: 17, missing: 2 }, counts: { compact: 9, details: 33 },
-      board: { cells: 81, cages: 0, signsFrom: 0, signsTo: 0, log: 'normal' },
-      // [#, m, phase, E, score, delta, hardest, J, culprit, line]
-      rows: [
-        [1, 0, 'S/Sol', 0, 0, 0, '—', '—', '—', '—'],
-        [2, 9, 'D/Dig', 17, 26, 26, 'nakedSingle', '—', '—', 'F'],
-        [3, 22, 'D/Dig', 43, 44, 18, 'nakedSingle', '—', '—', '—'],
-        [4, 25, 'G/Choose', 49, 47, 3, 'hiddenSingleBox', '—', '—', 'N'],
-        [5, 26, 'G/Choose', 51, 511, 464, 'simpleColouring', 'Y', 'R9C4', '—'],
-        [6, 27, 'G/Choose', 53, 1582, 1071, 'forcingChain', 'Y', 'R6C3', '—'],
-        [7, 29, 'G/Choose', 57, 1589, 7, 'forcingChain', '—', '—', '—'],
-        [8, 31, 'X/Adjust', 57, 2340, 751, 'nishio', '—', '—', 'N'],
-        [9, 31, 'F/Final', 57, 2340, 0, 'nishio', '—', '—', '—']
-      ],
-      details: [0, 5, 9, 12, 15, 18, 20, 22, 24, 26, 28, 30, 31, 33, 34, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47,
-        511, 1582, 1583, 1589, 1902, 2340, 2340],
-      alive: null,
-      folds: [],
-      jumps: [
-        {
-          step: 5, from: 47, to: 511,
-          before: { P: 1.25, W: 50.5, R: 1.678612, V: 44.044944, E: 49, level: 'easy' },
-          after: { P: 360, W: 455.5, R: 106.171917, V: 44.835165, E: 51, level: 'hard' },
-          choice: { chosen: 511, others: 8, nulls: 0, max: 48, at: 86, rated: 11, refused: 2 },
-          singles: [{ op: 'remove', cell: 'R1C6', score: 47 }, { op: 'remove', cell: 'R9C4', score: 510 }],
-          cause: 'single-culprit', frame: 'R9C4',
-          firstUse: { k: 28, n: 53, technique: 'simpleColouring' }, key: 'technique.simpleColouring.step',
-          effects: 'remove candidate 8@R3C2'
-        },
-        {
-          step: 6, from: 511, to: 1582,
-          before: { P: 360, W: 455.5, R: 106.171917, V: 44.835165, E: 51, level: 'hard' },
-          after: { P: 1100, W: 2207, R: 436.705368, V: 45.591398, E: 53, level: 'nightmare' },
-          choice: { chosen: null, others: 3, nulls: 0, max: 512, at: 95, rated: 8, refused: 4 },
-          singles: [{ op: 'remove', cell: 'R4C7', score: 512 }, { op: 'remove', cell: 'R6C3', score: 1582 }],
-          cause: 'single-culprit', frame: 'R6C3',
-          firstUse: { k: 29, n: 66, technique: 'forcingChain' }, key: 'technique.forcingChain.step.endpoints',
-          effects: 'remove candidate 4@R7C2'
+          step: 5, from: 48, to: 1797,
+          before: { P: 1.5, W: 55.75, R: 1.97034, V: 44.835165, E: 51, level: 'easy' },
+          after: { P: 1400, W: 1439.5, R: 357.07353, V: 39.493671, E: 39, level: 'nightmare' },
+          choice: null,
+          singles: [],
+          cause: 'multi-move', frame: null,
+          firstUse: { k: 18, n: 40, technique: 'forcingChainLong' },
+          key: 'technique.forcingChainLong.step.contradiction',
+          effects: 'remove candidate 4@R2C8'
         }
       ]
     },
@@ -308,33 +300,36 @@
     },
     {
       id: 'G10', request: { variantId: 'killer', difficulty: 'nightmare', seed: '42' },
-      today: { steps: 28, missing: 5 }, counts: { compact: 8, details: 40 },
-      board: { cells: 81, cages: 18, signsFrom: 0, signsTo: 0, log: 'normal' },
+      today: { steps: 28, missing: 5 }, counts: { compact: 8, details: 51 },
+      board: { cells: 81, cages: 21, signsFrom: 0, signsTo: 0, log: 'normal' },
       // [#, m, phase, E, score, delta, hardest, J, culprit, line]
       rows: [
         [1, 0, 'S/Sol', 0, 0, 0, '—', '—', '—', '—'],
         [2, 0, 'S/Cag', 0, 0, 0, '—', '—', '—', '—'],
         [3, 8, 'D/Dig', 16, 25, 25, 'nakedSingle', '—', '—', 'F'],
         [4, 22, 'D/Dig', 43, 44, 19, 'nakedSingle', '—', '—', '—'],
-        [5, 24, 'G/Choose', 47, 112, 68, 'cageCombo', '—', '—', 'N'],
-        [6, 36, 'G/Choose', 71, 144, 32, 'cageCombo', '—', '—', '—'],
-        [7, 37, 'G/Choose', 73, 2151, 2007, 'forcingChain', 'Y', 'R3C8', '—'],
-        [8, 37, 'F/Final', 73, 2151, 0, 'forcingChain', '—', '—', '—']
+        [5, 24, 'G/Choose', 47, 115, 71, 'cageCombo', '—', '—', 'N'],
+        [6, 35, 'G/Choose', 69, 145, 30, 'cageCombo', '—', '—', '—'],
+        [7, 48, 'G+A/Mixed', 59, 2051, 1906, 'forcingChainLong', 'Y', '—', '—'],
+        [8, 48, 'F/Final', 59, 2051, 0, 'forcingChainLong', '—', '—', '—']
       ],
-      details: [0, 0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 103, 112,
-        118, 121, 126, 131, 133, 134, 136, 138, 138, 140, 144, 144, 2151, 2151],
+      details: [0, 0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 99, 115,
+        119, 125, 129, 131, 132, 134, 136, 138, 142, 143, 145, 2320, 2574, 2630, 2668, 2505, 2356, 2333, 2328, 2263,
+        2262, 2250, 2061, 2051, 2051],
       alive: null,
-      folds: [],
+      folds: [
+        { step: 7, peak: 2668, end: 2051, removed: 8, restored: 18, signs: 0, opening: false }
+      ],
       jumps: [
         {
-          step: 7, from: 144, to: 2151,
-          before: { P: 40, W: 1470.5, R: 52.388824, V: 51.171171, E: 71, level: 'easy' },
-          after: { P: 1100, W: 12560, R: 999.455065, V: 51.681416, E: 73, level: 'nightmare' },
-          choice: { chosen: null, others: 0, nulls: 0, max: null, at: 158, rated: 1, refused: 0 },
-          singles: [{ op: 'remove', cell: 'R3C8', score: 2093 }, { op: 'remove', cell: 'R7C2', score: 146 }],
-          cause: 'single-culprit', frame: 'R3C8',
-          firstUse: { k: 90, n: 145, technique: 'forcingChain' }, key: 'technique.forcingChain.step.contradiction',
-          effects: 'remove candidate 9@R8C2'
+          step: 7, from: 145, to: 2051,
+          before: { P: 40, W: 1698, R: 54.412843, V: 50.642202, E: 69, level: 'easy' },
+          after: { P: 1400, W: 3224.75, R: 603.381993, V: 47.676768, E: 59, level: 'nightmare' },
+          choice: null,
+          singles: [],
+          cause: 'multi-move', frame: null,
+          firstUse: { k: 50, n: 80, technique: 'forcingChainLong' }, key: 'technique.forcingChainLong.step.forced',
+          effects: 'remove candidate '
         }
       ]
     },
@@ -414,36 +409,36 @@
     },
     {
       id: 'G13', request: { variantId: 'samurai', difficulty: 'nightmare', seed: '42' },
-      today: { steps: 14, missing: 1 }, counts: { compact: 8, details: 134 },
+      today: { steps: 14, missing: 1 }, counts: { compact: 7, details: 134 },
       board: { cells: 369, cages: 0, signsFrom: 0, signsTo: 0, log: 'normal' },
       // [#, m, phase, E, score, delta, hardest, J, culprit, line]
       rows: [
         [1, 0, 'S/Sol', 0, 0, 0, '—', '—', '—', '—'],
         [2, 8, 'D/Dig', 16, 25, 25, 'nakedSingle', '—', '—', 'F'],
-        [3, 47, 'D/Dig', 94, 59, 34, 'nakedSingle', '—', '—', '—'],
-        [4, 98, 'D/Dig', 195, 69, 10, 'nakedSingle', '—', '—', '—'],
-        [5, 113, 'G/Choose', 225, 72, 3, 'hiddenSingleLine', '—', '—', 'N'],
-        [6, 114, 'G/Choose', 227, 1483, 1411, 'forcingChain', 'Y', 'G2-R8C9', '—'],
-        [7, 132, 'G/Choose', 263, 1637, 154, 'forcingChain', '—', '—', '—'],
-        [8, 132, 'F/Final', 263, 1637, 0, 'forcingChain', '—', '—', '—']
+        [3, 98, 'D/Dig', 195, 69, 44, 'nakedSingle', '—', '—', '—'],
+        [4, 113, 'G/Choose', 225, 72, 3, 'hiddenSingleLine', '—', '—', 'N'],
+        [5, 114, 'G/Choose', 227, 1858, 1786, 'forcingChainLong', 'Y', 'G2-R8C9', '—'],
+        [6, 132, 'G/Choose', 263, 2021, 163, 'forcingChainLong', '—', '—', '—'],
+        [7, 132, 'F/Final', 263, 2021, 0, 'forcingChainLong', '—', '—', '—']
       ],
       details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
         48, 48, 49, 50, 50, 51, 52, 52, 53, 53, 54, 54, 55, 55, 56, 56, 57, 57, 58, 58, 58, 59, 59, 59, 60, 60, 60,
         61, 61, 61, 62, 62, 62, 62, 63, 63, 63, 63, 64, 64, 64, 64, 65, 65, 65, 65, 65, 66, 66, 66, 66, 66, 66, 67,
         67, 67, 67, 67, 67, 68, 68, 68, 68, 68, 68, 68, 69, 69, 69, 69, 69, 69, 69, 69, 70, 70, 70, 70, 71, 71, 71,
-        71, 71, 71, 71, 72, 72, 72, 1483, 1483, 1484, 1484, 1485, 1618, 1618, 1618, 1619, 1619, 1619, 1620, 1620,
-        1620, 1621, 1621, 1622, 1623, 1637, 1637],
+        71, 71, 71, 71, 72, 72, 72, 1858, 1859, 1859, 1860, 1860, 2000, 2000, 2001, 2001, 2002, 2002, 2002, 2003,
+        2003, 2004, 2004, 2005, 2005, 2021, 2021],
       alive: null,
       folds: [],
       jumps: [
         {
-          step: 6, from: 72, to: 1483,
+          step: 5, from: 72, to: 1858,
           before: { P: 1.5, W: 229.5, R: 2.725045, V: 67.924528, E: 225, level: 'easy' },
-          after: { P: 1100, W: 1332, R: 314.775919, V: 68.014981, E: 227, level: 'master' },
+          after: { P: 1400, W: 1632, R: 390.195024, V: 68.014981, E: 227, level: 'nightmare' },
           choice: { chosen: null, others: 6, nulls: 0, max: 72, at: 229, rated: 7, refused: 0 },
-          singles: [{ op: 'remove', cell: 'G2-R8C9', score: 1483 }, { op: 'remove', cell: 'G3-R2C1', score: 72 }],
+          singles: [{ op: 'remove', cell: 'G2-R8C9', score: 1858 }, { op: 'remove', cell: 'G3-R2C1', score: 72 }],
           cause: 'single-culprit', frame: 'G2-R8C9',
-          firstUse: { k: 209, n: 228, technique: 'forcingChain' }, key: 'technique.forcingChain.step.contradiction',
+          firstUse: { k: 209, n: 228, technique: 'forcingChainLong' },
+          key: 'technique.forcingChainLong.step.contradiction',
           effects: 'remove candidate 1@G2-R1C2'
         }
       ]
@@ -458,15 +453,15 @@
         [2, 11, 'D/Dig', 22, 31, 31, 'nakedSingle', '—', '—', 'F'],
         [3, 68, 'D/Dig', 136, 65, 34, 'hiddenSingleBox', '—', '—', 'N'],
         [4, 69, 'G/Choose', 138, 1646, 1581, 'forcingChain', 'Y', 'R8C4', '—'],
-        [5, 72, 'G/Choose', 144, 3603, 1957, 'nishio', '—', '—', 'N'],
-        [6, 76, 'G/Choose', 152, 6408, 2805, 'nishioDeep', '—', '—', 'N'],
-        [7, 77, 'G/Choose', 154, 6453, 45, 'nishioDeep', '—', '—', '—'],
-        [8, 77, 'F/Final', 154, 6453, 0, 'nishioDeep', '—', '—', '—']
+        [5, 72, 'G/Choose', 144, 3674, 2028, 'nishio', '—', '—', 'N'],
+        [6, 76, 'G/Choose', 152, 6420, 2746, 'nishioDeep', '—', '—', 'N'],
+        [7, 77, 'G/Choose', 154, 6475, 55, 'nishioDeep', '—', '—', '—'],
+        [8, 77, 'F/Final', 154, 6475, 0, 'nishioDeep', '—', '—', '—']
       ],
       details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
         48, 48, 49, 50, 50, 51, 52, 52, 53, 53, 54, 54, 55, 55, 56, 56, 57, 57, 58, 58, 58, 59, 59, 59, 60, 60, 60,
-        61, 61, 61, 62, 62, 62, 62, 63, 64, 64, 64, 64, 65, 65, 65, 65, 1646, 1660, 2111, 3603, 3874, 4236, 4387,
-        6408, 6453, 6453],
+        61, 61, 61, 62, 62, 62, 62, 63, 64, 64, 64, 64, 65, 65, 65, 65, 1646, 1660, 2607, 3674, 3901, 4263, 4414,
+        6420, 6475, 6475],
       alive: null,
       folds: [],
       jumps: [

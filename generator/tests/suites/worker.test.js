@@ -742,7 +742,7 @@
       });
 
     it('MS05b1-T05: a shallow fallback crosses the wire with exact false and its two warnings', function () {
-      var made = P.run({ variantId: 'classic9', difficulty: 'nightmare', seed: 42, trace: 'off',
+      var made = P.run({ variantId: 'classic9', difficulty: 'nightmare', seed: 5, trace: 'off',
         maxAttempts: 1 }, null);
       expect(made.exact).toBe(false);
       expect(made.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);

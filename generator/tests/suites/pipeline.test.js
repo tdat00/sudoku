@@ -2521,7 +2521,7 @@
 
       it('MS05b1-T04: a real complete result inside the band that needs no Nightmare technique is shallow',
         function () {
-          var out = run({ difficulty: 'nightmare', seed: 42, maxAttempts: 1 }, 'summary');
+          var out = run({ difficulty: 'nightmare', seed: 5, maxAttempts: 1 }, 'summary');
           var verdicts = tuneEvents(out.events);
           var shallow = verdicts.filter(function (e) { return e.i18nKey === 'tune.shallow'; });
           expect(shallow.length).toBeGreaterThan(0);

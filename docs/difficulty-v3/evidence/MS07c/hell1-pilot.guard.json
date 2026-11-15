@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "tool": "guard-probe",
+  "argv": [
+    "--variant=classic9",
+    "--level=hell1",
+    "--from=0",
+    "--count=2",
+    "--total-count=2",
+    "--seed=20260101",
+    "--no-gate",
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS07c\\hell1-pilot.json"
+  ],
+  "exitCode": 0,
+  "solves": 18306,
+  "guardRefusals": 0,
+  "requestCalls": 3,
+  "requestsWithGuardRefusals": 0,
+  "instrumented": [
+    "solve",
+    "generate",
+    "run"
+  ],
+  "problems": [],
+  "calls": [
+    {
+      "route": "digger.generate",
+      "solves": 6057,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 6057,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 6186,
+      "guardRefusals": 0
+    }
+  ]
+}

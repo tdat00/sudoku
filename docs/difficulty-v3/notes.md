@@ -999,3 +999,49 @@ deep population or the pilot (0 of 14, 0 of 2) and no depth-2 step in 12 more He
 source): **the classic9 Hell 1 GD batch at MS07e (at least 90 % exact of 20) is expected to fail**, an availability result, not a regression,
 **S-AV26** classic9 Hell 1 requests 4.9 to 5.4 s against the 2.5 s budget (an indication: two requests, not section 9.1's p95; related to S-AV19);
 routes MS07e, then MS18c and MS18d.
+
+## MS07c: the short-chain cutoff C = 4 and its override
+
+**The selection (R9, owner SA1-Q-S1(c)).** `SG.chainSearch.SHORT_MAX`, the cutoff between `forcingChain` (1 to C links) and `forcingChainLong` (C + 1 to 12), is now **4**
+(it was 6 provisionally). The rule was fixed beforehand: measure C = 4 and C = 6 on fresh generation requests and take the cutoff with more exact hits in total, C = 6 on a tie. The
+experiment is 12 fresh Nightmare requests per cutoff of classic9, diagonalX and Jigsaw 9 (soak base seed 20260101, the allowance, the attempts and the weights fixed, every
+error a miss): **C = 4 36 of 36 exact, C = 6 24 of 36** (classic9 12 / 2, diagonalX 12 / 10, Jigsaw 9 12 / 12), no error and no invariant violation, 12.3 s against 121.8 s of command
+time. With C = 6 a Nightmare proof needs a 7-link chain or a Nishio, so most requests end as a shallow fallback after all attempts; with C = 4 every proof of 5 or more
+links is `forcingChainLong` (a Nightmare-tier technique), so the first attempts are exact. The only production edit is the literal `INITIAL_SHORT_MAX`; the long ceiling 12, the depths, the
+weights, the work limits, the orders and the offers are unchanged. Full record: [chain-window-2026-11-15.md](chain-window-2026-11-15.md), evidence [evidence/MS07c/](evidence/MS07c/evidence.md).
+
+**The override.** `node tests\soak.js ... --chain-window=4|6` (diagnostic, never a production or user setting) sets C once before the ordered-prefix check, the references and the requests and puts it
+back when the run ends; any other value is a usage error (exit 2) before a request, `--no-gate` included. The ledger says `meta.chainWindow` (asked, `null` when not) and `meta.chainShortMax`
+(in force), and `mergeShards` refuses shards of different cutoffs (and an explicit window against none), so C = 4 and C = 6 never join. IR60 (no range check on `SHORT_MAX`) is closed at the setter: the soak
+accepts 4 and 6 only; the engine's reader is unchanged (the task allows a default-only production change). The chain statistics of a ledger now count the proofs of both windows (`forcingChainLong`
+lengths and `nishioDeep` depths with the short ones, the diagnostics handed over by MS07b). 94 tests in `difficulty-diagnostics` (85 before), four checks of the checks (mutations M1, M2, M3 and M5).
+
+**Reclassifications of reference puzzles (R20).** `constructed-nightmare-1` goes from Nightmare, not required (score 2,178 at C = 6), to **Hell 1, not required (2,704)**, and
+`constructed-nightmare-3` from Nightmare, not required (2,148) to **Hell 1, not required (2,642)**. The cause is `forcingChainLong` (weight 1,400): their shortest chains of 5 and 6 links, which were
+`forcingChain` (1,100) at C = 6, are its steps at C = 4 (`-1`: 2 `forcingChain` and 6 `forcingChainLong` steps; `-3`: 5 and 3).
+`V3_EXPECTED` in `generator/tests/fixtures/rated.js` says `['hell1', false]` for both (like `constructed-nightmare-2` since MS07b, which now scores 2,662 instead of 2,632); the quick `difficulty-floor` suite
+checks every `v3Expected` against the rater, and the manual `difficulty` suite names the three (not run). `rated-scores.txt` in the evidence is the read-only rating of every rated entry at both cutoffs.
+No other rated entry changes its level or requiredness.
+
+**Output differences and what caused each.** E on the final source (`d591e6f6...`): **37 of the 520 regression hashes changed**, all Nightmare (classic9 18 of 20, diagonalX 19 of 20); the wires G10 (Killer Nightmare) and G13
+(Samurai Nightmare) changed and are now exact at attempts 4 and 1 where both were shallow fallbacks; G03 to G07, G10, G13 and G14 differ in the analyses (a 5- or 6-link chain is `forcingChainLong` with a higher score,
+and the digs of G04 to G07, G10 and G13 ended elsewhere); only the `forcingChainLong` help example changed (the same discovered puzzle gives a 6-link contradiction). The cause is the default in every case: nothing was fitted.
+The pins that follow (the registry fixtures of `forcingChainLong`, a `forcingChain` boundary negative, the three constructed Nightmare puzzles which are Hell 1, the exchange of G04 as the only exchange, the 14 compact and 17
+details jumps of the goldens, the shallow-fallback specimen of the cache, worker and pipeline suites moving from seed 42 to seed 5) are in the evidence. The generated golden fixture wraps a long jump key onto its own line
+(`replay-recording.js`), which meant recording the GR ledgers a second time.
+
+**Cost and the pilot.** The Hell 1 pilot is repeated because the default changed: 5,559.6 and 5,571.3 ms for the two requests (mean 5,565.4 ms, MS07b 5,142.5 ms), both in band and shallow (0 of 2 exact, no `nishioDeep` step), the unchanged 20-request GD
+batch projecting to 111.3 s and the first 40 GQ requests to 222.6 s. The split IDs cost, on their real fixtures, at most 10,039 of the 50,000 units of `forcingChainLong` (20.1 %) and 12.6 ms for `nishioDeep`, nothing capped. The objective guard of
+the dig (IR59) refused nothing in 240,130 solves observed outside the soak. The standing quick cost is **684.3 s** (744.9 s at MS07b: the changed goldens and requests end earlier); Generator 3,459 and Player 1,750 tests.
+
+**Handoffs to MS07d and MS07e (SA1 review 17, IR62 to IR66).**
+
+- **Stale records are history.** The 28 deep mega records are two sets of 14: the Hell 1 records (MS07b, source `ddf2fa5a...`) describe C = 6; the Nightmare records (MS05r5m, `fee8b8d6...`) predate the split, when chains of up to 12 links were Master's `forcingChain` and Nightmare's tier was the old `nishio`. Neither set describes the current source. MS07d does not read them and MS07e must not compare them as current; MS18e reruns the population once, after the final engine change.
+- **S-AV22 and S-AV23 (window-cell numbers).** S-AV22's two Nightmare losses (classic9 request 1, diagonalX request 6) are exact at C = 4 (both cells 12 of 12) and misses at C = 6. S-AV23's Jigsaw 9 Nightmare cell is 12 of 12 exact at both cutoffs: C = 4 median 142.2 ms, p95 481.3 ms, 701 full ratings; C = 6 median 423.5 ms, p95 2,705.3 ms, 3,138 full ratings.
+- **Three side effects not measured at C = 4:** Master availability (it lost the 5- and 6-link chains; its 40 regression hashes did not move), the Greater-Than Nightmare CV6 margin (19,192 of 20,000 ms at the restored source), and Nightmare and Hell 1 on large boards. GQ and GD are the first measurements on this source; a failure is a new named item attributed to it.
+- **Expected at MS07e:** the classic9 Hell 1 GD batch (at least 90 % exact of 20) fails (S-AV25), an availability result and not a regression; the manual `difficulty` suite passes its certificate and "v3 reference" contracts at its first run.
+
+**Verified here, and what is not.** The final quick sets on the final tree (after the review fix round: the design table of section 6.7 and a comment of `tech-chain.js`): Generator 3,459 of 3,459 (fingerprint `d32f1d9e...41827`), Player 1,750 of 1,750 (`dfb21962...9c323`), `generator-suites.sh check` exit 0; complete E, the complete GH
+catalogue, the pilot and the cost record. Not verified: the manual `difficulty` suite (edited for the three constructed Nightmare puzzles, **not run**: MS07b's edit had left its "constructed puzzle keeps its label" contract false for
+`constructed-nightmare-2`), the mega Nightmare and Hell 1 deep records (history on earlier sources, see above; MS18e reruns them), and any qualification or GQ-first (not this task's gate). Named items: S-AV08 re-measured at 684.3 s;
+S-AV04, S-AV07, S-AV19, S-AV20, S-AV22 and S-AV23 changed numbers on the window cells and on G13 (listed in the evidence, routes MS07e then MS18c and MS18d); S-AV25 (no `nishioDeep` step in 30 Hell 1 generations) and S-AV26 (5.6 s per Hell 1 request) with the pilot's numbers; S-AV02, S-AV03 and S-AV24 as history.

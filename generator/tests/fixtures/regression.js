@@ -84,11 +84,11 @@
         '40fb1b94a17744c8', '5b90d5565d7fb11a', '29347bf7614c9de3', '0653c5d7dc8f5133'
       ],
       'classic9/nightmare': [
-        '86d1e172be618b9e', '7c21f405e81ddad9', '014f55fe64c7b982', '486e7c2ec5568382',
-        '345c0e526057fe6e', '12ef6c318fc0d53d', 'b1f7b262d7cb10ce', 'e6a777410136194d',
-        '4164e7fe5f7fe0e2', '85547b3b71a3ee0f', '0caa79518030700d', '5b51d9e075f3fe7c',
-        'b457b0449e9a0ee8', '71afbd6714c77a53', 'd21fee25b9491269', '1e3ed1b29371764e',
-        '41ea89e94ebb3c95', '333527f37c599ca7', '6609cbc059d1792c', '7e5d71552b14f449'
+        'af8cc1903dae114c', '02187d257efbeee9', '9eb005df27ca67fb', '50d912426088f8ae',
+        '16e254f77e390dd3', '975c7eb469143628', '928fc14996261565', '7a18532b7b9079ef',
+        '8795814f4ba2980b', 'dfe595d66baa4e2a', 'f24ddbd6fb4bcd5a', '5b51d9e075f3fe7c',
+        'a8570f419832bdbd', '5808eca53f2e9399', '668d170e087a5ac2', '03e1963a6a104586',
+        '2d5076ab2613714f', '333527f37c599ca7', 'ea50bd67245c3443', '03422584c3ded548'
       ],
       'mega12/normal': [
         '97897abcb3ad1978', '880378cbd0717e4f', '8db24fe4df2928a0', 'f7a01ff67ea68312',
@@ -112,11 +112,11 @@
         '69ce6a82fd52539e', 'e9142c88dff360d4', 'd5f4aeb7c4373de3', '21d0e09cd4e738d0'
       ],
       'diagonalX/nightmare': [
-        '2d590e59df31f175', 'e146de8f5fc95aeb', 'edfaf735dcebeb69', '36a7770b4c58994f',
-        '30a81f93a7eab1f7', '863dc6f9375bbf65', '1f1a13a4b5e716e8', 'd3b88366b7c46bea',
-        'c569190b688625cf', '2664a77a0835c0e6', '37f4fcd45964d318', '0086fe024b32105e',
-        'a7dd044fac63df4b', 'eab7817ac72f1b96', 'd560e6c98ee86185', 'd74675d99db28fa5',
-        'c2a515b84ef8b804', '5410290818e10de4', '0b042686411f1b3a', '4d80a44cf03bb140'
+        '6aa1199289508cee', 'ec3bc191c961f6cd', 'a124fb395b1c3995', 'e87ea2398c204a65',
+        '8244fd6c8e539f80', '717a3db05357b59c', 'fb84742989554835', '8bb9d385985a75f9',
+        'c9d1861f942c781b', '51ff0ce01d01701c', '75d5fdbb8e3559bf', 'e784425b02f0a5ff',
+        'df6c3ef1fde34fcd', '2ba101ef5bdb65bb', '16cda02e9d025cf2', '217450ec2407a0f0',
+        'c2a515b84ef8b804', '89adb1febef76b92', '0a325c1fbcc4712b', '95ed00c2ff0ac9ee'
       ],
       'hyper/hard': [
         '8cb8dd03560df7d7', 'bc3d5e35d5c2eaf9', 'b2f1ed93f656de47', 'b814c3c13a732ded',

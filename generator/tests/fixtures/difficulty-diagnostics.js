@@ -48,7 +48,8 @@
  *   workCheck ({ status: 'ok' | 'mismatch' | 'unavailable', reason }: the conservation check, never 'ok' for
  *   missing work), target (the target of the selected result: a finite number, zero included, or null, which
  *   is what a result without one has; never a draw or a value computed by the soak), chainLengths /
- *   nishioDepths (of the final path),
+ *   nishioDepths (of the final path: the lengths of the forcing-chain steps, `forcingChain` and
+ *   `forcingChainLong` alike, and the depths of the Nishio steps, `nishio` and `nishioDeep` alike),
  *   puzzleHash (identity of the puzzle) and pathCheck ({ status: 'not-run' | 'ok' | 'mismatch' | 'error',
  *   error }).
  */
@@ -499,14 +500,21 @@
     return ids.every(function (id) { return (left[id] || 0) === (right[id] || 0); });
   }
 
-  /** The lengths of the forcing-chain steps and the depths of the Nishio steps of a list of steps. */
+  /**
+   * The lengths of the forcing-chain steps and the depths of the Nishio steps of a list of steps. A proof is
+   * counted whichever of its ids owns it (`forcingChain` and `forcingChainLong`, `nishio` and `nishioDeep`: the
+   * window of the cutoff C decides the id, the length or depth is the proof's own), so the series of a run with
+   * C = 4 and of one with C = 6 are comparable.
+   */
   function chainsOf(steps) {
     var lengths = [];
     var depths = [];
     (steps || []).forEach(function (step) {
       var args = step.i18nArgs || {};
-      if (step.technique === 'forcingChain' && finite(args.length)) lengths.push(args.length);
-      else if (step.technique === 'nishio' && finite(args.depth)) depths.push(args.depth);
+      var forcing = step.technique === 'forcingChain' || step.technique === 'forcingChainLong';
+      var nishio = step.technique === 'nishio' || step.technique === 'nishioDeep';
+      if (forcing && finite(args.length)) lengths.push(args.length);
+      else if (nishio && finite(args.depth)) depths.push(args.depth);
     });
     return { lengths: lengths, depths: depths };
   }
@@ -581,14 +589,16 @@
   }
 
   // What the shards of one logical cell must share for their rows to be used together: the identity of the
-  // sources and of the tool, the Node version, the seed, the allowance and the other settings of the run, and
-  // the logical cell. The span (`from`, `requests`), the command line and the dates are left out.
+  // sources and of the tool, the Node version, the seed, the allowance, the short-chain cutoff (asked for and
+  // in force: C = 4 and C = 6 never mix, nor an explicit window with the default) and the other settings of the
+  // run, and the logical cell. The span (`from`, `requests`), the command line and the dates are left out.
   function shardIdentityOf(meta, cell) {
     var manifest = meta.manifest || {};
     return {
       acceptance: meta.acceptance, sourceHash: meta.sourceHash, sourceFiles: meta.sourceFiles,
       toolHash: meta.toolHash, node: meta.node, seedBase: meta.seedBase, shallowCap: meta.shallowCap,
-      shallowSearchRatings: meta.shallowSearchRatings, quick: manifest.quick, perCombo: manifest.perCombo,
+      shallowSearchRatings: meta.shallowSearchRatings, chainWindow: meta.chainWindow,
+      chainShortMax: meta.chainShortMax, quick: manifest.quick, perCombo: manifest.perCombo,
       includeUnsupported: manifest.includeUnsupported, weights: manifest.weights, bands: manifest.bands,
       gate: manifest.gate, ratingVersion: manifest.ratingVersion,
       referenceBudgetMs: manifest.referenceBudgetMs, variant: cell.variant, level: cell.level,

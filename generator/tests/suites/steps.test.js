@@ -817,7 +817,7 @@
       });
     });
 
-    it('marks 13 compact and 16 details jumps over the 14 goldens, and one first rated puzzle per view',
+    it('marks 14 compact and 17 details jumps over the 14 goldens, and one first rated puzzle per view',
       function () {
         var jumps = { compact: 0, details: 0 };
         inLocale('en', function () {
@@ -852,7 +852,7 @@
             });
           });
         });
-        expect(jumps).toEqual({ compact: 15, details: 18 });
+        expect(jumps).toEqual({ compact: 14, details: 17 });
       }, 120000);
 
     it('the example: the first rated puzzle, the new hardest technique without a badge, an unchanged total',
@@ -1058,15 +1058,15 @@
       }
       expect(third('G03', 23).sentences[2])
         .toBe('Removing each clue alone gives 45 and 44; removing the whole group gives 870.');
-      expect(third('G05', 24).sentences[2])
-        .toBe('Removing the clue at R3C9 alone gives 1,992; removing the clue at R7C1 alone gives 551.');
+      expect(third('G05', 29).sentences[2])
+        .toBe('Removing each clue alone gives 50 and 50; removing the whole group gives 2,497.');
       expect(third('G09', 37).sentences[2]).toBe('Removing the clue at R3C5 alone gives 524, versus 562 for the ' +
         'whole symmetric group, which is always displayed as one complete change.');
       var sign = third('G11', 110, 'details');
       expect(sign.sentences[0]).toContain('After the sign between R2C4 and R1C4 is removed, ');
       expect(sign.sentences[2]).toBe('This step removes one sign; there is no smaller sign-removal move to show.');
       expect(third('G13', 114).sentences[2])
-        .toBe('Removing the clue at G2-R8C9 alone gives 1,483; removing the clue at G3-R2C1 alone gives 72.');
+        .toBe('Removing the clue at G2-R8C9 alone gives 1,858; removing the clue at G3-R2C1 alone gives 72.');
     }, 120000);
 
     function fragmentEn(move) {
@@ -1335,20 +1335,28 @@
       }
     });
 
-    it('the first deductions of the goldens: Killer candidates 5, 6 and 8 in one cell, candidate 9 in another',
+    it('the first deductions of the goldens: Killer candidates 5, 6 and 8 in one cell, a placement, candidate 1 in a cell',
       function () {
         var nine = golden('G09');
         var ten = golden('G10');
+        var thirteen = golden('G13');
         withLabels(nine, function () {
           inLocale('en', function () {
             var why = textOfStep(stepAt(viewsOf(nine).compact.steps, 37)).callout.why;
             expect(why).toContain('In that deduction, candidates 5, 6 and 8 are removed from R6C5.');
           });
         });
+        // the forced chain that is the first use of the G10 jump places a digit and removes no candidate
         withLabels(ten, function () {
           inLocale('en', function () {
-            var why = textOfStep(stepAt(viewsOf(ten).compact.steps, 37)).callout.why;
-            expect(why).toContain('In that deduction, candidate 9 is removed from R8C2.');
+            var why = textOfStep(stepAt(viewsOf(ten).compact.steps, 48)).callout.why;
+            expect(why).toContain('In that deduction, 2 is placed in R2C9.');
+          });
+        });
+        withLabels(thirteen, function () {
+          inLocale('en', function () {
+            var why = textOfStep(stepAt(viewsOf(thirteen).compact.steps, 114)).callout.why;
+            expect(why).toContain('In that deduction, candidate 1 is removed from G2-R1C2.');
           });
         });
       }, 120000);
@@ -1518,10 +1526,10 @@
     }, 120000);
 
     it('a restored culprit gets the restore legend and the restore sentence, never the removal legend', function () {
-      // No real jump shows a clue again. The exchange of G07 (two clues removed, two shown again) is the specimen:
+      // No real jump shows a clue again. The exchange of G04 (two clues removed, two shown again) is the specimen:
       // its transition is made a jump whose culprit is one of the clues it shows again, and the frames of the
       // real jumps are taken away so that this is the only one.
-      var res = golden('G07');
+      var res = golden('G04');
       var analysis = analysisOf(res);
       var base = viewsOf(res).details.steps.filter(function (s) {
         return s.role === 'moves' && analysis.moves[s.position].kind === 'exchange';

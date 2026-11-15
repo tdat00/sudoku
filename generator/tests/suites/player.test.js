@@ -383,10 +383,12 @@
     });
 
     it('an exchange step counts its moves, the cells it cleared and the clues it restored (gross)', function () {
-      var step = compactOf(goldenResult('G07'))[7];
+      // the only exchange of the goldens is the one of G04 (G07 had two until the cutoff C = 4 of MS07c)
+      var steps = compactOf(goldenResult('G04'));
+      var step = steps[steps.length - 2];
       expect(step.kind).toBe('search');
       expect(step.key).toBe('replay.exchange');
-      expect([step.args.count, step.args.removed, step.args.revealed]).toEqual([2, 4, 4]);
+      expect([step.args.count, step.args.removed, step.args.revealed]).toEqual([1, 2, 2]);
     });
 
     it('Killer: the cages appear in the step after the solution', function () {
@@ -471,12 +473,12 @@
     });
 
     it('one complete move per details step: no position shows half of an exchange', function () {
-      var result = goldenResult('G07');
+      var result = goldenResult('G04');
       var analysis = analysisOf(result);
       var steps = stepsOf(result);
-      expect(steps.length).toBe(33);
+      expect(steps.length).toBe(29);
       var exchanges = steps.filter(function (s) { return s.role === 'moves' && analysis.moves[s.position].kind === 'exchange'; });
-      expect(exchanges.length).toBe(2);
+      expect(exchanges.length).toBe(1);
       exchanges.forEach(function (s) {
         var move = analysis.moves[s.position];
         expect(s.kind).toBe('search');
@@ -1001,7 +1003,7 @@
           });
         });
       });
-      expect(jumps).toBe(33);
+      expect(jumps).toBe(31);
       expect(framed).toBeGreaterThan(8);
       expect(framed).toBeLessThan(jumps);
     }, 120000);
@@ -1009,9 +1011,9 @@
     it('a restored culprit is framed as causeRestore and leaves the revealed clues; an unavailable cause has no ' +
       'frame, and the removed cells stay as they were',
       function () {
-        // No real jump shows a clue again. The exchange of G07 (two clues removed, two shown again) is the
+        // No real jump shows a clue again. The exchange of G04 (two clues removed, two shown again) is the
         // specimen: its transition is made a jump whose culprit is one of the clues it shows again.
-        var result = goldenResult('G07');
+        var result = goldenResult('G04');
         var analysis = analysisOf(result);
         var base = viewsOf(result).details.steps.filter(function (s) {
           return s.role === 'moves' && analysis.moves[s.position].kind === 'exchange';

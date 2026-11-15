@@ -170,15 +170,16 @@
     });
 
     // The example's local search ended in exchanges before the target policy (MS06c2): its sample now ends in the
-    // guided pass, so the exchanges of a log are taken from the Jigsaw 9x9 Nightmare golden that still has two.
-    slow('has exchanges in G07: 32 positions with 7 guided moves and 2 exchanges, each removing 2 and restoring 2',
+    // guided pass, so the exchanges of a log are taken from the Classic 9x9 Hell 1 golden G04, which has one (G07 had
+    // two until the cutoff C = 4 of MS07c made its Nightmare puzzle exact without a local search).
+    slow('has an exchange in G04: 28 positions with 4 guided moves and 1 exchange, removing 2 and restoring 2',
       function () {
-        var moves = R.moves(entry('G07').result).moves;
-        expect(moves).toHaveLength(32);
+        var moves = R.moves(entry('G04').result).moves;
+        expect(moves).toHaveLength(28);
         var kinds = moves.map(function (m) { return m.kind; });
-        expect(kinds.slice(23, 30)).toEqual(new Array(7).fill('guided'));
-        expect(kinds.slice(30)).toEqual(['exchange', 'exchange']);
-        moves.slice(30).forEach(function (m) {
+        expect(kinds.slice(23, 27)).toEqual(new Array(4).fill('guided'));
+        expect(kinds.slice(27)).toEqual(['exchange']);
+        moves.slice(27).forEach(function (m) {
           expect(m.removed).toHaveLength(2);
           expect(m.restored).toHaveLength(2);
           expect(m.phase).toBe('search');
@@ -215,8 +216,8 @@
       });
     });
 
-    slow('never shows half of an exchange: the board with only the removal is no position (G07)', function () {
-      var moves = R.moves(entry('G07').result).moves;
+    slow('never shows half of an exchange: the board with only the removal is no position (G04)', function () {
+      var moves = R.moves(entry('G04').result).moves;
       var boards = moves.map(function (m) { return Array.from(m.values).join(','); });
       var exchanges = 0;
       moves.forEach(function (m, i) {
@@ -226,7 +227,7 @@
         m.removed.forEach(function (c) { half[c] = 0; });
         expect(boards).not.toContain(Array.from(half).join(','));
       });
-      expect(exchanges).toBe(2);
+      expect(exchanges).toBe(1);
     });
 
     slow('keeps the example as it is: its givens, its score 969 (expert) and its 87-entry log', function () {
@@ -518,7 +519,7 @@
       expect(rating.empties).toBe(53);
       expect(rating.counts).toEqual({
         nakedSingle: 2, hiddenSingleBox: 15, pointing: 6, boxLine: 1, nakedPair: 2, hiddenPair: 2, wWing: 2,
-        uniqueRectangle: 1, forcingChain: 4
+        uniqueRectangle: 1, forcingChain: 3, forcingChainLong: 1
       });
       expect(rating.checks).toBeGreaterThan(0);
       expect(rating.memo).toBe(false);
@@ -548,8 +549,10 @@
       expect(capped.level).toBeNull();
     });
 
+    // The guard of one check is spent by the uniqueness count of G06 (a Jigsaw 9x9 puzzle) and not by the easy
+    // count of the other goldens' puzzles.
     slow('is unverified when the uniqueness count runs out of its guard, and rated with the default one', function () {
-      var result = entry('G04').result;
+      var result = entry('G06').result;
       var out = R.rateBoard(result.model, result.givens, { forceCount: true, countNodes: 1 });
       expect(out.status).toBe('unverified');
       expect(out.reasons).toEqual(['unverified']);
@@ -557,7 +560,7 @@
       expect(Object.keys(out.counts).length).toBeGreaterThan(0);
       var rated = R.rateBoard(result.model, result.givens, { forceCount: true });
       expect(rated.status).toBe('rated');
-      expect(rated.score).toBe(2916);
+      expect(rated.score).toBe(2330);
     });
 
     slow('reports the progress of prepare once per position, then after every probe and optional solve', function () {
@@ -1075,14 +1078,15 @@
         expect(steps).toHaveLength(g.counts.compact);
         expect(analysis.views.details.steps).toHaveLength(g.counts.details);
         expect(g.rows).toHaveLength(steps.length);
-        // every audit is complete; a jump stays unless a bridge of recorded positions avoids it, which only G04 has
-        // and, since the chain windows of MS07b (the depth-2 step is now nishioDeep, after a nishio step of 3603), G14
+        // every audit is complete; a jump stays unless a bridge of recorded positions avoids it, which only G14 has
+        // (the depth-2 step is nishioDeep after a nishio step of 3674, since the chain windows of MS07b; G04 had one
+        // too until the cutoff C = 4 of MS07c changed its puzzle)
         var audit = analysis.views.compact.audit;
         var avoided = audit.filter(function (edge) { return edge.inserted.length > 0; });
         expect(audit.every(function (edge) { return edge.scope === 'complete'; })).toBe(true);
         expect(avoided.every(function (edge) { return !edge.remaining; })).toBe(true);
         expect(audit.every(function (edge) { return edge.inserted.length > 0 || edge.remaining; })).toBe(true);
-        expect(avoided).toHaveLength(g.id === 'G04' || g.id === 'G14' ? 1 : 0);
+        expect(avoided).toHaveLength(g.id === 'G14' ? 1 : 0);
         g.rows.forEach(function (row, i) {
           var step = steps[i];
           var rating = analysis.ratings[step.position];
@@ -1201,7 +1205,7 @@
       expect(toPosition(g01, 'details', 27).before.W).toBeCloseTo(198.25, 6);
     });
 
-    slow('has 15 compact, 18 details and 20 distinct jump transitions in the 14 goldens', function () {
+    slow('has 14 compact, 17 details and 21 distinct jump transitions in the 14 goldens', function () {
       var count = { compact: 0, details: 0 };
       var distinctJumps = {};
       GOLDENS.forEach(function (g) {
@@ -1211,8 +1215,8 @@
           distinctJumps[g.id + ':' + t.from + '>' + t.to + ':' + t.before.total + '>' + t.after.total] = true;
         });
       });
-      expect(count).toEqual({ compact: 15, details: 18 });
-      expect(Object.keys(distinctJumps)).toHaveLength(20);
+      expect(count).toEqual({ compact: 14, details: 17 });
+      expect(Object.keys(distinctJumps)).toHaveLength(21);
     });
 
     slow('labels a new hardest technique also at a flat or lower score (details: G13, G11)', function () {
@@ -1240,7 +1244,7 @@
   describe('replay: explaining the jumps', function () {
     var NONE = '\u2014';
     // The goldens whose jump has no candidates recorded by the generator, with the kind that says so.
-    var UNRECORDED = { 'G11:5': 'combined', 'G12:5': 'combined' };
+    var UNRECORDED = { 'G07:5': 'combined', 'G10:7': 'combined', 'G11:5': 'combined', 'G12:5': 'combined' };
 
     function labeller(id) {
       return function (cell) { return SG.model.cellLabel(entry(id).result.model, cell); };
@@ -1529,7 +1533,7 @@
       expect(guarded.ratings.every(function (r) { return r.status !== 'capped'; })).toBe(true);
     });
 
-    slow('has a cause, a choice and a proof for every jump of the goldens: 15 compact and 18 details', function () {
+    slow('has a cause, a choice and a proof for every jump of the goldens: 14 compact and 17 details', function () {
       var count = { compact: 0, details: 0 };
       GOLDENS.forEach(function (g) {
         var analysis = analysisOf(g.id);
@@ -1552,15 +1556,15 @@
         });
         expect(Object.keys(analysis.proofs).map(Number)).toEqual(Object.keys(ends).map(Number));
       });
-      expect(count).toEqual({ compact: 15, details: 18 });
+      expect(count).toEqual({ compact: 14, details: 17 });
     });
 
-    slow('frames the details jumps too: G06 R8C4 and the four sign jumps of G11', function () {
+    slow('frames the details jumps too: G06 R5C9 and the four sign jumps of G11', function () {
       var g06 = analysisOf('G06');
       var t = toPosition(g06, 'details', 27);
-      expect([t.before.total, t.after.total, t.cause.class]).toEqual([106, 1697, 'single-culprit']);
-      expect(frameLabel('G06', t.cause.frame)).toBe('R8C4');
-      expect(t.cause.culprit.otherScore).toBe(107);
+      expect([t.before.total, t.after.total, t.cause.class]).toEqual([48, 530, 'single-culprit']);
+      expect(frameLabel('G06', t.cause.frame)).toBe('R5C9');
+      expect(t.cause.culprit.otherScore).toBe(48);
       var g11 = jumpsOf(analysisOf('G11'), 'details');
       expect(g11.map(function (x) { return x.cause.frame; })).toEqual([
         { kind: 'sign', sign: 7 }, { kind: 'sign', sign: 43 }, { kind: 'sign', sign: 75 }, { kind: 'sign', sign: 6 }]);

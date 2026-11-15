@@ -573,7 +573,7 @@
 
     it('MS05b1-T05: a shallow fallback keeps exact false and both warnings; a required result keeps its flag',
       function () {
-        const shallow = P.run({ variantId: 'classic9', difficulty: 'nightmare', seed: 42, trace: 'summary',
+        const shallow = P.run({ variantId: 'classic9', difficulty: 'nightmare', seed: 5, trace: 'summary',
           maxAttempts: 1 }, null);
         expect(shallow.exact).toBe(false);
         expect(shallow.rating.level).toBe('nightmare');

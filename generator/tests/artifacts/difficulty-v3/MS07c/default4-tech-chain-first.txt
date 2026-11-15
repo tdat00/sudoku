@@ -1,0 +1,86 @@
+$ node tests\node-runner.js --suite=tech-chain,techniques
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-chain: 97 passed, 10 failed  (6.03 s)
+FAIL techniques: 184 passed, 2 failed  (1.61 s)
+
+Failures:
+  FAIL tech-chain > chain group: registration > exposes the short window C, 6 to begin with, at SG.chainSearch.SHORT_MAX
+       AssertionError: expected 4 to be 6
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:654:40)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-chain > forcingChain: fixtures > reports the contradiction chain of 5 links
+       AssertionError: technique "forcingChain" found nothing, but a Finding was expected
+       at fail (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:107:11)
+       at Object.expectFinding (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:426:7)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:940:25)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL tech-chain > forcingChain: fixtures > reports the contradiction chain of 6 links
+       AssertionError: technique "forcingChain" found nothing, but a Finding was expected
+       at fail (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:107:11)
+       at Object.expectFinding (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:426:7)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:940:25)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL tech-chain > forcingChain: maxChainLength > reports the shortest chain up to C links, and nothing at all below its length
+       AssertionError: expected 4 to be > 4
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:1001:23)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-chain > forcingChain: maxChainLength > treats the fixtures as exact: one link less and the chain is out of reach
+       TypeError: Cannot read properties of null (reading 'i18nArgs')
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:1010:19
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:1006:22)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL tech-chain > chain windows: the four registered ids on their own > reads C at every call, not once: the same position changes owner as SHORT_MAX changes
+       AssertionError: expected 4 to be 6
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2094:28)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-chain > chain windows: the four registered ids on their own > refuses a SHORT_MAX that is not a number instead of guessing a window
+       AssertionError: expected 4 to be 6
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2122:28)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-chain > chain windows: the four registered ids on their own > narrows its window with maxChainLength and never widens it, nor raises a maximum to make it fire
+       AssertionError: expected Array(2)[3120, null] to equal Array(2)[0, null]
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2150:67
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2150:17)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL tech-chain > chain windows: the four registered ids on their own > owns every shortest proof exactly once, for C = 4 and C = 6: the windows partition the scan
+       AssertionError: expected 15 to be > 20
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2192:41)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-chain > chain group: nightmare puzzles > honours maxChainLength given to the solver: singles + chains solve what it allows
+       AssertionError: expected false to be true
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2359:33
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2355:13)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL techniques > techniques: fixtures (fixtures/techniques.js) > forcingChainLong > finds exactly the recorded deduction: forcingChainLong contradiction of 7 links on a dug puzzle
+       AssertionError: technique "forcingChainLong": eliminations differ from the expected ones.
+  expected: 48:3
+  found:    14:3
+  finding:  {"technique":"forcingChainLong","cells":[14,12,75,78,6,11,1],"placements":[],"eliminations":[[14,3]],"i18nKey":"technique.forcingChainLong.step.contradiction","i18nArgs":{"kind":"contradiction","length":5,"chains":[[[14,3,1],[14,2,0],[12,2,1],[75,2,0],[78,2,1],[6,2,0]],[[14,3,1],[11,3,0],[1,3,1],[1,2,0],[6,2,1]]]}}
+       at fail (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:107:11)
+       at expectList (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:413:7)
+       at Object.expectFinding (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:451:7)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:155:29)
+  FAIL techniques > techniques: fixtures (fixtures/techniques.js) > forcingChainLong > finds exactly the recorded deduction: forcingChainLong contradiction of 8 links on a dug puzzle
+       AssertionError: technique "forcingChainLong": eliminations differ from the expected ones.
+  expected: 1:9
+  found:    10:2
+  finding:  {"technique":"forcingChainLong","cells":[10,14,59,57,21,18,25],"placements":[],"eliminations":[[10,2]],"i18nKey":"technique.forcingChainLong.step.contradiction","i18nArgs":{"kind":"contradiction","length":6,"chains":[[[10,2,1],[10,9,0],[14,9,1],[59,9,0],[57,9,1],[57,4,0],[21,4,1]],[[10,2,1],[18,2,0],[25,2,1],[25,6,0],[21,6,1],[21,4,0]]]}}
+       at fail (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:107:11)
+       at expectList (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:413:7)
+       at Object.expectFinding (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:451:7)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:155:29)
+
+Suites: 2
+Tests:  293 total, 281 passed, 12 failed, 0 skipped
+Time:   7.63 s running tests, 7.73 s total
+exit=1 seconds=7.829

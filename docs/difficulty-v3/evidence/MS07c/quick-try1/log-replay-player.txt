@@ -1,0 +1,36 @@
+$ node ..\.github\scripts\generator-quick.js run replay-player --results-dir=..\docs\difficulty-v3\evidence\MS07c\quick-try1
+==== shard player (69 tests): node tests/node-runner.js --suite=player --results=..\docs\difficulty-v3\evidence\MS07c\quick-try1\generator-player.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL player: 65 passed, 4 failed  (134.41 s)
+
+Failures:
+  FAIL player > player: the replay steps of a result > an exchange step counts its moves, the cells it cleared and the clues it restored (gross)
+       TypeError: Cannot read properties of undefined (reading 'kind')
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:387:19)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL player > player: the replay steps of a result > one complete move per details step: no position shows half of an exchange
+       AssertionError: expected 42 to be 33
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:477:28)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL player > player: the frame of the one clue or sign that causes a score jump > frames exactly the jumps that one clue or one sign causes (the 14 goldens, both views)
+       AssertionError: expected 31 to be 33
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:1004:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL player > player: the frame of the one clue or sign that causes a score jump > a restored culprit is framed as causeRestore and leaves the revealed clues; an unavailable cause has no frame, and the removed cells stay as they were
+       TypeError: Cannot read properties of undefined (reading 'index')
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:1019:26)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  69 total, 65 passed, 4 failed, 0 skipped
+Time:   134.41 s running tests, 134.59 s total
+Results: docs/difficulty-v3/evidence/MS07c/quick-try1/generator-player.json
+shard player: exit 1, 134.8 s
+FAILED: player
+exit=1 seconds=135.170

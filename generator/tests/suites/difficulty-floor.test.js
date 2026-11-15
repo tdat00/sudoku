@@ -710,16 +710,17 @@
 
     // The labels and family certificates of the fixtures are rating v2's history: a label names the level
     // asked, and a certificate is no floor of rating v3 (a Nightmare puzzle needs no more than Master's).
-    // These are the requested level (the label) and the verdict of the reference there, named explicitly:
-    // the four old shallow certificates are Normal 1 and 3 and Nightmare 1 and 3. Nightmare 2 is no longer
-    // shallow at its label since MS07b: it needs two chains of 7 links, which forcingChainLong owns, and
-    // forcingChainLong (1.25 x 1400 = 1750) belongs to the tier of Nightmare, not to its floor.
+    // These are the requested level (the label) and the verdict of the reference there, named explicitly.
+    // The four old shallow certificates were Normal 1 and 3 and Nightmare 1 and 3. Nightmare 2 stopped being shallow
+    // at its label in MS07b (two chains of 7 links, which forcingChainLong owns), and at the selected C = 4 (MS07c)
+    // so do Nightmare 1 and 3: their chains of 5 and 6 links are forcingChainLong's too, and forcingChainLong
+    // (1.25 x 1400 = 1750) belongs to the tier of Nightmare, not to its floor. All three now rate Hell 1.
     var LABELLED = [
       ['easy', [false, false, false]],
       ['normal', [false, true, false]],
       ['hard', [true, true, true]],
       ['expert', [true, true, true]],
-      ['nightmare', [false, true, false]]
+      ['nightmare', [true, true, true]]
     ];
 
     LABELLED.forEach(function (row) {

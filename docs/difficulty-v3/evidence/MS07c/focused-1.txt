@@ -1,0 +1,161 @@
+$ node tests\node-runner.js --suite=tech-chain,techniques,technique-weights,difficulty-floor,difficulty-diagnostics,pattern-cost-tools,steps,replay,replay-recorders,help,i18n,purity,mega-contract,mega,digger,digger-target,smoke,ui-contract
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL difficulty-diagnostics: 89 passed, 5 failed  (12.23 s)
+FAIL difficulty-floor: 45 passed, 3 failed  (26.72 s)
+ok   digger: 64 passed  (938 ms)
+ok   digger-target: 75 passed  (1.17 s)
+ok   help: 30 passed  (4.21 s)
+ok   i18n: 83 passed  (102 ms)
+ok   mega: 108 passed  (9.39 s)
+ok   mega-contract: 44 passed  (1.64 s)
+FAIL pattern-cost-tools: 30 passed, 2 failed  (2.33 s)
+ok   purity: 41 passed  (23 ms)
+FAIL replay: 144 passed, 10 failed  (14.52 s)
+FAIL replay-recorders: 38 passed, 1 failed  (7.60 s)
+ok   smoke: 44 passed  (4.61 s)
+FAIL steps: 53 passed, 4 failed  (15.17 s)
+ok   tech-chain: 107 passed  (6.33 s)
+ok   technique-weights: 6 passed  (2 ms)
+ok   techniques: 187 passed  (1.60 s)
+ok   ui-contract: 67 passed  (340 ms)
+
+Failures:
+  FAIL difficulty-diagnostics > difficulty diagnostics: the soak with --json (Node only) > MS07c: the short-chain cutoff of a run (--chain-window) > starts at the selected default and, without --chain-window, leaves it alone and says it was not asked for
+       AssertionError: expected 4 to be 6
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\difficulty-diagnostics.test.js:1821:32)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL difficulty-diagnostics > difficulty diagnostics: the soak with --json (Node only) > MS07c: the short-chain cutoff of a run (--chain-window) > --chain-window=4 sets C once, before the prefix check, the references and every request, and puts the previous value back
+       AssertionError: expected Array(2)[4, 4] to equal Array(2)[4, 6]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\difficulty-diagnostics.test.js:1836:31)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL difficulty-diagnostics > difficulty diagnostics: the soak with --json (Node only) > MS07c: the short-chain cutoff of a run (--chain-window) > --chain-window=6 sets C once, before the prefix check, the references and every request, and puts the previous value back
+       AssertionError: expected Array(2)[6, 4] to equal Array(2)[6, 6]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\difficulty-diagnostics.test.js:1836:31)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL difficulty-diagnostics > difficulty diagnostics: the soak with --json (Node only) > MS07c: the short-chain cutoff of a run (--chain-window) > puts the previous value back when the run ends with an error or with a refusal of the weights
+       AssertionError: expected Array(2)[4, 4] to equal Array(2)[4, 6]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\difficulty-diagnostics.test.js:1855:33)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL difficulty-diagnostics > difficulty diagnostics: the soak with --json (Node only) > MS07c: the short-chain cutoff of a run (--chain-window) > records the cutoff of each shard and refuses to merge shards of different cutoffs
+       AssertionError: expected Array(2)[null, 4] to equal Array(2)[null, 6]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\difficulty-diagnostics.test.js:1897:74)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL difficulty-floor > difficulty floor: the reference on the frozen puzzles, in a registry of its own > says of the three constructed nightmare puzzles: required false, true, false
+       AssertionError: expected Array(2)["constructed-nightmare-1", true] to equal Array(2)["constructed-nightmare-1", false]
+       at Q:\git\sudoku\generator\tests\suites\difficulty-floor.test.js:733:49
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\difficulty-floor.test.js:731:17)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL difficulty-floor > difficulty floor: the reference on the frozen puzzles, in a registry of its own > says the same through requiredOf at the requested level of the old shallow certificates
+       AssertionError: expected Array(2)["constructed-nightmare-1", {required: true, vacuous: false, floorLevel: "master"}] to equal Array(2)["constructed-nightmare-1", {required: false, vacuous: false, floorLevel: "master"}]
+       at Q:\git\sudoku\generator\tests\suites\difficulty-floor.test.js:854:91
+       at Array.forEach (<anonymous>)
+       at Q:\git\sudoku\generator\tests\suites\difficulty-floor.test.js:852:32
+       at Array.forEach (<anonymous>)
+  FAIL difficulty-floor > difficulty floor: the reference on the frozen puzzles, in a registry of its own > agrees with the v3Expected level and verdict of every rated puzzle (unrated: null and null)
+       AssertionError: expected Array(2)["constructed-nightmare-1", "hell1"] to equal Array(2)["constructed-nightmare-1", "nightmare"]
+       at Q:\git\sudoku\generator\tests\suites\difficulty-floor.test.js:871:46
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\difficulty-floor.test.js:863:39)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL pattern-cost-tools > pattern cost: measuring real fixtures with a fake clock > runs every case of forcingChain and nishio the same number of times, with the work records
+       AssertionError: expected Array(8)["forcingChain:positive:1", "forcingChain:positive:2", "forcingChain:negative:1", "forcingChain:negative:2", "nishio:positive:1", "nishio:positive:2", "nishio:negative:1", "nishio:negative:2"] to equal Array(7)["forcingChain:positive:1", "forcingChain:positive:2", "forcingChain:negative:1", "nishio:positive:1", "nishio:positive:2", "nishio:negative:1", "nishio:negative:2"]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\pattern-cost-tools.test.js:404:65)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL pattern-cost-tools > pattern cost: tests/pattern-cost.js (Node only) > shows the usage, lists the cases and runs nothing
+       AssertionError: expected length 8 of Array(8)["forcingChain:positive:1  forcingChain contradiction of 4 links on puzzle 2", "forcingChain:positive:2  forcingChain contradiction of 3 links on the first position of hard-b", "forcingChain:negative:1  forcingChain has nothing left to do once the techniques through it are exhausted", "forcingChain:negative:2  forcingChain leaves a chain of 5 links to forcingChainLong (the window ends at C = 4)", "nishio:positive:1  nishio depth 1 on puzzle 1", "nishio:positive:2  nishio depth 1 on puzzle 2", "nishio:negative:1  nishio finds nothing on a board where every candidate is still possible (the empty board)", "nishio:negative:2  nishio leaves the refutation of hard-platinum, which needs a guess inside a guess, to nishioDeep"] to be 7
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\pattern-cost-tools.test.js:579:97)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: the moves of the example (Classic 9x9 Expert, seed 3275974478) > has exchanges in G07: 32 positions with 7 guided moves and 2 exchanges, each removing 2 and restoring 2
+       AssertionError: expected length 41 of Array(41)[{index: 0, kind: "solution", phase: "start", pass: null, from: -1, to: -1, at: -1, removed: Array(0)[], ...}, {index: 1, kind: "random", phase: "random", pass: "random", from: 1, to: 1, at: 1, removed: Array(2)[21, 59], ...}, {index: 2, kind: "random", phase: "random", pass: "random", from: 2, to: 2, at: 2, removed: Array(2)[28, 52], ...}, {index: 3, kind: "random", phase: "random", pass: "random", from: 3, to: 3, at: 3, removed: Array(2)[8, 72], ...}, {index: 4, kind: "random", phase: "random", pass: "random", from: 4, to: 4, at: 4, removed: Array(2)[1, 79], ...}, {index: 5, kind: "random", phase: "random", pass: "random", from: 5, to: 5, at: 5, removed: Array(2)[30, 50], ...}, {index: 6, kind: "random", phase: "random", pass: "random", from: 6, to: 6, at: 6, removed: Array(2)[19, 61], ...}, {index: 7, kind: "random", phase: "random", pass: "random", from: 7, to: 7, at: 7, removed: Array(2)[22, 58], ...}, {index: 8, kind: "random", phase: "random", pass: "random", from: 8, to: 8, at: 8, removed: Array(2)[33, 47], ...}, {index: 9, kind: "random", phase: "random", pass: "random", from: 9, to: 9, at: 9, removed: Array(2)[4, 76], ...}, {index: 10, kind: "random", phase: "random", pass: "random", from: 10, to: 10, at: 10, removed: Array(2)[39, 41], ...}, {index: 11, kind: "random", phase: "random", pass: "random", from: 11, to: 11, at: 11, removed: Array(2)[2, 78], ...}, ...] to be 32
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:177:23)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: the moves of the example (Classic 9x9 Expert, seed 3275974478) > never shows half of an exchange: the board with only the removal is no position (G07)
+       AssertionError: expected 0 to be 2
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:229:25)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: ratings > rates a stuck board honestly: attempted counts and two solutions (Classic 9x9, section 2.3)
+       AssertionError: expected {nakedSingle: 2, hiddenSingleBox: 15, pointing: 6, boxLine: 1, nakedPair: 2, hiddenPair: 2, wWing: 2, uniqueRectangle: 1, ...} to equal {nakedSingle: 2, hiddenSingleBox: 15, pointing: 6, boxLine: 1, nakedPair: 2, hiddenPair: 2, wWing: 2, uniqueRectangle: 1, ...}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:519:29)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: ratings > is unverified when the uniqueness count runs out of its guard, and rated with the default one
+       AssertionError: expected "rated" to be "unverified"
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:554:26)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > golden G04 compact rows, counts and invariants
+       AssertionError: expected length 0 of Array(0)[] to be 1
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1085:25)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > has 15 compact, 18 details and 20 distinct jump transitions in the 14 goldens
+       AssertionError: expected {compact: 14, details: 17} to equal {compact: 15, details: 18}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1214:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > golden G07: the generator's choice, the first use and the restricted check
+       AssertionError: expected "combined" to be undefined
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1333:28
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1329:17)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL replay > replay: explaining the jumps > golden G10: the generator's choice, the first use and the restricted check
+       AssertionError: expected "combined" to be undefined
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1333:28
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1329:17)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL replay > replay: explaining the jumps > has a cause, a choice and a proof for every jump of the goldens: 15 compact and 18 details
+       AssertionError: expected {compact: 14, details: 17} to equal {compact: 15, details: 18}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1555:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > frames the details jumps too: G06 R8C4 and the four sign jumps of G11
+       AssertionError: expected Array(3)[48, 530, "single-culprit"] to equal Array(3)[106, 1697, "single-culprit"]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1561:62)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay-recorders > replay recorders: the canonical golden fixture > lays a record out like the hand-written fixture: rows, wrapped details, folds, jumps
+       AssertionError: expected 124 to be < 121
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay-recorders.test.js:486:88)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the tiers, the badge and the lines > marks 13 compact and 16 details jumps over the 14 goldens, and one first rated puzzle per view
+       AssertionError: expected {compact: 14, details: 17} to equal {compact: 15, details: 18}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:855:23)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the callout of a score jump > names the cause of a move per class, on the goldens
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at textOfStep (Q:\git\sudoku\generator\tests\suites\steps.test.js:66:27)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1054:24
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1053:18
+  FAIL steps > stepView: "Why?" lines: the choice, the proof and the effects > the first deductions of the goldens: Killer candidates 5, 6 and 8 in one cell, candidate 9 in another
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at textOfStep (Q:\git\sudoku\generator\tests\suites\steps.test.js:66:27)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1350:23
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1349:11
+  FAIL steps > stepView: the callout, the badge and the legend on the page > a restored culprit gets the restore legend and the restore sentence, never the removal legend
+       TypeError: Cannot read properties of undefined (reading 'index')
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1529:24)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 18
+Tests:  1280 total, 1255 passed, 25 failed, 0 skipped
+Time:   108.93 s running tests, 109.17 s total
+exit=1 seconds=109.298

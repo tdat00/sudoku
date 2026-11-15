@@ -931,15 +931,19 @@
           expect([entry.name, rating.solved ? rating.level : null])
             .toEqual([entry.name, entry.v3Expected.level]);
         });
-        // a constructed puzzle keeps the level of its label; the one published label that moved is on record
+        // a constructed puzzle keeps the level of its label, except the three Nightmare ones: their chains of 5 and
+        // 6 links are forcingChainLong's at the selected C = 4 (nightmare-2's two of 7 links already since MS07b), which
+        // lifts them to Hell 1; the other moved published label is on record
         SG.fixtures.rated.constructed.forEach(function (entry) {
-          expect([entry.name, entry.v3Expected.level]).toEqual([entry.name, entry.label]);
+          var level = /^constructed-nightmare-/.test(entry.name) ? 'hell1' : entry.label;
+          expect([entry.name, entry.v3Expected.level]).toEqual([entry.name, level]);
         });
         var moved = entries.filter(function (entry) { return entry.v3Expected.level !== entry.label; })
           .map(function (entry) {
             return entry.name + ': ' + entry.label + ' -> ' + entry.v3Expected.level;
           });
-        expect(moved).toEqual(['classic-medium: normal -> easy']);
+        expect(moved).toEqual(['classic-medium: normal -> easy', 'constructed-nightmare-1: nightmare -> hell1',
+          'constructed-nightmare-2: nightmare -> hell1', 'constructed-nightmare-3: nightmare -> hell1']);
       });
 
     it('v3 reference: the level is required (or vacuous) as expected, derived and by the current floor',

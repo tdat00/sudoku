@@ -584,8 +584,9 @@
   /**
    * Real minimal puzzles (one solution each) that the techniques below the chain group and forcingChain get stuck
    * on, and where the shortest chain has 7 or 8 links: dug by SG.testkit.dig from the seeded stream 161 (fork
-   * 'minimal.<i>', the index in the comment), found by scanning 3000 of them in MS07b. Under any short cutoff
-   * C of 4 or 6 these positions belong to forcingChainLong.
+   * 'minimal.<i>', the index in the comment), found by scanning 3000 of them in MS07b. The stuck position is
+   * the one reached with C = 6 (`longStuckItem`): below C = 4 chains of 5 and 6 links are still left in it. Under
+   * C = 4 and C = 6 alike its shortest chain is a forcingChainLong's.
    */
   var LONG_CHAIN_PUZZLES = [
     '..7..1..6.8....1..5..6.78.3..65..7.......8..2.9..6....459........2...5......1..9.', // #24: 7 links
@@ -607,6 +608,22 @@
     var givens = H.parsePuzzle(model9, text);
     return { state: H.stateAfter(model9, text, ids), solution: SG.dfs.solve(model9, givens), givens: givens,
       kind: 'stuck' };
+  }
+
+  /** Runs `fn` with the short-chain cutoff C (`SG.chainSearch.SHORT_MAX`) set to `c`, and puts it back. */
+  function withCutoff(c, fn) {
+    var before = SG.chainSearch.SHORT_MAX;
+    SG.chainSearch.SHORT_MAX = c;
+    try {
+      return fn();
+    } finally {
+      SG.chainSearch.SHORT_MAX = before;
+    }
+  }
+
+  /** The stuck position of a puzzle of LONG_CHAIN_PUZZLES: every chain of up to 6 links is exhausted in it. */
+  function longStuckItem(text, ids) {
+    return withCutoff(6, function () { return stuckItem(text, ids); });
   }
 
   /** The ids tried before `id` in the registry: every other technique of the classic ladder below it. */
@@ -650,8 +667,8 @@
       });
     });
 
-    it('exposes the short window C, 6 to begin with, at SG.chainSearch.SHORT_MAX', function () {
-      expect(SG.chainSearch.SHORT_MAX).toBe(6);
+    it('exposes the short window C, 4 to begin with (selected by MS07c), at SG.chainSearch.SHORT_MAX', function () {
+      expect(SG.chainSearch.SHORT_MAX).toBe(4);
     });
   });
 
@@ -668,7 +685,7 @@
       function () {
         var below = idsBefore('forcingChainLong');
         expect(below).toContain('forcingChain');
-        var states = LONG_CHAIN_PUZZLES.map(function (text) { return stuckItem(text, below); });
+        var states = LONG_CHAIN_PUZZLES.map(function (text) { return longStuckItem(text, below); });
         var stats = H.assertSound(SG.test, 'forcingChainLong',
           { model: model9, states: states, minFirings: states.length });
         expect(stats.eliminations).toBeGreaterThanOrEqual(states.length);
@@ -930,16 +947,23 @@
   });
 
   describe('forcingChain: fixtures', function () {
+    // The window decides the id: a chain of up to C links is forcingChain's, a longer one forcingChainLong's.
+    function ownerOf(fx) {
+      return fx.length <= SG.chainSearch.SHORT_MAX ? 'forcingChain' : 'forcingChainLong';
+    }
+
     CHAIN_FIXTURES.forEach(function (fx) {
       it('reports the ' + fx.name, function () {
         var state = fixtureState(fx);
+        var id = ownerOf(fx);
         var expected = { cells: fx.cells, args: { kind: fx.kind, length: fx.length } };
         if (fx.eliminations) expected.eliminations = fx.eliminations;
         if (fx.placements) expected.placements = fx.placements;
         if (fx.chains) expected.args.chains = fx.chains;
-        var finding = H.expectFinding(SG.test, 'forcingChain', state, expected);
-        expect(finding.i18nKey).toBe('technique.forcingChain.step.' + fx.kind);
+        var finding = H.expectFinding(SG.test, id, state, expected);
+        expect(finding.i18nKey).toBe('technique.' + id + '.step.' + fx.kind);
         expect(chainProblems(model9, state, finding)).toEqual([]);
+        expect(run(id === 'forcingChain' ? 'forcingChainLong' : 'forcingChain', model9, state)).toBeNull();
       });
     });
 
@@ -998,15 +1022,16 @@
         }
         if (base !== null) longest = Math.max(longest, base.i18nArgs.length);
       });
-      expect(longest).toBeGreaterThan(4);
-      expect(longest).toBeLessThanOrEqual(SG.chainSearch.SHORT_MAX);
+      expect(longest).toBe(SG.chainSearch.SHORT_MAX);
     });
 
     it('treats the fixtures as exact: one link less and the chain is out of reach', function () {
       CHAIN_FIXTURES.forEach(function (fx) {
         var state = fixtureState(fx);
-        expect(run('forcingChain', model9, state, { maxChainLength: fx.length - 1 })).toBeNull();
-        var at = run('forcingChain', model9, state, { maxChainLength: fx.length });
+        // forcingChain's own fixtures; a longer chain is forcingChainLong's, whose window starts at C + 1
+        var id = fx.length <= SG.chainSearch.SHORT_MAX ? 'forcingChain' : 'forcingChainLong';
+        expect(run(id, model9, state, { maxChainLength: fx.length - 1 })).toBeNull();
+        var at = run(id, model9, state, { maxChainLength: fx.length });
         expect(at.i18nArgs.length).toBe(fx.length);
       });
     });
@@ -1399,7 +1424,7 @@
       function () {
         var c = SG.chainSearch.SHORT_MAX;
         var long = LONG_CHAIN_PUZZLES.map(function (text) {
-          return stuckItem(text, idsBefore('forcingChainLong')).state;
+          return longStuckItem(text, idsBefore('forcingChainLong')).state;
         });
         var chains = {
           forcingChain: { minLength: 1, maxLength: c, workLimit: null },
@@ -2091,16 +2116,21 @@
         expect([short === null, long === null].filter(function (isNull) { return !isNull; }).length).toBe(1);
         return short !== null ? 'forcingChain' : 'forcingChainLong';
       }
-      expect(CS.SHORT_MAX).toBe(6);
-      expect(owner()).toBe('forcingChain');
+      var initial = CS.SHORT_MAX;
+      var byDefault = initial >= 6 ? 'forcingChain' : 'forcingChainLong';
+      expect(owner()).toBe(byDefault);
       withShortMax(4, function () { expect(owner()).toBe('forcingChainLong'); });
       withShortMax(5, function () { expect(owner()).toBe('forcingChainLong'); });
-      expect(owner()).toBe('forcingChain'); // restored, and still read afresh
+      withShortMax(6, function () { expect(owner()).toBe('forcingChain'); });
+      expect(CS.SHORT_MAX).toBe(initial);
+      expect(owner()).toBe(byDefault); // restored, and still read afresh
       withShortMax(12, function () { expect(owner()).toBe('forcingChain'); });
       // a real position with a chain of 5 links (fixture 'contradiction chain of 5 links')
       var five = fixtureState(CHAIN_FIXTURES[4]);
-      expect(run('forcingChain', model9, five).i18nArgs.length).toBe(5);
-      expect(run('forcingChainLong', model9, five)).toBeNull();
+      withShortMax(6, function () {
+        expect(run('forcingChain', model9, five).i18nArgs.length).toBe(5);
+        expect(run('forcingChainLong', model9, five)).toBeNull();
+      });
       withShortMax(4, function () {
         expect(run('forcingChain', model9, five)).toBeNull();
         var long = run('forcingChainLong', model9, five);
@@ -2111,6 +2141,7 @@
 
     it('refuses a SHORT_MAX that is not a number instead of guessing a window', function () {
       var state = fixtureState(CHAIN_FIXTURES[0]);
+      var initial = CS.SHORT_MAX;
       [undefined, NaN, '6', null].forEach(function (bad) {
         withShortMax(bad, function () {
           ['forcingChain', 'forcingChainLong'].forEach(function (id) {
@@ -2119,7 +2150,7 @@
           });
         });
       });
-      expect(CS.SHORT_MAX).toBe(6);
+      expect(CS.SHORT_MAX).toBe(initial);
     });
 
     it('narrows its window with maxChainLength and never widens it, nor raises a maximum to make it fire',
@@ -2142,13 +2173,15 @@
         });
         // a maximum below C + 1 leaves an empty window, and it is not raised: not a search that fails
         var records = [];
-        [6, 6.9, 5, 3, 1, 0, -3, 0.5, -Infinity].forEach(function (asked) {
+        var c = CS.SHORT_MAX;
+        var below = [c, c + 0.9, c - 1, 1, 0, -3, 0.5, -Infinity];
+        below.forEach(function (asked) {
           var out = run('forcingChainLong', near, nearState, { maxChainLength: asked,
             onPatternWork: function (r) { records.push(r); } });
           expect([asked, out]).toEqual([asked, null]);
         });
         records.forEach(function (r) { expect([r.work, r.capHit]).toEqual([0, null]); });
-        expect(records.length).toBe(9);
+        expect(records.length).toBe(below.length);
         // Infinity reaches the ceiling and not beyond: a chain of 13 links stays out of reach
         var far = ringNeeding(MAX_LONG + 1);
         expect(run('forcingChainLong', far, SG.model.initState(far), { maxChainLength: Infinity })).toBeNull();
@@ -2164,7 +2197,7 @@
         var positions = prunedStates(model9, SG.testkit.rng.create(171), 60,
           function (r) { return 0.03 + 0.3 * r.next(); }).map(function (item) { return item.state; });
         CHAIN_FIXTURES.forEach(function (fx) { positions.push(fixtureState(fx)); });
-        LONG_CHAIN_PUZZLES.forEach(function (text) { positions.push(stuckItem(text, below).state); });
+        LONG_CHAIN_PUZZLES.forEach(function (text) { positions.push(longStuckItem(text, below).state); });
         var counts = { forcingChain: 0, forcingChainLong: 0, none: 0 };
         [4, 6].forEach(function (c) {
           withShortMax(c, function () {
@@ -2352,13 +2385,15 @@
         { needs: 4, puzzle: '8...7.14..4....5.79......3..1.53.......9....5' +
           '..........32.1..8.5.7..2.......8.3..' }
       ];
+      // both windows of the chain, so that the limit decides what is solved, whatever the cutoff C is
+      var chains = ['forcingChain', 'forcingChainLong'];
       cases.forEach(function (tc) {
         for (var limit = 1; limit <= 12; limit++) {
           var report = SG.logicalSolver.solve(model9, H.parsePuzzle(model9, tc.puzzle), {
-            allowedTechniques: singles.concat(['forcingChain']), collectSteps: true, maxChainLength: limit });
+            allowedTechniques: singles.concat(chains), collectSteps: true, maxChainLength: limit });
           expect(report.solved).toBe(limit >= tc.needs);
           report.steps.forEach(function (s) {
-            if (s.technique === 'forcingChain') expect(s.i18nArgs.length).toBeLessThanOrEqual(limit);
+            if (chains.indexOf(s.technique) !== -1) expect(s.i18nArgs.length).toBeLessThanOrEqual(limit);
           });
         }
       });
