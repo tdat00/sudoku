@@ -539,3 +539,8 @@ MS07 may change the window, floors and search; these pre-freeze results decide n
 IG-S06 is deferred (not passed or refuted); SM1, SM3 and the Greater-Than diagnostic continue.
 IG-S10 will bring the full interpretation, SM1 attribution and the frozen-catalogue rerun proposal.
 No question or policy decision is requested.
+
+IG-S07 (non-gating, pre-MS07): about 81 % / 77 % of the single mega16 / mega12 Nightmare profiles' engine-root
+wall time lies in legacy `nishio`/`forcingChain`: hotspots, not evidence of cacheability or achievable gains.
+Frozen attribution must distinguish MS07b's new chain families (`forcingChainLong`, `nishioDeep`).
+The interpretation remains with IG-S10.

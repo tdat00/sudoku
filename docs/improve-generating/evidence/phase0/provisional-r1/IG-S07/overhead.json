@@ -1,0 +1,634 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S07",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "note": "The profile is wall-clock time of one instrumented native request: an attribution run, not a timing run. Finder and apply times include the cost of their own timers (estimated in overhead.json).",
+  "rows": [
+    {
+      "key": "IG-S07/c9/classic9:nightmare:3/profiled",
+      "cell": "classic9",
+      "level": "nightmare",
+      "seed": 3,
+      "outcome": "complete",
+      "profiledReadyWallMs": 5797.932,
+      "profiledColdWallMs": 5916.319,
+      "profiledCpuTotalMs": 6547,
+      "profiledCpuStatus": "resolved",
+      "comparator": {
+        "source": "IG-S02 native-w1 (harness generation dd759a22)",
+        "key": "IG-S02/c9/classic9:nightmare:3/native-w1",
+        "readyWallMs": 5644.893,
+        "coldWallMs": 5728.149,
+        "cpuTotalMs": 6094,
+        "sameCommand": false
+      },
+      "readyWallRatio": 1.0271,
+      "coldWallRatio": 1.0329,
+      "cpuRatio": 1.0743,
+      "overheadReadyWallPercent": 2.71,
+      "comparatorKind": "IG-S02 native-w1, time-separated (machine state and difficulty-v3 load may differ; harness fingerprints differ, see compatibility)",
+      "calibration": {
+        "clockReadNs": 59.4,
+        "finderTimerPairNs": 160.8,
+        "applyTimerNs": 148.8,
+        "framePairNs": 166.5,
+        "countedCheckNs": 0,
+        "counterIncrementNs": 0
+      },
+      "operations": {
+        "finderTimers": 434359,
+        "applyTimers": 279244,
+        "frames": 40097,
+        "countedChecks": 1852334,
+        "dfsCounterIncrements": 78196
+      },
+      "estimatedInstrumentationMs": 118.0726,
+      "estimatedInstrumentationShareOfReadyWall": 0.0204,
+      "estimateNote": "operations x calibrated unit costs (a quiet worker with a warm clock path): a lower-bound style estimate, not a correction",
+      "profileBytes": 46070,
+      "hostReadyMinusWorkerRunMs": 6.528
+    },
+    {
+      "key": "IG-S07/m16/mega16:nightmare:3/profiled",
+      "cell": "mega16",
+      "level": "nightmare",
+      "seed": 3,
+      "outcome": "complete",
+      "profiledReadyWallMs": 106685.121,
+      "profiledColdWallMs": 106810.917,
+      "profiledCpuTotalMs": 106703,
+      "profiledCpuStatus": "resolved",
+      "comparator": {
+        "source": "IG-S02 native-w1 (harness generation dd759a22)",
+        "key": "IG-S02/m16-3/mega16:nightmare:3/native-w1",
+        "readyWallMs": 107525.019,
+        "coldWallMs": 107614.849,
+        "cpuTotalMs": 107547,
+        "sameCommand": false
+      },
+      "readyWallRatio": 0.9922,
+      "coldWallRatio": 0.9925,
+      "cpuRatio": 0.9922,
+      "overheadReadyWallPercent": -0.78,
+      "comparatorKind": "IG-S02 native-w1, time-separated (machine state and difficulty-v3 load may differ; harness fingerprints differ, see compatibility)",
+      "calibration": {
+        "clockReadNs": 59.7,
+        "finderTimerPairNs": 161.5,
+        "applyTimerNs": 149.5,
+        "framePairNs": 167.4,
+        "countedCheckNs": 0,
+        "counterIncrementNs": 0
+      },
+      "operations": {
+        "finderTimers": 1194635,
+        "applyTimers": 356700,
+        "frames": 16139,
+        "countedChecks": 28066760,
+        "dfsCounterIncrements": 625041
+      },
+      "estimatedInstrumentationMs": 248.9619,
+      "estimatedInstrumentationShareOfReadyWall": 0.0023,
+      "estimateNote": "operations x calibrated unit costs (a quiet worker with a warm clock path): a lower-bound style estimate, not a correction",
+      "profileBytes": 24237,
+      "hostReadyMinusWorkerRunMs": 7.318
+    },
+    {
+      "key": "IG-S07/m12/mega12:nightmare:3/profiled",
+      "cell": "mega12",
+      "level": "nightmare",
+      "seed": 3,
+      "outcome": "complete",
+      "profiledReadyWallMs": 24388.768,
+      "profiledColdWallMs": 24513.818,
+      "profiledCpuTotalMs": 24984,
+      "profiledCpuStatus": "resolved",
+      "comparator": {
+        "source": "IG-S02 native-w1 (harness generation dd759a22)",
+        "key": "IG-S02/m12/mega12:nightmare:3/native-w1",
+        "readyWallMs": 23499.832,
+        "coldWallMs": 23597.588,
+        "cpuTotalMs": 23922,
+        "sameCommand": false
+      },
+      "readyWallRatio": 1.0378,
+      "coldWallRatio": 1.0388,
+      "cpuRatio": 1.0444,
+      "overheadReadyWallPercent": 3.78,
+      "comparatorKind": "IG-S02 native-w1, time-separated (machine state and difficulty-v3 load may differ; harness fingerprints differ, see compatibility)",
+      "calibration": {
+        "clockReadNs": 59.3,
+        "finderTimerPairNs": 163.4,
+        "applyTimerNs": 148.1,
+        "framePairNs": 169.2,
+        "countedCheckNs": 0,
+        "counterIncrementNs": 0
+      },
+      "operations": {
+        "finderTimers": 895184,
+        "applyTimers": 405840,
+        "frames": 32211,
+        "countedChecks": 8438133,
+        "dfsCounterIncrements": 117964
+      },
+      "estimatedInstrumentationMs": 211.8281,
+      "estimatedInstrumentationShareOfReadyWall": 0.0087,
+      "estimateNote": "operations x calibrated unit costs (a quiet worker with a warm clock path): a lower-bound style estimate, not a correction",
+      "profileBytes": 32108,
+      "hostReadyMinusWorkerRunMs": 6.93
+    },
+    {
+      "key": "IG-S07/sam/samurai:nightmare:42/profiled",
+      "cell": "samurai",
+      "level": "nightmare",
+      "seed": 42,
+      "outcome": "complete",
+      "profiledReadyWallMs": 22425.106,
+      "profiledColdWallMs": 22557.603,
+      "profiledCpuTotalMs": 23203,
+      "profiledCpuStatus": "resolved",
+      "comparator": {
+        "source": "IG-S02 native-w1 (harness generation dd759a22)",
+        "key": "IG-S02/sam/samurai:nightmare:42/native-w1",
+        "readyWallMs": 21697.037,
+        "coldWallMs": 21781.643,
+        "cpuTotalMs": 22391,
+        "sameCommand": false
+      },
+      "readyWallRatio": 1.0336,
+      "coldWallRatio": 1.0356,
+      "cpuRatio": 1.0363,
+      "overheadReadyWallPercent": 3.36,
+      "comparatorKind": "IG-S02 native-w1, time-separated (machine state and difficulty-v3 load may differ; harness fingerprints differ, see compatibility)",
+      "calibration": {
+        "clockReadNs": 59.9,
+        "finderTimerPairNs": 165.9,
+        "applyTimerNs": 150.6,
+        "framePairNs": 170.5,
+        "countedCheckNs": 0,
+        "counterIncrementNs": 0
+      },
+      "operations": {
+        "finderTimers": 1955903,
+        "applyTimers": 1395986,
+        "frames": 35357,
+        "countedChecks": 10087881,
+        "dfsCounterIncrements": 467717
+      },
+      "estimatedInstrumentationMs": 540.7482,
+      "estimatedInstrumentationShareOfReadyWall": 0.0241,
+      "estimateNote": "operations x calibrated unit costs (a quiet worker with a warm clock path): a lower-bound style estimate, not a correction",
+      "profileBytes": 23998,
+      "hostReadyMinusWorkerRunMs": 7.361
+    },
+    {
+      "key": "IG-S07/killer-n/killer:nightmare:3/profiled",
+      "cell": "killer",
+      "level": "nightmare",
+      "seed": 3,
+      "outcome": "complete",
+      "profiledReadyWallMs": 22242.606,
+      "profiledColdWallMs": 22368.582,
+      "profiledCpuTotalMs": 23344,
+      "profiledCpuStatus": "resolved",
+      "comparator": {
+        "source": "IG-S02 native-w1 (harness generation dd759a22)",
+        "key": "IG-S02/killer/killer:nightmare:3/native-w1",
+        "readyWallMs": 21114.451,
+        "coldWallMs": 21200.215,
+        "cpuTotalMs": 22157,
+        "sameCommand": false
+      },
+      "readyWallRatio": 1.0534,
+      "coldWallRatio": 1.0551,
+      "cpuRatio": 1.0536,
+      "overheadReadyWallPercent": 5.34,
+      "comparatorKind": "IG-S02 native-w1, time-separated (machine state and difficulty-v3 load may differ; harness fingerprints differ, see compatibility)",
+      "calibration": {
+        "clockReadNs": 61.6,
+        "finderTimerPairNs": 162.7,
+        "applyTimerNs": 149.2,
+        "framePairNs": 167,
+        "countedCheckNs": 0,
+        "counterIncrementNs": 0
+      },
+      "operations": {
+        "finderTimers": 3770604,
+        "applyTimers": 1519786,
+        "frames": 89226,
+        "countedChecks": 4412670,
+        "dfsCounterIncrements": 3320248
+      },
+      "estimatedInstrumentationMs": 855.1301,
+      "estimatedInstrumentationShareOfReadyWall": 0.0384,
+      "estimateNote": "operations x calibrated unit costs (a quiet worker with a warm clock path): a lower-bound style estimate, not a correction",
+      "profileBytes": 51720,
+      "hostReadyMinusWorkerRunMs": 6.417
+    },
+    {
+      "key": "IG-S07/gt-n/greaterThan:nightmare:3/profiled",
+      "cell": "greaterThan",
+      "level": "nightmare",
+      "seed": 3,
+      "outcome": "complete",
+      "profiledReadyWallMs": 12426.969,
+      "profiledColdWallMs": 12553.665,
+      "profiledCpuTotalMs": 16516,
+      "profiledCpuStatus": "resolved",
+      "comparator": {
+        "source": "IG-S02 native-w1 (harness generation dd759a22)",
+        "key": "IG-S02/gt/greaterThan:nightmare:3/native-w1",
+        "readyWallMs": 11565.728,
+        "coldWallMs": 11653.897,
+        "cpuTotalMs": 15500,
+        "sameCommand": false
+      },
+      "readyWallRatio": 1.0745,
+      "coldWallRatio": 1.0772,
+      "cpuRatio": 1.0655,
+      "overheadReadyWallPercent": 7.45,
+      "comparatorKind": "IG-S02 native-w1, time-separated (machine state and difficulty-v3 load may differ; harness fingerprints differ, see compatibility)",
+      "calibration": {
+        "clockReadNs": 59.7,
+        "finderTimerPairNs": 161.5,
+        "applyTimerNs": 149.1,
+        "framePairNs": 167,
+        "countedCheckNs": 0,
+        "counterIncrementNs": 0
+      },
+      "operations": {
+        "finderTimers": 1295272,
+        "applyTimers": 397203,
+        "frames": 73122,
+        "countedChecks": 0,
+        "dfsCounterIncrements": 751648
+      },
+      "estimatedInstrumentationMs": 280.6208,
+      "estimatedInstrumentationShareOfReadyWall": 0.0226,
+      "estimateNote": "operations x calibrated unit costs (a quiet worker with a warm clock path): a lower-bound style estimate, not a correction",
+      "profileBytes": 23362,
+      "hostReadyMinusWorkerRunMs": 6.138
+    },
+    {
+      "key": "IG-S07/killer-h/killer:hard:1/profiled",
+      "cell": "killer",
+      "level": "hard",
+      "seed": 1,
+      "outcome": "complete",
+      "profiledReadyWallMs": 6196.001,
+      "profiledColdWallMs": 6313.819,
+      "profiledCpuTotalMs": 6922,
+      "profiledCpuStatus": "resolved",
+      "comparator": {
+        "source": "same-command unprofiled arm",
+        "key": "IG-S07/killer-h/killer:hard:1/unprofiled",
+        "readyWallMs": 5421.787,
+        "coldWallMs": 5510.969,
+        "cpuTotalMs": 6266,
+        "sameCommand": true
+      },
+      "readyWallRatio": 1.1428,
+      "coldWallRatio": 1.1457,
+      "cpuRatio": 1.1047,
+      "overheadReadyWallPercent": 14.28,
+      "comparatorKind": "same-command unprofiled arm (cleanest)",
+      "calibration": {
+        "clockReadNs": 74.3,
+        "finderTimerPairNs": 165.5,
+        "applyTimerNs": 153.9,
+        "framePairNs": 168.3,
+        "countedCheckNs": 0,
+        "counterIncrementNs": 0
+      },
+      "operations": {
+        "finderTimers": 2899161,
+        "applyTimers": 1303580,
+        "frames": 62189,
+        "countedChecks": 964390,
+        "dfsCounterIncrements": 743898
+      },
+      "estimatedInstrumentationMs": 690.8985,
+      "estimatedInstrumentationShareOfReadyWall": 0.1115,
+      "estimateNote": "operations x calibrated unit costs (a quiet worker with a warm clock path): a lower-bound style estimate, not a correction",
+      "profileBytes": 40632,
+      "hostReadyMinusWorkerRunMs": 6.151
+    },
+    {
+      "key": "IG-S07/killer-e/killer:expert:1/profiled",
+      "cell": "killer",
+      "level": "expert",
+      "seed": 1,
+      "outcome": "complete",
+      "profiledReadyWallMs": 11761.513,
+      "profiledColdWallMs": 11889.062,
+      "profiledCpuTotalMs": 13078,
+      "profiledCpuStatus": "resolved",
+      "comparator": {
+        "source": "same-command unprofiled arm",
+        "key": "IG-S07/killer-e/killer:expert:1/unprofiled",
+        "readyWallMs": 10734.569,
+        "coldWallMs": 10829.779,
+        "cpuTotalMs": 12000,
+        "sameCommand": true
+      },
+      "readyWallRatio": 1.0957,
+      "coldWallRatio": 1.0978,
+      "cpuRatio": 1.0898,
+      "overheadReadyWallPercent": 9.57,
+      "comparatorKind": "same-command unprofiled arm (cleanest)",
+      "calibration": {
+        "clockReadNs": 61.1,
+        "finderTimerPairNs": 164.3,
+        "applyTimerNs": 149.3,
+        "framePairNs": 167.1,
+        "countedCheckNs": 0,
+        "counterIncrementNs": 0
+      },
+      "operations": {
+        "finderTimers": 3614270,
+        "applyTimers": 1468476,
+        "frames": 64677,
+        "countedChecks": 6628413,
+        "dfsCounterIncrements": 1116152
+      },
+      "estimatedInstrumentationMs": 823.8756,
+      "estimatedInstrumentationShareOfReadyWall": 0.07,
+      "estimateNote": "operations x calibrated unit costs (a quiet worker with a warm clock path): a lower-bound style estimate, not a correction",
+      "profileBytes": 43529,
+      "hostReadyMinusWorkerRunMs": 7.14
+    },
+    {
+      "key": "IG-S07/gt-normal/greaterThan:normal:300/profiled",
+      "cell": "greaterThan",
+      "level": "normal",
+      "seed": 300,
+      "outcome": "complete",
+      "profiledReadyWallMs": 2185.767,
+      "profiledColdWallMs": 2306.156,
+      "profiledCpuTotalMs": 4062,
+      "profiledCpuStatus": "resolved",
+      "comparator": {
+        "source": "same-command unprofiled arm",
+        "key": "IG-S07/gt-normal/greaterThan:normal:300/unprofiled",
+        "readyWallMs": 2138.451,
+        "coldWallMs": 2230.428,
+        "cpuTotalMs": 3828,
+        "sameCommand": true
+      },
+      "readyWallRatio": 1.0221,
+      "coldWallRatio": 1.034,
+      "cpuRatio": 1.0611,
+      "overheadReadyWallPercent": 2.21,
+      "comparatorKind": "same-command unprofiled arm (cleanest)",
+      "calibration": {
+        "clockReadNs": 59.6,
+        "finderTimerPairNs": 162.8,
+        "applyTimerNs": 151.4,
+        "framePairNs": 167.8,
+        "countedCheckNs": 0,
+        "counterIncrementNs": 0
+      },
+      "operations": {
+        "finderTimers": 263679,
+        "applyTimers": 128555,
+        "frames": 25616,
+        "countedChecks": 0,
+        "dfsCounterIncrements": 197413
+      },
+      "estimatedInstrumentationMs": 66.6885,
+      "estimatedInstrumentationShareOfReadyWall": 0.0305,
+      "estimateNote": "operations x calibrated unit costs (a quiet worker with a warm clock path): a lower-bound style estimate, not a correction",
+      "profileBytes": 10839,
+      "hostReadyMinusWorkerRunMs": 5.154
+    }
+  ],
+  "summary": {
+    "requests": 9,
+    "compared": 9,
+    "sameCommandReadyWallRatio": [
+      {
+        "key": "IG-S07/killer-h/killer:hard:1/profiled",
+        "ratio": 1.1428,
+        "cpuRatio": 1.1047
+      },
+      {
+        "key": "IG-S07/killer-e/killer:expert:1/profiled",
+        "ratio": 1.0957,
+        "cpuRatio": 1.0898
+      },
+      {
+        "key": "IG-S07/gt-normal/greaterThan:normal:300/profiled",
+        "ratio": 1.0221,
+        "cpuRatio": 1.0611
+      }
+    ],
+    "timeSeparatedReadyWallRatio": [
+      {
+        "key": "IG-S07/c9/classic9:nightmare:3/profiled",
+        "ratio": 1.0271,
+        "cpuRatio": 1.0743
+      },
+      {
+        "key": "IG-S07/m16/mega16:nightmare:3/profiled",
+        "ratio": 0.9922,
+        "cpuRatio": 0.9922
+      },
+      {
+        "key": "IG-S07/m12/mega12:nightmare:3/profiled",
+        "ratio": 1.0378,
+        "cpuRatio": 1.0444
+      },
+      {
+        "key": "IG-S07/sam/samurai:nightmare:42/profiled",
+        "ratio": 1.0336,
+        "cpuRatio": 1.0363
+      },
+      {
+        "key": "IG-S07/killer-n/killer:nightmare:3/profiled",
+        "ratio": 1.0534,
+        "cpuRatio": 1.0536
+      },
+      {
+        "key": "IG-S07/gt-n/greaterThan:nightmare:3/profiled",
+        "ratio": 1.0745,
+        "cpuRatio": 1.0655
+      }
+    ],
+    "reading": "A ratio above 1 is the cost of the instrumentation plus whatever else differs between the two runs. The same-command arms differ only by the instrumentation and the run order; the time-separated comparators also differ by machine state, so a ratio within a few percent of 1 is not resolved against that noise. The instrumented wall time is never a before/after figure."
+  },
+  "referenceCompatibility": {
+    "rows": [
+      {
+        "key": "IG-S07/c9/classic9:nightmare:3/profiled",
+        "baselineKey": "IG-S02/c9/classic9:nightmare:3/native-w1",
+        "ok": true,
+        "problems": [],
+        "baselineRuntimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+        "baselineCatalogueFingerprint": "d035b740ff3ad78310773050a53f0633ca6ac4e4b38e68df173c19befef9fb3e",
+        "baselineHarnessFingerprint": "dd759a22bf13b732face5b950b3e3054cf12e79115f0f5eed536e74f306406fd",
+        "harnessFingerprintNow": "0feb1ea57bd481a17889f3e678143ce55574691748f44cae486be1e51c307225",
+        "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+        "accountingPathFilesChanged": [],
+        "accountingPathFiles": [
+          "host.cjs",
+          "loader.cjs",
+          "common.cjs",
+          "records.cjs",
+          "manifest.cjs"
+        ],
+        "changedFilesSinceBaseline": [
+          "aggregate.cjs",
+          "ig02-run.cjs",
+          "run.cjs",
+          "worker.cjs"
+        ],
+        "harnessFilesAtBaseline": 16
+      },
+      {
+        "key": "IG-S07/m16/mega16:nightmare:3/profiled",
+        "baselineKey": "IG-S02/m16-3/mega16:nightmare:3/native-w1",
+        "ok": true,
+        "problems": [],
+        "baselineRuntimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+        "baselineCatalogueFingerprint": "d035b740ff3ad78310773050a53f0633ca6ac4e4b38e68df173c19befef9fb3e",
+        "baselineHarnessFingerprint": "dd759a22bf13b732face5b950b3e3054cf12e79115f0f5eed536e74f306406fd",
+        "harnessFingerprintNow": "0feb1ea57bd481a17889f3e678143ce55574691748f44cae486be1e51c307225",
+        "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+        "accountingPathFilesChanged": [],
+        "accountingPathFiles": [
+          "host.cjs",
+          "loader.cjs",
+          "common.cjs",
+          "records.cjs",
+          "manifest.cjs"
+        ],
+        "changedFilesSinceBaseline": [
+          "aggregate.cjs",
+          "ig02-run.cjs",
+          "run.cjs",
+          "worker.cjs"
+        ],
+        "harnessFilesAtBaseline": 16
+      },
+      {
+        "key": "IG-S07/m12/mega12:nightmare:3/profiled",
+        "baselineKey": "IG-S02/m12/mega12:nightmare:3/native-w1",
+        "ok": true,
+        "problems": [],
+        "baselineRuntimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+        "baselineCatalogueFingerprint": "d035b740ff3ad78310773050a53f0633ca6ac4e4b38e68df173c19befef9fb3e",
+        "baselineHarnessFingerprint": "dd759a22bf13b732face5b950b3e3054cf12e79115f0f5eed536e74f306406fd",
+        "harnessFingerprintNow": "0feb1ea57bd481a17889f3e678143ce55574691748f44cae486be1e51c307225",
+        "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+        "accountingPathFilesChanged": [],
+        "accountingPathFiles": [
+          "host.cjs",
+          "loader.cjs",
+          "common.cjs",
+          "records.cjs",
+          "manifest.cjs"
+        ],
+        "changedFilesSinceBaseline": [
+          "aggregate.cjs",
+          "ig02-run.cjs",
+          "run.cjs",
+          "worker.cjs"
+        ],
+        "harnessFilesAtBaseline": 16
+      },
+      {
+        "key": "IG-S07/sam/samurai:nightmare:42/profiled",
+        "baselineKey": "IG-S02/sam/samurai:nightmare:42/native-w1",
+        "ok": true,
+        "problems": [],
+        "baselineRuntimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+        "baselineCatalogueFingerprint": "d035b740ff3ad78310773050a53f0633ca6ac4e4b38e68df173c19befef9fb3e",
+        "baselineHarnessFingerprint": "dd759a22bf13b732face5b950b3e3054cf12e79115f0f5eed536e74f306406fd",
+        "harnessFingerprintNow": "0feb1ea57bd481a17889f3e678143ce55574691748f44cae486be1e51c307225",
+        "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+        "accountingPathFilesChanged": [],
+        "accountingPathFiles": [
+          "host.cjs",
+          "loader.cjs",
+          "common.cjs",
+          "records.cjs",
+          "manifest.cjs"
+        ],
+        "changedFilesSinceBaseline": [
+          "aggregate.cjs",
+          "ig02-run.cjs",
+          "run.cjs",
+          "worker.cjs"
+        ],
+        "harnessFilesAtBaseline": 16
+      },
+      {
+        "key": "IG-S07/killer-n/killer:nightmare:3/profiled",
+        "baselineKey": "IG-S02/killer/killer:nightmare:3/native-w1",
+        "ok": true,
+        "problems": [],
+        "baselineRuntimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+        "baselineCatalogueFingerprint": "d035b740ff3ad78310773050a53f0633ca6ac4e4b38e68df173c19befef9fb3e",
+        "baselineHarnessFingerprint": "dd759a22bf13b732face5b950b3e3054cf12e79115f0f5eed536e74f306406fd",
+        "harnessFingerprintNow": "0feb1ea57bd481a17889f3e678143ce55574691748f44cae486be1e51c307225",
+        "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+        "accountingPathFilesChanged": [],
+        "accountingPathFiles": [
+          "host.cjs",
+          "loader.cjs",
+          "common.cjs",
+          "records.cjs",
+          "manifest.cjs"
+        ],
+        "changedFilesSinceBaseline": [
+          "aggregate.cjs",
+          "ig02-run.cjs",
+          "run.cjs",
+          "worker.cjs"
+        ],
+        "harnessFilesAtBaseline": 16
+      },
+      {
+        "key": "IG-S07/gt-n/greaterThan:nightmare:3/profiled",
+        "baselineKey": "IG-S02/gt/greaterThan:nightmare:3/native-w1",
+        "ok": true,
+        "problems": [],
+        "baselineRuntimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+        "baselineCatalogueFingerprint": "d035b740ff3ad78310773050a53f0633ca6ac4e4b38e68df173c19befef9fb3e",
+        "baselineHarnessFingerprint": "dd759a22bf13b732face5b950b3e3054cf12e79115f0f5eed536e74f306406fd",
+        "harnessFingerprintNow": "0feb1ea57bd481a17889f3e678143ce55574691748f44cae486be1e51c307225",
+        "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+        "accountingPathFilesChanged": [],
+        "accountingPathFiles": [
+          "host.cjs",
+          "loader.cjs",
+          "common.cjs",
+          "records.cjs",
+          "manifest.cjs"
+        ],
+        "changedFilesSinceBaseline": [
+          "aggregate.cjs",
+          "ig02-run.cjs",
+          "run.cjs",
+          "worker.cjs"
+        ],
+        "harnessFilesAtBaseline": 16
+      }
+    ],
+    "knownChanges": [
+      {
+        "file": "worker.cjs",
+        "why": "job-kind dispatch lines of IG-S03 to IG-S07 and the Killer-only branch of validate() (verification only); the native pipelineRequest path is the one of the IG-S02 evidence by the accepted logs, not independently re-derivable here (no old copy, no git)"
+      },
+      {
+        "file": "run.cjs",
+        "why": "task hooks and solverMode (IG-S02 acceptance), one hook line per later task"
+      },
+      {
+        "file": "ig02-run.cjs, aggregate.cjs",
+        "why": "reporting only (IG-S02 acceptance, harness c4f3a6e0)"
+      }
+    ],
+    "statement": "The accounting and loading path (host.cjs, loader.cjs, common.cjs, records.cjs, manifest.cjs) is byte-identical to the harness of IG-S02's generation evidence; the comparators are therefore compatible, with the changed files listed per row."
+  },
+  "timingEvidence": "Headline timings stay IG-S02's (and IG-S03's) measurements; nothing in this folder replaces them."
+}

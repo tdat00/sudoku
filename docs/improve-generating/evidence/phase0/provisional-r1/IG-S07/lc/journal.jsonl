@@ -1,0 +1,2 @@
+{"seq":1,"at":"2026-11-15T01:01:32.108Z","type":"command-start","task":"IG-S07","shard":"lc","attemptId":"a1","keys":[],"manifestHash":"a02b3f0ae47e667679888fa5429030db936efd3c0f379dd0e16254ad8a028f55","physicalPlanHash":"11c8ef46615b5f0d102c2e8a6866543e9442a450e0034ea966112c8cb444a423"}
+{"seq":2,"at":"2026-11-15T01:01:32.847Z","type":"command-end","status":"complete","exit":0}

@@ -1,0 +1,3650 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S07",
+  "shard": "lc",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "formalGate": "not-evaluable-pre-freeze",
+  "status": "complete",
+  "exit": 0,
+  "coverage": {
+    "planned": 0,
+    "completed": 0,
+    "censored": 0,
+    "errors": 0,
+    "unstarted": 0,
+    "complete": true,
+    "exclusions": [
+      "an instrumented run is not a timing run: the profiled wall time is never a before/after figure",
+      "the unmeasured catalogue probe, the calibration and the independent audit are outside every generation time",
+      "the three controls' unprofiled arms are overhead comparators, not new headline measurements"
+    ]
+  },
+  "sources": {
+    "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "files": 63,
+    "harnessFingerprint": "062742c330eb9e999ac47ce72393df2ad89bdf31ffa03da5793682098d98d14a",
+    "adapterIds": [],
+    "adapterHashes": [],
+    "sourceStable": true,
+    "firewallClean": true
+  },
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 73.39800000000002,
+      "changesSeen": 7,
+      "incrementsMs": [
+        15,
+        16,
+        16,
+        16,
+        15,
+        16
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    },
+    "commandCpuMs": 828,
+    "processAgeAtHostMs": 550.0831
+  },
+  "pairedRows": [],
+  "arms": {},
+  "estimateVerdict": "attribution only; the headline timings stay IG-S02's (profiles are not timing evidence)",
+  "extra": {
+    "arms": {
+      "prototype": "profiled native request (adapter profile, runtime installed for the one pipeline call)",
+      "reference": "unprofiled native request (the unchanged host path), controls only"
+    },
+    "identity": {
+      "pairs": [],
+      "failed": 0,
+      "ok": 0,
+      "notComparable": 0,
+      "deferred": 0,
+      "complete": false
+    },
+    "profiles": [],
+    "calibration": null,
+    "referenceCompatibility": [],
+    "engineChecks": null,
+    "loopCheck": {
+      "ok": true,
+      "passed": 13,
+      "total": 13,
+      "results": [
+        {
+          "id": "loop.transforms-loaded",
+          "group": "engine",
+          "ok": true,
+          "title": "the patched instance ran all transforms of the adapter profile",
+          "detail": {
+            "transforms": 27
+          }
+        },
+        {
+          "id": "loop.parity.empty-ladder",
+          "group": "engine",
+          "ok": true,
+          "title": "an unpatched instance, the patched sources without the runtime and with it return the same report or error and the same number of budget checks at every limit",
+          "detail": {
+            "limits": 4,
+            "problems": []
+          }
+        },
+        {
+          "id": "loop.observed.empty-ladder",
+          "group": "engine",
+          "ok": true,
+          "title": "the observed loop checks (both sites, counted before the call) plus the finder checks equal the budget's own count at every limit, a check that throws included, and the hooks are restored",
+          "detail": {
+            "limits": 4,
+            "problems": []
+          }
+        },
+        {
+          "id": "loop.parity.singles-solved",
+          "group": "engine",
+          "ok": true,
+          "title": "an unpatched instance, the patched sources without the runtime and with it return the same report or error and the same number of budget checks at every limit",
+          "detail": {
+            "limits": 30,
+            "problems": []
+          }
+        },
+        {
+          "id": "loop.observed.singles-solved",
+          "group": "engine",
+          "ok": true,
+          "title": "the observed loop checks (both sites, counted before the call) plus the finder checks equal the budget's own count at every limit, a check that throws included, and the hooks are restored",
+          "detail": {
+            "limits": 30,
+            "problems": []
+          }
+        },
+        {
+          "id": "loop.parity.singles-stuck",
+          "group": "engine",
+          "ok": true,
+          "title": "an unpatched instance, the patched sources without the runtime and with it return the same report or error and the same number of budget checks at every limit",
+          "detail": {
+            "limits": 5,
+            "problems": []
+          }
+        },
+        {
+          "id": "loop.observed.singles-stuck",
+          "group": "engine",
+          "ok": true,
+          "title": "the observed loop checks (both sites, counted before the call) plus the finder checks equal the budget's own count at every limit, a check that throws included, and the hooks are restored",
+          "detail": {
+            "limits": 5,
+            "problems": []
+          }
+        },
+        {
+          "id": "loop.parity.subsets-stuck",
+          "group": "engine",
+          "ok": true,
+          "title": "an unpatched instance, the patched sources without the runtime and with it return the same report or error and the same number of budget checks at every limit",
+          "detail": {
+            "limits": 30,
+            "problems": []
+          }
+        },
+        {
+          "id": "loop.observed.subsets-stuck",
+          "group": "engine",
+          "ok": true,
+          "title": "the observed loop checks (both sites, counted before the call) plus the finder checks equal the budget's own count at every limit, a check that throws included, and the hooks are restored",
+          "detail": {
+            "limits": 30,
+            "problems": []
+          }
+        },
+        {
+          "id": "loop.boundary-first-check",
+          "group": "engine",
+          "ok": true,
+          "title": "a check that throws before the first finder is observed (one check, no finder call, the budget's own node count of 1)",
+          "detail": {
+            "problems": []
+          }
+        },
+        {
+          "id": "loop.boundary-stuck-check",
+          "group": "engine",
+          "ok": true,
+          "title": "a check that throws before a stuck result is observed (the last check of every case that ends stuck)",
+          "detail": {
+            "stuckCases": 3,
+            "problems": []
+          }
+        },
+        {
+          "id": "loop.boundary-empty-ladder",
+          "group": "engine",
+          "ok": true,
+          "title": "an empty ladder is two loop checks (the top of the pass and the one before the stuck result) and no finder call",
+          "detail": {
+            "loopChecks": 2,
+            "derived": 1,
+            "nodes": 2
+          }
+        },
+        {
+          "id": "loop.r1-derivation-misses",
+          "group": "engine",
+          "ok": true,
+          "title": "the r1 derivation (loop checks from the finder passes) differs from the budget's own count at the boundary rows",
+          "detail": {
+            "rowsWhereItDiffers": 39,
+            "profiledRows": 73,
+            "rowsThatThrewInsideAFinder": 25
+          }
+        }
+      ],
+      "rows": {
+        "plain": [
+          {
+            "name": "empty-ladder",
+            "techniques": [],
+            "unlimited": {
+              "off": {
+                "limit": null,
+                "status": "stuck",
+                "code": null,
+                "nodes": 2,
+                "steps": 0,
+                "score": 48.6,
+                "counts": {},
+                "profile": null
+              }
+            },
+            "rows": [
+              {
+                "limit": 0,
+                "off": {
+                  "limit": 0,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 1,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 1,
+                "off": {
+                  "limit": 1,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 2,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 2,
+                "off": {
+                  "limit": 2,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 2,
+                  "steps": 0,
+                  "score": 48.6,
+                  "counts": {},
+                  "profile": null
+                }
+              },
+              {
+                "limit": 3,
+                "off": {
+                  "limit": 3,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 2,
+                  "steps": 0,
+                  "score": 48.6,
+                  "counts": {},
+                  "profile": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "singles-solved",
+            "techniques": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine"
+            ],
+            "unlimited": {
+              "off": {
+                "limit": null,
+                "status": "solved",
+                "code": null,
+                "nodes": 49,
+                "steps": 49,
+                "score": 78.9,
+                "counts": {
+                  "nakedSingle": 49
+                },
+                "profile": null
+              }
+            },
+            "rows": [
+              {
+                "limit": 0,
+                "off": {
+                  "limit": 0,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 1,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 1,
+                "off": {
+                  "limit": 1,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 2,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 2,
+                "off": {
+                  "limit": 2,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 3,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 3,
+                "off": {
+                  "limit": 3,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 4,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 4,
+                "off": {
+                  "limit": 4,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 5,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 5,
+                "off": {
+                  "limit": 5,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 6,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 6,
+                "off": {
+                  "limit": 6,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 7,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 7,
+                "off": {
+                  "limit": 7,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 8,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 8,
+                "off": {
+                  "limit": 8,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 9,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 9,
+                "off": {
+                  "limit": 9,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 10,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 10,
+                "off": {
+                  "limit": 10,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 11,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 11,
+                "off": {
+                  "limit": 11,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 12,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 12,
+                "off": {
+                  "limit": 12,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 13,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 13,
+                "off": {
+                  "limit": 13,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 14,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 14,
+                "off": {
+                  "limit": 14,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 15,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 15,
+                "off": {
+                  "limit": 15,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 16,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 16,
+                "off": {
+                  "limit": 16,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 17,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 17,
+                "off": {
+                  "limit": 17,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 18,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 18,
+                "off": {
+                  "limit": 18,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 19,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 19,
+                "off": {
+                  "limit": 19,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 20,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 20,
+                "off": {
+                  "limit": 20,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 21,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 21,
+                "off": {
+                  "limit": 21,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 22,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 22,
+                "off": {
+                  "limit": 22,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 23,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 23,
+                "off": {
+                  "limit": 23,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 24,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 24,
+                "off": {
+                  "limit": 24,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 25,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 46,
+                "off": {
+                  "limit": 46,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 47,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 47,
+                "off": {
+                  "limit": 47,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 48,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 48,
+                "off": {
+                  "limit": 48,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 49,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 49,
+                "off": {
+                  "limit": 49,
+                  "status": "solved",
+                  "code": null,
+                  "nodes": 49,
+                  "steps": 49,
+                  "score": 78.9,
+                  "counts": {
+                    "nakedSingle": 49
+                  },
+                  "profile": null
+                }
+              },
+              {
+                "limit": 50,
+                "off": {
+                  "limit": 50,
+                  "status": "solved",
+                  "code": null,
+                  "nodes": 49,
+                  "steps": 49,
+                  "score": 78.9,
+                  "counts": {
+                    "nakedSingle": 49
+                  },
+                  "profile": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "singles-stuck",
+            "techniques": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine"
+            ],
+            "unlimited": {
+              "off": {
+                "limit": null,
+                "status": "stuck",
+                "code": null,
+                "nodes": 3,
+                "steps": 1,
+                "score": 37.8,
+                "counts": {
+                  "hiddenSingleBox": 1
+                },
+                "profile": null
+              }
+            },
+            "rows": [
+              {
+                "limit": 0,
+                "off": {
+                  "limit": 0,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 1,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 1,
+                "off": {
+                  "limit": 1,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 2,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 2,
+                "off": {
+                  "limit": 2,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 3,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 3,
+                "off": {
+                  "limit": 3,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 3,
+                  "steps": 1,
+                  "score": 37.8,
+                  "counts": {
+                    "hiddenSingleBox": 1
+                  },
+                  "profile": null
+                }
+              },
+              {
+                "limit": 4,
+                "off": {
+                  "limit": 4,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 3,
+                  "steps": 1,
+                  "score": 37.8,
+                  "counts": {
+                    "hiddenSingleBox": 1
+                  },
+                  "profile": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "subsets-stuck",
+            "techniques": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple"
+            ],
+            "unlimited": {
+              "off": {
+                "limit": null,
+                "status": "stuck",
+                "code": null,
+                "nodes": 84,
+                "steps": 1,
+                "score": 37.8,
+                "counts": {
+                  "hiddenSingleBox": 1
+                },
+                "profile": null
+              }
+            },
+            "rows": [
+              {
+                "limit": 0,
+                "off": {
+                  "limit": 0,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 1,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 1,
+                "off": {
+                  "limit": 1,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 2,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 2,
+                "off": {
+                  "limit": 2,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 3,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 3,
+                "off": {
+                  "limit": 3,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 4,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 4,
+                "off": {
+                  "limit": 4,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 5,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 5,
+                "off": {
+                  "limit": 5,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 6,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 6,
+                "off": {
+                  "limit": 6,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 7,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 7,
+                "off": {
+                  "limit": 7,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 8,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 8,
+                "off": {
+                  "limit": 8,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 9,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 9,
+                "off": {
+                  "limit": 9,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 10,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 10,
+                "off": {
+                  "limit": 10,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 11,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 11,
+                "off": {
+                  "limit": 11,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 12,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 12,
+                "off": {
+                  "limit": 12,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 13,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 13,
+                "off": {
+                  "limit": 13,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 14,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 14,
+                "off": {
+                  "limit": 14,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 15,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 15,
+                "off": {
+                  "limit": 15,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 16,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 16,
+                "off": {
+                  "limit": 16,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 17,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 17,
+                "off": {
+                  "limit": 17,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 18,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 18,
+                "off": {
+                  "limit": 18,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 19,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 19,
+                "off": {
+                  "limit": 19,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 20,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 20,
+                "off": {
+                  "limit": 20,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 21,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 21,
+                "off": {
+                  "limit": 21,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 22,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 22,
+                "off": {
+                  "limit": 22,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 23,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 23,
+                "off": {
+                  "limit": 23,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 24,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 24,
+                "off": {
+                  "limit": 24,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 25,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 81,
+                "off": {
+                  "limit": 81,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 82,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 82,
+                "off": {
+                  "limit": 82,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 83,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 83,
+                "off": {
+                  "limit": 83,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 84,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                }
+              },
+              {
+                "limit": 84,
+                "off": {
+                  "limit": 84,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 84,
+                  "steps": 1,
+                  "score": 37.8,
+                  "counts": {
+                    "hiddenSingleBox": 1
+                  },
+                  "profile": null
+                }
+              },
+              {
+                "limit": 85,
+                "off": {
+                  "limit": 85,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 84,
+                  "steps": 1,
+                  "score": 37.8,
+                  "counts": {
+                    "hiddenSingleBox": 1
+                  },
+                  "profile": null
+                }
+              }
+            ]
+          }
+        ],
+        "patched": [
+          {
+            "name": "empty-ladder",
+            "techniques": [],
+            "unlimited": {
+              "off": {
+                "limit": null,
+                "status": "stuck",
+                "code": null,
+                "nodes": 2,
+                "steps": 0,
+                "score": 48.6,
+                "counts": {},
+                "profile": null
+              },
+              "on": {
+                "limit": null,
+                "status": "stuck",
+                "code": null,
+                "nodes": 2,
+                "steps": 0,
+                "score": 48.6,
+                "counts": {},
+                "profile": {
+                  "restored": true,
+                  "problems": [],
+                  "loopChecks": 2,
+                  "finderChecks": 0,
+                  "loopChecksDerived": 1,
+                  "finderCalls": 0,
+                  "finderThrows": 0,
+                  "passes": 0
+                }
+              }
+            },
+            "rows": [
+              {
+                "limit": 0,
+                "off": {
+                  "limit": 0,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 1,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 0,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 1,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 1,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 0,
+                    "finderCalls": 0,
+                    "finderThrows": 0,
+                    "passes": 0
+                  }
+                }
+              },
+              {
+                "limit": 1,
+                "off": {
+                  "limit": 1,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 2,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 1,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 2,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 0,
+                    "finderCalls": 0,
+                    "finderThrows": 0,
+                    "passes": 0
+                  }
+                }
+              },
+              {
+                "limit": 2,
+                "off": {
+                  "limit": 2,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 2,
+                  "steps": 0,
+                  "score": 48.6,
+                  "counts": {},
+                  "profile": null
+                },
+                "on": {
+                  "limit": 2,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 2,
+                  "steps": 0,
+                  "score": 48.6,
+                  "counts": {},
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 1,
+                    "finderCalls": 0,
+                    "finderThrows": 0,
+                    "passes": 0
+                  }
+                }
+              },
+              {
+                "limit": 3,
+                "off": {
+                  "limit": 3,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 2,
+                  "steps": 0,
+                  "score": 48.6,
+                  "counts": {},
+                  "profile": null
+                },
+                "on": {
+                  "limit": 3,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 2,
+                  "steps": 0,
+                  "score": 48.6,
+                  "counts": {},
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 1,
+                    "finderCalls": 0,
+                    "finderThrows": 0,
+                    "passes": 0
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "singles-solved",
+            "techniques": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine"
+            ],
+            "unlimited": {
+              "off": {
+                "limit": null,
+                "status": "solved",
+                "code": null,
+                "nodes": 49,
+                "steps": 49,
+                "score": 78.9,
+                "counts": {
+                  "nakedSingle": 49
+                },
+                "profile": null
+              },
+              "on": {
+                "limit": null,
+                "status": "solved",
+                "code": null,
+                "nodes": 49,
+                "steps": 49,
+                "score": 78.9,
+                "counts": {
+                  "nakedSingle": 49
+                },
+                "profile": {
+                  "restored": true,
+                  "problems": [],
+                  "loopChecks": 49,
+                  "finderChecks": 0,
+                  "loopChecksDerived": 49,
+                  "finderCalls": 49,
+                  "finderThrows": 0,
+                  "passes": 49
+                }
+              }
+            },
+            "rows": [
+              {
+                "limit": 0,
+                "off": {
+                  "limit": 0,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 1,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 0,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 1,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 1,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 0,
+                    "finderCalls": 0,
+                    "finderThrows": 0,
+                    "passes": 0
+                  }
+                }
+              },
+              {
+                "limit": 1,
+                "off": {
+                  "limit": 1,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 2,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 1,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 2,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 1,
+                    "finderCalls": 1,
+                    "finderThrows": 0,
+                    "passes": 1
+                  }
+                }
+              },
+              {
+                "limit": 2,
+                "off": {
+                  "limit": 2,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 3,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 2,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 3,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 3,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 2,
+                    "finderThrows": 0,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 3,
+                "off": {
+                  "limit": 3,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 4,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 3,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 4,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 4,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 3,
+                    "finderCalls": 3,
+                    "finderThrows": 0,
+                    "passes": 3
+                  }
+                }
+              },
+              {
+                "limit": 4,
+                "off": {
+                  "limit": 4,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 5,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 4,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 5,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 5,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 4,
+                    "finderCalls": 4,
+                    "finderThrows": 0,
+                    "passes": 4
+                  }
+                }
+              },
+              {
+                "limit": 5,
+                "off": {
+                  "limit": 5,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 6,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 5,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 6,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 6,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 5,
+                    "finderCalls": 5,
+                    "finderThrows": 0,
+                    "passes": 5
+                  }
+                }
+              },
+              {
+                "limit": 6,
+                "off": {
+                  "limit": 6,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 7,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 6,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 7,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 7,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 6,
+                    "finderCalls": 6,
+                    "finderThrows": 0,
+                    "passes": 6
+                  }
+                }
+              },
+              {
+                "limit": 7,
+                "off": {
+                  "limit": 7,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 8,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 7,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 8,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 8,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 7,
+                    "finderCalls": 7,
+                    "finderThrows": 0,
+                    "passes": 7
+                  }
+                }
+              },
+              {
+                "limit": 8,
+                "off": {
+                  "limit": 8,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 9,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 8,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 9,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 9,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 8,
+                    "finderCalls": 8,
+                    "finderThrows": 0,
+                    "passes": 8
+                  }
+                }
+              },
+              {
+                "limit": 9,
+                "off": {
+                  "limit": 9,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 10,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 9,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 10,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 10,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 9,
+                    "finderCalls": 9,
+                    "finderThrows": 0,
+                    "passes": 9
+                  }
+                }
+              },
+              {
+                "limit": 10,
+                "off": {
+                  "limit": 10,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 11,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 10,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 11,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 11,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 10,
+                    "finderCalls": 10,
+                    "finderThrows": 0,
+                    "passes": 10
+                  }
+                }
+              },
+              {
+                "limit": 11,
+                "off": {
+                  "limit": 11,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 12,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 11,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 12,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 12,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 11,
+                    "finderCalls": 11,
+                    "finderThrows": 0,
+                    "passes": 11
+                  }
+                }
+              },
+              {
+                "limit": 12,
+                "off": {
+                  "limit": 12,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 13,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 12,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 13,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 13,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 12,
+                    "finderCalls": 12,
+                    "finderThrows": 0,
+                    "passes": 12
+                  }
+                }
+              },
+              {
+                "limit": 13,
+                "off": {
+                  "limit": 13,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 14,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 13,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 14,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 14,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 13,
+                    "finderCalls": 13,
+                    "finderThrows": 0,
+                    "passes": 13
+                  }
+                }
+              },
+              {
+                "limit": 14,
+                "off": {
+                  "limit": 14,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 15,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 14,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 15,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 15,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 14,
+                    "finderCalls": 14,
+                    "finderThrows": 0,
+                    "passes": 14
+                  }
+                }
+              },
+              {
+                "limit": 15,
+                "off": {
+                  "limit": 15,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 16,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 15,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 16,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 16,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 15,
+                    "finderCalls": 15,
+                    "finderThrows": 0,
+                    "passes": 15
+                  }
+                }
+              },
+              {
+                "limit": 16,
+                "off": {
+                  "limit": 16,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 17,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 16,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 17,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 17,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 16,
+                    "finderCalls": 16,
+                    "finderThrows": 0,
+                    "passes": 16
+                  }
+                }
+              },
+              {
+                "limit": 17,
+                "off": {
+                  "limit": 17,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 18,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 17,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 18,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 18,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 17,
+                    "finderCalls": 17,
+                    "finderThrows": 0,
+                    "passes": 17
+                  }
+                }
+              },
+              {
+                "limit": 18,
+                "off": {
+                  "limit": 18,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 19,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 18,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 19,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 19,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 18,
+                    "finderCalls": 18,
+                    "finderThrows": 0,
+                    "passes": 18
+                  }
+                }
+              },
+              {
+                "limit": 19,
+                "off": {
+                  "limit": 19,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 20,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 19,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 20,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 20,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 19,
+                    "finderCalls": 19,
+                    "finderThrows": 0,
+                    "passes": 19
+                  }
+                }
+              },
+              {
+                "limit": 20,
+                "off": {
+                  "limit": 20,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 21,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 20,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 21,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 21,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 20,
+                    "finderCalls": 20,
+                    "finderThrows": 0,
+                    "passes": 20
+                  }
+                }
+              },
+              {
+                "limit": 21,
+                "off": {
+                  "limit": 21,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 22,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 21,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 22,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 22,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 21,
+                    "finderCalls": 21,
+                    "finderThrows": 0,
+                    "passes": 21
+                  }
+                }
+              },
+              {
+                "limit": 22,
+                "off": {
+                  "limit": 22,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 23,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 22,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 23,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 23,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 22,
+                    "finderCalls": 22,
+                    "finderThrows": 0,
+                    "passes": 22
+                  }
+                }
+              },
+              {
+                "limit": 23,
+                "off": {
+                  "limit": 23,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 24,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 23,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 24,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 24,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 23,
+                    "finderCalls": 23,
+                    "finderThrows": 0,
+                    "passes": 23
+                  }
+                }
+              },
+              {
+                "limit": 24,
+                "off": {
+                  "limit": 24,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 25,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 24,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 25,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 25,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 24,
+                    "finderCalls": 24,
+                    "finderThrows": 0,
+                    "passes": 24
+                  }
+                }
+              },
+              {
+                "limit": 46,
+                "off": {
+                  "limit": 46,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 47,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 46,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 47,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 47,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 46,
+                    "finderCalls": 46,
+                    "finderThrows": 0,
+                    "passes": 46
+                  }
+                }
+              },
+              {
+                "limit": 47,
+                "off": {
+                  "limit": 47,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 48,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 47,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 48,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 48,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 47,
+                    "finderCalls": 47,
+                    "finderThrows": 0,
+                    "passes": 47
+                  }
+                }
+              },
+              {
+                "limit": 48,
+                "off": {
+                  "limit": 48,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 49,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 48,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 49,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 49,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 48,
+                    "finderCalls": 48,
+                    "finderThrows": 0,
+                    "passes": 48
+                  }
+                }
+              },
+              {
+                "limit": 49,
+                "off": {
+                  "limit": 49,
+                  "status": "solved",
+                  "code": null,
+                  "nodes": 49,
+                  "steps": 49,
+                  "score": 78.9,
+                  "counts": {
+                    "nakedSingle": 49
+                  },
+                  "profile": null
+                },
+                "on": {
+                  "limit": 49,
+                  "status": "solved",
+                  "code": null,
+                  "nodes": 49,
+                  "steps": 49,
+                  "score": 78.9,
+                  "counts": {
+                    "nakedSingle": 49
+                  },
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 49,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 49,
+                    "finderCalls": 49,
+                    "finderThrows": 0,
+                    "passes": 49
+                  }
+                }
+              },
+              {
+                "limit": 50,
+                "off": {
+                  "limit": 50,
+                  "status": "solved",
+                  "code": null,
+                  "nodes": 49,
+                  "steps": 49,
+                  "score": 78.9,
+                  "counts": {
+                    "nakedSingle": 49
+                  },
+                  "profile": null
+                },
+                "on": {
+                  "limit": 50,
+                  "status": "solved",
+                  "code": null,
+                  "nodes": 49,
+                  "steps": 49,
+                  "score": 78.9,
+                  "counts": {
+                    "nakedSingle": 49
+                  },
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 49,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 49,
+                    "finderCalls": 49,
+                    "finderThrows": 0,
+                    "passes": 49
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "singles-stuck",
+            "techniques": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine"
+            ],
+            "unlimited": {
+              "off": {
+                "limit": null,
+                "status": "stuck",
+                "code": null,
+                "nodes": 3,
+                "steps": 1,
+                "score": 37.8,
+                "counts": {
+                  "hiddenSingleBox": 1
+                },
+                "profile": null
+              },
+              "on": {
+                "limit": null,
+                "status": "stuck",
+                "code": null,
+                "nodes": 3,
+                "steps": 1,
+                "score": 37.8,
+                "counts": {
+                  "hiddenSingleBox": 1
+                },
+                "profile": {
+                  "restored": true,
+                  "problems": [],
+                  "loopChecks": 3,
+                  "finderChecks": 0,
+                  "loopChecksDerived": 3,
+                  "finderCalls": 5,
+                  "finderThrows": 0,
+                  "passes": 2
+                }
+              }
+            },
+            "rows": [
+              {
+                "limit": 0,
+                "off": {
+                  "limit": 0,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 1,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 0,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 1,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 1,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 0,
+                    "finderCalls": 0,
+                    "finderThrows": 0,
+                    "passes": 0
+                  }
+                }
+              },
+              {
+                "limit": 1,
+                "off": {
+                  "limit": 1,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 2,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 1,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 2,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 1,
+                    "finderCalls": 2,
+                    "finderThrows": 0,
+                    "passes": 1
+                  }
+                }
+              },
+              {
+                "limit": 2,
+                "off": {
+                  "limit": 2,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 3,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 2,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 3,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 3,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 5,
+                    "finderThrows": 0,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 3,
+                "off": {
+                  "limit": 3,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 3,
+                  "steps": 1,
+                  "score": 37.8,
+                  "counts": {
+                    "hiddenSingleBox": 1
+                  },
+                  "profile": null
+                },
+                "on": {
+                  "limit": 3,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 3,
+                  "steps": 1,
+                  "score": 37.8,
+                  "counts": {
+                    "hiddenSingleBox": 1
+                  },
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 3,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 3,
+                    "finderCalls": 5,
+                    "finderThrows": 0,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 4,
+                "off": {
+                  "limit": 4,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 3,
+                  "steps": 1,
+                  "score": 37.8,
+                  "counts": {
+                    "hiddenSingleBox": 1
+                  },
+                  "profile": null
+                },
+                "on": {
+                  "limit": 4,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 3,
+                  "steps": 1,
+                  "score": 37.8,
+                  "counts": {
+                    "hiddenSingleBox": 1
+                  },
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 3,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 3,
+                    "finderCalls": 5,
+                    "finderThrows": 0,
+                    "passes": 2
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "subsets-stuck",
+            "techniques": [
+              "nakedSingle",
+              "hiddenSingleBox",
+              "hiddenSingleLine",
+              "nakedPair",
+              "hiddenPair",
+              "nakedTriple"
+            ],
+            "unlimited": {
+              "off": {
+                "limit": null,
+                "status": "stuck",
+                "code": null,
+                "nodes": 84,
+                "steps": 1,
+                "score": 37.8,
+                "counts": {
+                  "hiddenSingleBox": 1
+                },
+                "profile": null
+              },
+              "on": {
+                "limit": null,
+                "status": "stuck",
+                "code": null,
+                "nodes": 84,
+                "steps": 1,
+                "score": 37.8,
+                "counts": {
+                  "hiddenSingleBox": 1
+                },
+                "profile": {
+                  "restored": true,
+                  "problems": [],
+                  "loopChecks": 3,
+                  "finderChecks": 81,
+                  "loopChecksDerived": 3,
+                  "finderCalls": 8,
+                  "finderThrows": 0,
+                  "passes": 2
+                }
+              }
+            },
+            "rows": [
+              {
+                "limit": 0,
+                "off": {
+                  "limit": 0,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 1,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 0,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 1,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 1,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 0,
+                    "finderCalls": 0,
+                    "finderThrows": 0,
+                    "passes": 0
+                  }
+                }
+              },
+              {
+                "limit": 1,
+                "off": {
+                  "limit": 1,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 2,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 1,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 2,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 0,
+                    "loopChecksDerived": 1,
+                    "finderCalls": 2,
+                    "finderThrows": 0,
+                    "passes": 1
+                  }
+                }
+              },
+              {
+                "limit": 2,
+                "off": {
+                  "limit": 2,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 3,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 2,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 3,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 1,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 3,
+                "off": {
+                  "limit": 3,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 4,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 3,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 4,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 2,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 4,
+                "off": {
+                  "limit": 4,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 5,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 4,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 5,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 3,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 5,
+                "off": {
+                  "limit": 5,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 6,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 5,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 6,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 4,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 6,
+                "off": {
+                  "limit": 6,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 7,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 6,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 7,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 5,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 7,
+                "off": {
+                  "limit": 7,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 8,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 7,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 8,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 6,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 8,
+                "off": {
+                  "limit": 8,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 9,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 8,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 9,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 7,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 9,
+                "off": {
+                  "limit": 9,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 10,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 9,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 10,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 8,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 10,
+                "off": {
+                  "limit": 10,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 11,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 10,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 11,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 9,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 11,
+                "off": {
+                  "limit": 11,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 12,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 11,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 12,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 10,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 12,
+                "off": {
+                  "limit": 12,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 13,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 12,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 13,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 11,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 13,
+                "off": {
+                  "limit": 13,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 14,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 13,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 14,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 12,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 14,
+                "off": {
+                  "limit": 14,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 15,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 14,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 15,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 13,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 15,
+                "off": {
+                  "limit": 15,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 16,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 15,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 16,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 14,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 16,
+                "off": {
+                  "limit": 16,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 17,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 16,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 17,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 15,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 17,
+                "off": {
+                  "limit": 17,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 18,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 17,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 18,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 16,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 18,
+                "off": {
+                  "limit": 18,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 19,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 18,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 19,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 17,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 19,
+                "off": {
+                  "limit": 19,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 20,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 19,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 20,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 18,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 20,
+                "off": {
+                  "limit": 20,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 21,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 20,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 21,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 19,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 21,
+                "off": {
+                  "limit": 21,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 22,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 21,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 22,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 20,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 22,
+                "off": {
+                  "limit": 22,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 23,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 22,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 23,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 21,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 23,
+                "off": {
+                  "limit": 23,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 24,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 23,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 24,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 22,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 24,
+                "off": {
+                  "limit": 24,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 25,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 24,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 25,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 23,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 6,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 81,
+                "off": {
+                  "limit": 81,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 82,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 81,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 82,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 80,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 8,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 82,
+                "off": {
+                  "limit": 82,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 83,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 82,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 83,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 2,
+                    "finderChecks": 81,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 8,
+                    "finderThrows": 1,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 83,
+                "off": {
+                  "limit": 83,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 84,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": null
+                },
+                "on": {
+                  "limit": 83,
+                  "status": null,
+                  "code": "budget.exceeded",
+                  "nodes": 84,
+                  "steps": null,
+                  "score": null,
+                  "counts": null,
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 3,
+                    "finderChecks": 81,
+                    "loopChecksDerived": 2,
+                    "finderCalls": 8,
+                    "finderThrows": 0,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 84,
+                "off": {
+                  "limit": 84,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 84,
+                  "steps": 1,
+                  "score": 37.8,
+                  "counts": {
+                    "hiddenSingleBox": 1
+                  },
+                  "profile": null
+                },
+                "on": {
+                  "limit": 84,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 84,
+                  "steps": 1,
+                  "score": 37.8,
+                  "counts": {
+                    "hiddenSingleBox": 1
+                  },
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 3,
+                    "finderChecks": 81,
+                    "loopChecksDerived": 3,
+                    "finderCalls": 8,
+                    "finderThrows": 0,
+                    "passes": 2
+                  }
+                }
+              },
+              {
+                "limit": 85,
+                "off": {
+                  "limit": 85,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 84,
+                  "steps": 1,
+                  "score": 37.8,
+                  "counts": {
+                    "hiddenSingleBox": 1
+                  },
+                  "profile": null
+                },
+                "on": {
+                  "limit": 85,
+                  "status": "stuck",
+                  "code": null,
+                  "nodes": 84,
+                  "steps": 1,
+                  "score": 37.8,
+                  "counts": {
+                    "hiddenSingleBox": 1
+                  },
+                  "profile": {
+                    "restored": true,
+                    "problems": [],
+                    "loopChecks": 3,
+                    "finderChecks": 81,
+                    "loopChecksDerived": 3,
+                    "finderCalls": 8,
+                    "finderThrows": 0,
+                    "passes": 2
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "workerWallMs": 307.9678,
+      "workerCpuMs": 375,
+      "workerEngineMs": {
+        "plain": 8.548599999999965,
+        "patched": 65.28059999999994
+      },
+      "adapterHash": "4d409f0ef2e0297511a4c1100462f8f1042b7fc6a871f63ebeebe2d503eef169",
+      "adapterVersion": 2
+    },
+    "catalogueProbe": null,
+    "chain": {
+      "attempts": [
+        "a1"
+      ],
+      "resumed": false,
+      "startedBefore": [],
+      "startedHere": [],
+      "rerunKeys": [],
+      "noRerun": true,
+      "unstartedAfter": []
+    }
+  },
+  "notes": []
+}
