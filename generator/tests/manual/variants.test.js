@@ -17,6 +17,9 @@
 // all of them on any definition, registered or not, and reports pass / fail / skip per check. Default
 // volume: 5 grid seeds and 3 puzzles per level (3 and 2 for the heavy boards); SG_DEEP=1 (Node) or
 // SG.test.deep = true (browser) gives the full 50 seeds and 20 puzzles per level.
+//
+// Apart from the sweep, the describe "player: the replay steps of a result" at the end holds the two real
+// mega16 replay requests that the quick suite tests/suites/player.test.js ran until MS07f (S-OD8).
 (function () {
   'use strict';
 
@@ -775,5 +778,85 @@
         });
       });
     });
+  });
+
+  // The two real mega16 requests of the replay case of the Generator's player suite (tests/suites/), moved here
+  // unchanged by MS07f (S-OD8). The helpers are copies of that suite's, and the case reads nothing of the sweep
+  // above (no corpus, no variant check).
+  describe('player: the replay steps of a result', function () {
+    var P = SG.player;
+    var R = SG.replay;
+    var resultCache = {};
+    var analysisCache = [];
+
+    /** A real result (memoised). */
+    function realResult(variantId, difficulty, seed) {
+      var key = [variantId, difficulty, seed].join('/');
+      if (!resultCache[key]) {
+        resultCache[key] = SG.pipeline.run(
+          { variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
+      }
+      return resultCache[key];
+    }
+
+    /** The analysis of a result (memoised per result). */
+    function analysisOf(result) {
+      for (var i = 0; i < analysisCache.length; i++) {
+        if (analysisCache[i].result === result) return analysisCache[i].analysis;
+      }
+      var analysis = R.analyse(result);
+      analysisCache.push({ result: result, analysis: analysis });
+      return analysis;
+    }
+
+    function viewsOf(result) {
+      return P.buildViews(result, analysisOf(result));
+    }
+
+    /** The steps of the details view (one per complete move), unless a test asks for the compact view. */
+    function stepsOf(result) {
+      return viewsOf(result).details.steps;
+    }
+
+    function clues(values) {
+      var n = 0;
+      for (var i = 0; i < values.length; i++) if (values[i] > 0) n++;
+      return n;
+    }
+
+    function sameValues(a, b) {
+      if (a.length !== b.length) return false;
+      for (var i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
+      return true;
+    }
+
+    /** Every step's clue count agrees with its board, and a reveal never shows up in the step before it. */
+    function expectFaithful(steps) {
+      steps.forEach(function (s, i) {
+        if (s.metrics !== null) expect(s.metrics.clues).toBe(clues(s.values));
+        if (s.kind !== 'reveal') return;
+        s.marks.revealed.forEach(function (c) {
+          if (steps[i - 1].values[c] !== 0) {
+            throw new Error('step ' + s.index + ': cell ' + c + ' is already shown in step ' +
+              steps[i - 1].index);
+          }
+          expect(s.values[c]).not.toBe(0);
+        });
+      });
+    }
+
+    it('real top-level results with clues shown again replay faithfully (mega16)', function () {
+      [['mega16', 'nightmare', 478576959], ['mega16', 'hell1', 2422420669]]
+        .forEach(function (c) {
+          var result = realResult(c[0], c[1], c[2]);
+          var analysis = analysisOf(result);
+          var steps = stepsOf(result);
+          expectFaithful(steps);
+          steps.forEach(function (s) {
+            if (s.role === 'final') expect(sameValues(s.values, result.givens)).toBe(true);
+            else expect(sameValues(s.values, analysis.moves[s.position].values)).toBe(true);
+          });
+        });
+    }, 60000);
   });
 })();

@@ -1,6 +1,9 @@
 # Recovery quick cost: what a complete quick run costs, per app
 
-**Status: measured by MS05r6b on 2026-11-14 on the final source, with every quick test passing in both apps.** The numbers
+**Status: the current standing cost is the MS07f section at the end of this report (measured 2026-11-15 after the
+owner-approved move of four slow cases to the manual tier, S-OD8): the Generator 296.7 s as the sum of its four group commands
+and the Player 35.0 s, every quick test passing. The sections before it are the measurement of MS05r6b on 2026-11-14, kept as
+the history of the source they name.** The numbers
 below are measurements of one named source on one named machine, never a promise, a guard or a timing assertion. Both
 guides and `AGENTS.md` point here instead of quoting a duration. The report is data only: it is not an input of any quick
 fingerprint, and no test reads it. The orchestrator acknowledges the standing cost with the normal combined acceptance
@@ -103,3 +106,72 @@ Largest Player suites: `tech-chain` 6.5 s, `tech-fish` 6.4 s, `help-example-tool
 - A later task re-projects the shards for its own source; it does not treat these numbers as a permanent timing promise.
 - If the Generator's complete quick time stays above about five minutes, S-AV08 carries the per-suite breakdown to MS07e,
   which proposes which generation-heavy cases belong in the manual tier. Nothing is moved without that approval.
+
+## MS07f: the standing cost after the quick-tier move (current)
+
+MS07f moved four slow quick cases to the manual tier on the owner's approval (S-OD8, from section 9 of
+`docs/difficulty-v3/qualification-checkpoint-2026-11-15.md`) and changed no request, seed, limit or assertion. Measured on
+2026-11-15, 17:06-17:13 (+07:00), under the shared-machine lock with no lock wait (0.08 to 0.09 s of helper overhead per
+command), Windows x64, AMD EPYC 7763 (16 cores, 64 GiB), Node v26.13.0, time factor 2; results in
+`docs/difficulty-v3/evidence/MS07f/quick/`, the reconciliation in `evidence/MS07f/reconcile.txt`. Every test passed, none was
+skipped, and every inventory key appears exactly once.
+
+| | Before (MS08a `quick-final-2`) | After (MS07f `quick`) | Change |
+|---|---:|---:|---:|
+| Generator fingerprint | `519cd6653180d243…` | `b8ba10267ffe8650a6e0d48f5251f1d495e3c33ff01bb144549ffee6ee35ca40` (165 files) | MS07f's edits to tests, guides and designs |
+| Generator tests, shards | 3,563 in 8 | 3,560 in 8 | -3 |
+| Generator standing cost, **sum of the four group commands** | 699.833 s (71.582 + 170.353 + 317.976 + 139.922) | **296.670 s** (71.326 + 170.900 + 30.622 + 23.822) | -403.163 s (-57.6 %) |
+| Generator, sum of the per-shard process seconds (the manifest's convention) | 696.1 s | 293.5 s | -402.6 s (-57.8 %) |
+| Longest Generator shard | `pipeline` 317.3 s | `own-fast` 168.2 s | -149.1 s |
+| Player fingerprint | `222e69cffbc2ea1c…` | `d1581ee06644a982cc5673df12e49822fad8c978df5f3b0ef4276a7aa75a0058` (130 files) | guides and `player/design.md` (counts) |
+| Player tests | 1,807 | 1,807 | none |
+| Player, command wall | 35.295 s | 35.012 s | -0.283 s (run-to-run noise; the Player is unchanged) |
+| Player, runner body ("running tests") | 34.66 s | 34.54 s | -0.12 s |
+
+**Conventions, so that like is compared with like (IR68).** The Generator figures are sums of the helper's seconds for the
+four locked group commands, and the second row is the group runner's per-shard process seconds (the values of
+`.github/scripts/generator-quick.json`). The Player's wall is the helper's seconds for its one command, and its body is the
+runner's own time; the manifest's 34.7 s is a body time. Both sides of every comparison above use the same convention.
+
+| Shard | Tests before | Tests after | Process s before | Process s after |
+|---|---:|---:|---:|---:|
+| `core-shared` | 1,267 | 1,267 | 28.3 | 28.2 |
+| `steps` | 57 | 57 | 15.8 | 15.8 |
+| `replay` | 154 | 154 | 15.0 | 15.0 |
+| `mega` | 108 | 108 | 11.0 | 10.9 |
+| `own-fast` | 1,679 | 1,679 | 167.5 | 168.2 |
+| `digger-target` | 75 | 75 | 1.8 | 1.8 |
+| `pipeline` | 154 | **151** | 317.3 | **30.2** |
+| `player` (the replay player of the Generator) | 69 | 69 | 139.4 | **23.4** |
+
+**What moved.** The three tests `pipeline > instrumented generators: what the events cost > generating puzzles: verbosity 'off' costs
+less than 2%`, `'summary' costs less than 10%` and `'full' costs less than 35%` are now in the manual `perf` suite under the same
+describe name. `player > player: the replay steps of a result > real top-level results with clues shown again replay faithfully
+(mega16, classic9)` is now `(classic9)` in the quick `player` suite (one request, Hell 1 seed 3) and `(mega16)` in the manual
+`variants` suite under a describe of the same name (Nightmare seed 478576959, then Hell 1 seed 2422420669). The Generator `player`
+suite still has 69 tests, `pipeline` 151, and the manual tier 1,148 tests (1,144 before).
+
+**What the four cases cost on the same source, one locked command each, from a fresh process.**
+
+| Case (manual) | Before, inside the quick shard (MS08a) | After, selected alone |
+|---|---:|---:|
+| `generating puzzles: verbosity 'off'` | 95.30 s | 95.84 s |
+| `generating puzzles: verbosity 'summary'` | 95.39 s | 95.16 s |
+| `generating puzzles: verbosity 'full'` | 96.15 s | 96.89 s |
+| `(mega16)`, two requests | 116.03 s (the whole case: the classic9 request is generated earlier, by the test that checks the 13 kinds of title, and the case reuses it) | 118.04 s |
+
+The three ratios take 287.89 s together (process 288.311 s) and the mega16 case 119.088 s of process time, both projected from the
+MS08a rows (286.84 s and 116.03 s plus start-up) before they ran, each far under the 450 s limit. The classic9 case that stays quick
+now takes 0.5 ms inside its own shard, since its result is the one that the earlier test generated. By group wall, `pipeline` lost
+287.4 s and `replay-player` 116.1 s, 403.5 s together, and the other two groups gained 0.3 s together: the 403.2 s of the table.
+
+**Where the time goes now (suite `results.ms`).** `worker` 45.9 s, `pipeline` 29.8 s, `difficulty-floor` 27.3 s (16.5 s of it the
+case "equals the reference on small generated samples", a further candidate that S-OD8 does not move), `player` 23.0 s, `multigrid`
+19.1 s, `steps` 15.4 s, `replay` 14.6 s, `difficulty-diagnostics` 12.8 s, `perf-tooling` 11.5 s; the Player's longest suites are
+`tech-fish` and `tech-chain` (7.7 s each).
+
+**Reading.** The Generator standing cost is now **296.7 s, 4 min 57 s**, and the proposal's "about 300 s" was a projection, not a
+promise: its margin to five minutes is 3.3 s, less than the run-to-run spread seen between MS08a's two complete runs (691.6 s and
+699.8 s), so a later source or machine can land on either side of it. No further move is approved. The three ratios and the two mega16
+replays no longer gate a pull request (the accepted loss of S-OD8); their manual outcomes are in
+`evidence/MS07f/manual/ratios.json` and `mega-replay.json`, and MS18e reruns the four cases on the final source.

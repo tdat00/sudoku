@@ -907,7 +907,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (53 suites, 3,505 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (53 suites, 3,560 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (61 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -919,7 +919,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 53 suites,
-3,505 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+3,560 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -957,8 +957,15 @@ manual suites, `--all`, the deep tier (`tests/mega-contract.js`), `tests/pattern
 them is offline evidence, kept in `docs/difficulty-v3/evidence/` by the tasks that own it (the 14 deep mega Nightmare
 requests and their relations by the records of MS05r5m reconciled by MS05r6b, the live CV3 outcomes by MS05b3, the
 manual corpora, GD, E, qualification and performance by MS05r6a, MS05r6b and the later gate tasks), and listed in
-[docs/difficulty-v3/evidence/MS05r6c/evidence.md](docs/difficulty-v3/evidence/MS05r6c/evidence.md). The browser scripts of
-the player stay in the pull-request workflow.
+[docs/difficulty-v3/evidence/MS05r6c/evidence.md](docs/difficulty-v3/evidence/MS05r6c/evidence.md). Three slow tests
+and two requests of a fourth moved from the quick set to the manual suites in MS07f (owner decision S-OD8), and **no
+pull request runs them any more**: the three generation-cost ratios of the events (`generating puzzles: verbosity
+'off'`, `'summary'` and `'full'`) are in the `perf` suite, and the two real mega16 requests of the replay case of the
+generator's `player` suite (Nightmare seed 478576959 and Hell 1 seed 2422420669) are now the case `(mega16)` of the
+`variants` suite. They are unchanged and still hard failures; run them by name (`--suite=perf` or `--suite=variants`
+with the full name of the case in `--filter`) when you touch the event instrumentation or the replay of a large board.
+The structural event tests, the short digging and full-grid cost tests, the classic9 Hell 1 case of the replay and the
+golden replays G01-G14 stay quick. The browser scripts of the player stay in the pull-request workflow.
 
 The runner loads `SOURCE_FILES` with `vm.runInThisContext`, discovers `../core/tests/fixtures/*.js`,
 `tests/fixtures/*.js`, `../core/tests/suites/*.test.js` and `tests/suites/*.test.js` (and `tests/manual/*.test.js` with
@@ -969,7 +976,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 61 suites, 53 of them quick (3,505 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 61 suites, 53 of them quick (3,560 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1376,7 +1383,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (30, 1,749 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (30, 1,807 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

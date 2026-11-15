@@ -1,0 +1,37 @@
+{
+  "ratios": {
+    "cwd": "generator",
+    "allowExit1": true,
+    "args": ["tests\\node-runner.js", "--suite=perf", "--filter=> instrumented generators: what the events cost > generating puzzles:", "--verbose", "--results=..\\docs\\difficulty-v3\\evidence\\MS07f\\manual\\ratios.json"]
+  },
+  "mega-replay": {
+    "cwd": "generator",
+    "allowExit1": true,
+    "args": ["tests\\node-runner.js", "--suite=variants", "--filter=> player: the replay steps of a result > real top-level results with clues shown again replay faithfully (mega16)", "--verbose", "--results=..\\docs\\difficulty-v3\\evidence\\MS07f\\manual\\mega-replay.json"]
+  },
+  "shared-small": {
+    "cwd": "generator",
+    "allowExit1": true,
+    "args": ["..\\.github\\scripts\\generator-quick.js", "run", "shared-small", "--results-dir=..\\docs\\difficulty-v3\\evidence\\MS07f\\quick"]
+  },
+  "own-suites": {
+    "cwd": "generator",
+    "allowExit1": true,
+    "args": ["..\\.github\\scripts\\generator-quick.js", "run", "own-suites", "--results-dir=..\\docs\\difficulty-v3\\evidence\\MS07f\\quick"]
+  },
+  "pipeline": {
+    "cwd": "generator",
+    "allowExit1": true,
+    "args": ["..\\.github\\scripts\\generator-quick.js", "run", "pipeline", "--results-dir=..\\docs\\difficulty-v3\\evidence\\MS07f\\quick"]
+  },
+  "replay-player": {
+    "cwd": "generator",
+    "allowExit1": true,
+    "args": ["..\\.github\\scripts\\generator-quick.js", "run", "replay-player", "--results-dir=..\\docs\\difficulty-v3\\evidence\\MS07f\\quick"]
+  },
+  "player-quick": {
+    "cwd": "player",
+    "allowExit1": true,
+    "args": ["tests\\node-runner.js", "--results=..\\docs\\difficulty-v3\\evidence\\MS07f\\quick\\player-quick.json"]
+  }
+}

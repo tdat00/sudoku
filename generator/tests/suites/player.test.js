@@ -560,8 +560,10 @@
         expectFaithful(steps);
       });
 
-    it('real top-level results with clues shown again replay faithfully (mega16, classic9)', function () {
-      [['mega16', 'nightmare', 478576959], ['mega16', 'hell1', 2422420669], ['classic9', 'hell1', 3]]
+    // The two mega16 requests of this case moved unchanged to the case (mega16) of the manual
+    // tests/manual/variants.test.js (MS07f, S-OD8).
+    it('real top-level results with clues shown again replay faithfully (classic9)', function () {
+      [['classic9', 'hell1', 3]]
         .forEach(function (c) {
           var result = realResult(c[0], c[1], c[2]);
           var analysis = analysisOf(result);

@@ -1,0 +1,49 @@
+== Generator quick (after the move)
+PASS quick/generator-core-shared.json: complete and source stable  tests 1267, failed 0, wallMs 27979.9
+PASS quick/generator-core-shared.json: no registration error
+PASS quick/generator-steps.json: complete and source stable  tests 57, failed 0, wallMs 15614.3
+PASS quick/generator-steps.json: no registration error
+PASS quick/generator-replay.json: complete and source stable  tests 154, failed 0, wallMs 14796.3
+PASS quick/generator-replay.json: no registration error
+PASS quick/generator-mega.json: complete and source stable  tests 108, failed 0, wallMs 10731.7
+PASS quick/generator-mega.json: no registration error
+PASS quick/generator-own-fast.json: complete and source stable  tests 1679, failed 0, wallMs 167921.6
+PASS quick/generator-own-fast.json: no registration error
+PASS quick/generator-digger-target.json: complete and source stable  tests 75, failed 0, wallMs 1621.6
+PASS quick/generator-digger-target.json: no registration error
+PASS quick/generator-pipeline.json: complete and source stable  tests 151, failed 0, wallMs 30007.7
+PASS quick/generator-pipeline.json: no registration error
+PASS quick/generator-player.json: complete and source stable  tests 69, failed 0, wallMs 23216.8
+PASS quick/generator-player.json: no registration error
+PASS inventory 3560 tests, results 3560 rows
+PASS every inventory key exactly once; missing 0, duplicate 0, unexpected 0
+PASS one source fingerprint, equal to the inventory's  b8ba10267ffe8650 / b8ba10267ffe8650
+PASS statuses: {"pass":3560}
+   shards: generator-core-shared.json=1267, generator-steps.json=57, generator-replay.json=154, generator-mega.json=108, generator-own-fast.json=1679, generator-digger-target.json=75, generator-pipeline.json=151, generator-player.json=69
+== Player quick (after the move)
+PASS quick/player-quick.json: complete and source stable  tests 1807, failed 0, wallMs 34801.6
+PASS quick/player-quick.json: no registration error
+PASS inventory 1807 tests, results 1807 rows
+PASS every inventory key exactly once; missing 0, duplicate 0, unexpected 0
+PASS one source fingerprint, equal to the inventory's  d1581ee06644a982 / d1581ee06644a982
+PASS statuses: {"pass":1807}
+   shards: player-quick.json=1807
+== membership delta, Generator quick (before -> after, by suite and full name)
+   removed: pipeline > instrumented generators: what the events cost > generating puzzles: verbosity 'off' costs less than 2%
+   removed: pipeline > instrumented generators: what the events cost > generating puzzles: verbosity 'summary' costs less than 10%
+   removed: pipeline > instrumented generators: what the events cost > generating puzzles: verbosity 'full' costs less than 35%
+   removed: player > player: the replay steps of a result > real top-level results with clues shown again replay faithfully (mega16, classic9)
+   added:   player > player: the replay steps of a result > real top-level results with clues shown again replay faithfully (classic9)
+PASS quick delta is -3 (pipeline ratios) and one rename (player replay case): 4 removed names, 1 added
+   suite pipeline: 154 -> 151
+   suite player: 69 -> 69
+PASS pipeline 154 -> 151, player 69 -> 69
+PASS the classic9-only case was exercised in the complete quick run (once, passed)  0.518 ms, ordinal 25
+== the four relocated cases (map: old full name -> new full name -> manual result)
+PASS    generating puzzles: verbosity 'off' costs less than 2%  pass, 95.84 s, timeout 120000 (was: generating puzzles: verbosity 'off' costs less than 2%)
+PASS    generating puzzles: verbosity 'summary' costs less than 10%  pass, 95.16 s, timeout 120000 (was: generating puzzles: verbosity 'summary' costs less than 10%)
+PASS    generating puzzles: verbosity 'full' costs less than 35%  pass, 96.89 s, timeout 120000 (was: generating puzzles: verbosity 'full' costs less than 35%)
+PASS    real top-level results with clues shown again replay faithfully (mega16)  pass, 118.04 s, timeout 60000 (was: real top-level results with clues shown again replay faithfully (mega16, classic9) [two of its three requests])
+PASS manual inventory: 1,148 tests in 8 suites; 1,144 before (the four new cases are the only added registrations)
+PASS ratio and mega selections ran with complete results, no skip
+ALL PASS

@@ -1,5 +1,6 @@
 // The instrumented generators and the pipeline: the seven steps and their events,
-// replaying the patches, the cost of the instrumentation, determinism, hooks, retries and cancellation.
+// replaying the patches, the cost of the instrumentation (the short digging and full-grid ratios; the ratios
+// of whole generations are in tests/manual/perf.test.js), determinism, hooks, retries and cancellation.
 // The event system itself is tested in events.test.js.
 (function () {
   'use strict';
@@ -645,23 +646,8 @@
       return smallest;
     }
 
-    function generateWork(emit) {
-      var opts = emit === undefined ? {} : { emit: emit };
-      for (var s = 1; s <= 24; s++) SG.digger.generate(model9, 'easy', SG.rng.create(s), opts);
-      for (var m = 1; m <= 2; m++) SG.digger.generate(model9, 'normal', SG.rng.create(m), opts);
-    }
-
-    it("generating puzzles: verbosity 'off' costs less than 2%", function () {
-      expect(costRatio(generateWork, 'off', 1.02, 5)).toBeLessThan(1.02);
-    }, 120000);
-
-    it("generating puzzles: verbosity 'summary' costs less than 10%", function () {
-      expect(costRatio(generateWork, 'summary', 1.10, 4)).toBeLessThan(1.10);
-    }, 120000);
-
-    it("generating puzzles: verbosity 'full' costs less than 35%", function () {
-      expect(costRatio(generateWork, 'full', 1.35, 4)).toBeLessThan(1.35);
-    }, 120000);
+    // The three generation-cost ratios ('off', 'summary' and 'full', the generating puzzles tests) are in
+    // tests/manual/perf.test.js since MS07f (S-OD8).
 
     it("digging a grid: 'off' costs less than 2%, 'full' less than 35%", function () {
       var rng = SG.rng.create(5);
