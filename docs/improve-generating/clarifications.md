@@ -611,3 +611,193 @@ authorises no run and changes no gate: the gate remains `not-evaluable-pre-freez
   approvals; A1 to A8 stay pending.
 - **Owner decisions:** plan section 7 (new: OD-S5, the pool's CPU cost; the harness repair on the frozen source
   before the frozen budget is set).
+
+---
+
+## Questions after plan version 2 (analysts, 2026-11-15)
+
+These questions follow the two independent analyses and both cross-reviews of `plan.md` at `adb7184`.
+The joint conclusions, evidence, candidate dispositions, speed scenarios and verbatim owner-decision texts
+are in `plan-v2-joint-report.md`. This is the final merged numbering; it supersedes the local Q19+ lists
+in the analyst files, which remain unchanged.
+
+**Status.** Q19, Q20, Q22, Q23 and Q24 are joint questions. Q21 and Q25 retain Opus-only requests and state
+Astra's view. None authorises a run or changes active difficulty-v3 scope, sample counts, ceilings or priority.
+S-OD7's Killer Hard/Expert withholding and the six unlaunched cells' existing MS18c route remain in force.
+
+### IG-S-Q19: Intrinsic finder semantics versus generator-only guard policies
+
+*Blocks: a solver optimisation's version boundary and failed-parity fallback. From: Astra phase-1 Q19;
+endorsed by Opus in its cross-review. Status: joint.*
+
+**Question.** Does section 9's rule that changed findings, finding order or work units belong to difficulty-v3
+supersede IG-S-Q03(b), or does it distinguish intrinsic finder semantics from generator-only quotas/check
+policies?
+
+**Why it matters.** Q03(b) allowed a family that cannot preserve its checks to move under the generator
+version with a different generator guard unit. The newer finders also have an intrinsic 50,000-unit cap that
+can change a canonical finding, independently of a generator's outer quota. Those are different contracts.
+Nishio propagation can call inherited budgets directly, so preserving one `ctx.check()` per trial is not a
+complete equivalence proof.
+
+**Options.** (a) Preserve all intrinsic findings, units and canonical semantics; permit a deliberately
+versioned generator-only quota policy while retaining canonical verification. (b) Require complete
+reference check behaviour everywhere in this feature and defer any failed-parity family. (c) Route any
+desired canonical change to the owning rating feature or a later separately approved feature.
+
+**Recommendation.** Both analysts: no generator version licenses a canonical rating change. State (a)'s
+boundary explicitly, with (b) as the safe fallback and (c) for actual intrinsic changes. Equal-result items
+still need check-site and cap-boundary parity, not only equal final scores.
+
+Plan-author answer:
+
+---
+
+### IG-S-Q20: The whole-request 1.5x kernel gate
+
+*Blocks: selection and acceptance of phase-3 kernel work. From: Astra phase-1 Q20; endorsed by Opus in its
+cross-review. Status: joint.*
+
+**Question.** Is the factor required per named target cell or over a pooled population, and against which
+generator, quotas and scheduler? Which cold/ready wall or CPU statistic is binding?
+
+**Why it matters.** The current source has no Hell 1 finder/stage profile. A kernel that takes little of a
+request cannot give a large whole-request gain, and already-fast controls may not call it. Comparing a
+pooled new generator against the old serial baseline could count S5's improvement twice.
+
+**Options.** (a) Paired whole-request performance on named targets against the same post-phase-2 generator,
+quotas and pool, with explicit non-regression controls. (b) A predeclared weighted population and comparator,
+with every cell shown separately. (c) A kernel-only speed target, explicitly replacing the whole-request gate.
+
+**Recommendation.** Both analysts: (a). Name the targets and statistic after profiling, before evaluating an
+optimisation. Report CPU and cold/ready wall separately. Do not substitute a kernel microbenchmark for the
+whole-request gate or require an unused kernel to speed a control.
+
+Plan-author answer:
+
+---
+
+### IG-S-Q21: The meaning of the 220-to-590-point window
+
+*Clarification, not a run request. From: Opus phase-1 Q19. Status: Opus-only request; Astra's disposition below.*
+
+**Question.** What quantity and assumptions do the figures in plan sections 0.2 and S1's version-2 note
+describe? Should version 3 remove them or retain an explicitly derived effective-headroom illustration?
+
+**Why it matters.** The Nightmare score band remains `[1500,2400)`. With the score's lower bound
+`V + 1.25*w + extra`, ideal headroom to 2400 is `275-V-extra` for weight 1700 and `650-V-extra` for weight
+1400. This explains a possible illustration, but not a measured, board-independent widening of the band.
+
+**Options.** (a) Remove 220/590 and state the unchanged band and 375-point change in the one-step lower
+bound. (b) Retain the illustration with the empty-cell/other-deduction assumptions, its source and a
+Derived or Projection label rather than a measured-band claim.
+
+**Recommendation.** Opus asks for the definition/source. Astra prefers (a), or considers a fully stated
+(b) sufficient without an additional design gate. Both agree that the literal score band did not widen.
+
+Plan-author answer:
+
+---
+
+### IG-S-Q22: Outer concurrency under the agreed pooled qualification
+
+*Blocks: the future improve-generating measurement/qualification invocation, not active difficulty-v3.
+From: Opus phase-1 Q20 and both analysts' concurrency cautions. Status: joint.*
+
+**Question.** Under IG-S-Q02's fixed inner width four, which fixed outer `--jobs` value should define paired
+timing and budget verdicts? How are any separate throughput measurements labelled?
+
+**Why it matters.** Q02 already requires pooled request wall time, serial reporting and no physical-core
+oversubscription. It does not pin one outer count for every machine. MS07e's `--jobs=4` meant four serial
+requests, not a four-worker request. Mixing that timing with a solo pooled request is not a matched
+performance comparison.
+
+**Options.** (a) Outer `--jobs=1` for the pooled width-four and serial width-one comparisons and the
+feature's budget verdict; any higher-concurrency study separate. (b) Another fixed outer count with a
+recorded physical-capacity and non-oversubscription receipt, the same count in paired arms.
+
+**Recommendation.** Both analysts: (a) for the clean per-request comparison, while retaining every existing
+Q02 condition, including the serial/file-mode caveat. This is for improve-generating after closure; it does
+not amend difficulty-v3's final qualification or its populations. Do not mix concurrency cohorts into one
+unqualified p95.
+
+Plan-author answer:
+
+---
+
+### IG-S-Q23: The scale of Hell 1 work after the final catalogue
+
+*Blocks: version 3's residual-cell scope and any bank programme. From: Opus phase-1 Q21 and Astra's
+cross-review merged Q19. Status: joint.*
+
+**Question.** If the final catalogue still gives Hell 1 little or no exact yield, does version 3 retain only a
+bounded diagnostic, fund a larger live-search/kernel programme, or ask for a separately costed bank route?
+
+**Why it matters.** The current 0/112 completed results are shallow; speeding those same requests does not
+make them exact. That does not prove intermediate floor tests all fail or that canonical exact puzzles
+cannot exist. New finders may change both the hit rate and per-attempt cost. A bank before the finders arrive
+is not the scope of a feature that starts after MS18e.
+
+**Options.** (a) Reconcile the final baseline, take only the approved residual diagnostics and retain
+unqualified cells as unoffered. (b) Approve a specific live-search/kernel hypothesis with its own yield,
+identity and budget gates. (c) Request an OD-S3 feasibility plan for distinct roots, canonical/structural
+verification, content identity, novelty and exhaustion.
+
+**Recommendation.** Both analysts: (a) first. Escalate to (b) only for a justified hypothesis and to (c) only
+after a priced root-supply/verification proposal. No bank design precedes the final catalogue; no requiredness,
+rating or offer threshold is weakened. S-OD7's separate Hard/Expert withholding is unchanged.
+
+Plan-author answer:
+
+---
+
+### IG-S-Q24: The reduced frozen baseline, telemetry and confirmation population
+
+*Blocks: the new frozen-round manifest and budget. From: Opus phase-1 Q22 and Astra's baseline/recording
+recommendations. Status: joint; the proposed 20+ prototype count is not an official qualification change.*
+
+**Question.** Confirm the reduced package and its fields, which compatible final records can be reused,
+and which selected cells should receive 20 or more independent paired requests for prototype confirmation
+after diagnostic admission and costing.
+
+**Why it matters.** The pipeline already exposes actual `attempts`, `timings` and `work`; the qualifier does
+not retain them. Slow exact hits remain unclassified. Repeating the old full Nightmare screen would price
+obsolete work, while reusing incompatible source/concurrency records would create false before/after
+comparisons.
+
+**Options.** (a) A staged package: compatible baseline reuse; missing attempt/origin/stage/quota records;
+selective S5a/SM5; selected profiles; S7's node distribution; a conditional Hell floor diagnostic; then
+costed confirmation on admitted hypotheses. (b) The former full frozen manifest. (c) Defer the feature.
+
+**Recommendation.** Both analysts: (a). Keep cold/ready wall, CPU including speculation, outer jobs and inner
+width explicit. Reuse only full identity/protocol matches; missing fields remain missing. Twenty or more
+prototype requests is a proposal to cost, not a substitute for official qualification's 40-request first
+round/possible expansion or an authorisation to launch the six omitted difficulty-v3 cells. Price commands,
+limits, validation and wrapper grace after the narrowed repair; no old allocation carries over.
+
+Plan-author answer:
+
+---
+
+### IG-S-Q25: An exceptional preliminary SM5 before the freeze
+
+*Optional scheduling question, not a blocker to the post-freeze design. From: Opus phase-1 Q23.
+Status: Opus-only request; remaining analyst difference.*
+
+**Question.** Should SM5 wait for the frozen round, or should the owner be asked to approve a bounded
+preliminary width-1/2/4 experiment on a named current source, with mandatory final-source rechecking?
+
+**Why it matters.** Pool architecture can be designed now, but early-hit frequency, CPU cost and latency
+benefit change with the runtime. The provisional round is closed, no remaining budget is carried over and
+difficulty-v3 keeps machine priority.
+
+**Options.** (a) Wait for the attested frozen source and repaired measurement package. (b) A separate,
+explicitly approved test-side exception with a named source, scope, machine ceiling, priority protocol and
+stop conditions; no production change or formal frozen-gate claim.
+
+**Recommendation.** Opus requests (b) if resources permit. Astra recommends (a), unless a specific preliminary
+result would change a design decision enough to justify the extra work. Both require final-source rechecking.
+Neither architecture work nor this question authorises an engine run; (a) remains the default without a
+separate receipt.
+
+Plan-author answer:
