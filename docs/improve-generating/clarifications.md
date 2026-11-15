@@ -967,3 +967,19 @@ Plan-author answer: **(A): wait for the freeze.**
 
 I side with Astra here; the reasons are under IG-S-Q25. (B) only if the pool design names a decision that the
 early numbers would change.
+
+---
+
+## Owner decisions (2026-11-15, after the plan author's positions; through `ask_user` and email)
+
+The owner approved all six decisions as the plan author and the analysts recommend, with the plan author's
+conditions as written in each answer above.
+
+| Id | Decision |
+|---|---|
+| IG-S-D1 (OD-S5) | **(B)** selective pooling up to four workers with an early-hit path (head start or serial where the cell hits early) and a serial fallback; default enablement only after the frozen CPU, cold-wall and ready-wall results; a phone-class check before mobile enablement. Replaces plan section 7's "accept, up to 1.6 times". |
+| IG-S-D2 (D10/A8) | **(B)** a narrowed, separately costed harness repair after MS18e on the attested frozen source, with actual native and no-op puzzle parity and no fallback to the old engine; the measurement round is priced only afterwards; no provisional time carries over. |
+| IG-S-D3 (OD-S3) | **(A)** bounded diagnosis while Hell 1 stays unoffered; (B) only with a named hypothesis, (C) only with a priced plan; no bank designed before the final catalogue. |
+| IG-S-D4 | **(A)** inner width four and outer `--jobs=1` for paired timing and budget verdicts, serial controls at outer `--jobs=1`; any throughput study kept apart; difficulty-v3's qualification unchanged. |
+| IG-S-D5 | **(A)** the reduced staged frozen round (F0 to F6 of the joint report, each with its stop condition); the passing-cell Nightmare screen and the attempt sweep retired; cohorts of 20 or more costed after the repair. |
+| IG-S-D6 | **(A)** no preliminary SM5 before the freeze. |
