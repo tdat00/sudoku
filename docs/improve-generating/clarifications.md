@@ -801,3 +801,64 @@ Neither architecture work nor this question authorises an engine run; (a) remain
 separate receipt.
 
 Plan-author answer:
+
+---
+
+## Pending owner decisions: the plan author's position requested (2026-11-15)
+
+The joint report (`plan-v2-joint-report.md`, section (f)) puts six decisions to the owner. The owner asks the plan
+author for a position on each before deciding. The analysts' joint recommendation is given; the full option texts and
+evidence are in the joint report. Answer each with an option and any condition.
+
+### IG-S-D1 (OD-S5): pool CPU cost and enablement
+
+Options: (A) eager pooling up to four workers; (B) selective pooling up to four with a mandatory early-hit path or
+head start and a serial fallback; (C) serial until browser evidence. The observed 1.6x is not a CPU ceiling:
+individual pairs reached 4.39x and 4.13x. Analysts: **(B)**, default enablement only after frozen CPU, cold and
+ready-wall results, and a phone-class check before mobile enablement.
+
+Plan-author answer:
+
+### IG-S-D2 (D10/A8): harness repair before the frozen budget
+
+Options: (A) repair the old full package now; (B) a separately costed, narrowed repair after MS18e on the attested
+frozen source, then price the measurement round; (C) defer the feature. Analysts: **(B)**, with actual loader parity
+and capability checks and never a fallback to the old engine; no provisional unused time carries over.
+
+Plan-author answer:
+
+### IG-S-D3 (OD-S3): the Hell 1 route
+
+If Hell 1 still lacks reliable exact yield on the final catalogue: (A) bounded diagnosis while it remains unoffered;
+(B) a separately funded live-search or kernel programme; (C) a separately costed seed-bank feasibility plan.
+Analysts: **(A) first**; (B) only with a specific viable hypothesis; (C) only with a priced distinct-root supply and
+verification plan. No bank design or supply commitment precedes the final catalogue.
+
+Plan-author answer:
+
+### IG-S-D4: outer concurrency of the improve-generating qualification
+
+Options: (A) inner width four and outer `--jobs=1` for paired timing and budget verdicts, with serial controls at
+outer `--jobs=1`; (B) another fixed, non-oversubscribed outer concurrency. Analysts: **(A)**; any throughput study is
+separate. It refines IG-S-Q02 and does not alter difficulty-v3's qualification, its sample counts or the 120 s
+request-wall guard. (See also IG-S-Q22.)
+
+Plan-author answer:
+
+### IG-S-D5: the reduced frozen-round scope
+
+Options: (A) a reduced staged frozen round (compatible baseline reuse, the missing work telemetry, selective S5a and
+SM5, targeted profiles, S7 tails and a conditional Hell 1 floor diagnostic; the passing-cell Nightmare screen and the
+attempt sweep retired); (B) the old full package; (C) deferral. Analysts: **(A)**; cohorts of 20 or more are a costed
+proposal, not a replacement for official qualification; machine time approved only after the repair. (See also
+IG-S-Q24.)
+
+Plan-author answer:
+
+### IG-S-D6: an early SM5 run before the freeze (analysts disagree)
+
+Options: (A) wait for the freeze (Astra; the default); (B) a separately approved, bounded preliminary run on a named
+current source with a mandatory frozen recheck (Opus, when resources permit). There is no joint request to execute
+it now. (See also IG-S-Q25.)
+
+Plan-author answer:
