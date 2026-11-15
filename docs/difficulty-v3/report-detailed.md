@@ -182,7 +182,7 @@ not a second hard-coded policy table:
 | VeryEasy | nakedSingle, hiddenSingleBox, hiddenSingleLine; certificate explicitly vacuous |
 | Easy | pointing, boxLine, nakedPair |
 | Normal | hiddenPair, nakedTriple, hiddenTriple, nakedQuad, hiddenQuad |
-| Hard | xWing, skyscraper, twoStringKite, simpleColouring, emptyRectangle, finnedXWing, swordfish, remotePairs, finnedSwordfish, jellyfish |
+| Hard | xWing, skyscraper, twoStringKite, remotePairs, simpleColouring, emptyRectangle, finnedXWing, swordfish, finnedSwordfish, jellyfish |
 | Expert | xyWing, xyzWing |
 | Master | wxyzWing, wWing, uniqueRectangle, bugPlusOne, xyChain, forcingChain |
 | Nightmare | alsXz, sueDeCoq, forcingChainLong, nishio |
@@ -642,9 +642,9 @@ following positive costs for new IDs. ALS uses the existing group `chain`.
 | lawOfLeftovers | 200 | 20 |
 | skyscraper | 330 | 33 |
 | twoStringKite | 340 | 34 |
+| remotePairs | 350 | 35 |
 | emptyRectangle | 380 | 38 |
 | finnedXWing | 400 | 40 |
-| remotePairs | 440 | 44 |
 | finnedSwordfish | 480 | 48 |
 | wxyzWing | 800 | 57 |
 | bugPlusOne | 920 | 72 |
@@ -658,6 +658,11 @@ These are solver raw costs, not v3 rating weights. They preserve nearby existing
 calibrated scoring still uses `WEIGHTS`. Raw solver hardestTechnique may differ. Do not add a global
 raw-cost monotonicity assertion: existing jellyfish=56 and xyWing=48 already violate one.
 **Alternatives not chosen — SA2-Q-S08:** uniform weight/10 for all new IDs or a new `als` group.
+
+**RP-01 / S-OD9 supersession (owner confirmed 2026-11-16 06:23 +07:00):** only Remote Pairs'
+prior is corrected: order 116, weight 350, base cost 35 replace 132/440/44. The original
+SA2-Q-S08 answer remains unchanged in `clarifications-resolved.md`, followed by its supersession.
+All other rows and the distinction between raw base cost and v3 weight remain unchanged.
 
 **Bounded-search policy — SA2-Q-S05 (a), starting values approved by the author.** Use documented,
 common, deterministic per-call bounds, the same on every board, not unbounded scans or hidden
@@ -744,7 +749,7 @@ fish regressions. Use no global single-number cell mask. Own R10 integration and
 
 **Plan:** S3 group 3a. **Task:** MS10. **File:** `core/js/engine/tech-wing.js`.
 
-- `remotePairs`, order 132, weight 440, group `wing`: group identical bivalue masks; peer edges
+- `remotePairs`, order 116, weight 350, group `wing`, base cost 35: group identical bivalue masks; peer edges
   require alternating assignments. Two-colour consistent components. A nontrivial remote connection
   has at least three edges; a target seeing opposite colours loses both digits. Odd means edges,
   not cells. Reject inconsistent odd-cycle colouring; do not relabel a two-cell naked pair.
@@ -752,6 +757,19 @@ fish regressions. Use no global single-number cell mask. Own R10 integration and
   digits. Exactly one digit z is non-restricted; for each other digit, every pair of its occurrences
   in the four cells is mutually visible. If z were absent, four cells would need three digits each
   usable at most once. Remove z only from external candidates seeing all z occurrences.
+
+**Remote Pairs priority — RP-01 / S-OD9.** The owner confirmed Fable's corrected prior on
+2026-11-16 at 06:23 (+07:00). The new placement is between Two-String Kite (114/340/34) and
+Simple Colouring (120/360/36); `1.25 * 350 = 437.5`, so the tier stays Hard and the floor/weight
+prefix order is preserved. After the naked pairs are done, every Remote Pairs deduction on a
+standard board is also a Simple Colouring deduction, and the ladder names the simpler pattern first.
+Here the subsumption argument requires complete-unit peer support. A cage-only peer edge invalidates
+the complete-unit subsumption proof; this alone does not demonstrate normal-hint reachability.
+Killer's assembled cage models supply that exception; it is recorded under S-AV32, not used as a GH
+fallback. MS10a owns the specified seed-4242 reachability gate before E and an unchanged normal-hint
+GH check. A complete gate with zero matching solves stops for the owner, not another order/weight
+experiment or another decision from Fable. The prior 132/440/44 and its four diagnostic logs remain
+history in RP-01; GH, IR72 H1, bundle B and SA2-Q-S11 are not weakened.
 
 Neither assumes uniqueness. Bound quartet enumeration per R10. WXYZ belongs to **Master** because
 1.25*800=1000 is not below Expert's upper edge. Arguments use `digits` and `digit` for z.

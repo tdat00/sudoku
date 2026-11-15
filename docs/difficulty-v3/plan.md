@@ -468,7 +468,7 @@ ordering. No new core file for the first three groups.
 | 1 | `emptyRectangle` | one digit, a box whose candidates lie on one row + one column, plus a conjugate pair (a grouped link; only on boards with box units, set `variantScope` or test `unitMeta.kind === 'box'`) | `tech-fish.js` | 124 | 380 | hard |
 | 2 | `finnedXWing` | X-Wing with extra candidates (fin) in one box; covers sashimi | `tech-fish.js` (extend `findFish` with a fin mask) | 126 | 400 | hard |
 | 2 | `finnedSwordfish` | same for size 3 | `tech-fish.js` | 134 | 480 | hard |
-| 3 | `remotePairs` | chain of identical bivalue cells; cells seeing both ends of an odd chain lose both digits | `tech-wing.js` | 132 | 440 | hard |
+| 3 | `remotePairs` | chain of identical bivalue cells; cells seeing the selected non-peer ends of an odd path of at least three edges lose both digits | `tech-wing.js` | 116 | 350 | hard |
 | 3 | `wxyzWing` | four cells, four digits, one non-restricted digit | `tech-wing.js` | 155 | 800 | master (1.25·800 = 1000) |
 | 3 | `uniqueRectangle` (extend, same id) | add types 3 (naked subset with the roof), 4 (conjugate pair removes the other digit) and hidden rectangle | `tech-wing.js` `findUniqueRectangle` (477) | 180 | 900 | master |
 | 3 | `bugPlusOne` | every open cell bivalue except one with three candidates: place the digit that appears three times in its units; `assumesUniqueness: true` | `tech-wing.js` | 182 | 920 | master |
@@ -477,6 +477,13 @@ ordering. No new core file for the first three groups.
 | 5 | `lawOfLeftovers` | Jigsaw only: n rows (columns) and n regions that differ in equally many cells: the cells sticking out on each side hold the same digits. `variantScope: ['jigsaw9']`, group `locked` | `tech-basic.js` or `tech-subset.js` | 87 | 200 | normal |
 | 5 | Killer cage / unit interaction | check first whether `cageCombo` already does both: (a) a digit every remaining combination of a cage needs, whose cells in the cage lie in one unit, leaves the rest of that unit; (b) "killer pair": two cells of a cage that must hold {a, b} act as a naked pair in a shared unit. If not, add `cageLocked`, `variantScope: ['killer']` | `tech-cage.js` | 57 | 60 | easy |
 | 6 | `alsXz`, `sueDeCoq` | almost-locked-set rules; need an ALS enumerator → **new core file `tech-als.js`** (add it to the 8 script lists, see `AGENTS.md`) | new | 194 / 196 | 1250 / 1300 | nightmare |
+
+**RP-01 / S-OD9 (owner confirmed 2026-11-16 06:23 +07:00):** Remote Pairs' 132/440/44
+is superseded by **order 116, weight 350, base cost 35**, between Two-String Kite and Simple
+Colouring; wing / Hard / unscoped / no uniqueness stay. The original prior is preserved as history
+in `clarifications-resolved.md`. MS10a's amended brief fixes the seed-4242 reachability gate and
+the normal-hint GH route before E; a failed complete gate goes to the owner, not another prior
+trial. GH, the source-discovery ceiling and the full S3 scope remain unchanged.
 
 With these, move `forcingChainLong` (S2.2) to order 198 so the invariant holds (190 / 1100 forcingChain,
 194 / 1250 alsXz, 196 / 1300 sueDeCoq, 198 / 1400 forcingChainLong, 200 / 1700 nishio, 202 / 2600 nishioDeep).

@@ -194,6 +194,13 @@ SA2 recommends (a): predictable and keeps the calibrated weights separate. Base 
 
 **Answer (claude-fable-5-2, 2026-11-12):** Group: ALS techniques go in the existing group `chain` (no new `als` group). Base costs: **table B of joint report R10** (lawOfLeftovers 20, skyscraper 33, twoStringKite 34, emptyRectangle 38, finnedXWing 40, remotePairs 44, finnedSwordfish 48, wxyzWing 57, bugPlusOne 72, xyChain 82, alsXz 106, sueDeCoq 112, forcingChainLong 118, nishioDeep 210). Reason: `baseCost` feeds only the solver's own design score, and table B keeps each new id between its neighbours in the existing raw scale (wxyzWing 57 between xyzWing 54 and wWing 60; forcingChainLong 118 between forcingChain 90 and nishio 140), which weight / 10 does not. Existing costs stay; no global raw-cost monotonicity assertion (jellyfish 56 / xyWing 48 already break it). The v3 score uses `WEIGHTS` only.
 
+**Later supersession — RP-01 / S-OD9, 2026-11-16.** The original answer above is preserved,
+not rewritten. Fable corrected only Remote Pairs' prior, and the owner confirmed it at 06:23
+(+07:00): order **116**, weight **350**, base cost **35** replace 132/440/44. The active R10
+cost row and R13/plan/task registration now follow that decision. The ALS group and every other
+base cost remain as answered. See RP-01 and its adjacent owner confirmation below for the
+reachability gate, unchanged GH contract and execution authority.
+
 ### SA2-Q-S09: what does S3 group 5 "Killer cage / unit interaction" mean?
 
 Context: report section 4 "S3 group 5". `cageCombo` already does both ordinary cases the plan describes (a digit
