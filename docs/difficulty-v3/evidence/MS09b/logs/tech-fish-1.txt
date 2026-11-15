@@ -1,0 +1,42 @@
+$ node tests\node-runner.js --suite=tech-fish
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-fish: 474 passed, 6 failed  (20.48 s)
+
+Failures:
+  FAIL tech-fish > finnedSwordfish (R12): geometry > leaves the ordinary Swordfish to swordfish, the line of fins only to boxLine and the finned X-Wing to finnedXWing, never relabelling any of them
+       AssertionError: expected Array(2)[Array(2)[43, 5], Array(2)[73, 5]] to equal Array(1)[Array(2)[43, 5]]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:5265:67)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > returns a finned Swordfish found inside the searched prefix, whatever follows it, and nothing short of it (the exact boundary)
+       AssertionError: expected {tested: 673, capped: true} to equal {tested: 673, capped: false}
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:5787:22)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > finds a finned Swordfish exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+       AssertionError: expected 87 to be >= 100
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:6081:29)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > finds a finned Swordfish exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+       AssertionError: expected 70 to be >= 100
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:6081:29)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > agrees on diagonalX (extra regions are real peers: a target may see a fin through one)
+       AssertionError: expected 13 to be >= 20
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:6116:31)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > agrees on hyper (extra regions are real peers: a target may see a fin through one)
+       AssertionError: expected 18 to be >= 20
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:6116:31)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  480 total, 474 passed, 6 failed, 0 skipped
+Time:   20.48 s running tests, 20.58 s total
+exit=1 seconds=20.706

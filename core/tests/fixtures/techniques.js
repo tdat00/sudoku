@@ -29,7 +29,7 @@
  * an ID's fixtures from now on without touching a v2 position. A later technique adds its entry to CURRENT,
  * built from explicit `after` lists or an initial real puzzle state. MS07b replaces the four chain IDs
  * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way; MS08a adds skyscraper,
- * MS08b twoStringKite, MS08c emptyRectangle and MS09a finnedXWing.
+ * MS08b twoStringKite, MS08c emptyRectangle, MS09a finnedXWing and MS09b finnedSwordfish.
  */
 (function () {
   'use strict';
@@ -46,16 +46,16 @@
   ];
 
   /**
-   * The 27 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
-   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the six
+   * The 28 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
+   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the seven
    * techniques added since: skyscraper (MS08a), twoStringKite (MS08b), emptyRectangle (MS08c), finnedXWing
-   * (MS09a) and the two chain windows forcingChainLong and nishioDeep (MS07b).
+   * (MS09a), finnedSwordfish (MS09b) and the two chain windows forcingChainLong and nishioDeep (MS07b).
    */
   var REGISTRY_ORDER = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite',
-    'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing',
-    'uniqueRectangle', 'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep'
+    'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'finnedSwordfish', 'jellyfish', 'xyWing',
+    'xyzWing', 'wWing', 'uniqueRectangle', 'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep'
   ];
 
   /** The techniques the ladder tries before `id`: the position after them is where `id` is reached. */
@@ -757,8 +757,8 @@
   var BELOW_CHAINS = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite',
-    'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing',
-    'uniqueRectangle'
+    'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'finnedSwordfish', 'jellyfish', 'xyWing',
+    'xyzWing', 'wWing', 'uniqueRectangle'
   ];
   var THROUGH_SHORT_CHAIN = BELOW_CHAINS.concat(['forcingChain']);
   var THROUGH_LONG_CHAIN = THROUGH_SHORT_CHAIN.concat(['forcingChainLong']);
@@ -788,6 +788,11 @@
   // the same plus itself.
   var BELOW_FIN = THROUGH_ER.slice();
   var THROUGH_FIN = BELOW_FIN.concat(['finnedXWing']);
+
+  // Where finnedSwordfish is reached (MS09b): the techniques before it in the registry (through swordfish), and the
+  // same plus itself. The position through finnedXWing is where swordfish is reached.
+  var BELOW_FSF = THROUGH_FIN.concat(['swordfish']);
+  var THROUGH_FSF = BELOW_FSF.concat(['finnedSwordfish']);
 
   // Real unique puzzles. The first two are the puzzles of the v2 chain fixtures; the next three are famous
   // puzzles of tests/fixtures/classic.js; the last three are minimal puzzles dug by SG.testkit.dig from the
@@ -859,13 +864,28 @@
   var FIN_SPARE = '....41.9...29...5.........87.5..9.4.....7...693...4....4.8.........25.17..6.....9';
   var FIN_ORDINARY = '.....3.......89172.......3.4....7...81....75..6.9....4..2.31....83.9..61.7.4.....';
 
+  // Real unique puzzles of the finnedSwordfish fixtures (MS09b). The first positive is ER_RATED, the puzzle of
+  // 'constructed-nightmare-2' of tests/fixtures/rated.js: its position through swordfish has a finned Swordfish
+  // (digit 3, rows R2, R5 and R9 on the covers C5, C8 and C9, the fin R5C7, two targets). FSF_SPARSE is state #512
+  // (puzzle 128) of the seeded corpus of H.randomStatesWithKnownSolution(classic9, seed 4242): digit 9, rows R1, R2
+  // and R5 on the covers C1, C6 and C9, the row R1 has a single body cell (R1C9) and the fin R1C4; FSF_SPARE is
+  // state #160 (puzzle 40) of the corpus of seed 99, a third real position for the soundness supplements (digit 9,
+  // columns C3, C5 and C7). FSF_ORDINARY is state #416 (puzzle 104) of the corpus of seed 777: its position through
+  // finnedXWing has a genuine ordinary Swordfish (digit 2, rows R3, R6 and R8 on the covers C6, C7 and C8) and no
+  // finned Swordfish, the neighbour boundary: an ordinary fish is no finned fish. FIN_SPARE (above) is the negative
+  // whose position before finnedXWing has a finned X-Wing and no finned Swordfish.
+  var FSF_SPARSE = '.3.....2..7.4....8..853.7....715......5...2......9..17...62...5...8.1..416.......';
+  var FSF_SPARE = '.6.8..2....36...8.9....3.4.5.278........6.59.7.......2.3.5......57.1.6.....3.7...';
+  var FSF_ORDINARY = '32.7.......6219..5..9.8..........1.6......87.8...5..3..7.8.5...5.896.....3.......';
+
   /**
    * Current fixtures that replace a historical entry or belong to an ID registered since (skyscraper, MS08a;
-   * twoStringKite, MS08b; emptyRectangle, MS08c; finnedXWing, MS09a), in the shape of the entries of the map. The
-   * short chain fixtures have at most 4 links, so that they are forcingChain's under C = 4 and C = 6 alike. The
-   * long ones are the 5- and 6-link shortest proofs of two dug puzzles: forcingChainLong's under the selected C = 4
-   * (MS07c; under C = 6 they would be forcingChain's). The negatives include positions where a shorter ID owns the
-   * proof, one of them at the window boundary: a chain of 5 links is not forcingChain's.
+   * twoStringKite, MS08b; emptyRectangle, MS08c; finnedXWing, MS09a; finnedSwordfish, MS09b), in the shape of the
+   * entries of the map. The short chain fixtures have at most 4 links, so that they are forcingChain's under C = 4
+   * and C = 6 alike. The long ones are the 5- and 6-link shortest proofs of two dug puzzles: forcingChainLong's
+   * under the selected C = 4 (MS07c; under C = 6 they would be forcingChain's). The negatives include positions
+   * where a shorter ID owns the proof, one of them at the window boundary: a chain of 5 links is not
+   * forcingChain's.
    */
   var CURRENT = {
     skyscraper: {
@@ -1039,6 +1059,52 @@
         }
       ]
     },
+    finnedSwordfish: {
+      positive: [
+        {
+          name: 'finnedSwordfish on digit 3, rows R2, R5 and R9 on the covers C5, C8 and C9, the fin R5C7 ' +
+            '(constructed-nightmare-2)',
+          puzzle: ER_RATED,
+          after: BELOW_FSF,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[52, 3], [53, 3]]
+          }
+        },
+        {
+          name: 'finnedSwordfish on digit 9, rows R1, R2 and R5 on the covers C1, C6 and C9, a single body cell in R1 ' +
+            'and the fin R1C4 (a seeded dug puzzle)',
+          puzzle: FSF_SPARSE,
+          after: BELOW_FSF,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[23, 9]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'finnedSwordfish has nothing left to do once the techniques through it are exhausted',
+          puzzle: COLOURING,
+          after: THROUGH_FSF,
+          propagate: true
+        },
+        {
+          name: 'finnedSwordfish leaves a genuine ordinary Swordfish (no fin) to swordfish',
+          puzzle: FSF_ORDINARY,
+          after: THROUGH_FIN,
+          propagate: true
+        },
+        {
+          name: 'finnedSwordfish leaves a genuine finned X-Wing to finnedXWing',
+          puzzle: FIN_SPARE,
+          after: BELOW_FIN,
+          propagate: true
+        }
+      ]
+    },
     forcingChain: {
       positive: [
         {
@@ -1177,9 +1243,13 @@
         }
       ],
       negative: [
+        // ESCARGOT until MS09b: with finnedSwordfish before it, its position through forcingChainLong has no
+        // depth 1 refutation left (nishioDeep finds depth 2 there), so the first v2 puzzle, whose position has one
+        // and whose nishioDeep finds nothing, is the first qualifying puzzle of a scan of the listed ones.
         {
-          name: 'nishioDeep leaves the depth 1 refutation of escargot to nishio (the shortest proof is not its own)',
-          puzzle: ESCARGOT,
+          name: 'nishioDeep leaves the depth 1 refutation of the first v2 puzzle to nishio (the shortest proof is ' +
+            'not its own)',
+          puzzle: V2_PUZZLE_1,
           after: THROUGH_LONG_CHAIN,
           propagate: true
         }
@@ -1205,7 +1275,8 @@
    * puzzle, are added on top in the same way. MS08c: emptyRectangle fires in about half of the random states
    * (144 firings in the 300 of the sweep), so its three real positions are added on top in the same way. MS09a:
    * finnedXWing fires in more than half of them, so its three real positions (two positives and a spare) are added
-   * on top in the same way.
+   * on top in the same way. MS09b: finnedSwordfish fires in nearly all of them (281 of the 300), and its three real
+   * positions are added on top in the same way.
    */
   var SUPPLEMENTS = {
     skyscraper: [
@@ -1238,6 +1309,14 @@
       { name: 'finnedXWing sashimi on columns with two fins (a seeded dug puzzle)', puzzle: FIN_SASHIMI,
         after: BELOW_FIN, propagate: true },
       { name: 'finnedXWing on rows with two fins (a second seeded dug puzzle)', puzzle: FIN_SPARE, after: BELOW_FIN,
+        propagate: true }
+    ],
+    finnedSwordfish: [
+      { name: 'finnedSwordfish on rows with one fin (constructed-nightmare-2)', puzzle: ER_RATED, after: BELOW_FSF,
+        propagate: true },
+      { name: 'finnedSwordfish on rows with a single body cell (a seeded dug puzzle)', puzzle: FSF_SPARSE,
+        after: BELOW_FSF, propagate: true },
+      { name: 'finnedSwordfish on columns (a second seeded dug puzzle)', puzzle: FSF_SPARE, after: BELOW_FSF,
         propagate: true }
     ],
     forcingChainLong: [

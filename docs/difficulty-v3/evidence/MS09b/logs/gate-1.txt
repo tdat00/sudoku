@@ -1,0 +1,21 @@
+$ node tests\node-runner.js --suite=tech-fish,techniques,technique-weights,difficulty-floor
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-floor: 48 passed  (27.46 s)
+ok   tech-fish: 480 passed  (20.18 s)
+ok   technique-weights: 11 passed  (3 ms)
+FAIL techniques: 230 passed, 1 failed  (2.65 s)
+
+Failures:
+  FAIL techniques > techniques: fixtures (fixtures/techniques.js) > nishioDeep > finds nothing: nishioDeep leaves the depth 1 refutation of escargot to nishio (the shortest proof is not its own)
+       AssertionError: technique "nishioDeep" should find nothing here, but returned: {"technique":"nishioDeep","cells":[38],"placements":[],"eliminations":[[38,4]],"i18nKey":"technique.nishioDeep.step","i18nArgs":{"cell":38,"label":"R5C3","digit":4,"depth":2}}
+       at fail (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:107:11)
+       at Object.expectNoFinding (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:473:7)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:168:15)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 4
+Tests:  770 total, 769 passed, 1 failed, 0 skipped
+Time:   50.29 s running tests, 50.40 s total
+exit=1 seconds=50.522

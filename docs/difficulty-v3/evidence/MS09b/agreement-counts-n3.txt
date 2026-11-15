@@ -1,0 +1,26 @@
+$ node tests\artifacts\difficulty-v3\MS09b\agreement-counts.js
+fishTest12 seed 2026: {"states":12,"limit":120,"found":3,"complete":3,"capped":6,"disagreements":0,"positions":[10,62],"genMs":58,"checkMs":144}
+fishTest16 seed 2026: {"states":8,"limit":60,"found":3,"complete":0,"capped":5,"disagreements":0,"positions":[12,46],"genMs":3590,"checkMs":41}
+jigsawLayout seed 4242: {"states":40,"limit":"default","found":16,"complete":24,"capped":0,"disagreements":0,"positions":[0,437],"genMs":356,"checkMs":1494}
+jigsawLayoutTurned seed 4242: {"states":40,"limit":"default","found":16,"complete":24,"capped":0,"disagreements":0,"positions":[4,724],"genMs":105,"checkMs":1866}
+classic9 seed 777: {"states":150,"limit":"default","found":87,"complete":63,"capped":0,"disagreements":0,"positions":[2,438],"genMs":32,"checkMs":1270}
+classic9 seed 99: {"states":150,"limit":"default","found":70,"complete":80,"capped":0,"disagreements":0,"positions":[1,566],"genMs":33,"checkMs":1129}
+classic6 seed 777: {"states":400,"limit":"default","found":147,"complete":253,"capped":0,"disagreements":0,"positions":[0,80],"genMs":107,"checkMs":131}
+classic4 seed 777: {"states":300,"limit":"default","found":17,"complete":283,"capped":0,"disagreements":0,"positions":[0,8],"genMs":28,"checkMs":9}
+classic9 seed 777: {"states":150,"limit":1,"found":0,"complete":49,"capped":101,"disagreements":0,"positions":[],"genMs":2,"checkMs":13}
+classic9 seed 777: {"states":150,"limit":25,"found":31,"complete":49,"capped":70,"disagreements":0,"positions":[2,23],"genMs":3,"checkMs":132}
+classic9 seed 777: {"states":150,"limit":300,"found":81,"complete":53,"capped":16,"disagreements":0,"positions":[2,294],"genMs":3,"checkMs":1117}
+classic9 seed 99: {"states":150,"limit":1,"found":0,"complete":46,"capped":104,"disagreements":0,"positions":[],"genMs":2,"checkMs":11}
+classic9 seed 99: {"states":150,"limit":25,"found":29,"complete":56,"capped":65,"disagreements":0,"positions":[1,20],"genMs":2,"checkMs":97}
+classic9 seed 99: {"states":150,"limit":300,"found":62,"complete":69,"capped":19,"disagreements":0,"positions":[1,290],"genMs":2,"checkMs":866}
+classic6 seed 777: {"states":400,"limit":1,"found":1,"complete":192,"capped":207,"disagreements":0,"positions":[0,0],"genMs":3,"checkMs":16}
+classic6 seed 777: {"states":400,"limit":10,"found":69,"complete":212,"capped":119,"disagreements":0,"positions":[0,9],"genMs":3,"checkMs":47}
+classic6 seed 777: {"states":400,"limit":60,"found":142,"complete":238,"capped":20,"disagreements":0,"positions":[0,58],"genMs":3,"checkMs":116}
+diagonalX seed 4242: {"states":40,"limit":"default","found":13,"complete":27,"capped":0,"disagreements":0,"positions":[2,616],"genMs":43,"checkMs":1133}
+hyper seed 4242: {"states":40,"limit":"default","found":18,"complete":22,"capped":0,"disagreements":0,"positions":[3,686],"genMs":35,"checkMs":997}
+jigsaw9 seed 4242: {"states":20,"limit":"default","found":6,"complete":14,"capped":0,"disagreements":0,"positions":[2,298],"genMs":362,"checkMs":989}
+samurai seed 4242: {"states":8,"limit":40,"found":0,"complete":3,"capped":5,"disagreements":0,"positions":[],"genMs":85,"checkMs":74}
+sohei seed 4242: {"states":8,"limit":40,"found":0,"complete":3,"capped":5,"disagreements":0,"positions":[],"genMs":359,"checkMs":47}
+butterfly seed 4242: {"states":8,"limit":40,"found":0,"complete":8,"capped":0,"disagreements":0,"positions":[],"genMs":12,"checkMs":5}
+flower seed 4242: {"states":8,"limit":40,"found":1,"complete":3,"capped":4,"disagreements":0,"positions":[30,30],"genMs":19,"checkMs":66}
+exit=0 seconds=17.262

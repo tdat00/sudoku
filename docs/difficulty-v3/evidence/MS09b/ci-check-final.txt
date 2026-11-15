@@ -1,0 +1,9 @@
+$ node generator\tests\artifacts\difficulty-v3\MS09b\ci-check.cjs
+Generator quick set: 3928 tests in 53 suites; Player quick set: 2171 tests in 30 suites
+  group shared-small: 4 shard(s) (core-shared, steps, replay, mega), 1950 tests, projected 630 s of 1800 s
+  group own-suites: 2 shard(s) (own-fast, digger-target), 1758 tests, projected 930 s of 1800 s
+  group pipeline: 1 shard(s) (pipeline), 151 tests, projected 360 s of 1800 s
+  group replay-player: 1 shard(s) (player), 69 tests, projected 330 s of 1800 s
+  Player job: projected 360 s of 1800 s
+Every quick test is in exactly one shard (3928 of 3928), no manual or unknown suite, no empty shard, every job inside its limit: check passed.
+exit=0 seconds=4.025

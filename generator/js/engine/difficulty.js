@@ -97,6 +97,7 @@
     emptyRectangle: 380,
     finnedXWing: 400,
     swordfish: 420,
+    finnedSwordfish: 480,
     jellyfish: 520,
     xyWing: 650,
     xyzWing: 750,

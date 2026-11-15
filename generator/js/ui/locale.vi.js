@@ -348,6 +348,13 @@
     'technique.swordfish': 'Swordfish (cá kiếm)',
     'technique.swordfish.desc': 'Phiên bản ba đường của X-Wing: chữ số chỉ nằm trong cùng ba cột ở ba hàng ' +
       'thì bị loại khỏi phần còn lại của ba cột đó.',
+    'technique.finnedSwordfish': 'Finned Swordfish (cá kiếm có vây)',
+    'technique.finnedSwordfish.desc': 'Một Swordfish mà các đường gốc có thêm những ô chứa chữ số, gọi là vây, ' +
+      'nằm cùng trong một khối hoặc vùng và ngoài ba đường phủ. Nếu không vây nào chứa chữ số thì các đường ' +
+      'gốc lấp đầy ba đường phủ như Swordfish; nếu một vây chứa nó thì chữ số bị loại khỏi mọi ô nhìn thấy ' +
+      'vây đó. Dù thế nào, chữ số cũng bị loại khỏi mọi ô của đường phủ, nằm ngoài các đường gốc, nhìn thấy ' +
+      'tất cả các vây. Một đường gốc có thể có ít hơn ba ô trên các đường phủ, miễn là có ít nhất một ô. ' +
+      'Tương tự khi đổi vai trò hàng và cột.',
     'technique.xyWing': 'XY-Wing',
     'technique.xyWing.desc': 'Ô trục có hai ứng viên nhìn thấy hai ô càng, mỗi ô càng chung một ứng viên ' +
       'với ô trục. Dù ô trục nhận giá trị nào thì một ô càng cũng chứa chữ số chung, nên chữ số đó bị ' +
@@ -436,6 +443,11 @@
     'technique.swordfish.step': 'Swordfish cho {digit}: trong {baseUnits}, chữ số {digit} chỉ có thể nằm ở ' +
       '{coverUnits}. Ba chữ số {digit} của các đường gốc lấp đầy cả ba đường phủ, nên {digit} bị loại ' +
       'khỏi mọi ô còn lại của {coverUnits}.',
+    'technique.finnedSwordfish.step': 'Finned Swordfish cho {digit}: trong {bases}, chữ số {digit} chỉ có thể ' +
+      'nằm ở {covers}, trừ các ô vây {fins} cùng nằm trong một khối hoặc vùng. Nếu không ô vây nào là ' +
+      '{digit} thì ba chữ số {digit} của các đường gốc lấp đầy cả ba đường phủ; nếu một ô vây là {digit} ' +
+      'thì nó loại {digit} khỏi mọi ô nhìn thấy nó. Dù thế nào, {digit} cũng bị loại khỏi mọi ô của ' +
+      '{covers} nằm ngoài các đường gốc {bases} và nhìn thấy tất cả các ô vây.',
     'technique.jellyfish.step': 'Jellyfish cho {digit}: trong {baseUnits}, chữ số {digit} chỉ có thể nằm ở ' +
       '{coverUnits}. Bốn chữ số {digit} của các đường gốc lấp đầy cả bốn đường phủ, nên {digit} bị loại ' +
       'khỏi mọi ô còn lại của {coverUnits}.',

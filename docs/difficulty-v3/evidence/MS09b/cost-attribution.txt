@@ -1,0 +1,6 @@
+$ node tests\artifacts\difficulty-v3\MS09b\cost-attribution.js
+26 references, wall seconds per pass
+with    : 0.355 0.351 0.350 0.348 0.347  median 0.350
+without : 0.248 0.248 0.247 0.248 0.246  median 0.248
+ratio of medians 1.411
+exit=0 seconds=3.577

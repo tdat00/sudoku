@@ -154,14 +154,14 @@ Return the inherited/new item list, actual gates and CI membership.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (orchestrator check against IR72 A-J; outside the analyst review set). The developer stopped before E with five questions; the pack author (SA2) accepted Q1, Q2 and Q5 and asked for test and report changes in Q3 and Q4 (no finder change); S-AV31 reserved |
+| Start | 2026-11-16 00:53:48 (+07:00), base `4cf0cb3` |
+| End | 2026-11-16 01:59 stop before E; 02:01-02:18 SA2 ruling; 02:20-03:27:26 corrections, E and final evidence; orchestrator re-check and commit |
+| Duration | 2 h 15 min developer (1 h 5 min to the question + 1 h 7 min after the ruling); about 17 min SA2 ruling; 82 locked commands, every lock wait 0-0.1 s |
+| Model | claude-sonnet-5.5 (developer); gpt-6-astra (SA2 ruling); claude-opus-5.5 (orchestrator) |
+| Token usage | 363 model calls; 130,026,698 input tokens (128,346,503 cache reads); 405,409 output tokens |
+| AI credits | about 2,109 (developer) |
+| Verification | `finnedSwordfish` in `core/js/engine/tech-fish.js` (fish group, order 134, base cost 48, unscoped, `assumesUniqueness: false`), `WEIGHTS.finnedSwordfish = 480` (between `swordfish` 420 and `jellyfish` 520: Hard tier). MS09a's rulings carried over (ownership for every base candidate incl. fins, box-like `box`/`region` single owner, targets on a cover outside the bases seeing every fin, a body cell in every base and cover, sparse bodies at n=3, no sashimi flag). Independent limit `SG.fishSearch.FINNED_SWORDFISH_WORK_LIMIT = 50,000` with the named seam; `finnedXWing`'s limit untouched (isolated-copy independence tests, four tying mutants caught). Truncation: the first L base combinations; a spent limit gives `null` with `capHit: 'work'` and never proves absence (672/673 boundary; the `agree` helper passes the oracle the effective limit, SA2 Q3). Multi-grid agreement by bounded sampling (whole on eight near-witness states, prefix 40 on the first eight, soundness checks for late witnesses Samurai 4242 #0 and Sohei 4242 #8); Butterfly's zero minimum justified structurally and pinned (SA2 Q4). Census (`work-census.json`): 3,508 sampled calls, none capped; Samurai 23,466 units, 212.353 ms and Sohei 8,412, 70.517 ms (p95/max of their 12-call cohorts); 16 digits p95 21.813 ms, max 23.382 ms; eight constructed calls kept apart, one capped (blank Samurai, 3.781 s); limit not adjusted. Ordinary fish and `finnedXWing` identical to `4cf0cb3` on 53,728 lines. Focused gate 773/773 (`tech-fish` 483, `techniques` 231, `technique-weights` 11, `difficulty-floor` 48); 63/64 mutants (#7 equivalent). **E** (frozen bytes; merge-checks re-run on the final tree): 13 of 520 hashes changed, none below Hard; wire G11 (two counters); analyses G07, G12, G14. Reference ratings: 3 change (escargot 5,279 -> 5,143; constructed-nightmare-1 2,727 -> 2,743; constructed-nightmare-2 2,652 -> 2,633), no level or `v3Expected` change. Help catalogue 33 (`finnedSwordfish` from Nightmare seed 3 step 18; `simpleColouring` and `nishioDeep` re-made from their own sources), 33/33. Quick sets: Generator 3,928/3,928 (368.3 s; +13.7 %), Player 2,171/2,171 (56.3 s; +24.3 %); fingerprints match; CI check passes. Orchestrator: locked gate suites 773/773 (52.9 s); CI shard check 3,928 |
+| Acceptance | MS09b-B01, B02, T01, T02, T03 met; IR72 A-J pass (developer's table with evidence pointers in `docs/difficulty-v3/evidence/MS09b/evidence.md`) |
+| Issues & resolutions | **Questions before E:** wording, the independent-limit surface, truncation and the capped-prefix test, multi-grid agreement cost, R10 observations; SA2 accepted with test and report corrections (applied) and reserved **S-AV31** "Finned Swordfish multigrid finder latency" (routed to MS18d, MS18e audit; check-list row added). With `finnedSwordfish` before `jellyfish`, ESCARGOT lost its depth-1 refutation at the `forcingChainLong` position, so the `nishioDeep` negative's puzzle moved to `V2_PUZZLE_1` (premise re-asserted from a saved scan; accepted by SA2; no assertion softened). One probe stopped by the developer when its reference enumeration ran away (logged with exit -1; not repeated). The quick sets grew (+13.7 % / +24.3 %): every Hard-and-above rating now runs the finder, and the 26 references rate 41 % slower; the Player shard's measured time is 56.0 s against its 60 s projection (margin 1.07), named for MS18e's audit (S-AV08 re-measured) |
+| Handoff | To MS10a: the fish group is complete through Finned Swordfish (order 134); box-like units `box`/`region` with the single-owner rule; IR72 A-J is the checklist; base quick totals Generator 3,928 (368.3 s) and Player 2,171 (56.3 s, close to its 60 s shard projection); help catalogue 33; S-AV01-S-AV31 open as recorded; ask before E |

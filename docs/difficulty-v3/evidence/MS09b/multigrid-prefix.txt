@@ -1,0 +1,14 @@
+$ node tests\artifacts\difficulty-v3\MS09b\multigrid-prefix.js
+samurai limit 100: found 0, complete 3, capped 5, 303 ms for the enumeration
+samurai limit 300: found 0, complete 3, capped 5, 1109 ms for the enumeration
+samurai limit 1000: found 0, complete 3, capped 5, 4134 ms for the enumeration
+sohei limit 100: found 0, complete 3, capped 5, 160 ms for the enumeration
+sohei limit 300: found 1, complete 3, capped 4, 386 ms for the enumeration
+sohei limit 1000: found 2, complete 3, capped 3, 2077 ms for the enumeration
+flower limit 100: found 1, complete 3, capped 4, 231 ms for the enumeration
+flower limit 300: found 1, complete 3, capped 4, 983 ms for the enumeration
+flower limit 1000: found 1, complete 7, capped 0, 1047 ms for the enumeration
+butterfly limit 100: found 0, complete 8, capped 0, 6 ms for the enumeration
+butterfly limit 300: found 0, complete 8, capped 0, 6 ms for the enumeration
+butterfly limit 1000: found 0, complete 8, capped 0, 6 ms for the enumeration
+exit=0 seconds=11.103

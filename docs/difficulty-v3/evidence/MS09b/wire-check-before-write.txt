@@ -1,0 +1,11 @@
+$ node tests\replay-fixtures.js --merge=..\docs\difficulty-v3\evidence\MS09b\wire --check
+merged 5 ledgers: all 5 keys exactly once, recorded from the current sources
+G09: matches replay-wire.js
+G10: matches replay-wire.js
+G11: 2 fields differ from replay-wire.js
+  work[4].localSearches[0].firstShallowAt: saved null, fresh 0
+  work[4].localSearches[0].shallowRatings: saved 0, fresh 1
+G12: matches replay-wire.js
+G13: matches replay-wire.js
+replay-wire.js differs; regenerate it with node tests/replay-fixtures.js --write only if the generator changed on purpose
+exit=1 seconds=0.425

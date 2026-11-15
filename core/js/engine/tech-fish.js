@@ -1,6 +1,6 @@
 /**
  * Fish techniques (group `fish`): X-Wing, Skyscraper, Two-string kite, Empty Rectangle, Finned X-Wing,
- * Swordfish, Jellyfish and Simple Colouring; registers itself in SG.techniques.
+ * Swordfish, Finned Swordfish, Jellyfish and Simple Colouring; registers itself in SG.techniques.
  *
  *   id               baseCost  order
  *   xWing                32     110     basic fish of size 2
@@ -10,6 +10,7 @@
  *   emptyRectangle       38     124     a box with a row arm and a column arm of a digit, and a strong link
  *   finnedXWing          40     126     an X-Wing with fins in one box, sashimi included
  *   swordfish            42     130     basic fish of size 3
+ *   finnedSwordfish      48     134     a Swordfish with fins in one box
  *   jellyfish            56     137     basic fish of size 4 (before the wings: weight 520 < xyWing 650)
  *
  * Basic fish (ONE routine, `findFish`, size n = 2, 3, 4): for a digit d pick n "base" lines of one
@@ -82,8 +83,8 @@
  * returned, with the candidates of U and the two cells of the pair in `cells` (cell order), the box label in
  * `box`, the row and the column in `lines` (unit order) and the two cells of the pair in `ends` (cell order).
  *
- * Finned fish (rating v3, R12; one routine for n = 2, the registered Finned X-Wing, and n = 3, which the
- * finned Swordfish registers later): for a digit d pick n base lines of one orientation (rows or columns,
+ * Finned fish (rating v3, R12; one routine for n = 2, the registered Finned X-Wing, and n = 3, the registered
+ * Finned Swordfish): for a digit d pick n base lines of one orientation (rows or columns,
  * complete units in which d is not placed and that have at least two cells that can still be d, the
  * candidates of the line) and n cover lines, complete units of the other orientation. Every candidate of a
  * base line has that line as its only line of its kind and exactly one cover line (candidate ownership as in
@@ -106,17 +107,20 @@
  * elimination is returned, with the candidates of the base lines in `cells` (cell order), the base lines in
  * `bases` and the covers in `covers` (unit order) and the fins in `fins` (cell order).
  *
- * Work (R10), the same for the four patterns. A work unit of the skyscraper is one tested pair of base lines
+ * Work (R10), the same for the five patterns. A work unit of the skyscraper is one tested pair of base lines
  * (the second line extending the first), one of the kite is one tested pair of a row and a column of a digit
  * (every one of its up to four bridges is tested inside the unit), one of the empty rectangle is one tested
  * pair of a box and a conjugate unit of a digit, and inside the unit at most eight trials are made (two
  * rectangles of the box, two choices of A, two choices of p), and one of the finned fish is one tested
  * combination of n base lines of a digit and orientation, inside which every choice of n covers is tried
  * (at most one per combination of the covers that hold a candidate of the lines). The limit is 50000 per
- * call (`SG.fishSearch.SKYSCRAPER_WORK_LIMIT`, `KITE_WORK_LIMIT`, `EMPTY_RECTANGLE_WORK_LIMIT`,
- * `FINNED_X_WING_WORK_LIMIT`); a spent limit ends the call with null (a lost deduction, never an invented
- * one). The parent budget is checked at entry and before the unit that would carry the work done since the
- * last check over 256 units; the counter is local to the call. A spent budget ('budget.exceeded') is
+ * call, one constant for each pattern (`SG.fishSearch.SKYSCRAPER_WORK_LIMIT`, `KITE_WORK_LIMIT`,
+ * `EMPTY_RECTANGLE_WORK_LIMIT`, `FINNED_X_WING_WORK_LIMIT`, `FINNED_SWORDFISH_WORK_LIMIT`; the two finned
+ * fish share the routine, not the limit); a spent limit ends the call with null (a lost deduction, never an
+ * invented one: the search is cut at a deterministic prefix of its base combinations, so null with
+ * `capHit: 'work'` proves no absence, while a finned fish found before the limit is spent is complete). The
+ * parent budget is checked at entry and before the unit that would carry the work done since the last check
+ * over 256 units; the counter is local to the call. A spent budget ('budget.exceeded') is
  * "nothing found" as for the chain finders, cancellation and every other error propagate.
  * `ctx.options.onPatternWork(record)` observes each call and never selects its result:
  * { id, work, limit, capHit (null | 'work'), retained (null) }, a fresh object per call.
@@ -140,10 +144,12 @@
   // R10 work policy of the Skyscraper, the Two-string kite, the Empty Rectangle and the finned fish: the
   // units one call may spend (tested pairs of base lines, of a row and a column, of a box and a conjugate
   // unit, tested combinations of base lines) and how many may pass between two checks of the parent budget.
+  // The finned X-Wing and the finned Swordfish share a routine and each has its own limit.
   const SKYSCRAPER_WORK_LIMIT = 50000;
   const KITE_WORK_LIMIT = 50000;
   const EMPTY_RECTANGLE_WORK_LIMIT = 50000;
   const FINNED_X_WING_WORK_LIMIT = 50000;
+  const FINNED_SWORDFISH_WORK_LIMIT = 50000;
   const WORK_CHECK_UNITS = 256;
 
   // Thrown through the unit loops of a pattern call whose work limit is spent.
@@ -1137,15 +1143,15 @@
     return scanFinned(model, state, info, run, 2, 'finnedXWing');
   }
 
-  // The shared enumeration at n = 3: not registered here, the finned Swordfish uses it.
+  // The shared enumeration at n = 3: the registered finnedSwordfish.
   function scanFinnedSwordfish(model, state, info, run) {
     return scanFinned(model, state, info, run, 3, 'finnedSwordfish');
   }
 
-  // A pattern call (`scan` is scanSkyscraper, scanKite, scanEmptyRectangle or scanFinnedXWing) with its own
-  // work counter. A spent work limit and a spent budget are "nothing found" (the logical solver notices the
-  // budget at its next check); cancellation and every other error propagate. The work goes to the optional
-  // observer, which never selects the result.
+  // A pattern call (`scan` is scanSkyscraper, scanKite, scanEmptyRectangle, scanFinnedXWing or
+  // scanFinnedSwordfish) with its own work counter. A spent work limit and a spent budget are "nothing found"
+  // (the logical solver notices the budget at its next check); cancellation and every other error propagate.
+  // The work goes to the optional observer, which never selects the result.
   function findBounded(id, scan, model, state, ctx, workLimit) {
     const info = infoFor(model, ctx);
     const run = { ctx: ctx, limit: workLimit, work: 0, checkedAt: 0, capped: false };
@@ -1413,26 +1419,32 @@
   define('swordfish', 42, 130, function (model, state, ctx) {
     return findFish(model, state, ctx, 3, 'swordfish');
   });
+  define('finnedSwordfish', 48, 134, function (model, state, ctx) {
+    return findBounded('finnedSwordfish', scanFinnedSwordfish, model, state, ctx,
+      FINNED_SWORDFISH_WORK_LIMIT);
+  });
   define('jellyfish', 56, 137, function (model, state, ctx) {
     return findFish(model, state, ctx, 4, 'jellyfish');
   });
 
-  // The parameterised searches behind skyscraper, twoStringKite, emptyRectangle and finnedXWing, for tests
-  // (explicit work limit); not registered techniques. `finnedFish` is the shared enumeration of the finned
-  // fish with an explicit size: 2 is the finned X-Wing, 3 the finned Swordfish, which no technique registers
-  // yet.
+  // The parameterised searches behind skyscraper, twoStringKite, emptyRectangle, finnedXWing and
+  // finnedSwordfish, for tests (explicit work limit); not registered techniques. `finnedFish` is the shared
+  // enumeration of the finned fish with an explicit size: 2 is the finned X-Wing and 3 the finned Swordfish,
+  // each with its own default work limit.
   if (!SG.fishSearch) {
-    const finnedSwordfishSeam = seamOf('finnedSwordfish', scanFinnedSwordfish, FINNED_X_WING_WORK_LIMIT);
+    const finnedSwordfishSeam = seamOf('finnedSwordfish', scanFinnedSwordfish, FINNED_SWORDFISH_WORK_LIMIT);
     const finnedXWingSeam = seamOf('finnedXWing', scanFinnedXWing, FINNED_X_WING_WORK_LIMIT);
     SG.fishSearch = Object.freeze({
       SKYSCRAPER_WORK_LIMIT: SKYSCRAPER_WORK_LIMIT,
       KITE_WORK_LIMIT: KITE_WORK_LIMIT,
       EMPTY_RECTANGLE_WORK_LIMIT: EMPTY_RECTANGLE_WORK_LIMIT,
       FINNED_X_WING_WORK_LIMIT: FINNED_X_WING_WORK_LIMIT,
+      FINNED_SWORDFISH_WORK_LIMIT: FINNED_SWORDFISH_WORK_LIMIT,
       skyscraper: seamOf('skyscraper', scanSkyscraper, SKYSCRAPER_WORK_LIMIT),
       twoStringKite: seamOf('twoStringKite', scanKite, KITE_WORK_LIMIT),
       emptyRectangle: seamOf('emptyRectangle', scanEmptyRectangle, EMPTY_RECTANGLE_WORK_LIMIT),
       finnedXWing: finnedXWingSeam,
+      finnedSwordfish: finnedSwordfishSeam,
       finnedFish: function (model, state, ctx, opts) {
         const size = opts === undefined || opts === null ? undefined : opts.size;
         if (size !== 2 && size !== 3) {

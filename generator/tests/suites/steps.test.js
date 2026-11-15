@@ -912,10 +912,10 @@
         var b = stepAt(fall, 103);
         var drop = textOfStep(b);
         expect(b.table.transition.before.total).toBe(3042);
-        expect(b.table.transition.after.total).toBe(2686);
+        expect(b.table.transition.after.total).toBe(2701);
         expect(drop.badge).toBeNull();
-        expect(drop.total).toBe(SG.i18n.formatNumber(2686) + ' (\u2212' + SG.i18n.formatNumber(356) + ')');
-        expect(drop.total).toBe('2,686 (\u2212356)');
+        expect(drop.total).toBe(SG.i18n.formatNumber(2701) + ' (\u2212' + SG.i18n.formatNumber(341) + ')');
+        expect(drop.total).toBe('2,701 (\u2212341)');
         expect(drop.line).toContain('now uses Long Forcing Chain (weight 1,400)');
         expect(drop.rowLabel.technique).toBe('forcingChainLong');
         expect(drop.totalHighlight).toBe(false);

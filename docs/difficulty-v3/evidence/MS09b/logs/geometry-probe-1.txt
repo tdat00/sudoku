@@ -1,0 +1,84 @@
+$ node tests\artifacts\difficulty-v3\MS09b\geometry-probe.js
+CORE: reference 2 removing row R1/R4/R7 on C2/C5/C8 fins R4C9 body 222 targets R5C8 | col C2/C5/C8 on R1/R4/R7 fins R5C8 body 222 targets R4C9
+   finder {"args":{"digit":5,"bases":["R1","R4","R7"],"covers":["C2","C5","C8"],"fins":["R4C9"]},"el":["R5C8"],"cells":7} work {"id":"finnedSwordfish","work":673,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+VECTOR: reference 1 removing row R1/R4/R7 on C2/C5/C8 fins R4C9 body 222 targets R5C8
+   finder {"args":{"digit":5,"bases":["R1","R4","R7"],"covers":["C2","C5","C8"],"fins":["R4C9"]},"el":["R5C8"],"cells":7} work {"id":"finnedSwordfish","work":673,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+VECTOR transposed: reference 1 removing col C1/C4/C7 on R2/R5/R8 fins R9C4 body 222 targets R8C5
+   finder {"args":{"digit":5,"bases":["C1","C4","C7"],"covers":["R2","R5","R8"],"fins":["R9C4"]},"el":["R8C5"],"cells":7} work {"id":"finnedSwordfish","work":674,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+SPARSE (R4C5 missing): reference 1 removing row R1/R4/R7 on C2/C5/C8 fins R4C9 body 212 targets R5C8
+   finder {"args":{"digit":5,"bases":["R1","R4","R7"],"covers":["C2","C5","C8"],"fins":["R4C9"]},"el":["R5C8"],"cells":6} work {"id":"finnedSwordfish","work":673,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 1, finnedXWing R4/R7, swordfish null
+SPARSE transposed: reference 1 removing col C1/C4/C7 on R2/R5/R8 fins R9C4 body 212 targets R8C5
+   finder {"args":{"digit":5,"bases":["C1","C4","C7"],"covers":["R2","R5","R8"],"fins":["R9C4"]},"el":["R8C5"],"cells":6} work {"id":"finnedSwordfish","work":673,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 1, finnedXWing C4/C7, swordfish null
+TWO_FINS: reference 1 removing row R1/R4/R7 on C2/C5/C8 fins R4C7,R4C9 body 222 targets R5C8
+   finder {"args":{"digit":5,"bases":["R1","R4","R7"],"covers":["C2","C5","C8"],"fins":["R4C7","R4C9"]},"el":["R5C8"],"cells":8} work {"id":"finnedSwordfish","work":673,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+TWO_FINS + R6C8: reference 1 removing row R1/R4/R7 on C2/C5/C8 fins R4C7,R4C9 body 222 targets R5C8,R6C8
+   finder {"args":{"digit":5,"bases":["R1","R4","R7"],"covers":["C2","C5","C8"],"fins":["R4C7","R4C9"]},"el":["R5C8","R6C8"],"cells":8} work {"id":"finnedSwordfish","work":673,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+FINS_TWO_LINES: reference 2 removing row R4/R5/R9 on C2/C5/C8 fins R4C9,R5C7 body 222 targets R6C8 | col C2/C5/C8 on R4/R5/R9 fins R6C8 body 222 targets R4C9,R5C7
+   finder {"args":{"digit":5,"bases":["R4","R5","R9"],"covers":["C2","C5","C8"],"fins":["R4C9","R5C7"]},"el":["R6C8"],"cells":8} work {"id":"finnedSwordfish","work":673,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 1, finnedXWing C2/C8, swordfish null
+FINS_TWO_LINES transposed: reference 2 removing row R2/R5/R8 on C4/C5/C9 fins R8C6 body 222 targets R7C5,R9C4 | col C4/C5/C9 on R2/R5/R8 fins R7C5,R9C4 body 222 targets R8C6
+   finder {"args":{"digit":5,"bases":["R2","R5","R8"],"covers":["C4","C5","C9"],"fins":["R8C6"]},"el":["R7C5","R9C4"],"cells":7} work {"id":"finnedSwordfish","work":673,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 1, finnedXWing R2/R8, swordfish null
+--- near misses
+split boxes R1C3: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1346,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+split boxes R1C3 transposed: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1346,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+fins one line two boxes R4C6: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1346,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+fins one line two boxes R4C6 transposed: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1346,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+off-cover target R5C7: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1346,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+off-cover target R5C7 transposed: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1346,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+cover cell not seeing the fin R2C8: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1346,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+cover cell not seeing the fin R2C8 transposed: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1346,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+no target: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1346,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+no target transposed: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1346,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+line of fins only: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1345,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+line of fins only transposed: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1345,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish null
+no fin (ordinary Swordfish): reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1346,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish R1/R4/R7
+no fin (ordinary Swordfish) transposed: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1346,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 0, finnedXWing null, swordfish C1/C4/C7
+n=2 vector at n=3: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1344,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 1, finnedXWing R1/R4, swordfish null
+n=2 vector at n=3 transposed: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1344,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 1, finnedXWing C1/C4, swordfish null
+two bases + single third row: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1345,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 1, finnedXWing C5/C8, swordfish null
+two bases + single third row transposed: reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1345,"limit":50000,"capHit":null,"retained":null}
+   n=2 reference removing 1, finnedXWing R5/R8, swordfish null
+exit=0 seconds=24.645

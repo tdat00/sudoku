@@ -1,0 +1,20 @@
+$ node tests\artifacts\difficulty-v3\MS09b\fixture-data.js
+FSF_RATED (ER_RATED) unique 1 left 48
+   finnedSwordfish {"args":{"digit":3,"bases":["R2","R5","R9"],"covers":["C5","C8","C9"],"fins":["R5C7"]},"elim":[[52,3],[53,3]],"labels":"R6C8-3 R6C9-3","cells":"R2C5 R2C8 R2C9 R5C5 R5C7 R5C8 R9C8 R9C9"}
+   swordfish null finnedXWing null
+FSF_SPARSE (rand4242#512) unique 1 left 35
+   finnedSwordfish {"args":{"digit":9,"bases":["R1","R2","R5"],"covers":["C1","C6","C9"],"fins":["R1C4"]},"elim":[[23,9]],"labels":"R3C6-9","cells":"R1C4 R1C9 R2C1 R2C6 R5C1 R5C9"}
+   swordfish null finnedXWing null
+FSF_SPARE (rand99#160) unique 1 left 38
+   finnedSwordfish {"args":{"digit":9,"bases":["C3","C5","C7"],"covers":["R2","R7","R9"],"fins":["R1C5"]},"elim":[[14,9]],"labels":"R2C6-9","cells":"R1C5 R2C5 R2C7 R7C3 R7C5 R7C7 R9C3 R9C5 R9C7"}
+   swordfish null finnedXWing null
+COLOURING through finnedSwordfish unique 1 left 26
+   finnedSwordfish null
+   swordfish null finnedXWing null
+FSF_ORDINARY (rand777#416) through finnedXWing unique 1 left 28
+   finnedSwordfish null
+   swordfish R3/R6/R8 on C6/C7/C8 finnedXWing null
+FIN_SPARE (rand20260101#16) through emptyRectangle unique 1 left 48
+   finnedSwordfish null
+   swordfish null finnedXWing R5/R7 fins R7C7,R7C9
+exit=0 seconds=0.204

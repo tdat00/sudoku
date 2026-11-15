@@ -354,6 +354,13 @@
     'technique.swordfish': 'Swordfish',
     'technique.swordfish.desc': 'The three-line version of X-Wing: a digit confined to the same three ' +
       'columns in three rows can be removed from the rest of those columns.',
+    'technique.finnedSwordfish': 'Finned Swordfish',
+    'technique.finnedSwordfish.desc': 'A Swordfish whose base lines hold extra cells for the digit, the fins, all ' +
+      'in one box or region and outside the three cover lines. If no fin holds the digit, the base lines fill ' +
+      'the three cover lines as in a Swordfish; if a fin does, it removes the digit from every cell that sees ' +
+      'it. Either way the digit is removed from every cell of a cover line, outside the base lines, that sees ' +
+      'all the fins. A base line may have fewer than three cells on the cover lines, as long as it has at ' +
+      'least one. The same holds with rows and columns swapped.',
     'technique.xyWing': 'XY-Wing',
     'technique.xyWing.desc': 'A pivot cell with two candidates sees two pincer cells that each share one ' +
       'of them. Whichever way the pivot goes, one pincer holds the common digit, so it leaves every cell ' +
@@ -451,6 +458,11 @@
     'technique.swordfish.step': 'Swordfish on {digit}: in {baseUnits}, the digit {digit} can only go in ' +
       '{coverUnits}. The three {digit}s of the base lines fill all three cover lines, so {digit} is ' +
       'removed from every other cell of {coverUnits}.',
+    'technique.finnedSwordfish.step': 'Finned Swordfish on {digit}: in {bases}, the digit {digit} can only go ' +
+      'in {covers}, apart from the fin cells {fins}, which all lie in one box or region. If none of the fins ' +
+      'is {digit}, the three {digit}s of the base lines fill all three cover lines; if one is, it removes ' +
+      '{digit} from every cell it sees. Either way {digit} is removed from every cell of {covers}, outside ' +
+      'the base lines {bases}, that sees all the fins.',
     'technique.jellyfish.step': 'Jellyfish on {digit}: in {baseUnits}, the digit {digit} can only go in ' +
       '{coverUnits}. The four {digit}s of the base lines fill all four cover lines, so {digit} is removed ' +
       'from every other cell of {coverUnits}.',

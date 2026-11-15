@@ -1,5 +1,5 @@
 // Fish techniques: X-Wing, Skyscraper, Two-string kite, Empty Rectangle, Finned X-Wing, Simple Colouring, Swordfish,
-// Jellyfish (../core/js/engine/tech-fish.js).
+// Finned Swordfish, Jellyfish (../core/js/engine/tech-fish.js).
 //
 // Fixtures: the published positions are the example boards of the SudokuWiki strategy pages (X-Wing,
 // Swordfish, Jellyfish, Simple Colouring). Each one is the puzzle plus the candidate grid the page shows when
@@ -8,9 +8,10 @@
 // checked against what the source says, not only against the code under test.
 // Every other check is built from the model's own units or from a solved grid, never from a published
 // board, so it holds for any digit count. The Skyscraper, the Two-string kite, the Empty Rectangle (R11) and the
-// Finned X-Wing (R12) have no published board in this suite: their geometry vectors are digit maps, every claim is
-// also checked against an independent enumeration (`referenceSkyscrapers`, `referenceKites`, `referenceRectangles`,
-// `referenceFinned`) and their positions are the real unique puzzles of core/tests/fixtures/techniques.js.
+// Finned X-Wing and Swordfish (R12) have no published board in this suite: their geometry vectors are digit maps,
+// every claim is also checked against an independent enumeration (`referenceSkyscrapers`, `referenceKites`,
+// `referenceRectangles`, `referenceFinned`) and their positions are the real unique puzzles of
+// core/tests/fixtures/techniques.js.
 (function () {
   'use strict';
 
@@ -20,7 +21,7 @@
   const model9 = H.model('classic9');
 
   const ALL_IDS = ['xWing', 'skyscraper', 'twoStringKite', 'simpleColouring', 'emptyRectangle', 'finnedXWing',
-    'swordfish', 'jellyfish'];
+    'swordfish', 'finnedSwordfish', 'jellyfish'];
   // The techniques that scan every digit and orientation with a budget check of their own.
   const SCAN_IDS = ['xWing', 'simpleColouring', 'swordfish', 'jellyfish'];
   const FISH_IDS = ['xWing', 'swordfish', 'jellyfish'];
@@ -1083,22 +1084,33 @@
    * candidates of the base lines (a cover without one has no body cell); `allCovers` takes every complete line of the
    * other kind instead and applies that rule as a filter; `digits` limits the digits looked at. The targets are the
    * open cells of the covers that can still be the digit, lie in no cell of a base line and see every fin (peers).
-   * @returns {Array<{digit, kind, bases, covers, fins, cells, body, targets}>} every pattern, with or without a
+   * @returns {Array<{digit, kind, bases, covers, fins, cells, body, targets, unit}>} every pattern, with or without a
    *   target, in the order digit, rows then columns, base lines (unit order, every combination once), covers (unit
-   *   order); `body` is the number of body cells of each base line
+   *   order); `body` is the number of body cells of each base line and `unit` the position of its combination of
+   *   base lines in that order (0 for the first tested combination, which is the work unit of the finder).
+   *   `options.limit` stops the enumeration before the combination at that position (a searched prefix, as the
+   *   finder's work limit does), `options.stopAtFirst` after the first pattern that removes something, and
+   *   `options.report` receives `{ tested, capped }`: the combinations tested and whether the limit cut the search
+   *   short (a combination was left over)
    */
   function referenceFinned(model, state, size, options) {
     const opts = options || {};
+    const limit = opts.limit === undefined ? Infinity : opts.limit;
+    const report = opts.report || {};
+    report.tested = 0;
+    report.capped = false;
+    let stop = false;
     const found = [];
     const cand = state.candidates;
     const val = state.value;
     const peers = peerSetsOf(model);
     const tables = finnedTablesOf(model);
     const increasing = function (a, b) { return a - b; };
-    for (let d = 1; d <= model.digits; d++) {
+    for (let d = 1; d <= model.digits && !stop; d++) {
       if (opts.digits && opts.digits.indexOf(d) === -1) continue;
       const bit = 1 << (d - 1);
       [['row', tables.row, tables.col], ['col', tables.col, tables.row]].forEach(function (orientation) {
+        if (stop) return;
         const kind = orientation[0];
         const ownLines = orientation[1];
         const crossLines = orientation[2];
@@ -1113,6 +1125,13 @@
           bases.push({ unit: u, cells: open, covers: open.map(function (c) { return crossLines[c][0]; }) });
         });
         combinations(bases, size).forEach(function (combo) {
+          if (stop) return;
+          if (report.tested >= limit) {
+            report.capped = true;
+            stop = true;
+            return;
+          }
+          const unit = report.tested++;
           const reachable = [];
           combo.forEach(function (b) {
             b.covers.forEach(function (u) { if (reachable.indexOf(u) === -1) reachable.push(u); });
@@ -1120,6 +1139,7 @@
           const pool = opts.allCovers ? unitsOfKind(model, other).filter(function (u) { return tables.complete[u]; })
             : reachable.sort(increasing);
           combinations(pool, size).forEach(function (covers) {
+            if (stop) return;
             const fins = [];
             const cells = [];
             const body = combo.map(function () { return 0; });
@@ -1148,7 +1168,8 @@
             });
             found.push({ digit: d, kind: kind, bases: combo.map(function (b) { return b.unit; }), covers: covers,
               fins: fins.sort(increasing), cells: cells.sort(increasing), body: body,
-              targets: Array.from(targets).sort(increasing) });
+              targets: Array.from(targets).sort(increasing), unit: unit });
+            if (opts.stopAtFirst && targets.size > 0) stop = true;
           });
         });
       });
@@ -1173,6 +1194,20 @@
     return H.makeState(model, blankPuzzle(model), { eliminate: eliminate, propagate: false });
   }
 
+  /**
+   * A blank-board state in which only `digit` has candidates, and only on the listed cells (`labels`; all cells when
+   * absent): no other digit is scanned, so a finned fish vector is all there is to find and the size 3 search of a
+   * large board (a flood of base lines) costs only the digit it is about.
+   */
+  function lonelyDigit(model, digit, labels) {
+    const state = H.makeState(model, blankPuzzle(model), { propagate: false });
+    const keep = labels === undefined ? null : new Set(labels.map(function (label) { return H.cell(model, label); }));
+    for (let c = 0; c < model.cellCount; c++) {
+      state.candidates[c] = keep === null || keep.has(c) ? 1 << (digit - 1) : 0;
+    }
+    return state;
+  }
+
   function describeItem(model, item, index) {
     return 'state #' + index + ' (' + item.kind + ')\n  puzzle: ' + H.puzzleString(model, item.givens);
   }
@@ -1186,6 +1221,7 @@
       emptyRectangle: { baseCost: 38, order: 124 },
       finnedXWing: { baseCost: 40, order: 126 },
       swordfish: { baseCost: 42, order: 130 },
+      finnedSwordfish: { baseCost: 48, order: 134 },
       jellyfish: { baseCost: 56, order: 137 }
     };
 
@@ -1202,7 +1238,7 @@
     });
 
     it('runs in ladder order: xWing, skyscraper, twoStringKite, simpleColouring, emptyRectangle, finnedXWing, ' +
-      'swordfish, jellyfish', function () {
+      'swordfish, finnedSwordfish, jellyfish', function () {
         const order = SG.techniques.list().map(function (def) { return def.id; });
         const at = ALL_IDS.map(function (id) { return order.indexOf(id); });
         at.forEach(function (index) { expect(index).toBeGreaterThanOrEqual(0); });
@@ -4848,10 +4884,10 @@
       });
   });
 
-  describe('finned fish (R12): the shared enumeration at n = 3, which no technique registers yet', function () {
+  describe('finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit', function () {
     // The enumeration of the finned X-Wing takes the number of lines as a parameter; the finned Swordfish (n = 3) is
-    // the same code with 3, registered by its own task. `SG.fishSearch.finnedFish` is its seam, tested here against
-    // the same independent enumeration.
+    // the same code with 3, registered by MS09b with a limit of its own. `SG.fishSearch.finnedFish` is its seam,
+    // tested here against the same independent enumeration (the registered finder has its own describes).
     const cache = {};
 
     function itemsOf(model, count, seed) {
@@ -4880,11 +4916,14 @@
     // reading with the columns.
     const SWORD = ['R1C2', 'R1C5', 'R1C8', 'R4C2', 'R4C5', 'R4C8', 'R7C2', 'R7C5', 'R7C8', 'R7C9', 'R8C8', 'R9C2'];
 
-    it('is not registered: finnedSwordfish waits for its own task, and only finnedXWing of the two is a technique',
-      function () {
-        expect(SG.techniques.has('finnedXWing')).toBe(true);
-        expect(SG.techniques.has('finnedSwordfish')).toBe(false);
-      });
+    it('is registered as a technique of its own beside the finned X-Wing, with a limit of its own', function () {
+      expect(SG.techniques.has('finnedXWing')).toBe(true);
+      expect(SG.techniques.has('finnedSwordfish')).toBe(true);
+      expect(SG.fishSearch.FINNED_SWORDFISH_WORK_LIMIT).toBe(50000);
+      expect(SG.fishSearch.FINNED_X_WING_WORK_LIMIT).toBe(50000);
+      expect(Object.keys(SG.fishSearch)).toContain('FINNED_SWORDFISH_WORK_LIMIT');
+      expect(Object.keys(SG.fishSearch)).toContain('finnedSwordfish');
+    });
 
     it('takes a size of 2 or 3 and a work limit like the other seams, and rejects anything else', function () {
       const state = digitsMap(model9, { 1: ['R1C2', 'R1C8', 'R4C2', 'R4C8', 'R4C9', 'R5C8'] });
@@ -4904,7 +4943,73 @@
       });
       const records = [];
       shared(model9, state, { size: 3 }, { onPatternWork: function (r) { records.push(r); } });
-      expect(records[0].limit).toBe(SG.fishSearch.FINNED_X_WING_WORK_LIMIT);
+      expect(records[0].limit).toBe(SG.fishSearch.FINNED_SWORDFISH_WORK_LIMIT);
+    });
+
+    it('has the default limit of each size from its own constant: the registered finders and the seams', function () {
+      const state = digitsMap(model9, { 1: SWORD });
+      [['finnedXWing', 2, SG.fishSearch.FINNED_X_WING_WORK_LIMIT],
+        ['finnedSwordfish', 3, SG.fishSearch.FINNED_SWORDFISH_WORK_LIMIT]].forEach(function (row) {
+        const id = row[0];
+        const ctxOf = function (list) {
+          return SG.techniques.createContext(model9, { onPatternWork: function (r) { list.push(r); } });
+        };
+        const registered = [];
+        const viaSize = [];
+        const named = [];
+        SG.techniques.get(id).find(model9, state, ctxOf(registered));
+        SG.fishSearch.finnedFish(model9, state, ctxOf(viaSize), { size: row[1] });
+        SG.fishSearch[id](model9, state, ctxOf(named));
+        expect([id, [registered[0].limit, viaSize[0].limit, named[0].limit]]).toEqual([id, [row[2], row[2], row[2]]]);
+        expect([registered[0].id, viaSize[0].id, named[0].id]).toEqual([id, id, id]);
+      });
+      // an explicit limit overrides the default of its own size only
+      const explicit = [];
+      SG.fishSearch.finnedFish(model9, state, SG.techniques.createContext(model9,
+        { onPatternWork: function (r) { explicit.push(r); } }), { size: 3, workLimit: 7 });
+      expect(explicit[0].limit).toBe(7);
+    });
+
+    it('keeps the two limits independent: another n = 2 literal leaves n = 3 alone, and the other way round ' +
+      '(Node only)', function () {
+      const env = SG.test.node;
+      if (!env) SG.test.skip('needs the Node runner to evaluate a changed copy of the engine');
+      const source = env.fs.readFileSync(env.path.join(env.root, '../core/js/engine/tech-fish.js'), 'utf8');
+      // The engine file evaluated in a context of its own, with one of its two limit literals changed: it registers
+      // into a stub registry and makes its own `SG.fishSearch`, so the real registry and seams are not touched.
+      function engineWith(constant, value) {
+        const text = source.replace('const ' + constant + ' = 50000;', 'const ' + constant + ' = ' + value + ';');
+        check(text !== source, 'the engine has no literal ' + constant + ' = 50000');
+        const registered = {};
+        const stub = {
+          techniques: { has: function () { return false; }, register: function (def) { registered[def.id] = def; } },
+          errors: SG.errors,
+          model: SG.model
+        };
+        env.vm.runInContext(text, env.vm.createContext({ SG: stub }), { filename: 'tech-fish.js (' + constant + ')' });
+        return { search: stub.fishSearch, registered: registered };
+      }
+      function limitsOf(engine) {
+        const state = digitsMap(model9, { 1: SWORD });
+        const out = {};
+        ['finnedXWing', 'finnedSwordfish'].forEach(function (id) {
+          const records = [];
+          const ctx = SG.techniques.createContext(model9, { onPatternWork: function (r) { records.push(r); } });
+          engine.registered[id].find(model9, state, ctx);
+          out[id] = records[0].limit;
+        });
+        const viaSize = [];
+        const ctx = SG.techniques.createContext(model9, { onPatternWork: function (r) { viaSize.push(r); } });
+        engine.search.finnedFish(model9, state, ctx, { size: 2 });
+        engine.search.finnedFish(model9, state, ctx, { size: 3 });
+        out.seams = [viaSize[0].limit, viaSize[1].limit];
+        out.constants = [engine.search.FINNED_X_WING_WORK_LIMIT, engine.search.FINNED_SWORDFISH_WORK_LIMIT];
+        return out;
+      }
+      expect(limitsOf(engineWith('FINNED_X_WING_WORK_LIMIT', 40000))).toEqual({
+        finnedXWing: 40000, finnedSwordfish: 50000, seams: [40000, 50000], constants: [40000, 50000] });
+      expect(limitsOf(engineWith('FINNED_SWORDFISH_WORK_LIMIT', 60000))).toEqual({
+        finnedXWing: 50000, finnedSwordfish: 60000, seams: [50000, 60000], constants: [50000, 60000] });
     });
 
     it('is the registered finder at n = 2: the same Finding and the same work on every state', function () {
@@ -4981,6 +5086,1233 @@
         });
     });
   });
+
+  describe('finnedSwordfish (R12): geometry', function () {
+    // The vector of R12 at n = 3: digit 5, the base lines R1 {C2, C5}, R4 {C5, C8, C9} and R7 {C2, C8} on the covers
+    // C2, C5 and C8, the fin R4C9 (the one candidate off the covers, in B6). R5C8 is on the cover C8, in no base line,
+    // and sees the fin along B6: it loses the 5. If the fin is not the 5, the three 5s of the base lines fill the three
+    // covers, and R5C8 cannot hold the 5 either. The six body cells leave the apparent corners R1C8, R4C2 and R7C5
+    // empty (at n = 3 sparse bodies are permitted by the same proof). The eight cells alone also give the columns
+    // C2, C5 and C8 on the covers R1, R4 and R7 with the fin R5C8, which removes R4C9; a decoy 5 at R9C2 ends that
+    // second reading. Only the digit 5 has candidates in these states (`lonelyDigit`).
+    const CORE = ['R1C2', 'R1C5', 'R4C5', 'R4C8', 'R4C9', 'R7C2', 'R7C8', 'R5C8'];
+    const VECTOR = CORE.concat(['R9C2']);
+    const WANT = {
+      cells: ['R1C2', 'R1C5', 'R4C5', 'R4C8', 'R4C9', 'R7C2', 'R7C8'],
+      eliminations: [['R5C8', 5]],
+      args: { digit: 5, bases: ['R1', 'R4', 'R7'], covers: ['C2', 'C5', 'C8'], fins: ['R4C9'] }
+    };
+    // The apparent corner R4C5 missing as well: R4 has one cell on the covers (R4C8) next to the fin R4C9.
+    const MISSING = ['R1C2', 'R1C5', 'R4C8', 'R4C9', 'R7C2', 'R7C8', 'R5C8', 'R9C2'];
+    const TWO_FINS = VECTOR.concat(['R4C7']);
+    // Fins in two base lines of one box: R4C9 and R5C7 in B6, the bases R4, R5 and R9 on the covers C2, C5 and C8,
+    // the target R6C8 in B6 (the decoy R1C2 ends the reading with the columns).
+    const FINS_TWO_LINES = ['R4C2', 'R4C5', 'R4C9', 'R5C5', 'R5C7', 'R5C8', 'R9C2', 'R9C8', 'R6C8', 'R1C2'];
+
+    function finState(labels) {
+      return lonelyDigit(model9, 5, labels);
+    }
+
+    function cellsOf(labels) {
+      return labels.map(function (ref) { return H.cell(model9, ref); }).sort(function (a, b) { return a - b; });
+    }
+
+    function unitLabels(model, units) {
+      return units.map(function (u) { return unitLabel(model, u); });
+    }
+
+    function finnedSwordfishOf(model, state, ctxOptions) {
+      return runFind('finnedSwordfish', model, state, ctxOptions);
+    }
+
+    it('removes the digit from the cover cell that sees the fin (the vector of R12)', function () {
+      const state = finState(VECTOR);
+      const patterns = removingFinned(model9, state, 3);
+      expect(patterns).toHaveLength(1);
+      expect(patterns[0].kind).toBe('row');
+      expect(patterns[0].body).toEqual([2, 2, 2]);
+      expect(patterns[0].fins).toEqual(cellsOf(['R4C9']));
+      expect(patterns[0].targets).toEqual(cellsOf(['R5C8']));
+      const finding = H.expectFinding(SG.test, 'finnedSwordfish', state, WANT);
+      expect(finding.technique).toBe('finnedSwordfish');
+      expect(finding.i18nKey).toBe('technique.finnedSwordfish.step');
+      expect(finding.placements).toEqual([]);
+      expect(finding.cells).toEqual(cellsOf(WANT.cells));
+      expect(finding.eliminations).toEqual([[H.cell(model9, 'R5C8'), 5]]);
+      expect(Object.keys(finding.i18nArgs)).toEqual(['digit', 'bases', 'covers', 'fins']);
+      // the pattern has a fin and three base lines: it is no ordinary Swordfish and no finned X-Wing
+      H.expectNoFinding(SG.test, 'swordfish', state);
+      H.expectNoFinding(SG.test, 'finnedXWing', state);
+      expect(removingFinned(model9, state, 2)).toEqual([]);
+    });
+
+    it('finds the transposed vector, with the columns C1, C4 and C7 as the base lines', function () {
+      const state = finState(VECTOR.map(transposeRef));
+      const patterns = removingFinned(model9, state, 3);
+      expect(patterns).toHaveLength(1);
+      expect(patterns[0].kind).toBe('col');
+      H.expectFinding(SG.test, 'finnedSwordfish', state, {
+        cells: WANT.cells.map(transposeRef),
+        eliminations: [['R8C5', 5]],
+        args: { digit: 5, bases: ['C1', 'C4', 'C7'], covers: ['R2', 'R5', 'R8'], fins: ['R9C4'] }
+      });
+    });
+
+    it('is symmetrical on the eight cells of the vector: the columns give a second pattern, rows come first',
+      function () {
+        const state = finState(CORE);
+        const patterns = removingFinned(model9, state, 3);
+        expect(patterns.map(function (p) { return p.kind; })).toEqual(['row', 'col']);
+        expect(patterns[1].fins).toEqual(cellsOf(['R5C8']));
+        expect(patterns[1].targets).toEqual(cellsOf(['R4C9']));
+        expect(finnedSwordfishOf(model9, state).eliminations).toEqual([[H.cell(model9, 'R5C8'), 5]]);
+      });
+
+    it('finds the vector with one more apparent corner missing (R4C5): a base line with one cell on the covers, ' +
+      'as listed and transposed', function () {
+      [['as listed', function (ref) { return ref; }, ['R1', 'R4', 'R7'], ['C2', 'C5', 'C8'], 'R4C9', 'R5C8', 'row'],
+        ['transposed', transposeRef, ['C1', 'C4', 'C7'], ['R2', 'R5', 'R8'], 'R9C4', 'R8C5', 'col']
+      ].forEach(function (variant) {
+        const turn = variant[1];
+        const state = finState(MISSING.map(turn));
+        const patterns = removingFinned(model9, state, 3);
+        expect(patterns).toHaveLength(1);
+        expect(patterns[0].kind).toBe(variant[6]);
+        expect(patterns[0].body).toEqual([2, 1, 2]);
+        const finding = H.expectFinding(SG.test, 'finnedSwordfish', state, {
+          cells: ['R1C2', 'R1C5', 'R4C8', 'R4C9', 'R7C2', 'R7C8'].map(turn),
+          eliminations: [[variant[5], 5]],
+          args: { digit: 5, bases: variant[2], covers: variant[3], fins: [variant[4]] }
+        });
+        expect(finding.technique).toBe('finnedSwordfish');
+        H.expectNoFinding(SG.test, 'swordfish', state);
+      });
+    });
+
+    it('names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all',
+      function () {
+        const state = finState(TWO_FINS);
+        expect(removingFinned(model9, state, 3)).toHaveLength(1);
+        H.expectFinding(SG.test, 'finnedSwordfish', state, {
+          cells: ['R1C2', 'R1C5', 'R4C5', 'R4C7', 'R4C8', 'R4C9', 'R7C2', 'R7C8'],
+          eliminations: [['R5C8', 5]],
+          args: { digit: 5, bases: ['R1', 'R4', 'R7'], covers: ['C2', 'C5', 'C8'], fins: ['R4C7', 'R4C9'] }
+        });
+        // R6C8 is on the cover C8 and in B6, so it sees both fins as well; the target list is complete and ascending
+        const two = finState(TWO_FINS.concat(['R6C8']));
+        H.expectFinding(SG.test, 'finnedSwordfish', two, {
+          eliminations: [['R5C8', 5], ['R6C8', 5]],
+          args: { fins: ['R4C7', 'R4C9'] }
+        });
+        const turned = finState(TWO_FINS.concat(['R6C8']).map(transposeRef));
+        H.expectFinding(SG.test, 'finnedSwordfish', turned, {
+          eliminations: [['R8C5', 5], ['R8C6', 5]],
+          args: { bases: ['C1', 'C4', 'C7'], covers: ['R2', 'R5', 'R8'], fins: ['R7C4', 'R9C4'] }
+        });
+      });
+
+    it('takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4, R5, R9',
+      function () {
+        const state = finState(FINS_TWO_LINES);
+        expect(removingFinned(model9, state, 3)).toHaveLength(1);
+        H.expectFinding(SG.test, 'finnedSwordfish', state, {
+          cells: ['R4C2', 'R4C5', 'R4C9', 'R5C5', 'R5C7', 'R5C8', 'R9C2', 'R9C8'],
+          eliminations: [['R6C8', 5]],
+          args: { digit: 5, bases: ['R4', 'R5', 'R9'], covers: ['C2', 'C5', 'C8'], fins: ['R4C9', 'R5C7'] }
+        });
+        const turned = finState(FINS_TWO_LINES.map(transposeRef));
+        expect(removingFinned(model9, turned, 3)).toHaveLength(1);
+        H.expectFinding(SG.test, 'finnedSwordfish', turned, {
+          eliminations: [['R8C6', 5]],
+          args: { bases: ['C4', 'C5', 'C9'], covers: ['R2', 'R5', 'R8'], fins: ['R7C5', 'R9C4'] }
+        });
+      });
+
+    // Each of these has the look of the vector but is no finned Swordfish that removes anything. They are checked
+    // against the independent enumeration first, so that a mistake of the construction cannot hide a bug.
+    const NEAR_MISSES = [
+      ['fins in two boxes: R1C3 (B1) and R4C9 (B6)', VECTOR.concat(['R1C3'])],
+      ['fins on one line in two boxes: R4C6 (B5) and R4C9 (B6)', VECTOR.concat(['R4C6'])],
+      ['an off-cover target: R5C7 sees the fin but C7 is no cover',
+        ['R1C2', 'R1C5', 'R4C5', 'R4C8', 'R4C9', 'R7C2', 'R7C8', 'R5C7', 'R9C2']],
+      ['a cover cell that does not see the fin: R2C8 (B3)',
+        ['R1C2', 'R1C5', 'R4C5', 'R4C8', 'R4C9', 'R7C2', 'R7C8', 'R2C8', 'R9C2']],
+      ['a target without the digit: R5C8 is not a candidate',
+        ['R1C2', 'R1C5', 'R4C5', 'R4C8', 'R4C9', 'R7C2', 'R7C8', 'R9C2']],
+      ['a base line of fins only: R4 {C7, C9} has no cell on the covers (a box/line reduction)',
+        ['R1C2', 'R1C5', 'R4C7', 'R4C9', 'R7C2', 'R7C8', 'R5C8', 'R9C2']],
+      ['no fin: the three lines are an ordinary Swordfish',
+        ['R1C2', 'R1C5', 'R4C5', 'R4C8', 'R7C2', 'R7C8', 'R5C8', 'R9C2']],
+      ['two base lines only (the finned X-Wing vector): the wrong number of lines',
+        ['R1C2', 'R1C8', 'R4C2', 'R4C8', 'R4C9', 'R5C8', 'R9C2']],
+      ['a third line of one cell: R7 holds only R7C2, so it is no base line',
+        ['R1C2', 'R1C5', 'R4C5', 'R4C8', 'R4C9', 'R7C2', 'R5C8', 'R9C2']]
+    ];
+
+    NEAR_MISSES.forEach(function (miss) {
+      [['as listed', miss[1]], ['transposed', miss[1].map(transposeRef)]].forEach(function (variant) {
+        it('does not authorize an elimination: ' + miss[0] + ' (' + variant[0] + ')', function () {
+          const state = finState(variant[1]);
+          expect(removingFinned(model9, state, 3)).toEqual([]);
+          H.expectNoFinding(SG.test, 'finnedSwordfish', state);
+        });
+      });
+    });
+
+    it('leaves the ordinary Swordfish to swordfish, the line of fins only to boxLine and the finned X-Wing to ' +
+      'finnedXWing, never relabelling any of them', function () {
+      const ordinary = finState(NEAR_MISSES[6][1]);
+      // the decoy R9C2 is on the cover C2 outside the base lines, so the ordinary Swordfish removes it as well
+      expect(runFind('swordfish', model9, ordinary).eliminations)
+        .toEqual([[H.cell(model9, 'R5C8'), 5], [H.cell(model9, 'R9C2'), 5]]);
+      H.expectNoFinding(SG.test, 'finnedSwordfish', ordinary);
+      // every 5 of the row R4 lies in the box B6: a box/line reduction, not a fish
+      const reduction = finState(NEAR_MISSES[5][1]);
+      expect(runFind('boxLine', model9, reduction)).not.toBeNull();
+      H.expectNoFinding(SG.test, 'finnedSwordfish', reduction);
+      const finnedXWing = finState(NEAR_MISSES[7][1]);
+      expect(runFind('finnedXWing', model9, finnedXWing).eliminations).toEqual([[H.cell(model9, 'R5C8'), 5]]);
+      H.expectNoFinding(SG.test, 'finnedSwordfish', finnedXWing);
+    });
+
+    it('takes its covers among the covers of the candidates of the base lines: no other line has a body cell',
+      function () {
+        [VECTOR, MISSING, TWO_FINS, FINS_TWO_LINES, CORE].forEach(function (labels) {
+          const state = finState(labels);
+          expect(referenceFinned(model9, state, 3)).toEqual(referenceFinned(model9, state, 3, { allCovers: true }));
+        });
+      });
+
+    it('needs complete units: an incomplete base line, cover or fin box gives nothing', function () {
+      const state = finState(VECTOR);
+      ['R1', 'R4', 'R7', 'C2', 'C5', 'C8', 'B6'].forEach(function (label) {
+        const complete = Uint8Array.from(SG.techniques.createContext(model9, {}).completeUnits);
+        complete[unitIndex(model9, label)] = 0;
+        const ctx = Object.assign({}, SG.techniques.createContext(model9, {}), { completeUnits: complete });
+        expect([label, SG.techniques.get('finnedSwordfish').find(model9, state, ctx)]).toEqual([label, null]);
+      });
+      expect(finnedSwordfishOf(model9, state)).not.toBeNull();
+      const none = new Uint8Array(model9.units.length);
+      const ctx = Object.assign({}, SG.techniques.createContext(model9, {}), { completeUnits: none });
+      expect(SG.techniques.get('finnedSwordfish').find(model9, state, ctx)).toBeNull();
+    });
+
+    it('skips a base line in which the digit is placed', function () {
+      const state = SG.model.cloneState(finState(VECTOR));
+      const at = H.cell(model9, 'R4C1');
+      state.value[at] = 5;
+      state.candidates[at] = 1 << 4;
+      expect(removingFinned(model9, state, 3)).toEqual([]);
+      H.expectNoFinding(SG.test, 'finnedSwordfish', state, { model: model9 });
+    });
+
+    function unitIndex(model, label) {
+      return model.unitMeta.findIndex(function (meta) { return meta.label === label; });
+    }
+
+    function lineCells(D, kind, i) {
+      return Array.from({ length: D }, function (_, k) { return kind === 'row' ? i * D + k : k * D + i; });
+    }
+
+    it('needs candidates with a single row and a single column: an extra line through a base line, a cover or a ' +
+      'fin spoils the pattern, and an extra line elsewhere does not', function () {
+      const spoiled = [
+        ['a second R1', buildGridModel('fishTestDupR1', 3, 3, [lineCells(9, 'row', 0)])],
+        ['a second R4 (a base line with the fin)', buildGridModel('fishTestDupR4', 3, 3, [lineCells(9, 'row', 3)])],
+        ['a second R7', buildGridModel('fishTestDupR7', 3, 3, [lineCells(9, 'row', 6)])],
+        ['a second C5 (a cover)', buildGridModel('fishTestDupC5', 3, 3, undefined,
+          { extraCols: [lineCells(9, 'col', 4)] })],
+        ['a second C8 (a cover)', buildGridModel('fishTestDupC8', 3, 3, undefined,
+          { extraCols: [lineCells(9, 'col', 7)] })],
+        ['a second C9 (the column of the fin)', buildGridModel('fishTestDupC9', 3, 3, undefined,
+          { extraCols: [lineCells(9, 'col', 8)] })]
+      ];
+      const kept = [
+        ['a second R9', buildGridModel('fishTestDupR9', 3, 3, [lineCells(9, 'row', 8)])],
+        ['a second C3', buildGridModel('fishTestDupC3', 3, 3, undefined, { extraCols: [lineCells(9, 'col', 2)] })]
+      ];
+      spoiled.forEach(function (item) {
+        const state = lonelyDigit(item[1], 5, VECTOR);
+        expect([item[0], removingFinned(item[1], state, 3)]).toEqual([item[0], []]);
+        H.expectNoFinding(SG.test, 'finnedSwordfish', state);
+      });
+      kept.forEach(function (item) {
+        const state = lonelyDigit(item[1], 5, VECTOR);
+        expect([item[0], removingFinned(item[1], state, 3).length]).toEqual([item[0], 1]);
+        H.expectFinding(SG.test, 'finnedSwordfish', state, WANT);
+      });
+    });
+
+    // The 4 x 4 board: the bases R1 {C1, C3}, R2 {C1, C2} and R3 {C2, C3, C4} on the covers C1, C2 and C3, the fin
+    // R3C4 (B4), the target R4C3 (B4); the decoy R4C1 ends the reading with the columns.
+    const SMALL = ['R1C1', 'R1C3', 'R2C1', 'R2C2', 'R3C2', 'R3C3', 'R3C4', 'R4C3', 'R4C1'];
+    const SMALL_WANT = {
+      cells: ['R1C1', 'R1C3', 'R2C1', 'R2C2', 'R3C2', 'R3C3', 'R3C4'],
+      eliminations: [['R4C3', 1]],
+      args: { digit: 1, bases: ['R1', 'R2', 'R3'], covers: ['C1', 'C2', 'C3'], fins: ['R3C4'] }
+    };
+
+    it('needs a fin box that is the only box-like unit of every fin (an overlapped box has two owners)', function () {
+      const plain = buildGridModel('fishTestPlain', 2, 2);
+      expect(removingFinned(plain, lonelyDigit(plain, 1, SMALL), 3)).toHaveLength(1);
+      H.expectFinding(SG.test, 'finnedSwordfish', lonelyDigit(plain, 1, SMALL), SMALL_WANT);
+      [['fishTestBoxes', { extraBoxes: [3] }, 'the fin box doubled'],
+        ['fishTestBoxAndRegion', { extraRegions: [3] }, 'the fin box and a region over the same cells']
+      ].forEach(function (setup) {
+        const doubled = buildGridModel(setup[0], 2, 2, undefined, setup[1]);
+        const state = lonelyDigit(doubled, 1, SMALL);
+        expect([setup[2], removingFinned(doubled, state, 3)]).toEqual([setup[2], []]);
+        H.expectNoFinding(SG.test, 'finnedSwordfish', state);
+      });
+      // another box doubled leaves the pattern alone
+      const other = buildGridModel('fishTestBoxes0', 2, 2, undefined, { extraBoxes: [0] });
+      H.expectFinding(SG.test, 'finnedSwordfish', lonelyDigit(other, 1, SMALL), SMALL_WANT);
+    });
+
+    it('needs a box: a Latin square (rows and columns only) has no fin box, so no finned Swordfish', function () {
+      const square = buildGridModel('fishTestLatin', 2, 2, undefined, { noBoxes: true });
+      const state = lonelyDigit(square, 1, SMALL);
+      expect(referenceFinned(square, state, 3)).toEqual([]);
+      H.expectNoFinding(SG.test, 'finnedSwordfish', state);
+    });
+
+    it('takes the lowest digit first, rows before columns whatever the unit list order, bases in unit order',
+      function () {
+        const both = digitsMap(model9, { 3: VECTOR, 2: VECTOR });
+        expect(finnedSwordfishOf(model9, both).i18nArgs.digit).toBe(2);
+        // columns listed before rows: the row based reading of the eight cells is still the first
+        const columnsFirst = buildGridModel('fishTestColumnsFirst', 3, 3, undefined, { columnsFirst: true });
+        H.expectFinding(SG.test, 'finnedSwordfish', lonelyDigit(columnsFirst, 5, CORE), {
+          eliminations: [['R5C8', 5]],
+          args: { bases: ['R1', 'R4', 'R7'], covers: ['C2', 'C5', 'C8'] }
+        });
+        // rows in reverse order (R9, R8, ..., R1): the unit order of the base lines is R7, R4, R1
+        const reversed = buildGridModel('fishTestReversedRows', 3, 3, undefined, { reverseRows: true });
+        const state = lonelyDigit(reversed, 5, VECTOR);
+        expect(removingFinned(reversed, state, 3)).toHaveLength(1);
+        H.expectFinding(SG.test, 'finnedSwordfish', state, {
+          cells: WANT.cells,
+          eliminations: WANT.eliminations,
+          args: { digit: 5, bases: ['R7', 'R4', 'R1'], covers: ['C2', 'C5', 'C8'], fins: ['R4C9'] }
+        });
+      });
+
+    it('gives the same answer for the same state after a call on another state', function () {
+      const a = finState(VECTOR);
+      const b = finState(VECTOR.map(transposeRef));
+      const first = JSON.stringify(finnedSwordfishOf(model9, a));
+      finnedSwordfishOf(model9, b);
+      expect(JSON.stringify(finnedSwordfishOf(model9, a))).toBe(first);
+    });
+
+    it('hands out its own data: changing a Finding changes neither the next call nor the state', function () {
+      const state = finState(TWO_FINS);
+      const before = SG.model.cloneState(state);
+      const first = finnedSwordfishOf(model9, state);
+      const copy = JSON.parse(JSON.stringify(first));
+      first.cells.push(99);
+      first.eliminations.push([1, 1]);
+      first.eliminations[0][0] = 77;
+      first.i18nArgs.bases.push('X');
+      first.i18nArgs.covers.length = 0;
+      first.i18nArgs.fins.reverse();
+      first.i18nArgs.digit = 1;
+      expect(finnedSwordfishOf(model9, state)).toEqual(copy);
+      expect(state.candidates).toEqual(before.candidates);
+      expect(state.value).toEqual(before.value);
+    });
+  });
+
+  describe('finnedSwordfish (R12): real positions', function () {
+    const entry = SG.fixtures.techniques.byId.finnedSwordfish;
+
+    // The exact Findings of the two real positive fixtures (core/tests/fixtures/techniques.js); `body` is the number
+    // of cells of each base line on the covers (the second position has a single one in R1).
+    const REAL = [
+      { cells: ['R2C5', 'R2C8', 'R2C9', 'R5C5', 'R5C7', 'R5C8', 'R9C8', 'R9C9'],
+        eliminations: [['R6C8', 3], ['R6C9', 3]], body: [3, 2, 2],
+        args: { digit: 3, bases: ['R2', 'R5', 'R9'], covers: ['C5', 'C8', 'C9'], fins: ['R5C7'] } },
+      { cells: ['R1C4', 'R1C9', 'R2C1', 'R2C6', 'R5C1', 'R5C9'], eliminations: [['R3C6', 9]], body: [1, 2, 2],
+        args: { digit: 9, bases: ['R1', 'R2', 'R5'], covers: ['C1', 'C6', 'C9'], fins: ['R1C4'] } }
+    ];
+
+    function positionOf(fixture) {
+      return H.stateAfter(model9, fixture.puzzle, fixture.after);
+    }
+
+    it('has two positive and three negative fixtures, positions listed explicitly (no ladder helper)', function () {
+      expect(entry.positive).toHaveLength(2);
+      expect(entry.negative).toHaveLength(3);
+      entry.positive.concat(entry.negative).forEach(function (fixture) {
+        expect(Array.isArray(fixture.after)).toBe(true);
+      });
+      entry.positive.forEach(function (fixture) {
+        expect(fixture.after).not.toContain('finnedSwordfish');
+        expect(fixture.after).toContain('swordfish');
+        expect(fixture.after).toContain('finnedXWing');
+      });
+      // nothing left after the technique itself; the ordinary Swordfish is the position before swordfish; the finned
+      // X-Wing position is the one before finnedXWing
+      expect(entry.negative[0].after).toContain('finnedSwordfish');
+      expect(entry.negative[1].after).not.toContain('swordfish');
+      expect(entry.negative[2].after).not.toContain('finnedXWing');
+      expect(entry.negative[2].after).toContain('emptyRectangle');
+    });
+
+    REAL.forEach(function (want, i) {
+      it('finds the exact Finding of real position ' + (i + 1) + ', sound against an independent completion',
+        function () {
+          const fixture = entry.positive[i];
+          const givens = H.parsePuzzle(model9, fixture.puzzle);
+          // the puzzle has exactly one solution (plain depth first search, no technique)
+          expect(SG.dfs.countSolutions(model9, givens, 2)).toBe(1);
+          const solution = SG.dfs.solve(model9, givens);
+          const state = positionOf(fixture);
+          const finding = H.expectFinding(SG.test, 'finnedSwordfish', state, want);
+          expect(finding.eliminations.length).toBe(want.eliminations.length);
+          finding.eliminations.forEach(function (e) { expect(solution[e[0]]).not.toBe(e[1]); });
+          // the position without the eliminated candidates still completes, and only to that solution
+          const reduced = SG.model.cloneState(state);
+          finding.eliminations.forEach(function (e) {
+            expect(SG.constraints.eliminate(model9, reduced, e[0], e[1])).toBe(true);
+          });
+          const done = SG.dfs.searchFrom(model9, reduced, { limit: 2 });
+          expect(done.found).toBe(1);
+          expect(Array.from(done.solution)).toEqual(Array.from(solution));
+          // the first finned Swordfish in order is the Finding (the independent enumeration agrees), and its shape
+          const first = removingFinned(model9, state, 3, { stopAtFirst: true })[0];
+          expect(first.targets).toEqual(finding.eliminations.map(function (e) { return e[0]; }));
+          expect(first.body).toEqual(want.body);
+          expect(first.fins).toEqual(want.args.fins.map(function (ref) { return H.cell(model9, ref); })
+            .sort(function (a, b) { return a - b; }));
+          // the cells of the Finding are the candidates of the base lines, none of them a target
+          expect(finding.cells).toEqual(first.cells);
+        });
+
+      it('finds the transposed real position ' + (i + 1) + ' with the transposed eliminations', function () {
+        const fixture = entry.positive[i];
+        const turned = transposeCells(fixture.puzzle, function (cells) { return cells.join(''); });
+        const state = H.stateAfter(model9, turned, fixture.after);
+        const wanted = new Set(want.eliminations.map(function (e) {
+          return H.cell(model9, transposeRef(e[0])) + ':' + e[1];
+        }));
+        const keys = eliminationKeys(removingFinned(model9, state, 3, { stopAtFirst: true }));
+        wanted.forEach(function (key) { expect(keys.has(key)).toBe(true); });
+        const finding = runFind('finnedSwordfish', model9, state);
+        expect(finding).not.toBeNull();
+        expect(H.findingProblems(model9, state, finding, { technique: 'finnedSwordfish',
+          solution: SG.dfs.solve(model9, H.parsePuzzle(model9, turned)) })).toEqual([]);
+      });
+    });
+
+    it('finds nothing at the negative positions: nothing left after it, an ordinary Swordfish, a finned X-Wing',
+      function () {
+        entry.negative.forEach(function (fixture) {
+          const state = positionOf(fixture);
+          H.expectNoFinding(SG.test, 'finnedSwordfish', state);
+          expect(removingFinned(model9, state, 3)).toEqual([]);
+        });
+        // the second position holds a genuine Swordfish (no fin, so swordfish's), the third a genuine finned X-Wing
+        const ordinary = runFind('swordfish', model9, positionOf(entry.negative[1]));
+        expect(ordinary).not.toBeNull();
+        expect(ordinary.i18nArgs.baseUnits).toEqual(['R3', 'R6', 'R8']);
+        const finnedXWing = runFind('finnedXWing', model9, positionOf(entry.negative[2]));
+        expect(finnedXWing).not.toBeNull();
+        expect(finnedXWing.i18nArgs.bases).toEqual(['R5', 'R7']);
+      });
+  });
+
+  describe('finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix', function () {
+    // A flood: one digit that is a candidate in every cell, so every row and column is a base line and a call tests
+    // 2 x C(D, 3) combinations of three lines (D = 9: 168, D = 12: 440, D = 16: 1120), none of them a finned
+    // Swordfish (the fins of three lines lie in many boxes). The blank board with every digit open costs D times
+    // as much: 9 x 168 = 1512, the structural maximum of the 9 x 9 boards.
+    const FLOOD_WORK = 2 * 560;
+    let flood = null;
+
+    function floodState() {
+      if (flood === null) {
+        const model = modelOfDigits(16);
+        flood = { model: model, state: lonelyDigit(model, 1) };
+      }
+      return flood;
+    }
+
+    // The vector with the digit 1 (the digits come in order, so a finding is the first combination tested) and, with
+    // the flood of the digits before it, the same vector on the digit 5 as the 673rd combination tested.
+    const VECTOR = ['R1C2', 'R1C5', 'R4C5', 'R4C8', 'R4C9', 'R7C2', 'R7C8', 'R5C8', 'R9C2'];
+
+    function caught(fn) {
+      try {
+        fn();
+      } catch (err) {
+        return err;
+      }
+      return null;
+    }
+
+    function observed(model, state, options, ctxOptions) {
+      const records = [];
+      const ctx = SG.techniques.createContext(model, Object.assign({
+        onPatternWork: function (r) { records.push(r); }
+      }, ctxOptions));
+      const finding = SG.fishSearch.finnedSwordfish(model, state, ctx, options);
+      return { finding: finding, records: records, record: records[0] };
+    }
+
+    it('has no finned Swordfish on the blank boards, which a plain enumeration confirms on 9 digits', function () {
+      const blank = H.makeState(model9, blankPuzzle(model9), { propagate: false });
+      expect(referenceFinned(model9, blank, 3, { digits: [1, 9] })).toEqual([]);
+      H.expectNoFinding(SG.test, 'finnedSwordfish', blank);
+      const f = floodState();
+      H.expectNoFinding(SG.test, 'finnedSwordfish', f.state);
+    });
+
+    it('has R10\'s limit of 50000 tested combinations, and the registered finder reports it', function () {
+      expect(SG.fishSearch.FINNED_SWORDFISH_WORK_LIMIT).toBe(50000);
+      const state = lonelyDigit(model9, 1, VECTOR);
+      const records = [];
+      const ctx = SG.techniques.createContext(model9, { onPatternWork: function (r) { records.push(r); } });
+      expect(SG.techniques.get('finnedSwordfish').find(model9, state, ctx)).not.toBeNull();
+      expect(records).toEqual([{ id: 'finnedSwordfish', work: 1, limit: 50000, capHit: null, retained: null }]);
+    });
+
+    it('counts one unit per tested combination of three base lines, from a fresh counter on every call',
+      function () {
+        const f = floodState();
+        const first = observed(f.model, f.state);
+        expect(first.finding).toBeNull();
+        expect(first.record).toEqual({ id: 'finnedSwordfish', work: FLOOD_WORK, limit: 50000, capHit: null,
+          retained: null });
+        const second = observed(f.model, f.state);
+        expect(second.record).toEqual(first.record);
+        expect(second.record).not.toBe(first.record);
+        // the blank 9 digit board is the structural maximum of its variants: 9 digits x 2 x C(9, 3)
+        const blank = H.makeState(model9, blankPuzzle(model9), { propagate: false });
+        expect(observed(model9, blank).record.work).toBe(9 * 2 * 84);
+        // a solved board has no base line (every digit is placed in every line) and costs nothing
+        const solved = H.makeState(model9, SG.fixtures.classic.unique[0].solution, { propagate: false });
+        expect(observed(model9, solved).record.work).toBe(0);
+        // a finding stops the count where it is found: the triple R1, R4, R7 of the digit 1 is the first tested
+        const found = observed(model9, lonelyDigit(model9, 1, VECTOR));
+        expect(found.finding).not.toBeNull();
+        expect(found.record.work).toBe(1);
+      });
+
+    it('counts the combinations of three lines, never the cover trials or the targets inside one', function () {
+      // the same eligible lines, a 9 digit board: 84 triples of rows, whatever the covers (up to 84 trials each)
+      const state = lonelyDigit(model9, 1);
+      expect(observed(model9, state).record.work).toBe(2 * 84);
+      // the lines of the vector: one triple of rows (R1, R4, R7) and one of columns, as the independent count says
+      const report = {};
+      referenceFinned(model9, lonelyDigit(model9, 1, VECTOR), 3, { report: report });
+      expect(report).toEqual({ tested: 2, capped: false });
+      expect(observed(model9, lonelyDigit(model9, 1, VECTOR.slice(0, 7))).record.work).toBe(2);
+    });
+
+    it('has no finned Swordfish and costs no work on a board without boxes (a Latin square), unlike the same ' +
+      'board with them', function () {
+      const plain = buildGridModel('fishTestPlain', 2, 2);
+      const square = buildGridModel('fishTestLatin', 2, 2, undefined, { noBoxes: true });
+      const out = observed(square, H.makeState(square, blankPuzzle(square), { propagate: false }));
+      expect(out.finding).toBeNull();
+      expect(out.record.work).toBe(0);
+      const control = observed(plain, H.makeState(plain, blankPuzzle(plain), { propagate: false }));
+      expect(control.finding).toBeNull();
+      expect(control.record.work).toBe(4 * 2 * 4);
+    });
+
+    it('ends a call whose limit is spent with nothing found (never a finding), and says so', function () {
+      const f = floodState();
+      [0, 1, 100, FLOOD_WORK - 1].forEach(function (limit) {
+        const out = observed(f.model, f.state, { workLimit: limit });
+        expect(out.finding).toBeNull();
+        expect(out.record).toEqual({ id: 'finnedSwordfish', work: limit, limit: limit, capHit: 'work',
+          retained: null });
+      });
+      const exact = observed(f.model, f.state, { workLimit: FLOOD_WORK });
+      expect(exact.record.capHit).toBeNull();
+      expect(exact.record.work).toBe(FLOOD_WORK);
+      // a limit of 0 loses the vector's deduction; the first tested combination finds it with a limit of 1
+      const state = lonelyDigit(model9, 1, VECTOR);
+      const lost = observed(model9, state, { workLimit: 0 });
+      expect(lost.finding).toBeNull();
+      expect(lost.record.capHit).toBe('work');
+      const kept = observed(model9, state, { workLimit: 1 });
+      expect(kept.finding).toEqual(observed(model9, state).finding);
+      expect(kept.record.capHit).toBeNull();
+    });
+
+    it('floors a fractional limit and rejects an invalid one with solver.invalidOption', function () {
+      const f = floodState();
+      expect(observed(f.model, f.state, { workLimit: 2.9 }).record.work).toBe(2);
+      [-1, NaN, Infinity, '5', null].forEach(function (workLimit) {
+        const err = caught(function () { observed(f.model, f.state, { workLimit: workLimit }); });
+        expect([String(workLimit), err && err.code]).toEqual([String(workLimit), 'solver.invalidOption']);
+        expect(err.message).toContain('fishSearch.finnedSwordfish');
+      });
+    });
+
+    /**
+     * The work done at each check of the parent budget: a context whose k-th check throws a spent budget lets the
+     * record of the (swallowed) call tell how many combinations were tested at that check.
+     */
+    function checkWorks(model, state, options) {
+      const base = SG.techniques.createContext(model, {});
+      function attempt(target) {
+        let k = 0;
+        let record = null;
+        const ctx = Object.assign({}, base, {
+          options: { onPatternWork: function (r) { record = r; } },
+          check: function () {
+            k++;
+            if (k === target) throw new SG.errors.GenerationError('budget.exceeded', { reason: 'nodes' });
+          }
+        });
+        const finding = SG.fishSearch.finnedSwordfish(model, state, ctx, options);
+        return { checks: k, record: record, finding: finding };
+      }
+      const free = attempt(0);
+      const works = [];
+      for (let target = 1; target <= free.checks; target++) {
+        const spent = attempt(target);
+        expect(spent.finding).toBeNull();
+        expect(spent.record.capHit).toBeNull();
+        works.push(spent.record.work);
+      }
+      const gaps = works.map(function (w, i) { return w - (i === 0 ? 0 : works[i - 1]); });
+      gaps.push(free.record.work - works[works.length - 1]);
+      return { works: works, gaps: gaps, max: Math.max.apply(null, gaps), free: free };
+    }
+
+    it('checks the parent budget at entry and so that at most 256 combinations pass between two checks', function () {
+      const f = floodState();
+      const out = checkWorks(f.model, f.state);
+      expect(out.works).toEqual([0, 256, 512, 768, 1024]);
+      expect(out.max).toBeLessThanOrEqual(256);
+      expect(out.free.checks).toBe(5);
+      // a call that ends at its limit keeps the same cadence
+      const capped = checkWorks(f.model, f.state, { workLimit: 1000 });
+      expect(capped.works).toEqual([0, 256, 512, 768]);
+      // a small call has only the entry check
+      expect(checkWorks(model9, lonelyDigit(model9, 1, VECTOR)).works).toEqual([0]);
+    });
+
+    it('reports a spent budget as nothing found and lets cancellation and other errors through', function () {
+      const f = floodState();
+      const parent = SG.budget.create({ nodes: 3 });
+      const spent = observed(f.model, f.state, undefined, { budget: parent });
+      expect(spent.finding).toBeNull();
+      expect(spent.records).toHaveLength(1);
+      expect(spent.record.capHit).toBeNull();
+      expect(spent.record.work).toBeLessThan(FLOOD_WORK);
+      // capHit null is no proof of a complete scan: the caller's budget still fails after the call
+      expect(caught(function () { parent.check(); }).code).toBe('budget.exceeded');
+
+      const budget = SG.budget.create({});
+      budget.cancel();
+      const records = [];
+      const err = caught(function () {
+        SG.techniques.get('finnedSwordfish').find(f.model, f.state, SG.techniques.createContext(f.model, {
+          budget: budget, onPatternWork: function (r) { records.push(r); } }));
+      });
+      expect(err.code).toBe('budget.cancelled');
+      expect(records).toEqual([]);
+
+      // cancellation in the middle of the scan, and an error that is not a budget error
+      [['budget.cancelled', true], ['boom', false]].forEach(function (kind) {
+        let k = 0;
+        const ctx = Object.assign({}, SG.techniques.createContext(f.model, {}), {
+          check: function () {
+            if (++k === 3) {
+              throw kind[1] ? new SG.errors.GenerationError(kind[0], { reason: 'cancelled' }) : new Error(kind[0]);
+            }
+          }
+        });
+        const thrown = caught(function () { SG.techniques.get('finnedSwordfish').find(f.model, f.state, ctx); });
+        expect(thrown).toBeTruthy();
+        expect(kind[1] ? thrown.code : thrown.message).toBe(kind[0]);
+        expect(k).toBe(3);
+      });
+    });
+
+    it('answers the same after a call that ended at its limit or with a finding (no marks are left behind)',
+      function () {
+        const vector = lonelyDigit(model9, 5, VECTOR);
+        const second = lonelyDigit(model9, 5, VECTOR.concat(['R4C7']).map(transposeRef));
+        const want = JSON.stringify(runFind('finnedSwordfish', model9, second));
+        expect(JSON.parse(want).eliminations).toEqual([[H.cell(model9, 'R8C5'), 5]]);
+        [{ workLimit: 0 }, { workLimit: 300 }, undefined].forEach(function (options) {
+          observed(model9, vector, options);
+          expect(JSON.stringify(runFind('finnedSwordfish', model9, second))).toBe(want);
+        });
+        const f = floodState();
+        observed(f.model, f.state, { workLimit: 5 });
+        expect(JSON.stringify(runFind('finnedSwordfish', model9, second))).toBe(want);
+      });
+
+    it('is not fooled by a hostile or absent observer', function () {
+      const state = lonelyDigit(model9, 1, VECTOR);
+      const plain = JSON.stringify(runFind('finnedSwordfish', model9, state));
+      ['not a function', null, 7].forEach(function (observer) {
+        const ctx = SG.techniques.createContext(model9, { onPatternWork: observer });
+        expect(JSON.stringify(SG.techniques.get('finnedSwordfish').find(model9, state, ctx))).toBe(plain);
+      });
+    });
+
+    // The limit cuts the search at a prefix of its combinations of base lines, in the order digit, rows then columns,
+    // lines in unit order. The vector on the digit 5 behind the flood of the digits 1 to 4 (4 x 168 = 672
+    // combinations, none with a finding) is found by the 673rd combination tested (position 672).
+    const WITNESS_AT = 672;
+
+    it('returns a finned Swordfish found inside the searched prefix, whatever follows it, and nothing short of ' +
+      'it (the exact boundary)', function () {
+      const state = digitsMap(model9, { 5: VECTOR });
+      const full = observed(model9, state);
+      expect(full.finding).not.toBeNull();
+      expect(full.record).toEqual({ id: 'finnedSwordfish', work: WITNESS_AT + 1, limit: 50000, capHit: null,
+        retained: null });
+      // one combination more than the position is enough, and the Finding is the unrestricted one, field by field
+      const exact = observed(model9, state, { workLimit: WITNESS_AT + 1 });
+      expect(exact.finding).toEqual(full.finding);
+      expect(exact.record).toEqual({ id: 'finnedSwordfish', work: WITNESS_AT + 1, limit: WITNESS_AT + 1,
+        capHit: null, retained: null });
+      // the position itself is cut off before its combination: nothing, and the record says the limit was spent
+      const short = observed(model9, state, { workLimit: WITNESS_AT });
+      expect(short.finding).toBeNull();
+      expect(short.record).toEqual({ id: 'finnedSwordfish', work: WITNESS_AT, limit: WITNESS_AT, capHit: 'work',
+        retained: null });
+      // the independent enumeration of the same prefixes: the witness is at position 672 and nowhere before
+      const inside = {};
+      const patterns = removingFinned(model9, state, 3, { limit: WITNESS_AT + 1, stopAtFirst: true, report: inside });
+      expect(patterns.map(function (p) { return p.unit; })).toEqual([WITNESS_AT]);
+      expect(inside).toEqual({ tested: WITNESS_AT + 1, capped: false });
+      const outside = {};
+      expect(removingFinned(model9, state, 3, { limit: WITNESS_AT, report: outside })).toEqual([]);
+      expect(outside).toEqual({ tested: WITNESS_AT, capped: true });
+    });
+
+    it('is cut at the same prefix on every call: null with capHit work, repeatable, and no proof of absence',
+      function () {
+        const state = digitsMap(model9, { 5: VECTOR });
+        [1, 100, 300, WITNESS_AT - 1].forEach(function (limit) {
+          const first = observed(model9, state, { workLimit: limit });
+          const second = observed(model9, state, { workLimit: limit });
+          expect(first.finding).toBeNull();
+          expect(first.record).toEqual({ id: 'finnedSwordfish', work: limit, limit: limit, capHit: 'work',
+            retained: null });
+          expect(second.record).toEqual(first.record);
+          // the unrestricted enumeration has a witness the prefix cannot reach: an allowed truncation, not a failure
+          expect(removingFinned(model9, state, 3, { stopAtFirst: true })).toHaveLength(1);
+          // the searched prefix has none, and the enumeration of that prefix says so
+          const report = {};
+          expect(removingFinned(model9, state, 3, { limit: limit, report: report })).toEqual([]);
+          expect(report).toEqual({ tested: limit, capped: true });
+        });
+        // a complete scan that finds nothing is no capped call, with or without a limit equal to its work
+        const none = lonelyDigit(model9, 1, VECTOR.slice(0, 7));
+        const scan = observed(model9, none);
+        expect(scan.finding).toBeNull();
+        expect(scan.record.capHit).toBeNull();
+        expect(observed(model9, none, { workLimit: scan.record.work }).record.capHit).toBeNull();
+        expect(observed(model9, none, { workLimit: scan.record.work - 1 }).record.capHit).toBe('work');
+      });
+
+    it('has a witness found before the limit complete: every field of the unrestricted Finding, at every limit ' +
+      'from its position on', function () {
+      const state = digitsMap(model9, { 5: VECTOR });
+      const want = JSON.stringify(observed(model9, state).finding);
+      [WITNESS_AT + 1, WITNESS_AT + 2, 5000, 50000].forEach(function (limit) {
+        expect([limit, JSON.stringify(observed(model9, state, { workLimit: limit }).finding)]).toEqual([limit, want]);
+      });
+      // the same prefix limit through the registered finder's parent budget: a spent budget is nothing found, with
+      // no cap, and a budget that holds does not change the Finding
+      const budget = SG.budget.create({ nodes: 1000000 });
+      expect(JSON.stringify(observed(model9, state, undefined, { budget: budget }).finding)).toBe(want);
+    });
+
+    it('cuts a real board the same way: a multi-grid flood is capped by an explicit limit, and the work is the limit',
+      function () {
+        if (!SG.testkit.hasVariant('samurai')) SG.test.skip('no board of samurai can be built here');
+        const board = H.model('samurai');
+        const state = lonelyDigit(board, 1);
+        [1, 300].forEach(function (limit) {
+          const out = observed(board, state, { workLimit: limit });
+          expect(out.finding).toBeNull();
+          expect(out.record).toEqual({ id: 'finnedSwordfish', work: limit, limit: limit, capHit: 'work',
+            retained: null });
+        });
+      });
+  });
+
+  describe('finnedSwordfish (R12): a region as the fin box, and the ownership on multi-grid boards', function () {
+    // A region of a jigsaw board is a box-like unit. Digit 5 on JIGSAW_LAYOUT: the base lines R3 {C5, C7, C8},
+    // R6 {C2, C8} and R9 {C2, C7} on the covers C2, C7 and C8, the fin R3C5 in the region J4 (R3C7 is in J4 too, but
+    // on the cover C7), the target R2C7 in J4 on the cover C7, which sees the fin along J4; the decoy R7C8 ends the
+    // reading with the columns.
+    const JIGSAW = ['R3C5', 'R3C7', 'R3C8', 'R6C2', 'R6C8', 'R9C2', 'R9C7', 'R2C7', 'R7C8'];
+
+    it('finds the finned Swordfish of a region: the vector on the jigsaw board (the fin and the target in J4)',
+      function () {
+        const board = jigsawBoard(false);
+        const state = lonelyDigit(board, 5, JIGSAW);
+        const patterns = removingFinned(board, state, 3);
+        expect(patterns).toHaveLength(1);
+        expect(patterns[0].targets).toEqual([H.cell(board, 'R2C7')]);
+        expect(unitLabel(board, crossUnit(board, patterns[0].fins[0], 'region'))).toBe('J4');
+        const finding = H.expectFinding(SG.test, 'finnedSwordfish', state, {
+          cells: ['R3C5', 'R3C7', 'R3C8', 'R6C2', 'R6C8', 'R9C2', 'R9C7'],
+          eliminations: [['R2C7', 5]],
+          args: { digit: 5, bases: ['R3', 'R6', 'R9'], covers: ['C2', 'C7', 'C8'], fins: ['R3C5'] }
+        });
+        expect(finding.placements).toEqual([]);
+      });
+
+    it('finds the transposed vector on the transposed jigsaw board (the columns C3, C6 and C9 are the base lines)',
+      function () {
+        const turned = jigsawBoard(true);
+        const state = lonelyDigit(turned, 5, JIGSAW.map(transposeRef));
+        const patterns = removingFinned(turned, state, 3);
+        expect(patterns).toHaveLength(1);
+        expect(patterns[0].kind).toBe('col');
+        H.expectFinding(SG.test, 'finnedSwordfish', state, {
+          cells: JIGSAW.slice(0, 7).map(transposeRef),
+          eliminations: [['R7C2', 5]],
+          args: { digit: 5, bases: ['C3', 'C6', 'C9'], covers: ['R2', 'R7', 'R8'], fins: ['R5C3'] }
+        });
+      });
+
+    // Near misses on the jigsaw board, checked first against the independent enumeration: a second fin in another
+    // region (R3C1, J1), and a cover cell outside the region of the fin in place of the target (R4C8, J6).
+    const JIGSAW_MISSES = [
+      ['a second fin in another region: R3C1 (J1)', JIGSAW.concat(['R3C1'])],
+      ['a cover cell outside the region of the fin: R4C8 (J6) instead of the target',
+        ['R3C5', 'R3C7', 'R3C8', 'R6C2', 'R6C8', 'R9C2', 'R9C7', 'R4C8', 'R7C8']]
+    ];
+
+    JIGSAW_MISSES.forEach(function (miss) {
+      [['as listed', false], ['transposed', true]].forEach(function (variant) {
+        it('does not authorize an elimination on the jigsaw board: ' + miss[0] + ' (' + variant[0] + ')',
+          function () {
+            const board = jigsawBoard(variant[1]);
+            const state = lonelyDigit(board, 5, variant[1] ? miss[1].map(transposeRef) : miss[1]);
+            expect(removingFinned(board, state, 3)).toEqual([]);
+            H.expectNoFinding(SG.test, 'finnedSwordfish', state);
+          });
+      });
+    });
+
+    it('has a region as the only box-like unit of a board of rows, columns and regions (the 4 x 4 board)',
+      function () {
+        // The 4 x 4 grid with its boxes taken out and listed as regions instead: the same finned Swordfish as on the
+        // plain board (the bases R1, R2 and R3 on the covers C1, C2 and C3, the fin R3C4, the target R4C3).
+        const labels = ['R1C1', 'R1C3', 'R2C1', 'R2C2', 'R3C2', 'R3C3', 'R3C4', 'R4C3', 'R4C1'];
+        const plain = buildGridModel('fishTestPlainRegions', 2, 2);
+        const regions = SG.model.create({
+          variantId: 'fishTestRegions', digits: 4, cellCount: 16,
+          units: plain.units.map(function (cells) { return Array.from(cells); }),
+          unitMeta: plain.unitMeta.map(function (meta) {
+            return meta.kind === 'box' ? { kind: 'region', gridIndex: 0, label: meta.label.replace('B', 'J') } : meta;
+          }),
+          layout: plain.layout
+        });
+        expect(unitsOfKind(regions, 'box')).toEqual([]);
+        const state = lonelyDigit(regions, 1, labels);
+        expect(removingFinned(regions, state, 3)).toHaveLength(1);
+        H.expectFinding(SG.test, 'finnedSwordfish', state, {
+          cells: ['R1C1', 'R1C3', 'R2C1', 'R2C2', 'R3C2', 'R3C3', 'R3C4'],
+          eliminations: [['R4C3', 1]],
+          args: { digit: 1, bases: ['R1', 'R2', 'R3'], covers: ['C1', 'C2', 'C3'], fins: ['R3C4'] }
+        });
+      });
+
+    // The Samurai: the grids G1 to G4 each share a corner box with the center grid G5, so a cell of such a box has two
+    // boxes and lies in a row and a column of two grids. Nothing of this board is excluded wholesale: the pattern of
+    // the vector in an unshared box (G1-B6) is found, the same shape with its fin in the shared box G1-B9 is not.
+    function samurai() {
+      if (!SG.testkit.hasVariant('samurai')) SG.test.skip('no board of samurai can be built here');
+      return H.model('samurai');
+    }
+
+    function boxesOf(model, label) {
+      return Array.from(model.cellUnits[H.cell(model, label)]).filter(function (u) {
+        return model.unitMeta[u].kind === 'box';
+      });
+    }
+
+    function inGrid(prefix, labels) {
+      return labels.map(function (label) { return prefix + label; });
+    }
+
+    it('finds the finned Swordfish of an unshared box of the Samurai (the fin and the target in the box G1-B6)',
+      function () {
+        const board = samurai();
+        expect(boxesOf(board, 'G1-R4C9')).toHaveLength(1);
+        const labels = inGrid('G1-', ['R1C2', 'R1C5', 'R4C5', 'R4C8', 'R4C9', 'R6C2', 'R6C8', 'R5C8', 'R9C2']);
+        const state = lonelyDigit(board, 5, labels);
+        const patterns = removingFinned(board, state, 3);
+        expect(patterns).toHaveLength(1);
+        expect(patterns[0].targets).toEqual([H.cell(board, 'G1-R5C8')]);
+        H.expectFinding(SG.test, 'finnedSwordfish', state, {
+          cells: inGrid('G1-', ['R1C2', 'R1C5', 'R4C5', 'R4C8', 'R4C9', 'R6C2', 'R6C8']),
+          eliminations: [['G1-R5C8', 5]],
+          args: { digit: 5, bases: ['G1-R1', 'G1-R4', 'G1-R6'], covers: ['G1-C2', 'G1-C5', 'G1-C8'],
+            fins: ['G1-R4C9'] }
+        });
+      });
+
+    it('finds nothing with the fin in a shared box of the Samurai: its cells have two boxes, rows and columns',
+      function () {
+        const board = samurai();
+        // The same shape at the corner box G1-B9 (= G5-B1): the base lines G1-R1, G1-R4 and G1-R7, the covers G1-C2,
+        // G1-C5 and G1-C8, the fin G1-R7C9, the target G1-R8C8. The cells G1-R7C8 and G1-R7C9 of the third base line
+        // lie in two rows (and two boxes), so that line is no base line.
+        const labels = inGrid('G1-', ['R1C2', 'R1C5', 'R4C5', 'R4C8', 'R7C2', 'R7C8', 'R7C9', 'R8C8', 'R9C2']);
+        ['G1-R7C8', 'G1-R7C9', 'G1-R8C8'].forEach(function (label) {
+          expect(boxesOf(board, label)).toHaveLength(2);
+        });
+        const state = lonelyDigit(board, 5, labels);
+        expect(removingFinned(board, state, 3)).toEqual([]);
+        H.expectNoFinding(SG.test, 'finnedSwordfish', state);
+      });
+
+    it('needs the target to see every fin through real peers: a window of the hyper board joins it to one fin ' +
+      'only', function () {
+      if (!SG.testkit.hasVariant('hyper')) SG.test.skip('no board of hyper can be built here');
+      const board = H.model('hyper');
+      // the bases R1, R4 and R7 on the covers C2, C5 and C8, the two fins R4C7 and R4C9 (B6). R5C8 sees both along
+      // B6. R2C8 is on the cover C8 and sees R4C7 along the window R2-R4 x C6-C8, but not R4C9: it keeps its 5.
+      const base = ['R1C2', 'R1C5', 'R4C5', 'R4C8', 'R7C2', 'R7C8', 'R9C2', 'R4C7', 'R4C9'];
+      const sees = function (a, b) { return Array.from(board.peers[H.cell(board, a)]).indexOf(H.cell(board, b)) !== -1; };
+      expect([sees('R2C8', 'R4C7'), sees('R2C8', 'R4C9'), sees('R5C8', 'R4C7'), sees('R5C8', 'R4C9')])
+        .toEqual([true, false, true, true]);
+      const whole = lonelyDigit(board, 5, base.concat(['R5C8']));
+      expect(removingFinned(board, whole, 3)).toHaveLength(1);
+      H.expectFinding(SG.test, 'finnedSwordfish', whole, {
+        eliminations: [['R5C8', 5]],
+        args: { bases: ['R1', 'R4', 'R7'], covers: ['C2', 'C5', 'C8'], fins: ['R4C7', 'R4C9'] }
+      });
+      const partial = lonelyDigit(board, 5, base.concat(['R2C8']));
+      expect(removingFinned(board, partial, 3)).toEqual([]);
+      H.expectNoFinding(SG.test, 'finnedSwordfish', partial);
+    });
+
+    // The Butterfly: why it cannot hold a finned Swordfish in a satisfiable state (a state whose candidates keep the
+    // solution), a structural argument pinned by its topology and not by sampled states alone. A candidate of a base
+    // line needs a single row and a single column (the ownership of `findFish`); the 36 cells that have them lie in
+    // four corner boxes, nine in each, every row and column that holds such cells holds three of them, all in one corner
+    // box, and the lines of two corners never meet. So an eligible base line has two or three candidates in the three
+    // cells of one corner box, and two eligible base lines of one orientation and digit in one corner box would put two
+    // placements of the digit in that box: not in a satisfiable state. The three base lines of a finned Swordfish
+    // therefore lie in three different corners, and their fins lie in the boxes of their own corners, so only one of
+    // them may have fins (the fins lie in one box). The other two have only body cells, at least two each, on two
+    // covers each; no cover line holds candidates of two corners, so the finned one needs a body cover of its own:
+    // at least 2 + 2 + 1 = 5 covers, never the three of a Swordfish.
+    function butterfly() {
+      if (!SG.testkit.hasVariant('butterfly')) SG.test.skip('no board of butterfly can be built here');
+      return H.model('butterfly');
+    }
+
+    it('has the ownership topology of the Butterfly that the argument needs: 36 cells with a single row and ' +
+      'column, nine in each of four corner boxes, no line through two corners', function () {
+      const board = butterfly();
+      const tables = finnedTablesOf(board);
+      const owned = [];
+      for (let c = 0; c < board.cellCount; c++) {
+        if (tables.row[c].length === 1 && tables.col[c].length === 1) owned.push(c);
+      }
+      expect(owned).toHaveLength(36);
+      const byBox = {};
+      owned.forEach(function (c) {
+        expect(tables.box[c]).toHaveLength(1);
+        const label = unitLabel(board, tables.box[c][0]);
+        byBox[label] = (byBox[label] || 0) + 1;
+      });
+      expect(byBox).toEqual({ 'G1-B1': 9, 'G2-B3': 9, 'G3-B7': 9, 'G4-B9': 9 });
+      const isOwned = new Set(owned);
+      ['row', 'col'].forEach(function (kind) {
+        const other = kind === 'row' ? tables.col : tables.row;
+        let holding = 0;
+        const coversOf = {};
+        unitsOfKind(board, kind).forEach(function (u) {
+          const cells = Array.from(board.units[u]).filter(function (c) { return isOwned.has(c); });
+          if (cells.length === 0) return;
+          holding++;
+          expect([unitLabel(board, u), cells.length]).toEqual([unitLabel(board, u), 3]);
+          const boxes = new Set(cells.map(function (c) { return tables.box[c][0]; }));
+          expect([unitLabel(board, u), boxes.size]).toEqual([unitLabel(board, u), 1]);
+          const corner = unitLabel(board, Array.from(boxes)[0]);
+          cells.forEach(function (c) {
+            const cover = other[c][0];
+            if (coversOf[cover] !== undefined) {
+              expect([unitLabel(board, cover), coversOf[cover]]).toEqual([unitLabel(board, cover), corner]);
+            }
+            coversOf[cover] = corner;
+          });
+        });
+        // twelve rows and twelve columns hold them, and a cover line of one corner holds no cell of another
+        expect([kind, holding]).toEqual([kind, 12]);
+        expect([kind, Object.keys(coversOf).length]).toEqual([kind, 12]);
+      });
+      // an eligible base line has at least two candidates and a non-finned one needs a cover for each of them
+      expect(2 + 2 + 1).toBeGreaterThan(3);
+    });
+
+    it('holds no finned Swordfish in a satisfiable state of the Butterfly, whatever the kind of state, and the ' +
+      'same pattern in a state without a solution shows that the argument needs one', function () {
+      const board = butterfly();
+      let calls = 0;
+      [4242, 777].forEach(function (seed) {
+        H.randomStatesWithKnownSolution(board, SG.testkit.rng.create(seed), 60).forEach(function (item, index) {
+          const records = [];
+          const ctx = SG.techniques.createContext(board, { onPatternWork: function (r) { records.push(r); } });
+          const finding = SG.techniques.get('finnedSwordfish').find(board, item.state, ctx);
+          expect([seed, index, finding, records[0].capHit]).toEqual([seed, index, null, null]);
+          calls++;
+        });
+      });
+      expect(calls).toBe(120);
+      // Two base lines of one corner box (G1-B1) with the digit only inside it have no common solution (the box would
+      // hold the digit twice), and a base line of the box G2-B3 with one fin completes a finned Swordfish on the
+      // covers G1-C1, G1-C2 and G2-C7: the pattern exists in such a state, the sound finder fires, and no state with
+      // a solution can look like it.
+      const labels = ['G1-R1C1', 'G1-R1C2', 'G1-R2C1', 'G1-R2C2', 'G2-R1C7', 'G2-R1C8', 'G2-R2C7'];
+      const state = lonelyDigit(board, 1, labels);
+      const patterns = removingFinned(board, state, 3);
+      // the rows reading and its symmetrical columns reading (the target and the fin swap roles); rows come first
+      expect(patterns.map(function (p) { return p.kind; })).toEqual(['row', 'col']);
+      H.expectFinding(SG.test, 'finnedSwordfish', state, {
+        cells: labels.slice(0, 6),
+        eliminations: [['G2-R2C7', 1]],
+        args: { digit: 1, bases: ['G1-R1', 'G1-R2', 'G2-R1'], covers: ['G1-C1', 'G1-C2', 'G2-C7'],
+          fins: ['G2-R1C8'] }
+      });
+    });
+  });
+
+  describe('finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix',
+    function () {
+      const cache = {};
+
+      function itemsOf(model, count, seed) {
+        const key = model.variantId + '/' + model.digits + '/' + seed;
+        if (!cache[key]) {
+          cache[key] = H.randomStatesWithKnownSolution(model, SG.testkit.rng.create(seed), count);
+        }
+        return cache[key];
+      }
+
+      /**
+       * The registered finder (or, with a `limit`, the seam with that work limit) against the enumeration of the same
+       * searched prefix: the Finding is the first pattern that removes something in the first `limit` combinations of
+       * base lines, field by field (the digit, the eliminations, the cells, the base lines, the covers, the fins),
+       * and its work is that pattern's position plus one. Without such a pattern the answer is nothing, and the
+       * record says `capHit: 'work'` exactly when the limit cut a combination off, with the work the enumeration
+       * tested. A witness beyond the prefix is no failure: it is what the truncation allows. The enumeration always
+       * gets an effective limit: the one given, else the registered finder's own (an omitted `limit` calls the
+       * registered finder, which has FINNED_SWORDFISH_WORK_LIMIT, never an unbounded enumeration).
+       * @returns {string} 'found', 'complete' (nothing, the whole search was tested) or 'capped'
+       */
+      function agree(model, item, index, limit) {
+        const report = {};
+        const effective = limit === undefined ? SG.fishSearch.FINNED_SWORDFISH_WORK_LIMIT : limit;
+        const options = { stopAtFirst: true, report: report, limit: effective };
+        const patterns = removingFinned(model, item.state, 3, options);
+        const records = [];
+        const ctx = SG.techniques.createContext(model, { onPatternWork: function (r) { records.push(r); } });
+        const finding = limit === undefined ? SG.techniques.get('finnedSwordfish').find(model, item.state, ctx)
+          : SG.fishSearch.finnedSwordfish(model, item.state, ctx, { workLimit: limit });
+        const where = '\n  ' + describeItem(model, item, index) + '\n  finding: ' + JSON.stringify(finding) +
+          '\n  limit: ' + effective;
+        check(records.length === 1, 'the observer did not get exactly one record' + where);
+        const record = records[0];
+        check((finding !== null) === (patterns.length > 0), 'finnedSwordfish ' + (finding !== null
+          ? 'reported a pattern that the enumeration does not know in the same prefix'
+          : 'missed a pattern the enumeration found in the same prefix') + where);
+        if (finding === null) {
+          const capHit = report.capped ? 'work' : null;
+          check(record.capHit === capHit && record.work === report.tested,
+            'the record ' + JSON.stringify(record) + ' is not the one of the enumeration (work ' + report.tested +
+            ', capHit ' + capHit + ')' + where);
+          return report.capped ? 'capped' : 'complete';
+        }
+        const first = patterns[0];
+        const same = function (a, b) { return JSON.stringify(a) === JSON.stringify(b); };
+        check(finding.technique === 'finnedSwordfish' && finding.i18nKey === 'technique.finnedSwordfish.step',
+          'wrong id or key' + where);
+        check(finding.i18nArgs.digit === first.digit, 'digit ' + finding.i18nArgs.digit + ' is not the first ' +
+          'pattern\'s ' + first.digit + where);
+        check(same(finding.eliminations, first.targets.map(function (c) { return [c, first.digit]; })),
+          'the eliminations are not those of the first pattern' + where);
+        check(same(finding.cells, first.cells), 'the cells are not the candidates of the base lines' + where);
+        check(same(finding.i18nArgs.bases, first.bases.map(function (u) { return unitLabel(model, u); })),
+          'the base lines are not those of the first pattern' + where);
+        check(same(finding.i18nArgs.covers, first.covers.map(function (u) { return unitLabel(model, u); })),
+          'the covers are not those of the first pattern' + where);
+        check(same(finding.i18nArgs.fins, first.fins.map(function (c) { return H.label(model, c); })),
+          'the fins are not those of the first pattern' + where);
+        check(same(Object.keys(finding.i18nArgs), ['digit', 'bases', 'covers', 'fins']), 'the arguments differ' + where);
+        check(record.capHit === null && record.work === first.unit + 1,
+          'the work ' + JSON.stringify(record) + ' is not the position ' + first.unit + ' of the first pattern plus one' +
+          where);
+        const problems = H.findingProblems(model, item.state, finding,
+          { technique: 'finnedSwordfish', solution: item.solution });
+        check(problems.length === 0, 'the Finding is not sound: ' + problems.join('; ') + where);
+        return 'found';
+      }
+
+      function tally(model, items, limit) {
+        const out = { found: 0, complete: 0, capped: 0 };
+        items.forEach(function (item, index) { out[agree(model, item, index, limit)]++; });
+        return out;
+      }
+
+      [['classic9', 150, 777, 60], ['classic9', 150, 99, 50], ['classic6', 400, 777, 100],
+        ['classic4', 300, 777, 8]].forEach(function (setup) {
+        it('finds a finned Swordfish exactly when one exists and removes exactly its candidates on ' + setup[0] +
+          ' (seed ' + setup[2] + ')', function () {
+          const model = H.model(setup[0]);
+          const out = tally(model, itemsOf(model, setup[1], setup[2]).slice(0, setup[1]));
+          expect(out.capped).toBe(0);
+          expect(out.found).toBeGreaterThanOrEqual(setup[3]);
+        });
+      });
+
+      [['classic9', 150, 777, [1, 25, 300]], ['classic9', 150, 99, [1, 25, 300]],
+        ['classic6', 400, 777, [1, 10, 60]]].forEach(function (setup) {
+        it('agrees on every searched prefix of ' + setup[0] + ' (seed ' + setup[2] + '): a witness inside it, ' +
+          'nothing and a spent limit outside it', function () {
+          const model = H.model(setup[0]);
+          const items = itemsOf(model, setup[1], setup[2]).slice(0, setup[1]);
+          const outs = setup[3].map(function (limit) { return tally(model, items, limit); });
+          // every limit cuts some searches short, and the longer the prefix the more of them end inside it
+          outs.forEach(function (out) { expect(out.capped).toBeGreaterThan(0); });
+          expect(outs[2].found).toBeGreaterThan(0);
+          expect(outs[2].found).toBeGreaterThanOrEqual(outs[0].found);
+          expect(outs[2].capped).toBeLessThanOrEqual(outs[0].capped);
+        });
+      });
+
+      [12, 16].forEach(function (D) {
+        it('agrees on ' + D + ' digits by searched prefix (box shapes of 3 x 4 and 4 x 4: a complete scan of ' +
+          'so many triples of lines is too long for a plain enumeration)', function () {
+          const model = modelOfDigits(D);
+          const out = tally(model, itemsOf(model, D === 12 ? 60 : 32, 2026).slice(0, D === 12 ? 12 : 8),
+            D === 12 ? 120 : 60);
+          expect(out.found + out.complete + out.capped).toBe(D === 12 ? 12 : 8);
+          expect(out.found).toBeGreaterThanOrEqual(2);
+          expect(out.capped).toBeGreaterThan(0);
+        });
+      });
+
+      [['diagonalX', 10], ['hyper', 14]].forEach(function (setup) {
+        it('agrees on ' + setup[0] + ' (extra regions are real peers: a target may see a fin through one)',
+          function () {
+            if (!SG.testkit.hasVariant(setup[0])) SG.test.skip('no board of ' + setup[0] + ' can be built here');
+            const model = H.model(setup[0]);
+            const out = tally(model, itemsOf(model, 120, 4242).slice(0, 40));
+            expect(out.found).toBeGreaterThanOrEqual(setup[1]);
+          });
+      });
+
+      it('agrees on the jigsaw board and on its transpose, where the irregular regions are the boxes', function () {
+        [jigsawBoard(false), jigsawBoard(true)].forEach(function (model) {
+          const out = tally(model, itemsOf(model, 120, 4242).slice(0, 40));
+          expect([model.variantId, out.found >= 10]).toEqual([model.variantId, true]);
+        });
+      });
+
+      it('agrees on the jigsaw9 board of the environment, whatever its layout (no minimum: the layouts differ)',
+        function () {
+          if (!SG.testkit.hasVariant('jigsaw9')) SG.test.skip('no board of jigsaw9 can be built here');
+          const model = H.model('jigsaw9');
+          expect(unitsOfKind(model, 'box')).toEqual([]);
+          tally(model, itemsOf(model, 120, 4242).slice(0, 20));
+        });
+
+      it('stays sound on the irregular jigsaw boards: every finned Swordfish removes only candidates that are ' +
+        'not the solution', function () {
+        [jigsawBoard(false), jigsawBoard(true)].forEach(function (model) {
+          const stats = H.assertSound(SG.test, 'finnedSwordfish',
+            { model: model, states: itemsOf(model, 120, 4242), minFirings: 30 });
+          expect([model.variantId, stats.firings >= 30]).toEqual([model.variantId, true]);
+        });
+        if (SG.testkit.hasVariant('jigsaw9')) {
+          const own = H.model('jigsaw9');
+          H.assertSound(SG.test, 'finnedSwordfish', { model: own, states: itemsOf(own, 120, 4242), minFirings: 0 });
+        }
+      });
+
+      it('agrees on the multi-grid boards (shared boxes, rows and columns have no single owner): eight states ' +
+        'whose witness is near the start of the search whole, and the first eight states of seed 4242 by prefix 40',
+      function () {
+        // Whole: eight states of the seeded corpora (seed, indexes), the ones whose finder witness lies inside the
+        // first 400 combinations of base lines, so that a plain enumeration can follow it to its position (the
+        // Samurai, the Sohei and the Flower have two, four and two of them; the Butterfly has none, see its own
+        // tests). By prefix: the first eight states of the seed 4242 corpus of each board, with a limit of 40
+        // combinations. The other states of the corpora are not enumerated; their late witnesses are checked for
+        // soundness only, in the next test.
+        const near = {
+          samurai: [[777, [4, 10]]], sohei: [[4242, [4, 11, 2]], [777, [4]]], flower: [[4242, [4]], [777, [2]]],
+          butterfly: []
+        };
+        const boards = Object.keys(near).filter(function (variant) { return SG.testkit.hasVariant(variant); });
+        if (boards.length === 0) SG.test.skip('no multi-grid board can be built here');
+        boards.forEach(function (variant) {
+          const model = H.model(variant);
+          let whole = 0;
+          near[variant].forEach(function (entry) {
+            const items = itemsOf(model, 12, entry[0]);
+            entry[1].forEach(function (i) {
+              expect([variant, entry[0], i, agree(model, items[i], i)]).toEqual([variant, entry[0], i, 'found']);
+              whole++;
+            });
+          });
+          expect([variant, whole]).toEqual([variant, { samurai: 2, sohei: 4, flower: 2, butterfly: 0 }[variant]]);
+          const out = tally(model, itemsOf(model, 12, 4242).slice(0, 8), 40);
+          expect([variant, out.found + out.complete + out.capped]).toEqual([variant, 8]);
+        });
+      });
+
+      it('stays sound at the late witnesses of the multi-grid corpora, which are not enumerated: the Finding is ' +
+        'checked against the known solution (Samurai seed 4242 #0, #3, #9 and seed 777 #0; Sohei seed 4242 #1 ' +
+        'and #8 and seed 777 #2)', function () {
+        const late = { samurai: [[4242, [0, 3, 9]], [777, [0]]], sohei: [[4242, [1, 8]], [777, [2]]] };
+        const boards = Object.keys(late).filter(function (variant) { return SG.testkit.hasVariant(variant); });
+        if (boards.length === 0) SG.test.skip('no multi-grid board can be built here');
+        boards.forEach(function (variant) {
+          const model = H.model(variant);
+          late[variant].forEach(function (entry) {
+            const items = itemsOf(model, 12, entry[0]);
+            entry[1].forEach(function (i) {
+              const records = [];
+              const ctx = SG.techniques.createContext(model, { onPatternWork: function (r) { records.push(r); } });
+              const finding = SG.techniques.get('finnedSwordfish').find(model, items[i].state, ctx);
+              const label = [variant, entry[0], i];
+              expect([label, finding !== null]).toEqual([label, true]);
+              // late: more than 400 combinations of base lines were tested before the witness, no cap was hit
+              expect([label, records[0].work > 400, records[0].capHit]).toEqual([label, true, null]);
+              expect([label, H.findingProblems(model, items[i].state, finding,
+                { technique: 'finnedSwordfish', solution: items[i].solution })]).toEqual([label, []]);
+            });
+          });
+        });
+      });
+
+      // The covers are the covers of the candidates of the base lines: taking every complete line of the other kind
+      // and keeping those with a body cell gives the same patterns, in the same order.
+      it('lists the same patterns when every complete line is tried as a cover (a cover needs a body cell anyway)',
+        function () {
+          const model = H.model('classic9');
+          itemsOf(model, 150, 777).slice(0, 12).forEach(function (item, index) {
+            const options = { limit: 400 };
+            const fast = referenceFinned(model, item.state, 3, options);
+            const slow = referenceFinned(model, item.state, 3, Object.assign({ allCovers: true }, options));
+            check(JSON.stringify(fast) === JSON.stringify(slow), 'the covers of the candidates give other ' +
+              'patterns\n  ' + describeItem(model, item, index));
+          });
+        });
+    });
 
   describe('fish: agreement with brute-force references', function () {
     const SETUPS = [['classic9', 400, 10], ['classic6', 400, 0], ['classic4', 300, 0]];

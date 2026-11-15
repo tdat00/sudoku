@@ -192,7 +192,8 @@
         expect(specs[0].allowedTechniques).toEqual(['nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine']);
         // The edges of the pruning rule: 1.25 x weight against the band maximum.
         var firsts = { easy: ['pointing', 'boxLine', 'nakedPair'], normal: ['hiddenPair', 'hiddenQuad'],
-          hard: ['xWing', 'skyscraper', 'twoStringKite', 'emptyRectangle', 'finnedXWing', 'jellyfish'],
+          hard: ['xWing', 'skyscraper', 'twoStringKite', 'emptyRectangle', 'finnedXWing', 'finnedSwordfish',
+            'jellyfish'],
           expert: ['xyWing', 'xyzWing'],
           master: ['wWing', 'forcingChain'],
           nightmare: ['forcingChainLong', 'nishio'], hell1: ['nishioDeep'] };
@@ -629,7 +630,7 @@
         nakedSingle: 1, hiddenSingleBox: 1.25, hiddenSingleLine: 1.5, pointing: 40, boxLine: 50,
         nakedPair: 120, hiddenPair: 145, nakedTriple: 180, hiddenTriple: 220, nakedQuad: 260, hiddenQuad: 300,
         xWing: 320, skyscraper: 330, twoStringKite: 340, simpleColouring: 360, emptyRectangle: 380,
-        finnedXWing: 400, swordfish: 420,
+        finnedXWing: 400, swordfish: 420, finnedSwordfish: 480,
         jellyfish: 520, xyWing: 650, xyzWing: 750, wWing: 850, uniqueRectangle: 900, forcingChain: 1100,
         forcingChainLong: 1400, nishio: 1700, nishioDeep: 2600, cageCombo: 40, ruleOf45: 260, cageSplit: 520,
         ineqChain: 40, minMaxForcing: 180

@@ -1,0 +1,6 @@
+$ node tests\artifacts\difficulty-v3\MS09b\work-census-n3.js --only=flood: one digit --budget=1
+{"population":"samurai flood: one digit open everywhere","source":"constructed state (one digit open everywhere)","limit":50000,"calls":1,"found":0,"capped":0,"largestWork":5850,"meanWork":5850,"latencyMs":{"mean":395.182,"p95":395.182,"max":395.182}}
+{"population":"sohei flood: one digit open everywhere","source":"constructed state (one digit open everywhere)","limit":50000,"calls":1,"found":0,"capped":0,"largestWork":1632,"meanWork":1632,"latencyMs":{"mean":93.526,"p95":93.526,"max":93.526}}
+{"population":"butterfly flood: one digit open everywhere","source":"constructed state (one digit open everywhere)","limit":50000,"calls":1,"found":0,"capped":0,"largestWork":0,"meanWork":0,"latencyMs":{"mean":0.145,"p95":0.145,"max":0.145}}
+{"population":"flower flood: one digit open everywhere","source":"constructed state (one digit open everywhere)","limit":50000,"calls":1,"found":0,"capped":0,"largestWork":40,"meanWork":40,"latencyMs":{"mean":1.373,"p95":1.373,"max":1.373}}
+exit=0 seconds=0.674

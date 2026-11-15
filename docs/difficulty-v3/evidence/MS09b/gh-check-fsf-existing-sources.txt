@@ -1,0 +1,27 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=finnedSwordfish --sources=tests\artifacts\difficulty-v3\MS09b\sources-fsf-existing.json --max-puzzles=64 --max-hints=400 --check
+selected 1 technique ID(s); mode check
+replaying 21 puzzle(s) for 1 ID(s) (--max-puzzles=64, --max-hints=400)
+puzzle 1/21 classic9 Easy 1 -> 47 hint(s), solved; wanted found: -
+puzzle 2/21 classic9 Nightmare 1156 -> 74 hint(s), solved; wanted found: finnedSwordfish
+puzzle 3/21 classic9 Nightmare 75 -> 76 hint(s), solved; wanted found: -
+puzzle 4/21 classic9 Nightmare 44 -> 59 hint(s), solved; wanted found: -
+puzzle 5/21 classic9 Hard 18 -> 62 hint(s), solved; wanted found: -
+puzzle 6/21 classic9 Nightmare 70 -> 76 hint(s), solved; wanted found: -
+puzzle 7/21 classic9 Hard 55 -> 58 hint(s), solved; wanted found: -
+puzzle 8/21 classic9 Nightmare 176 -> 67 hint(s), solved; wanted found: -
+puzzle 9/21 classic9 Nightmare 692 -> 61 hint(s), solved; wanted found: -
+puzzle 10/21 classic9 Nightmare 989 -> 63 hint(s), solved; wanted found: -
+puzzle 11/21 classic9 Hell 1 644 -> 80 hint(s), solved; wanted found: -
+puzzle 12/21 classic9 Hell 1 214 -> 70 hint(s), solved; wanted found: -
+puzzle 13/21 classic9 Nightmare 648 -> 77 hint(s), solved; wanted found: finnedSwordfish
+puzzle 14/21 classic9 Nightmare 561 -> 58 hint(s), solved; wanted found: -
+puzzle 15/21 classic9 Nightmare 828 -> 80 hint(s), solved; wanted found: -
+puzzle 16/21 classic9 Nightmare 13 -> 74 hint(s), solved; wanted found: -
+puzzle 17/21 classic9 Nightmare 11 -> 73 hint(s), solved; wanted found: -
+puzzle 18/21 classic9 Nightmare 1427 -> 73 hint(s), solved; wanted found: -
+puzzle 19/21 classic9 Nightmare 3 -> 60 hint(s), solved; wanted found: finnedSwordfish
+puzzle 20/21 classic9 Hell 1 8 -> 70 hint(s), solved; wanted found: -
+puzzle 21/21 classic9 Hell 2 escargot -> 111 hint(s), solved; wanted found: finnedSwordfish
+finnedSwordfish: has no example in help-examples.js (a new one)
+help-examples.js differs or lacks an example for 1 of the 1 selected ID(s)
+exit=1 seconds=2.546

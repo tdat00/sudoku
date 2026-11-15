@@ -1,0 +1,15 @@
+$ node tests\artifacts\difficulty-v3\MS09b\facts-all.js G07 G12 G14
+== G07 final 2268 compact 7 details 33 digLog 110
+  compact #5 pos 31 from 29 to 31 141>2268 class multi-move frame null choice combined hardest boxLine>forcingChainLong new true n 2 k 1 signs.cause null
+  details #30 pos 30 from 29 to 30 141>3215 class single-culprit frame remove:R1C4 choice guided hardest boxLine>nishio new true n 1 k null signs.cause null
+  compact jump end 31 (141>2268) is no jump in details: 3215>2268 change -947 ratio null
+  compact jump end 31 (141>2268) is no jump in details: 2268>2268 change 0 ratio null
+== G12 final 647 compact 7 details 111 digLog 165
+  compact #4 pos 107 from 99 to 107 133>513 class multi-move frame null choice combined hardest ineqChain>xWing new true n 8 k 2 signs.cause []
+  details #101 pos 100 from 99 to 100 133>3173 class single-sign frame sign 34 choice checked hardest ineqChain>nishio new true n 1 k null signs.cause [34]
+  details #104 pos 103 newPeak flat/lower 3042>2701 change -341 hardest nishio>forcingChainLong
+  compact jump end 107 (133>513) is no jump in details: 2488>513 change -1975 ratio null
+== G14 final 6473 compact 8 details 79 digLog 171
+  compact #3 pos 69 from 68 to 69 65>1685 class single-culprit frame remove:R8C4 choice guided hardest hiddenSingleBox>forcingChain new true n 1 k null signs.cause null
+  details #69 pos 69 from 68 to 69 65>1685 class single-culprit frame remove:R8C4 choice guided hardest hiddenSingleBox>forcingChain new true n 1 k null signs.cause null
+exit=0 seconds=5.337

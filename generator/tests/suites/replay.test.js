@@ -1190,7 +1190,7 @@
     });
 
     slow('has the same end position as a jump in one view and not in the other (G07, G12, G01)', function () {
-      [['G07', 31, [141, 2310], [3183, 2310]], ['G12', 107, [133, 513], [2488, 513]]].forEach(function (c) {
+      [['G07', 31, [141, 2268], [3215, 2268]], ['G12', 107, [133, 513], [2488, 513]]].forEach(function (c) {
         var analysis = analysisOf(c[0]);
         var compact = toPosition(analysis, 'compact', c[1]);
         var details = toPosition(analysis, 'details', c[1]);
@@ -1199,7 +1199,7 @@
         expect(details.tier).not.toBe('jump');
         expect(details.ratio).toBeNull();
       });
-      expect(toPosition(analysisOf('G07'), 'details', 31).change).toBe(-873);
+      expect(toPosition(analysisOf('G07'), 'details', 31).change).toBe(-947);
       expect(toPosition(analysisOf('G12'), 'details', 107).change).toBe(-1975);
       var g01 = analysisOf('G01');
       expect(toPosition(g01, 'compact', 27).before.W).toBeCloseTo(1518.75, 6);
@@ -1222,7 +1222,7 @@
 
     slow('labels a new hardest technique also at a flat or lower score (details: G13, G12)', function () {
       [['G13', 101, 70, 70, 'hiddenSingleBox', 'nakedSingle'],
-        ['G12', 103, 3042, 2686, 'forcingChainLong', 'nishio']
+        ['G12', 103, 3042, 2701, 'forcingChainLong', 'nishio']
       ].forEach(function (c) {
         var t = toPosition(analysisOf(c[0]), 'details', c[1]);
         expect([t.before.total, t.after.total, t.change]).toEqual([c[2], c[3], c[3] - c[2]]);

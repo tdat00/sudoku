@@ -1,0 +1,63 @@
+mutation 53 (the registered finnedXWing uses the finned Swordfish limit (the two limits are tied the other way)): DETECTED - 480 total, 479 passed, 1 failed, 0 skipped - 1 failing, 1 of the finned fish - 21.3 s
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > keeps the two limits independent: another n = 2 literal leaves n = 3 alone, and the other way round (Node only)
+mutation 54 (the size 2 seam uses the finned Swordfish limit by default): DETECTED - 480 total, 479 passed, 1 failed, 0 skipped - 1 failing, 1 of the finned fish - 21.1 s
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > keeps the two limits independent: another n = 2 literal leaves n = 3 alone, and the other way round (Node only)
+mutation 55 (the finned Swordfish limit constant is 50001): DETECTED - 480 total, 475 passed, 5 failed, 0 skipped - 5 failing, 5 of the finned fish - 21.1 s
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > is registered as a technique of its own beside the finned X-Wing, with a limit of its own
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > keeps the two limits independent: another n = 2 literal leaves n = 3 alone, and the other way round (Node only)
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > has R10's limit of 50000 tested combinations, and the registered finder reports it
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > counts one unit per tested combination of three base lines, from a fresh counter on every call
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > returns a finned Swordfish found inside the searched prefix, whatever follows it, and nothing short of it (the exact boundary)
+mutation 56 (the finned Swordfish limit constant is not exported): DETECTED - 480 total, 475 passed, 5 failed, 0 skipped - 5 failing, 5 of the finned fish - 21.1 s
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > is registered as a technique of its own beside the finned X-Wing, with a limit of its own
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > takes a size of 2 or 3 and a work limit like the other seams, and rejects anything else
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > has the default limit of each size from its own constant: the registered finders and the seams
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > keeps the two limits independent: another n = 2 literal leaves n = 3 alone, and the other way round (Node only)
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > has R10's limit of 50000 tested combinations, and the registered finder reports it
+mutation 57 (finnedSwordfish is registered with another base cost): DETECTED - 480 total, 479 passed, 1 failed, 0 skipped - 1 failing, 1 of the finned fish - 21.1 s
+    FAIL tech-fish > fish techniques: registration > finnedSwordfish is registered in group fish with its ladder cost and order
+mutation 58 (finnedSwordfish is registered with another order): DETECTED - 480 total, 479 passed, 1 failed, 0 skipped - 1 failing, 1 of the finned fish - 21.2 s
+    FAIL tech-fish > fish techniques: registration > finnedSwordfish is registered in group fish with its ladder cost and order
+mutation 59 (finnedSwordfish is not registered (the wrapper is gone)): DETECTED - 480 total, 407 passed, 73 failed, 0 skipped - 73 failing, 69 of the finned fish - 16.9 s
+    FAIL tech-fish > fish techniques: registration > finnedSwordfish is registered in group fish with its ladder cost and order
+    FAIL tech-fish > fish techniques: registration > runs in ladder order: xWing, skyscraper, twoStringKite, simpleColouring, emptyRectangle, finnedXWing, swordfish, finnedSwordfish, jellyfish
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > is registered as a technique of its own beside the finned X-Wing, with a limit of its own
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > has the default limit of each size from its own constant: the registered finders and the seams
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > keeps the two limits independent: another n = 2 literal leaves n = 3 alone, and the other way round (Node only)
+    FAIL tech-fish > finnedSwordfish (R12): geometry > removes the digit from the cover cell that sees the fin (the vector of R12)
+mutation 60 (the named seam finnedSwordfish is the size 2 seam): DETECTED - 480 total, 463 passed, 17 failed, 0 skipped - 17 failing, 17 of the finned fish - 20.1 s
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > has the default limit of each size from its own constant: the registered finders and the seams
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > counts one unit per tested combination of three base lines, from a fresh counter on every call
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > counts the combinations of three lines, never the cover trials or the targets inside one
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > has no finned Swordfish and costs no work on a board without boxes (a Latin square), unlike the same board with them
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 61 (the truncation order is reversed: the digits are scanned from the last to the first): DETECTED - 480 total, 447 passed, 33 failed, 0 skipped - 33 failing, 33 of the finned fish - 16.5 s
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the lowest digit first, rows before columns whatever the unit list order, covers in unit order
+    FAIL tech-fish > finnedXWing (R12): real positions > finds the exact Finding of real position 1, sound against an independent completion
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > has R10's limit of 50000 tested combinations, and the registered finder reports it
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > counts one unit per tested combination of base lines, from a fresh counter on every call
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 combinations pass between two checks
+mutation 62 (the unit is counted only for a combination whose first line has more than two candidates): DETECTED - 480 total, 456 passed, 24 failed, 0 skipped - 24 failing, 24 of the finned fish - 19.2 s
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > has R10's limit of 50000 tested combinations, and the registered finder reports it
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > counts one unit per tested combination of base lines, from a fresh counter on every call
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > takes a size of 2 or 3 and a work limit like the other seams, and rejects anything else
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > has R10's limit of 50000 tested combinations, and the registered finder reports it
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > counts one unit per tested combination of three base lines, from a fresh counter on every call
+mutation 63 (a spent limit is reported with the work of the unit that was not tested): DETECTED - 480 total, 460 passed, 20 failed, 0 skipped - 20 failing, 14 of the finned fish - 20.0 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 64 (the work of a capped call is not reported): DETECTED - 480 total, 461 passed, 19 failed, 0 skipped - 19 failing, 13 of the finned fish - 19.9 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+detected 12 of 12, 239.6 s

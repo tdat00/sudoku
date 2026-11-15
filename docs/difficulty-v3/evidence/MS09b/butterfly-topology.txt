@@ -1,0 +1,16 @@
+$ node tests\artifacts\difficulty-v3\MS09b\butterfly-topology.js
+butterfly: 144 cells, 36 with a single row, column and box
+boxes holding single-owner cells: G1-B1(9 cells), G2-B3(9 cells), G3-B7(9 cells), G4-B9(9 cells)
+rows: 36 complete, 12 with single-owner cells, 0 with single-owner cells in more than one box
+  G1-B1: G1-R1:3 G1-R2:3 G1-R3:3
+  G2-B3: G2-R1:3 G2-R2:3 G2-R3:3
+  G3-B7: G3-R7:3 G3-R8:3 G3-R9:3
+  G4-B9: G4-R7:3 G4-R8:3 G4-R9:3
+cols: 36 complete, 12 with single-owner cells, 0 with single-owner cells in more than one box
+  G1-B1: G1-C1:3 G1-C2:3 G1-C3:3
+  G2-B3: G2-C7:3 G2-C8:3 G2-C9:3
+  G3-B7: G3-C1:3 G3-C2:3 G3-C3:3
+  G4-B9: G4-C7:3 G4-C8:3 G4-C9:3
+base kind row: 0 cover line(s) (cols) holding single-owner cells of two boxes
+base kind col: 0 cover line(s) (rows) holding single-owner cells of two boxes
+exit=0 seconds=0.174
