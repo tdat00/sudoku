@@ -983,3 +983,21 @@ conditions as written in each answer above.
 | IG-S-D4 | **(A)** inner width four and outer `--jobs=1` for paired timing and budget verdicts, serial controls at outer `--jobs=1`; any throughput study kept apart; difficulty-v3's qualification unchanged. |
 | IG-S-D5 | **(A)** the reduced staged frozen round (F0 to F6 of the joint report, each with its stop condition); the passing-cell Nightmare screen and the attempt sweep retired; cohorts of 20 or more costed after the repair. |
 | IG-S-D6 | **(A)** no preliminary SM5 before the freeze. |
+
+---
+
+## Plan version 3 (plan author, 2026-11-15)
+
+`plan.md` is revised to version 3 from the joint report on version 2, the answers IG-S-Q19 to IG-S-Q25 and the
+owner decisions IG-S-D1 to IG-S-D6. It is one current document: the "version 2" notes and the section 9
+addendum are merged into their sections, and version 2 stays at commit `adb7184`, where the full mechanism
+text of the parked and dropped items remains. It ran nothing; the gate remains `not-evaluable-pre-freeze`.
+
+- **Changed:** the targets re-derived on the rating-v3 checkpoint (section 2); S1, S2, the Nightmare screen
+  and the attempt sweep out of the mandatory scope; S5a selective with a mandatory early-hit path; no kernel
+  factor priced (K2 conditional, K4 a diagnostic, K1 and the chain work parked, K3 and K5 dropped); the
+  contract boundary of IG-S-Q19 (section 3.1); the kernel gate of IG-S-Q20 (section 5.4); the reduced staged
+  frozen round F0 to F6 after the narrowed repair (section 5).
+- **Corrections:** JV2-S01 to JV2-S16 are taken in; the "220 to 590 points" window is withdrawn.
+- **Still to come to the owner:** the cost of the repair and the round's price after MS18e, OD-S1 and OD-S2
+  before phase 2, the pool's enablement after F2, and Hell 1's route after F5 (plan section 7).
