@@ -54,6 +54,13 @@ catalogue (`-Round frozen-gate`, with a freeze receipt and a budget receipt).
 | `ig05-aggregate.cjs` | IG-S05 documents from evidence only: `screen-manifest.json` (before any run) and `rates.json`, `paired-intervals.json`, `selection.json`, `summary.json/md`. |
 | `ig05-test.cjs` | IG-S05 tests: pure cases on synthetic records, a scripted fake engine and fake workers (`--only=pure`, no engine) and the engine cases of the first command. |
 | `ig05-dev-check.cjs` | IG-S05: one wrapped development check (synthetic engine tests and the complete per-job flow on a few real jobs) written beside the shard evidence; its trials are not part of the screen. |
+| `profile-runtime.cjs` | IG-S07: the wall-clock span profiler of one native request (exclusive accounting by segments into the matrices context x purpose x primitive and context x purpose x finder; install and restore of the engine-entry wrappers; the consistency check; the calibration of the instrumentation cost). |
+| `adapters/profile.cjs` | IG-S07: the 27 in-memory transforms (version 2; r1 ran version 1 with 26) of `logical-solver.js`, `techniques.js`, `dfs-solver.js` and `digger.js` that call the profile runtime (observation only; the native code when `SG.__igProf` is absent). |
+| `plans/ig-s07.cjs` | IG-S07: the nine shards, twelve requests and the IG-S02 comparator files; the revision r2 adds the request-free shard `lc`. |
+| `ig07-worker.cjs` | IG-S07 worker side (every job kind `ig07-`, one line in `worker.cjs`): the profiled native request, the engine checks of the first command, the calibration, the loop-check comparison of the revision r2 (`ig07-loopcheck`). |
+| `ig07-run.cjs` | IG-S07 glue for `run.cjs`: probe, reference compatibility, calibration and engine checks (`prepare`; for the shard `lc` only the loop-check comparison), the profiled request (`execute`), record additions, identity against the comparator, shard summary. |
+| `ig07-aggregate.cjs` | IG-S07 documents from evidence only: `stage-profile.json`, `finder-profile.json`, `overhead.json`, `frontier-phase-a.json`, `summary.json/md`; a revision writes `-r2` files (`--suffix=-r2 --revision=<text> [--write=stage,finder]`). |
+| `ig07-test.cjs` | IG-S07 tests: pure cases (fake clock, transforms on the real sources, the patched solver on a fake of the engine pieces, plan, glue, aggregator; `node ig07-test.cjs`, no engine), the engine checks of the first command and the loop-check comparison of the revision r2. |
 
 ## Commands
 
@@ -493,3 +500,63 @@ node generator\tests\artifacts\improve-generating\phase0\ig05-test.cjs
   the disclosure of the wrapped dev-check (`ig05-dev-check.cjs`: 16 real screen keys under an earlier harness and manifest, excluded
   from every number, compared read-only with the screen's own trials of the same keys). The dev-check's charge (its occupied time plus
   the 45 s grace) is a ledger entry of shard `dev-check`: a wrapped command launched by hand is charged like a dispatcher command.
+
+## IG-S07: SM1 stage and finder profiles and their overhead
+
+Test side only; every number is provisional (pre-freeze). Nine fixed shards, twelve native requests (`c9`, `m16`, `m12`, `sam`, `killer-n`,
+`gt-n` profiled; `killer-h`, `killer-e`, `gt-normal` each with one new unprofiled request first and the profiled one after it), exactly the
+IG-S02 request (trace off, rotational180, random order, default attempts). A profiled request is an **attribution run, never a timing run**:
+the headline timings stay IG-S02's, and the comparators of the six headline cells are IG-S02's matched native-w1 records (the runtime and
+catalogue fingerprints are checked, and the accounting-path files `host.cjs`, `loader.cjs`, `common.cjs`, `records.cjs`, `manifest.cjs` must be
+byte-identical to the harness of that evidence; the other changed files are listed, never hidden).
+
+```powershell
+# the plan (no engine, nothing timed, nothing written)
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S07 -Round provisional-r1 -PlanOnly
+# the nine shards in order (classic9 first: the plumbing check of the first command)
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S07 -Round provisional-r1
+# the task documents (evidence only, no engine, written once; --suffix=-r2 --revision=<text> [--write=stage,finder] for the revision r2)
+node generator\tests\artifacts\improve-generating\phase0\ig07-aggregate.cjs --task=IG-S07 --round=provisional-r1
+# the revision r2: the loop-check shard (one wrapped command, needs the remaining allocation and an admission window)
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S07 -Round provisional-r1 -Shard lc
+# development only, no engine, no timing, nothing written: the pure cases
+node generator\tests\artifacts\improve-generating\phase0\ig07-test.cjs
+```
+
+- **The instrument.** The adapter `profile` (27 transforms in version 2, 26 in the version 1 of the r1 cohort; hashes in `command.json` and in every record) calls `SG.__igProf`, which exists only
+  between `install` and `uninstall` of one request (`ig07-worker.cjs`, a `finally`); the entry points that need no source change
+  (`logicalSolver.solve`, `difficulty.rate`, the four DFS calls, `fullGrid.generate`) are wrapped by `install` and restored by `uninstall`, which
+  checks every restoration. Without the runtime the patched sources are the native code (the first command compares an unpatched instance, the
+  patched sources without the runtime and with it: same puzzle and the same number of budget checks).
+- **What is measured.** Wall clock (`performance.now()`), no process CPU per call. Every millisecond is booked once, by segments, to a cell of
+  *context* (setup, attempt, ordinary, proposal, local) x *purpose* (the pipeline steps and the digger's stages: stage A oracle, stage B
+  objective, safety count, keeper count, refinement, proposal rating, local search and its two counts) x *primitive* (own code, solver state/setup,
+  solver loop, applied Findings, finders, the four DFS entry points, canonical rating, grid generation); finders have their own matrix (calls,
+  hits, wall time, hit time, throw time, budget checks, throws; the negative-call time is wall - hit - throw). Nothing is redistributed: the unnamed remainder is the `self` cell of its
+  purpose. A finder never contains another timed frame, so its inclusive and exclusive times are one number; the solver's remaining work has its
+  own cells, so nothing is summed twice. `consistency` checks the root against the booked cells (a floating-point residual), the open frames, the
+  counters against the rows.
+- **Counters** (distinct, T02): canonical ratings (`difficulty.rate` calls, equal to the engine's work ratings), oracle solves (solves outside a
+  rating), DFS entries, budget checks of the search loop and backtracks (checks inside constraint propagation are not counted), finder budget
+  checks (`ctx.check()` of a budgeted solve) and the loop checks, guided candidates per round, refusal reasons, full-grid restarts and backtracks.
+  **Revision r2 (loop checks).** The r1 instrument (adapter version 1) *derived* the loop checks from the finder passes; that count misses a
+  check that throws before the first finder or before returning stuck, and every pass of an empty ladder, so the r1 budget-check totals are
+  marked **inexact** (`counters.checkTotals`; the original r1 records are untouched and the cohort was not rerun). Adapter version 2 counts
+  both check sites of the ladder loop before the call (`SG.__igProf.loopBudget`, the budget object of `iterate` forwarded unchanged), keeps the
+  old derivation only as a diagnostic (`loopChecksDerived`), and the budget checks that nishio and forcingChain issue through the propagation
+  engine (variants with propagation extensions) are still not observed. The shard `lc` (no request, no cell, no seed) runs one comparison on the
+  real engine: `SG.logicalSolver.solve` of classic9 under budgets of 0, 1, 2, ... nodes on an unpatched instance and on the patched sources
+  without and with the runtime, for an empty ladder, a ladder that solves, a ladder that ends stuck and one with finders that call
+  `ctx.check()`; it records a verdict, never a stop.
+- **Overhead.** `overhead.json`: the profiled request against its comparator (the same-command unprofiled arm of the controls, IG-S02's native-w1
+  for the headline cells, time-separated), and the calibrated unit costs (a clock read, a finder timer pair, an applied-Finding timer, a frame pair,
+  a counted check, a counter increment) times the operations the profile counted: an estimate, never a correction.
+- **Frontier phase A.** `frontier-phase-a.json` is read from the IG-S05 ledgers (no run): F1 against FC and FM, accepted and refused floor tests,
+  DFS counts, allowed-set and canonical work, deepen, and the three kinds of zero yield. Its wall time includes the floor tests and the DFS checks
+  after stuck tests; its per-purpose counts are not per-purpose wall times, and native finder shares are not transplanted into it.
+- **Conditional zero-cost scenarios (revision r2; r1 called some of them ceilings).** `finder-profile-r2.json` sets the wall time of a named
+  group of finder calls to zero in this one profiled run (all finder time, the covered finders' time, the remaining finders' time, and the negative
+  calls of each family) and gives root / (root - removed) next to IG-S03's measured partial-S3 factor for the same request. A scenario is
+  arithmetic, not a forecast and not a ceiling of a full S3: a call that returns a Finding can also skip cached negative scopes (so a full S3 can
+  save more than the negative calls) and a cache costs lookups and invalidation (so it saves less). Only the two family-time scenarios limit a
+  change confined to those finders' calls. The bias-adjusted column of r1 is dropped.

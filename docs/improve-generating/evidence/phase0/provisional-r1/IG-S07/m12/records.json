@@ -1,0 +1,4120 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S07",
+  "shard": "m12",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "manifestHash": "7d4d096c96bb7d6a16052fdbef7c56880d5ae9555bda67e9b3f69a747edf9db6",
+  "records": [
+    {
+      "key": "IG-S07/m12/mega12:nightmare:3/profiled",
+      "parentKey": null,
+      "recordKind": "request",
+      "pairId": "mega12:nightmare:3",
+      "gridCluster": null,
+      "requestSeed": 3,
+      "attempt": null,
+      "sample": null,
+      "variantId": "profiled",
+      "level": "nightmare",
+      "mode": "native",
+      "normalisedConfig": {
+        "variantId": "mega12",
+        "difficulty": "nightmare",
+        "seed": 3,
+        "symbolMode": "digits",
+        "symmetry": "rotational180",
+        "digOrder": "random",
+        "maxAttempts": 4,
+        "trace": "off",
+        "variantOptions": {}
+      },
+      "solverMode": "profiled",
+      "poolWidth": 1,
+      "sampleMode": null,
+      "parentMode": null,
+      "floorIds": null,
+      "tierIds": null,
+      "limits": {
+        "guardMs": 180000,
+        "guardScope": "request",
+        "commandDeadlineMs": 270000
+      },
+      "limitOrigin": "research safety guard (request 180 s); the profiled request is an attribution run, not a timing run",
+      "serialOrdinal": null,
+      "consumed": null,
+      "speculative": null,
+      "origin": null,
+      "outcome": "complete",
+      "timeoutScope": null,
+      "generation": {
+        "readyWallMs": 24388.7678,
+        "coldWallMs": 24513.8176,
+        "occupiedWallMs": 24518.9907,
+        "cpuToDecisionMs": 24906,
+        "cpuTotalMs": 24984,
+        "cpuReadyTotalMs": 24843,
+        "startupMs": 125.0498,
+        "startupCpuMs": 141,
+        "cleanupMs": 5.173099999999977,
+        "readyOccupiedWallMs": 24393.9409,
+        "gridBuildWallMs": null,
+        "gridBuildCpuMs": null,
+        "cpuApi": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+        "cpuResolutionStatus": "resolved",
+        "cleanupCpuMs": 78
+      },
+      "validation": {
+        "wallMs": 133.23689999999988,
+        "cpuMs": 235,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "claimedExact": false,
+      "verifiedExact": false,
+      "required": false,
+      "vacuous": false,
+      "shallow": true,
+      "achieved": "nightmare",
+      "score": 2046,
+      "puzzleHash": "da06846642b580acd05fd918eaaf19348df9a69f7e0e569eac26d50079a386cf",
+      "attemptsUsed": 4,
+      "samplesUsed": 48,
+      "canonicalRatings": 976,
+      "localProposals": 37223,
+      "localCapReasons": [
+        "shallow",
+        "shallow",
+        "shallow",
+        "proposals"
+      ],
+      "counts": {
+        "floorTests": null,
+        "floorDeductions": null,
+        "solverChecks": 8610633,
+        "dfsEntries": 46245,
+        "dfsChecks": 38505,
+        "ladderPasses": null,
+        "phaseBSolves": null,
+        "deepenProposals": null,
+        "verificationSolves": null
+      },
+      "firstExactOrigin": null,
+      "firstExactOrdinal": null,
+      "checkpointHashes": null,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "error": null,
+      "arm": "prototype",
+      "puzzleVariant": "mega12",
+      "blockKey": "IG-S07/m12/mega12:nightmare:3",
+      "shard": "m12",
+      "order": 0,
+      "terminateFailure": null,
+      "lateDecision": false,
+      "adapterIds": [
+        "profile"
+      ],
+      "adapterProof": {
+        "hooksPresent": false,
+        "exposed": [],
+        "normalizeConfigEqual": null
+      },
+      "transforms": [
+        {
+          "id": "profile.solve-iterate",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+          "afterTextHash": "73d607a8c0ce80eadb3361fcdc2c1c6c4f2a6b4ca5eb5b88d8da7a1452758667"
+        },
+        {
+          "id": "profile.iterate-begin",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "73d607a8c0ce80eadb3361fcdc2c1c6c4f2a6b4ca5eb5b88d8da7a1452758667",
+          "afterTextHash": "622ca07ea86788aa3a3ed74356b3b1a8d051fc1400c990c5173094e8d83a3eac"
+        },
+        {
+          "id": "profile.iterate-finder",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "622ca07ea86788aa3a3ed74356b3b1a8d051fc1400c990c5173094e8d83a3eac",
+          "afterTextHash": "ef74ec0180510aead68862b84f03e45e685a87f7c288423c60b55d8ceda63e82"
+        },
+        {
+          "id": "profile.iterate-apply",
+          "file": "../core/js/engine/logical-solver.js",
+          "beforeTextHash": "ef74ec0180510aead68862b84f03e45e685a87f7c288423c60b55d8ceda63e82",
+          "afterTextHash": "dfd369e2b5ee2020e9a98c59016c0afe21bf581521148b5fbba53511f7040388"
+        },
+        {
+          "id": "profile.context-check",
+          "file": "../core/js/engine/techniques.js",
+          "beforeTextHash": "96e98414a205e6bdb872db3b951f41d9ba052fe30df15f419addd61b60aa76ad",
+          "afterTextHash": "58da7ac8b8f11794ddb8c64133c4cdc5eb4ca9c4585cb2167827dcaa61651634"
+        },
+        {
+          "id": "profile.dfs-entry",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d",
+          "afterTextHash": "69b0585573f3b1f33f3f4e742c440038320c106dce742f9395dfe8e84d4bdee5"
+        },
+        {
+          "id": "profile.dfs-check",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "69b0585573f3b1f33f3f4e742c440038320c106dce742f9395dfe8e84d4bdee5",
+          "afterTextHash": "99652065b0e79f74b06ba23872156f233e5e63b97e016a698f470723ab5c9426"
+        },
+        {
+          "id": "profile.dfs-backtrack",
+          "file": "../core/js/engine/dfs-solver.js",
+          "beforeTextHash": "99652065b0e79f74b06ba23872156f233e5e63b97e016a698f470723ab5c9426",
+          "afterTextHash": "112d8b5cf58617ddcab458c87c9f3649972cceefb4c0ba3946d6981d6321073d"
+        },
+        {
+          "id": "profile.stage-open",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+          "afterTextHash": "71197ca1abc926c307fa01840064faf6be262dd8fa62f5eb644c7705070243e2"
+        },
+        {
+          "id": "profile.stage-close",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "71197ca1abc926c307fa01840064faf6be262dd8fa62f5eb644c7705070243e2",
+          "afterTextHash": "92b0971d3cf0aad293c2f5bc56d00d79b47e65adadabd83e45c3fad87c191ec5"
+        },
+        {
+          "id": "profile.oracle",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "92b0971d3cf0aad293c2f5bc56d00d79b47e65adadabd83e45c3fad87c191ec5",
+          "afterTextHash": "d43f59375bd4622faf89bbde791073e3a40820fdb47fb644bdf37e1cb0c84f90"
+        },
+        {
+          "id": "profile.objective",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "d43f59375bd4622faf89bbde791073e3a40820fdb47fb644bdf37e1cb0c84f90",
+          "afterTextHash": "b1fb0270d68abaa42522c46ece06c370188230cf7ac150656acbf4510a8ba55a"
+        },
+        {
+          "id": "profile.guided-round",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "b1fb0270d68abaa42522c46ece06c370188230cf7ac150656acbf4510a8ba55a",
+          "afterTextHash": "2bb35a2ea55dcce3cef0f3e4d95291fde153bd836b98bad02196d59bc2acc1ba"
+        },
+        {
+          "id": "profile.refusal",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "2bb35a2ea55dcce3cef0f3e4d95291fde153bd836b98bad02196d59bc2acc1ba",
+          "afterTextHash": "61f8600480251638367b2397d169e601331c7041fabd56c341bea4d9d551bcbc"
+        },
+        {
+          "id": "profile.safety",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "61f8600480251638367b2397d169e601331c7041fabd56c341bea4d9d551bcbc",
+          "afterTextHash": "9463c5c4f0f7e007358be54d803184f453460e0c73bb080ba7db0e2483bd1712"
+        },
+        {
+          "id": "profile.keeper",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "9463c5c4f0f7e007358be54d803184f453460e0c73bb080ba7db0e2483bd1712",
+          "afterTextHash": "9d8e40cd4089a875453f2d3fe0e4bd7609a8cb24ed2f29a8254c128801c28ec4"
+        },
+        {
+          "id": "profile.level-enter",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "9d8e40cd4089a875453f2d3fe0e4bd7609a8cb24ed2f29a8254c128801c28ec4",
+          "afterTextHash": "d09df0fd58678f0f31c43839a2161d6f4961e85aad402ae4ab4a433eca418597"
+        },
+        {
+          "id": "profile.proposal-rating",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "d09df0fd58678f0f31c43839a2161d6f4961e85aad402ae4ab4a433eca418597",
+          "afterTextHash": "8f66adb1945e2ad8e4844166d224115b534bd85783768d96f059ee3343b23608"
+        },
+        {
+          "id": "profile.proposal-refine",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "8f66adb1945e2ad8e4844166d224115b534bd85783768d96f059ee3343b23608",
+          "afterTextHash": "99310d834ccab870fc0e7e66ee2ac5c5dc41c157e0d2b17e381e20152572a8d2"
+        },
+        {
+          "id": "profile.sample-result",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "99310d834ccab870fc0e7e66ee2ac5c5dc41c157e0d2b17e381e20152572a8d2",
+          "afterTextHash": "2d8edc20d782bcc071284c07b26432686a0eaba48833a07a8d567e2c547b8382"
+        },
+        {
+          "id": "profile.search-strategy",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "2d8edc20d782bcc071284c07b26432686a0eaba48833a07a8d567e2c547b8382",
+          "afterTextHash": "60643488904532b352cd83d8dbf300245edc8baa7265d7ebe2fa0726eeb7bbdf"
+        },
+        {
+          "id": "profile.local-open",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "60643488904532b352cd83d8dbf300245edc8baa7265d7ebe2fa0726eeb7bbdf",
+          "afterTextHash": "6ab6979e97f5be572e9e37a9255fd88d9f1839fbae6bf61e9f969f6a6f92dfb7"
+        },
+        {
+          "id": "profile.local-close",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "6ab6979e97f5be572e9e37a9255fd88d9f1839fbae6bf61e9f969f6a6f92dfb7",
+          "afterTextHash": "cb1f137893934be8ae9f11efef288ac99470683d17d9a647144db94736b67b1e"
+        },
+        {
+          "id": "profile.local-refine",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "cb1f137893934be8ae9f11efef288ac99470683d17d9a647144db94736b67b1e",
+          "afterTextHash": "317c5f4f5b285cfc14e3864592a6f935d8f4a1566fcead4ffa8179b11360307b"
+        },
+        {
+          "id": "profile.local-unique",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "317c5f4f5b285cfc14e3864592a6f935d8f4a1566fcead4ffa8179b11360307b",
+          "afterTextHash": "b10b5d7a1869ebc65f6fa945212a791bf28fb79885dda8ff719de677225e14ee"
+        },
+        {
+          "id": "profile.local-rating",
+          "file": "js/engine/digger.js",
+          "beforeTextHash": "b10b5d7a1869ebc65f6fa945212a791bf28fb79885dda8ff719de677225e14ee",
+          "afterTextHash": "fbab33014a0ace41f2f5aaf9b23b932404fbfdd14f22db718d92b5c421512317"
+        }
+      ],
+      "engineElapsedMs": 24381.8381,
+      "digests": {
+        "structure": "e37424c41611dfc7aca3405afb980bf398ea5e71961ab62e00606f3a44c67e49",
+        "givens": "3d4ba4d97234624dc585b19e7cd6fd7a038ea7bbde2fdf0a2e64698aa29d8944",
+        "solution": "8ef43f7ca073c135377779b975ff1fa322775537bb5287a4e5df67f8c2cc92e9",
+        "rating": "a9682e57c74c0a5c225586d49da7cfb84ed94176caa0d87e2a8ccb1f807d7d96",
+        "config": "9a8960fffe29e1a05191d3698e11c72e8ce44ac54bf8968a19eb559c196629e1",
+        "warnings": "e02891584cdc20e1bd0222ed35c37c9eb4cee500d6191b8ff2c84ce979072d10",
+        "log": "9db31564ac6f7cc7c11a3767cb7563a1d9699ad461d9a16b2d8fd6c50aa10b4c",
+        "work": "105972579c1787535ed74590c409fc04bab910259de5051c90e4bd3504cdfdad",
+        "scalars": "7573766b0e30600e324ea711dc74dc1642a52f3bce44853912ed352c8d4f0d52",
+        "puzzle": "da06846642b580acd05fd918eaaf19348df9a69f7e0e569eac26d50079a386cf",
+        "all": "31ab8a793ef7db28e5fd6af04df2fb26c03a3f9194409ae3338bf983ff57821a"
+      },
+      "engineTimingsMs": {
+        "configure": 0.35710000000017317,
+        "buildModel": 2.0959000000000287,
+        "fullGrid": 4.161500000000615,
+        "extraStructure": 0.19699999999807005,
+        "dig": 24206.89639999999,
+        "rate": 161.6697000000015,
+        "tune": 0.9172999999975673
+      },
+      "validationDetail": {
+        "status": "verified",
+        "requirednessAgree": true,
+        "cpuResolutionStatus": "resolved",
+        "probe": {
+          "hooksPresent": false,
+          "exposed": [],
+          "normalizeConfigEqual": null
+        },
+        "errors": []
+      },
+      "cellKind": "headline",
+      "profile": {
+        "schema": "ig07-profile/1",
+        "clock": "wall milliseconds (monotonic), read at frame boundaries and around every finder call and every applied Finding; no process CPU accounting per call",
+        "dims": {
+          "contexts": [
+            "setup",
+            "attempt",
+            "ordinary",
+            "proposal",
+            "local"
+          ],
+          "purposes": [
+            "request",
+            "step:configure",
+            "step:buildModel",
+            "step:fullGrid",
+            "step:extraStructure",
+            "step:dig",
+            "step:rate",
+            "step:tune",
+            "stageA.oracle",
+            "stageB.objective",
+            "safety.count",
+            "keeper.count",
+            "refine",
+            "proposal.rating",
+            "local.search",
+            "local.unique",
+            "local.rating"
+          ],
+          "primitives": [
+            "self",
+            "solve.setup",
+            "solve.loop",
+            "apply",
+            "finder",
+            "dfs.count",
+            "dfs.stillUnique",
+            "dfs.solve",
+            "dfs.searchFrom",
+            "rate.canonical",
+            "fullGrid.generate"
+          ],
+          "finders": [
+            "nakedSingle",
+            "hiddenSingleBox",
+            "hiddenSingleLine",
+            "pointing",
+            "cageCombo",
+            "ineqChain",
+            "boxLine",
+            "nakedPair",
+            "hiddenPair",
+            "nakedTriple",
+            "minMaxForcing",
+            "hiddenTriple",
+            "ruleOf45",
+            "nakedQuad",
+            "hiddenQuad",
+            "xWing",
+            "simpleColouring",
+            "swordfish",
+            "cageSplit",
+            "jellyfish",
+            "xyWing",
+            "xyzWing",
+            "wWing",
+            "uniqueRectangle",
+            "forcingChain",
+            "nishio"
+          ]
+        },
+        "rootMs": 24381.88,
+        "stage": [
+          [
+            "setup",
+            "request",
+            "self",
+            1.136,
+            1
+          ],
+          [
+            "setup",
+            "step:configure",
+            "self",
+            0.405,
+            1
+          ],
+          [
+            "setup",
+            "step:buildModel",
+            "self",
+            2.102,
+            1
+          ],
+          [
+            "attempt",
+            "request",
+            "self",
+            2.506,
+            0
+          ],
+          [
+            "attempt",
+            "step:fullGrid",
+            "self",
+            0.22,
+            4
+          ],
+          [
+            "attempt",
+            "step:fullGrid",
+            "dfs.searchFrom",
+            2.463,
+            4
+          ],
+          [
+            "attempt",
+            "step:fullGrid",
+            "fullGrid.generate",
+            1.497,
+            4
+          ],
+          [
+            "attempt",
+            "step:extraStructure",
+            "self",
+            0.204,
+            4
+          ],
+          [
+            "attempt",
+            "step:tune",
+            "self",
+            0.088,
+            1
+          ],
+          [
+            "ordinary",
+            "request",
+            "self",
+            0.901,
+            0
+          ],
+          [
+            "ordinary",
+            "step:dig",
+            "self",
+            13.936,
+            24
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "self",
+            0.335,
+            24
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "solve.setup",
+            0.468,
+            24
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "solve.loop",
+            1.446,
+            24
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "apply",
+            0.505,
+            2764
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "rate.canonical",
+            0.343,
+            24
+          ],
+          [
+            "ordinary",
+            "step:tune",
+            "self",
+            0.357,
+            24
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "self",
+            2.715,
+            968
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "solve.setup",
+            11.746,
+            968
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "solve.loop",
+            10.054,
+            968
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "apply",
+            6.363,
+            38779
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "self",
+            11.208,
+            2057
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "solve.setup",
+            33.804,
+            2057
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "solve.loop",
+            69.385,
+            2057
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "apply",
+            31.348,
+            171412
+          ],
+          [
+            "ordinary",
+            "safety.count",
+            "self",
+            0.021,
+            24
+          ],
+          [
+            "ordinary",
+            "safety.count",
+            "dfs.count",
+            3.211,
+            24
+          ],
+          [
+            "proposal",
+            "request",
+            "self",
+            0.684,
+            0
+          ],
+          [
+            "proposal",
+            "step:dig",
+            "self",
+            14.211,
+            24
+          ],
+          [
+            "proposal",
+            "step:rate",
+            "self",
+            0.199,
+            24
+          ],
+          [
+            "proposal",
+            "step:tune",
+            "self",
+            0.468,
+            24
+          ],
+          [
+            "proposal",
+            "stageA.oracle",
+            "self",
+            0.826,
+            963
+          ],
+          [
+            "proposal",
+            "stageA.oracle",
+            "dfs.stillUnique",
+            7.959,
+            1896
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "self",
+            6.792,
+            2016
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "solve.setup",
+            19.764,
+            1420
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "solve.loop",
+            31.794,
+            1420
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "apply",
+            18.487,
+            96521
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "dfs.stillUnique",
+            77.987,
+            3709
+          ],
+          [
+            "proposal",
+            "safety.count",
+            "self",
+            0.012,
+            24
+          ],
+          [
+            "proposal",
+            "safety.count",
+            "dfs.count",
+            6.471,
+            24
+          ],
+          [
+            "proposal",
+            "keeper.count",
+            "self",
+            0.034,
+            2
+          ],
+          [
+            "proposal",
+            "keeper.count",
+            "dfs.count",
+            0.653,
+            2
+          ],
+          [
+            "proposal",
+            "refine",
+            "self",
+            2.136,
+            24
+          ],
+          [
+            "proposal",
+            "refine",
+            "solve.setup",
+            0.698,
+            41
+          ],
+          [
+            "proposal",
+            "refine",
+            "solve.loop",
+            1.986,
+            41
+          ],
+          [
+            "proposal",
+            "refine",
+            "apply",
+            0.781,
+            4380
+          ],
+          [
+            "proposal",
+            "refine",
+            "rate.canonical",
+            0.557,
+            41
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "self",
+            0.109,
+            24
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "solve.setup",
+            0.434,
+            24
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "solve.loop",
+            1.892,
+            24
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "apply",
+            0.564,
+            2987
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "rate.canonical",
+            0.73,
+            24
+          ],
+          [
+            "local",
+            "request",
+            "self",
+            0.085,
+            0
+          ],
+          [
+            "local",
+            "step:dig",
+            "self",
+            0.224,
+            4
+          ],
+          [
+            "local",
+            "step:rate",
+            "self",
+            0.026,
+            4
+          ],
+          [
+            "local",
+            "step:tune",
+            "self",
+            0.038,
+            4
+          ],
+          [
+            "local",
+            "safety.count",
+            "self",
+            0.003,
+            4
+          ],
+          [
+            "local",
+            "safety.count",
+            "dfs.count",
+            0.32,
+            4
+          ],
+          [
+            "local",
+            "local.search",
+            "self",
+            308.355,
+            4
+          ],
+          [
+            "local",
+            "local.unique",
+            "self",
+            1.652,
+            3779
+          ],
+          [
+            "local",
+            "local.unique",
+            "dfs.count",
+            315.846,
+            3779
+          ],
+          [
+            "local",
+            "local.rating",
+            "self",
+            0.836,
+            890
+          ],
+          [
+            "local",
+            "local.rating",
+            "solve.setup",
+            12.388,
+            887
+          ],
+          [
+            "local",
+            "local.rating",
+            "solve.loop",
+            35.433,
+            887
+          ],
+          [
+            "local",
+            "local.rating",
+            "apply",
+            16.362,
+            88997
+          ],
+          [
+            "local",
+            "local.rating",
+            "rate.canonical",
+            8.444,
+            887
+          ]
+        ],
+        "finders": [
+          [
+            "ordinary",
+            "step:rate",
+            "nakedSingle",
+            2764,
+            1478,
+            1.237,
+            0.707,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "hiddenSingleBox",
+            1286,
+            523,
+            0.964,
+            0.363,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "hiddenSingleLine",
+            763,
+            155,
+            1.046,
+            0.176,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "pointing",
+            608,
+            187,
+            2.197,
+            0.526,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "boxLine",
+            421,
+            65,
+            1.648,
+            0.175,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "nakedPair",
+            356,
+            39,
+            2.07,
+            0.126,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "hiddenPair",
+            317,
+            29,
+            2.983,
+            0.117,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "nakedTriple",
+            288,
+            11,
+            2.242,
+            0.05,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "hiddenTriple",
+            277,
+            4,
+            2.952,
+            0.034,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "nakedQuad",
+            273,
+            2,
+            2.769,
+            0.019,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "hiddenQuad",
+            271,
+            0,
+            3.247,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "xWing",
+            271,
+            7,
+            7.272,
+            0.154,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "simpleColouring",
+            264,
+            15,
+            17.103,
+            0.663,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "swordfish",
+            249,
+            2,
+            7.488,
+            0.047,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "jellyfish",
+            247,
+            0,
+            7.302,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "xyWing",
+            247,
+            7,
+            1.957,
+            0.035,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "xyzWing",
+            240,
+            10,
+            1.359,
+            0.035,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "wWing",
+            230,
+            14,
+            2.104,
+            0.101,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "uniqueRectangle",
+            216,
+            3,
+            9.01,
+            0.193,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "step:rate",
+            "forcingChain",
+            213,
+            213,
+            81.449,
+            81.449,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "nakedSingle",
+            38835,
+            38406,
+            10.399,
+            10.254,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "hiddenSingleBox",
+            429,
+            331,
+            0.238,
+            0.165,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "hiddenSingleLine",
+            98,
+            16,
+            0.117,
+            0.013,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "pointing",
+            82,
+            2,
+            0.179,
+            0.002,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "boxLine",
+            80,
+            2,
+            0.14,
+            0.002,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "nakedPair",
+            78,
+            1,
+            0.211,
+            0.002,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "hiddenPair",
+            77,
+            0,
+            0.357,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "nakedTriple",
+            77,
+            2,
+            0.201,
+            0.007,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "hiddenTriple",
+            75,
+            0,
+            0.329,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "nakedQuad",
+            75,
+            0,
+            0.173,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "hiddenQuad",
+            75,
+            0,
+            0.297,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "xWing",
+            75,
+            4,
+            1.286,
+            0.034,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "simpleColouring",
+            71,
+            4,
+            1.796,
+            0.035,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "swordfish",
+            67,
+            0,
+            1.066,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "jellyfish",
+            67,
+            0,
+            0.882,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "xyWing",
+            67,
+            2,
+            0.181,
+            0.007,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "xyzWing",
+            65,
+            0,
+            0.093,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "wWing",
+            65,
+            3,
+            0.304,
+            0.015,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "forcingChain",
+            62,
+            6,
+            4.217,
+            1.169,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageA.oracle",
+            "nishio",
+            56,
+            0,
+            18.518,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "nakedSingle",
+            171958,
+            116691,
+            56.256,
+            34.316,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "hiddenSingleBox",
+            55267,
+            30703,
+            36.288,
+            17.237,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "hiddenSingleLine",
+            24564,
+            5291,
+            33.64,
+            5.586,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "pointing",
+            19273,
+            5213,
+            64.331,
+            11.949,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "boxLine",
+            14060,
+            1563,
+            51.957,
+            4.062,
+            0,
+            0,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "nakedPair",
+            12497,
+            1217,
+            70.483,
+            4.021,
+            0,
+            424686,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "hiddenPair",
+            11280,
+            701,
+            106.052,
+            2.911,
+            0,
+            388908,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "nakedTriple",
+            10579,
+            308,
+            78.199,
+            1.406,
+            0,
+            379214,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "hiddenTriple",
+            10271,
+            73,
+            104.711,
+            0.449,
+            0,
+            371644,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "nakedQuad",
+            10198,
+            13,
+            94.342,
+            0.074,
+            0,
+            373115,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "hiddenQuad",
+            10185,
+            1,
+            112.817,
+            0.002,
+            0,
+            371718,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "xWing",
+            10184,
+            283,
+            262.643,
+            5.373,
+            0,
+            240862,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "simpleColouring",
+            9901,
+            555,
+            602.39,
+            21.259,
+            0,
+            115677,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "swordfish",
+            9346,
+            35,
+            268.051,
+            0.762,
+            0,
+            223939,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "jellyfish",
+            9311,
+            3,
+            252.559,
+            0.067,
+            0,
+            223436,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "xyWing",
+            9308,
+            280,
+            70.562,
+            1.276,
+            0,
+            232896,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "xyzWing",
+            9028,
+            254,
+            45.554,
+            1.121,
+            0,
+            156087,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "wWing",
+            8774,
+            417,
+            88.116,
+            3.481,
+            0,
+            65916,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "forcingChain",
+            8357,
+            6257,
+            3674.434,
+            2427.425,
+            0,
+            1973482,
+            0
+          ],
+          [
+            "ordinary",
+            "stageB.objective",
+            "nishio",
+            2100,
+            1554,
+            12836.456,
+            3075.095,
+            296.353,
+            2896553,
+            4
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "nakedSingle",
+            96954,
+            70295,
+            30.632,
+            21.327,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "hiddenSingleBox",
+            26659,
+            18480,
+            16.27,
+            11.377,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "hiddenSingleLine",
+            8179,
+            2510,
+            8.698,
+            2.468,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "pointing",
+            5669,
+            2643,
+            14.451,
+            5.421,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "boxLine",
+            3026,
+            803,
+            9.081,
+            1.895,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "nakedPair",
+            2223,
+            524,
+            10.467,
+            1.774,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "hiddenPair",
+            1699,
+            341,
+            13.227,
+            1.52,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "nakedTriple",
+            1358,
+            73,
+            8.979,
+            0.366,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "hiddenTriple",
+            1285,
+            25,
+            11.907,
+            0.149,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "nakedQuad",
+            1260,
+            29,
+            10.628,
+            0.196,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "hiddenQuad",
+            1231,
+            0,
+            12.53,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "xWing",
+            1231,
+            119,
+            27.957,
+            1.692,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "simpleColouring",
+            1112,
+            157,
+            60.701,
+            5.802,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "swordfish",
+            955,
+            48,
+            23.558,
+            0.815,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "jellyfish",
+            907,
+            0,
+            23.112,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "xyWing",
+            907,
+            169,
+            6.475,
+            0.783,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "xyzWing",
+            738,
+            83,
+            3.632,
+            0.261,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "wWing",
+            655,
+            139,
+            6.185,
+            1.666,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "stageB.objective",
+            "uniqueRectangle",
+            516,
+            83,
+            27.817,
+            1.662,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "nakedSingle",
+            4380,
+            2579,
+            1.512,
+            0.725,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "hiddenSingleBox",
+            1801,
+            760,
+            1.282,
+            0.454,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "hiddenSingleLine",
+            1041,
+            196,
+            1.501,
+            0.245,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "pointing",
+            845,
+            272,
+            2.932,
+            0.63,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "boxLine",
+            573,
+            79,
+            2.288,
+            0.235,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "nakedPair",
+            494,
+            55,
+            2.847,
+            0.179,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "hiddenPair",
+            439,
+            40,
+            4.235,
+            0.194,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "nakedTriple",
+            399,
+            9,
+            3.23,
+            0.036,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "hiddenTriple",
+            390,
+            4,
+            4.282,
+            0.031,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "nakedQuad",
+            386,
+            1,
+            4.251,
+            0.01,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "hiddenQuad",
+            385,
+            0,
+            4.895,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "xWing",
+            385,
+            11,
+            10.33,
+            0.195,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "simpleColouring",
+            374,
+            28,
+            25.022,
+            1.207,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "swordfish",
+            346,
+            3,
+            10.609,
+            0.055,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "jellyfish",
+            343,
+            0,
+            10.553,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "xyWing",
+            343,
+            13,
+            2.749,
+            0.069,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "xyzWing",
+            330,
+            12,
+            1.836,
+            0.035,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "wWing",
+            318,
+            18,
+            3.393,
+            0.193,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "uniqueRectangle",
+            300,
+            10,
+            10.69,
+            0.225,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "forcingChain",
+            290,
+            271,
+            111.382,
+            99.76,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "refine",
+            "nishio",
+            19,
+            19,
+            0.405,
+            0.405,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "nakedSingle",
+            2987,
+            1566,
+            1.107,
+            0.459,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "hiddenSingleBox",
+            1421,
+            461,
+            1.365,
+            0.528,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "hiddenSingleLine",
+            960,
+            121,
+            1.582,
+            0.158,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "pointing",
+            839,
+            202,
+            3.617,
+            0.516,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "boxLine",
+            637,
+            71,
+            2.904,
+            0.178,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "nakedPair",
+            566,
+            45,
+            3.167,
+            0.142,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "hiddenPair",
+            521,
+            33,
+            5.21,
+            0.14,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "nakedTriple",
+            488,
+            13,
+            3.82,
+            0.056,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "hiddenTriple",
+            475,
+            5,
+            5.259,
+            0.043,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "nakedQuad",
+            470,
+            2,
+            5.253,
+            0.018,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "hiddenQuad",
+            468,
+            0,
+            6.034,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "xWing",
+            468,
+            7,
+            12.638,
+            0.168,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "simpleColouring",
+            461,
+            18,
+            30.812,
+            0.662,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "swordfish",
+            443,
+            2,
+            13.629,
+            0.044,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "jellyfish",
+            441,
+            0,
+            13.784,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "xyWing",
+            441,
+            11,
+            3.153,
+            0.065,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "xyzWing",
+            430,
+            9,
+            2.471,
+            0.034,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "wWing",
+            421,
+            14,
+            3.687,
+            0.093,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "uniqueRectangle",
+            407,
+            5,
+            14.566,
+            0.078,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "forcingChain",
+            402,
+            339,
+            175.008,
+            141.9,
+            0,
+            0,
+            0
+          ],
+          [
+            "proposal",
+            "proposal.rating",
+            "nishio",
+            63,
+            63,
+            3.543,
+            3.543,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "nakedSingle",
+            88997,
+            57689,
+            29.336,
+            16.351,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "hiddenSingleBox",
+            31308,
+            16412,
+            21.564,
+            10.117,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "hiddenSingleLine",
+            14896,
+            3776,
+            20.875,
+            4.543,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "pointing",
+            11120,
+            3402,
+            39.234,
+            8.666,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "boxLine",
+            7718,
+            708,
+            31.161,
+            2.104,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "nakedPair",
+            7010,
+            865,
+            40.462,
+            3.263,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "hiddenPair",
+            6145,
+            525,
+            58.885,
+            2.704,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "nakedTriple",
+            5620,
+            142,
+            44.383,
+            0.613,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "hiddenTriple",
+            5478,
+            71,
+            58.766,
+            0.388,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "nakedQuad",
+            5407,
+            10,
+            56.828,
+            0.097,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "hiddenQuad",
+            5397,
+            0,
+            67.238,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "xWing",
+            5397,
+            85,
+            142.732,
+            1.597,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "simpleColouring",
+            5312,
+            214,
+            349.903,
+            8.376,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "swordfish",
+            5098,
+            43,
+            149.369,
+            1.276,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "jellyfish",
+            5055,
+            0,
+            144.764,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "xyWing",
+            5055,
+            157,
+            40.712,
+            0.706,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "xyzWing",
+            4898,
+            112,
+            25.926,
+            0.425,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "wWing",
+            4786,
+            287,
+            46.071,
+            1.744,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "uniqueRectangle",
+            4499,
+            37,
+            159.937,
+            1.246,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "forcingChain",
+            4462,
+            4308,
+            1772.646,
+            1683.888,
+            0,
+            0,
+            0
+          ],
+          [
+            "local",
+            "local.rating",
+            "nishio",
+            154,
+            154,
+            7.72,
+            7.72,
+            0,
+            0,
+            0
+          ]
+        ],
+        "inclusiveMs": {
+          "request": {
+            "ms": 24381.88,
+            "frames": 1
+          },
+          "step:configure": {
+            "ms": 0.405,
+            "frames": 1
+          },
+          "step:buildModel": {
+            "ms": 2.102,
+            "frames": 1
+          },
+          "step:fullGrid": {
+            "ms": 4.18,
+            "frames": 4
+          },
+          "step:extraStructure": {
+            "ms": 0.204,
+            "frames": 4
+          },
+          "step:dig": {
+            "ms": 24207.007,
+            "frames": 52
+          },
+          "step:rate": {
+            "ms": 161.721,
+            "frames": 52
+          },
+          "step:tune": {
+            "ms": 0.95,
+            "frames": 53
+          },
+          "stageA.oracle": {
+            "ms": 80.649,
+            "frames": 1931
+          },
+          "stageB.objective": {
+            "ms": 19536.716,
+            "frames": 4073
+          },
+          "safety.count": {
+            "ms": 10.039,
+            "frames": 52
+          },
+          "keeper.count": {
+            "ms": 0.686,
+            "frames": 2
+          },
+          "refine": {
+            "ms": 226.563,
+            "frames": 24
+          },
+          "proposal.rating": {
+            "ms": 316.337,
+            "frames": 24
+          },
+          "local.search": {
+            "ms": 4007.825,
+            "frames": 4
+          },
+          "local.unique": {
+            "ms": 317.498,
+            "frames": 3779
+          },
+          "local.rating": {
+            "ms": 3381.972,
+            "frames": 890
+          }
+        },
+        "totals": {
+          "stageMs": 1105.005,
+          "finderMs": 23276.875,
+          "sumMs": 24381.88,
+          "residualMs": 0,
+          "note": "sum = every booked cell (stage cells hold exclusive time, finder cells the finder calls); residual = root - sum (floating-point error only: no time is left unbooked)"
+        },
+        "counters": {
+          "solves": 5421,
+          "canonicalRates": 976,
+          "finderCalls": 895184,
+          "finderMs": 23276.875,
+          "finderChecks": 8438133,
+          "loopChecksDerived": 172500,
+          "passes": 406875,
+          "applied": 405840,
+          "dfsEntries": 46245,
+          "dfsSearchChecks": 38505,
+          "dfsBacktracks": 33214
+        },
+        "grid": {
+          "calls": 4,
+          "attempts": 4,
+          "restarts": 0,
+          "backtracks": 0,
+          "fastSeeds": 4
+        },
+        "guided": [
+          {
+            "context": "ordinary",
+            "rounds": 176,
+            "candidates": 2595,
+            "pool": 2057,
+            "minPool": 1,
+            "maxPool": 18
+          },
+          {
+            "context": "proposal",
+            "rounds": 176,
+            "candidates": 2570,
+            "pool": 2016,
+            "minPool": 1,
+            "maxPool": 18
+          }
+        ],
+        "refusals": {
+          "stageA": {
+            "ordinary": {
+              "techniques": 56,
+              "tooHard": 0,
+              "ambiguous": 0
+            },
+            "proposal": {
+              "techniques": 0,
+              "tooHard": 0,
+              "ambiguous": 51
+            }
+          },
+          "objective": {
+            "ordinary": {
+              "techniques": 546,
+              "tooHard": 43,
+              "ambiguous": 0
+            },
+            "proposal": {
+              "techniques": 0,
+              "tooHard": 0,
+              "ambiguous": 596
+            }
+          }
+        },
+        "samples": [
+          {
+            "attempt": 1,
+            "sample": 1,
+            "kind": "proposal",
+            "startMs": 7.56,
+            "wallMs": 82.109,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2046,
+            "solved": true,
+            "clues": 56,
+            "stats": {
+              "groups": 72,
+              "tried": 130,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 32,
+              "oracleCalls": 244
+            },
+            "solves": 67,
+            "rates": 2,
+            "dfsEntries": 199,
+            "finderMs": 57.544
+          },
+          {
+            "attempt": 1,
+            "sample": 2,
+            "kind": "ordinary",
+            "startMs": 89.776,
+            "wallMs": 802.347,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2375,
+            "solved": true,
+            "clues": 56,
+            "stats": {
+              "groups": 72,
+              "tried": 100,
+              "accepted": 44,
+              "rejected": 28,
+              "skipped": 33,
+              "oracleCalls": 100
+            },
+            "solves": 101,
+            "rates": 1,
+            "dfsEntries": 11,
+            "finderMs": 790.45
+          },
+          {
+            "attempt": 1,
+            "sample": 3,
+            "kind": "proposal",
+            "startMs": 892.191,
+            "wallMs": 17.679,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2032,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 121,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 30,
+              "oracleCalls": 228
+            },
+            "solves": 57,
+            "rates": 1,
+            "dfsEntries": 76,
+            "finderMs": 10.065
+          },
+          {
+            "attempt": 1,
+            "sample": 4,
+            "kind": "ordinary",
+            "startMs": 909.953,
+            "wallMs": 927.046,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2031,
+            "solved": true,
+            "clues": 50,
+            "stats": {
+              "groups": 72,
+              "tried": 132,
+              "accepted": 47,
+              "rejected": 25,
+              "skipped": 33,
+              "oracleCalls": 132
+            },
+            "solves": 133,
+            "rates": 1,
+            "dfsEntries": 24,
+            "finderMs": 917.343
+          },
+          {
+            "attempt": 1,
+            "sample": 5,
+            "kind": "proposal",
+            "startMs": 1837.061,
+            "wallMs": 64.375,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2243,
+            "solved": true,
+            "clues": 58,
+            "stats": {
+              "groups": 72,
+              "tried": 122,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 30,
+              "oracleCalls": 232
+            },
+            "solves": 61,
+            "rates": 4,
+            "dfsEntries": 166,
+            "finderMs": 55.776
+          },
+          {
+            "attempt": 1,
+            "sample": 6,
+            "kind": "ordinary",
+            "startMs": 1901.479,
+            "wallMs": 601.599,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2326,
+            "solved": true,
+            "clues": 56,
+            "stats": {
+              "groups": 72,
+              "tried": 111,
+              "accepted": 44,
+              "rejected": 28,
+              "skipped": 33,
+              "oracleCalls": 111
+            },
+            "solves": 112,
+            "rates": 1,
+            "dfsEntries": 4,
+            "finderMs": 593.175
+          },
+          {
+            "attempt": 1,
+            "sample": 7,
+            "kind": "proposal",
+            "startMs": 2503.133,
+            "wallMs": 31.618,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 1999,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 136,
+              "accepted": 46,
+              "rejected": 26,
+              "skipped": 33,
+              "oracleCalls": 256
+            },
+            "solves": 74,
+            "rates": 2,
+            "dfsEntries": 196,
+            "finderMs": 21.939
+          },
+          {
+            "attempt": 1,
+            "sample": 8,
+            "kind": "ordinary",
+            "startMs": 2534.798,
+            "wallMs": 493.389,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2352,
+            "solved": true,
+            "clues": 52,
+            "stats": {
+              "groups": 72,
+              "tried": 141,
+              "accepted": 46,
+              "rejected": 26,
+              "skipped": 31,
+              "oracleCalls": 141
+            },
+            "solves": 142,
+            "rates": 1,
+            "dfsEntries": 16,
+            "finderMs": 483.19
+          },
+          {
+            "attempt": 1,
+            "sample": 9,
+            "kind": "proposal",
+            "startMs": 3028.244,
+            "wallMs": 38.632,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2294,
+            "solved": true,
+            "clues": 56,
+            "stats": {
+              "groups": 72,
+              "tried": 121,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 32,
+              "oracleCalls": 226
+            },
+            "solves": 59,
+            "rates": 3,
+            "dfsEntries": 87,
+            "finderMs": 31.306
+          },
+          {
+            "attempt": 1,
+            "sample": 10,
+            "kind": "ordinary",
+            "startMs": 3066.999,
+            "wallMs": 575.391,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2218,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 140,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 26,
+              "oracleCalls": 140
+            },
+            "solves": 141,
+            "rates": 1,
+            "dfsEntries": 2,
+            "finderMs": 567.111
+          },
+          {
+            "attempt": 1,
+            "sample": 11,
+            "kind": "proposal",
+            "startMs": 3642.452,
+            "wallMs": 50.577,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 1949,
+            "solved": true,
+            "clues": 56,
+            "stats": {
+              "groups": 72,
+              "tried": 142,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 30,
+              "oracleCalls": 271
+            },
+            "solves": 79,
+            "rates": 2,
+            "dfsEntries": 359,
+            "finderMs": 38.923
+          },
+          {
+            "attempt": 1,
+            "sample": 12,
+            "kind": "ordinary",
+            "startMs": 3693.072,
+            "wallMs": 594.835,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2204,
+            "solved": true,
+            "clues": 52,
+            "stats": {
+              "groups": 72,
+              "tried": 133,
+              "accepted": 46,
+              "rejected": 26,
+              "skipped": 30,
+              "oracleCalls": 133
+            },
+            "solves": 134,
+            "rates": 1,
+            "dfsEntries": 8,
+            "finderMs": 586.656
+          },
+          {
+            "attempt": 1,
+            "sample": 12,
+            "kind": "local",
+            "startMs": 4288.023,
+            "wallMs": 1000.714,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2354,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 1704,
+              "accepted": 17,
+              "rejected": 1686,
+              "skipped": 0,
+              "oracleCalls": 1033
+            },
+            "solves": 256,
+            "rates": 256,
+            "dfsEntries": 9246,
+            "finderMs": 878.121
+          },
+          {
+            "attempt": 2,
+            "sample": 1,
+            "kind": "proposal",
+            "startMs": 5289.245,
+            "wallMs": 61.922,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 1991,
+            "solved": true,
+            "clues": 60,
+            "stats": {
+              "groups": 72,
+              "tried": 112,
+              "accepted": 44,
+              "rejected": 28,
+              "skipped": 31,
+              "oracleCalls": 216
+            },
+            "solves": 50,
+            "rates": 4,
+            "dfsEntries": 203,
+            "finderMs": 54.531
+          },
+          {
+            "attempt": 2,
+            "sample": 2,
+            "kind": "ordinary",
+            "startMs": 5351.205,
+            "wallMs": 414.357,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2098,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 118,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 31,
+              "oracleCalls": 118
+            },
+            "solves": 119,
+            "rates": 1,
+            "dfsEntries": 9,
+            "finderMs": 405.214
+          },
+          {
+            "attempt": 2,
+            "sample": 3,
+            "kind": "proposal",
+            "startMs": 5765.606,
+            "wallMs": 51.3,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2323,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 130,
+              "accepted": 46,
+              "rejected": 26,
+              "skipped": 32,
+              "oracleCalls": 246
+            },
+            "solves": 68,
+            "rates": 2,
+            "dfsEntries": 280,
+            "finderMs": 41.986
+          },
+          {
+            "attempt": 2,
+            "sample": 4,
+            "kind": "ordinary",
+            "startMs": 5816.938,
+            "wallMs": 789.728,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2137,
+            "solved": true,
+            "clues": 52,
+            "stats": {
+              "groups": 72,
+              "tried": 139,
+              "accepted": 46,
+              "rejected": 26,
+              "skipped": 32,
+              "oracleCalls": 139
+            },
+            "solves": 140,
+            "rates": 1,
+            "dfsEntries": 5,
+            "finderMs": 781.909
+          },
+          {
+            "attempt": 2,
+            "sample": 5,
+            "kind": "proposal",
+            "startMs": 6606.704,
+            "wallMs": 37.608,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2024,
+            "solved": true,
+            "clues": 58,
+            "stats": {
+              "groups": 72,
+              "tried": 114,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 28,
+              "oracleCalls": 214
+            },
+            "solves": 52,
+            "rates": 3,
+            "dfsEntries": 93,
+            "finderMs": 31.57
+          },
+          {
+            "attempt": 2,
+            "sample": 6,
+            "kind": "ordinary",
+            "startMs": 6644.381,
+            "wallMs": 1139.662,
+            "exact": false,
+            "shallow": false,
+            "level": "normal",
+            "score": 314,
+            "solved": true,
+            "clues": 52,
+            "stats": {
+              "groups": 72,
+              "tried": 125,
+              "accepted": 46,
+              "rejected": 26,
+              "skipped": 30,
+              "oracleCalls": 125
+            },
+            "solves": 126,
+            "rates": 1,
+            "dfsEntries": 6,
+            "finderMs": 1132.907
+          },
+          {
+            "attempt": 2,
+            "sample": 7,
+            "kind": "proposal",
+            "startMs": 7784.081,
+            "wallMs": 10.067,
+            "exact": false,
+            "shallow": false,
+            "level": "normal",
+            "score": 309,
+            "solved": true,
+            "clues": 52,
+            "stats": {
+              "groups": 72,
+              "tried": 126,
+              "accepted": 46,
+              "rejected": 26,
+              "skipped": 31,
+              "oracleCalls": 235
+            },
+            "solves": 63,
+            "rates": 1,
+            "dfsEntries": 85,
+            "finderMs": 3.574
+          },
+          {
+            "attempt": 2,
+            "sample": 8,
+            "kind": "ordinary",
+            "startMs": 7794.171,
+            "wallMs": 1215.738,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2198,
+            "solved": true,
+            "clues": 52,
+            "stats": {
+              "groups": 72,
+              "tried": 148,
+              "accepted": 46,
+              "rejected": 26,
+              "skipped": 30,
+              "oracleCalls": 148
+            },
+            "solves": 149,
+            "rates": 1,
+            "dfsEntries": 7,
+            "finderMs": 1207.641
+          },
+          {
+            "attempt": 2,
+            "sample": 9,
+            "kind": "proposal",
+            "startMs": 9009.95,
+            "wallMs": 48.687,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2187,
+            "solved": true,
+            "clues": 56,
+            "stats": {
+              "groups": 72,
+              "tried": 134,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 31,
+              "oracleCalls": 254
+            },
+            "solves": 71,
+            "rates": 2,
+            "dfsEntries": 168,
+            "finderMs": 40.026
+          },
+          {
+            "attempt": 2,
+            "sample": 10,
+            "kind": "ordinary",
+            "startMs": 9058.672,
+            "wallMs": 1303.068,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2300,
+            "solved": true,
+            "clues": 56,
+            "stats": {
+              "groups": 72,
+              "tried": 108,
+              "accepted": 44,
+              "rejected": 28,
+              "skipped": 31,
+              "oracleCalls": 108
+            },
+            "solves": 109,
+            "rates": 1,
+            "dfsEntries": 10,
+            "finderMs": 1294.693
+          },
+          {
+            "attempt": 2,
+            "sample": 11,
+            "kind": "proposal",
+            "startMs": 10361.825,
+            "wallMs": 17.047,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2234,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 111,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 34,
+              "oracleCalls": 207
+            },
+            "solves": 47,
+            "rates": 1,
+            "dfsEntries": 88,
+            "finderMs": 11.575
+          },
+          {
+            "attempt": 2,
+            "sample": 12,
+            "kind": "ordinary",
+            "startMs": 10378.902,
+            "wallMs": 556.859,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2348,
+            "solved": true,
+            "clues": 56,
+            "stats": {
+              "groups": 72,
+              "tried": 125,
+              "accepted": 44,
+              "rejected": 28,
+              "skipped": 31,
+              "oracleCalls": 125
+            },
+            "solves": 126,
+            "rates": 1,
+            "dfsEntries": 11,
+            "finderMs": 549
+          },
+          {
+            "attempt": 2,
+            "sample": 12,
+            "kind": "local",
+            "startMs": 10935.812,
+            "wallMs": 1086.121,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2379,
+            "solved": true,
+            "clues": 56,
+            "stats": {
+              "groups": 72,
+              "tried": 1511,
+              "accepted": 17,
+              "rejected": 1493,
+              "skipped": 0,
+              "oracleCalls": 885
+            },
+            "solves": 256,
+            "rates": 256,
+            "dfsEntries": 8024,
+            "finderMs": 979.664
+          },
+          {
+            "attempt": 3,
+            "sample": 1,
+            "kind": "proposal",
+            "startMs": 12022.163,
+            "wallMs": 45.489,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2314,
+            "solved": true,
+            "clues": 58,
+            "stats": {
+              "groups": 72,
+              "tried": 122,
+              "accepted": 44,
+              "rejected": 28,
+              "skipped": 34,
+              "oracleCalls": 227
+            },
+            "solves": 58,
+            "rates": 2,
+            "dfsEntries": 182,
+            "finderMs": 38.381
+          },
+          {
+            "attempt": 3,
+            "sample": 2,
+            "kind": "ordinary",
+            "startMs": 12067.674,
+            "wallMs": 587.429,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2235,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 124,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 32,
+              "oracleCalls": 124
+            },
+            "solves": 125,
+            "rates": 1,
+            "dfsEntries": 6,
+            "finderMs": 579.613
+          },
+          {
+            "attempt": 3,
+            "sample": 3,
+            "kind": "proposal",
+            "startMs": 12655.144,
+            "wallMs": 53.944,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 1842,
+            "solved": true,
+            "clues": 60,
+            "stats": {
+              "groups": 72,
+              "tried": 125,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 29,
+              "oracleCalls": 236
+            },
+            "solves": 65,
+            "rates": 5,
+            "dfsEntries": 86,
+            "finderMs": 46.926
+          },
+          {
+            "attempt": 3,
+            "sample": 4,
+            "kind": "ordinary",
+            "startMs": 12709.11,
+            "wallMs": 567.021,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2276,
+            "solved": true,
+            "clues": 58,
+            "stats": {
+              "groups": 72,
+              "tried": 119,
+              "accepted": 43,
+              "rejected": 29,
+              "skipped": 33,
+              "oracleCalls": 119
+            },
+            "solves": 120,
+            "rates": 1,
+            "dfsEntries": 7,
+            "finderMs": 558.933
+          },
+          {
+            "attempt": 3,
+            "sample": 5,
+            "kind": "proposal",
+            "startMs": 13276.177,
+            "wallMs": 44.437,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2208,
+            "solved": true,
+            "clues": 60,
+            "stats": {
+              "groups": 72,
+              "tried": 112,
+              "accepted": 43,
+              "rejected": 29,
+              "skipped": 34,
+              "oracleCalls": 204
+            },
+            "solves": 47,
+            "rates": 2,
+            "dfsEntries": 155,
+            "finderMs": 37.903
+          },
+          {
+            "attempt": 3,
+            "sample": 6,
+            "kind": "ordinary",
+            "startMs": 13320.652,
+            "wallMs": 1164.987,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2091,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 120,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 33,
+              "oracleCalls": 120
+            },
+            "solves": 121,
+            "rates": 1,
+            "dfsEntries": 17,
+            "finderMs": 1155.215
+          },
+          {
+            "attempt": 3,
+            "sample": 7,
+            "kind": "proposal",
+            "startMs": 14485.696,
+            "wallMs": 39.304,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 1914,
+            "solved": true,
+            "clues": 56,
+            "stats": {
+              "groups": 72,
+              "tried": 132,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 32,
+              "oracleCalls": 250
+            },
+            "solves": 69,
+            "rates": 2,
+            "dfsEntries": 95,
+            "finderMs": 32.124
+          },
+          {
+            "attempt": 3,
+            "sample": 8,
+            "kind": "ordinary",
+            "startMs": 14525.034,
+            "wallMs": 955.503,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2357,
+            "solved": true,
+            "clues": 56,
+            "stats": {
+              "groups": 72,
+              "tried": 119,
+              "accepted": 44,
+              "rejected": 28,
+              "skipped": 30,
+              "oracleCalls": 119
+            },
+            "solves": 120,
+            "rates": 1,
+            "dfsEntries": 6,
+            "finderMs": 947.746
+          },
+          {
+            "attempt": 3,
+            "sample": 9,
+            "kind": "proposal",
+            "startMs": 15480.58,
+            "wallMs": 95.858,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2166,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 143,
+              "accepted": 48,
+              "rejected": 24,
+              "skipped": 33,
+              "oracleCalls": 273
+            },
+            "solves": 85,
+            "rates": 4,
+            "dfsEntries": 290,
+            "finderMs": 86.508
+          },
+          {
+            "attempt": 3,
+            "sample": 10,
+            "kind": "ordinary",
+            "startMs": 15576.463,
+            "wallMs": 1010.324,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2131,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 145,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 32,
+              "oracleCalls": 145
+            },
+            "solves": 146,
+            "rates": 1,
+            "dfsEntries": 33,
+            "finderMs": 1002.807
+          },
+          {
+            "attempt": 3,
+            "sample": 11,
+            "kind": "proposal",
+            "startMs": 16586.83,
+            "wallMs": 69.197,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2056,
+            "solved": true,
+            "clues": 62,
+            "stats": {
+              "groups": 72,
+              "tried": 126,
+              "accepted": 44,
+              "rejected": 28,
+              "skipped": 33,
+              "oracleCalls": 239
+            },
+            "solves": 67,
+            "rates": 7,
+            "dfsEntries": 187,
+            "finderMs": 61.7
+          },
+          {
+            "attempt": 3,
+            "sample": 12,
+            "kind": "ordinary",
+            "startMs": 16656.052,
+            "wallMs": 976.667,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 1802,
+            "solved": true,
+            "clues": 52,
+            "stats": {
+              "groups": 72,
+              "tried": 141,
+              "accepted": 46,
+              "rejected": 26,
+              "skipped": 33,
+              "oracleCalls": 141
+            },
+            "solves": 142,
+            "rates": 1,
+            "dfsEntries": 10,
+            "finderMs": 968.379
+          },
+          {
+            "attempt": 3,
+            "sample": 12,
+            "kind": "local",
+            "startMs": 17632.802,
+            "wallMs": 1153.442,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2399,
+            "solved": true,
+            "clues": 58,
+            "stats": {
+              "groups": 72,
+              "tried": 1240,
+              "accepted": 9,
+              "rejected": 1230,
+              "skipped": 0,
+              "oracleCalls": 810
+            },
+            "solves": 256,
+            "rates": 256,
+            "dfsEntries": 5988,
+            "finderMs": 1067.162
+          },
+          {
+            "attempt": 4,
+            "sample": 1,
+            "kind": "proposal",
+            "startMs": 18786.589,
+            "wallMs": 19.808,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2096,
+            "solved": true,
+            "clues": 52,
+            "stats": {
+              "groups": 72,
+              "tried": 121,
+              "accepted": 46,
+              "rejected": 26,
+              "skipped": 31,
+              "oracleCalls": 227
+            },
+            "solves": 58,
+            "rates": 1,
+            "dfsEntries": 63,
+            "finderMs": 14.404
+          },
+          {
+            "attempt": 4,
+            "sample": 2,
+            "kind": "ordinary",
+            "startMs": 18806.449,
+            "wallMs": 632.128,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 1690,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 123,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 31,
+              "oracleCalls": 123
+            },
+            "solves": 124,
+            "rates": 1,
+            "dfsEntries": 7,
+            "finderMs": 625.154
+          },
+          {
+            "attempt": 4,
+            "sample": 3,
+            "kind": "proposal",
+            "startMs": 19438.603,
+            "wallMs": 27.291,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2088,
+            "solved": true,
+            "clues": 56,
+            "stats": {
+              "groups": 72,
+              "tried": 117,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 33,
+              "oracleCalls": 217
+            },
+            "solves": 55,
+            "rates": 3,
+            "dfsEntries": 184,
+            "finderMs": 20.764
+          },
+          {
+            "attempt": 4,
+            "sample": 4,
+            "kind": "ordinary",
+            "startMs": 19465.91,
+            "wallMs": 484.611,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 1984,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 134,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 34,
+              "oracleCalls": 134
+            },
+            "solves": 135,
+            "rates": 1,
+            "dfsEntries": 16,
+            "finderMs": 477.046
+          },
+          {
+            "attempt": 4,
+            "sample": 5,
+            "kind": "proposal",
+            "startMs": 19950.547,
+            "wallMs": 18.266,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 1980,
+            "solved": true,
+            "clues": 52,
+            "stats": {
+              "groups": 72,
+              "tried": 150,
+              "accepted": 46,
+              "rejected": 26,
+              "skipped": 34,
+              "oracleCalls": 287
+            },
+            "solves": 87,
+            "rates": 1,
+            "dfsEntries": 208,
+            "finderMs": 9.723
+          },
+          {
+            "attempt": 4,
+            "sample": 6,
+            "kind": "ordinary",
+            "startMs": 19968.831,
+            "wallMs": 1298.775,
+            "exact": false,
+            "shallow": false,
+            "level": "hard",
+            "score": 621,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 114,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 33,
+              "oracleCalls": 114
+            },
+            "solves": 115,
+            "rates": 1,
+            "dfsEntries": 4,
+            "finderMs": 1292.281
+          },
+          {
+            "attempt": 4,
+            "sample": 7,
+            "kind": "proposal",
+            "startMs": 21267.628,
+            "wallMs": 40.613,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2043,
+            "solved": true,
+            "clues": 60,
+            "stats": {
+              "groups": 72,
+              "tried": 106,
+              "accepted": 44,
+              "rejected": 28,
+              "skipped": 33,
+              "oracleCalls": 198
+            },
+            "solves": 45,
+            "rates": 5,
+            "dfsEntries": 206,
+            "finderMs": 35.045
+          },
+          {
+            "attempt": 4,
+            "sample": 8,
+            "kind": "ordinary",
+            "startMs": 21308.265,
+            "wallMs": 546.114,
+            "exact": false,
+            "shallow": false,
+            "level": "normal",
+            "score": 241,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 121,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 34,
+              "oracleCalls": 121
+            },
+            "solves": 122,
+            "rates": 1,
+            "dfsEntries": 2,
+            "finderMs": 539.403
+          },
+          {
+            "attempt": 4,
+            "sample": 9,
+            "kind": "proposal",
+            "startMs": 21854.4,
+            "wallMs": 56.401,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 1994,
+            "solved": true,
+            "clues": 60,
+            "stats": {
+              "groups": 72,
+              "tried": 114,
+              "accepted": 44,
+              "rejected": 28,
+              "skipped": 33,
+              "oracleCalls": 212
+            },
+            "solves": 53,
+            "rates": 5,
+            "dfsEntries": 293,
+            "finderMs": 49.029
+          },
+          {
+            "attempt": 4,
+            "sample": 10,
+            "kind": "ordinary",
+            "startMs": 21910.823,
+            "wallMs": 556.777,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2318,
+            "solved": true,
+            "clues": 52,
+            "stats": {
+              "groups": 72,
+              "tried": 122,
+              "accepted": 46,
+              "rejected": 26,
+              "skipped": 32,
+              "oracleCalls": 122
+            },
+            "solves": 123,
+            "rates": 1,
+            "dfsEntries": 20,
+            "finderMs": 547.996
+          },
+          {
+            "attempt": 4,
+            "sample": 11,
+            "kind": "proposal",
+            "startMs": 22467.626,
+            "wallMs": 32.868,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2041,
+            "solved": true,
+            "clues": 54,
+            "stats": {
+              "groups": 72,
+              "tried": 112,
+              "accepted": 45,
+              "rejected": 27,
+              "skipped": 32,
+              "oracleCalls": 206
+            },
+            "solves": 48,
+            "rates": 1,
+            "dfsEntries": 82,
+            "finderMs": 27.818
+          },
+          {
+            "attempt": 4,
+            "sample": 12,
+            "kind": "ordinary",
+            "startMs": 22500.509,
+            "wallMs": 1112.76,
+            "exact": false,
+            "shallow": false,
+            "level": "master",
+            "score": 1174,
+            "solved": true,
+            "clues": 52,
+            "stats": {
+              "groups": 72,
+              "tried": 123,
+              "accepted": 46,
+              "rejected": 26,
+              "skipped": 32,
+              "oracleCalls": 123
+            },
+            "solves": 124,
+            "rates": 1,
+            "dfsEntries": 8,
+            "finderMs": 1105.362
+          },
+          {
+            "attempt": 4,
+            "sample": 12,
+            "kind": "local",
+            "startMs": 23613.333,
+            "wallMs": 768.214,
+            "exact": false,
+            "shallow": true,
+            "level": "nightmare",
+            "score": 2234,
+            "solved": true,
+            "clues": 48,
+            "stats": {
+              "groups": 72,
+              "tried": 32768,
+              "accepted": 10,
+              "rejected": 32758,
+              "skipped": 0,
+              "oracleCalls": 1418
+            },
+            "solves": 119,
+            "rates": 119,
+            "dfsEntries": 18477,
+            "finderMs": 383.564
+          }
+        ],
+        "nest": {
+          "framesOpened": 32211,
+          "leakedFramesClosedAtUnwind": 0,
+          "maxDepth": 7,
+          "framesOpenAboveRootAtFinish": 0
+        },
+        "ops": {
+          "finderTimers": 895184,
+          "applyTimers": 405840,
+          "frames": 32211,
+          "countedChecks": 8438133,
+          "dfsCounterIncrements": 117964
+        }
+      },
+      "profileRestore": {
+        "restored": true,
+        "problems": [],
+        "wasInstalled": true
+      },
+      "profileWorkerRunMs": 24381.8381,
+      "profileCalibration": {
+        "wallMs": 311.76380000000006,
+        "cpuMs": 345,
+        "iterations": 100000,
+        "repeats": 5,
+        "clockReadNs": 59.3,
+        "finderTimerPairNs": 163.4,
+        "applyTimerNs": 148.1,
+        "framePairNs": 169.2,
+        "countedCheckNs": 0,
+        "counterIncrementNs": 0,
+        "sink": true
+      },
+      "profileMessages": 1,
+      "profileProblems": [],
+      "attemptsWork": [
+        {
+          "attempt": 1,
+          "ratings": 276,
+          "proposals": 1704,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1704,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "attempt": 2,
+          "ratings": 275,
+          "proposals": 1511,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1511,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "attempt": 3,
+          "ratings": 284,
+          "proposals": 1240,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1240,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "attempt": 4,
+          "ratings": 141,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 119,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 119,
+              "shallowLimit": 256,
+              "capHit": "proposals"
+            }
+          ]
+        }
+      ],
+      "firstExactDetail": {
+        "origin": null,
+        "ordinal": null,
+        "attempt": null
+      }
+    }
+  ]
+}

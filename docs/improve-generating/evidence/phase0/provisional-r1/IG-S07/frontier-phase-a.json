@@ -1,0 +1,3826 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S07",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "source": {
+    "task": "IG-S05",
+    "shard": "screen",
+    "attempts": [
+      "a1",
+      "a2",
+      "a3",
+      "a4",
+      "a5",
+      "a6",
+      "a7",
+      "a8",
+      "a9",
+      "a10"
+    ],
+    "startedTrials": 256
+  },
+  "rows": [
+    {
+      "cell": "classic9",
+      "mode": "F0",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 159.824,
+      "meanSampleWallMs": 9.989,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 16,
+        "candidateClasses": {
+          "fallback": 16
+        }
+      },
+      "wallMs": {
+        "init": 10.611,
+        "phaseA": 131.25,
+        "phaseBWithoutDeepen": 0,
+        "deepen": 0,
+        "phaseWallTotal": 141.861,
+        "outsideThePhases": 17.963,
+        "phaseAShareOfSample": 0.8212,
+        "phaseBShareOfSample": 0,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0664,
+        "phaseAShareOfPhaseWall": 0.9252,
+        "phaseBShareOfPhaseWall": 0,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 656,
+        "acceptedFull": 427,
+        "acceptedS2": 0,
+        "refusedStuckUnique": 0,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 229,
+        "unclassifiedTests": 0,
+        "skippedGroups": 458
+      },
+      "phaseACounts": {
+        "logicalSolves": 656,
+        "logicalChecks": 78393,
+        "dfsCalls": 229,
+        "dfsEntries": 1300,
+        "dfsChecks": 842
+      },
+      "uniquenessDfs": {
+        "calls": 229,
+        "entries": 1300,
+        "checks": 842,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 0,
+        "canonicalSolves": 16,
+        "logicalChecks": 0
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 0,
+      "phaseBTries": 0,
+      "checkShares": {
+        "floorTests": 1,
+        "allowedAndCanonical": 0,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "F1",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 178.006,
+      "meanSampleWallMs": 11.125,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 16,
+        "candidateClasses": {
+          "fallback": 16
+        }
+      },
+      "wallMs": {
+        "init": 12.058,
+        "phaseA": 145.658,
+        "phaseBWithoutDeepen": 0,
+        "deepen": 0,
+        "phaseWallTotal": 157.716,
+        "outsideThePhases": 20.291,
+        "phaseAShareOfSample": 0.8183,
+        "phaseBShareOfSample": 0,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0677,
+        "phaseAShareOfPhaseWall": 0.9235,
+        "phaseBShareOfPhaseWall": 0,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 656,
+        "acceptedFull": 65,
+        "acceptedS2": 362,
+        "refusedStuckUnique": 0,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 229,
+        "unclassifiedTests": 0,
+        "skippedGroups": 458
+      },
+      "phaseACounts": {
+        "logicalSolves": 656,
+        "logicalChecks": 75112,
+        "dfsCalls": 229,
+        "dfsEntries": 1300,
+        "dfsChecks": 842
+      },
+      "uniquenessDfs": {
+        "calls": 229,
+        "entries": 1300,
+        "checks": 842,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 0,
+        "canonicalSolves": 16,
+        "logicalChecks": 0
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 0,
+      "phaseBTries": 0,
+      "checkShares": {
+        "floorTests": 1,
+        "allowedAndCanonical": 0,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "FC",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 157.858,
+      "meanSampleWallMs": 9.866,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 16,
+        "candidateClasses": {
+          "fallback": 16
+        }
+      },
+      "wallMs": {
+        "init": 10.563,
+        "phaseA": 130.292,
+        "phaseBWithoutDeepen": 0,
+        "deepen": 0,
+        "phaseWallTotal": 140.855,
+        "outsideThePhases": 17.002,
+        "phaseAShareOfSample": 0.8254,
+        "phaseBShareOfSample": 0,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0669,
+        "phaseAShareOfPhaseWall": 0.925,
+        "phaseBShareOfPhaseWall": 0,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 656,
+        "acceptedFull": 65,
+        "acceptedS2": 362,
+        "refusedStuckUnique": 0,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 229,
+        "unclassifiedTests": 0,
+        "skippedGroups": 0
+      },
+      "phaseACounts": {
+        "logicalSolves": 656,
+        "logicalChecks": 75112,
+        "dfsCalls": 229,
+        "dfsEntries": 1300,
+        "dfsChecks": 842
+      },
+      "uniquenessDfs": {
+        "calls": 229,
+        "entries": 1300,
+        "checks": 842,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 0,
+        "canonicalSolves": 16,
+        "logicalChecks": 0
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 0,
+      "phaseBTries": 0,
+      "checkShares": {
+        "floorTests": 1,
+        "allowedAndCanonical": 0,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "FM",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 217.002,
+      "meanSampleWallMs": 13.563,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 16,
+        "candidateClasses": {
+          "fallback": 16
+        }
+      },
+      "wallMs": {
+        "init": 10.453,
+        "phaseA": 189.317,
+        "phaseBWithoutDeepen": 0,
+        "deepen": 0,
+        "phaseWallTotal": 199.77,
+        "outsideThePhases": 17.231,
+        "phaseAShareOfSample": 0.8724,
+        "phaseBShareOfSample": 0,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0482,
+        "phaseAShareOfPhaseWall": 0.9477,
+        "phaseBShareOfPhaseWall": 0,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 656,
+        "acceptedFull": 65,
+        "acceptedS2": 362,
+        "refusedStuckUnique": 0,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 229,
+        "unclassifiedTests": 0,
+        "skippedGroups": 0
+      },
+      "phaseACounts": {
+        "logicalSolves": 656,
+        "logicalChecks": 98895,
+        "dfsCalls": 229,
+        "dfsEntries": 1300,
+        "dfsChecks": 842
+      },
+      "uniquenessDfs": {
+        "calls": 229,
+        "entries": 1300,
+        "checks": 842,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 0,
+        "canonicalSolves": 16,
+        "logicalChecks": 0
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 0,
+      "phaseBTries": 0,
+      "checkShares": {
+        "floorTests": 1,
+        "allowedAndCanonical": 0,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "FU",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 165.602,
+      "meanSampleWallMs": 10.35,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 16,
+        "candidateClasses": {
+          "fallback": 16
+        }
+      },
+      "wallMs": {
+        "init": 10.65,
+        "phaseA": 136.403,
+        "phaseBWithoutDeepen": 0,
+        "deepen": 0,
+        "phaseWallTotal": 147.052,
+        "outsideThePhases": 18.549,
+        "phaseAShareOfSample": 0.8237,
+        "phaseBShareOfSample": 0,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0643,
+        "phaseAShareOfPhaseWall": 0.9276,
+        "phaseBShareOfPhaseWall": 0,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 656,
+        "acceptedFull": 65,
+        "acceptedS2": 362,
+        "refusedStuckUnique": 0,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 229,
+        "unclassifiedTests": 0,
+        "skippedGroups": 458
+      },
+      "phaseACounts": {
+        "logicalSolves": 656,
+        "logicalChecks": 75112,
+        "dfsCalls": 229,
+        "dfsEntries": 1300,
+        "dfsChecks": 842
+      },
+      "uniquenessDfs": {
+        "calls": 229,
+        "entries": 1300,
+        "checks": 842,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 0,
+        "canonicalSolves": 16,
+        "logicalChecks": 0
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 0,
+      "phaseBTries": 0,
+      "checkShares": {
+        "floorTests": 1,
+        "allowedAndCanonical": 0,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "FS",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 159.801,
+      "meanSampleWallMs": 9.988,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 16,
+        "candidateClasses": {
+          "fallback": 16
+        }
+      },
+      "wallMs": {
+        "init": 10.715,
+        "phaseA": 131.362,
+        "phaseBWithoutDeepen": 0,
+        "deepen": 0,
+        "phaseWallTotal": 142.077,
+        "outsideThePhases": 17.724,
+        "phaseAShareOfSample": 0.822,
+        "phaseBShareOfSample": 0,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0671,
+        "phaseAShareOfPhaseWall": 0.9246,
+        "phaseBShareOfPhaseWall": 0,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 656,
+        "acceptedFull": 65,
+        "acceptedS2": 362,
+        "refusedStuckUnique": 0,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 229,
+        "unclassifiedTests": 0,
+        "skippedGroups": 458
+      },
+      "phaseACounts": {
+        "logicalSolves": 656,
+        "logicalChecks": 75112,
+        "dfsCalls": 229,
+        "dfsEntries": 1300,
+        "dfsChecks": 842
+      },
+      "uniquenessDfs": {
+        "calls": 229,
+        "entries": 1300,
+        "checks": 842,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 0,
+        "canonicalSolves": 16,
+        "logicalChecks": 0
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 0,
+      "phaseBTries": 0,
+      "checkShares": {
+        "floorTests": 1,
+        "allowedAndCanonical": 0,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "proposal-only",
+      "kind": "native sample",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 192.486,
+      "meanSampleWallMs": 12.03,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": null,
+        "candidateClasses": {
+          "below": 14,
+          "shallow": 2
+        }
+      },
+      "nativeCounts": {
+        "oracleCalls": 2070,
+        "groupsTried": 1097,
+        "canonicalRatings": 16
+      }
+    },
+    {
+      "cell": "classic9",
+      "mode": "ordinary-only",
+      "kind": "native sample",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 901.259,
+      "meanSampleWallMs": 56.329,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": null,
+        "candidateClasses": {
+          "below": 14,
+          "shallow": 2
+        }
+      },
+      "nativeCounts": {
+        "oracleCalls": 1097,
+        "groupsTried": 1097,
+        "canonicalRatings": 16
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "F0",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 780.798,
+      "meanSampleWallMs": 48.8,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 12,
+        "candidateClasses": {
+          "fallback": 12,
+          "above": 4
+        }
+      },
+      "wallMs": {
+        "init": 11.747,
+        "phaseA": 446.823,
+        "phaseBWithoutDeepen": 300.672,
+        "deepen": 0,
+        "phaseWallTotal": 759.242,
+        "outsideThePhases": 21.557,
+        "phaseAShareOfSample": 0.5723,
+        "phaseBShareOfSample": 0.3851,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.015,
+        "phaseAShareOfPhaseWall": 0.5885,
+        "phaseBShareOfPhaseWall": 0.396,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 1196,
+        "acceptedFull": 736,
+        "acceptedS2": 0,
+        "refusedStuckUnique": 51,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 409,
+        "unclassifiedTests": 0,
+        "skippedGroups": 797
+      },
+      "phaseACounts": {
+        "logicalSolves": 1196,
+        "logicalChecks": 300867,
+        "dfsCalls": 460,
+        "dfsEntries": 5321,
+        "dfsChecks": 4452
+      },
+      "uniquenessDfs": {
+        "calls": 467,
+        "entries": 5445,
+        "checks": 4569,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 7,
+        "canonicalSolves": 23,
+        "logicalChecks": 213140
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 7,
+      "phaseBTries": 7,
+      "checkShares": {
+        "floorTests": 0.5853,
+        "allowedAndCanonical": 0.4147,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "F1",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 772.04,
+      "meanSampleWallMs": 48.252,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 12,
+        "candidateClasses": {
+          "fallback": 12,
+          "above": 4
+        }
+      },
+      "wallMs": {
+        "init": 11.901,
+        "phaseA": 435.439,
+        "phaseBWithoutDeepen": 301.804,
+        "deepen": 0,
+        "phaseWallTotal": 749.143,
+        "outsideThePhases": 22.897,
+        "phaseAShareOfSample": 0.564,
+        "phaseBShareOfSample": 0.3909,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0154,
+        "phaseAShareOfPhaseWall": 0.5812,
+        "phaseBShareOfPhaseWall": 0.4029,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 1196,
+        "acceptedFull": 74,
+        "acceptedS2": 662,
+        "refusedStuckUnique": 51,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 409,
+        "unclassifiedTests": 0,
+        "skippedGroups": 797
+      },
+      "phaseACounts": {
+        "logicalSolves": 1196,
+        "logicalChecks": 290106,
+        "dfsCalls": 460,
+        "dfsEntries": 5321,
+        "dfsChecks": 4452
+      },
+      "uniquenessDfs": {
+        "calls": 467,
+        "entries": 5445,
+        "checks": 4569,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 7,
+        "canonicalSolves": 23,
+        "logicalChecks": 213140
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 7,
+      "phaseBTries": 7,
+      "checkShares": {
+        "floorTests": 0.5765,
+        "allowedAndCanonical": 0.4235,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "FC",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 5696.187,
+      "meanSampleWallMs": 356.012,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 4,
+        "candidateClasses": {
+          "fallback": 7,
+          "above": 6,
+          "shallow": 3
+        }
+      },
+      "wallMs": {
+        "init": 11.677,
+        "phaseA": 282.275,
+        "phaseBWithoutDeepen": 552.983,
+        "deepen": 4828.85,
+        "phaseWallTotal": 5675.786,
+        "outsideThePhases": 20.402,
+        "phaseAShareOfSample": 0.0496,
+        "phaseBShareOfSample": 0.0971,
+        "deepenShareOfSample": 0.8477,
+        "initShareOfSample": 0.002,
+        "phaseAShareOfPhaseWall": 0.0497,
+        "phaseBShareOfPhaseWall": 0.0974,
+        "deepenShareOfPhaseWall": 0.8508
+      },
+      "floorTests": {
+        "tests": 1152,
+        "acceptedFull": 74,
+        "acceptedS2": 657,
+        "refusedStuckUnique": 30,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 391,
+        "unclassifiedTests": 0,
+        "skippedGroups": 0
+      },
+      "phaseACounts": {
+        "logicalSolves": 1152,
+        "logicalChecks": 200088,
+        "dfsCalls": 421,
+        "dfsEntries": 4689,
+        "dfsChecks": 3877
+      },
+      "uniquenessDfs": {
+        "calls": 451,
+        "entries": 5124,
+        "checks": 4268,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 16,
+        "canonicalSolves": 32,
+        "logicalChecks": 343126
+      },
+      "deepenCounts": {
+        "runs": 1,
+        "proposals": 16,
+        "solves": 16,
+        "logicalChecks": 1240657
+      },
+      "entries": 30,
+      "phaseBTries": 30,
+      "checkShares": {
+        "floorTests": 0.1122,
+        "allowedAndCanonical": 0.1923,
+        "deepen": 0.6955,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "FM",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 830.781,
+      "meanSampleWallMs": 51.924,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 5,
+        "candidateClasses": {
+          "fallback": 9,
+          "shallow": 3,
+          "above": 4
+        }
+      },
+      "wallMs": {
+        "init": 11.539,
+        "phaseA": 396.059,
+        "phaseBWithoutDeepen": 401.847,
+        "deepen": 0,
+        "phaseWallTotal": 809.445,
+        "outsideThePhases": 21.335,
+        "phaseAShareOfSample": 0.4767,
+        "phaseBShareOfSample": 0.4837,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0139,
+        "phaseAShareOfPhaseWall": 0.4893,
+        "phaseBShareOfPhaseWall": 0.4964,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 1152,
+        "acceptedFull": 74,
+        "acceptedS2": 658,
+        "refusedStuckUnique": 23,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 397,
+        "unclassifiedTests": 0,
+        "skippedGroups": 0
+      },
+      "phaseACounts": {
+        "logicalSolves": 1152,
+        "logicalChecks": 266265,
+        "dfsCalls": 420,
+        "dfsEntries": 5033,
+        "dfsChecks": 4216
+      },
+      "uniquenessDfs": {
+        "calls": 443,
+        "entries": 5451,
+        "checks": 4601,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 13,
+        "canonicalSolves": 29,
+        "logicalChecks": 278122
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 23,
+      "phaseBTries": 23,
+      "checkShares": {
+        "floorTests": 0.4891,
+        "allowedAndCanonical": 0.5109,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "FU",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 825.207,
+      "meanSampleWallMs": 51.575,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 12,
+        "candidateClasses": {
+          "fallback": 12,
+          "above": 4
+        }
+      },
+      "wallMs": {
+        "init": 12.343,
+        "phaseA": 437.77,
+        "phaseBWithoutDeepen": 352.953,
+        "deepen": 0,
+        "phaseWallTotal": 803.066,
+        "outsideThePhases": 22.141,
+        "phaseAShareOfSample": 0.5305,
+        "phaseBShareOfSample": 0.4277,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.015,
+        "phaseAShareOfPhaseWall": 0.5451,
+        "phaseBShareOfPhaseWall": 0.4395,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 1196,
+        "acceptedFull": 74,
+        "acceptedS2": 662,
+        "refusedStuckUnique": 51,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 409,
+        "unclassifiedTests": 0,
+        "skippedGroups": 797
+      },
+      "phaseACounts": {
+        "logicalSolves": 1196,
+        "logicalChecks": 290106,
+        "dfsCalls": 460,
+        "dfsEntries": 5321,
+        "dfsChecks": 4452
+      },
+      "uniquenessDfs": {
+        "calls": 467,
+        "entries": 5445,
+        "checks": 4569,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 7,
+        "canonicalSolves": 23,
+        "logicalChecks": 213140
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 7,
+      "phaseBTries": 7,
+      "checkShares": {
+        "floorTests": 0.5765,
+        "allowedAndCanonical": 0.4235,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "FS",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 812.575,
+      "meanSampleWallMs": 50.786,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 12,
+        "candidateClasses": {
+          "fallback": 12,
+          "above": 4
+        }
+      },
+      "wallMs": {
+        "init": 11.965,
+        "phaseA": 468.23,
+        "phaseBWithoutDeepen": 309.897,
+        "deepen": 0,
+        "phaseWallTotal": 790.091,
+        "outsideThePhases": 22.484,
+        "phaseAShareOfSample": 0.5762,
+        "phaseBShareOfSample": 0.3814,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0147,
+        "phaseAShareOfPhaseWall": 0.5926,
+        "phaseBShareOfPhaseWall": 0.3922,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 1196,
+        "acceptedFull": 74,
+        "acceptedS2": 662,
+        "refusedStuckUnique": 51,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 409,
+        "unclassifiedTests": 0,
+        "skippedGroups": 797
+      },
+      "phaseACounts": {
+        "logicalSolves": 1196,
+        "logicalChecks": 290106,
+        "dfsCalls": 460,
+        "dfsEntries": 5321,
+        "dfsChecks": 4452
+      },
+      "uniquenessDfs": {
+        "calls": 467,
+        "entries": 5445,
+        "checks": 4569,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 7,
+        "canonicalSolves": 23,
+        "logicalChecks": 213140
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 7,
+      "phaseBTries": 7,
+      "checkShares": {
+        "floorTests": 0.5765,
+        "allowedAndCanonical": 0.4235,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "proposal-only",
+      "kind": "native sample",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 1012.536,
+      "meanSampleWallMs": 63.284,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": null,
+        "candidateClasses": {
+          "shallow": 16
+        }
+      },
+      "nativeCounts": {
+        "oracleCalls": 3867,
+        "groupsTried": 2051,
+        "canonicalRatings": 43
+      }
+    },
+    {
+      "cell": "mega12",
+      "mode": "ordinary-only",
+      "kind": "native sample",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 9917.027,
+      "meanSampleWallMs": 619.814,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": null,
+        "candidateClasses": {
+          "shallow": 14,
+          "below": 2
+        }
+      },
+      "nativeCounts": {
+        "oracleCalls": 2002,
+        "groupsTried": 2002,
+        "canonicalRatings": 16
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "F0",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 6166.44,
+      "meanSampleWallMs": 385.402,
+      "outcomes": {
+        "complete": 14,
+        "budgetEnded": 2,
+        "emptyFrontier": 2,
+        "candidateClasses": {
+          "above": 11,
+          "fallback": 5
+        }
+      },
+      "wallMs": {
+        "init": 10.936,
+        "phaseA": 3185.528,
+        "phaseBWithoutDeepen": 2945.16,
+        "deepen": 0,
+        "phaseWallTotal": 6141.624,
+        "outsideThePhases": 24.815,
+        "phaseAShareOfSample": 0.5166,
+        "phaseBShareOfSample": 0.4776,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0018,
+        "phaseAShareOfPhaseWall": 0.5187,
+        "phaseBShareOfPhaseWall": 0.4795,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 2222,
+        "acceptedFull": 1241,
+        "acceptedS2": 0,
+        "refusedStuckUnique": 217,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 762,
+        "unclassifiedTests": 2,
+        "skippedGroups": 1321
+      },
+      "phaseACounts": {
+        "logicalSolves": 2222,
+        "logicalChecks": 1257896,
+        "dfsCalls": 981,
+        "dfsEntries": 166736,
+        "dfsChecks": 164991
+      },
+      "uniquenessDfs": {
+        "calls": 1010,
+        "entries": 176909,
+        "checks": 175130,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 24,
+        "canonicalSolves": 40,
+        "logicalChecks": 1760394
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 41,
+      "phaseBTries": 29,
+      "checkShares": {
+        "floorTests": 0.4168,
+        "allowedAndCanonical": 0.5832,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "F1",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 6178.926,
+      "meanSampleWallMs": 386.183,
+      "outcomes": {
+        "complete": 14,
+        "budgetEnded": 2,
+        "emptyFrontier": 2,
+        "candidateClasses": {
+          "above": 11,
+          "fallback": 5
+        }
+      },
+      "wallMs": {
+        "init": 10.278,
+        "phaseA": 3198.491,
+        "phaseBWithoutDeepen": 2945.57,
+        "deepen": 0,
+        "phaseWallTotal": 6154.34,
+        "outsideThePhases": 24.586,
+        "phaseAShareOfSample": 0.5176,
+        "phaseBShareOfSample": 0.4767,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0017,
+        "phaseAShareOfPhaseWall": 0.5197,
+        "phaseBShareOfPhaseWall": 0.4786,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 2222,
+        "acceptedFull": 71,
+        "acceptedS2": 1170,
+        "refusedStuckUnique": 217,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 762,
+        "unclassifiedTests": 2,
+        "skippedGroups": 1321
+      },
+      "phaseACounts": {
+        "logicalSolves": 2222,
+        "logicalChecks": 1212952,
+        "dfsCalls": 981,
+        "dfsEntries": 166736,
+        "dfsChecks": 164991
+      },
+      "uniquenessDfs": {
+        "calls": 1010,
+        "entries": 176909,
+        "checks": 175130,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 24,
+        "canonicalSolves": 40,
+        "logicalChecks": 1760394
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 41,
+      "phaseBTries": 29,
+      "checkShares": {
+        "floorTests": 0.4079,
+        "allowedAndCanonical": 0.5921,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "FC",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 9706.947,
+      "meanSampleWallMs": 606.684,
+      "outcomes": {
+        "complete": 14,
+        "budgetEnded": 2,
+        "emptyFrontier": 0,
+        "candidateClasses": {
+          "shallow": 7,
+          "above": 7,
+          "fallback": 2
+        }
+      },
+      "wallMs": {
+        "init": 10.247,
+        "phaseA": 1828.268,
+        "phaseBWithoutDeepen": 4832.116,
+        "deepen": 3010.107,
+        "phaseWallTotal": 9680.738,
+        "outsideThePhases": 26.209,
+        "phaseAShareOfSample": 0.1883,
+        "phaseBShareOfSample": 0.4978,
+        "deepenShareOfSample": 0.3101,
+        "initShareOfSample": 0.0011,
+        "phaseAShareOfPhaseWall": 0.1889,
+        "phaseBShareOfPhaseWall": 0.4991,
+        "deepenShareOfPhaseWall": 0.3109
+      },
+      "floorTests": {
+        "tests": 2045,
+        "acceptedFull": 71,
+        "acceptedS2": 1160,
+        "refusedStuckUnique": 129,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 684,
+        "unclassifiedTests": 1,
+        "skippedGroups": 0
+      },
+      "phaseACounts": {
+        "logicalSolves": 2045,
+        "logicalChecks": 674638,
+        "dfsCalls": 814,
+        "dfsEntries": 111840,
+        "dfsChecks": 110341
+      },
+      "uniquenessDfs": {
+        "calls": 927,
+        "entries": 145622,
+        "checks": 143952,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 55,
+        "canonicalSolves": 71,
+        "logicalChecks": 2826850
+      },
+      "deepenCounts": {
+        "runs": 1,
+        "proposals": 9,
+        "solves": 9,
+        "logicalChecks": 848323
+      },
+      "entries": 129,
+      "phaseBTries": 113,
+      "checkShares": {
+        "floorTests": 0.1551,
+        "allowedAndCanonical": 0.6499,
+        "deepen": 0.195,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "FM",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 6662.407,
+      "meanSampleWallMs": 416.4,
+      "outcomes": {
+        "complete": 14,
+        "budgetEnded": 2,
+        "emptyFrontier": 0,
+        "candidateClasses": {
+          "shallow": 7,
+          "above": 6,
+          "fallback": 3
+        }
+      },
+      "wallMs": {
+        "init": 10.242,
+        "phaseA": 2318.159,
+        "phaseBWithoutDeepen": 4308.29,
+        "deepen": 0,
+        "phaseWallTotal": 6636.691,
+        "outsideThePhases": 25.716,
+        "phaseAShareOfSample": 0.3479,
+        "phaseBShareOfSample": 0.6467,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0015,
+        "phaseAShareOfPhaseWall": 0.3493,
+        "phaseBShareOfPhaseWall": 0.6492,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 2035,
+        "acceptedFull": 71,
+        "acceptedS2": 1162,
+        "refusedStuckUnique": 125,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 675,
+        "unclassifiedTests": 2,
+        "skippedGroups": 0
+      },
+      "phaseACounts": {
+        "logicalSolves": 2035,
+        "logicalChecks": 862854,
+        "dfsCalls": 802,
+        "dfsEntries": 126214,
+        "dfsChecks": 124736
+      },
+      "uniquenessDfs": {
+        "calls": 908,
+        "entries": 148146,
+        "checks": 146504,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 48,
+        "canonicalSolves": 64,
+        "logicalChecks": 2576254
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 125,
+      "phaseBTries": 106,
+      "checkShares": {
+        "floorTests": 0.2509,
+        "allowedAndCanonical": 0.7491,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "FU",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 6339.606,
+      "meanSampleWallMs": 396.225,
+      "outcomes": {
+        "complete": 14,
+        "budgetEnded": 2,
+        "emptyFrontier": 2,
+        "candidateClasses": {
+          "above": 11,
+          "fallback": 5
+        }
+      },
+      "wallMs": {
+        "init": 10.557,
+        "phaseA": 3214.822,
+        "phaseBWithoutDeepen": 3089.388,
+        "deepen": 0,
+        "phaseWallTotal": 6314.767,
+        "outsideThePhases": 24.839,
+        "phaseAShareOfSample": 0.5071,
+        "phaseBShareOfSample": 0.4873,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0017,
+        "phaseAShareOfPhaseWall": 0.5091,
+        "phaseBShareOfPhaseWall": 0.4892,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 2222,
+        "acceptedFull": 71,
+        "acceptedS2": 1170,
+        "refusedStuckUnique": 217,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 762,
+        "unclassifiedTests": 2,
+        "skippedGroups": 1321
+      },
+      "phaseACounts": {
+        "logicalSolves": 2222,
+        "logicalChecks": 1212952,
+        "dfsCalls": 981,
+        "dfsEntries": 166736,
+        "dfsChecks": 164991
+      },
+      "uniquenessDfs": {
+        "calls": 1010,
+        "entries": 176909,
+        "checks": 175130,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 24,
+        "canonicalSolves": 40,
+        "logicalChecks": 1760394
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 41,
+      "phaseBTries": 29,
+      "checkShares": {
+        "floorTests": 0.4079,
+        "allowedAndCanonical": 0.5921,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "FS",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 6866.485,
+      "meanSampleWallMs": 429.155,
+      "outcomes": {
+        "complete": 14,
+        "budgetEnded": 2,
+        "emptyFrontier": 2,
+        "candidateClasses": {
+          "above": 12,
+          "fallback": 4
+        }
+      },
+      "wallMs": {
+        "init": 10.202,
+        "phaseA": 3206.122,
+        "phaseBWithoutDeepen": 3625.46,
+        "deepen": 0,
+        "phaseWallTotal": 6841.784,
+        "outsideThePhases": 24.701,
+        "phaseAShareOfSample": 0.4669,
+        "phaseBShareOfSample": 0.528,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0015,
+        "phaseAShareOfPhaseWall": 0.4686,
+        "phaseBShareOfPhaseWall": 0.5299,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 2222,
+        "acceptedFull": 71,
+        "acceptedS2": 1170,
+        "refusedStuckUnique": 217,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 762,
+        "unclassifiedTests": 2,
+        "skippedGroups": 1321
+      },
+      "phaseACounts": {
+        "logicalSolves": 2222,
+        "logicalChecks": 1212952,
+        "dfsCalls": 981,
+        "dfsEntries": 166736,
+        "dfsChecks": 164991
+      },
+      "uniquenessDfs": {
+        "calls": 1010,
+        "entries": 176711,
+        "checks": 174937,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 29,
+        "canonicalSolves": 45,
+        "logicalChecks": 2161824
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 41,
+      "phaseBTries": 29,
+      "checkShares": {
+        "floorTests": 0.3594,
+        "allowedAndCanonical": 0.6406,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "proposal-only",
+      "kind": "native sample",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 8326.292,
+      "meanSampleWallMs": 520.393,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": null,
+        "candidateClasses": {
+          "shallow": 16
+        }
+      },
+      "nativeCounts": {
+        "oracleCalls": 4401,
+        "groupsTried": 2472,
+        "canonicalRatings": 92
+      }
+    },
+    {
+      "cell": "mega16",
+      "mode": "ordinary-only",
+      "kind": "native sample",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 123406.856,
+      "meanSampleWallMs": 7712.928,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": null,
+        "candidateClasses": {
+          "shallow": 16
+        }
+      },
+      "nativeCounts": {
+        "oracleCalls": 2416,
+        "groupsTried": 2416,
+        "canonicalRatings": 16
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "F0",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 1728.57,
+      "meanSampleWallMs": 108.036,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 15,
+        "candidateClasses": {
+          "fallback": 15,
+          "above": 1
+        }
+      },
+      "wallMs": {
+        "init": 14.212,
+        "phaseA": 1498.098,
+        "phaseBWithoutDeepen": 185.168,
+        "deepen": 0,
+        "phaseWallTotal": 1697.478,
+        "outsideThePhases": 31.092,
+        "phaseAShareOfSample": 0.8667,
+        "phaseBShareOfSample": 0.1071,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0082,
+        "phaseAShareOfPhaseWall": 0.8825,
+        "phaseBShareOfPhaseWall": 0.1091,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 2996,
+        "acceptedFull": 2128,
+        "acceptedS2": 0,
+        "refusedStuckUnique": 37,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 831,
+        "unclassifiedTests": 0,
+        "skippedGroups": 1647
+      },
+      "phaseACounts": {
+        "logicalSolves": 2996,
+        "logicalChecks": 2553433,
+        "dfsCalls": 868,
+        "dfsEntries": 9566,
+        "dfsChecks": 7867
+      },
+      "uniquenessDfs": {
+        "calls": 869,
+        "entries": 9662,
+        "checks": 7962,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 1,
+        "canonicalSolves": 17,
+        "logicalChecks": 162588
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 1,
+      "phaseBTries": 1,
+      "checkShares": {
+        "floorTests": 0.9401,
+        "allowedAndCanonical": 0.0599,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "F1",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 1632.86,
+      "meanSampleWallMs": 102.054,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 15,
+        "candidateClasses": {
+          "fallback": 15,
+          "above": 1
+        }
+      },
+      "wallMs": {
+        "init": 13.9,
+        "phaseA": 1407.03,
+        "phaseBWithoutDeepen": 183.446,
+        "deepen": 0,
+        "phaseWallTotal": 1604.376,
+        "outsideThePhases": 28.485,
+        "phaseAShareOfSample": 0.8617,
+        "phaseBShareOfSample": 0.1123,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0085,
+        "phaseAShareOfPhaseWall": 0.877,
+        "phaseBShareOfPhaseWall": 0.1143,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 2996,
+        "acceptedFull": 87,
+        "acceptedS2": 2041,
+        "refusedStuckUnique": 37,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 831,
+        "unclassifiedTests": 0,
+        "skippedGroups": 1647
+      },
+      "phaseACounts": {
+        "logicalSolves": 2996,
+        "logicalChecks": 2330227,
+        "dfsCalls": 868,
+        "dfsEntries": 9566,
+        "dfsChecks": 7867
+      },
+      "uniquenessDfs": {
+        "calls": 869,
+        "entries": 9662,
+        "checks": 7962,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 1,
+        "canonicalSolves": 17,
+        "logicalChecks": 162588
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 1,
+      "phaseBTries": 1,
+      "checkShares": {
+        "floorTests": 0.9348,
+        "allowedAndCanonical": 0.0652,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "FC",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 3063.436,
+      "meanSampleWallMs": 191.465,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 2,
+        "candidateClasses": {
+          "above": 3,
+          "below": 1,
+          "shallow": 6,
+          "fallback": 6
+        }
+      },
+      "wallMs": {
+        "init": 13.944,
+        "phaseA": 1016.007,
+        "phaseBWithoutDeepen": 690.882,
+        "deepen": 1312.744,
+        "phaseWallTotal": 3033.578,
+        "outsideThePhases": 29.858,
+        "phaseAShareOfSample": 0.3317,
+        "phaseBShareOfSample": 0.2255,
+        "deepenShareOfSample": 0.4285,
+        "initShareOfSample": 0.0046,
+        "phaseAShareOfPhaseWall": 0.3349,
+        "phaseBShareOfPhaseWall": 0.2277,
+        "deepenShareOfPhaseWall": 0.4327
+      },
+      "floorTests": {
+        "tests": 2960,
+        "acceptedFull": 87,
+        "acceptedS2": 2031,
+        "refusedStuckUnique": 26,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 816,
+        "unclassifiedTests": 0,
+        "skippedGroups": 0
+      },
+      "phaseACounts": {
+        "logicalSolves": 2960,
+        "logicalChecks": 1962201,
+        "dfsCalls": 842,
+        "dfsEntries": 8506,
+        "dfsChecks": 6848
+      },
+      "uniquenessDfs": {
+        "calls": 868,
+        "entries": 9476,
+        "checks": 7777,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 11,
+        "canonicalSolves": 27,
+        "logicalChecks": 553460
+      },
+      "deepenCounts": {
+        "runs": 1,
+        "proposals": 16,
+        "solves": 16,
+        "logicalChecks": 618864
+      },
+      "entries": 26,
+      "phaseBTries": 26,
+      "checkShares": {
+        "floorTests": 0.626,
+        "allowedAndCanonical": 0.1766,
+        "deepen": 0.1974,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "FM",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 2753.934,
+      "meanSampleWallMs": 172.121,
+      "outcomes": {
+        "complete": 15,
+        "budgetEnded": 1,
+        "emptyFrontier": 3,
+        "candidateClasses": {
+          "fallback": 6,
+          "shallow": 5,
+          "above": 5
+        }
+      },
+      "wallMs": {
+        "init": 15.293,
+        "phaseA": 1670.434,
+        "phaseBWithoutDeepen": 1037.931,
+        "deepen": 0,
+        "phaseWallTotal": 2723.657,
+        "outsideThePhases": 30.277,
+        "phaseAShareOfSample": 0.6066,
+        "phaseBShareOfSample": 0.3769,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0056,
+        "phaseAShareOfPhaseWall": 0.6133,
+        "phaseBShareOfPhaseWall": 0.3811,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 2949,
+        "acceptedFull": 87,
+        "acceptedS2": 2024,
+        "refusedStuckUnique": 21,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 816,
+        "unclassifiedTests": 1,
+        "skippedGroups": 0
+      },
+      "phaseACounts": {
+        "logicalSolves": 2949,
+        "logicalChecks": 2529034,
+        "dfsCalls": 838,
+        "dfsEntries": 11170,
+        "dfsChecks": 9516
+      },
+      "uniquenessDfs": {
+        "calls": 859,
+        "entries": 12430,
+        "checks": 10749,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 15,
+        "canonicalSolves": 31,
+        "logicalChecks": 895556
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 21,
+      "phaseBTries": 21,
+      "checkShares": {
+        "floorTests": 0.7385,
+        "allowedAndCanonical": 0.2615,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "FU",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 1681.85,
+      "meanSampleWallMs": 105.116,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 15,
+        "candidateClasses": {
+          "fallback": 15,
+          "above": 1
+        }
+      },
+      "wallMs": {
+        "init": 14.453,
+        "phaseA": 1438.666,
+        "phaseBWithoutDeepen": 198.203,
+        "deepen": 0,
+        "phaseWallTotal": 1651.322,
+        "outsideThePhases": 30.528,
+        "phaseAShareOfSample": 0.8554,
+        "phaseBShareOfSample": 0.1178,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0086,
+        "phaseAShareOfPhaseWall": 0.8712,
+        "phaseBShareOfPhaseWall": 0.12,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 2996,
+        "acceptedFull": 87,
+        "acceptedS2": 2041,
+        "refusedStuckUnique": 37,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 831,
+        "unclassifiedTests": 0,
+        "skippedGroups": 1647
+      },
+      "phaseACounts": {
+        "logicalSolves": 2996,
+        "logicalChecks": 2330227,
+        "dfsCalls": 868,
+        "dfsEntries": 9566,
+        "dfsChecks": 7867
+      },
+      "uniquenessDfs": {
+        "calls": 869,
+        "entries": 9662,
+        "checks": 7962,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 1,
+        "canonicalSolves": 17,
+        "logicalChecks": 162588
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 1,
+      "phaseBTries": 1,
+      "checkShares": {
+        "floorTests": 0.9348,
+        "allowedAndCanonical": 0.0652,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "FS",
+      "kind": "frontier",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 1667.623,
+      "meanSampleWallMs": 104.226,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": 15,
+        "candidateClasses": {
+          "fallback": 15,
+          "above": 1
+        }
+      },
+      "wallMs": {
+        "init": 13.976,
+        "phaseA": 1436.984,
+        "phaseBWithoutDeepen": 186.912,
+        "deepen": 0,
+        "phaseWallTotal": 1637.872,
+        "outsideThePhases": 29.752,
+        "phaseAShareOfSample": 0.8617,
+        "phaseBShareOfSample": 0.1121,
+        "deepenShareOfSample": 0,
+        "initShareOfSample": 0.0084,
+        "phaseAShareOfPhaseWall": 0.8773,
+        "phaseBShareOfPhaseWall": 0.1141,
+        "deepenShareOfPhaseWall": 0
+      },
+      "floorTests": {
+        "tests": 2996,
+        "acceptedFull": 87,
+        "acceptedS2": 2041,
+        "refusedStuckUnique": 37,
+        "refusedStuckUnknown": 0,
+        "refusedAmbiguous": 831,
+        "unclassifiedTests": 0,
+        "skippedGroups": 1647
+      },
+      "phaseACounts": {
+        "logicalSolves": 2996,
+        "logicalChecks": 2330227,
+        "dfsCalls": 868,
+        "dfsEntries": 9566,
+        "dfsChecks": 7867
+      },
+      "uniquenessDfs": {
+        "calls": 869,
+        "entries": 9662,
+        "checks": 7962,
+        "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+      },
+      "allowedAndCanonical": {
+        "allowedSolves": 1,
+        "canonicalSolves": 17,
+        "logicalChecks": 162588
+      },
+      "deepenCounts": {
+        "runs": 0,
+        "proposals": 0,
+        "solves": 0,
+        "logicalChecks": 0
+      },
+      "entries": 1,
+      "phaseBTries": 1,
+      "checkShares": {
+        "floorTests": 0.9348,
+        "allowedAndCanonical": 0.0652,
+        "deepen": 0,
+        "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "proposal-only",
+      "kind": "native sample",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 4738.818,
+      "meanSampleWallMs": 296.176,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": null,
+        "candidateClasses": {
+          "below": 3,
+          "shallow": 13
+        }
+      },
+      "nativeCounts": {
+        "oracleCalls": 10024,
+        "groupsTried": 5262,
+        "canonicalRatings": 64
+      }
+    },
+    {
+      "cell": "samurai",
+      "mode": "ordinary-only",
+      "kind": "native sample",
+      "trials": 8,
+      "samples": 16,
+      "sampleWallMs": 20302.564,
+      "meanSampleWallMs": 1268.91,
+      "outcomes": {
+        "complete": 16,
+        "budgetEnded": 0,
+        "emptyFrontier": null,
+        "candidateClasses": {
+          "below": 5,
+          "shallow": 10,
+          "above": 1
+        }
+      },
+      "nativeCounts": {
+        "oracleCalls": 5204,
+        "groupsTried": 5204,
+        "canonicalRatings": 16
+      }
+    }
+  ],
+  "pilot": {
+    "source": {
+      "task": "IG-S04",
+      "shards": {
+        "s1-large-controls": [
+          "a2"
+        ],
+        "s2-small-all": [
+          "a1",
+          "a2",
+          "a3"
+        ],
+        "s3-large-native-f1": [
+          "a1"
+        ],
+        "s4-large-floors": [
+          "a1",
+          "a2"
+        ],
+        "s5-large-reference": [
+          "a1",
+          "a2",
+          "a3",
+          "a4",
+          "a5",
+          "a6"
+        ],
+        "s6-large-s2-control": [
+          "a1"
+        ]
+      },
+      "startedTrials": 48,
+      "note": "the pilot that fitted the count budgets: one sample per trial on two grids per cell; the same columns as the screen rows"
+    },
+    "rows": [
+      {
+        "cell": "classic9",
+        "mode": "F0",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 37.298,
+        "meanSampleWallMs": 18.649,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 2,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.437,
+          "phaseA": 22.127,
+          "phaseBWithoutDeepen": 0,
+          "deepen": 0,
+          "phaseWallTotal": 24.564,
+          "outsideThePhases": 12.734,
+          "phaseAShareOfSample": 0.5933,
+          "phaseBShareOfSample": 0,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.0653,
+          "phaseAShareOfPhaseWall": 0.9008,
+          "phaseBShareOfPhaseWall": 0,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 82,
+          "acceptedFull": 56,
+          "acceptedS2": 0,
+          "refusedStuckUnique": 0,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 26,
+          "unclassifiedTests": 0,
+          "skippedGroups": 52
+        },
+        "phaseACounts": {
+          "logicalSolves": 82,
+          "logicalChecks": 7850,
+          "dfsCalls": 26,
+          "dfsEntries": 133,
+          "dfsChecks": 81
+        },
+        "uniquenessDfs": {
+          "calls": 26,
+          "entries": 133,
+          "checks": 81,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 0,
+          "canonicalSolves": 2,
+          "logicalChecks": 0
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 0,
+        "phaseBTries": 0,
+        "checkShares": {
+          "floorTests": 1,
+          "allowedAndCanonical": 0,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "classic9",
+        "mode": "F1",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 40.327,
+        "meanSampleWallMs": 20.164,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 2,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.435,
+          "phaseA": 25.609,
+          "phaseBWithoutDeepen": 0,
+          "deepen": 0,
+          "phaseWallTotal": 28.044,
+          "outsideThePhases": 12.283,
+          "phaseAShareOfSample": 0.635,
+          "phaseBShareOfSample": 0,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.0604,
+          "phaseAShareOfPhaseWall": 0.9132,
+          "phaseBShareOfPhaseWall": 0,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 82,
+          "acceptedFull": 9,
+          "acceptedS2": 47,
+          "refusedStuckUnique": 0,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 26,
+          "unclassifiedTests": 0,
+          "skippedGroups": 52
+        },
+        "phaseACounts": {
+          "logicalSolves": 82,
+          "logicalChecks": 7418,
+          "dfsCalls": 26,
+          "dfsEntries": 133,
+          "dfsChecks": 81
+        },
+        "uniquenessDfs": {
+          "calls": 26,
+          "entries": 133,
+          "checks": 81,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 0,
+          "canonicalSolves": 2,
+          "logicalChecks": 0
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 0,
+        "phaseBTries": 0,
+        "checkShares": {
+          "floorTests": 1,
+          "allowedAndCanonical": 0,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "classic9",
+        "mode": "FC",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 40.906,
+        "meanSampleWallMs": 20.453,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 2,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.597,
+          "phaseA": 25.427,
+          "phaseBWithoutDeepen": 0,
+          "deepen": 0,
+          "phaseWallTotal": 28.024,
+          "outsideThePhases": 12.882,
+          "phaseAShareOfSample": 0.6216,
+          "phaseBShareOfSample": 0,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.0635,
+          "phaseAShareOfPhaseWall": 0.9073,
+          "phaseBShareOfPhaseWall": 0,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 82,
+          "acceptedFull": 9,
+          "acceptedS2": 47,
+          "refusedStuckUnique": 0,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 26,
+          "unclassifiedTests": 0,
+          "skippedGroups": 0
+        },
+        "phaseACounts": {
+          "logicalSolves": 82,
+          "logicalChecks": 7418,
+          "dfsCalls": 26,
+          "dfsEntries": 133,
+          "dfsChecks": 81
+        },
+        "uniquenessDfs": {
+          "calls": 26,
+          "entries": 133,
+          "checks": 81,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 0,
+          "canonicalSolves": 2,
+          "logicalChecks": 0
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 0,
+        "phaseBTries": 0,
+        "checkShares": {
+          "floorTests": 1,
+          "allowedAndCanonical": 0,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "classic9",
+        "mode": "FM",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 46.252,
+        "meanSampleWallMs": 23.126,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 2,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.496,
+          "phaseA": 31.002,
+          "phaseBWithoutDeepen": 0,
+          "deepen": 0,
+          "phaseWallTotal": 33.499,
+          "outsideThePhases": 12.754,
+          "phaseAShareOfSample": 0.6703,
+          "phaseBShareOfSample": 0,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.054,
+          "phaseAShareOfPhaseWall": 0.9255,
+          "phaseBShareOfPhaseWall": 0,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 82,
+          "acceptedFull": 9,
+          "acceptedS2": 47,
+          "refusedStuckUnique": 0,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 26,
+          "unclassifiedTests": 0,
+          "skippedGroups": 0
+        },
+        "phaseACounts": {
+          "logicalSolves": 82,
+          "logicalChecks": 9618,
+          "dfsCalls": 26,
+          "dfsEntries": 133,
+          "dfsChecks": 81
+        },
+        "uniquenessDfs": {
+          "calls": 26,
+          "entries": 133,
+          "checks": 81,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 0,
+          "canonicalSolves": 2,
+          "logicalChecks": 0
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 0,
+        "phaseBTries": 0,
+        "checkShares": {
+          "floorTests": 1,
+          "allowedAndCanonical": 0,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "classic9",
+        "mode": "FU",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 38.884,
+        "meanSampleWallMs": 19.442,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 2,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.477,
+          "phaseA": 23.28,
+          "phaseBWithoutDeepen": 0,
+          "deepen": 0,
+          "phaseWallTotal": 25.756,
+          "outsideThePhases": 13.128,
+          "phaseAShareOfSample": 0.5987,
+          "phaseBShareOfSample": 0,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.0637,
+          "phaseAShareOfPhaseWall": 0.9038,
+          "phaseBShareOfPhaseWall": 0,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 82,
+          "acceptedFull": 9,
+          "acceptedS2": 47,
+          "refusedStuckUnique": 0,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 26,
+          "unclassifiedTests": 0,
+          "skippedGroups": 52
+        },
+        "phaseACounts": {
+          "logicalSolves": 82,
+          "logicalChecks": 7418,
+          "dfsCalls": 26,
+          "dfsEntries": 133,
+          "dfsChecks": 81
+        },
+        "uniquenessDfs": {
+          "calls": 26,
+          "entries": 133,
+          "checks": 81,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 0,
+          "canonicalSolves": 2,
+          "logicalChecks": 0
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 0,
+        "phaseBTries": 0,
+        "checkShares": {
+          "floorTests": 1,
+          "allowedAndCanonical": 0,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "classic9",
+        "mode": "FS",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 41.276,
+        "meanSampleWallMs": 20.638,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 2,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.596,
+          "phaseA": 25.69,
+          "phaseBWithoutDeepen": 0,
+          "deepen": 0,
+          "phaseWallTotal": 28.287,
+          "outsideThePhases": 12.989,
+          "phaseAShareOfSample": 0.6224,
+          "phaseBShareOfSample": 0,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.0629,
+          "phaseAShareOfPhaseWall": 0.9082,
+          "phaseBShareOfPhaseWall": 0,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 82,
+          "acceptedFull": 9,
+          "acceptedS2": 47,
+          "refusedStuckUnique": 0,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 26,
+          "unclassifiedTests": 0,
+          "skippedGroups": 52
+        },
+        "phaseACounts": {
+          "logicalSolves": 82,
+          "logicalChecks": 7418,
+          "dfsCalls": 26,
+          "dfsEntries": 133,
+          "dfsChecks": 81
+        },
+        "uniquenessDfs": {
+          "calls": 26,
+          "entries": 133,
+          "checks": 81,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 0,
+          "canonicalSolves": 2,
+          "logicalChecks": 0
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 0,
+        "phaseBTries": 0,
+        "checkShares": {
+          "floorTests": 1,
+          "allowedAndCanonical": 0,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "mega12",
+        "mode": "F0",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 5027.379,
+        "meanSampleWallMs": 2513.689,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 0,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.974,
+          "phaseA": 124.764,
+          "phaseBWithoutDeepen": 49.736,
+          "deepen": 4832.07,
+          "phaseWallTotal": 5009.544,
+          "outsideThePhases": 17.834,
+          "phaseAShareOfSample": 0.0248,
+          "phaseBShareOfSample": 0.0099,
+          "deepenShareOfSample": 0.9612,
+          "initShareOfSample": 0.0006,
+          "phaseAShareOfPhaseWall": 0.0249,
+          "phaseBShareOfPhaseWall": 0.0099,
+          "deepenShareOfPhaseWall": 0.9646
+        },
+        "floorTests": {
+          "tests": 155,
+          "acceptedFull": 88,
+          "acceptedS2": 0,
+          "refusedStuckUnique": 14,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 53,
+          "unclassifiedTests": 0,
+          "skippedGroups": 103
+        },
+        "phaseACounts": {
+          "logicalSolves": 155,
+          "logicalChecks": 62970,
+          "dfsCalls": 67,
+          "dfsEntries": 411,
+          "dfsChecks": 291
+        },
+        "uniquenessDfs": {
+          "calls": 70,
+          "entries": 464,
+          "checks": 340,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 2,
+          "canonicalSolves": 4,
+          "logicalChecks": 23034
+        },
+        "deepenCounts": {
+          "runs": 1,
+          "proposals": 16,
+          "solves": 16,
+          "logicalChecks": 1241588
+        },
+        "entries": 3,
+        "phaseBTries": 3,
+        "checkShares": {
+          "floorTests": 0.0474,
+          "allowedAndCanonical": 0.0174,
+          "deepen": 0.9352,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "mega12",
+        "mode": "F1",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 5107.044,
+        "meanSampleWallMs": 2553.522,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 0,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.814,
+          "phaseA": 105.209,
+          "phaseBWithoutDeepen": 42.486,
+          "deepen": 4939.698,
+          "phaseWallTotal": 5090.207,
+          "outsideThePhases": 16.836,
+          "phaseAShareOfSample": 0.0206,
+          "phaseBShareOfSample": 0.0083,
+          "deepenShareOfSample": 0.9672,
+          "initShareOfSample": 0.0006,
+          "phaseAShareOfPhaseWall": 0.0207,
+          "phaseBShareOfPhaseWall": 0.0083,
+          "deepenShareOfPhaseWall": 0.9704
+        },
+        "floorTests": {
+          "tests": 155,
+          "acceptedFull": 6,
+          "acceptedS2": 82,
+          "refusedStuckUnique": 14,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 53,
+          "unclassifiedTests": 0,
+          "skippedGroups": 103
+        },
+        "phaseACounts": {
+          "logicalSolves": 155,
+          "logicalChecks": 61834,
+          "dfsCalls": 67,
+          "dfsEntries": 411,
+          "dfsChecks": 291
+        },
+        "uniquenessDfs": {
+          "calls": 70,
+          "entries": 464,
+          "checks": 340,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 2,
+          "canonicalSolves": 4,
+          "logicalChecks": 23034
+        },
+        "deepenCounts": {
+          "runs": 1,
+          "proposals": 16,
+          "solves": 16,
+          "logicalChecks": 1241588
+        },
+        "entries": 3,
+        "phaseBTries": 3,
+        "checkShares": {
+          "floorTests": 0.0466,
+          "allowedAndCanonical": 0.0174,
+          "deepen": 0.936,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "mega12",
+        "mode": "FC",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 5038.246,
+        "meanSampleWallMs": 2519.123,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 0,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.87,
+          "phaseA": 47.746,
+          "phaseBWithoutDeepen": 106.965,
+          "deepen": 4863.769,
+          "phaseWallTotal": 5021.35,
+          "outsideThePhases": 16.896,
+          "phaseAShareOfSample": 0.0095,
+          "phaseBShareOfSample": 0.0212,
+          "deepenShareOfSample": 0.9654,
+          "initShareOfSample": 0.0006,
+          "phaseAShareOfPhaseWall": 0.0095,
+          "phaseBShareOfPhaseWall": 0.0213,
+          "deepenShareOfPhaseWall": 0.9686
+        },
+        "floorTests": {
+          "tests": 144,
+          "acceptedFull": 6,
+          "acceptedS2": 81,
+          "refusedStuckUnique": 7,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 50,
+          "unclassifiedTests": 0,
+          "skippedGroups": 0
+        },
+        "phaseACounts": {
+          "logicalSolves": 144,
+          "logicalChecks": 26542,
+          "dfsCalls": 57,
+          "dfsEntries": 338,
+          "dfsChecks": 231
+        },
+        "uniquenessDfs": {
+          "calls": 64,
+          "entries": 394,
+          "checks": 277,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 4,
+          "canonicalSolves": 6,
+          "logicalChecks": 66152
+        },
+        "deepenCounts": {
+          "runs": 1,
+          "proposals": 16,
+          "solves": 16,
+          "logicalChecks": 1241588
+        },
+        "entries": 7,
+        "phaseBTries": 7,
+        "checkShares": {
+          "floorTests": 0.0199,
+          "allowedAndCanonical": 0.0496,
+          "deepen": 0.9305,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "mega12",
+        "mode": "FM",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 5072.479,
+        "meanSampleWallMs": 2536.239,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 0,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.767,
+          "phaseA": 66.381,
+          "phaseBWithoutDeepen": 98.239,
+          "deepen": 4888.746,
+          "phaseWallTotal": 5056.133,
+          "outsideThePhases": 16.346,
+          "phaseAShareOfSample": 0.0131,
+          "phaseBShareOfSample": 0.0194,
+          "deepenShareOfSample": 0.9638,
+          "initShareOfSample": 0.0005,
+          "phaseAShareOfPhaseWall": 0.0131,
+          "phaseBShareOfPhaseWall": 0.0194,
+          "deepenShareOfPhaseWall": 0.9669
+        },
+        "floorTests": {
+          "tests": 144,
+          "acceptedFull": 6,
+          "acceptedS2": 81,
+          "refusedStuckUnique": 7,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 50,
+          "unclassifiedTests": 0,
+          "skippedGroups": 0
+        },
+        "phaseACounts": {
+          "logicalSolves": 144,
+          "logicalChecks": 37768,
+          "dfsCalls": 57,
+          "dfsEntries": 338,
+          "dfsChecks": 231
+        },
+        "uniquenessDfs": {
+          "calls": 64,
+          "entries": 394,
+          "checks": 277,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 4,
+          "canonicalSolves": 6,
+          "logicalChecks": 66152
+        },
+        "deepenCounts": {
+          "runs": 1,
+          "proposals": 16,
+          "solves": 16,
+          "logicalChecks": 1241588
+        },
+        "entries": 7,
+        "phaseBTries": 7,
+        "checkShares": {
+          "floorTests": 0.0281,
+          "allowedAndCanonical": 0.0492,
+          "deepen": 0.9228,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "mega12",
+        "mode": "FU",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 170.692,
+        "meanSampleWallMs": 85.346,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 0,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.735,
+          "phaseA": 105.081,
+          "phaseBWithoutDeepen": 46.666,
+          "deepen": 0,
+          "phaseWallTotal": 154.482,
+          "outsideThePhases": 16.21,
+          "phaseAShareOfSample": 0.6156,
+          "phaseBShareOfSample": 0.2734,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.016,
+          "phaseAShareOfPhaseWall": 0.6802,
+          "phaseBShareOfPhaseWall": 0.3021,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 155,
+          "acceptedFull": 6,
+          "acceptedS2": 82,
+          "refusedStuckUnique": 14,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 53,
+          "unclassifiedTests": 0,
+          "skippedGroups": 103
+        },
+        "phaseACounts": {
+          "logicalSolves": 155,
+          "logicalChecks": 61834,
+          "dfsCalls": 67,
+          "dfsEntries": 411,
+          "dfsChecks": 291
+        },
+        "uniquenessDfs": {
+          "calls": 70,
+          "entries": 464,
+          "checks": 340,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 1,
+          "canonicalSolves": 3,
+          "logicalChecks": 21046
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 3,
+        "phaseBTries": 3,
+        "checkShares": {
+          "floorTests": 0.7461,
+          "allowedAndCanonical": 0.2539,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "mega12",
+        "mode": "FS",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 5082.826,
+        "meanSampleWallMs": 2541.413,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 0,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.755,
+          "phaseA": 109.612,
+          "phaseBWithoutDeepen": 51.633,
+          "deepen": 4901.676,
+          "phaseWallTotal": 5065.675,
+          "outsideThePhases": 17.151,
+          "phaseAShareOfSample": 0.0216,
+          "phaseBShareOfSample": 0.0102,
+          "deepenShareOfSample": 0.9644,
+          "initShareOfSample": 0.0005,
+          "phaseAShareOfPhaseWall": 0.0216,
+          "phaseBShareOfPhaseWall": 0.0102,
+          "deepenShareOfPhaseWall": 0.9676
+        },
+        "floorTests": {
+          "tests": 155,
+          "acceptedFull": 6,
+          "acceptedS2": 82,
+          "refusedStuckUnique": 14,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 53,
+          "unclassifiedTests": 0,
+          "skippedGroups": 103
+        },
+        "phaseACounts": {
+          "logicalSolves": 155,
+          "logicalChecks": 61834,
+          "dfsCalls": 67,
+          "dfsEntries": 411,
+          "dfsChecks": 291
+        },
+        "uniquenessDfs": {
+          "calls": 70,
+          "entries": 428,
+          "checks": 305,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 3,
+          "canonicalSolves": 5,
+          "logicalChecks": 25636
+        },
+        "deepenCounts": {
+          "runs": 1,
+          "proposals": 16,
+          "solves": 16,
+          "logicalChecks": 1241588
+        },
+        "entries": 3,
+        "phaseBTries": 3,
+        "checkShares": {
+          "floorTests": 0.0465,
+          "allowedAndCanonical": 0.0193,
+          "deepen": 0.9342,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "mega16",
+        "mode": "F0",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 372.165,
+        "meanSampleWallMs": 186.083,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 2,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.541,
+          "phaseA": 345.785,
+          "phaseBWithoutDeepen": 0,
+          "deepen": 0,
+          "phaseWallTotal": 348.326,
+          "outsideThePhases": 23.839,
+          "phaseAShareOfSample": 0.9291,
+          "phaseBShareOfSample": 0,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.0068,
+          "phaseAShareOfPhaseWall": 0.9927,
+          "phaseBShareOfPhaseWall": 0,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 266,
+          "acceptedFull": 156,
+          "acceptedS2": 0,
+          "refusedStuckUnique": 10,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 100,
+          "unclassifiedTests": 0,
+          "skippedGroups": 192
+        },
+        "phaseACounts": {
+          "logicalSolves": 266,
+          "logicalChecks": 122070,
+          "dfsCalls": 110,
+          "dfsEntries": 12104,
+          "dfsChecks": 11894
+        },
+        "uniquenessDfs": {
+          "calls": 110,
+          "entries": 12104,
+          "checks": 11894,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 0,
+          "canonicalSolves": 2,
+          "logicalChecks": 0
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 0,
+        "phaseBTries": 0,
+        "checkShares": {
+          "floorTests": 1,
+          "allowedAndCanonical": 0,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "mega16",
+        "mode": "F1",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 315.303,
+        "meanSampleWallMs": 157.651,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 2,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.433,
+          "phaseA": 290.888,
+          "phaseBWithoutDeepen": 0,
+          "deepen": 0,
+          "phaseWallTotal": 293.322,
+          "outsideThePhases": 21.981,
+          "phaseAShareOfSample": 0.9226,
+          "phaseBShareOfSample": 0,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.0077,
+          "phaseAShareOfPhaseWall": 0.9917,
+          "phaseBShareOfPhaseWall": 0,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 266,
+          "acceptedFull": 5,
+          "acceptedS2": 151,
+          "refusedStuckUnique": 10,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 100,
+          "unclassifiedTests": 0,
+          "skippedGroups": 192
+        },
+        "phaseACounts": {
+          "logicalSolves": 266,
+          "logicalChecks": 117206,
+          "dfsCalls": 110,
+          "dfsEntries": 12104,
+          "dfsChecks": 11894
+        },
+        "uniquenessDfs": {
+          "calls": 110,
+          "entries": 12104,
+          "checks": 11894,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 0,
+          "canonicalSolves": 2,
+          "logicalChecks": 0
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 0,
+        "phaseBTries": 0,
+        "checkShares": {
+          "floorTests": 1,
+          "allowedAndCanonical": 0,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "mega16",
+        "mode": "FC",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 694.339,
+        "meanSampleWallMs": 347.17,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 0,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.356,
+          "phaseA": 197.187,
+          "phaseBWithoutDeepen": 470.258,
+          "deepen": 0,
+          "phaseWallTotal": 669.8,
+          "outsideThePhases": 24.539,
+          "phaseAShareOfSample": 0.284,
+          "phaseBShareOfSample": 0.6773,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.0034,
+          "phaseAShareOfPhaseWall": 0.2944,
+          "phaseBShareOfPhaseWall": 0.7021,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 256,
+          "acceptedFull": 5,
+          "acceptedS2": 150,
+          "refusedStuckUnique": 7,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 94,
+          "unclassifiedTests": 0,
+          "skippedGroups": 0
+        },
+        "phaseACounts": {
+          "logicalSolves": 256,
+          "logicalChecks": 74058,
+          "dfsCalls": 101,
+          "dfsEntries": 9915,
+          "dfsChecks": 9720
+        },
+        "uniquenessDfs": {
+          "calls": 108,
+          "entries": 11816,
+          "checks": 11610,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 3,
+          "canonicalSolves": 5,
+          "logicalChecks": 244026
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 7,
+        "phaseBTries": 7,
+        "checkShares": {
+          "floorTests": 0.2328,
+          "allowedAndCanonical": 0.7672,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "mega16",
+        "mode": "FM",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 740.008,
+        "meanSampleWallMs": 370.004,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 0,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.406,
+          "phaseA": 249.969,
+          "phaseBWithoutDeepen": 464.826,
+          "deepen": 0,
+          "phaseWallTotal": 717.201,
+          "outsideThePhases": 22.807,
+          "phaseAShareOfSample": 0.3378,
+          "phaseBShareOfSample": 0.6281,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.0033,
+          "phaseAShareOfPhaseWall": 0.3485,
+          "phaseBShareOfPhaseWall": 0.6481,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 256,
+          "acceptedFull": 5,
+          "acceptedS2": 150,
+          "refusedStuckUnique": 7,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 94,
+          "unclassifiedTests": 0,
+          "skippedGroups": 0
+        },
+        "phaseACounts": {
+          "logicalSolves": 256,
+          "logicalChecks": 94071,
+          "dfsCalls": 101,
+          "dfsEntries": 9915,
+          "dfsChecks": 9720
+        },
+        "uniquenessDfs": {
+          "calls": 108,
+          "entries": 11816,
+          "checks": 11610,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 3,
+          "canonicalSolves": 5,
+          "logicalChecks": 244026
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 7,
+        "phaseBTries": 7,
+        "checkShares": {
+          "floorTests": 0.2782,
+          "allowedAndCanonical": 0.7218,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "mega16",
+        "mode": "FU",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 334.064,
+        "meanSampleWallMs": 167.032,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 2,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.446,
+          "phaseA": 307.975,
+          "phaseBWithoutDeepen": 0,
+          "deepen": 0,
+          "phaseWallTotal": 310.421,
+          "outsideThePhases": 23.643,
+          "phaseAShareOfSample": 0.9219,
+          "phaseBShareOfSample": 0,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.0073,
+          "phaseAShareOfPhaseWall": 0.9921,
+          "phaseBShareOfPhaseWall": 0,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 266,
+          "acceptedFull": 5,
+          "acceptedS2": 151,
+          "refusedStuckUnique": 10,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 100,
+          "unclassifiedTests": 0,
+          "skippedGroups": 192
+        },
+        "phaseACounts": {
+          "logicalSolves": 266,
+          "logicalChecks": 117206,
+          "dfsCalls": 110,
+          "dfsEntries": 12104,
+          "dfsChecks": 11894
+        },
+        "uniquenessDfs": {
+          "calls": 110,
+          "entries": 12104,
+          "checks": 11894,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 0,
+          "canonicalSolves": 2,
+          "logicalChecks": 0
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 0,
+        "phaseBTries": 0,
+        "checkShares": {
+          "floorTests": 1,
+          "allowedAndCanonical": 0,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "mega16",
+        "mode": "FS",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 345.842,
+        "meanSampleWallMs": 172.921,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 2,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 2.636,
+          "phaseA": 317.436,
+          "phaseBWithoutDeepen": 0,
+          "deepen": 0,
+          "phaseWallTotal": 320.072,
+          "outsideThePhases": 25.769,
+          "phaseAShareOfSample": 0.9179,
+          "phaseBShareOfSample": 0,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.0076,
+          "phaseAShareOfPhaseWall": 0.9918,
+          "phaseBShareOfPhaseWall": 0,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 266,
+          "acceptedFull": 5,
+          "acceptedS2": 151,
+          "refusedStuckUnique": 10,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 100,
+          "unclassifiedTests": 0,
+          "skippedGroups": 192
+        },
+        "phaseACounts": {
+          "logicalSolves": 266,
+          "logicalChecks": 117206,
+          "dfsCalls": 110,
+          "dfsEntries": 12104,
+          "dfsChecks": 11894
+        },
+        "uniquenessDfs": {
+          "calls": 110,
+          "entries": 12104,
+          "checks": 11894,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 0,
+          "canonicalSolves": 2,
+          "logicalChecks": 0
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 0,
+        "phaseBTries": 0,
+        "checkShares": {
+          "floorTests": 1,
+          "allowedAndCanonical": 0,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "samurai",
+        "mode": "F0",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 309.95,
+        "meanSampleWallMs": 154.975,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 2,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 3.43,
+          "phaseA": 279.485,
+          "phaseBWithoutDeepen": 0,
+          "deepen": 0,
+          "phaseWallTotal": 282.916,
+          "outsideThePhases": 27.034,
+          "phaseAShareOfSample": 0.9017,
+          "phaseBShareOfSample": 0,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.0111,
+          "phaseAShareOfPhaseWall": 0.9879,
+          "phaseBShareOfPhaseWall": 0,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 376,
+          "acceptedFull": 266,
+          "acceptedS2": 0,
+          "refusedStuckUnique": 6,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 104,
+          "unclassifiedTests": 0,
+          "skippedGroups": 206
+        },
+        "phaseACounts": {
+          "logicalSolves": 376,
+          "logicalChecks": 370087,
+          "dfsCalls": 110,
+          "dfsEntries": 1393,
+          "dfsChecks": 1179
+        },
+        "uniquenessDfs": {
+          "calls": 110,
+          "entries": 1393,
+          "checks": 1179,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 0,
+          "canonicalSolves": 2,
+          "logicalChecks": 0
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 0,
+        "phaseBTries": 0,
+        "checkShares": {
+          "floorTests": 1,
+          "allowedAndCanonical": 0,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "samurai",
+        "mode": "F1",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 269.481,
+        "meanSampleWallMs": 134.74,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 2,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 3.246,
+          "phaseA": 240.359,
+          "phaseBWithoutDeepen": 0,
+          "deepen": 0,
+          "phaseWallTotal": 243.605,
+          "outsideThePhases": 25.876,
+          "phaseAShareOfSample": 0.8919,
+          "phaseBShareOfSample": 0,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.012,
+          "phaseAShareOfPhaseWall": 0.9867,
+          "phaseBShareOfPhaseWall": 0,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 376,
+          "acceptedFull": 14,
+          "acceptedS2": 252,
+          "refusedStuckUnique": 6,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 104,
+          "unclassifiedTests": 0,
+          "skippedGroups": 206
+        },
+        "phaseACounts": {
+          "logicalSolves": 376,
+          "logicalChecks": 328086,
+          "dfsCalls": 110,
+          "dfsEntries": 1393,
+          "dfsChecks": 1179
+        },
+        "uniquenessDfs": {
+          "calls": 110,
+          "entries": 1393,
+          "checks": 1179,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 0,
+          "canonicalSolves": 2,
+          "logicalChecks": 0
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 0,
+        "phaseBTries": 0,
+        "checkShares": {
+          "floorTests": 1,
+          "allowedAndCanonical": 0,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "samurai",
+        "mode": "FC",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 2967.954,
+        "meanSampleWallMs": 1483.977,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 0,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 3.312,
+          "phaseA": 149.328,
+          "phaseBWithoutDeepen": 134.428,
+          "deepen": 2655.295,
+          "phaseWallTotal": 2942.363,
+          "outsideThePhases": 25.591,
+          "phaseAShareOfSample": 0.0503,
+          "phaseBShareOfSample": 0.0453,
+          "deepenShareOfSample": 0.8947,
+          "initShareOfSample": 0.0011,
+          "phaseAShareOfPhaseWall": 0.0508,
+          "phaseBShareOfPhaseWall": 0.0457,
+          "deepenShareOfPhaseWall": 0.9024
+        },
+        "floorTests": {
+          "tests": 370,
+          "acceptedFull": 14,
+          "acceptedS2": 250,
+          "refusedStuckUnique": 4,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 102,
+          "unclassifiedTests": 0,
+          "skippedGroups": 0
+        },
+        "phaseACounts": {
+          "logicalSolves": 370,
+          "logicalChecks": 252493,
+          "dfsCalls": 106,
+          "dfsEntries": 1288,
+          "dfsChecks": 1080
+        },
+        "uniquenessDfs": {
+          "calls": 110,
+          "entries": 1393,
+          "checks": 1179,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 2,
+          "canonicalSolves": 4,
+          "logicalChecks": 100864
+        },
+        "deepenCounts": {
+          "runs": 1,
+          "proposals": 16,
+          "solves": 16,
+          "logicalChecks": 1221685
+        },
+        "entries": 4,
+        "phaseBTries": 4,
+        "checkShares": {
+          "floorTests": 0.1603,
+          "allowedAndCanonical": 0.064,
+          "deepen": 0.7757,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "samurai",
+        "mode": "FM",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 3027.155,
+        "meanSampleWallMs": 1513.577,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 0,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 3.308,
+          "phaseA": 224.022,
+          "phaseBWithoutDeepen": 124.336,
+          "deepen": 2648.352,
+          "phaseWallTotal": 3000.018,
+          "outsideThePhases": 27.136,
+          "phaseAShareOfSample": 0.074,
+          "phaseBShareOfSample": 0.0411,
+          "deepenShareOfSample": 0.8749,
+          "initShareOfSample": 0.0011,
+          "phaseAShareOfPhaseWall": 0.0747,
+          "phaseBShareOfPhaseWall": 0.0414,
+          "deepenShareOfPhaseWall": 0.8828
+        },
+        "floorTests": {
+          "tests": 370,
+          "acceptedFull": 14,
+          "acceptedS2": 250,
+          "refusedStuckUnique": 4,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 102,
+          "unclassifiedTests": 0,
+          "skippedGroups": 0
+        },
+        "phaseACounts": {
+          "logicalSolves": 370,
+          "logicalChecks": 281991,
+          "dfsCalls": 106,
+          "dfsEntries": 1288,
+          "dfsChecks": 1080
+        },
+        "uniquenessDfs": {
+          "calls": 110,
+          "entries": 1393,
+          "checks": 1179,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 2,
+          "canonicalSolves": 4,
+          "logicalChecks": 100864
+        },
+        "deepenCounts": {
+          "runs": 1,
+          "proposals": 16,
+          "solves": 16,
+          "logicalChecks": 1221685
+        },
+        "entries": 4,
+        "phaseBTries": 4,
+        "checkShares": {
+          "floorTests": 0.1757,
+          "allowedAndCanonical": 0.0629,
+          "deepen": 0.7614,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "samurai",
+        "mode": "FU",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 272.811,
+        "meanSampleWallMs": 136.405,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 2,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 3.396,
+          "phaseA": 243.828,
+          "phaseBWithoutDeepen": 0,
+          "deepen": 0,
+          "phaseWallTotal": 247.224,
+          "outsideThePhases": 25.587,
+          "phaseAShareOfSample": 0.8938,
+          "phaseBShareOfSample": 0,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.0124,
+          "phaseAShareOfPhaseWall": 0.9863,
+          "phaseBShareOfPhaseWall": 0,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 376,
+          "acceptedFull": 14,
+          "acceptedS2": 252,
+          "refusedStuckUnique": 6,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 104,
+          "unclassifiedTests": 0,
+          "skippedGroups": 206
+        },
+        "phaseACounts": {
+          "logicalSolves": 376,
+          "logicalChecks": 328086,
+          "dfsCalls": 110,
+          "dfsEntries": 1393,
+          "dfsChecks": 1179
+        },
+        "uniquenessDfs": {
+          "calls": 110,
+          "entries": 1393,
+          "checks": 1179,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 0,
+          "canonicalSolves": 2,
+          "logicalChecks": 0
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 0,
+        "phaseBTries": 0,
+        "checkShares": {
+          "floorTests": 1,
+          "allowedAndCanonical": 0,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      },
+      {
+        "cell": "samurai",
+        "mode": "FS",
+        "kind": "frontier",
+        "trials": 2,
+        "samples": 2,
+        "sampleWallMs": 300.366,
+        "meanSampleWallMs": 150.183,
+        "outcomes": {
+          "complete": 2,
+          "budgetEnded": 0,
+          "emptyFrontier": 2,
+          "candidateClasses": {
+            "not recorded": 2
+          }
+        },
+        "wallMs": {
+          "init": 3.43,
+          "phaseA": 268.862,
+          "phaseBWithoutDeepen": 0,
+          "deepen": 0,
+          "phaseWallTotal": 272.292,
+          "outsideThePhases": 28.074,
+          "phaseAShareOfSample": 0.8951,
+          "phaseBShareOfSample": 0,
+          "deepenShareOfSample": 0,
+          "initShareOfSample": 0.0114,
+          "phaseAShareOfPhaseWall": 0.9874,
+          "phaseBShareOfPhaseWall": 0,
+          "deepenShareOfPhaseWall": 0
+        },
+        "floorTests": {
+          "tests": 376,
+          "acceptedFull": 14,
+          "acceptedS2": 252,
+          "refusedStuckUnique": 6,
+          "refusedStuckUnknown": 0,
+          "refusedAmbiguous": 104,
+          "unclassifiedTests": 0,
+          "skippedGroups": 206
+        },
+        "phaseACounts": {
+          "logicalSolves": 376,
+          "logicalChecks": 328086,
+          "dfsCalls": 110,
+          "dfsEntries": 1393,
+          "dfsChecks": 1179
+        },
+        "uniquenessDfs": {
+          "calls": 110,
+          "entries": 1393,
+          "checks": 1179,
+          "note": "DFS after every stuck floor test (the refused-test uniqueness proof) and the phase-B fresh proofs; phase A wall holds its share, which these counts do not separate"
+        },
+        "allowedAndCanonical": {
+          "allowedSolves": 0,
+          "canonicalSolves": 2,
+          "logicalChecks": 0
+        },
+        "deepenCounts": {
+          "runs": 0,
+          "proposals": 0,
+          "solves": 0,
+          "logicalChecks": 0
+        },
+        "entries": 0,
+        "phaseBTries": 0,
+        "checkShares": {
+          "floorTests": 1,
+          "allowedAndCanonical": 0,
+          "deepen": 0,
+          "note": "shares of the logical budget checks by engine purpose: counts, not wall time"
+        }
+      }
+    ]
+  },
+  "limits": [
+    "The phase A wall of a frontier sample contains every floor test AND the DFS uniqueness checks that follow a stuck test; the per-purpose counts (floor, dfs, allowed/canonical, deepen) are counts of logical checks and DFS entries, not per-purpose or per-finder wall measurements.",
+    "Native-request finder shares (finder-profile.json) cannot be transplanted into frontier phase A, and they say nothing about the cost of a scoped cache. A per-finder profile of frontier phase A would be separately authorised work.",
+    "Classic9's empty frontier (every refused group proves ambiguous), the larger boards' above-band or shallow candidates and the budget-ended searches are different outcomes of different mechanisms, never interchangeable failures.",
+    "No frontier run was made for IG-S07: these are the IG-S05 screen trials as recorded (two samples of two grids per cell and mode at most, eight clusters per cell; zero verified hits in every mode) and, as a second dataset, the IG-S04 pilot trials (grid seeds 11 and 12, one sample each)."
+  ]
+}

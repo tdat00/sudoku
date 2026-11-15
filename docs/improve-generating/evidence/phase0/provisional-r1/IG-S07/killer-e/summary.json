@@ -1,0 +1,322 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S07",
+  "shard": "killer-e",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "formalGate": "not-evaluable-pre-freeze",
+  "status": "complete",
+  "exit": 0,
+  "coverage": {
+    "planned": 2,
+    "completed": 2,
+    "censored": 0,
+    "errors": 0,
+    "unstarted": 0,
+    "complete": true,
+    "exclusions": [
+      "an instrumented run is not a timing run: the profiled wall time is never a before/after figure",
+      "the unmeasured catalogue probe, the calibration and the independent audit are outside every generation time",
+      "the three controls' unprofiled arms are overhead comparators, not new headline measurements"
+    ]
+  },
+  "sources": {
+    "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "files": 63,
+    "harnessFingerprint": "0feb1ea57bd481a17889f3e678143ce55574691748f44cae486be1e51c307225",
+    "adapterIds": [
+      "profile"
+    ],
+    "adapterHashes": [
+      "1e6f4df1909ebe02c680f850acb281c02b529ad53dbe0be96f14b7badcac2a03"
+    ],
+    "sourceStable": true,
+    "firewallClean": true
+  },
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 51.6262999999999,
+      "changesSeen": 7,
+      "incrementsMs": [
+        15,
+        16,
+        16,
+        16,
+        15,
+        16
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    },
+    "commandCpuMs": 26422,
+    "processAgeAtHostMs": 595.8697
+  },
+  "pairedRows": [
+    {
+      "pairId": "killer:expert:1",
+      "reference": {
+        "key": "IG-S07/killer-e/killer:expert:1/unprofiled",
+        "outcome": "complete",
+        "readyWallMs": 10734.5687,
+        "coldWallMs": 10829.7794,
+        "cpuTotalMs": 12000,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "puzzleHash": "d8d8479e42082b17bbc749b6705b7cbbade739440d6f3f94dec87864f98cbc16"
+      },
+      "prototype": {
+        "key": "IG-S07/killer-e/killer:expert:1/profiled",
+        "outcome": "complete",
+        "readyWallMs": 11761.5133,
+        "coldWallMs": 11889.0617,
+        "cpuTotalMs": 13078,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": false,
+        "verifiedExact": false,
+        "puzzleHash": "d8d8479e42082b17bbc749b6705b7cbbade739440d6f3f94dec87864f98cbc16"
+      },
+      "cpuFactor": 1.0898333333333334,
+      "readyWallFactor": 1.0956670574011977,
+      "coldWallFactor": 1.0978119923661604
+    }
+  ],
+  "arms": {
+    "reference": {
+      "requests": 1,
+      "complete": 1,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 0,
+      "readyWallMs": {
+        "n": 1,
+        "p50": 10734.5687,
+        "p95": 10734.5687,
+        "max": 10734.5687,
+        "upperMedian": 10734.5687,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 1,
+        "p50": 10829.7794,
+        "p95": 10829.7794,
+        "max": 10829.7794,
+        "upperMedian": 10829.7794,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 1,
+        "p50": 12000,
+        "p95": 12000,
+        "max": 12000,
+        "upperMedian": 12000,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 1,
+          "cpuMs": 12000,
+          "wallMs": 10838.0988
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 1,
+          "cpuMs": 12000,
+          "wallMs": 10838.0988
+        }
+      },
+      "cpuTotalAggregateMs": 12000,
+      "cpuAggregateStatus": "resolved",
+      "wallChargedMs": 10838.0988,
+      "verifiedHits": 0,
+      "hitsPerCpuSecond": 0,
+      "hitsPerColdWallSecond": 0
+    },
+    "prototype": {
+      "requests": 1,
+      "complete": 1,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 0,
+      "readyWallMs": {
+        "n": 1,
+        "p50": 11761.5133,
+        "p95": 11761.5133,
+        "max": 11761.5133,
+        "upperMedian": 11761.5133,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 1,
+        "p50": 11889.0617,
+        "p95": 11889.0617,
+        "max": 11889.0617,
+        "upperMedian": 11889.0617,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 1,
+        "p50": 13078,
+        "p95": 13078,
+        "max": 13078,
+        "upperMedian": 13078,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 1,
+          "cpuMs": 13078,
+          "wallMs": 11896.989
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 1,
+          "cpuMs": 13078,
+          "wallMs": 11896.989
+        }
+      },
+      "cpuTotalAggregateMs": 13078,
+      "cpuAggregateStatus": "resolved",
+      "wallChargedMs": 11896.989,
+      "verifiedHits": 0,
+      "hitsPerCpuSecond": 0,
+      "hitsPerColdWallSecond": 0
+    }
+  },
+  "estimateVerdict": "attribution only; the headline timings stay IG-S02's (profiles are not timing evidence)",
+  "extra": {
+    "arms": {
+      "prototype": "profiled native request (adapter profile, runtime installed for the one pipeline call)",
+      "reference": "unprofiled native request (the unchanged host path), controls only"
+    },
+    "identity": {
+      "pairs": [
+        {
+          "pairId": "IG-S07/killer-e/killer:expert:1/profiled",
+          "comparator": "same-command unprofiled arm",
+          "comparatorKey": "IG-S07/killer-e/killer:expert:1/unprofiled",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "puzzleHash": "d8d8479e42082b17bbc749b6705b7cbbade739440d6f3f94dec87864f98cbc16",
+          "comparatorPuzzleHash": "d8d8479e42082b17bbc749b6705b7cbbade739440d6f3f94dec87864f98cbc16",
+          "profiledDigest": "49405971f37f5cc93430407a621898ea104d32d4fc4b5ac1819a2c0334bb2864",
+          "comparatorDigest": "49405971f37f5cc93430407a621898ea104d32d4fc4b5ac1819a2c0334bb2864"
+        }
+      ],
+      "failed": 0,
+      "ok": 1,
+      "notComparable": 0,
+      "deferred": 0,
+      "complete": true
+    },
+    "profiles": [
+      {
+        "key": "IG-S07/killer-e/killer:expert:1/profiled",
+        "outcome": "complete",
+        "rootMs": 11754.414,
+        "workerRunMs": 11754.373,
+        "readyWallMs": 11761.5133,
+        "contextShare": {
+          "setup": 0,
+          "attempt": 0.552,
+          "ordinary": 0.344,
+          "local": 0.103
+        },
+        "finderShareOfRoot": 0.568,
+        "finderCalls": 3614270,
+        "solves": 21075,
+        "canonicalRates": 1881,
+        "samples": 104,
+        "problems": []
+      }
+    ],
+    "calibration": {
+      "wallMs": 326.6071999999999,
+      "cpuMs": 376,
+      "iterations": 100000,
+      "repeats": 5,
+      "clockReadNs": 61.1,
+      "finderTimerPairNs": 164.3,
+      "applyTimerNs": 149.3,
+      "framePairNs": 167.1,
+      "countedCheckNs": 0,
+      "counterIncrementNs": 0,
+      "sink": true
+    },
+    "referenceCompatibility": [],
+    "engineChecks": null,
+    "catalogueProbe": {
+      "wallMs": 104.75329999999997,
+      "cpuMs": 78,
+      "note": "unmeasured: loads the engine once per command so no request carries the catalogue discovery"
+    },
+    "chain": {
+      "attempts": [
+        "a1"
+      ],
+      "resumed": false,
+      "startedBefore": [],
+      "startedHere": [
+        "IG-S07/killer-e/killer:expert:1/unprofiled",
+        "IG-S07/killer-e/killer:expert:1/profiled"
+      ],
+      "rerunKeys": [],
+      "noRerun": true,
+      "unstartedAfter": []
+    }
+  },
+  "notes": []
+}

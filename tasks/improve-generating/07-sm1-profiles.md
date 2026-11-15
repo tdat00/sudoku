@@ -141,12 +141,12 @@ No task rewrites earlier timing rows with profiled numbers.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start /end | |
-| Developer /model | |
-| Files /source identities | |
-| Verification /evidence | |
-| Machine charged /priority wait | |
-| Findings /author answers | |
-| Orchestrator review /acceptance | |
-| Handoff | |
+| Status | Accepted (pack author: IG-S07 ACCEPT after one fix round; provisional attribution, not complete solver-check accounting) |
+| Start /end | 2026-11-15 06:11-07:20 (+07:00) first pass; 07:30 author review; 07:36-08:03 fix round r2 (one loop-check command); 08:08 author acceptance; orchestrator commit |
+| Developer /model | claude-sonnet-5.5; 299 model calls, 105,420,238 input tokens (104,149,957 cache reads), 529,783 output tokens, about 1,889 AI credits. Author review gpt-6-astra; orchestrator claude-opus-5.5 |
+| Files /source identities | New under `phase0/`: `profile-runtime.cjs`, `adapters/profile.cjs` (v2, 27 transforms), `ig07-worker.cjs`, `plans/ig-s07.cjs`, `ig07-run.cjs`, `ig07-aggregate.cjs`, `ig07-test.cjs` (31/31); one line each in `worker.cjs` and `run.cjs`; README. Fingerprints: profile cohort `0feb1ea57bd4`, r1 report `f91e6e527f67`, loop-check command `062742c330eb`, r2 writer `5027a528f03a` |
+| Verification /evidence | `docs/improve-generating/evidence/phase0/provisional-r1/IG-S07/` (`summary-r2.md` current, r1 kept; `stage-profile-r2.json`, `finder-profile-r2.json`, `lc/`). 12 requests, 0 censored, 0 errors; 9/9 profiled outputs digest-identical to their unprofiled comparators; 13 engine checks. Loop check on the real engine (Escargot classic9): 13/13, unpatched / patched / profiled identical at every budget limit; observed loop plus finder checks equal the budget's count including the throwing check |
+| Machine charged /priority wait | 710.6 s of 720 s (10 commands; the 12 s approval lifted admission only) plus the disclosed unwrapped 0.47 s / 0.41 s CPU pre-check; priority waits 1,185.4 s, not charged |
+| Findings /author answers | Stage shares (sample / local): mega16 90.5 / 9.5 (the report's anchor holds), mega12 83.5 / 16.4, samurai 72.8 / 27.2, classic9 60.3 / 39.6; Killer and Greater-Than have large non-finder shares (Killer DFS 45 %, Greater-Than `local.search` own code 25 %). Chains: legacy `nishio` plus `forcingChain` about 81 % of the single mega16 profile and 77 % of mega12. Conditional zero-cost scenarios (not full-S3 ceilings): covered-finder negative calls removed 1.03-1.15x (measured partial S3 0.94-1.03x); remaining-finder negative calls 1.02-2.36x, only 1.02-1.30x without chains; covered-finder family time removed 1.04-1.18x. r1 check totals inexact (loop-check boundaries; chain propagation checks bypassing `ctx.check`, read from the source). Frontier phase A from existing data: F1 phase-A share 52-92 %. Disclosures: classic9 first as a plumbing check; unprofiled arm first in the control shards; IG-S04 pilot as a second frontier dataset; n = 1 per cell; a `$env:TEMP` slip and a renamed file; the pre-check puzzle replaced by Escargot |
+| Orchestrator review /acceptance | Only harness and evidence folders changed; formats checked. The chain finding was added to the non-gating interim note for the plan author |
+| Handoff | IG-S08 on harness `5027a528f03a`, with `062742c330eb` kept as loop-test provenance and the counter limitation carried forward; busy-worker journals, unknown counters and actual censoring limits preserved; explicitly pre-MS07. Frozen attribution must distinguish MS07b's new chain families (`forcingChainLong`, `nishioDeep`) |

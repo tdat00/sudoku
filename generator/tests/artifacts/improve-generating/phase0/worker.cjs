@@ -305,6 +305,9 @@ function handle(job) {
   else if (typeof job.kind === 'string' && job.kind.indexOf('ig05-') === 0) {
     require('./ig05-worker.cjs').handle({ SG: SG, job: job, post: post, failure: failure });
   }
+  else if (typeof job.kind === 'string' && job.kind.indexOf('ig07-') === 0) {
+    require('./ig07-worker.cjs').handle({ SG: SG, job: job, post: post, failure: failure });
+  }
   else if (data.testOnly === true) syntheticJob(job);
   else post({ type: 'fatal', error: { code: 'job-kind', name: null, message: 'unknown job kind ' + job.kind } });
 }

@@ -1,0 +1,10 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S07",
+  "shard": "lc",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "manifestHash": "a02b3f0ae47e667679888fa5429030db936efd3c0f379dd0e16254ad8a028f55",
+  "records": []
+}

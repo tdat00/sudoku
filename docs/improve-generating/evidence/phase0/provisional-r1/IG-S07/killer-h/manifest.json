@@ -1,0 +1,662 @@
+{
+  "manifest": {
+    "schema": "ig-s-phase0/1",
+    "task": "IG-S07",
+    "round": "provisional-r1",
+    "evidenceStatus": "provisional (pre-freeze)",
+    "guards": {
+      "commandMs": 270000,
+      "requestMs": 180000,
+      "sampleMs": 45000,
+      "jigsawMs": 240000,
+      "validationMs": 60000,
+      "wrapperLimitMs": 300000,
+      "graceMs": 45000,
+      "finalizeReserveMs": 8000,
+      "startMarginMs": 2000,
+      "minWindowMs": 15000
+    },
+    "pairOrder": [
+      {
+        "pairId": "classic9:nightmare:3",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "mega16:nightmare:3",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "mega12:nightmare:3",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "samurai:nightmare:42",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "killer:nightmare:3",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:nightmare:3",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "killer:hard:1",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "killer:expert:1",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      },
+      {
+        "pairId": "greaterThan:normal:300",
+        "seedIndex": 0,
+        "order": [
+          "reference",
+          "prototype"
+        ]
+      }
+    ],
+    "shards": [
+      {
+        "shard": "c9",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S07/c9/classic9:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S07/c9/classic9:nightmare:3/profiled"
+        ]
+      },
+      {
+        "shard": "m16",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S07/m16/mega16:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S07/m16/mega16:nightmare:3/profiled"
+        ]
+      },
+      {
+        "shard": "m12",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S07/m12/mega12:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S07/m12/mega12:nightmare:3/profiled"
+        ]
+      },
+      {
+        "shard": "sam",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S07/sam/samurai:nightmare:42"
+        ],
+        "jobKeys": [
+          "IG-S07/sam/samurai:nightmare:42/profiled"
+        ]
+      },
+      {
+        "shard": "killer-n",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S07/killer-n/killer:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S07/killer-n/killer:nightmare:3/profiled"
+        ]
+      },
+      {
+        "shard": "gt-n",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S07/gt-n/greaterThan:nightmare:3"
+        ],
+        "jobKeys": [
+          "IG-S07/gt-n/greaterThan:nightmare:3/profiled"
+        ]
+      },
+      {
+        "shard": "killer-h",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S07/killer-h/killer:hard:1"
+        ],
+        "jobKeys": [
+          "IG-S07/killer-h/killer:hard:1/unprofiled",
+          "IG-S07/killer-h/killer:hard:1/profiled"
+        ]
+      },
+      {
+        "shard": "killer-e",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S07/killer-e/killer:expert:1"
+        ],
+        "jobKeys": [
+          "IG-S07/killer-e/killer:expert:1/unprofiled",
+          "IG-S07/killer-e/killer:expert:1/profiled"
+        ]
+      },
+      {
+        "shard": "gt-normal",
+        "kind": "pipeline",
+        "blockKeys": [
+          "IG-S07/gt-normal/greaterThan:normal:300"
+        ],
+        "jobKeys": [
+          "IG-S07/gt-normal/greaterThan:normal:300/unprofiled",
+          "IG-S07/gt-normal/greaterThan:normal:300/profiled"
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "blockKey": "IG-S07/c9/classic9:nightmare:3",
+        "shard": "c9",
+        "jobKeys": [
+          "IG-S07/c9/classic9:nightmare:3/profiled"
+        ],
+        "estimateMs": 14000
+      },
+      {
+        "blockKey": "IG-S07/m16/mega16:nightmare:3",
+        "shard": "m16",
+        "jobKeys": [
+          "IG-S07/m16/mega16:nightmare:3/profiled"
+        ],
+        "estimateMs": 135000
+      },
+      {
+        "blockKey": "IG-S07/m12/mega12:nightmare:3",
+        "shard": "m12",
+        "jobKeys": [
+          "IG-S07/m12/mega12:nightmare:3/profiled"
+        ],
+        "estimateMs": 33000
+      },
+      {
+        "blockKey": "IG-S07/sam/samurai:nightmare:42",
+        "shard": "sam",
+        "jobKeys": [
+          "IG-S07/sam/samurai:nightmare:42/profiled"
+        ],
+        "estimateMs": 32000
+      },
+      {
+        "blockKey": "IG-S07/killer-n/killer:nightmare:3",
+        "shard": "killer-n",
+        "jobKeys": [
+          "IG-S07/killer-n/killer:nightmare:3/profiled"
+        ],
+        "estimateMs": 31000
+      },
+      {
+        "blockKey": "IG-S07/gt-n/greaterThan:nightmare:3",
+        "shard": "gt-n",
+        "jobKeys": [
+          "IG-S07/gt-n/greaterThan:nightmare:3/profiled"
+        ],
+        "estimateMs": 20000
+      },
+      {
+        "blockKey": "IG-S07/killer-h/killer:hard:1",
+        "shard": "killer-h",
+        "jobKeys": [
+          "IG-S07/killer-h/killer:hard:1/unprofiled",
+          "IG-S07/killer-h/killer:hard:1/profiled"
+        ],
+        "estimateMs": 24000
+      },
+      {
+        "blockKey": "IG-S07/killer-e/killer:expert:1",
+        "shard": "killer-e",
+        "jobKeys": [
+          "IG-S07/killer-e/killer:expert:1/unprofiled",
+          "IG-S07/killer-e/killer:expert:1/profiled"
+        ],
+        "estimateMs": 30000
+      },
+      {
+        "blockKey": "IG-S07/gt-normal/greaterThan:normal:300",
+        "shard": "gt-normal",
+        "jobKeys": [
+          "IG-S07/gt-normal/greaterThan:normal:300/unprofiled",
+          "IG-S07/gt-normal/greaterThan:normal:300/profiled"
+        ],
+        "estimateMs": 16000
+      }
+    ],
+    "jobs": [
+      {
+        "key": "IG-S07/c9/classic9:nightmare:3/profiled",
+        "blockKey": "IG-S07/c9/classic9:nightmare:3",
+        "shard": "c9",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": "classic9:nightmare:3",
+        "gridCluster": null,
+        "requestSeed": 3,
+        "variantId": "profiled",
+        "puzzleVariant": "classic9",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "solverMode": "profiled",
+        "executor": "profile",
+        "adapterIds": [
+          "profile"
+        ],
+        "cellKind": "headline",
+        "request": {
+          "variantId": "classic9",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 14000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S07/m16/mega16:nightmare:3/profiled",
+        "blockKey": "IG-S07/m16/mega16:nightmare:3",
+        "shard": "m16",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": "mega16:nightmare:3",
+        "gridCluster": null,
+        "requestSeed": 3,
+        "variantId": "profiled",
+        "puzzleVariant": "mega16",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "solverMode": "profiled",
+        "executor": "profile",
+        "adapterIds": [
+          "profile"
+        ],
+        "cellKind": "headline",
+        "request": {
+          "variantId": "mega16",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 135000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S07/m12/mega12:nightmare:3/profiled",
+        "blockKey": "IG-S07/m12/mega12:nightmare:3",
+        "shard": "m12",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": "mega12:nightmare:3",
+        "gridCluster": null,
+        "requestSeed": 3,
+        "variantId": "profiled",
+        "puzzleVariant": "mega12",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "solverMode": "profiled",
+        "executor": "profile",
+        "adapterIds": [
+          "profile"
+        ],
+        "cellKind": "headline",
+        "request": {
+          "variantId": "mega12",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 33000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S07/sam/samurai:nightmare:42/profiled",
+        "blockKey": "IG-S07/sam/samurai:nightmare:42",
+        "shard": "sam",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": "samurai:nightmare:42",
+        "gridCluster": null,
+        "requestSeed": 42,
+        "variantId": "profiled",
+        "puzzleVariant": "samurai",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "solverMode": "profiled",
+        "executor": "profile",
+        "adapterIds": [
+          "profile"
+        ],
+        "cellKind": "headline",
+        "request": {
+          "variantId": "samurai",
+          "difficulty": "nightmare",
+          "seed": 42,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 32000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S07/killer-n/killer:nightmare:3/profiled",
+        "blockKey": "IG-S07/killer-n/killer:nightmare:3",
+        "shard": "killer-n",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": "killer:nightmare:3",
+        "gridCluster": null,
+        "requestSeed": 3,
+        "variantId": "profiled",
+        "puzzleVariant": "killer",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "solverMode": "profiled",
+        "executor": "profile",
+        "adapterIds": [
+          "profile"
+        ],
+        "cellKind": "headline",
+        "request": {
+          "variantId": "killer",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 31000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S07/gt-n/greaterThan:nightmare:3/profiled",
+        "blockKey": "IG-S07/gt-n/greaterThan:nightmare:3",
+        "shard": "gt-n",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": "greaterThan:nightmare:3",
+        "gridCluster": null,
+        "requestSeed": 3,
+        "variantId": "profiled",
+        "puzzleVariant": "greaterThan",
+        "level": "nightmare",
+        "mode": "native",
+        "arm": "prototype",
+        "solverMode": "profiled",
+        "executor": "profile",
+        "adapterIds": [
+          "profile"
+        ],
+        "cellKind": "headline",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "nightmare",
+          "seed": 3,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 20000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S07/killer-h/killer:hard:1/unprofiled",
+        "blockKey": "IG-S07/killer-h/killer:hard:1",
+        "shard": "killer-h",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": "killer:hard:1",
+        "gridCluster": null,
+        "requestSeed": 1,
+        "variantId": "unprofiled",
+        "puzzleVariant": "killer",
+        "level": "hard",
+        "mode": "native",
+        "arm": "reference",
+        "solverMode": "native-w1",
+        "executor": null,
+        "adapterIds": [],
+        "cellKind": "control",
+        "request": {
+          "variantId": "killer",
+          "difficulty": "hard",
+          "seed": 1,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 12000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S07/killer-h/killer:hard:1/profiled",
+        "blockKey": "IG-S07/killer-h/killer:hard:1",
+        "shard": "killer-h",
+        "order": 1,
+        "seedIndex": 0,
+        "pairId": "killer:hard:1",
+        "gridCluster": null,
+        "requestSeed": 1,
+        "variantId": "profiled",
+        "puzzleVariant": "killer",
+        "level": "hard",
+        "mode": "native",
+        "arm": "prototype",
+        "solverMode": "profiled",
+        "executor": "profile",
+        "adapterIds": [
+          "profile"
+        ],
+        "cellKind": "control",
+        "request": {
+          "variantId": "killer",
+          "difficulty": "hard",
+          "seed": 1,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 12000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S07/killer-e/killer:expert:1/unprofiled",
+        "blockKey": "IG-S07/killer-e/killer:expert:1",
+        "shard": "killer-e",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": "killer:expert:1",
+        "gridCluster": null,
+        "requestSeed": 1,
+        "variantId": "unprofiled",
+        "puzzleVariant": "killer",
+        "level": "expert",
+        "mode": "native",
+        "arm": "reference",
+        "solverMode": "native-w1",
+        "executor": null,
+        "adapterIds": [],
+        "cellKind": "control",
+        "request": {
+          "variantId": "killer",
+          "difficulty": "expert",
+          "seed": 1,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 15000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S07/killer-e/killer:expert:1/profiled",
+        "blockKey": "IG-S07/killer-e/killer:expert:1",
+        "shard": "killer-e",
+        "order": 1,
+        "seedIndex": 0,
+        "pairId": "killer:expert:1",
+        "gridCluster": null,
+        "requestSeed": 1,
+        "variantId": "profiled",
+        "puzzleVariant": "killer",
+        "level": "expert",
+        "mode": "native",
+        "arm": "prototype",
+        "solverMode": "profiled",
+        "executor": "profile",
+        "adapterIds": [
+          "profile"
+        ],
+        "cellKind": "control",
+        "request": {
+          "variantId": "killer",
+          "difficulty": "expert",
+          "seed": 1,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 15000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S07/gt-normal/greaterThan:normal:300/unprofiled",
+        "blockKey": "IG-S07/gt-normal/greaterThan:normal:300",
+        "shard": "gt-normal",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": "greaterThan:normal:300",
+        "gridCluster": null,
+        "requestSeed": 300,
+        "variantId": "unprofiled",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "reference",
+        "solverMode": "native-w1",
+        "executor": null,
+        "adapterIds": [],
+        "cellKind": "control",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 300,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      },
+      {
+        "key": "IG-S07/gt-normal/greaterThan:normal:300/profiled",
+        "blockKey": "IG-S07/gt-normal/greaterThan:normal:300",
+        "shard": "gt-normal",
+        "order": 1,
+        "seedIndex": 0,
+        "pairId": "greaterThan:normal:300",
+        "gridCluster": null,
+        "requestSeed": 300,
+        "variantId": "profiled",
+        "puzzleVariant": "greaterThan",
+        "level": "normal",
+        "mode": "native",
+        "arm": "prototype",
+        "solverMode": "profiled",
+        "executor": "profile",
+        "adapterIds": [
+          "profile"
+        ],
+        "cellKind": "control",
+        "request": {
+          "variantId": "greaterThan",
+          "difficulty": "normal",
+          "seed": 300,
+          "trace": "off",
+          "symmetry": "rotational180",
+          "digOrder": "random"
+        },
+        "estimateMs": 8000,
+        "guardScope": "request"
+      }
+    ],
+    "manifestHash": "7d4d096c96bb7d6a16052fdbef7c56880d5ae9555bda67e9b3f69a747edf9db6"
+  },
+  "attemptKeys": [
+    "IG-S07/killer-h/killer:hard:1/unprofiled",
+    "IG-S07/killer-h/killer:hard:1/profiled"
+  ],
+  "runKeys": [
+    "IG-S07/killer-h/killer:hard:1/unprofiled",
+    "IG-S07/killer-h/killer:hard:1/profiled"
+  ],
+  "physicalPlan": {
+    "windowMs": 180937,
+    "commands": [
+      {
+        "index": 0,
+        "blockKeys": [
+          "IG-S07/killer-h/killer:hard:1"
+        ],
+        "jobKeys": [
+          "IG-S07/killer-h/killer:hard:1/unprofiled",
+          "IG-S07/killer-h/killer:hard:1/profiled"
+        ],
+        "estimateMs": 24000,
+        "split": false
+      }
+    ],
+    "oversize": [],
+    "hash": "385b6d1dff003186e973e2791bd5228a7314657cf342dc446a6c4cc4856cf484"
+  }
+}
