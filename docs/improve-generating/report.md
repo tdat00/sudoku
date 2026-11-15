@@ -2,10 +2,10 @@
 
 | Field | Value |
 |---|---|
-| Plan | [plan.md](plan.md), by Fable |
+| Plan | `plan.md` at `8c5bc25`, by Fable |
 | Analysts | SA1 claude-opus-5.5 ("Opus", lead of this report) and SA2 gpt-6-astra ("Astra", reviewer of this report) |
 | Source | Analyses made against `f7be90f` (the difficulty-v3 recovery MS05: 8 / 4 / 2 attempts, allowance 256, requiredness). The worktree is now at `ef8a9cc`, which adds or changes only documents, task files, the MS05e evidence and six MS05e measurement scripts (`generator/tests/artifacts/difficulty-v3/MS05e/`); no runtime file changed (the MS05e candidate was restored byte for byte), so the source analysed is unchanged |
-| Detail | Opus: [1-analysis](claude-opus-5.5/1-analysis.md), [1-speed-summary](claude-opus-5.5/1-speed-summary.md), [2-cross-review](claude-opus-5.5/2-cross-review.md). Astra: [1-analysis](gpt-6-astra/1-analysis.md), [1-speed-summary](gpt-6-astra/1-speed-summary.md), [2-cross-review](gpt-6-astra/2-cross-review.md) |
+| Detail | Opus: [1-analysis](claude-opus-5.5/1-analysis.md), `docs/improve-generating/claude-opus-5.5/1-speed-summary.md` at `2278b61`, [2-cross-review](claude-opus-5.5/2-cross-review.md). Astra: [1-analysis](gpt-6-astra/1-analysis.md), `docs/improve-generating/gpt-6-astra/1-speed-summary.md` at `2278b61`, [2-cross-review](gpt-6-astra/2-cross-review.md) |
 | Questions | [clarifications.md](clarifications.md): IG-S-Q01 to IG-S-Q16, blocking ones first |
 
 **Every number after "today" is an estimate. Nothing was run for this report or for the analyses behind it: no

@@ -1,7 +1,7 @@
 # Improve generating (Sudoku): cross-review of Astra's analysis (SA1, claude-opus-5.5)
 
 Phase 2, 2026-11-14. Worktree `improve-generating` at `f7be90f`. Reviewed: `docs/improve-generating/gpt-6-astra/1-analysis.md`
-and `1-speed-summary.md` (SA2), against my `docs/improve-generating/claude-opus-5.5/1-analysis.md` and `1-speed-summary.md`
+and `docs/improve-generating/gpt-6-astra/1-speed-summary.md` at `2278b61` (SA2), against my `docs/improve-generating/claude-opus-5.5/1-analysis.md` and `docs/improve-generating/claude-opus-5.5/1-speed-summary.md` at `2278b61`
 ("Opus §n" and "Astra §n" below). Read-only: no test, generation, benchmark, qualification or timing run, no git action.
 The checks read the code and the committed evidence; every number below is arithmetic on figures already in the two
 analyses or in the evidence they cite. Labels as before: *Measured*, *Derived*, *Projection*.

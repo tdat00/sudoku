@@ -1001,3 +1001,84 @@ text of the parked and dropped items remains. It ran nothing; the gate remains `
 - **Corrections:** JV2-S01 to JV2-S16 are taken in; the "220 to 590 points" window is withdrawn.
 - **Still to come to the owner:** the cost of the repair and the round's price after MS18e, OD-S1 and OD-S2
   before phase 2, the pool's enablement after F2, and Hell 1's route after F5 (plan section 7).
+
+---
+
+## Questions and corrections after plan version 3 (analysts, 2026-11-15)
+
+Raised by the analysts' review of plan version 3 (`plan.md` at `2278b61`): phase-1 analyses
+`claude-opus-5.5/5-plan-v3-analysis.md` and `gpt-6-astra/5-plan-v3-analysis.md`, cross-reviews `6-*`, and the
+joint report [plan-v3-joint-report.md](plan-v3-joint-report.md) (written by Astra, signed off by Opus). Both
+analysts support the direction of version 3 and agree on the two questions below; neither needs a run to be
+answered. **No owner decision is needed**; IG-S-D1 to IG-S-D6 remain in force.
+
+- **Corrections for the next revision:** the joint report's section 3 gives them as exact text: butterfly Hell 1's
+  phase-1 scenario 19.5-23.8 s becomes **11.2-19.1 s** (a four-attempt board; section 4), the "real-tier" wording
+  of the passing cells, Q's relation to MS08a (Skyscraper, 66 of 520 hashes), the workers sentence, an optional
+  K2 admission note, and the outcome-reuse rule of section 5.3 (JV3-S03).
+- **Findings:** JV3-S01 to JV3-S09 (2 Medium, 7 Low) in the joint report's section 2.
+- **Line numbers** in the joint report refer to `plan.md` at `2278b61`, before the cleanup below; the quoted text
+  identifies each place.
+- **Cleanup at the owner's request** ("xóa bớt những phần thừa trong plan v1 và v2 nếu không cần thiết"),
+  executed by the orchestrator with only what both analysts support (joint report section 7):
+  - `plan.md`: section 0 "What version 3 changes" and one history sentence of the header removed (494 to 472
+    lines); the two links into `../difficulty-v3/` pinned to `75b99e6`, where those files exist; no content that
+    binds a phase, a gate or a decision was cut;
+  - deleted: `claude-opus-5.5/1-speed-summary.md` and `gpt-6-astra/1-speed-summary.md` (superseded duplicate
+    tables; at `2278b61`), with the links to them pinned to that commit;
+  - kept: `report.md` (its plan link pinned to `8c5bc25`, version 1 as reviewed), the analysts' 1-* to 4-*
+    files, `plan-v2-joint-report.md`, this log, `evidence/` and `tasks/improve-generating/`.
+### IG-S-Q26: Where and against which arms do the confirmation cohorts run?
+
+*Joint. Blocks: the frozen manifest's arm matrix, price and the evidence required before pool enablement.*
+
+**Context.** F2 names native and widths 1, 2 and 4. Section 5.3 separately proposes 20 or more paired requests
+on Greater-Than Master, Killer Master and Nightmare, diagonalX Hell 1, samurai Hell 1, and mega16 Nightmare
+if still unqualified, plus classic9 and mega12 Nightmare controls. Cells are fixed after F1; the confirmation
+has no assigned F step or arm matrix. F6's kernel-only gate has a different comparator.
+
+**Question.** Where do these confirmations sit, which arms and control counts run, and when are the
+per-cell early-hit policy and warm/cold operating protocol frozen?
+
+**Options.** (a) All four F2 arms on every confirmation seed. (b) A small F2 width/policy pilot, then held-out
+width-one/width-four confirmation after F5 and before F6. (c) Confirmation only of later admitted F6 work,
+with separately specified evidence still required for S5a enablement.
+
+**Joint recommendation.** (b): about five pilot seeds per cell as a costed proposal, then at least twenty
+independent held-out pairs for the selected, admitted confirmation cells; keep native/no-op and width
+invariance checks. Fix the chosen policy before confirmation. Retain the bounded diagnostic purpose for
+unoffered Hell cells; their inclusion is not a wider live-search programme. A later kernel confirmation is
+separately priced against the same post-phase-2 generator, quotas and pool, not against serial S5a.
+
+**Price/gate effect.** Four full arms mean 80 executions per cell at twenty seeds; a two-arm confirmation
+means 40 plus the pilot (Derived counts, not a wall-time saving). The manifest must price every command,
+population, startup, validation, grace and cleanup. No preliminary SM5 is authorised and the official
+40-request qualification population is unchanged.
+
+Plan-author answer:
+
+### IG-S-Q27: Which tolerance and CPU statistic bind the kernel controls?
+
+*Joint. Blocks: fixing the kernel evaluation protocol after F3, before evaluating an optimisation.*
+
+**Context.** Section 5.4 uses the per-cell geometric mean of paired ready-wall reference/new ratios,
+thresholds 1.5 or 1.15 on targets, at least 0.95 on named controls, and “CPU may not rise”.
+S5a separately retains strict serial non-regression. At 0.95, new wall time may be about 5.26% higher.
+
+**Question.** Is the 0.95 tolerance expressly limited to the named kernel comparison, distinct from the
+pool's width-one check? Which per-cell CPU aggregation and threshold bind: a paired geometric mean,
+cohort totals or a specified bound?
+
+**Options.** (a) Explicitly separate the kernel-control tolerance from S5a's serial check, and define the
+CPU statistic and threshold. (b) Use strict >=1 wall/CPU ratios on both. (c) State another predeclared
+confidence/tolerance rule and its scope.
+
+**Joint recommendation.** State the scope now, and fix the exact CPU statistic with the targets/controls
+after F3 and before evaluation, as section 5.4 already requires. Report CPU including speculation and cold
+wall separately. Do not select the best-looking aggregation after seeing results or implicitly relax an
+owner-bound serial condition.
+
+**Price/gate effect.** This does not authorise another run; it prevents an ambiguous pass/fail verdict or
+an avoidable repeat of a wrongly specified comparison.
+
+Plan-author answer:
