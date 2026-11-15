@@ -677,8 +677,8 @@
           expect(P.stepMeta(steps[6])).toBe('30 clues');
         });
       });
-      expect(steps.map(function (s) { return s.table.score; })).toEqual([0, 23, 44, 47, 621, 925, 925]);
-      expect(steps.map(function (s) { return s.table.change; })).toEqual([null, 23, 21, 3, 574, 304, 0]);
+      expect(steps.map(function (s) { return s.table.score; })).toEqual([0, 23, 44, 47, 593, 925, 925]);
+      expect(steps.map(function (s) { return s.table.change; })).toEqual([null, 23, 21, 3, 546, 332, 0]);
     }, 60000);
 
     it('the example of the guides: Classic 9x9 easy, seed 3, replays in 7 steps (26 with every move shown)',
@@ -839,7 +839,7 @@
       expect(two.before).toEqual({});
       expect(two.counts).toEqual(analysis.ratings[7].counts);
       var four = r.player.tableAt(5);
-      expect([four.state, four.score, four.change]).toEqual(['scored', 621, 574]);
+      expect([four.state, four.score, four.change]).toEqual(['scored', 593, 546]);
       expect(four.before).toEqual(r.player.tableAt(4).counts);
       expect(four.transition).toBe(analysis.transitions[analysis.views.compact.steps[4].transition]);
       expect(four.proof).toBe(analysis.proofs[26]);

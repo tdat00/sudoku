@@ -1,10 +1,11 @@
 /**
- * Fish techniques (group `fish`): X-Wing, Skyscraper, Swordfish, Jellyfish and Simple Colouring; registers
- * itself in SG.techniques.
+ * Fish techniques (group `fish`): X-Wing, Skyscraper, Two-string kite, Swordfish, Jellyfish and Simple
+ * Colouring; registers itself in SG.techniques.
  *
  *   id               baseCost  order
  *   xWing                32     110     basic fish of size 2
  *   skyscraper           33     112     two lines with two candidates each, one end pair in a common line
+ *   twoStringKite        34     114     a row pair and a column pair, one cell of each in the same box
  *   simpleColouring      36     120     chains of strong links, two colours
  *   swordfish            42     130     basic fish of size 3
  *   jellyfish            56     137     basic fish of size 4 (before the wings: weight 520 < xyWing 650)
@@ -45,12 +46,29 @@
  * columns as base lines, line pair; the first pattern with an elimination is returned, with the four cells
  * in `cells`.
  *
- * Skyscraper work (R10). One unit is one tested pair of base lines (the second line extending the first),
- * limit 50000 per call (`SG.fishSearch.SKYSCRAPER_WORK_LIMIT`); a spent limit ends the call with null (a lost
- * deduction, never an invented one). The parent budget is checked at entry and before the pair that would
- * carry the work done since the last check over 256 units; the counter is local to the call. A spent budget
- * ('budget.exceeded') is "nothing found" as for the chain finders, cancellation and every other error
- * propagate. `ctx.options.onPatternWork(record)` observes each call and never selects its result:
+ * Two-string kite (rating v3, R11): for a digit d take a row and a column (complete units, each disjoint from
+ * the other lines of its kind) that each have exactly two cells that can still be d, with d not placed in
+ * them. Each holds d once, so one of its two cells is d. The four cells must be distinct (a row and a column
+ * meet in one cell, which must not be a cell of both pairs). One cell of the row and one of the column, the
+ * bridge, lie in the same box: a unit of kind 'box' or 'region' (a region of a jigsaw board is a box-like
+ * unit) that is complete and is the only box-like unit holding either cell (an overlapped box of a
+ * multi-grid board belongs to two grids, so its cells have no single owner and bridge nothing; a diagonal or
+ * a window is no box). A board without a complete box-like unit has no kite and costs no work. The bridge
+ * cells see each other, so they cannot both be d: at least one of the other two cells, the ends, is d. d is
+ * removed from every other cell that sees both ends (real peers, so any unit shape and extra regions
+ * count); a bridge cell or an end is never a target. A kite is looked for in the order digit, row pair (line
+ * order), column pair (line order), bridge cell of the row (cell order), bridge cell of the column (cell
+ * order); the first pattern with an elimination is returned, with the four cells in `cells`, the row and the
+ * column in `lines` (unit order), the two bridge cells in `bridge` and the two ends in `ends` (cell order).
+ *
+ * Work (R10), the same for both patterns. A work unit of the skyscraper is one tested pair of base lines (the
+ * second line extending the first), one of the kite is one tested pair of a row and a column of a digit
+ * (every one of its up to four bridges is tested inside the unit). The limit is 50000 per call
+ * (`SG.fishSearch.SKYSCRAPER_WORK_LIMIT`, `SG.fishSearch.KITE_WORK_LIMIT`); a spent limit ends the call with
+ * null (a lost deduction, never an invented one). The parent budget is checked at entry and before the unit
+ * that would carry the work done since the last check over 256 units; the counter is local to the call. A
+ * spent budget ('budget.exceeded') is "nothing found" as for the chain finders, cancellation and every other
+ * error propagate. `ctx.options.onPatternWork(record)` observes each call and never selects its result:
  * { id, work, limit, capHit (null | 'work'), retained (null) }, a fresh object per call.
  *
  * Performance: per model data (the lines, the owner line of every cell, all scratch buffers) is built once in
@@ -69,12 +87,14 @@
   /** Largest fish size (Jellyfish); sizes the per-line cover lists. */
   const MAX_FISH = 4;
 
-  // R10 work policy of the Skyscraper: the units one call may spend (tested pairs of base lines) and how many
-  // may pass between two checks of the parent budget.
+  // R10 work policy of the Skyscraper and the Two-string kite: the units one call may spend (tested pairs of
+  // base lines, tested pairs of a row and a column) and how many may pass between two checks of the parent
+  // budget.
   const SKYSCRAPER_WORK_LIMIT = 50000;
+  const KITE_WORK_LIMIT = 50000;
   const WORK_CHECK_UNITS = 256;
 
-  // Thrown through the pair loops of a skyscraper call whose work limit is spent.
+  // Thrown through the unit loops of a pattern call whose work limit is spent.
   const WORK_CAP = Object.freeze({ capHit: 'work' });
 
   const infos = new WeakMap();
@@ -119,11 +139,13 @@
     const nCells = model.cellCount;
     const rows = [];
     const cols = [];
+    const boxLike = [];
     for (let u = 0; u < nUnits; u++) {
       if (ctx.completeUnits[u] !== 1) continue;
       const kind = model.unitMeta[u].kind;
       if (kind === 'row') rows.push(u);
       else if (kind === 'col') cols.push(u);
+      else if (kind === 'box' || kind === 'region') boxLike.push(u);
     }
     const maxLines = Math.max(rows.length, cols.length, 1);
     const lineOf = [ownerTable(model, rows), ownerTable(model, cols)];
@@ -136,6 +158,10 @@
       lines: [Int32Array.from(rows), Int32Array.from(cols)],
       lineOf: lineOf,
       disjoint: disjoint,
+      // cell -> the one complete box-like unit (kind 'box' or 'region') holding it, counted over both kinds;
+      // -1 for a cell in none or in several (overlapped boxes)
+      boxOf: ownerTable(model, boxLike),
+      hasBox: boxLike.length > 0,
 
       // Skyscraper: the base lines of the current digit and orientation (their two cells and the cover
       // line of each), and the peers of the second end.
@@ -143,6 +169,12 @@
       skyCell: new Int32Array(maxLines * 2),
       skyCover: new Int32Array(maxLines * 2),
       peerMark: new Uint8Array(nCells),
+
+      // Two-string kite: the conjugate rows and columns of the current digit with their two cells each.
+      kiteRowUnit: new Int32Array(maxLines),
+      kiteRowCell: new Int32Array(maxLines * 2),
+      kiteColUnit: new Int32Array(maxLines),
+      kiteColCell: new Int32Array(maxLines * 2),
 
       // Fish search: eligible base lines of the current digit and the depth-first selection state.
       baseUnit: new Int32Array(maxLines),
@@ -395,6 +427,34 @@
     return count;
   }
 
+  // The eliminations of a pattern whose two ends are endA and endB: every open cell that still has the digit,
+  // sees both ends and is none of the four cells of the pattern loses it. Null when there is none.
+  function endEliminations(model, state, info, digit, endA, endB, pattern) {
+    const cand = state.candidates;
+    const val = state.value;
+    const bit = 1 << (digit - 1);
+
+    const peersB = model.peers[endB];
+    for (let k = 0; k < peersB.length; k++) info.peerMark[peersB[k]] = 1;
+    const targets = [];
+    const peersA = model.peers[endA];
+    for (let k = 0; k < peersA.length; k++) {
+      const c = peersA[k];
+      if (info.peerMark[c] === 1 && val[c] === 0 && (cand[c] & bit) !== 0 && pattern.indexOf(c) === -1) {
+        targets.push(c);
+      }
+    }
+    for (let k = 0; k < peersB.length; k++) info.peerMark[peersB[k]] = 0;
+    if (targets.length === 0) return null;
+
+    targets.sort(byNumber);
+    const eliminations = [];
+    for (let k = 0; k < targets.length; k++) {
+      if (k === 0 || targets[k] !== targets[k - 1]) eliminations.push([targets[k], digit]);
+    }
+    return eliminations;
+  }
+
   // The skyscraper of the linked lines i < j (indices of the scratch lists) or null: exactly one cover line
   // holds a cell of each line (the roots); the other two cells are the ends, and every other cell that still
   // has the digit and sees both ends loses it.
@@ -418,33 +478,14 @@
     const roots = [info.skyCell[a + rootA], info.skyCell[b + rootB]];
     const endA = info.skyCell[a + 1 - rootA];
     const endB = info.skyCell[b + 1 - rootB];
-    const cand = state.candidates;
-    const val = state.value;
-    const bit = 1 << (digit - 1);
+    const cells = [roots[0], roots[1], endA, endB];
+    const eliminations = endEliminations(model, state, info, digit, endA, endB, cells);
+    if (eliminations === null) return null;
 
-    const peersB = model.peers[endB];
-    for (let k = 0; k < peersB.length; k++) info.peerMark[peersB[k]] = 1;
-    const targets = [];
-    const peersA = model.peers[endA];
-    for (let k = 0; k < peersA.length; k++) {
-      const c = peersA[k];
-      if (info.peerMark[c] === 1 && val[c] === 0 && (cand[c] & bit) !== 0 && c !== roots[0] &&
-          c !== roots[1] && c !== endB) {
-        targets.push(c);
-      }
-    }
-    for (let k = 0; k < peersB.length; k++) info.peerMark[peersB[k]] = 0;
-    if (targets.length === 0) return null;
-
-    targets.sort(byNumber);
-    const eliminations = [];
-    for (let k = 0; k < targets.length; k++) {
-      if (k === 0 || targets[k] !== targets[k - 1]) eliminations.push([targets[k], digit]);
-    }
     const ends = endA < endB ? [endA, endB] : [endB, endA];
     return {
       technique: 'skyscraper',
-      cells: [roots[0], roots[1], endA, endB].sort(byNumber),
+      cells: cells.sort(byNumber),
       placements: [],
       eliminations: eliminations,
       i18nKey: 'technique.skyscraper.step',
@@ -456,8 +497,96 @@
     };
   }
 
-  // One tested pair of base lines is one work unit. The parent budget is checked before the unit that would
-  // carry the work done since the last check over WORK_CHECK_UNITS; a spent limit throws WORK_CAP.
+  // Lists the disjoint lines of one orientation that hold the digit in exactly two open cells (the conjugate
+  // pairs of a kite) into `units` and `pairCells` (two cells per line, ascending); returns their number.
+  // A line is skipped when it is not disjoint from the other lines of its kind, already has the digit placed
+  // or holds it in another number of cells.
+  function collectConjugateLines(model, state, info, digit, orient, units, pairCells) {
+    const cand = state.candidates;
+    const val = state.value;
+    const bit = 1 << (digit - 1);
+    const lines = info.lines[orient];
+    let count = 0;
+
+    for (let li = 0; li < lines.length; li++) {
+      const u = lines[li];
+      if (info.disjoint[u] === 0) continue;
+      const cells = model.units[u];
+      const slot = count * 2;
+      let positions = 0;
+      let eligible = true;
+      for (let k = 0; k < cells.length && eligible; k++) {
+        const c = cells[k];
+        if (val[c] !== 0) {
+          if (val[c] === digit) eligible = false;
+          continue;
+        }
+        if ((cand[c] & bit) === 0) continue;
+        if (positions === 2) eligible = false;
+        else pairCells[slot + positions++] = c;
+      }
+      if (eligible && positions === 2) {
+        if (pairCells[slot] > pairCells[slot + 1]) {
+          const lower = pairCells[slot + 1];
+          pairCells[slot + 1] = pairCells[slot];
+          pairCells[slot] = lower;
+        }
+        units[count++] = u;
+      }
+    }
+    return count;
+  }
+
+  // The kite of the conjugate row i and column j (indices of the scratch lists) or null: the four cells are
+  // distinct, and a bridge is one cell of each pair in the same single box-like unit (box or region); the
+  // other two cells are the ends. The bridges are tried row cell first, lower cell first; the first that
+  // removes something decides.
+  function kiteOf(model, state, info, digit, i, j) {
+    const a = 2 * i;
+    const b = 2 * j;
+    const rowCell = info.kiteRowCell;
+    const colCell = info.kiteColCell;
+    for (let p = 0; p < 2; p++) {
+      for (let q = 0; q < 2; q++) {
+        if (rowCell[a + p] === colCell[b + q]) return null;
+      }
+    }
+    for (let p = 0; p < 2; p++) {
+      const box = info.boxOf[rowCell[a + p]];
+      if (box === -1) continue;
+      for (let q = 0; q < 2; q++) {
+        if (info.boxOf[colCell[b + q]] !== box) continue;
+        const bridge = [rowCell[a + p], colCell[b + q]];
+        const endA = rowCell[a + 1 - p];
+        const endB = colCell[b + 1 - q];
+        const cells = [bridge[0], bridge[1], endA, endB];
+        const eliminations = endEliminations(model, state, info, digit, endA, endB, cells);
+        if (eliminations === null) continue;
+
+        const ends = endA < endB ? [endA, endB] : [endB, endA];
+        const rowUnit = info.kiteRowUnit[i];
+        const colUnit = info.kiteColUnit[j];
+        return {
+          technique: 'twoStringKite',
+          cells: cells.sort(byNumber),
+          placements: [],
+          eliminations: eliminations,
+          i18nKey: 'technique.twoStringKite.step',
+          i18nArgs: {
+            digit: digit,
+            lines: unitLabels(model, rowUnit < colUnit ? [rowUnit, colUnit] : [colUnit, rowUnit]),
+            bridge: cellsToLabels(model, bridge[0] < bridge[1] ? bridge : [bridge[1], bridge[0]]),
+            ends: cellsToLabels(model, ends)
+          }
+        };
+      }
+    }
+    return null;
+  }
+
+  // One work unit is one tested pair of base lines (skyscraper) or of a row and a column (kite). The parent
+  // budget is checked before the unit that would carry the work done since the last check over
+  // WORK_CHECK_UNITS; a spent limit throws WORK_CAP.
   function spend(run) {
     if (run.work >= run.limit) throw WORK_CAP;
     if (run.work + 1 - run.checkedAt > WORK_CHECK_UNITS) {
@@ -485,16 +614,35 @@
     return null;
   }
 
-  // A skyscraper call with its own work counter. A spent work limit and a spent budget are "nothing found"
-  // (the logical solver notices the budget at its next check); cancellation and every other error propagate.
-  // The work goes to the optional observer, which never selects the result.
-  function findSkyscraper(model, state, ctx, workLimit) {
+  // Every digit, conjugate rows in line order, conjugate columns in line order: the first kite that removes
+  // something. A board without a complete box-like unit has no bridge, so it has no kite and costs nothing.
+  function scanKite(model, state, info, run) {
+    if (!info.hasBox) return null;
+    for (let digit = 1; digit <= model.digits; digit++) {
+      const rows = collectConjugateLines(model, state, info, digit, ROW, info.kiteRowUnit, info.kiteRowCell);
+      if (rows === 0) continue;
+      const cols = collectConjugateLines(model, state, info, digit, COL, info.kiteColUnit, info.kiteColCell);
+      for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+          spend(run);
+          const found = kiteOf(model, state, info, digit, i, j);
+          if (found !== null) return found;
+        }
+      }
+    }
+    return null;
+  }
+
+  // A pattern call (`scan` is scanSkyscraper or scanKite) with its own work counter. A spent work limit and a
+  // spent budget are "nothing found" (the logical solver notices the budget at its next check); cancellation
+  // and every other error propagate. The work goes to the optional observer, which never selects the result.
+  function findBounded(id, scan, model, state, ctx, workLimit) {
     const info = infoFor(model, ctx);
     const run = { ctx: ctx, limit: workLimit, work: 0, checkedAt: 0, capped: false };
     let found = null;
     try {
       ctx.check();
-      found = scanSkyscraper(model, state, info, run);
+      found = scan(model, state, info, run);
     } catch (err) {
       if (err === WORK_CAP) run.capped = true;
       else if (!(err && err.code === 'budget.exceeded')) throw err;
@@ -502,7 +650,7 @@
     const observer = ctx.options ? ctx.options.onPatternWork : undefined;
     if (typeof observer === 'function') {
       observer({
-        id: 'skyscraper',
+        id: id,
         work: run.work,
         limit: workLimit,
         capHit: run.capped ? 'work' : null,
@@ -512,20 +660,23 @@
     return found;
   }
 
-  // The seam of the tests: the same search with an explicit work limit (absent = SKYSCRAPER_WORK_LIMIT).
-  function skyscraperSeam(model, state, ctx, opts) {
-    let limit = SKYSCRAPER_WORK_LIMIT;
-    const given = opts === undefined || opts === null ? undefined : opts.workLimit;
-    if (given !== undefined) {
-      if (typeof given !== 'number' || !Number.isFinite(given) || given < 0) {
-        const err = new SG.errors.GenerationError('solver.invalidOption',
-          { option: 'fishSearch.skyscraper.workLimit' });
-        err.message = 'solver.invalidOption: fishSearch.skyscraper workLimit must be a number of at least 0';
-        throw err;
+  // The seam of the tests: the same search with an explicit work limit (absent = the pattern's default).
+  function seamOf(id, scan, defaultLimit) {
+    return function (model, state, ctx, opts) {
+      let limit = defaultLimit;
+      const given = opts === undefined || opts === null ? undefined : opts.workLimit;
+      if (given !== undefined) {
+        if (typeof given !== 'number' || !Number.isFinite(given) || given < 0) {
+          const err = new SG.errors.GenerationError('solver.invalidOption',
+            { option: 'fishSearch.' + id + '.workLimit' });
+          err.message = 'solver.invalidOption: fishSearch.' + id +
+            ' workLimit must be a number of at least 0';
+          throw err;
+        }
+        limit = Math.floor(given);
       }
-      limit = Math.floor(given);
-    }
-    return findSkyscraper(model, state, ctx, limit);
+      return findBounded(id, scan, model, state, ctx, limit);
+    };
   }
 
   // Fills unitCount / unitA / unitB for one digit: 2 for a strong link (unitA, unitB are its cells),
@@ -737,7 +888,10 @@
     return findFish(model, state, ctx, 2, 'xWing');
   });
   define('skyscraper', 33, 112, function (model, state, ctx) {
-    return findSkyscraper(model, state, ctx, SKYSCRAPER_WORK_LIMIT);
+    return findBounded('skyscraper', scanSkyscraper, model, state, ctx, SKYSCRAPER_WORK_LIMIT);
+  });
+  define('twoStringKite', 34, 114, function (model, state, ctx) {
+    return findBounded('twoStringKite', scanKite, model, state, ctx, KITE_WORK_LIMIT);
   });
   define('simpleColouring', 36, 120, findSimpleColouring);
   define('swordfish', 42, 130, function (model, state, ctx) {
@@ -747,11 +901,14 @@
     return findFish(model, state, ctx, 4, 'jellyfish');
   });
 
-  // The parameterised search behind skyscraper, for tests (explicit work limit); not a registered technique.
+  // The parameterised searches behind skyscraper and twoStringKite, for tests (explicit work limit); not
+  // registered techniques.
   if (!SG.fishSearch) {
     SG.fishSearch = Object.freeze({
       SKYSCRAPER_WORK_LIMIT: SKYSCRAPER_WORK_LIMIT,
-      skyscraper: skyscraperSeam
+      KITE_WORK_LIMIT: KITE_WORK_LIMIT,
+      skyscraper: seamOf('skyscraper', scanSkyscraper, SKYSCRAPER_WORK_LIMIT),
+      twoStringKite: seamOf('twoStringKite', scanKite, KITE_WORK_LIMIT)
     });
   }
 })(typeof self !== 'undefined' ? self : globalThis);

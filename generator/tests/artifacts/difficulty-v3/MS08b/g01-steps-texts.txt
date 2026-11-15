@@ -1,0 +1,172 @@
+$ node tests\artifacts\difficulty-v3\MS08b\g01-steps-texts.js
+=== en step 4
+total "593 (+546)"
+badge {
+ "kind": "jump",
+ "text": "Score jump ×12.6"
+}
+line null
+heading "Score jump: 47 → 593 (+546)"
+sentences [
+ "After the clues at R2C4 and R8C6 are removed, the generator's solution uses Two-String Kite once; previously, its hardest technique was Hidden Single (box).",
+ "The largest technique weight, 340, contributes in full as the P term of the score (P = 340).",
+ "Removing the clue at R2C4 alone gives 593; removing the clue at R8C6 alone gives 47."
+]
+why [
+ "P, peak technique weight: 1.25 → 340 (+338.75)",
+ "W, weighted sum of technique uses: 50.5 → 1,518.75",
+ "R = 0.25 × P × log₂(1 + W ÷ P): 1.68 → 208.31 (+206.63)",
+ "E, number of empty cells: 49 → 51",
+ "V = 80 × E ÷ (E + 40): 44.04 → 44.84 (+0.79)",
+ "Score = V + P + R, rounded: 47 → 593 (+546)",
+ "Level: Easy → Hard",
+ "The log records 5 candidates before this accepted removal, with 3 rejected; the other candidate with a completed score reached 48 by the generator's limited check.",
+ "In a separate check, this solver stopped before completing the board using only techniques with weights below 340.",
+ "First use in the generator's solution: logical deduction 26 of 61.",
+ "Two-String Kite on 3: in R8, C2, the digit 3 can only go in two cells each, and the cells R8C3, R9C2 (the bridge) lie in the same box, so they cannot both be 3. At least one of the other two cells, R1C2, R8C9, is 3, so 3 is removed from every other cell that sees both of them.",
+ "In that deduction, candidate 3 is removed from R1C9.",
+ "These numbers describe the generator's solution, not every way to solve the puzzle."
+]
+rowLabel {
+ "technique": "twoStringKite",
+ "text": "New hardest technique"
+}
+totalHighlight false
+firstUse {
+ "key": "technique.twoStringKite.step",
+ "args": {
+  "digit": 3,
+  "lines": [
+   "R8",
+   "C2"
+  ],
+  "bridge": [
+   "R8C3",
+   "R9C2"
+  ],
+  "ends": [
+   "R1C2",
+   "R8C9"
+  ]
+ },
+ "text": "Two-String Kite on 3: in R8, C2, the digit 3 can only go in two cells each, and the cells R8C3, R9C2 (the bridge) lie in the same box, so they cannot both be 3. At least one of the other two cells, R1C2, R8C9, is 3, so 3 is removed from every other cell that sees both of them."
+}
+why[10] "Two-String Kite on 3: in R8, C2, the digit 3 can only go in two cells each, and the cells R8C3, R9C2 (the bridge) lie in the same box, so they cannot both be 3. At least one of the other two cells, R1C2, R8C9, is 3, so 3 is removed from every other cell that sees both of them."
+=== vi step 4
+total "593 (+546)"
+badge {
+ "kind": "jump",
+ "text": "Điểm tăng vọt ×12,6"
+}
+line null
+heading "Điểm tăng vọt: 47 → 593 (+546)"
+sentences [
+ "Sau khi bỏ số cho sẵn ở R2C4 và R8C6, lời giải mà trình sinh đề tìm được dùng Two-String Kite (diều hai dây) 1 lần; trước đó, kỹ thuật khó nhất là Số đơn ẩn trong khối (Hidden Single).",
+ "Trọng số cao nhất 340 được tính toàn bộ vào điểm ở thành phần P (P = 340).",
+ "Chỉ bỏ số ở R2C4 cho 593 điểm; chỉ bỏ số ở R8C6 cho 47 điểm."
+]
+why [
+ "P, trọng số cao nhất: 1,25 → 340 (+338,75)",
+ "W, tổng trọng số các lần áp dụng kỹ thuật: 50,5 → 1.518,75",
+ "R = 0,25 × P × log₂(1 + W ÷ P): 1,68 → 208,31 (+206,63)",
+ "E, số ô trống: 49 → 51",
+ "V (điểm của ô trống) = 80 × E ÷ (E + 40): 44,04 → 44,84 (+0,79)",
+ "Điểm = V + P + R, làm tròn: 47 → 593 (+546)",
+ "Mức độ: Dễ → Khó",
+ "Bản ghi có 5 phương án trước lần bỏ số được chọn này, trong đó 3 bị loại; 1 phương án khác có điểm sau phép kiểm tra giới hạn của trình sinh đề đạt cao nhất 48 điểm.",
+ "Trong một lần kiểm tra riêng, bộ giải này chỉ dùng các kỹ thuật có trọng số dưới 340 và đã dừng khi chưa giải xong đề.",
+ "Lần dùng đầu tiên trong lời giải của trình sinh đề: bước suy luận 26/61.",
+ "Two-String Kite cho 3: trong R8, C2, chữ số 3 mỗi đường chỉ có thể nằm ở hai ô, và các ô R8C3, R9C2 (cầu nối) nằm trong cùng một khối, nên chúng không thể cùng là 3. Ít nhất một trong hai ô còn lại, R1C2, R8C9, là 3, nên 3 bị loại khỏi mọi ô khác nhìn thấy cả hai ô đó.",
+ "Ở bước suy luận đó, loại ứng viên 3 khỏi R1C9.",
+ "Các con số này mô tả cách giải mà trình sinh đề tìm được, không đại diện cho mọi cách giải đề."
+]
+rowLabel {
+ "technique": "twoStringKite",
+ "text": "Kỹ thuật khó nhất mới"
+}
+totalHighlight false
+firstUse {
+ "key": "technique.twoStringKite.step",
+ "args": {
+  "digit": 3,
+  "lines": [
+   "R8",
+   "C2"
+  ],
+  "bridge": [
+   "R8C3",
+   "R9C2"
+  ],
+  "ends": [
+   "R1C2",
+   "R8C9"
+  ]
+ },
+ "text": "Two-String Kite cho 3: trong R8, C2, chữ số 3 mỗi đường chỉ có thể nằm ở hai ô, và các ô R8C3, R9C2 (cầu nối) nằm trong cùng một khối, nên chúng không thể cùng là 3. Ít nhất một trong hai ô còn lại, R1C2, R8C9, là 3, nên 3 bị loại khỏi mọi ô khác nhìn thấy cả hai ô đó."
+}
+why[10] "Two-String Kite cho 3: trong R8, C2, chữ số 3 mỗi đường chỉ có thể nằm ở hai ô, và các ô R8C3, R9C2 (cầu nối) nằm trong cùng một khối, nên chúng không thể cùng là 3. Ít nhất một trong hai ô còn lại, R1C2, R8C9, là 3, nên 3 bị loại khỏi mọi ô khác nhìn thấy cả hai ô đó."
+en step 1 {
+ "total": "23 (+23)",
+ "badge": {
+  "kind": "first",
+  "text": "First rated puzzle"
+ },
+ "line": "First rated puzzle: score 23. The generator's solution uses Naked Single as its hardest technique.",
+ "rowLabel": null,
+ "callout": null
+}
+en step 2 {
+ "total": "44 (+21)",
+ "badge": null,
+ "line": null,
+ "rowLabel": null,
+ "callout": null
+}
+en step 3 {
+ "total": "47 (+3)",
+ "badge": null,
+ "line": "The generator's solution now uses Hidden Single (box) (weight 1.25) as its hardest technique, instead of Naked Single (weight 1).",
+ "rowLabel": {
+  "technique": "hiddenSingleBox",
+  "text": "New hardest technique"
+ },
+ "callout": null
+}
+en step 6 {
+ "total": "925 (unchanged)",
+ "badge": null,
+ "line": null,
+ "rowLabel": null,
+ "callout": null
+}
+vi step 1 {
+ "total": "23 (+23)",
+ "badge": {
+  "kind": "first",
+  "text": "Đề đầu tiên được chấm điểm"
+ },
+ "line": "Đề đầu tiên được chấm điểm: 23 điểm. Trong lời giải mà trình sinh đề tìm được, kỹ thuật khó nhất là Ô một ứng viên (Naked Single).",
+ "rowLabel": null
+}
+vi step 2 {
+ "total": "44 (+21)",
+ "badge": null,
+ "line": null,
+ "rowLabel": null
+}
+vi step 3 {
+ "total": "47 (+3)",
+ "badge": null,
+ "line": "Trong lời giải mới của trình sinh đề, kỹ thuật khó nhất là Số đơn ẩn trong khối (Hidden Single) (trọng số 1,25), thay cho Ô một ứng viên (Naked Single) (trọng số 1).",
+ "rowLabel": {
+  "technique": "hiddenSingleBox",
+  "text": "Kỹ thuật khó nhất mới"
+ }
+}
+vi step 6 {
+ "total": "925 (không đổi)",
+ "badge": null,
+ "line": null,
+ "rowLabel": null
+}
+exit=0 seconds=0.490

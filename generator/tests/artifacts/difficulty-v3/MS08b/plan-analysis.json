@@ -1,0 +1,142 @@
+[
+  {
+    "label": "g-analysis-G01",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G01",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G01.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08b pass 2a g-analysis-G01 0.809 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G02",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G02",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G02.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08b pass 2a g-analysis-G02 0.533 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G03",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G03",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G03.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08b pass 2a g-analysis-G03 0.698 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G04",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G04",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G04.json"
+    ],
+    "projectionSeconds": 19,
+    "projectionBasis": "MS08b pass 2a g-analysis-G04 6.927 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G05",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G05",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G05.json"
+    ],
+    "projectionSeconds": 19,
+    "projectionBasis": "MS08b pass 2a g-analysis-G05 6.555 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G06",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G06",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G06.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08b pass 2a g-analysis-G06 0.697 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G07",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G07",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G07.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08b pass 2a g-analysis-G07 0.692 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G08",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G08",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G08.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08b pass 2a g-analysis-G08 0.53 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G09",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G09.json"
+    ],
+    "projectionSeconds": 34,
+    "projectionBasis": "MS08b pass 2a g-analysis-G09 14.229 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G10",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G10.json"
+    ],
+    "projectionSeconds": 36,
+    "projectionBasis": "MS08b pass 2a g-analysis-G10 15.04 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G11",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G11.json"
+    ],
+    "projectionSeconds": 22,
+    "projectionBasis": "MS08b pass 2a g-analysis-G11 8.195 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G12",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G12.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS08b pass 2a g-analysis-G12 4.225 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G13",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G13.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08b pass 2a g-analysis-G13 0.71 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G14",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G14",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G14.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS08b pass 2a g-analysis-G14 2.21 s (box-like kite, same shard); 2 x + 5 s"
+  }
+]

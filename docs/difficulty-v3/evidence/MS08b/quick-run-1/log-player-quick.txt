@@ -1,0 +1,58 @@
+$ node tests\node-runner.js --results=..\docs\difficulty-v3\evidence\MS08b\quick-final\player-quick.json
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+ok   bits: 32 passed  (61 ms)
+ok   board-view: 37 passed  (76 ms)
+ok   constraints: 43 passed  (76 ms)
+ok   exchange: 20 passed  (219 ms)
+ok   harness: 25 passed  (1.85 s)
+ok   logical-solver: 100 passed  (320 ms)
+ok   model: 49 passed  (38 ms)
+ok   solver: 50 passed  (2.65 s)
+ok   symbols: 12 passed  (2 ms)
+ok   tech-basic: 167 passed  (1.84 s)
+ok   tech-chain: 107 passed  (7.79 s)
+FAIL tech-fish: 232 passed, 3 failed  (357.93 s)
+ok   tech-subset: 100 passed  (912 ms)
+ok   tech-wing: 168 passed  (1.62 s)
+ok   techniques: 204 passed  (2.57 s)
+ok   wordbook: 7 passed  (9 ms)
+ok   a11y: 24 passed  (18 ms)
+ok   app: 15 passed  (12 ms)
+ok   fixtures: 21 passed  (14 ms)
+ok   help-example-tools: 51 passed  (4.77 s)
+ok   help: 27 passed  (1.33 s)
+ok   i18n: 66 passed  (83 ms)
+ok   importer: 88 passed  (320 ms)
+ok   model-aids: 7 passed  (2 ms)
+ok   play: 68 passed  (167 ms)
+ok   progress: 26 passed  (47 ms)
+ok   store: 17 passed  (3 ms)
+ok   text-boards: 14 passed  (14 ms)
+ok   theme: 54 passed  (37 ms)
+ok   ui-contract: 62 passed  (142 ms)
+
+Failures:
+  FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > bridges through a region: the vector on the jigsaw board (J4 holds R3C5 and R4C7)
+       AssertionError: expected 0 to be 1
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:2493:31)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > finds the transposed vector on the transposed jigsaw board (J4 holds R5C3 and R7C4)
+       AssertionError: expected 0 to be 1
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:2510:31)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL tech-fish > twoStringKite (R11): agreement with an independent enumeration > agrees on jigsaw9 and on its transpose, where the irregular regions are the bridges
+       AssertionError: expected Array(2)["jigsaw9Turned", false] to equal Array(2)["jigsaw9Turned", true]
+       at Q:\git\sudoku\core\tests\suites\tech-fish.test.js:2720:54
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:2715:35)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+
+Suites: 30
+Tests:  1896 total, 1893 passed, 3 failed, 0 skipped
+Time:   384.93 s running tests, 385.21 s total
+Results: docs/difficulty-v3/evidence/MS08b/quick-final/player-quick.json
+(node:22792) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+exit=1 seconds=385.412

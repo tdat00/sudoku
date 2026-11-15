@@ -1,0 +1,59 @@
+$ node tests\replay-goldens.js --merge=..\docs\difficulty-v3\evidence\MS08b\analysis --check
+merged 14 ledgers: all 14 keys exactly once, recorded from the current sources
+G01: matches replay-goldens.js
+G02: matches replay-goldens.js
+G03: matches replay-goldens.js
+G04: matches replay-goldens.js
+G05: matches replay-goldens.js
+G06: 15 fields differ from replay-goldens.js
+  rows[6][4]: saved 2329, fresh 2327
+  rows[6][5]: saved 1619, fresh 1617
+  rows[7][4]: saved 2329, fresh 2327
+  details[28]: saved 656, fresh 655
+  details[30]: saved 2329, fresh 2327
+  details[31]: saved 2329, fresh 2327
+  jumps[1].to: saved 2329, fresh 2327
+  jumps[1].before.W: saved 3359.25, fresh 3339.25
+  jumps[1].before.R: saved 303.204862, fresh 302.504759
+  jumps[1].after.W: saved 6612.25, fresh 6592.25
+  jumps[1].after.R: saved 880.873213, fresh 879.61121
+  jumps[1].choice.chosen: saved 2329, fresh 2327
+  jumps[1].choice.max: saved 725, fresh 735
+  jumps[1].singles[0].score: saved 711, fresh 710
+  jumps[1].singles[1].score: saved 2328, fresh 2327
+G07: 58 fields differ from replay-goldens.js
+  counts.compact: saved 6, fresh 7
+  counts.details: saved 42, fresh 34
+  rows.length: saved 6, fresh 7
+  rows[3][1]: saved 26, fresh 28
+  rows[3][3]: saved 51, fresh 55
+  rows[3][4]: saved 48, fresh 119
+  rows[3][5]: saved 4, fresh 75
+  rows[3][6]: saved "hiddenSingleLine", fresh "pointing"
+  rows[4][1]: saved 40, fresh 29
+  rows[4][2]: saved "G+A/Mixed", fresh "G/Choose"
+  rows[4][3]: saved 39, fresh 57
+  rows[4][4]: saved 1797, fresh 141
+  rows[4][5]: saved 1749, fresh 22
+  rows[4][6]: saved "forcingChainLong", fresh "boxLine"
+  rows[4][7]: saved "Y", fresh "—"
+  rows[4][9]: saved "—", fresh "N"
+  rows[5][1]: saved 40, fresh 32
+  rows[5][2]: saved "F/Final", fresh "G+A/Mixed"
+  rows[5][3]: saved 39, fresh 55
+  rows[5][4]: saved 1797, fresh 2391
+  rows[5][5]: saved 0, fresh 2250
+  rows[5][7]: saved "—", fresh "Y"
+  details.length: saved 42, fresh 34
+  details[10]: saved 29, fresh 28
+  details[11]: saved 31, fresh 30
+  ... and 33 more
+G08: matches replay-goldens.js
+G09: matches replay-goldens.js
+G10: matches replay-goldens.js
+G11: matches replay-goldens.js
+G12: matches replay-goldens.js
+G13: matches replay-goldens.js
+G14: matches replay-goldens.js
+replay-goldens.js differs; regenerate it with node tests/replay-goldens.js --write only if the generator changed on purpose
+exit=1 seconds=0.428

@@ -28,7 +28,8 @@
  * `byId` (and `ids`) is the ACTIVE map: the historical one plus the explicit `CURRENT` entries, which replace
  * an ID's fixtures from now on without touching a v2 position. A later technique adds its entry to CURRENT,
  * built from explicit `after` lists or an initial real puzzle state. MS07b replaces the four chain IDs
- * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way; MS08a adds skyscraper.
+ * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way; MS08a adds skyscraper and
+ * MS08b twoStringKite.
  */
 (function () {
   'use strict';
@@ -45,16 +46,16 @@
   ];
 
   /**
-   * The 24 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
-   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the three
-   * techniques added since: skyscraper (MS08a) and the two chain windows forcingChainLong and nishioDeep
-   * (MS07b).
+   * The 25 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
+   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the four
+   * techniques added since: skyscraper (MS08a), twoStringKite (MS08b) and the two chain windows
+   * forcingChainLong and nishioDeep (MS07b).
    */
   var REGISTRY_ORDER = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
-    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'simpleColouring',
-    'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle', 'forcingChain',
-    'forcingChainLong', 'nishio', 'nishioDeep'
+    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite',
+    'simpleColouring', 'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle',
+    'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep'
   ];
 
   /** The techniques the ladder tries before `id`: the position after them is where `id` is reached. */
@@ -755,8 +756,8 @@
    */
   var BELOW_CHAINS = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
-    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'simpleColouring',
-    'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle'
+    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite',
+    'simpleColouring', 'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle'
   ];
   var THROUGH_SHORT_CHAIN = BELOW_CHAINS.concat(['forcingChain']);
   var THROUGH_LONG_CHAIN = THROUGH_SHORT_CHAIN.concat(['forcingChainLong']);
@@ -771,6 +772,11 @@
   var THROUGH_SKYSCRAPER = BELOW_SKYSCRAPER.concat(['skyscraper']);
   // The position where xWing itself is reached (a copy of the ids before it).
   var BEFORE_XWING = BELOW_SKYSCRAPER.slice(0, BELOW_SKYSCRAPER.indexOf('xWing'));
+
+  // Where twoStringKite is reached (MS08b): the techniques before it in the registry (through skyscraper), and
+  // the same plus itself.
+  var BELOW_KITE = THROUGH_SKYSCRAPER.slice();
+  var THROUGH_KITE = BELOW_KITE.concat(['twoStringKite']);
 
   // Real unique puzzles. The first two are the puzzles of the v2 chain fixtures; the next three are famous
   // puzzles of tests/fixtures/classic.js; the last three are minimal puzzles dug by SG.testkit.dig from the
@@ -801,13 +807,25 @@
   var X_WING = '9.2.....8......1..41.85..39.....8.....3.....78..6.45.2...29..1..5...........614..';
   var COLOURING = '....154........2..1.62..7...52..8.....79.23......54..8..3....9.5......6.7.......2';
 
+  // Real unique puzzles of the twoStringKite fixtures (MS08b). The kite positives are HARD_B (a famous puzzle
+  // of tests/fixtures/classic.js, digit 5, row R6 and column C8 bridged in box 6) and KITE_SEEDED, state #232
+  // (puzzle 58) of the seeded corpus of H.randomStatesWithKnownSolution(classic9, seed 99), which the 1200-state
+  // sweep of tech-fish.test.js shares (digit 5, row R9 and column C2 bridged in box 7). KITE_SPARE is state #48
+  // (puzzle 12) of the corpus of seed 20260101, a third real position for the soundness supplements. ESCARGOT
+  // (a famous puzzle) is the negative where a row pair and a column pair share the cell R5C3: the cell R6C8 sees
+  // both free ends, and it holds the digit 3. SKY_ONLY is state #168 (puzzle 42) of the corpus of seed 20260101:
+  // its position before skyscraper has a skyscraper (rows R3 and R4) and no kite.
+  var KITE_SEEDED = '........4.76....8...51...2.6..39....2..6....3.3......28....4.363...7......9.1.4..';
+  var KITE_SPARE = '76.....8.........4.....32...5....8.6...1..97...15.....4...8.69.82..9.4.....7.....';
+  var SKY_ONLY = '......6..8.21.....3.7..8..9.314.6..........5...47..163..6..........12.7.4..8..5.2';
+
   /**
-   * Current fixtures that replace a historical entry or belong to an ID registered since (skyscraper, MS08a), in
-   * the shape of the entries of the map. The short chain fixtures have at most 4 links, so that they are
-   * forcingChain's under C = 4 and C = 6 alike. The long ones are the 5- and 6-link shortest proofs of two dug
-   * puzzles: forcingChainLong's under the selected C = 4 (MS07c; under C = 6 they would be forcingChain's). The
-   * negatives include positions where a shorter ID owns the proof, one of them at the window boundary: a chain
-   * of 5 links is not forcingChain's.
+   * Current fixtures that replace a historical entry or belong to an ID registered since (skyscraper, MS08a;
+   * twoStringKite, MS08b), in the shape of the entries of the map. The short chain fixtures have at most 4
+   * links, so that they are forcingChain's under C = 4 and C = 6 alike. The long ones are the 5- and 6-link
+   * shortest proofs of two dug puzzles: forcingChainLong's under the selected C = 4 (MS07c; under C = 6 they
+   * would be forcingChain's). The negatives include positions where a shorter ID owns the proof, one of them at
+   * the window boundary: a chain of 5 links is not forcingChain's.
    */
   var CURRENT = {
     skyscraper: {
@@ -844,6 +862,50 @@
           name: 'skyscraper leaves a genuine X-Wing (two shared covers) to xWing',
           puzzle: X_WING,
           after: BEFORE_XWING,
+          propagate: true
+        }
+      ]
+    },
+    twoStringKite: {
+      positive: [
+        {
+          name: 'twoStringKite on digit 5, row R6 and column C8 bridged in box 6 (a famous puzzle)',
+          puzzle: HARD_B,
+          after: BELOW_KITE,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[73, 5]]
+          }
+        },
+        {
+          name: 'twoStringKite on digit 5, row R9 and column C2 bridged in box 7 (a seeded dug puzzle)',
+          puzzle: KITE_SEEDED,
+          after: BELOW_KITE,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[34, 5]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'twoStringKite has nothing left to do once the techniques through it are exhausted',
+          puzzle: COLOURING,
+          after: THROUGH_KITE,
+          propagate: true
+        },
+        {
+          name: 'twoStringKite is no row pair and column pair that share a cell (R6C8 holds the 3)',
+          puzzle: ESCARGOT,
+          after: THROUGH_KITE,
+          propagate: true
+        },
+        {
+          name: 'twoStringKite leaves a genuine skyscraper (two rows with a common cover column) to skyscraper',
+          puzzle: SKY_ONLY,
+          after: BELOW_SKYSCRAPER,
           propagate: true
         }
       ]
@@ -1009,7 +1071,9 @@
    * shortest chains of the first two have 5 and 6 links (7 and 8 once forcingChain had exhausted every chain of
    * up to 6 links). MS08a: skyscraper is not rare (65 firings in the 300 random states), so its three real
    * positions, the two positive fixtures and 'constructed-hard-3', only add deterministic states on top of the
-   * unchanged random population and its minimum of 3 firings.
+   * unchanged random population and its minimum of 3 firings. MS08b: twoStringKite is not rare either (114
+   * firings in the 300 random states), so its three real positions, the two positive fixtures and a third
+   * puzzle, are added on top in the same way.
    */
   var SUPPLEMENTS = {
     skyscraper: [
@@ -1018,6 +1082,14 @@
       { name: 'skyscraper on columns (a seeded dug puzzle)', puzzle: SKY_COLS, after: BELOW_SKYSCRAPER,
         propagate: true },
       { name: 'skyscraper on rows (constructed-hard-3)', puzzle: SKY_SPARE, after: BELOW_SKYSCRAPER,
+        propagate: true }
+    ],
+    twoStringKite: [
+      { name: 'twoStringKite bridged in box 6 (a famous puzzle)', puzzle: HARD_B, after: BELOW_KITE,
+        propagate: true },
+      { name: 'twoStringKite bridged in box 7 (a seeded dug puzzle)', puzzle: KITE_SEEDED, after: BELOW_KITE,
+        propagate: true },
+      { name: 'twoStringKite on digit 1 (a second seeded dug puzzle)', puzzle: KITE_SPARE, after: BELOW_KITE,
         propagate: true }
     ],
     forcingChainLong: [

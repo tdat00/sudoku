@@ -1,0 +1,13 @@
+$ node tests\artifacts\difficulty-v3\MS08b\g01-compact.js
+cuts [0,7,22,25,26,27] ranks [4,1,2,3,3,3] ratio 2.126621933549811
+jump4 {"ratio":12.6,"newHardest":true,"change":546,"auditScope":null}
+folded5 {"peak":null,"aboveBand":false,"revealed":0,"unscored":0,"restart":null} tier5 newPeak
+audit []
+pos27 compact before.W 1518.75 details 1518.75
+cause {"class":"single-culprit","changes":[{"cell":12,"action":"remove"},{"cell":68,"action":"remove"}],"singles":[{"cell":12,"action":"remove","score":593},{"cell":68,"action":"remove","score":47}],"culprit":{"cell":12,"action":"remove","score":593,"otherScore":47},"largest":null,"sign":null,"k":null,"n":null,"kMove":null,"verifiedOnly":false,"frame":{"kind":"cell","cell":12,"action":"remove"}}
+choice {"kind":"guided","count":null,"chosen":593,"at":67,"rated":5,"refused":3,"others":1,"nulls":0,"max":48}
+proof {"restricted":"stuck","k":26,"n":61,"technique":"twoStringKite","key":"technique.twoStringKite.step","placements":[],"args":{"digit":3,"lines":["R8","C2"],"bridge":["R8C3","R9C2"],"ends":["R1C2","R8C9"]}}
+before [47,593,"easy","hard"]
+step5 {"tier":"newPeak","cause":null,"before":593,"after":925}
+culprit label R2C4
+exit=0 seconds=0.451

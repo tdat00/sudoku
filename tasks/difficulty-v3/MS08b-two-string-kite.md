@@ -119,14 +119,14 @@ Return the inherited/new item list and actual B/T, coverage and CI outcomes.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (orchestrator check against IR72 A-J; outside the analyst review set). The developer's own reading of "box" was routed to the pack author (SA2), who ruled (b): a fix round followed before commitment |
+| Start | 2026-11-15 17:19:18 (+07:00), base `75b99e6` |
+| End | 2026-11-15 19:08 first pass; 19:15-19:19 SA2 ruling; fix round 19:19:12-20:34; orchestrator re-check and commit |
+| Duration | 3 h 4 min developer (1 h 49 min first pass + 1 h 15 min fix round); about 4 min SA2 ruling |
+| Model | claude-sonnet-5.5 (developer); gpt-6-astra (SA2 ruling); claude-opus-5.5 (orchestrator) |
+| Token usage | 539 model calls; 211,164,942 input tokens (209,615,762 cache reads); 531,371 output tokens |
+| AI credits | about 3,015 (developer) |
+| Verification | `twoStringKite` in `core/js/engine/tech-fish.js` (fish group, order 114, base cost 34, unscoped, `assumesUniqueness: false`), `WEIGHTS.twoStringKite = 340` in `generator/js/engine/difficulty.js`. Pattern: a complete row and a complete column, whole-line disjoint, each holding the digit in exactly two cells, with one cell of each in the same complete box-like unit (`kind` `box` or `region`); each bridge cell has exactly one complete box-like owner counted across both kinds and the owners match (an overlapped multi-grid box bridges nothing); the digit leaves every real peer of both ends. Limits: 50,000 units per call, parent budget at entry and at most every 256 units (pinned at 0, 256, ... 1,792), spent limit gives `null` with `capHit: 'work'`; structural maximum 729 on 9x9 and Jigsaw 9, 6,561 on Samurai (largest), 0 on Butterfly. Shared helpers with Skyscraper: identical on 2,336 states (differential). `tech-fish` 155 -> 236 tests: vector and transpose, near misses, independent `referenceKites` enumeration on every grid shape, Jigsaw 9 firing coverage (minimum 20 per 120 states; 28 and 31 observed), multi-grid ownership negative on the real Samurai; 20/20 mutations detected (incl. box-only eligibility). **E** (complete, wires -> analyses -> hashes; pass 1 and pass 2a kept): 18 of 520 hashes changed (classic9 hard 1, expert 3, master 2, nightmare 1; diagonalX nightmare 6; hyper hard 1; jigsaw9 master 4), no key below Hard; wires G10 (work counters only) and G11 (957 -> 994); analyses G01 (jump now Two-String Kite 47 -> 593 at R2C4; final 925 unchanged), G05, G06 (2,329 -> 2,327), G07 (a different dug puzzle), G11, G14. Reference ratings: no level or `v3Expected` change; four ratings change by 1-13 points. Help catalogue 30 examples (`twoStringKite` new; `hiddenTriple`, `xWing` regenerated from their own sources; `simpleColouring` moved), `--check` 30/30. Quick sets on the final tree: Generator 3,651/3,651 (303.4 s, sum of the four group walls; +2.3 % against S-AV08's 296.670 s for +2.6 % tests), Player 1,897/1,897 (38.1 s); fingerprints match the tree; CI check passes. Orchestrator: locked gate suites 496/496 (`tech-fish` 236, `techniques` 204, `technique-weights` 8, `difficulty-floor` 48; 38.5 s); CI shard check 3,651 |
+| Acceptance | MS08b-B01, B02, T01, T02, T03 met; IR72 A-J pass (A design §6.6 and the reference enumeration on every shape incl. Jigsaw; B weight and reference ratings; C limits and structural maxima; D positives, negatives, sweep; E bilingual docs and totals; F 20/20 mutants; G complete E; H 30/30 help; I pins refreshed with before/after values; J fingerprints) |
+| Issues & resolutions | **Box reading (fix round).** The developer read "real box" as `kind === 'box'` only, so Jigsaw had no kite; the engine treats regions as box-like (`model.js`, `tech-wing.js`). SA2 ruled (b): box-like = `box` or `region`; the overlapped-box restriction stands as a conservative ownership rule. The finder, the reference enumeration, the tests (Jigsaw firings, multi-grid negative, a box-only mutant), the structural bounds, complete E, help, wording ("box or region" / "hoặc vùng"), design §6.6, guides, notes and evidence were redone. The first fix-round Player quick run failed (the Player's own `jigsaw9` layout differs from the Generator's); the suite now writes the Generator layout and its transpose and checks the environment's layout for agreement only; the failed run is kept. E was recorded twice in the fix round because the recorders hash the locale files, which changed after the first recording. A late `generator/design.md` edit in the first pass required one more Generator quick run (fingerprint). No new S-AV item |
+| Handoff | To MS08c: the shared fish helpers (Skyscraper and Two-String Kite) and their reference enumerations; box-like units are `box` or `region` with the single-owner rule; IR72 A-J is the checklist; base quick totals Generator 3,651 (303.4 s) and Player 1,897 (38.1 s); help catalogue 30 |

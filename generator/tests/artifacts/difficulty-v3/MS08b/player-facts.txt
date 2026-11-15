@@ -1,0 +1,39 @@
+$ node tests\artifacts\difficulty-v3\MS08b\player-facts.js
+== en
+0 ["Full solution","Fill the whole grid with a random solution that follows every rule (81 cells)."]
+1 ["Random removals","Clear 14 cells chosen at random: the puzzle can still be solved without their clues."]
+2 ["Random removals","Try to clear 33 cells chosen at random: 29 cells cleared, 4 cells put back because without their clues, the solver did not finish the puzzle with the techniques of this level."]
+3 ["Choosing clues to remove","Across 3 accepted removals, compare 33 possible removals (8 rejected); the removed clues are at R1C5, R9C5, R3C4, R7C6, R2C7 and R8C3."]
+4 ["Choosing clues to remove","Compare 6 possible removals (4 rejected) and choose the removal preferred by the generator's check: R2C4 and R8C6."]
+5 ["Adjusting the puzzle","Adjust the clues to look for a higher-scoring puzzle: clear 2 cells and restore 2 clues."]
+6 ["Finished puzzle","The finished puzzle: 30 clues."]
+meta 5 "2 cells cleared · 2 clues restored · 30 clues left"
+meta 3 "6 cells removed · 16 cells put back · 32 clues left"
+meta 0 "81 cells"
+meta 6 "30 clues"
+== vi
+0 ["Lời giải đầy đủ","Điền kín lưới bằng một lời giải ngẫu nhiên tuân theo mọi luật (81 ô)."]
+1 ["Xóa ngẫu nhiên","Bỏ số ở 14 ô được chọn ngẫu nhiên: đề vẫn giải được khi thiếu các số đó."]
+2 ["Xóa ngẫu nhiên","Thử bỏ số ở 33 ô được chọn ngẫu nhiên: bỏ được số ở 29 ô và khôi phục số ở 4 ô, vì bộ giải chưa giải xong đề bằng các kỹ thuật của mức này khi thiếu các số đó."]
+3 ["Chọn số cho sẵn để bỏ","Qua 3 lần chọn phương án bỏ số, đã xét 33 cách bỏ số (8 bị loại); các ô được bỏ số là R1C5, R9C5, R3C4, R7C6, R2C7 và R8C3."]
+4 ["Chọn số cho sẵn để bỏ","Xét 6 cách bỏ số (4 bị loại) và chọn phương án được ưu tiên theo phép kiểm tra của trình sinh đề: bỏ số ở R2C4 và R8C6."]
+5 ["Điều chỉnh đề","Qua 1 thay đổi trọn vẹn nhằm tìm đề có điểm cao hơn, tổng cộng bỏ số ở 2 ô và khôi phục 2 số cho sẵn."]
+6 ["Đề hoàn chỉnh","Đề hoàn chỉnh: 30 số cho sẵn."]
+meta 5 "bỏ số ở 2 ô · khôi phục 2 số cho sẵn · còn 30 số cho sẵn"
+meta 3 "xóa 6 ô · trả lại 16 ô · còn 32 số cho sẵn"
+meta 0 "81 ô"
+meta 6 "30 số cho sẵn"
+scores [0,23,44,47,593,925,925]
+changes [null,23,21,3,546,332,0]
+step4 ["guided","deeper","replay.guided",6,4]
+step3 ["replay.guided.rounds",3,33,8]
+kinds ["solution","random","random","guided","guided","search","final"]
+step4 transition to 26 proofs[to] yes proofKeys ["26"] table.proof is proofs[to] true
+step4 marks {"cause":[12],"dug":[68],"restore":[]}
+step5 marks cause []
+labels cause R2C4 dug R8C6
+G11 compact 2 folded {"key":"replay.folded.reveal","args":{"peak":1964,"revealed":10}}
+G11 text Clear the grid, then show 21 clues. Try to remove 108 signs: 96 signs removed, 12 signs kept because the puzzle still needs them. The puzzle came out too hard for this level, so 2 clues more are shown. Try to remove 12 signs: 2 signs removed, 10 signs kept because the puzzle still needs them. The puzzle came out too hard for this level, so 2 clues more are shown. Try to remove 19 signs: 2 signs removed, 17 signs kept because the puzzle still needs them. The puzzle came out too hard for this level, so 4 clues more are shown. Try to remove 8 signs: 2 signs removed, 6 signs kept because without them the puzzle would have more than one solution. The puzzle came out too hard for this level, so 2 clues more are shown. Within this step, the score reached 1,964, above the chosen level, and 10 clues were restored during refinement.
+G12 compact 2 last part {"key":"replay.folded.peak","args":{"peak":130}}
+jumps 29 framed 17
+exit=0 seconds=15.312

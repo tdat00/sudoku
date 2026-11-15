@@ -330,6 +330,11 @@
       'and one cell of each lies in the same column (or row). Those two cells see each other, so they cannot ' +
       'both hold the digit: at least one of the other two does, and the digit is removed from every cell ' +
       'that sees both of them.',
+    'technique.twoStringKite': 'Two-String Kite',
+    'technique.twoStringKite.desc': 'A row and a column in which a digit has only two possible cells each, ' +
+      'and one cell of the row and one cell of the column lie in the same box (or region). Those two cells ' +
+      'see each other, so they cannot both hold the digit: at least one of the other two does, and the ' +
+      'digit is removed from every cell that sees both of them.',
     'technique.simpleColouring': 'Simple Colouring',
     'technique.simpleColouring.desc': 'Cells linked by "one or the other" for a single digit are painted ' +
       'in two colours. Exactly one colour is true, which exposes cells that cannot hold the digit.',
@@ -416,6 +421,10 @@
       'cells each, and one cell of each lies on a common line, so those two cannot both be {digit}. At ' +
       'least one of the other two cells, {ends}, is {digit}, so {digit} is removed from every other cell ' +
       'that sees both of them.',
+    'technique.twoStringKite.step': 'Two-String Kite on {digit}: in {lines}, the digit {digit} can only go in two ' +
+      'cells each, and the cells {bridge} (the bridge) lie in the same box or region, so they cannot both be ' +
+      '{digit}. At least one of the other two cells, {ends}, is {digit}, so {digit} is removed from every ' +
+      'other cell that sees both of them.',
     'technique.swordfish.step': 'Swordfish on {digit}: in {baseUnits}, the digit {digit} can only go in ' +
       '{coverUnits}. The three {digit}s of the base lines fill all three cover lines, so {digit} is ' +
       'removed from every other cell of {coverUnits}.',

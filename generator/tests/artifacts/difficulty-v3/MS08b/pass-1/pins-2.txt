@@ -1,0 +1,13 @@
+$ node tests\node-runner.js --suite=replay,steps,player,pipeline
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   pipeline: 151 passed  (30.69 s)
+ok   player: 69 passed  (22.21 s)
+ok   replay: 154 passed  (14.26 s)
+ok   steps: 57 passed  (14.77 s)
+
+Suites: 4
+Tests:  431 total, 431 passed, 0 failed, 0 skipped
+Time:   81.93 s running tests, 82.05 s total
+exit=0 seconds=82.175

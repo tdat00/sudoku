@@ -92,6 +92,7 @@
     hiddenQuad: 300,
     xWing: 320,
     skyscraper: 330,
+    twoStringKite: 340,
     simpleColouring: 360,
     swordfish: 420,
     jellyfish: 520,

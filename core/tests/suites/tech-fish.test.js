@@ -1,4 +1,5 @@
-// Fish techniques: X-Wing, Skyscraper, Simple Colouring, Swordfish, Jellyfish (../core/js/engine/tech-fish.js).
+// Fish techniques: X-Wing, Skyscraper, Two-string kite, Simple Colouring, Swordfish, Jellyfish
+// (../core/js/engine/tech-fish.js).
 //
 // Fixtures: the published positions are the example boards of the SudokuWiki strategy pages (X-Wing,
 // Swordfish, Jellyfish, Simple Colouring). Each one is the puzzle plus the candidate grid the page shows when
@@ -6,9 +7,10 @@
 // descriptions (digit, rows, columns, shape, the cells named in the text) are asserted, so a fixture is
 // checked against what the source says, not only against the code under test.
 // Every other check is built from the model's own units or from a solved grid, never from a published
-// board, so it holds for any digit count. The Skyscraper (R11) has no published board in this suite: its
-// geometry vectors are digit maps, every claim is also checked against an independent enumeration
-// (`referenceSkyscrapers`) and its positions are the real unique puzzles of core/tests/fixtures/techniques.js.
+// board, so it holds for any digit count. The Skyscraper and the Two-string kite (R11) have no published board
+// in this suite: their geometry vectors are digit maps, every claim is also checked against an independent
+// enumeration (`referenceSkyscrapers`, `referenceKites`) and their positions are the real unique puzzles of
+// core/tests/fixtures/techniques.js.
 (function () {
   'use strict';
 
@@ -17,7 +19,7 @@
   const H = SG.techHelper;
   const model9 = H.model('classic9');
 
-  const ALL_IDS = ['xWing', 'skyscraper', 'simpleColouring', 'swordfish', 'jellyfish'];
+  const ALL_IDS = ['xWing', 'skyscraper', 'twoStringKite', 'simpleColouring', 'swordfish', 'jellyfish'];
   // The techniques that scan every digit and orientation with a budget check of their own.
   const SCAN_IDS = ['xWing', 'simpleColouring', 'swordfish', 'jellyfish'];
   const FISH_IDS = ['xWing', 'swordfish', 'jellyfish'];
@@ -347,9 +349,15 @@
   // Models for the generic tests
   /**
    * A classic style grid: rows, columns and boxes of boxRows x boxCols cells (digits = boxRows * boxCols).
-   * `extraRows` adds more units of kind 'row' (lists of cells) to imitate overlapping sub-grids.
+   * `extraRows` adds more units of kind 'row' (lists of cells) to imitate overlapping sub-grids. `options`:
+   * `extraBoxes` lists box numbers (0-based) whose cells are listed once more as a second unit of kind 'box'
+   * (an overlapped box of a multi-grid board belongs to two grids); `extraRegions` lists them as a second unit
+   * of kind 'region' (a box-like unit of the other kind: the owners are counted over both kinds); `columnsFirst`
+   * puts the columns before the rows in the unit list (the unit order of a multi-grid board does not keep rows
+   * first); `noBoxes` leaves the boxes out (a Latin square: only rows and columns).
    */
-  function buildGridModel(variantId, boxRows, boxCols, extraRows) {
+  function buildGridModel(variantId, boxRows, boxCols, extraRows, options) {
+    const opts = options || {};
     const D = boxRows * boxCols;
     const n = D * D;
     const cellRow = new Int32Array(n);
@@ -364,14 +372,25 @@
         cellRegion[r * D + c] = Math.floor(r / boxRows) * (D / boxCols) + Math.floor(c / boxCols);
       }
     }
+    const rowUnits = [];
+    const rowMeta = [];
     for (let r = 0; r < D; r++) {
-      units.push(Array.from({ length: D }, function (_, c) { return r * D + c; }));
-      unitMeta.push({ kind: 'row', gridIndex: 0, label: 'R' + (r + 1) });
+      rowUnits.push(Array.from({ length: D }, function (_, c) { return r * D + c; }));
+      rowMeta.push({ kind: 'row', gridIndex: 0, label: 'R' + (r + 1) });
     }
+    const colUnits = [];
+    const colMeta = [];
     for (let c = 0; c < D; c++) {
-      units.push(Array.from({ length: D }, function (_, r) { return r * D + c; }));
-      unitMeta.push({ kind: 'col', gridIndex: 0, label: 'C' + (c + 1) });
+      colUnits.push(Array.from({ length: D }, function (_, r) { return r * D + c; }));
+      colMeta.push({ kind: 'col', gridIndex: 0, label: 'C' + (c + 1) });
     }
+    const first = opts.columnsFirst ? [colUnits, colMeta] : [rowUnits, rowMeta];
+    const second = opts.columnsFirst ? [rowUnits, rowMeta] : [colUnits, colMeta];
+    units.push.apply(units, first[0]);
+    unitMeta.push.apply(unitMeta, first[1]);
+    units.push.apply(units, second[0]);
+    unitMeta.push.apply(unitMeta, second[1]);
+    const boxCells = [];
     for (let b = 0; b < D; b++) {
       const top = Math.floor(b / (D / boxCols)) * boxRows;
       const left = (b % (D / boxCols)) * boxCols;
@@ -379,12 +398,22 @@
       for (let r = 0; r < boxRows; r++) {
         for (let c = 0; c < boxCols; c++) cells.push((top + r) * D + left + c);
       }
+      boxCells.push(cells);
+      if (opts.noBoxes) continue;
       units.push(cells);
       unitMeta.push({ kind: 'box', gridIndex: 0, label: 'B' + (b + 1) });
     }
     (extraRows || []).forEach(function (cells, i) {
       units.push(cells);
       unitMeta.push({ kind: 'row', gridIndex: 1, label: 'X' + (i + 1) });
+    });
+    (opts.extraBoxes || []).forEach(function (b) {
+      units.push(boxCells[b].slice());
+      unitMeta.push({ kind: 'box', gridIndex: 1, label: 'G2-B' + (b + 1) });
+    });
+    (opts.extraRegions || []).forEach(function (b) {
+      units.push(boxCells[b].slice());
+      unitMeta.push({ kind: 'region', gridIndex: 1, label: 'G2-J' + (b + 1) });
     });
     return SG.model.create({
       variantId: variantId, digits: D, cellCount: n, units: units, unitMeta: unitMeta,
@@ -401,6 +430,64 @@
       gridModels[D] = D === 12 ? buildGridModel('fishTest12', 3, 4) : buildGridModel('fishTest16', 4, 4);
     }
     return gridModels[D];
+  }
+
+  // The regions of the registry's jigsaw9 board of the Generator (nine irregular regions, '1' to '9', and no box),
+  // written out so that the positions and the counts of the tests do not depend on the layout that an
+  // environment's own jigsaw9 model has (the Player's is another one).
+  const JIGSAW_LAYOUT = ['111222233', '112224443', '152244463', '155544463', '155566663', '155666733',
+    '888997773', '888999777', '888999977'];
+
+  /** A board of rows, columns and the regions of a layout of D rows of D digits, in that unit order. */
+  function regionBoard(variantId, layout) {
+    const D = layout.length;
+    const n = D * D;
+    const units = [];
+    const unitMeta = [];
+    const cellRow = new Int32Array(n);
+    const cellCol = new Int32Array(n);
+    const cellRegion = new Int32Array(n);
+    for (let c = 0; c < n; c++) {
+      cellRow[c] = Math.floor(c / D);
+      cellCol[c] = c % D;
+    }
+    for (let r = 0; r < D; r++) {
+      units.push(Array.from({ length: D }, function (_, c) { return r * D + c; }));
+      unitMeta.push({ kind: 'row', gridIndex: 0, label: 'R' + (r + 1) });
+    }
+    for (let c = 0; c < D; c++) {
+      units.push(Array.from({ length: D }, function (_, r) { return r * D + c; }));
+      unitMeta.push({ kind: 'col', gridIndex: 0, label: 'C' + (c + 1) });
+    }
+    for (let k = 0; k < D; k++) {
+      const cells = [];
+      for (let c = 0; c < n; c++) {
+        if (layout[Math.floor(c / D)].charAt(c % D) === String(k + 1)) cells.push(c);
+      }
+      cells.forEach(function (c) { cellRegion[c] = k; });
+      units.push(cells);
+      unitMeta.push({ kind: 'region', gridIndex: 0, label: 'J' + (k + 1) });
+    }
+    return SG.model.create({
+      variantId: variantId, digits: D, cellCount: n, units: units, unitMeta: unitMeta,
+      layout: { rows: D, cols: D, cellRow: cellRow, cellCol: cellCol, cellRegion: cellRegion }
+    });
+  }
+
+  const regionBoards = {};
+
+  /**
+   * The jigsaw board of JIGSAW_LAYOUT or, with `turned`, the same board turned on its diagonal: rows and columns
+   * swap and every region is turned with them, which gives another irregular layout.
+   */
+  function jigsawBoard(turned) {
+    const key = turned ? 'jigsawLayoutTurned' : 'jigsawLayout';
+    if (!regionBoards[key]) {
+      regionBoards[key] = regionBoard(key, turned ? JIGSAW_LAYOUT.map(function (_, r) {
+        return JIGSAW_LAYOUT.map(function (row) { return row.charAt(r); }).join('');
+      }) : JIGSAW_LAYOUT);
+    }
+    return regionBoards[key];
   }
 
   const solutions = {};
@@ -764,6 +851,84 @@
     return keys;
   }
 
+  /**
+   * Every two-string kite of a state (R11) by plain enumeration from the model's units, with none of the tables
+   * of tech-fish.js. A line is a complete unit of kind 'row' or 'col' none of whose cells lies in another
+   * complete unit of that kind, in which the digit is not placed and exactly two open cells can still be the
+   * digit. A cell has a box when exactly one complete box-like unit (kind 'box' or 'region', counted over both
+   * kinds) holds it. For a row and a column of that kind with four distinct cells, a bridge is one cell of
+   * each in the same box; the other two cells are the ends. The targets are the open cells that still have the
+   * digit, are none of the four cells and see both ends.
+   * @returns {Array<{digit, lines, bridge, ends, targets}>} every pattern, with or without a target, in the
+   *   order digit, row, column, cell of the row, cell of the column (the cells of a line ascending)
+   */
+  function referenceKites(model, state) {
+    const found = [];
+    const cand = state.candidates;
+    const val = state.value;
+    const peers = peerSetsOf(model);
+    const isComplete = function (u) {
+      return model.units[u].length === model.digits && !(model.unitMeta[u] && model.unitMeta[u].partial);
+    };
+    const holders = function (cell, kind) {
+      return Array.from(model.cellUnits[cell]).filter(function (u) {
+        return model.unitMeta[u].kind === kind && isComplete(u);
+      });
+    };
+    const boxLike = function (cell) {
+      return Array.from(model.cellUnits[cell]).filter(function (u) {
+        const kind = model.unitMeta[u].kind;
+        return (kind === 'box' || kind === 'region') && isComplete(u);
+      });
+    };
+    const pairsOf = function (kind, d, bit) {
+      const out = [];
+      unitsOfKind(model, kind).forEach(function (u) {
+        if (!isComplete(u)) return;
+        const cells = Array.from(model.units[u]);
+        if (cells.some(function (c) { return holders(c, kind).length !== 1; })) return;
+        if (cells.some(function (c) { return val[c] === d; })) return;
+        const open = cells.filter(function (c) { return val[c] === 0 && (cand[c] & bit) !== 0; });
+        if (open.length === 2) out.push({ unit: u, cells: open.sort(function (a, b) { return a - b; }) });
+      });
+      return out;
+    };
+    for (let d = 1; d <= model.digits; d++) {
+      const bit = 1 << (d - 1);
+      const rows = pairsOf('row', d, bit);
+      const cols = pairsOf('col', d, bit);
+      rows.forEach(function (row) {
+        cols.forEach(function (col) {
+          if (new Set(row.cells.concat(col.cells)).size !== 4) return;
+          row.cells.forEach(function (a) {
+            col.cells.forEach(function (b) {
+              const boxA = boxLike(a);
+              const boxB = boxLike(b);
+              if (boxA.length !== 1 || boxB.length !== 1 || boxA[0] !== boxB[0]) return;
+              const ends = [row.cells[0] === a ? row.cells[1] : row.cells[0],
+                col.cells[0] === b ? col.cells[1] : col.cells[0]];
+              const four = [a, b].concat(ends);
+              const targets = [];
+              for (let c = 0; c < model.cellCount; c++) {
+                if (four.indexOf(c) !== -1) continue;
+                if (val[c] === 0 && (cand[c] & bit) !== 0 && peers[ends[0]].has(c) && peers[ends[1]].has(c)) {
+                  targets.push(c);
+                }
+              }
+              found.push({ digit: d, lines: [row.unit, col.unit], bridge: [a, b], ends: ends, targets: targets });
+            });
+          });
+        });
+      });
+    }
+    return found;
+  }
+
+  /** The kites that remove something. */
+  function removingKites(model, state) {
+    return referenceKites(model, state).filter(function (p) { return p.targets.length > 0; });
+  }
+
   /** A blank-board state in which each listed digit stays only on its listed cells (all else is open). */
   function digitsMap(model, spec) {
     const eliminate = [];
@@ -784,6 +949,7 @@
     const EXPECTED = {
       xWing: { baseCost: 32, order: 110 },
       skyscraper: { baseCost: 33, order: 112 },
+      twoStringKite: { baseCost: 34, order: 114 },
       simpleColouring: { baseCost: 36, order: 120 },
       swordfish: { baseCost: 42, order: 130 },
       jellyfish: { baseCost: 56, order: 137 }
@@ -801,7 +967,7 @@
       });
     });
 
-    it('runs in ladder order: xWing, skyscraper, simpleColouring, swordfish, jellyfish', function () {
+    it('runs in ladder order: xWing, skyscraper, twoStringKite, simpleColouring, swordfish, jellyfish', function () {
       const order = SG.techniques.list().map(function (def) { return def.id; });
       const at = ALL_IDS.map(function (id) { return order.indexOf(id); });
       at.forEach(function (index) { expect(index).toBeGreaterThanOrEqual(0); });
@@ -1727,6 +1893,882 @@
           if (agree(model, item, index)) withPattern++;
         });
         expect(withPattern).toBeGreaterThanOrEqual(10);
+      });
+    });
+  });
+
+  describe('twoStringKite (R11): geometry', function () {
+    // The vector of R11: digit 5 in the row R2 {C1, C8} and the column C2 {R1, R7}. The bridge is R2C1 and R1C2
+    // (box 1): they see each other, so R2C8 or R7C2 is a 5, and R7C8 sees both (R7C2 along R7, R2C8 along C8).
+    // R7C8 also makes R7 and C8 conjugate pairs, but each of them shares a cell with the row or the column of
+    // the vector, so that the vector holds exactly one kite.
+    const VECTOR = ['R2C1', 'R2C8', 'R1C2', 'R7C2', 'R7C8'];
+    const WANT = {
+      cells: ['R1C2', 'R2C1', 'R2C8', 'R7C2'],
+      eliminations: [['R7C8', 5]],
+      args: { digit: 5, lines: ['R2', 'C2'], bridge: ['R1C2', 'R2C1'], ends: ['R2C8', 'R7C2'] }
+    };
+
+    function kiteState(labels) {
+      return digitsMap(model9, { 5: labels });
+    }
+
+    function unitIndex(model, label) {
+      return model.unitMeta.findIndex(function (meta) { return meta.label === label; });
+    }
+
+    it('removes the digit from the cell that sees both ends (the vector of R11)', function () {
+      const state = kiteState(VECTOR);
+      const patterns = removingKites(model9, state);
+      expect(patterns.length).toBe(1);
+      expect(patterns[0].targets).toEqual([H.cell(model9, 'R7C8')]);
+      const finding = H.expectFinding(SG.test, 'twoStringKite', state, WANT);
+      expect(finding.technique).toBe('twoStringKite');
+      expect(finding.i18nKey).toBe('technique.twoStringKite.step');
+      expect(finding.placements).toEqual([]);
+      expect(finding.cells).toEqual(['R1C2', 'R2C1', 'R2C8', 'R7C2'].map(function (ref) {
+        return H.cell(model9, ref);
+      }));
+      expect(finding.eliminations).toEqual([[H.cell(model9, 'R7C8'), 5]]);
+    });
+
+    it('finds the transposed vector: the row R2 {C1, C7}, the column C2 {R1, R8}, R8C7 loses the digit',
+      function () {
+        const state = kiteState(VECTOR.map(transposeRef));
+        const patterns = removingKites(model9, state);
+        expect(patterns.length).toBe(1);
+        H.expectFinding(SG.test, 'twoStringKite', state, {
+          cells: ['R1C2', 'R2C1', 'R2C7', 'R8C2'],
+          eliminations: [['R8C7', 5]],
+          args: { digit: 5, lines: ['R2', 'C2'], bridge: ['R1C2', 'R2C1'], ends: ['R2C7', 'R8C2'] }
+        });
+      });
+
+    // The bridge cell of the row is the lower or the higher cell of its pair, and so is the bridge cell of the
+    // column: box 5 holds R5C4 (row R5) and R4C6 (column C6), the partner of the row lies left or right of the
+    // box, the partner of the column above or below it. The target is where the lines of the two ends meet.
+    const BRIDGE = ['R4C6', 'R5C4'];
+    const FOUR = [
+      { name: 'row partner left, column partner above', ends: ['R1C6', 'R5C1'], target: 'R1C1' },
+      { name: 'row partner left, column partner below', ends: ['R5C1', 'R9C6'], target: 'R9C1' },
+      { name: 'row partner right, column partner above', ends: ['R1C6', 'R5C9'], target: 'R1C9' },
+      { name: 'row partner right, column partner below', ends: ['R5C9', 'R9C6'], target: 'R9C9' }
+    ];
+
+    function inCellOrder(labels) {
+      return labels.slice().sort(function (a, b) { return H.cell(model9, a) - H.cell(model9, b); });
+    }
+
+    function fourLabels(item) {
+      return BRIDGE.concat(item.ends, [item.target]);
+    }
+
+    FOUR.forEach(function (item) {
+      it('finds the kite with the ' + item.name + ' (the bridge in box 5), as listed and transposed', function () {
+        [['as listed', function (ref) { return ref; }, ['R5', 'C6']],
+          ['transposed', transposeRef, ['R6', 'C5']]].forEach(function (variant) {
+          const turn = variant[1];
+          const state = kiteState(fourLabels(item).map(turn));
+          const patterns = removingKites(model9, state);
+          expect(patterns.length).toBe(1);
+          expect(patterns[0].targets).toEqual([H.cell(model9, turn(item.target))]);
+          const ends = inCellOrder(item.ends.map(turn));
+          H.expectFinding(SG.test, 'twoStringKite', state, {
+            cells: BRIDGE.concat(item.ends).map(turn),
+            eliminations: [[turn(item.target), 5]],
+            args: { digit: 5, lines: variant[2], bridge: inCellOrder(BRIDGE.map(turn)), ends: ends }
+          });
+        });
+      });
+    });
+
+    it('finds a kite whose four cells lie in one box: the first bridge in order is the one named', function () {
+      // Row R2 {C1, C2} and column C3 {R1, R3} are all in box 1, so every one of the four bridges is a bridge.
+      const state = kiteState(['R2C1', 'R2C2', 'R1C3', 'R3C3', 'R3C1']);
+      const patterns = removingKites(model9, state);
+      expect(patterns.length).toBeGreaterThanOrEqual(2);
+      expect(patterns[0].bridge).toEqual([H.cell(model9, 'R2C1'), H.cell(model9, 'R1C3')]);
+      H.expectFinding(SG.test, 'twoStringKite', state, {
+        cells: ['R1C3', 'R2C1', 'R2C2', 'R3C3'],
+        eliminations: [['R3C1', 5]],
+        args: { digit: 5, lines: ['R2', 'C3'], bridge: ['R1C3', 'R2C1'], ends: ['R2C2', 'R3C3'] }
+      });
+    });
+
+    // Each of these has the look of the vector but is no kite that removes anything. They are checked against
+    // the independent enumeration first, so that a mistake of the construction cannot hide a bug.
+    const NEAR_MISSES = [
+      ['a third candidate in the row (R2 is no conjugate pair)', VECTOR.concat(['R2C5'])],
+      ['a third candidate in the column (C2 is no conjugate pair)', VECTOR.concat(['R4C2'])],
+      ['a shared endpoint: the row and the column meet in R2C2, a cell of both pairs (three distinct cells)',
+        ['R2C2', 'R2C8', 'R7C2', 'R7C8', 'R7C5', 'R5C8']],
+      ['no box link: the cells R2C4 and R1C2 lie in different boxes', ['R2C4', 'R2C8', 'R1C2', 'R7C2', 'R7C8']],
+      ['a target that sees only the end R2C8', ['R2C1', 'R2C8', 'R1C2', 'R7C2', 'R5C8']],
+      ['a target that sees only the end R7C2', ['R2C1', 'R2C8', 'R1C2', 'R7C2', 'R7C5']],
+      ['a bridge cell that sees both ends is no external candidate', ['R2C1', 'R2C8', 'R1C2', 'R3C2']],
+      ['a skyscraper (two rows with a common cover column) is no kite',
+        ['R1C2', 'R1C8', 'R4C2', 'R4C7', 'R2C7', 'R6C7']],
+      ['an X-Wing (two rows on two columns) is no kite', ['R2C2', 'R2C8', 'R7C2', 'R7C8', 'R5C8']],
+      ['a row with a single candidate (R2 is no conjugate pair)', ['R2C1', 'R1C2', 'R7C2', 'R7C8']]
+    ];
+
+    NEAR_MISSES.forEach(function (miss) {
+      [['as listed', miss[1]], ['transposed', miss[1].map(transposeRef)]].forEach(function (variant) {
+        it('does not authorize an elimination: ' + miss[0] + ' (' + variant[0] + ')', function () {
+          const state = kiteState(variant[1]);
+          expect(removingKites(model9, state)).toEqual([]);
+          H.expectNoFinding(SG.test, 'twoStringKite', state);
+        });
+      });
+    });
+
+    it('leaves the skyscraper and the X-Wing near misses to skyscraper and xWing', function () {
+      [[NEAR_MISSES[7][1], 'skyscraper'], [NEAR_MISSES[8][1], 'xWing']].forEach(function (p) {
+        [p[0], p[0].map(transposeRef)].forEach(function (labels) {
+          const finding = runFind(p[1], model9, kiteState(labels));
+          expect([p[1], finding !== null]).toEqual([p[1], true]);
+        });
+      });
+    });
+
+    it('needs complete lines and a complete box: an incomplete row, column or box gives nothing', function () {
+      const state = kiteState(VECTOR);
+      ['R2', 'C2', 'B1'].forEach(function (label) {
+        const complete = Uint8Array.from(SG.techniques.createContext(model9, {}).completeUnits);
+        complete[unitIndex(model9, label)] = 0;
+        const ctx = Object.assign({}, SG.techniques.createContext(model9, {}), { completeUnits: complete });
+        expect([label, SG.techniques.get('twoStringKite').find(model9, state, ctx)]).toEqual([label, null]);
+      });
+      expect(runFind('twoStringKite', model9, state)).not.toBeNull();
+      const none = new Uint8Array(model9.units.length);
+      const ctx = Object.assign({}, SG.techniques.createContext(model9, {}), { completeUnits: none });
+      expect(SG.techniques.get('twoStringKite').find(model9, state, ctx)).toBeNull();
+    });
+
+    it('skips a row whose digit is already placed, however many candidates the digit still has in it', function () {
+      const state = SG.model.cloneState(kiteState(VECTOR));
+      const placed = H.cell(model9, 'R2C5');
+      state.value[placed] = 5;
+      state.candidates[placed] = 1 << 4;
+      expect(removingKites(model9, state)).toEqual([]);
+      H.expectNoFinding(SG.test, 'twoStringKite', state, { model: model9 });
+    });
+
+    it('needs disjoint lines: rows that share a cell are no conjugate rows, however the candidates lie', function () {
+      // On the plain 4 x 4 board the digit map holds a kite: the row R2 {C1, C4}, the column C2 {R1, R4}, the
+      // bridge R2C1 - R1C2 in box 1, and R4C4 sees both ends (R2C4 along C4, R4C2 along R4). The extra row X1
+      // shares one cell with each of R1 to R4 (it is a row for the model), so none of them is a disjoint line.
+      const plain = buildGridModel('fishTestPlain', 2, 2);
+      const overlapping = buildGridModel('fishTestOverlap', 2, 2, [[3, 4, 9, 14]]);
+      const labels = ['R2C1', 'R2C4', 'R1C2', 'R4C2', 'R4C4'];
+      H.expectFinding(SG.test, 'twoStringKite', digitsMap(plain, { 1: labels }), {
+        cells: ['R1C2', 'R2C1', 'R2C4', 'R4C2'],
+        eliminations: [['R4C4', 1]],
+        args: { digit: 1, lines: ['R2', 'C2'], bridge: ['R1C2', 'R2C1'], ends: ['R2C4', 'R4C2'] }
+      });
+      const crossed = digitsMap(overlapping, { 1: labels });
+      expect(removingKites(overlapping, crossed)).toEqual([]);
+      H.expectNoFinding(SG.test, 'twoStringKite', crossed);
+    });
+
+    it('needs a box that is the only box of both bridge cells (an overlapped box has two owners)', function () {
+      // The same position with box 1 listed twice, as an overlapped box of a multi-grid board is: its cells have
+      // no single box, so R2C1 and R1C2 bridge nothing.
+      const labels = ['R2C1', 'R2C4', 'R1C2', 'R4C2', 'R4C4'];
+      const doubled = buildGridModel('fishTestBoxes', 2, 2, undefined, { extraBoxes: [0] });
+      const crossed = digitsMap(doubled, { 1: labels });
+      expect(removingKites(doubled, crossed)).toEqual([]);
+      H.expectNoFinding(SG.test, 'twoStringKite', crossed);
+      // another box doubled leaves the bridge alone
+      const other = buildGridModel('fishTestBoxes2', 2, 2, undefined, { extraBoxes: [3] });
+      expect(removingKites(other, digitsMap(other, { 1: labels }))).toHaveLength(1);
+      H.expectFinding(SG.test, 'twoStringKite', digitsMap(other, { 1: labels }), {
+        eliminations: [['R4C4', 1]]
+      });
+    });
+
+    it('lists the two lines in unit order, whichever kind comes first in the model', function () {
+      const labels = ['R2C1', 'R2C4', 'R1C2', 'R4C2', 'R4C4'];
+      const columnsFirst = buildGridModel('fishTestColumnsFirst', 2, 2, undefined, { columnsFirst: true });
+      const state = digitsMap(columnsFirst, { 1: labels });
+      const finding = H.expectFinding(SG.test, 'twoStringKite', state, {
+        eliminations: [['R4C4', 1]],
+        args: { digit: 1, lines: ['C2', 'R2'], bridge: ['R1C2', 'R2C1'], ends: ['R2C4', 'R4C2'] }
+      });
+      expect(finding.i18nArgs.lines).toEqual(['C2', 'R2']);
+      expect(removingKites(columnsFirst, state)[0].lines).toEqual([unitIndex(columnsFirst, 'R2'),
+        unitIndex(columnsFirst, 'C2')]);
+    });
+
+    it('takes the lowest digit first, then the rows and the columns in line order', function () {
+      const both = digitsMap(model9, { 3: VECTOR, 2: VECTOR });
+      expect(runFind('twoStringKite', model9, both).i18nArgs.digit).toBe(2);
+      // Two kites of the digit 5: the one of the row R2 comes before the one of the row R5.
+      const rows = kiteState(VECTOR.concat(fourLabels(FOUR[0])));
+      const patterns = removingKites(model9, rows);
+      expect(patterns.length).toBe(2);
+      expect(patterns.map(function (p) { return unitLabel(model9, p.lines[0]); })).toEqual(['R2', 'R5']);
+      H.expectFinding(SG.test, 'twoStringKite', rows, WANT);
+      // Two kites on one row: the column C2 comes before the column C3, and once the first has been applied
+      // the second is what is left.
+      const columns = kiteState(['R2C1', 'R2C8', 'R1C2', 'R7C2', 'R3C3', 'R9C3', 'R7C8', 'R9C8']);
+      const listed = removingKites(model9, columns);
+      expect(listed.map(function (p) { return [unitLabel(model9, p.lines[0]), unitLabel(model9, p.lines[1])]; }))
+        .toEqual([['R2', 'C2'], ['R2', 'C3']]);
+      H.expectFinding(SG.test, 'twoStringKite', columns, WANT);
+      SG.constraints.eliminate(model9, columns, H.cell(model9, 'R7C8'), 5);
+      H.expectFinding(SG.test, 'twoStringKite', columns, {
+        cells: ['R2C1', 'R2C8', 'R3C3', 'R9C3'],
+        eliminations: [['R9C8', 5]],
+        args: { digit: 5, lines: ['R2', 'C3'], bridge: ['R2C1', 'R3C3'], ends: ['R2C8', 'R9C3'] }
+      });
+    });
+
+    it('gives the same answer for the same state after a call on another state', function () {
+      const a = kiteState(VECTOR);
+      const b = kiteState(VECTOR.map(transposeRef));
+      const first = JSON.stringify(runFind('twoStringKite', model9, a));
+      runFind('twoStringKite', model9, b);
+      expect(JSON.stringify(runFind('twoStringKite', model9, a))).toBe(first);
+    });
+
+    it('hands out its own data: changing a Finding changes neither the next call nor the state', function () {
+      const state = kiteState(VECTOR);
+      const before = SG.model.cloneState(state);
+      const first = runFind('twoStringKite', model9, state);
+      const copy = JSON.parse(JSON.stringify(first));
+      first.cells.push(99);
+      first.eliminations.push([1, 1]);
+      first.eliminations[0][0] = 77;
+      first.i18nArgs.lines.push('X');
+      first.i18nArgs.bridge.push('X');
+      first.i18nArgs.ends.length = 0;
+      first.i18nArgs.digit = 1;
+      expect(runFind('twoStringKite', model9, state)).toEqual(copy);
+      expect(state.candidates).toEqual(before.candidates);
+      expect(state.value).toEqual(before.value);
+    });
+  });
+
+  describe('twoStringKite (R11): real positions', function () {
+    const entry = SG.fixtures.techniques.byId.twoStringKite;
+
+    // The exact Findings of the two real positive fixtures (core/tests/fixtures/techniques.js).
+    const REAL = [
+      { cells: ['R5C8', 'R6C2', 'R6C9', 'R9C8'], eliminations: [['R9C2', 5]],
+        args: { digit: 5, lines: ['R6', 'C8'], bridge: ['R5C8', 'R6C9'], ends: ['R6C2', 'R9C8'] } },
+      { cells: ['R4C2', 'R8C2', 'R9C1', 'R9C8'], eliminations: [['R4C8', 5]],
+        args: { digit: 5, lines: ['R9', 'C2'], bridge: ['R8C2', 'R9C1'], ends: ['R4C2', 'R9C8'] } }
+    ];
+
+    function positionOf(fixture) {
+      return H.stateAfter(model9, fixture.puzzle, fixture.after);
+    }
+
+    it('has two positive and three negative fixtures, positions listed explicitly (no ladder helper)', function () {
+      expect(entry.positive).toHaveLength(2);
+      expect(entry.negative).toHaveLength(3);
+      entry.positive.concat(entry.negative).forEach(function (fixture) {
+        expect(Array.isArray(fixture.after)).toBe(true);
+      });
+      entry.positive.forEach(function (fixture) { expect(fixture.after).not.toContain('twoStringKite'); });
+      entry.positive.forEach(function (fixture) { expect(fixture.after).toContain('skyscraper'); });
+      // nothing left after the kite itself (two positions); the skyscraper position is the one before skyscraper
+      expect(entry.negative[0].after).toContain('twoStringKite');
+      expect(entry.negative[1].after).toContain('twoStringKite');
+      expect(entry.negative[2].after).not.toContain('skyscraper');
+      expect(entry.negative[2].after).toContain('xWing');
+    });
+
+    REAL.forEach(function (want, i) {
+      it('finds the exact Finding of real position ' + (i + 1) + ', sound against an independent completion',
+        function () {
+          const fixture = entry.positive[i];
+          const givens = H.parsePuzzle(model9, fixture.puzzle);
+          // the puzzle has exactly one solution (plain depth first search, no technique)
+          expect(SG.dfs.countSolutions(model9, givens, 2)).toBe(1);
+          const solution = SG.dfs.solve(model9, givens);
+          const state = positionOf(fixture);
+          const finding = H.expectFinding(SG.test, 'twoStringKite', state, want);
+          expect(finding.eliminations.length).toBe(want.eliminations.length);
+          finding.eliminations.forEach(function (e) { expect(solution[e[0]]).not.toBe(e[1]); });
+          // the position without the eliminated candidates still completes, and only to that solution
+          const reduced = SG.model.cloneState(state);
+          finding.eliminations.forEach(function (e) {
+            expect(SG.constraints.eliminate(model9, reduced, e[0], e[1])).toBe(true);
+          });
+          const done = SG.dfs.searchFrom(model9, reduced, { limit: 2 });
+          expect(done.found).toBe(1);
+          expect(Array.from(done.solution)).toEqual(Array.from(solution));
+          // the first kite in order is the Finding (the independent enumeration agrees)
+          const first = removingKites(model9, state)[0];
+          expect(first.targets).toEqual(finding.eliminations.map(function (e) { return e[0]; }));
+        });
+
+      it('finds the transposed real position ' + (i + 1) + ' with the transposed eliminations', function () {
+        const fixture = entry.positive[i];
+        const turned = transposeCells(fixture.puzzle, function (cells) { return cells.join(''); });
+        const state = H.stateAfter(model9, turned, fixture.after);
+        const wanted = new Set(want.eliminations.map(function (e) {
+          return H.cell(model9, transposeRef(e[0])) + ':' + e[1];
+        }));
+        const keys = eliminationKeys(removingKites(model9, state));
+        wanted.forEach(function (key) { expect(keys.has(key)).toBe(true); });
+        const finding = runFind('twoStringKite', model9, state);
+        expect(finding).not.toBeNull();
+        expect(H.findingProblems(model9, state, finding, { technique: 'twoStringKite',
+          solution: SG.dfs.solve(model9, H.parsePuzzle(model9, turned)) })).toEqual([]);
+      });
+    });
+
+    it('finds nothing at the negative positions: nothing left after it, a shared cell, a skyscraper', function () {
+      entry.negative.forEach(function (fixture) {
+        const state = positionOf(fixture);
+        H.expectNoFinding(SG.test, 'twoStringKite', state);
+        expect(removingKites(model9, state)).toEqual([]);
+      });
+      const skyscraper = positionOf(entry.negative[2]);
+      expect(runFind('skyscraper', model9, skyscraper)).not.toBeNull();
+    });
+
+    it('has a negative whose near kite shares a cell and would remove the solution of R6C8', function () {
+      const fixture = entry.negative[1];
+      const state = positionOf(fixture);
+      const solution = SG.dfs.solve(model9, H.parsePuzzle(model9, fixture.puzzle));
+      const row = unitsOfKind(model9, 'row')[4];
+      const col = unitsOfKind(model9, 'col')[2];
+      const open = function (u) {
+        return Array.from(model9.units[u]).filter(function (c) {
+          return state.value[c] === 0 && (state.candidates[c] & 4) !== 0;
+        });
+      };
+      // R5 holds the digit 3 only in R5C3 and R5C8, C3 only in R5C3 and R6C3: they share R5C3
+      expect(open(row)).toEqual([H.cell(model9, 'R5C3'), H.cell(model9, 'R5C8')]);
+      expect(open(col)).toEqual([H.cell(model9, 'R5C3'), H.cell(model9, 'R6C3')]);
+      // R6C8 sees the two free ends R5C8 and R6C3, and it is where the digit 3 goes
+      const peers = peerSetsOf(model9);
+      expect(peers[H.cell(model9, 'R5C8')].has(H.cell(model9, 'R6C8'))).toBe(true);
+      expect(peers[H.cell(model9, 'R6C3')].has(H.cell(model9, 'R6C8'))).toBe(true);
+      expect(solution[H.cell(model9, 'R6C8')]).toBe(3);
+      expect(state.candidates[H.cell(model9, 'R6C8')] & 4).toBe(4);
+    });
+  });
+
+  describe('twoStringKite (R11): work limit, budget and cancellation', function () {
+    // Digits 1 to 8 may only go in one horizontal domino of every box of a 16 digit board (box (rb, cb) holds
+    // its domino in the row 4 rb + (rb + cb) mod 4, in the columns 4 cb and 4 cb + 1 for rb < 2 and 4 cb + 2 and
+    // 4 cb + 3 for rb >= 2). Every row and every column holds a digit in exactly two cells, so each digit has 16
+    // conjugate rows and 16 conjugate columns; the two cells of a row lie in one box, and the only cells of a
+    // conjugate column in that box are those of the domino, so no pair of a row and a column has four distinct
+    // cells and a bridge: a call tests 8 digits x 16 x 16 = 2048 pairs and finds nothing.
+    const FLOOD_WORK = 2048;
+    let flood = null;
+
+    function floodState() {
+      if (flood === null) {
+        const model = modelOfDigits(16);
+        const domino = new Set();
+        for (let rb = 0; rb < 4; rb++) {
+          for (let cb = 0; cb < 4; cb++) {
+            const r = 4 * rb + (rb + cb) % 4;
+            const c = 4 * cb + (rb >= 2 ? 2 : 0);
+            domino.add(r * 16 + c);
+            domino.add(r * 16 + c + 1);
+          }
+        }
+        const eliminate = [];
+        for (let c = 0; c < model.cellCount; c++) {
+          if (domino.has(c)) continue;
+          for (let d = 1; d <= 8; d++) eliminate.push([c, d]);
+        }
+        flood = { model: model, state: H.makeState(model, blankPuzzle(model), { eliminate: eliminate,
+          propagate: false }) };
+      }
+      return flood;
+    }
+
+    const VECTOR = ['R2C1', 'R2C8', 'R1C2', 'R7C2', 'R7C8'];
+
+    function caught(fn) {
+      try {
+        fn();
+      } catch (err) {
+        return err;
+      }
+      return null;
+    }
+
+    function observed(model, state, options, ctxOptions) {
+      const records = [];
+      const ctx = SG.techniques.createContext(model, Object.assign({
+        onPatternWork: function (r) { records.push(r); }
+      }, ctxOptions));
+      const finding = SG.fishSearch.twoStringKite(model, state, ctx, options);
+      return { finding: finding, records: records, record: records[0] };
+    }
+
+    it('has no kite in the flood position, which a plain enumeration confirms', function () {
+      const f = floodState();
+      expect(referenceKites(f.model, f.state)).toEqual([]);
+      H.expectNoFinding(SG.test, 'twoStringKite', f.state);
+    });
+
+    it('has R10\'s limit of 50000 tested pairs, and the registered finder reports it', function () {
+      expect(SG.fishSearch.KITE_WORK_LIMIT).toBe(50000);
+      const state = digitsMap(model9, { 5: VECTOR });
+      const records = [];
+      const ctx = SG.techniques.createContext(model9, { onPatternWork: function (r) { records.push(r); } });
+      expect(SG.techniques.get('twoStringKite').find(model9, state, ctx)).not.toBeNull();
+      expect(records).toEqual([{ id: 'twoStringKite', work: 1, limit: 50000, capHit: null, retained: null }]);
+    });
+
+    it('counts one unit per tested pair of a row and a column, from a fresh counter on every call', function () {
+      const f = floodState();
+      const first = observed(f.model, f.state);
+      expect(first.finding).toBeNull();
+      expect(first.record).toEqual({ id: 'twoStringKite', work: FLOOD_WORK, limit: 50000, capHit: null,
+        retained: null });
+      const second = observed(f.model, f.state);
+      expect(second.record).toEqual(first.record);
+      expect(second.record).not.toBe(first.record);
+      // a position without a conjugate pair costs nothing; a finding stops the count where it is found
+      const empty = H.makeState(model9, blankPuzzle(model9), { propagate: false });
+      expect(observed(model9, empty).record.work).toBe(0);
+      const found = observed(model9, digitsMap(model9, { 5: VECTOR }));
+      expect(found.finding).not.toBeNull();
+      expect(found.record.work).toBe(1);
+      // the rows R2 and R7 and the column C2 are conjugate: two tested pairs, and R7C5 sees only one end
+      const noKite = observed(model9, digitsMap(model9, { 5: ['R2C1', 'R2C8', 'R1C2', 'R7C2', 'R7C5'] }));
+      expect(noKite.finding).toBeNull();
+      expect(noKite.record.work).toBe(2);
+    });
+
+    it('has no kite and costs no work on a board without boxes (a Latin square), unlike the same position with them',
+      function () {
+        const labels = ['R2C1', 'R2C4', 'R1C2', 'R4C2', 'R4C4'];
+        const plain = buildGridModel('fishTestPlain', 2, 2);
+        const square = buildGridModel('fishTestLatin', 2, 2, undefined, { noBoxes: true });
+        expect(unitsOfKind(square, 'box')).toEqual([]);
+        const state = digitsMap(square, { 1: labels });
+        expect(referenceKites(square, state)).toEqual([]);
+        const out = observed(square, state);
+        expect(out.finding).toBeNull();
+        expect(out.record.work).toBe(0);
+        const control = observed(plain, digitsMap(plain, { 1: labels }));
+        expect(control.finding).not.toBeNull();
+        expect(control.record.work).toBe(1);
+      });
+
+    it('ends a call whose limit is spent with nothing found (never a finding), and says so', function () {
+      const f = floodState();
+      [0, 1, 100, FLOOD_WORK - 1].forEach(function (limit) {
+        const out = observed(f.model, f.state, { workLimit: limit });
+        expect(out.finding).toBeNull();
+        expect(out.record).toEqual({ id: 'twoStringKite', work: limit, limit: limit, capHit: 'work',
+          retained: null });
+      });
+      const exact = observed(f.model, f.state, { workLimit: FLOOD_WORK });
+      expect(exact.record.capHit).toBeNull();
+      expect(exact.record.work).toBe(FLOOD_WORK);
+      // a limit of 0 loses the vector's deduction; the first tested pair finds it with a limit of 1
+      const state = digitsMap(model9, { 5: VECTOR });
+      const lost = observed(model9, state, { workLimit: 0 });
+      expect(lost.finding).toBeNull();
+      expect(lost.record.capHit).toBe('work');
+      const kept = observed(model9, state, { workLimit: 1 });
+      expect(kept.finding).toEqual(observed(model9, state).finding);
+      expect(kept.record.capHit).toBeNull();
+    });
+
+    it('floors a fractional limit and rejects an invalid one with solver.invalidOption', function () {
+      const f = floodState();
+      expect(observed(f.model, f.state, { workLimit: 2.9 }).record.work).toBe(2);
+      [-1, NaN, Infinity, '5', null].forEach(function (workLimit) {
+        const err = caught(function () { observed(f.model, f.state, { workLimit: workLimit }); });
+        expect([String(workLimit), err && err.code]).toEqual([String(workLimit), 'solver.invalidOption']);
+        expect(err.message).toContain('fishSearch.twoStringKite');
+      });
+    });
+
+    /**
+     * The work done at each check of the parent budget: a context whose k-th check throws a spent budget lets the
+     * record of the (swallowed) call tell how many pairs were tested at that check.
+     */
+    function checkWorks(model, state, options) {
+      const base = SG.techniques.createContext(model, {});
+      function attempt(target) {
+        let k = 0;
+        let record = null;
+        const ctx = Object.assign({}, base, {
+          options: { onPatternWork: function (r) { record = r; } },
+          check: function () {
+            k++;
+            if (k === target) throw new SG.errors.GenerationError('budget.exceeded', { reason: 'nodes' });
+          }
+        });
+        const finding = SG.fishSearch.twoStringKite(model, state, ctx, options);
+        return { checks: k, record: record, finding: finding };
+      }
+      const free = attempt(0);
+      const works = [];
+      for (let target = 1; target <= free.checks; target++) {
+        const spent = attempt(target);
+        expect(spent.finding).toBeNull();
+        expect(spent.record.capHit).toBeNull();
+        works.push(spent.record.work);
+      }
+      const gaps = works.map(function (w, i) { return w - (i === 0 ? 0 : works[i - 1]); });
+      gaps.push(free.record.work - works[works.length - 1]);
+      return { works: works, gaps: gaps, max: Math.max.apply(null, gaps), free: free };
+    }
+
+    it('checks the parent budget at entry and so that at most 256 pairs pass between two checks', function () {
+      const f = floodState();
+      const out = checkWorks(f.model, f.state);
+      expect(out.works[0]).toBe(0);
+      expect(out.works).toEqual([0, 256, 512, 768, 1024, 1280, 1536, 1792]);
+      expect(out.max).toBeLessThanOrEqual(256);
+      expect(out.free.checks).toBe(8);
+      // a call that ends at its limit keeps the same cadence
+      const capped = checkWorks(f.model, f.state, { workLimit: 1000 });
+      expect(capped.works).toEqual([0, 256, 512, 768]);
+      // a small call has only the entry check
+      expect(checkWorks(model9, digitsMap(model9, { 5: VECTOR })).works).toEqual([0]);
+    });
+
+    it('reports a spent budget as nothing found and lets cancellation and other errors through', function () {
+      const f = floodState();
+      const parent = SG.budget.create({ nodes: 3 });
+      const spent = observed(f.model, f.state, undefined, { budget: parent });
+      expect(spent.finding).toBeNull();
+      expect(spent.records).toHaveLength(1);
+      expect(spent.record.capHit).toBeNull();
+      expect(spent.record.work).toBeLessThan(FLOOD_WORK);
+      // capHit null is no proof of a complete scan: the caller's budget still fails after the call
+      expect(caught(function () { parent.check(); }).code).toBe('budget.exceeded');
+
+      const budget = SG.budget.create({});
+      budget.cancel();
+      const records = [];
+      const err = caught(function () {
+        SG.techniques.get('twoStringKite').find(f.model, f.state, SG.techniques.createContext(f.model, {
+          budget: budget, onPatternWork: function (r) { records.push(r); } }));
+      });
+      expect(err.code).toBe('budget.cancelled');
+      expect(records).toEqual([]);
+
+      // cancellation in the middle of the scan, and an error that is not a budget error
+      [['budget.cancelled', true], ['boom', false]].forEach(function (kind) {
+        let k = 0;
+        const ctx = Object.assign({}, SG.techniques.createContext(f.model, {}), {
+          check: function () {
+            if (++k === 3) {
+              throw kind[1] ? new SG.errors.GenerationError(kind[0], { reason: 'cancelled' }) : new Error(kind[0]);
+            }
+          }
+        });
+        const thrown = caught(function () { SG.techniques.get('twoStringKite').find(f.model, f.state, ctx); });
+        expect(thrown).toBeTruthy();
+        expect(kind[1] ? thrown.code : thrown.message).toBe(kind[0]);
+        expect(k).toBe(3);
+      });
+    });
+
+    it('is not fooled by a hostile or absent observer', function () {
+      const state = digitsMap(model9, { 5: VECTOR });
+      const plain = JSON.stringify(runFind('twoStringKite', model9, state));
+      ['not a function', null, 7].forEach(function (observer) {
+        const ctx = SG.techniques.createContext(model9, { onPatternWork: observer });
+        expect(JSON.stringify(SG.techniques.get('twoStringKite').find(model9, state, ctx))).toBe(plain);
+      });
+    });
+  });
+
+  describe('twoStringKite (R11): a region as the box, and the ownership on multi-grid boards', function () {
+    // A region of a jigsaw board is a box-like unit: a bridge may lie in it. J4 of JIGSAW_LAYOUT holds R3C5 (row
+    // R3) and R4C7 (column C7), the other cells of the two lines are R3C9 and R8C7, and R8C9 sees both (R3C9 along
+    // C9, R8C7 along R8). R8 and C9 are conjugate pairs too, but each of them shares a cell with the row or the
+    // column of the vector, so that the vector holds exactly one kite.
+    const JIGSAW = ['R3C5', 'R3C9', 'R4C7', 'R8C7', 'R8C9'];
+
+    function inCellOrderOf(model, labels) {
+      return labels.slice().sort(function (a, b) { return H.cell(model, a) - H.cell(model, b); });
+    }
+
+    it('has no box on the jigsaw board: its nine regions are the box-like units', function () {
+      const board = jigsawBoard(false);
+      [board, jigsawBoard(true)].concat(SG.testkit.hasVariant('jigsaw9') ? [H.model('jigsaw9')] : [])
+        .forEach(function (model) {
+          expect(unitsOfKind(model, 'box')).toEqual([]);
+          expect(unitsOfKind(model, 'region')).toHaveLength(9);
+        });
+      expect(unitLabel(board, crossUnit(board, H.cell(board, 'R3C5'), 'region'))).toBe('J4');
+    });
+
+    it('bridges through a region: the vector on the jigsaw board (J4 holds R3C5 and R4C7)', function () {
+      const board = jigsawBoard(false);
+      const state = digitsMap(board, { 5: JIGSAW });
+      const patterns = removingKites(board, state);
+      expect(patterns.length).toBe(1);
+      expect(patterns[0].targets).toEqual([H.cell(board, 'R8C9')]);
+      expect(unitLabel(board, crossUnit(board, H.cell(board, 'R3C5'), 'region'))).toBe('J4');
+      expect(unitLabel(board, crossUnit(board, H.cell(board, 'R4C7'), 'region'))).toBe('J4');
+      const finding = H.expectFinding(SG.test, 'twoStringKite', state, {
+        cells: ['R3C5', 'R3C9', 'R4C7', 'R8C7'],
+        eliminations: [['R8C9', 5]],
+        args: { digit: 5, lines: ['R3', 'C7'], bridge: ['R3C5', 'R4C7'], ends: ['R3C9', 'R8C7'] }
+      });
+      expect(finding.placements).toEqual([]);
+    });
+
+    it('finds the transposed vector on the transposed jigsaw board (J4 holds R5C3 and R7C4)', function () {
+      const turned = jigsawBoard(true);
+      const labels = JIGSAW.map(transposeRef);
+      const state = digitsMap(turned, { 5: labels });
+      const patterns = removingKites(turned, state);
+      expect(patterns.length).toBe(1);
+      expect(patterns[0].targets).toEqual([H.cell(turned, 'R9C8')]);
+      expect(unitLabel(turned, crossUnit(turned, H.cell(turned, 'R5C3'), 'region'))).toBe('J4');
+      expect(unitLabel(turned, crossUnit(turned, H.cell(turned, 'R7C4'), 'region'))).toBe('J4');
+      H.expectFinding(SG.test, 'twoStringKite', state, {
+        cells: inCellOrderOf(turned, ['R3C5', 'R3C9', 'R4C7', 'R8C7'].map(transposeRef)),
+        eliminations: [['R9C8', 5]],
+        args: { digit: 5, lines: ['R7', 'C3'], bridge: inCellOrderOf(turned, ['R3C5', 'R4C7'].map(transposeRef)),
+          ends: inCellOrderOf(turned, ['R3C9', 'R8C7'].map(transposeRef)) }
+      });
+    });
+
+    // Near misses on the jigsaw board: they look like the vector, checked first against the independent
+    // enumeration. The bridge cells lie in different regions, or in the same 3 x 3 block but in different regions
+    // (a block is no box of this board), or one of them lies in a region together with a third candidate line.
+    const JIGSAW_MISSES = [
+      ['the bridge cells lie in different regions (R3C4 is in J2, R4C7 in J4)', ['R3C4', 'R3C9', 'R4C7', 'R8C7', 'R8C9']],
+      ['the bridge cells lie in one 3 x 3 block but in different regions (R2C3 is in J2, R3C2 in J5)',
+        ['R2C3', 'R2C9', 'R3C2', 'R7C2', 'R7C9']],
+      ['a third candidate in the row (R3 is no conjugate pair)', JIGSAW.concat(['R3C1'])],
+      ['a target that sees only the end R3C9', ['R3C5', 'R3C9', 'R4C7', 'R8C7', 'R1C9']]
+    ];
+
+    JIGSAW_MISSES.forEach(function (miss) {
+      [['as listed', false], ['transposed', true]].forEach(function (variant) {
+        it('does not authorize an elimination on the jigsaw board: ' + miss[0] + ' (' + variant[0] + ')',
+          function () {
+            const board = jigsawBoard(variant[1]);
+            const state = digitsMap(board, { 5: variant[1] ? miss[1].map(transposeRef) : miss[1] });
+            expect(removingKites(board, state)).toEqual([]);
+            H.expectNoFinding(SG.test, 'twoStringKite', state);
+          });
+      });
+    });
+
+    it('counts the owners of a cell over both kinds: a box and a region over the same cells bridge nothing',
+      function () {
+        // The 4 x 4 position of "needs disjoint lines": R2C1 and R1C2 bridge through box 1. With a region listed
+        // over box 1 as well, those two cells have two box-like owners (one of each kind), as an overlapped box
+        // has; a region over another box leaves the bridge alone.
+        const labels = ['R2C1', 'R2C4', 'R1C2', 'R4C2', 'R4C4'];
+        const both = buildGridModel('fishTestBoxAndRegion', 2, 2, undefined, { extraRegions: [0] });
+        const crossed = digitsMap(both, { 1: labels });
+        expect(removingKites(both, crossed)).toEqual([]);
+        H.expectNoFinding(SG.test, 'twoStringKite', crossed);
+        const other = buildGridModel('fishTestBoxAndRegion2', 2, 2, undefined, { extraRegions: [3] });
+        expect(removingKites(other, digitsMap(other, { 1: labels }))).toHaveLength(1);
+        H.expectFinding(SG.test, 'twoStringKite', digitsMap(other, { 1: labels }), {
+          eliminations: [['R4C4', 1]]
+        });
+      });
+
+    it('has a region as the only box-like unit of a board of rows, columns and regions (the jigsaw layout)',
+      function () {
+        // The 4 x 4 grid with its boxes taken out and listed as regions instead: the same kite as on the plain board.
+        const labels = ['R2C1', 'R2C4', 'R1C2', 'R4C2', 'R4C4'];
+        const plain = buildGridModel('fishTestPlainRegions', 2, 2);
+        const regions = SG.model.create({
+          variantId: 'fishTestRegions', digits: 4, cellCount: 16,
+          units: plain.units.map(function (cells) { return Array.from(cells); }),
+          unitMeta: plain.unitMeta.map(function (meta) {
+            return meta.kind === 'box' ? { kind: 'region', gridIndex: 0, label: meta.label.replace('B', 'J') } : meta;
+          }),
+          layout: plain.layout
+        });
+        expect(unitsOfKind(regions, 'box')).toEqual([]);
+        const state = digitsMap(regions, { 1: labels });
+        expect(removingKites(regions, state)).toHaveLength(1);
+        H.expectFinding(SG.test, 'twoStringKite', state, {
+          cells: ['R1C2', 'R2C1', 'R2C4', 'R4C2'],
+          eliminations: [['R4C4', 1]],
+          args: { digit: 1, lines: ['R2', 'C2'], bridge: ['R1C2', 'R2C1'], ends: ['R2C4', 'R4C2'] }
+        });
+      });
+
+    // The Samurai: the center grid G5 shares its four corner boxes with the corner grids, so a cell of such a
+    // box has two boxes and lies in a row and a column of two grids. Nothing of this board is excluded wholesale:
+    // a kite inside the middle band of the center grid is found, and the same digit map moved onto an overlapped
+    // box is not.
+    function samurai() {
+      if (!SG.testkit.hasVariant('samurai')) SG.test.skip('no board of samurai can be built here');
+      return H.model('samurai');
+    }
+
+    function boxesOf(model, label) {
+      return Array.from(model.cellUnits[H.cell(model, label)]).filter(function (u) {
+        return model.unitMeta[u].kind === 'box';
+      });
+    }
+
+    it('finds a kite in the middle band of the Samurai center grid (rows and columns of one grid only)',
+      function () {
+        const board = samurai();
+        // G5 row 5 {C4, C8} and column 5 {R6, R9}: the bridge G5-R5C4 and G5-R6C5 lie in the box G5-B5, and
+        // G5-R9C8 (listed as G4-R3C2, a cell of an overlapped box) sees both ends along its column and its row.
+        const labels = ['G5-R5C4', 'G5-R5C8', 'G5-R6C5', 'G5-R9C5', 'G4-R3C2'];
+        expect(boxesOf(board, 'G5-R5C4')).toHaveLength(1);
+        expect(boxesOf(board, 'G5-R6C5')).toHaveLength(1);
+        const state = digitsMap(board, { 5: labels });
+        expect(removingKites(board, state)).toHaveLength(1);
+        H.expectFinding(SG.test, 'twoStringKite', state, {
+          cells: ['G5-R5C4', 'G5-R5C8', 'G5-R6C5', 'G5-R9C5'],
+          eliminations: [['G4-R3C2', 5]],
+          args: { digit: 5, lines: ['G5-R5', 'G5-C5'], bridge: ['G5-R5C4', 'G5-R6C5'], ends: ['G5-R5C8', 'G5-R9C5'] }
+        });
+      });
+
+    it('finds nothing through an overlapped box of the Samurai: its bridge cells have two boxes', function () {
+      const board = samurai();
+      // The same shape on the corner of the center grid: G5 row 2 {C1, C5} and column 2 {R3, R5}, the bridge
+      // G1-R8C7 (= G5-R2C1) and G1-R9C8 (= G5-R3C2) in the box G1-B9 = G5-B1. Both bridge cells have two boxes
+      // and the two lines pass through overlapped cells, so no kite is a kite of one grid.
+      const labels = ['G1-R8C7', 'G5-R2C5', 'G1-R9C8', 'G5-R5C2', 'G5-R5C5'];
+      expect(boxesOf(board, 'G1-R8C7')).toHaveLength(2);
+      expect(boxesOf(board, 'G1-R9C8')).toHaveLength(2);
+      expect(boxesOf(board, 'G1-R8C7')).toEqual(boxesOf(board, 'G1-R9C8'));
+      const state = digitsMap(board, { 5: labels });
+      expect(removingKites(board, state)).toEqual([]);
+      H.expectNoFinding(SG.test, 'twoStringKite', state);
+    });
+  });
+
+  describe('twoStringKite (R11): agreement with an independent enumeration', function () {
+    const cache = {};
+
+    function itemsOf(model, count, seed) {
+      const key = model.variantId + '/' + model.digits + '/' + seed;
+      if (!cache[key]) {
+        cache[key] = H.randomStatesWithKnownSolution(model, SG.testkit.rng.create(seed), count);
+      }
+      return cache[key];
+    }
+
+    function ascending(list) {
+      return list.slice().sort(function (a, b) { return a - b; });
+    }
+
+    /** The Finding is the first pattern of the enumeration that removes something, field by field. */
+    function agree(model, item, index) {
+      const patterns = removingKites(model, item.state);
+      const finding = runFind('twoStringKite', model, item.state);
+      check((finding !== null) === (patterns.length > 0), 'twoStringKite ' + (finding !== null
+        ? 'reported a pattern that the enumeration does not know' : 'missed a pattern the enumeration found') +
+        '\n  ' + describeItem(model, item, index));
+      if (finding === null) return false;
+      const first = patterns[0];
+      check(finding.i18nArgs.digit === first.digit, 'digit ' + finding.i18nArgs.digit + ' is not the first ' +
+        'pattern\'s ' + first.digit + '\n  ' + describeItem(model, item, index));
+      check(JSON.stringify(finding.eliminations) === JSON.stringify(first.targets.map(function (c) {
+        return [c, first.digit];
+      })), 'the eliminations are not those of the first pattern\n  ' + describeItem(model, item, index));
+      check(JSON.stringify(finding.cells) === JSON.stringify(ascending(first.bridge.concat(first.ends))),
+        'the cells are not the four cells of the first pattern\n  ' + describeItem(model, item, index));
+      check(JSON.stringify(finding.i18nArgs.lines) === JSON.stringify(ascending(first.lines).map(function (u) {
+        return unitLabel(model, u);
+      })), 'the lines are not those of the first pattern\n  ' + describeItem(model, item, index));
+      check(JSON.stringify(finding.i18nArgs.bridge) === JSON.stringify(ascending(first.bridge).map(function (c) {
+        return H.label(model, c);
+      })), 'the bridge is not that of the first pattern\n  ' + describeItem(model, item, index));
+      check(JSON.stringify(finding.i18nArgs.ends) === JSON.stringify(ascending(first.ends).map(function (c) {
+        return H.label(model, c);
+      })), 'the ends are not those of the first pattern\n  ' + describeItem(model, item, index));
+      return true;
+    }
+
+    [['classic9', 400, 777, 100], ['classic9', 400, 99, 100], ['classic6', 400, 777, 100],
+      ['classic4', 300, 777, 15]].forEach(function (setup) {
+      it('finds a kite exactly when one exists and removes exactly its candidates on ' + setup[0] +
+        ' (seed ' + setup[2] + ')', function () {
+        const model = H.model(setup[0]);
+        let withPattern = 0;
+        itemsOf(model, setup[1], setup[2]).forEach(function (item, index) {
+          if (agree(model, item, index)) withPattern++;
+        });
+        expect(withPattern).toBeGreaterThanOrEqual(setup[3]);
+      });
+    });
+
+    [12, 16].forEach(function (D) {
+      it('agrees on ' + D + ' digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)', function () {
+        const model = modelOfDigits(D);
+        let withPattern = 0;
+        itemsOf(model, D === 12 ? 60 : 32, 2026).forEach(function (item, index) {
+          if (agree(model, item, index)) withPattern++;
+        });
+        expect(withPattern).toBeGreaterThanOrEqual(D === 12 ? 20 : 12);
+      });
+    });
+
+    [['diagonalX', 20], ['hyper', 20]].forEach(function (setup) {
+      it('agrees on ' + setup[0] + ' (extra regions are real peers of the targets, not bridges)', function () {
+        if (!SG.testkit.hasVariant(setup[0])) SG.test.skip('no board of ' + setup[0] + ' can be built here');
+        const model = H.model(setup[0]);
+        let withPattern = 0;
+        itemsOf(model, 120, 4242).forEach(function (item, index) {
+          if (agree(model, item, index)) withPattern++;
+        });
+        expect(withPattern).toBeGreaterThanOrEqual(setup[1]);
+      });
+    });
+
+    it('agrees on the jigsaw board and on its transpose, where the irregular regions are the bridges', function () {
+      [jigsawBoard(false), jigsawBoard(true)].forEach(function (model) {
+        let withPattern = 0;
+        itemsOf(model, 120, 4242).forEach(function (item, index) {
+          if (agree(model, item, index)) withPattern++;
+        });
+        expect([model.variantId, withPattern >= 20]).toEqual([model.variantId, true]);
+      });
+    });
+
+    it('agrees on the jigsaw9 board of the environment, whatever its layout (no minimum: the layouts differ)',
+      function () {
+        if (!SG.testkit.hasVariant('jigsaw9')) SG.test.skip('no board of jigsaw9 can be built here');
+        const model = H.model('jigsaw9');
+        expect(unitsOfKind(model, 'box')).toEqual([]);
+        itemsOf(model, 120, 4242).forEach(function (item, index) { agree(model, item, index); });
+      });
+
+    it('stays sound on the irregular jigsaw boards: every kite removes only candidates that are not the solution',
+      function () {
+        [jigsawBoard(false), jigsawBoard(true)].forEach(function (model) {
+          const stats = H.assertSound(SG.test, 'twoStringKite',
+            { model: model, states: itemsOf(model, 120, 4242), minFirings: 20 });
+          expect([model.variantId, stats.firings >= 20]).toEqual([model.variantId, true]);
+        });
+        if (SG.testkit.hasVariant('jigsaw9')) {
+          const own = H.model('jigsaw9');
+          H.assertSound(SG.test, 'twoStringKite', { model: own, states: itemsOf(own, 120, 4242), minFirings: 0 });
+        }
+      });
+
+    it('agrees on the multi-grid boards (overlapped boxes and lines have no single owner)', function () {
+      const minimum = { samurai: 2, sohei: 3, butterfly: 0, flower: 0 };
+      const boards = Object.keys(minimum).filter(function (variant) { return SG.testkit.hasVariant(variant); });
+      if (boards.length === 0) SG.test.skip('no multi-grid board can be built here');
+      boards.forEach(function (variant) {
+        const model = H.model(variant);
+        let withPattern = 0;
+        itemsOf(model, 12, 4242).forEach(function (item, index) {
+          if (agree(model, item, index)) withPattern++;
+        });
+        expect([variant, withPattern >= minimum[variant]]).toEqual([variant, true]);
       });
     });
   });

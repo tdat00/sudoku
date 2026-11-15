@@ -599,7 +599,7 @@
             return /step-table__total/.test(el.getAttribute('class') || '');
           })[0];
           expect(fx.doc.findAll(total6, function (el) { return el.getAttribute('data-role') === 'score'; })[0]
-            .textContent).toBe('925 (+304)');
+            .textContent).toBe('925 (+332)');
           fx.view.setPosition(7);
           var total7 = fx.doc.findAll(fx.detail, function (el) {
             return /step-table__total/.test(el.getAttribute('class') || '');
@@ -950,56 +950,56 @@
   describe('stepView: the callout of a score jump', function () {
     var EXAMPLE = {
       en: {
-        badge: 'Score jump \u00d713.2',
-        heading: 'Score jump: 47 \u2192 621 (+574)',
+        badge: 'Score jump \u00d712.6',
+        heading: 'Score jump: 47 \u2192 593 (+546)',
         sentences: [
-          'After the clues at R2C4 and R8C6 are removed, the generator\'s solution uses Simple Colouring once; ' +
+          'After the clues at R2C4 and R8C6 are removed, the generator\'s solution uses Two-String Kite once; ' +
             'previously, its hardest technique was Hidden Single (box).',
-          'The largest technique weight, 360, contributes in full as the P term of the score (P = 360).',
-          'Removing the clue at R2C4 alone gives 620; removing the clue at R8C6 alone gives 47.'
+          'The largest technique weight, 340, contributes in full as the P term of the score (P = 340).',
+          'Removing the clue at R2C4 alone gives 593; removing the clue at R8C6 alone gives 47.'
         ],
         why: [
-          'P, peak technique weight: 1.25 \u2192 360 (+358.75)',
-          'W, weighted sum of technique uses: 50.5 \u2192 1,538.75',
-          'R = 0.25 \u00d7 P \u00d7 log\u2082(1 + W \u00f7 P): 1.68 \u2192 215.91 (+214.23)',
+          'P, peak technique weight: 1.25 \u2192 340 (+338.75)',
+          'W, weighted sum of technique uses: 50.5 \u2192 1,518.75',
+          'R = 0.25 \u00d7 P \u00d7 log\u2082(1 + W \u00f7 P): 1.68 \u2192 208.31 (+206.63)',
           'E, number of empty cells: 49 \u2192 51',
           'V = 80 \u00d7 E \u00f7 (E + 40): 44.04 \u2192 44.84 (+0.79)',
-          'Score = V + P + R, rounded: 47 \u2192 621 (+574)',
+          'Score = V + P + R, rounded: 47 \u2192 593 (+546)',
           'Level: Easy \u2192 Hard',
           'The log records 5 candidates before this accepted removal, with 3 rejected; the other candidate with a ' +
             'completed score reached 48 by the generator\'s limited check.',
           'In a separate check, this solver stopped before completing the board using only techniques with ' +
-            'weights below 360.',
+            'weights below 340.',
           'First use in the generator\'s solution: logical deduction 26 of 61.',
           null,
-          'In that deduction, candidate 3 is removed from R1C9 and R2C8.',
+          'In that deduction, candidate 3 is removed from R1C9.',
           'These numbers describe the generator\'s solution, not every way to solve the puzzle.'
         ]
       },
       vi: {
-        badge: 'Điểm tăng vọt \u00d713,2',
-        heading: 'Điểm tăng vọt: 47 \u2192 621 (+574)',
+        badge: 'Điểm tăng vọt \u00d712,6',
+        heading: 'Điểm tăng vọt: 47 \u2192 593 (+546)',
         sentences: [
-          'Sau khi bỏ số cho sẵn ở R2C4 và R8C6, lời giải mà trình sinh đề tìm được dùng Tô màu đơn giản ' +
-            '(Simple Colouring) 1 lần; trước đó, kỹ thuật khó nhất là Số đơn ẩn trong khối (Hidden Single).',
-          'Trọng số cao nhất 360 được tính toàn bộ vào điểm ở thành phần P (P = 360).',
-          'Chỉ bỏ số ở R2C4 cho 620 điểm; chỉ bỏ số ở R8C6 cho 47 điểm.'
+          'Sau khi bỏ số cho sẵn ở R2C4 và R8C6, lời giải mà trình sinh đề tìm được dùng Two-String Kite ' +
+            '(diều hai dây) 1 lần; trước đó, kỹ thuật khó nhất là Số đơn ẩn trong khối (Hidden Single).',
+          'Trọng số cao nhất 340 được tính toàn bộ vào điểm ở thành phần P (P = 340).',
+          'Chỉ bỏ số ở R2C4 cho 593 điểm; chỉ bỏ số ở R8C6 cho 47 điểm.'
         ],
         why: [
-          'P, trọng số cao nhất: 1,25 \u2192 360 (+358,75)',
-          'W, tổng trọng số các lần áp dụng kỹ thuật: 50,5 \u2192 1.538,75',
-          'R = 0,25 \u00d7 P \u00d7 log\u2082(1 + W \u00f7 P): 1,68 \u2192 215,91 (+214,23)',
+          'P, trọng số cao nhất: 1,25 \u2192 340 (+338,75)',
+          'W, tổng trọng số các lần áp dụng kỹ thuật: 50,5 \u2192 1.518,75',
+          'R = 0,25 \u00d7 P \u00d7 log\u2082(1 + W \u00f7 P): 1,68 \u2192 208,31 (+206,63)',
           'E, số ô trống: 49 \u2192 51',
           'V (điểm của ô trống) = 80 \u00d7 E \u00f7 (E + 40): 44,04 \u2192 44,84 (+0,79)',
-          'Điểm = V + P + R, làm tròn: 47 \u2192 621 (+574)',
+          'Điểm = V + P + R, làm tròn: 47 \u2192 593 (+546)',
           'Mức độ: Dễ \u2192 Khó',
           'Bản ghi có 5 phương án trước lần bỏ số được chọn này, trong đó 3 bị loại; 1 phương án khác có điểm ' +
             'sau phép kiểm tra giới hạn của trình sinh đề đạt cao nhất 48 điểm.',
-          'Trong một lần kiểm tra riêng, bộ giải này chỉ dùng các kỹ thuật có trọng số dưới 360 và đã dừng ' +
+          'Trong một lần kiểm tra riêng, bộ giải này chỉ dùng các kỹ thuật có trọng số dưới 340 và đã dừng ' +
             'khi chưa giải xong đề.',
           'Lần dùng đầu tiên trong lời giải của trình sinh đề: bước suy luận 26/61.',
           null,
-          'Ở bước suy luận đó, loại ứng viên 3 khỏi R1C9 và R2C8.',
+          'Ở bước suy luận đó, loại ứng viên 3 khỏi R1C9.',
           'Các con số này mô tả cách giải mà trình sinh đề tìm được, không đại diện cho mọi cách giải đề.'
         ]
       }
@@ -1015,7 +1015,7 @@
           inLocale(code, function () {
             var text = textOfStep(step);
             var want = EXAMPLE[code];
-            expect(text.total).toBe('621 (+574)');
+            expect(text.total).toBe('593 (+546)');
             expect(text.badge).toEqual({ kind: 'jump', text: want.badge });
             expect(text.line).toBeNull();
             expect(text.callout.heading).toBe(want.heading);
@@ -1026,9 +1026,10 @@
             });
             // The solver's own paragraph of the first use, as it wrote it.
             expect(text.callout.why[10]).toBe(SG.i18n.t(proof.firstUse.i18nKey, proof.firstUse.i18nArgs));
-            expect(text.callout.why[10]).toContain(code === 'en' ? 'colour 1 is R1C2, R4C1, R8C3, R9C8'
-              : 'màu 1 là R1C2, R4C1, R8C3, R9C8');
-            expect(text.rowLabel.technique).toBe('simpleColouring');
+            expect(text.callout.why[10]).toContain(code === 'en'
+              ? 'the cells R8C3, R9C2 (the bridge) lie in the same box or region'
+              : 'các ô R8C3, R9C2 (cầu nối) nằm trong cùng một khối (hoặc vùng)');
+            expect(text.rowLabel.technique).toBe('twoStringKite');
             expect(text.rowLabel.text).toBe(code === 'en' ? 'New hardest technique' : 'Kỹ thuật khó nhất mới');
             expect(text.totalHighlight).toBe(false);
           });
@@ -1062,7 +1063,7 @@
       expect(third('G03', 23).sentences[2])
         .toBe('Removing each clue alone gives 45 and 44; removing the whole group gives 870.');
       expect(third('G05', 29).sentences[2])
-        .toBe('Removing each clue alone gives 50 and 50; removing the whole group gives 2,497.');
+        .toBe('Removing each clue alone gives 50 and 50; removing the whole group gives 2,461.');
       expect(third('G09', 37).sentences[2]).toBe('Removing the clue at R3C5 alone gives 524, versus 562 for the ' +
         'whole symmetric group, which is always displayed as one complete change.');
       var sign = third('G11', 110, 'details');
@@ -1423,7 +1424,7 @@
             expect(callout.children.map(function (el) { return el.getAttribute('class'); })).toEqual(
               ['step-callout__heading', 'step-callout__text', 'step-callout__text', 'step-callout__text',
                 'step-why']);
-            expect(callout.children[0].textContent).toBe('Score jump: 47 \u2192 621 (+574)');
+            expect(callout.children[0].textContent).toBe('Score jump: 47 \u2192 593 (+546)');
             var why = callout.children[4];
             expect(why.tagName).toBe('DETAILS');
             expect(why.getAttribute('open')).toBeNull();
@@ -1439,8 +1440,8 @@
             expect(badge.length).toBe(1);
             expect(badge[0].tagName).toBe('SPAN');
             expect(badge[0].classes()).toContain('step-badge--jump');
-            expect(badge[0].textContent).toBe('Score jump \u00d713.2');
-            expect(heading.textContent).toBe('Step 5 \u2013 ' + SG.player.stepTitle(steps[4]) + ' Score jump \u00d713.2');
+            expect(badge[0].textContent).toBe('Score jump \u00d712.6');
+            expect(heading.textContent).toBe('Step 5 \u2013 ' + SG.player.stepTitle(steps[4]) + ' Score jump \u00d712.6');
 
             fx.view.setPosition(2);
             expect(part(fx, 'step-callout')).toBeNull();
@@ -1469,11 +1470,11 @@
           fx.view.setPosition(5);
           inLocale('vi', function () {
             var heading = fx.root.querySelector('#steps-heading');
-            expect(heading.textContent).toContain('Điểm tăng vọt \u00d713,2');
-            expect(part(fx, 'step-callout__heading').textContent).toBe('Điểm tăng vọt: 47 \u2192 621 (+574)');
+            expect(heading.textContent).toContain('Điểm tăng vọt \u00d712,6');
+            expect(part(fx, 'step-callout__heading').textContent).toBe('Điểm tăng vọt: 47 \u2192 593 (+546)');
             expect(fx.detail.textContent).toContain('Vì sao?');
           });
-          expect(part(fx, 'step-callout__heading').textContent).toBe('Score jump: 47 \u2192 621 (+574)');
+          expect(part(fx, 'step-callout__heading').textContent).toBe('Score jump: 47 \u2192 593 (+546)');
         });
         fx.view.destroy();
         player.destroy();

@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "b3d20827036b7be0608c066212bca7989f4baf64b5813adef97c106cb94018e9",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "75b99e69b792c9fba4c8ea69506cb3907809cf45",
+  "dirty": true,
+  "generatedAt": "2026-11-15T12:46:28.724Z",
+  "argv": ["--ids=G12","--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\analysis\\G12.json"],
+  "records": [
+    {"key":"G12","request":{"variantId":"greaterThan","difficulty":"hard","seed":"3115968914"},"value":{"id":"G12","request":{"variantId":"greaterThan","difficulty":"hard","seed":"3115968914"},"today":{"steps":12,"missing":11},"counts":{"compact":6,"details":106},"board":{"cells":81,"cages":0,"signsFrom":108,"signsTo":6,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,0,"S/Sig",0,0,0,"—","—","—","—"],[3,22,"C+I/Mixed",57,127,127,"ineqChain","—","—","F"],[4,92,"I/Signs",57,130,3,"ineqChain","—","—","—"],[5,103,"I/Signs",57,594,464,"skyscraper","Y","—","—"],[6,103,"F/Final",57,594,0,"skyscraper","—","—","—"]],"details":[0,0,129,129,130,130,130,130,130,130,130,130,130,130,130,129,129,129,128,128,128,128,128,127,127,127,127,127,127,127,127,127,127,127,129,129,129,129,129,129,129,127,127,127,127,127,127,127,127,127,127,127,127,129,129,129,129,129,129,129,135,135,135,135,135,134,134,134,134,133,133,133,133,133,133,133,133,133,133,134,133,133,132,132,131,131,131,131,131,131,131,131,131,130,605,605,603,603,603,603,603,603,603,598,594,594],"alive":[108,108,87,17,6,6],"folds":[{"step":3,"peak":130,"end":127,"removed":null,"restored":null,"signs":21,"opening":true},{"step":4,"peak":135,"end":130,"removed":0,"restored":0,"signs":70,"opening":false},{"step":5,"peak":605,"end":594,"removed":0,"restored":0,"signs":11,"opening":false}],"jumps":[{"step":5,"from":130,"to":594,"before":{"P":40,"W":741,"R":42.872506,"V":47.010309,"E":57,"level":"easy"},"after":{"P":330,"W":1705.5,"R":216.549737,"V":47.010309,"E":57,"level":"hard"},"choice":null,"singles":[],"cause":"multi-move","frame":null,"firstUse":{"k":47,"n":75,"technique":"skyscraper"},"key":"technique.skyscraper.step","effects":"remove candidate 4@R7C4, 4@R8C3"}]},"ms":3674,"overrides":[]}
+  ]
+}

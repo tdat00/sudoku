@@ -354,8 +354,8 @@ never shown.
    `signs.cause`; `board.setSignMarks` takes a `cause` list).
 
 The numbers of the examples are the ones of the tests. Classic 9×9 *expert* with seed 3275974478 has 28 positions
-and 29 steps with every move shown; its compact view has 7 steps with the scores 0, 23, 44, 47, 621, 925 and
-925, and the step 47 → 621 (×13.2) is a jump caused by the clue at R2C4 (alone it gives 620; the other removal
+and 29 steps with every move shown; its compact view has 7 steps with the scores 0, 23, 44, 47, 593, 925 and
+925, and the step 47 → 593 (×12.6) is a jump caused by the clue at R2C4 (alone it gives 593; the other removal
 of the move, R8C6, alone gives 47), which is framed. A Classic 9×9 *easy* puzzle with seed 3 replays in 7 steps
 (26 with every move shown): the full solution, three steps of random removals (scores 15, 26 and 44), two
 steps of the guided dig (46 and 100) and the finished puzzle with 34 clues.
@@ -849,11 +849,15 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    24 for 6: [docs/difficulty-v3/chain-window-2026-11-15.md](docs/difficulty-v3/chain-window-2026-11-15.md)), read at
    every call. A caller's `maxChainLength` and
    `maxNishioDepth` option can only narrow a window, never widen it, and a wrapper intersects its own range with it.
-   The skyscraper (`core/js/engine/tech-fish.js`, task MS08a) is the other bounded finder: one work unit is one tested
-   pair of base lines, 50,000 per call, the parent budget is checked at entry and before the pair that would carry
-   the work over 256 units since the last check, and a spent limit gives `null`, a lost deduction and never an
-   invented one. `SG.fishSearch.skyscraper(model, state, ctx, { workLimit })` is its unregistered seam for tests with
-   an explicit limit.
+   The skyscraper and the two-string kite (`core/js/engine/tech-fish.js`, tasks MS08a and MS08b) are the other bounded
+   finders: one work unit is one tested pair of base lines (skyscraper) or one tested pair of a row and a column
+   (kite), 50,000 per call, the parent budget is checked at entry and before the unit that would carry the work over
+   256 units since the last check, and a spent limit gives `null`, a lost deduction and never an invented one.
+   `SG.fishSearch.skyscraper` and `SG.fishSearch.twoStringKite(model, state, ctx, { workLimit })` are their
+   unregistered seams for tests with an explicit limit. The bridge of a kite lies in one box-like unit, a box or a
+   jigsaw region (kind `box` or `region`, complete, and the only one holding the cell), so the kite also fires on
+   Jigsaw boards; an overlapped box of a multi-grid board has two owners and bridges nothing, a diagonal or a window
+   is no box, and only whole lines that no other line of their kind touches count.
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
    `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
@@ -892,7 +896,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    that belongs to the true solution — needs no code of yours: `techniques.test.js` runs it for every registered
    technique. A rare pattern that the seeded random states seldom reach gets deterministic real positions in the
    `SUPPLEMENTS` of that fixture file (`{ name, puzzle, after, propagate }` with an explicit `after` array, a puzzle
-   with one solution; `forcingChainLong`, `nishioDeep` and `skyscraper` have three real positions each): the sweep runs the
+   with one solution; `forcingChainLong`, `nishioDeep`, `skyscraper` and `twoStringKite` have three real positions each): the sweep runs the
    complete random population of its call site first, never fewer states
    and never a lower firing minimum, and the supplements after it. What a finder costs on its fixtures is measured
    with `tests/pattern-cost.js` (see "Pattern cost" below); a finder reports its work through
@@ -907,7 +911,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (53 suites, 3,560 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (53 suites, 3,651 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (61 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -919,7 +923,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 53 suites,
-3,560 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+3,651 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -976,7 +980,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 61 suites, 53 of them quick (3,560 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 61 suites, 53 of them quick (3,651 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1224,8 +1228,9 @@ on the reference machine and measured by `node tests/perf.js`.
   `SG.fixtures.patternCost` (`tests/fixtures/pattern-cost.js`), tested on fake observations, fake clocks, the real
   fixtures of the chain techniques and the tool itself by the `pattern-cost-tools` suite; its test output goes to a
   folder of its own for each invocation (`.scratch-pattern-cost-tools/<pid-time-random>/` in the repository root,
-  ignored by git) and only that folder is removed. The active fixtures cover `skyscraper`, `forcingChain`, `forcingChainLong`,
-  `nishio` and `nishioDeep` with real positions (the scoped `lawOfLeftovers` adapter is MS14b's).
+  ignored by git) and only that folder is removed. The active fixtures cover `skyscraper`, `twoStringKite`,
+  `forcingChain`, `forcingChainLong`, `nishio` and `nishioDeep` with real positions (the scoped `lawOfLeftovers`
+  adapter is MS14b's).
 - **Qualification of the levels** — `node tests/qualify.js` runs the protocol that decides which levels each
   variant offers (40 fixed seeds per variant and level through the real pipeline, 60 more for a borderline level,
   a time budget on the 95th percentile) and prints the table and the support lists; `--variant`, `--level`,
@@ -1332,7 +1337,7 @@ these are the technical details behind some of them.
   The explanation of a jump describes the generator's own solution and its limited check, never what every solver
   needs, and the work count `checks` of a rating is diagnostic only: it can differ by a few between two runs (the
   subset techniques space their budget checks with a counter that lives across solves), so the tests ignore it.
-- **Difficulty weights are engineering priors**, not measurements of human solvers: the weights of the 29
+- **Difficulty weights are engineering priors**, not measurements of human solvers: the weights of the 30
   techniques and the nine score bands were chosen from measurements of generated puzzles
   ([docs/difficulty-rating/report-detailed.md](docs/difficulty-rating/report-detailed.md)); the Killer weights of `ruleOf45` and
   `cageSplit` are the first candidates for a calibration with people.
@@ -1383,7 +1388,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (30, 1,807 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (30, 1,897 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

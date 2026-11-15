@@ -342,8 +342,8 @@ Phần việc kỹ thuật (cấu hình, mô hình bàn cờ, các lần đào t
    `signs.cause`; `board.setSignMarks` nhận thêm danh sách `cause`).
 
 Các con số của ví dụ là những con số của các bài kiểm thử. Sudoku Cổ điển 9×9 mức *chuyên gia* với seed 3275974478
-có 28 vị trí và 29 bước khi hiện từng thay đổi; chế độ xem gọn của nó có 7 bước với điểm 0, 23, 44, 47, 621, 925 và
-925, và bước 47 → 621 (×13,2) là một bước tăng vọt do số cho sẵn ở R2C4 gây ra (bỏ riêng nó cho 620 điểm; lần bỏ còn
+có 28 vị trí và 29 bước khi hiện từng thay đổi; chế độ xem gọn của nó có 7 bước với điểm 0, 23, 44, 47, 593, 925 và
+925, và bước 47 → 593 (×12,6) là một bước tăng vọt do số cho sẵn ở R2C4 gây ra (bỏ riêng nó cho 593 điểm; lần bỏ còn
 lại của nước đi, R8C6, bỏ riêng cho 47), được đánh khung. Một đề Sudoku Cổ điển 9×9 mức *dễ* với seed 3 phát lại
 trong 7 bước (26 bước khi hiện từng thay đổi): lời giải đầy đủ, ba bước xóa ngẫu nhiên (điểm 15, 26 và 44), hai
 bước đào có định hướng (46 và 100) và đề hoàn chỉnh với 34 số cho sẵn.
@@ -603,12 +603,17 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    chọn từ số lần đạt chính xác của 72 yêu cầu Nightmare mới, 36 so với 24 của 6:
    [docs/difficulty-v3/chain-window-2026-11-15.md](docs/difficulty-v3/chain-window-2026-11-15.md)), đọc ở
    mỗi lần gọi. Tùy chọn `maxChainLength` và `maxNishioDepth` của người gọi chỉ có thể thu hẹp một khoảng, không bao
-   giờ mở rộng, và lớp bao lấy giao của khoảng của nó với tùy chọn đó. Skyscraper (`core/js/engine/tech-fish.js`,
-   nhiệm vụ MS08a) là bộ tìm có giới hạn còn lại: một đơn vị công việc là một cặp đường gốc được thử, 50.000 mỗi lần
-   gọi, ngân sách của nơi gọi được kiểm tra khi vào và trước cặp làm công việc kể từ lần kiểm tra trước vượt 256 đơn
-   vị, và khi hết giới hạn thì trả `null`, tức là mất một phép suy luận chứ không bao giờ bịa ra một phép suy luận.
-   `SG.fishSearch.skyscraper(model, state, ctx, { workLimit })` là cổng không đăng ký của các bài kiểm thử để đặt
-   một giới hạn tường minh.
+   giờ mở rộng, và lớp bao lấy giao của khoảng của nó với tùy chọn đó. Skyscraper và two-string kite
+   (`core/js/engine/tech-fish.js`, nhiệm vụ MS08a và MS08b) là các bộ tìm có giới hạn còn lại: một đơn vị công việc là
+   một cặp đường gốc được thử (skyscraper) hoặc một cặp gồm một hàng và một cột được thử (kite), 50.000 mỗi lần
+   gọi, ngân sách của nơi gọi được kiểm tra khi vào và trước đơn vị làm công việc kể từ lần kiểm tra trước vượt 256
+   đơn vị, và khi hết giới hạn thì trả `null`, tức là mất một phép suy luận chứ không bao giờ bịa ra một phép suy luận.
+   `SG.fishSearch.skyscraper` và `SG.fishSearch.twoStringKite(model, state, ctx, { workLimit })` là các cổng không
+   đăng ký của các bài kiểm thử để đặt một giới hạn tường minh. Cầu nối của một kite nằm trong một đơn vị giống khối,
+   tức một khối hoặc một vùng của bàn Ghép hình (loại `box` hoặc `region`, đầy đủ và là đơn vị duy nhất chứa ô đó),
+   nên kite cũng chạy trên bàn Ghép hình; một khối chồng của bàn nhiều lưới có hai chủ nên không nối được gì, đường
+   chéo hay cửa sổ không phải là khối, và chỉ những đường nguyên vẹn mà không đường nào khác cùng loại chạm vào mới
+   được tính.
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
    [Cách hoạt động](#cách-hoạt-động) — và trong các danh sách script của trình chơi (`index.html`, `help.html`,
    `tests.html`, `tests/node-runner.js`), vì kỹ thuật nằm trong bộ máy dùng chung (`core/js/engine/`) và gợi ý
@@ -662,7 +667,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (53 suite, 3.560 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (53 suite, 3.651 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (61 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -673,7 +678,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 3.560 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 3.651 bài —
 37 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -729,7 +734,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (3.560 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (3.651 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -973,8 +978,8 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   (`tests/fixtures/pattern-cost.js`), do suite `pattern-cost-tools` kiểm thử trên các quan sát giả, đồng hồ giả, các
   mẫu thật của các kỹ thuật chuỗi và chính công cụ; đầu ra thử nghiệm của nó nằm trong một thư mục riêng cho mỗi lần
   gọi (`.scratch-pattern-cost-tools/<pid-thời-gian-ngẫu-nhiên>/` ở gốc kho mã, bị git bỏ qua) và chỉ thư mục đó bị xóa.
-  Các mẫu đang dùng bao gồm `skyscraper`, `forcingChain`, `forcingChainLong`, `nishio` và `nishioDeep` bằng các thế cờ thật (bộ
-  chuyển đổi có phạm vi `lawOfLeftovers` thuộc MS14b).
+  Các mẫu đang dùng bao gồm `skyscraper`, `twoStringKite`, `forcingChain`, `forcingChainLong`, `nishio` và
+  `nishioDeep` bằng các thế cờ thật (bộ chuyển đổi có phạm vi `lawOfLeftovers` thuộc MS14b).
 - **Kiểm định các mức** — `node tests/qualify.js` chạy quy trình quyết định mỗi biến thể có những mức nào (40
   seed cố định cho mỗi biến thể và mức qua pipeline thật, thêm 60 seed cho mức ở ranh giới, ngân sách thời gian
   cho phân vị 95) rồi in bảng và danh sách mức; `--variant`, `--level`, `--jobs`, `--json` và `--markdown` thu
@@ -1078,7 +1083,7 @@ Các hạn chế mà người dùng nhận thấy được liệt kê trong hư�
   giờ là điều mọi người giải đều cần, và số đếm công việc `checks` của một lần chấm điểm chỉ để chẩn đoán: nó có thể
   lệch vài đơn vị giữa hai lần chạy (các kỹ thuật tập con cách quãng các lần kiểm tra ngân sách bằng một bộ đếm sống
   qua nhiều lần giải), nên các bài kiểm thử bỏ qua nó.
-- **Trọng số độ khó là giá trị ước lượng kỹ thuật**, chưa phải số đo trên người giải: trọng số của 29 kỹ thuật
+- **Trọng số độ khó là giá trị ước lượng kỹ thuật**, chưa phải số đo trên người giải: trọng số của 30 kỹ thuật
   và chín khoảng điểm được chọn từ các phép đo trên đề do máy tạo
   ([docs/difficulty-rating/report-detailed.md](docs/difficulty-rating/report-detailed.md)); trọng số Sát thủ của `ruleOf45` và
   `cageSplit` là những ứng viên đầu tiên cần hiệu chỉnh với người chơi thật.
@@ -1128,7 +1133,7 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 1.807 bài); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 1.897 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

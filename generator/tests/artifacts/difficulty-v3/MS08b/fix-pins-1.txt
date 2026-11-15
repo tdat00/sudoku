@@ -1,0 +1,25 @@
+$ node tests\node-runner.js --suite=replay,steps,player,pipeline
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   pipeline: 151 passed  (31.32 s)
+ok   player: 69 passed  (23.04 s)
+FAIL replay: 152 passed, 2 failed  (15.08 s)
+ok   steps: 57 passed  (14.91 s)
+
+Failures:
+  FAIL replay > replay: ratings > is unverified when the uniqueness count runs out of its guard, and rated with the default one
+       AssertionError: expected 2327 to be 2329
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:564:27)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > golden G07: the generator's choice, the first use and the restricted check
+       AssertionError: expected "combined" to be undefined
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1338:28
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1334:17)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 4
+Tests:  431 total, 429 passed, 2 failed, 0 skipped
+Time:   84.36 s running tests, 84.48 s total
+exit=1 seconds=84.590

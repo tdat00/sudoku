@@ -1,0 +1,80 @@
+$ node tests\node-runner.js --suite=replay,steps,player,pipeline,cache,worker,smoke
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   cache: 106 passed  (9.34 s)
+FAIL pipeline: 149 passed, 2 failed  (31.60 s)
+(node:17068) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL player: 67 passed, 2 failed  (22.70 s)
+FAIL replay: 150 passed, 4 failed  (14.54 s)
+ok   smoke: 44 passed  (4.31 s)
+FAIL steps: 53 passed, 4 failed  (14.86 s)
+ok   worker: 144 passed  (43.62 s)
+
+Failures:
+  FAIL pipeline > digger: exactness needs the tier of the level (MS05b1) > recovery: shallow allowance (MS05r3) > MS05r3-T03: Infinity and an allowance that never binds give the same real puzzle and work
+       AssertionError: expected 0 to be > 0
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\pipeline.test.js:2922:40)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL pipeline > digger: exactness needs the tier of the level (MS05b1) > recovery: shallow allowance (MS05r3) > MS05r3-T01: on the real rater an allowance of 64 ends the search exactly 64 ratings after the first shallow state, on the same path
+       AssertionError: expected {ratings: 48, firstShallowAt: 0, shallowRatings: 48, shallowLimit: 64, capHit: "proposals"} to equal {ratings: 64, firstShallowAt: 0, shallowRatings: 64, shallowLimit: 64, capHit: "shallow"}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\pipeline.test.js:2939:30)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL player > player: texts of the steps > the seven compact steps of the example read as specified, in English and Vietnamese
+       AssertionError: expected Array(7)[0, 23, 44, 47, 593, 925, 925] to equal Array(7)[0, 23, 44, 47, 621, 925, 925]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:680:65)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL player > player: the table models > example: start at 0, zero for the solution, scored with change and before, final at the end
+       AssertionError: expected Array(3)["scored", 593, 546] to equal Array(3)["scored", 621, 574]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:842:53)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: ratings > gives the score parts of the golden jump of the example
+       AssertionError: expected "twoStringKite" to be "simpleColouring"
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:506:44)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > gives the example 7 compact and 29 details steps, and its cuts, ratio and tiers
+       AssertionError: expected Array(7)[0, 23, 44, 47, 593, 925, 925] to equal Array(7)[0, 23, 44, 47, 621, 925, 925]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1161:45)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > has the same end position as a jump in one view and not in the other (G11, G12, G01)
+       AssertionError: expected Array(3)[119, 994, "jump"] to equal Array(3)[119, 957, "jump"]
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1197:75
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1193:84)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > gives the example its numbers: R2C4 is the culprit (620, the rest 47) and 26 of 61 is the first use
+       AssertionError: expected {cell: 12, action: "remove", score: 593, otherScore: 47} to equal {cell: 12, action: "remove", score: 620, otherScore: 47}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1376:31)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the score table of every step > draws the start, the steps before the first score, the scored steps and the final one (the example)
+       AssertionError: expected "925 (+332)" to be "925 (+304)"
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:602:27
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:565:9)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the callout of a score jump > the example (Classic 9x9 expert, step 5) reads as specified, in English and Vietnamese
+       AssertionError: expected "593 (+546)" to be "621 (+574)"
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1018:32
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1015:11
+       at Array.forEach (<anonymous>)
+  FAIL steps > stepView: the callout of a score jump > names the cause of a move per class, on the goldens
+       AssertionError: expected "Removing each clue alone gives 50 and 50; removing the whole group gives 2,461." to be "Removing each clue alone gives 50 and 50; removing the whole group gives 2,497."
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1065:10)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the callout, the badge and the legend on the page > puts the callout after the table; "Why?" is a closed details with a summary
+       AssertionError: expected "Score jump: 47 → 593 (+546)" to be "Score jump: 47 → 621 (+574)"
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1426:53
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1416:11
+       at withLabels (Q:\git\sudoku\generator\tests\suites\steps.test.js:58:14)
+
+Suites: 7
+Tests:  725 total, 713 passed, 12 failed, 0 skipped
+Time:   140.98 s running tests, 141.11 s total
+exit=1 seconds=141.265

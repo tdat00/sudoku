@@ -2892,11 +2892,15 @@
         });
 
       // A real 9x9 Master request whose local search meets shallow states and keeps going after them: it shows
-      // the allowance on the real rater, not on a script. Under the active target policy (MS06c2) three seeds of
-      // the first 25 do (3, 5 and 25); seed 5 is the one whose search reaches its first shallow state after
-      // some ratings (27) and then goes on for 94 ratings, so the first shallow state is not the entry (the
-      // MS05r3 seed 1 ends 62 ratings after its first shallow state now: tests/artifacts/difficulty-v3/MS06c2/).
-      var REAL = { level: 'master', seed: 5 };
+      // the allowance on the real rater, not on a script. The specimen is the lowest seed whose search (one
+      // attempt, no allowance) reaches its first shallow state after some ratings and goes on for more than 64
+      // ratings after it, and whose search with an allowance of 64 ends exactly 64 ratings after that state: the
+      // scan of the seeds 1 to 128 (tests/artifacts/difficulty-v3/MS08b/probe-real-seeds.cjs, recorded in
+      // docs/difficulty-v3/evidence/MS08b/real-specimen-scan.txt) stops at seed 128, whose first shallow state is
+      // its 42nd rating and whose free search goes on for 216 more (258 in all, ended by the proposal cap).
+      // The earlier specimen, seed 5 (seeds 3, 5 and 25 qualified under MS06c2), is shallow from its first
+      // rating since the two-string kite joined (MS08b) and ends at 48 ratings on the proposal cap.
+      var REAL = { level: 'master', seed: 128 };
 
       function realRequest(allowance) {
         var out = null;

@@ -1,0 +1,39 @@
+$ node tests\artifacts\difficulty-v3\MS08b\skyscraper-differential.js
+classic9 seed 777: 400 states, 103 skyscrapers
+classic9 seed 99: 400 states, 111 skyscrapers
+classic9 seed 20260101: 300 states, 59 skyscrapers
+classic6 seed 777: 400 states, 96 skyscrapers
+classic4 seed 777: 300 states, 7 skyscrapers
+fishTest12 seed 2026: 60 states, 22 skyscrapers
+fishTest16 seed 2026: 32 states, 11 skyscrapers
+diagonalX seed 4242: 120 states, 28 skyscrapers
+hyper seed 4242: 120 states, 23 skyscrapers
+jigsaw9 seed 4242: 120 states, 22 skyscrapers
+killer seed 4242: 12 states, 5 skyscrapers
+greaterThan seed 4242: 12 states, 5 skyscrapers
+wordoku seed 4242: 12 states, 2 skyscrapers
+samurai seed 4242: 12 states, 3 skyscrapers
+sohei seed 4242: 12 states, 0 skyscrapers
+butterfly seed 4242: 12 states, 0 skyscrapers
+flower seed 4242: 12 states, 0 skyscrapers
+OLD 9344 lines 43f7164bee3b17fa0be62d82dad20a470ae73c2aae1ba6631da12951f4583fbb
+classic9 seed 777: 400 states, 103 skyscrapers
+classic9 seed 99: 400 states, 111 skyscrapers
+classic9 seed 20260101: 300 states, 59 skyscrapers
+classic6 seed 777: 400 states, 96 skyscrapers
+classic4 seed 777: 300 states, 7 skyscrapers
+fishTest12 seed 2026: 60 states, 22 skyscrapers
+fishTest16 seed 2026: 32 states, 11 skyscrapers
+diagonalX seed 4242: 120 states, 28 skyscrapers
+hyper seed 4242: 120 states, 23 skyscrapers
+jigsaw9 seed 4242: 120 states, 22 skyscrapers
+killer seed 4242: 12 states, 5 skyscrapers
+greaterThan seed 4242: 12 states, 5 skyscrapers
+wordoku seed 4242: 12 states, 2 skyscrapers
+samurai seed 4242: 12 states, 3 skyscrapers
+sohei seed 4242: 12 states, 0 skyscrapers
+butterfly seed 4242: 12 states, 0 skyscrapers
+flower seed 4242: 12 states, 0 skyscrapers
+NEW 9344 lines 43f7164bee3b17fa0be62d82dad20a470ae73c2aae1ba6631da12951f4583fbb
+IDENTICAL: the skyscraper of the base commit and of the working tree agree on every line
+exit=0 seconds=10.078

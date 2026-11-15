@@ -105,6 +105,25 @@
         expect(D.spec('hard', model).floorTechniques).not.toContain('skyscraper');
       });
 
+    it('places twoStringKite between skyscraper and simpleColouring: order 114, weight 340, a Hard-tier ' +
+      'technique (R11)', function () {
+        var model = SG.techHelper.model('classic9');
+        expect([SG.techniques.get('twoStringKite').order, D.WEIGHTS.twoStringKite]).toEqual([114, 340]);
+        expect(position('skyscraper')).toBeLessThan(position('twoStringKite'));
+        expect(position('twoStringKite')).toBeLessThan(position('simpleColouring'));
+        expect(D.WEIGHTS.skyscraper).toBeLessThan(D.WEIGHTS.twoStringKite);
+        expect(D.WEIGHTS.twoStringKite).toBeLessThan(D.WEIGHTS.simpleColouring);
+        // its own weight decides the hardest technique, no tie is needed
+        expect(D.breakdown({ skyscraper: 1, twoStringKite: 1 }, 10).hardest).toBe('twoStringKite');
+        expect(D.breakdown({ twoStringKite: 1, simpleColouring: 1 }, 10).hardest).toBe('simpleColouring');
+        // 1.25 x 340 is above Normal's maximum (400) and below Hard's (700)
+        expect(D.spec('normal', model).allowedTechniques).not.toContain('twoStringKite');
+        expect(D.spec('hard', model).allowedTechniques).toContain('twoStringKite');
+        expect(D.spec('hard', model).tierTechniques).toContain('twoStringKite');
+        expect(D.spec('expert', model).floorTechniques).toContain('twoStringKite');
+        expect(D.spec('hard', model).floorTechniques).not.toContain('twoStringKite');
+      });
+
     it('lets a tie of weight and of order fall to the smaller id and still sorts the sequence', function () {
       var ids = ['orderProbeB', 'orderProbeA'];
       try {
