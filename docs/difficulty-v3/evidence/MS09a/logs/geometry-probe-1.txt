@@ -1,0 +1,78 @@
+$ node tests\artifacts\difficulty-v3\MS09a\geometry-probe.js
+== bare vector | patterns 2 removing 2 allCoversSame true
+   ref row bases R1,R4 covers C2,C8 fins R4C9 body 2,2 -> R5C8
+   ref col bases C2,C8 covers R1,R4 fins R5C8 body 2,2 -> R4C9
+   finder {"cells":["R1C2","R1C8","R4C2","R4C8","R4C9"],"el":["R5C8"],"args":{"digit":5,"bases":["R1","R4"],"covers":["C2","C8"],"fins":["R4C9"]}}
+== vector (decoy R9C2) | patterns 1 removing 1 allCoversSame true
+   ref row bases R1,R4 covers C2,C8 fins R4C9 body 2,2 -> R5C8
+   finder {"cells":["R1C2","R1C8","R4C2","R4C8","R4C9"],"el":["R5C8"],"args":{"digit":5,"bases":["R1","R4"],"covers":["C2","C8"],"fins":["R4C9"]}}
+== vector transposed | patterns 1 removing 1 allCoversSame true
+   ref col bases C1,C4 covers R2,R8 fins R9C4 body 2,2 -> R8C5
+   finder {"cells":["R2C1","R2C4","R8C1","R8C4","R9C4"],"el":["R8C5"],"args":{"digit":5,"bases":["C1","C4"],"covers":["R2","R8"],"fins":["R9C4"]}}
+== sashimi | patterns 3 removing 1 allCoversSame true
+   ref row bases R1,R4 covers C2,C8 fins R4C9 body 2,1 -> R5C8
+   (no target) row bases R1,R4 covers C8,C9 fins R1C2
+   (no target) col bases C2,C8 covers R1,R9 fins R4C8,R5C8
+   finder {"cells":["R1C2","R1C8","R4C8","R4C9"],"el":["R5C8"],"args":{"digit":5,"bases":["R1","R4"],"covers":["C2","C8"],"fins":["R4C9"]}}
+== sashimi transposed | patterns 3 removing 1 allCoversSame true
+   ref col bases C1,C4 covers R2,R8 fins R9C4 body 2,1 -> R8C5
+   (no target) row bases R2,R8 covers C1,C9 fins R8C4,R8C5
+   (no target) col bases C1,C4 covers R8,R9 fins R2C1
+   finder {"cells":["R2C1","R8C1","R8C4","R9C4"],"el":["R8C5"],"args":{"digit":5,"bases":["C1","C4"],"covers":["R2","R8"],"fins":["R9C4"]}}
+== two fins same line | patterns 1 removing 1 allCoversSame true
+   ref row bases R1,R4 covers C2,C8 fins R4C7,R4C9 body 2,2 -> R5C8
+   finder {"cells":["R1C2","R1C8","R4C2","R4C7","R4C8","R4C9"],"el":["R5C8"],"args":{"digit":5,"bases":["R1","R4"],"covers":["C2","C8"],"fins":["R4C7","R4C9"]}}
+== two fins, two targets | patterns 1 removing 1 allCoversSame true
+   ref row bases R1,R4 covers C2,C8 fins R4C7,R4C9 body 2,2 -> R5C8,R6C8
+   finder {"cells":["R1C2","R1C8","R4C2","R4C7","R4C8","R4C9"],"el":["R5C8","R6C8"],"args":{"digit":5,"bases":["R1","R4"],"covers":["C2","C8"],"fins":["R4C7","R4C9"]}}
+== fins in two bases, one box | patterns 3 removing 1 allCoversSame true
+   ref row bases R4,R5 covers C2,C8 fins R4C9,R5C7 body 2,2 -> R6C8
+   (no target) row bases R4,R5 covers C2,C7 fins R4C8,R4C9,R5C8
+   (no target) row bases R4,R5 covers C2,C9 fins R4C8,R5C7,R5C8
+   finder {"cells":["R4C2","R4C8","R4C9","R5C2","R5C7","R5C8"],"el":["R6C8"],"args":{"digit":5,"bases":["R4","R5"],"covers":["C2","C8"],"fins":["R4C9","R5C7"]}}
+== split-box fins | patterns 0 removing 0 allCoversSame true
+   finder null
+== off-cover target only | patterns 2 removing 0 allCoversSame true
+   (no target) row bases R1,R4 covers C2,C8 fins R4C9
+   (no target) col bases C2,C8 covers R1,R4 fins R9C2
+   finder null
+== target missing the fin (R7C8) | patterns 1 removing 0 allCoversSame true
+   (no target) row bases R1,R4 covers C2,C8 fins R4C9
+   finder null
+== fins only in one base line | patterns 2 removing 0 allCoversSame true
+   (no target) col bases C2,C8 covers R1,R5 fins R9C2
+   (no target) col bases C2,C8 covers R1,R9 fins R5C8
+   finder null
+== no fin (ordinary X-Wing) | patterns 1 removing 0 allCoversSame true
+   (no target) col bases C2,C8 covers R1,R4 fins R5C8
+   finder null
+== third base candidate in a third box + vector (two boxes of fins) | patterns 0 removing 0 allCoversSame true
+   finder null
+== target without the candidate | patterns 2 removing 0 allCoversSame true
+   (no target) row bases R1,R4 covers C2,C8 fins R4C9
+   (no target) col bases C2,C8 covers R1,R4 fins R9C2
+   finder null
+== cover order | patterns 15 removing 7 allCoversSame true
+   ref row bases R1,R2 covers C2,C8 fins R1C9 body 2,2 -> R3C8
+   ref row bases R1,R2 covers C2,C9 fins R1C8,R2C8 body 2,1 -> R3C9
+   ref row bases R1,R3 covers C2,C8 fins R1C9,R3C9 body 2,1 -> R2C8
+   ref row bases R2,R3 covers C2,C8 fins R3C9 body 2,1 -> R1C8
+   ref row bases R2,R3 covers C2,C9 fins R2C8,R3C8 body 1,1 -> R1C9
+   ref col bases C2,C8 covers R1,R2 fins R3C8 body 2,2 -> R1C9
+   ref col bases C2,C9 covers R1,R2 fins R3C9 body 2,1 -> R1C8,R2C8
+   (no target) row bases R1,R2 covers C8,C9 fins R1C2,R2C2
+   (no target) row bases R1,R3 covers C2,C9 fins R1C8,R3C8
+   (no target) row bases R1,R3 covers C8,C9 fins R1C2
+   (no target) row bases R2,R3 covers C8,C9 fins R2C2
+   (no target) col bases C2,C9 covers R1,R3 fins R2C2
+   (no target) col bases C8,C9 covers R1,R2 fins R3C8,R3C9
+   (no target) col bases C8,C9 covers R1,R3 fins R2C8
+   (no target) col bases C8,C9 covers R2,R3 fins R1C8,R1C9
+   finder {"cells":["R1C2","R1C8","R1C9","R2C2","R2C8"],"el":["R3C8"],"args":{"digit":5,"bases":["R1","R2"],"covers":["C2","C8"],"fins":["R1C9"]}}
+== cover order b | patterns 4 removing 2 allCoversSame true
+   ref row bases R1,R2 covers C2,C8 fins R1C9 body 2,2 -> R3C8
+   ref col bases C2,C8 covers R1,R2 fins R3C8 body 2,2 -> R1C9
+   (no target) row bases R1,R2 covers C2,C9 fins R1C8,R2C8
+   (no target) row bases R1,R2 covers C8,C9 fins R1C2,R2C2
+   finder {"cells":["R1C2","R1C8","R1C9","R2C2","R2C8"],"el":["R3C8"],"args":{"digit":5,"bases":["R1","R2"],"covers":["C2","C8"],"fins":["R1C9"]}}
+exit=0 seconds=4.228

@@ -1,0 +1,4 @@
+$ node tests\tools\make-technique-examples.js ..\generator --max-puzzles=64 --max-hints=400 --check
+selected 32 technique ID(s); mode check
+no source for finnedXWing: it has no saved example; give --sources=<file.json> or use --discover with --write or --record-sources
+exit=1 seconds=0.142

@@ -143,6 +143,25 @@
         expect(D.spec('hard', model).floorTechniques).not.toContain('emptyRectangle');
       });
 
+    it('places finnedXWing between emptyRectangle and swordfish: order 126, weight 400, a Hard-tier technique ' +
+      '(R12)', function () {
+        var model = SG.techHelper.model('classic9');
+        expect([SG.techniques.get('finnedXWing').order, D.WEIGHTS.finnedXWing]).toEqual([126, 400]);
+        expect(position('emptyRectangle')).toBeLessThan(position('finnedXWing'));
+        expect(position('finnedXWing')).toBeLessThan(position('swordfish'));
+        expect(D.WEIGHTS.emptyRectangle).toBeLessThan(D.WEIGHTS.finnedXWing);
+        expect(D.WEIGHTS.finnedXWing).toBeLessThan(D.WEIGHTS.swordfish);
+        // its own weight decides the hardest technique, no tie is needed
+        expect(D.breakdown({ emptyRectangle: 1, finnedXWing: 1 }, 10).hardest).toBe('finnedXWing');
+        expect(D.breakdown({ finnedXWing: 1, swordfish: 1 }, 10).hardest).toBe('swordfish');
+        // 1.25 x 400 is above Normal's maximum (400) and below Hard's (700)
+        expect(D.spec('normal', model).allowedTechniques).not.toContain('finnedXWing');
+        expect(D.spec('hard', model).allowedTechniques).toContain('finnedXWing');
+        expect(D.spec('hard', model).tierTechniques).toContain('finnedXWing');
+        expect(D.spec('expert', model).floorTechniques).toContain('finnedXWing');
+        expect(D.spec('hard', model).floorTechniques).not.toContain('finnedXWing');
+      });
+
     it('lets a tie of weight and of order fall to the smaller id and still sorts the sequence', function () {
       var ids = ['orderProbeB', 'orderProbeA'];
       try {

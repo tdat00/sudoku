@@ -29,7 +29,7 @@
  * an ID's fixtures from now on without touching a v2 position. A later technique adds its entry to CURRENT,
  * built from explicit `after` lists or an initial real puzzle state. MS07b replaces the four chain IDs
  * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way; MS08a adds skyscraper,
- * MS08b twoStringKite and MS08c emptyRectangle.
+ * MS08b twoStringKite, MS08c emptyRectangle and MS09a finnedXWing.
  */
 (function () {
   'use strict';
@@ -46,15 +46,15 @@
   ];
 
   /**
-   * The 26 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
-   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the five
-   * techniques added since: skyscraper (MS08a), twoStringKite (MS08b), emptyRectangle (MS08c) and the two chain
-   * windows forcingChainLong and nishioDeep (MS07b).
+   * The 27 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
+   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the six
+   * techniques added since: skyscraper (MS08a), twoStringKite (MS08b), emptyRectangle (MS08c), finnedXWing
+   * (MS09a) and the two chain windows forcingChainLong and nishioDeep (MS07b).
    */
   var REGISTRY_ORDER = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite',
-    'simpleColouring', 'emptyRectangle', 'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing',
+    'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing',
     'uniqueRectangle', 'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep'
   ];
 
@@ -757,7 +757,7 @@
   var BELOW_CHAINS = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite',
-    'simpleColouring', 'emptyRectangle', 'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing',
+    'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing',
     'uniqueRectangle'
   ];
   var THROUGH_SHORT_CHAIN = BELOW_CHAINS.concat(['forcingChain']);
@@ -783,6 +783,11 @@
   // and the same plus itself.
   var BELOW_ER = THROUGH_KITE.concat(['simpleColouring']);
   var THROUGH_ER = BELOW_ER.concat(['emptyRectangle']);
+
+  // Where finnedXWing is reached (MS09a): the techniques before it in the registry (through emptyRectangle), and
+  // the same plus itself.
+  var BELOW_FIN = THROUGH_ER.slice();
+  var THROUGH_FIN = BELOW_FIN.concat(['finnedXWing']);
 
   // Real unique puzzles. The first two are the puzzles of the v2 chain fixtures; the next three are famous
   // puzzles of tests/fixtures/classic.js; the last three are minimal puzzles dug by SG.testkit.dig from the
@@ -840,14 +845,27 @@
   var ER_GENERAL = '48..1....5....7.....125..9....7.84.....9..5.6.7........12....47......86.894....3.';
   var KITE_ONLY = '........6.1.672..4....39871..2....4.......1..34..61.28....8.53.93.......6........';
 
+  // Real unique puzzles of the finnedXWing fixtures (MS09a). FIN_RATED is 'constructed-nightmare-1' of
+  // tests/fixtures/rated.js (digit 2, rows R5 and R8, covers C1 and C5, the fin R8C6). FIN_SASHIMI is state #48
+  // (puzzle 12) of the seeded corpus of H.randomStatesWithKnownSolution(classic9, seed 20260101), which is also
+  // KITE_SPARE (digit 5, columns C1 and C7 on the covers R1 and R9: the column C1 has only the cell R9C1 on the
+  // covers, so it is a sashimi, and the two fins R2C1 and R3C1 lie in box 1). FIN_SPARE is state #16 (puzzle 4) of the
+  // same corpus, a third real position for the soundness supplements (digit 3, rows R5 and R7, two fins in box 9).
+  // FIN_ORDINARY is state #32 (puzzle 8) of that corpus: its position before xWing has an ordinary X-Wing (digit 6,
+  // rows R2 and R7 on the covers C1 and C4) and no finned fish, the neighbour boundary: an ordinary fish is no finned
+  // fish. KITE_ONLY (above) is the negative with a genuine kite and no finned fish.
+  var FIN_RATED = '.19.7....7....85..6..5.....1.59....8.84...96.9....32.5.....7..9..76....4....5.78.';
+  var FIN_SASHIMI = '76.....8.........4.....32...5....8.6...1..97...15.....4...8.69.82..9.4.....7.....';
+  var FIN_SPARE = '....41.9...29...5.........87.5..9.4.....7...693...4....4.8.........25.17..6.....9';
+  var FIN_ORDINARY = '.....3.......89172.......3.4....7...81....75..6.9....4..2.31....83.9..61.7.4.....';
+
   /**
    * Current fixtures that replace a historical entry or belong to an ID registered since (skyscraper, MS08a;
-   * twoStringKite, MS08b; emptyRectangle, MS08c), in the shape of the entries of the map. The short chain fixtures
-   * have at most 4
-   * links, so that they are forcingChain's under C = 4 and C = 6 alike. The long ones are the 5- and 6-link
-   * shortest proofs of two dug puzzles: forcingChainLong's under the selected C = 4 (MS07c; under C = 6 they
-   * would be forcingChain's). The negatives include positions where a shorter ID owns the proof, one of them at
-   * the window boundary: a chain of 5 links is not forcingChain's.
+   * twoStringKite, MS08b; emptyRectangle, MS08c; finnedXWing, MS09a), in the shape of the entries of the map. The
+   * short chain fixtures have at most 4 links, so that they are forcingChain's under C = 4 and C = 6 alike. The
+   * long ones are the 5- and 6-link shortest proofs of two dug puzzles: forcingChainLong's under the selected C = 4
+   * (MS07c; under C = 6 they would be forcingChain's). The negatives include positions where a shorter ID owns the
+   * proof, one of them at the window boundary: a chain of 5 links is not forcingChain's.
    */
   var CURRENT = {
     skyscraper: {
@@ -970,6 +988,51 @@
         },
         {
           name: 'emptyRectangle leaves a genuine two-string kite to twoStringKite',
+          puzzle: KITE_ONLY,
+          after: BELOW_KITE,
+          propagate: true
+        }
+      ]
+    },
+    finnedXWing: {
+      positive: [
+        {
+          name: 'finnedXWing on digit 2, rows R5 and R8 on the covers C1 and C5, the fin R8C6 (a constructed puzzle)',
+          puzzle: FIN_RATED,
+          after: BELOW_FIN,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[58, 2]]
+          }
+        },
+        {
+          name: 'finnedXWing sashimi on digit 5, columns C1 and C7 on the covers R1 and R9, the fins R2C1 and R3C1 ' +
+            '(a seeded dug puzzle)',
+          puzzle: FIN_SASHIMI,
+          after: BELOW_FIN,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[2, 5]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'finnedXWing has nothing left to do once the techniques through it are exhausted',
+          puzzle: COLOURING,
+          after: THROUGH_FIN,
+          propagate: true
+        },
+        {
+          name: 'finnedXWing leaves a genuine ordinary X-Wing (no fin) to xWing',
+          puzzle: FIN_ORDINARY,
+          after: BEFORE_XWING,
+          propagate: true
+        },
+        {
+          name: 'finnedXWing leaves a genuine two-string kite to twoStringKite',
           puzzle: KITE_ONLY,
           after: BELOW_KITE,
           propagate: true
@@ -1140,7 +1203,9 @@
    * unchanged random population and its minimum of 3 firings. MS08b: twoStringKite is not rare either (114
    * firings in the 300 random states), so its three real positions, the two positive fixtures and a third
    * puzzle, are added on top in the same way. MS08c: emptyRectangle fires in about half of the random states
-   * (144 firings in the 300 of the sweep), so its three real positions are added on top in the same way.
+   * (144 firings in the 300 of the sweep), so its three real positions are added on top in the same way. MS09a:
+   * finnedXWing fires in more than half of them, so its three real positions (two positives and a spare) are added
+   * on top in the same way.
    */
   var SUPPLEMENTS = {
     skyscraper: [
@@ -1165,6 +1230,14 @@
       { name: 'emptyRectangle on digit 6 in box 1 (a seeded dug puzzle)', puzzle: ER_SEEDED, after: BELOW_ER,
         propagate: true },
       { name: 'emptyRectangle on digit 1 in box 8 (a second seeded dug puzzle)', puzzle: ER_SPARE, after: BELOW_ER,
+        propagate: true }
+    ],
+    finnedXWing: [
+      { name: 'finnedXWing on rows with one fin (a constructed puzzle)', puzzle: FIN_RATED, after: BELOW_FIN,
+        propagate: true },
+      { name: 'finnedXWing sashimi on columns with two fins (a seeded dug puzzle)', puzzle: FIN_SASHIMI,
+        after: BELOW_FIN, propagate: true },
+      { name: 'finnedXWing on rows with two fins (a second seeded dug puzzle)', puzzle: FIN_SPARE, after: BELOW_FIN,
         propagate: true }
     ],
     forcingChainLong: [

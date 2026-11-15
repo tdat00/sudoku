@@ -1,0 +1,20 @@
+$ node tests\artifacts\difficulty-v3\MS09a\work-census.js
+classic9 seed 99: 1200 calls, 706 found, largest work 313, mean 57.1, capped 0
+classic9 seed 777: 400 calls, 232 found, largest work 310, mean 56.9, capped 0
+classic9 seed 20260101: 300 calls, 159 found, largest work 334, mean 58.9, capped 0
+classic6 seed 777: 400 calls, 169 found, largest work 96, mean 10.7, capped 0
+classic4 seed 777: 300 calls, 22 found, largest work 19, mean 1.8, capped 0
+fishTest12 seed 2026: 60 calls, 43 found, largest work 642, mean 156.2, capped 0
+fishTest16 seed 2026: 32 calls, 28 found, largest work 1294, mean 324.7, capped 0
+diagonalX seed 4242: 120 calls, 59 found, largest work 394, mean 104.3, capped 0
+hyper seed 4242: 120 calls, 58 found, largest work 406, mean 92.8, capped 0
+jigsaw9 seed 4242: 120 calls, 67 found, largest work 408, mean 81.1, capped 0
+killer seed 4242: 12 calls, 8 found, largest work 63, mean 28.2, capped 0
+greaterThan seed 4242: 12 calls, 8 found, largest work 63, mean 28.2, capped 0
+wordoku seed 4242: 12 calls, 5 found, largest work 277, mean 89.8, capped 0
+samurai seed 4242: 12 calls, 9 found, largest work 1901, mean 603.8, capped 0
+sohei seed 4242: 12 calls, 7 found, largest work 1779, mean 531.1, capped 0
+butterfly seed 4242: 12 calls, 0 found, largest work 5, mean 2.4, capped 0
+flower seed 4242: 12 calls, 6 found, largest work 240, mean 125.3, capped 0
+largest work of any call: 1901 of 50000
+exit=0 seconds=5.145

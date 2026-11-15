@@ -1,0 +1,32 @@
+$ node tests\node-runner.js --suite=help,play,i18n,help-example-tools,tech-fish,techniques
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+ok   tech-fish: 395 passed  (14.90 s)
+ok   techniques: 222 passed  (2.44 s)
+FAIL help-example-tools: 50 passed, 1 failed  (4.67 s)
+FAIL help: 25 passed, 2 failed  (1.82 s)
+ok   i18n: 66 passed  (90 ms)
+ok   play: 68 passed  (146 ms)
+
+Failures:
+  FAIL help-example-tools > help example tools: replaying a source > finds the saved example further into the puzzle and gives the same data again
+       AssertionError: expected 52 to be 50
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:294:59)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL help > help: the sections of the guide > every technique has a translated name and description, and so has its group
+       AssertionError: expected 32 to be 31
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:95:27)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL help > help: what the user guide claims > its numbers are the numbers of the code: 31 techniques, 100 + 100 puzzles, 8 MB files
+       AssertionError: expected 32 to be 31
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:533:43)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+
+Suites: 6
+Tests:  829 total, 826 passed, 3 failed, 0 skipped
+Time:   24.07 s running tests, 24.15 s total
+exit=1 seconds=24.262

@@ -1,0 +1,3 @@
+$ node generator\tests\artifacts\difficulty-v3\MS09a\check-format.cjs
+checked 75 files, 0 with problems
+exit=0 seconds=0.299

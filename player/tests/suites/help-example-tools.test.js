@@ -291,7 +291,7 @@
       ready();
       var first = replay('hiddenSingleBox', 60);
       expect(JSON.stringify(first.best.hiddenSingleBox.data)).toBe(JSON.stringify(EXAMPLES.hiddenSingleBox));
-      expect(first.best.hiddenSingleBox.data.source.step).toBe(50);
+      expect(first.best.hiddenSingleBox.data.source.step).toBe(52);
       expect(JSON.stringify(replay('hiddenSingleBox', 60))).toBe(JSON.stringify(first));
     });
 

@@ -1,0 +1,9 @@
+$ node tests\pattern-cost.js --ids=finnedXWing --runs=20 --json=..\docs\difficulty-v3\evidence\MS09a\pattern-cost.json
+pattern-cost: 5 of 5 cases x 20 runs (100 finds), complete true, found 2, none 3, outcome not the fixture's 0, capped 0, wall 0.032 s
+  finnedXWing:positive:1 found, work 66 of 50000, ms p50 0.156 p95 0.796 max 1.466
+  finnedXWing:positive:2 found, work 131 of 50000, ms p50 0.104 p95 0.152 max 0.187
+  finnedXWing:negative:1 none, work 92 of 50000, ms p50 0.052 p95 0.101 max 0.108
+  finnedXWing:negative:2 none, work 196 of 50000, ms p50 0.122 p95 0.175 max 0.228
+  finnedXWing:negative:3 none, work 216 of 50000, ms p50 0.152 p95 0.192 max 0.224
+record: docs/difficulty-v3/evidence/MS09a/pattern-cost.json
+exit=0 seconds=0.558

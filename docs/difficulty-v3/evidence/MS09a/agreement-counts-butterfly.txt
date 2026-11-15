@@ -1,0 +1,14 @@
+$ node tests\artifacts\difficulty-v3\MS09a\agreement-counts.js butterfly 300
+fishTest12 seed 2026: {"states":60,"hits":43,"genMs":58,"findMs":23}
+fishTest16 seed 2026: {"states":32,"hits":28,"genMs":3627,"findMs":16}
+jigsawLayout seed 4242: {"states":120,"hits":67,"genMs":355,"findMs":11}
+jigsawLayoutTurned seed 4242: {"states":120,"hits":70,"genMs":105,"findMs":10}
+classic9 seed 777: {"states":400,"hits":232,"genMs":84,"findMs":20}
+classic9 seed 99: {"states":400,"hits":226,"genMs":81,"findMs":19}
+classic6 seed 777: {"states":400,"hits":169,"genMs":106,"findMs":3}
+classic4 seed 777: {"states":300,"hits":22,"genMs":28,"findMs":0}
+diagonalX seed 4242: {"states":120,"hits":59,"genMs":43,"findMs":11}
+hyper seed 4242: {"states":120,"hits":58,"genMs":35,"findMs":11}
+jigsaw9 seed 4242: {"states":120,"hits":67,"genMs":364,"findMs":10}
+butterfly seed 4242: {"states":300,"hits":0,"genMs":325,"findMs":7}
+exit=0 seconds=5.549

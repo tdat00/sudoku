@@ -852,7 +852,7 @@
             });
           });
         });
-        expect(jumps).toEqual({ compact: 13, details: 14 });
+        expect(jumps).toEqual({ compact: 12, details: 12 });
       }, 120000);
 
     it('the example: the first rated puzzle, the new hardest technique without a badge, an unchanged total',
@@ -898,7 +898,7 @@
 
     it('also tells a new hardest technique when the score is flat or falls (details view)', function () {
       var flat = viewsOf(golden('G13')).details.steps;
-      var fall = viewsOf(golden('G11')).details.steps;
+      var fall = viewsOf(golden('G12')).details.steps;
       inLocale('en', function () {
         var a = stepAt(flat, 101);
         var text = textOfStep(a);
@@ -909,15 +909,15 @@
         expect(text.total).toBe('70 (unchanged)');
         expect(text.line).toMatch(/^The generator's solution now uses .* \(weight [\d.,]+\) as its hardest technique, instead of /);
         expect(text.rowLabel.technique).toBe(a.table.transition.after.hardest);
-        var b = stepAt(fall, 104);
+        var b = stepAt(fall, 103);
         var drop = textOfStep(b);
-        expect(b.table.transition.before.total).toBe(2876);
-        expect(b.table.transition.after.total).toBe(1081);
+        expect(b.table.transition.before.total).toBe(3042);
+        expect(b.table.transition.after.total).toBe(2686);
         expect(drop.badge).toBeNull();
-        expect(drop.total).toBe(SG.i18n.formatNumber(1081) + ' (\u2212' + SG.i18n.formatNumber(1795) + ')');
-        expect(drop.total).toBe('1,081 (\u22121,795)');
-        expect(drop.line).toContain('now uses XY-Wing (weight 650)');
-        expect(drop.rowLabel.technique).toBe('xyWing');
+        expect(drop.total).toBe(SG.i18n.formatNumber(2686) + ' (\u2212' + SG.i18n.formatNumber(356) + ')');
+        expect(drop.total).toBe('2,686 (\u2212356)');
+        expect(drop.line).toContain('now uses Long Forcing Chain (weight 1,400)');
+        expect(drop.rowLabel.technique).toBe('forcingChainLong');
         expect(drop.totalHighlight).toBe(false);
       });
     }, 120000);
@@ -1063,11 +1063,13 @@
       expect(third('G03', 23).sentences[2])
         .toBe('Removing each clue alone gives 45 and 44; removing the whole group gives 870.');
       expect(third('G05', 29).sentences[2])
-        .toBe('Removing each clue alone gives 50 and 50; removing the whole group gives 2,461.');
-      expect(third('G09', 37).sentences[2]).toBe('Removing the clue at R3C5 alone gives 524, versus 562 for the ' +
-        'whole symmetric group, which is always displayed as one complete change.');
-      var sign = third('G11', 103, 'details');
-      expect(sign.sentences[0]).toContain('After the sign between R1C5 and R1C4 is removed, ');
+        .toBe('Removing each clue alone gives 50 and 50; removing the whole group gives 2,501.');
+      // G09's jump was the "mixed" class (one clue against its whole symmetric group); its jump is now a single
+      // culprit like G13's, and the "mixed" wording is pinned by the synthetic test of every class below
+      expect(third('G09', 35).sentences[2]).toBe('Removing the clue at R8C5 alone gives 510; removing the clue at ' +
+        'R2C5 alone gives 139.');
+      var sign = third('G11', 70, 'details');
+      expect(sign.sentences[0]).toContain('After the sign between R8C7 and R9C7 is removed, ');
       expect(sign.sentences[2]).toBe('This step removes one sign; there is no smaller sign-removal move to show.');
       expect(third('G13', 114).sentences[2])
         .toBe('Removing the clue at G2-R8C9 alone gives 1,858; removing the clue at G3-R2C1 alone gives 72.');
@@ -1088,7 +1090,7 @@
     }
 
     it('a jump over several moves says in which complete change the new technique first appears', function () {
-      [['G11', 100, 'compact'], ['G12', 107, 'compact']].forEach(function (c) {
+      [['G07', 31, 'compact'], ['G10', 48, 'compact'], ['G12', 107, 'compact']].forEach(function (c) {
         var res = golden(c[0]);
         var analysis = analysisOf(res);
         var step = stepAt(viewsOf(res)[c[2]].steps, c[1]);
@@ -1339,15 +1341,15 @@
       }
     });
 
-    it('the first deductions of the goldens: Killer candidates 5, 6 and 8 in one cell, a placement, candidate 1 in a cell',
+    it('the first deductions of the goldens: Killer candidate 7 in a cell, a placement, candidate 1 in a cell',
       function () {
         var nine = golden('G09');
         var ten = golden('G10');
         var thirteen = golden('G13');
         withLabels(nine, function () {
           inLocale('en', function () {
-            var why = textOfStep(stepAt(viewsOf(nine).compact.steps, 37)).callout.why;
-            expect(why).toContain('In that deduction, candidates 5, 6 and 8 are removed from R6C5.');
+            var why = textOfStep(stepAt(viewsOf(nine).compact.steps, 35)).callout.why;
+            expect(why).toContain('In that deduction, candidate 7 is removed from R9C1.');
           });
         });
         // the forced chain that is the first use of the G10 jump places a digit and removes no candidate
@@ -1499,7 +1501,7 @@
       fx.view.destroy();
       player.destroy();
 
-      var gt = golden('G11');
+      var gt = golden('G12');
       var gtPlayer = loadedPlayer(gt);
       var gtFx = panelFixture({ table: tableOf(gtPlayer) });
       var gtLegend = gtFx.detail.nextSibling;

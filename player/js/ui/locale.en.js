@@ -206,6 +206,13 @@
       'the digit in their unit decides: if the end that sees every digit of one part holds it, that part loses ' +
       'it and the other part holds it; otherwise the other end holds it. Either way the digit is removed from ' +
       'every cell that sees the whole other part and the other end.',
+    'technique.finnedXWing': 'Finned X-Wing',
+    'technique.finnedXWing.desc': 'An X-Wing whose base lines hold extra cells for the digit, the fins, all in one ' +
+      'box or region and outside the two cover lines. If no fin holds the digit, the base lines fill the cover ' +
+      'lines as in an X-Wing; if a fin does, it removes the digit from every cell that sees it. Either way the ' +
+      'digit is removed from every cell of a cover line, outside the base lines, that sees all the fins. A base ' +
+      'line with only one cell on the cover lines (a sashimi) works the same way. The same holds with rows and ' +
+      'columns swapped.',
     'technique.swordfish': 'Swordfish',
     'technique.swordfish.desc': 'The three-line version of X-Wing: a digit confined to the same three ' +
       'columns in three rows can be removed from the rest of those columns.',
@@ -292,6 +299,11 @@
       'unit, so one of them is {digit}. If the end that sees every {digit} of one part is {digit}, that part ' +
       'loses it and the other part holds it; if it is not, the other end is {digit}. Either way {digit} is ' +
       'removed from every other cell that sees the whole other part and the other end.',
+    'technique.finnedXWing.step': 'Finned X-Wing on {digit}: in {bases}, the digit {digit} can only go in ' +
+      '{covers}, apart from the fin cells {fins}, which all lie in one box or region. If none of the fins is ' +
+      '{digit}, the two {digit}s of the base lines fill both cover lines; if one is, it removes {digit} from ' +
+      'every cell it sees. Either way {digit} is removed from every cell of {covers}, outside the base lines ' +
+      '{bases}, that sees all the fins.',
     'technique.swordfish.step': 'Swordfish on {digit}: in {baseUnits}, the digit {digit} can only go in ' +
       '{coverUnits}. The three {digit}s of the base lines fill all three cover lines, so {digit} is ' +
       'removed from every other cell of {coverUnits}.',

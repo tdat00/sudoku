@@ -1,6 +1,6 @@
 /**
- * Fish techniques (group `fish`): X-Wing, Skyscraper, Two-string kite, Empty Rectangle, Swordfish, Jellyfish
- * and Simple Colouring; registers itself in SG.techniques.
+ * Fish techniques (group `fish`): X-Wing, Skyscraper, Two-string kite, Empty Rectangle, Finned X-Wing,
+ * Swordfish, Jellyfish and Simple Colouring; registers itself in SG.techniques.
  *
  *   id               baseCost  order
  *   xWing                32     110     basic fish of size 2
@@ -8,6 +8,7 @@
  *   twoStringKite        34     114     a row pair and a column pair, one cell of each in the same box
  *   simpleColouring      36     120     chains of strong links, two colours
  *   emptyRectangle       38     124     a box with a row arm and a column arm of a digit, and a strong link
+ *   finnedXWing          40     126     an X-Wing with fins in one box, sashimi included
  *   swordfish            42     130     basic fish of size 3
  *   jellyfish            56     137     basic fish of size 4 (before the wings: weight 520 < xyWing 650)
  *
@@ -81,18 +82,44 @@
  * returned, with the candidates of U and the two cells of the pair in `cells` (cell order), the box label in
  * `box`, the row and the column in `lines` (unit order) and the two cells of the pair in `ends` (cell order).
  *
- * Work (R10), the same for the three patterns. A work unit of the skyscraper is one tested pair of base lines
+ * Finned fish (rating v3, R12; one routine for n = 2, the registered Finned X-Wing, and n = 3, which the
+ * finned Swordfish registers later): for a digit d pick n base lines of one orientation (rows or columns,
+ * complete units in which d is not placed and that have at least two cells that can still be d, the
+ * candidates of the line) and n cover lines, complete units of the other orientation. Every candidate of a
+ * base line has that line as its only line of its kind and exactly one cover line (candidate ownership as in
+ * the fish search, never weaker), so two base lines share no candidate. A candidate on a chosen cover is a
+ * body cell, one outside every chosen cover is a fin. A pattern needs at least one fin (without one it is the
+ * ordinary fish, left to xWing and swordfish), all fins in one box (a complete box-like unit, kind 'box' or
+ * 'region', that is the only box-like unit holding each fin: an overlapped box of a multi-grid board has no
+ * owner and a board without a complete box-like unit has no finned fish), and a body cell in every base line
+ * (a line that has only fins is a box/line reduction) and in every cover. At n = 2, one body cell in a base
+ * line gives the missing-corner sashimi form; at n = 3, sparse bodies are also permitted by the same proof
+ * (an ordinary Swordfish can already have two body cells per base line). Each base line holds d once. If no
+ * fin is d, the n placements are body cells of n different base lines; each cover holds d at most once and
+ * together the covers hold all n placements, so each cover holds exactly one and d leaves every other cell
+ * of the covers.
+ * If a fin is d, d leaves every cell that sees it. So d is removed from every cell that lies on a chosen
+ * cover, outside the base lines, can still be d and sees every fin (real peers, so the box of the fins, extra
+ * regions and any unit shape count); a body cell or a fin is never a target. Looked for in the order digit,
+ * rows then columns as base lines, base lines in unit order (every combination once), covers in unit order
+ * (every combination of the covers that hold a candidate of the base lines); the first pattern with an
+ * elimination is returned, with the candidates of the base lines in `cells` (cell order), the base lines in
+ * `bases` and the covers in `covers` (unit order) and the fins in `fins` (cell order).
+ *
+ * Work (R10), the same for the four patterns. A work unit of the skyscraper is one tested pair of base lines
  * (the second line extending the first), one of the kite is one tested pair of a row and a column of a digit
  * (every one of its up to four bridges is tested inside the unit), one of the empty rectangle is one tested
  * pair of a box and a conjugate unit of a digit, and inside the unit at most eight trials are made (two
- * rectangles of the box, two choices of A, two choices of p). The limit is 50000 per call
- * (`SG.fishSearch.SKYSCRAPER_WORK_LIMIT`, `KITE_WORK_LIMIT`, `EMPTY_RECTANGLE_WORK_LIMIT`); a spent limit
- * ends the call with null (a lost deduction, never an invented one). The parent budget is checked at entry
- * and before the unit that would carry the work done since the last check over 256 units; the counter is
- * local to the call. A spent budget ('budget.exceeded') is "nothing found" as for the chain finders,
- * cancellation and every other error propagate. `ctx.options.onPatternWork(record)` observes each call and
- * never selects its result: { id, work, limit, capHit (null | 'work'), retained (null) }, a fresh object per
- * call.
+ * rectangles of the box, two choices of A, two choices of p), and one of the finned fish is one tested
+ * combination of n base lines of a digit and orientation, inside which every choice of n covers is tried
+ * (at most one per combination of the covers that hold a candidate of the lines). The limit is 50000 per
+ * call (`SG.fishSearch.SKYSCRAPER_WORK_LIMIT`, `KITE_WORK_LIMIT`, `EMPTY_RECTANGLE_WORK_LIMIT`,
+ * `FINNED_X_WING_WORK_LIMIT`); a spent limit ends the call with null (a lost deduction, never an invented
+ * one). The parent budget is checked at entry and before the unit that would carry the work done since the
+ * last check over 256 units; the counter is local to the call. A spent budget ('budget.exceeded') is
+ * "nothing found" as for the chain finders, cancellation and every other error propagate.
+ * `ctx.options.onPatternWork(record)` observes each call and never selects its result:
+ * { id, work, limit, capHit (null | 'work'), retained (null) }, a fresh object per call.
  *
  * Performance: per model data (the lines, the owner line of every cell, all scratch buffers) is built once in
  * a WeakMap, so `find` allocates only the Finding it returns. The fish search is a depth-first selection of
@@ -110,12 +137,13 @@
   /** Largest fish size (Jellyfish); sizes the per-line cover lists. */
   const MAX_FISH = 4;
 
-  // R10 work policy of the Skyscraper, the Two-string kite and the Empty Rectangle: the units one call may
-  // spend (tested pairs of base lines, of a row and a column, of a box and a conjugate unit) and how many may
-  // pass between two checks of the parent budget.
+  // R10 work policy of the Skyscraper, the Two-string kite, the Empty Rectangle and the finned fish: the
+  // units one call may spend (tested pairs of base lines, of a row and a column, of a box and a conjugate
+  // unit, tested combinations of base lines) and how many may pass between two checks of the parent budget.
   const SKYSCRAPER_WORK_LIMIT = 50000;
   const KITE_WORK_LIMIT = 50000;
   const EMPTY_RECTANGLE_WORK_LIMIT = 50000;
+  const FINNED_X_WING_WORK_LIMIT = 50000;
   const WORK_CHECK_UNITS = 256;
 
   // Thrown through the unit loops of a pattern call whose work limit is spent.
@@ -174,6 +202,9 @@
     const maxLines = Math.max(rows.length, cols.length, 1);
     let maxBox = 1;
     for (let i = 0; i < boxLike.length; i++) maxBox = Math.max(maxBox, model.units[boxLike[i]].length);
+    let maxLine = 1;
+    for (let i = 0; i < rows.length; i++) maxLine = Math.max(maxLine, model.units[rows[i]].length);
+    for (let i = 0; i < cols.length; i++) maxLine = Math.max(maxLine, model.units[cols[i]].length);
     const lineOf = [ownerTable(model, rows), ownerTable(model, cols)];
     const disjoint = new Uint8Array(nUnits);
     disjointTable(model, rows, lineOf[ROW], disjoint);
@@ -214,6 +245,23 @@
       kiteRowCell: new Int32Array(maxLines * 2),
       kiteColUnit: new Int32Array(maxLines),
       kiteColCell: new Int32Array(maxLines * 2),
+
+      // Finned fish: the eligible base lines of the current digit and orientation (the unit, and the open
+      // cells of the digit with the cover line of each, `finStride` slots per line), the chosen base lines
+      // and covers, the covers of the chosen base lines, the fins of the tested selection and the marks of
+      // the covers of the pool and of the chosen covers and base lines.
+      finStride: maxLine,
+      finUnit: new Int32Array(maxLines),
+      finCount: new Int32Array(maxLines),
+      finCell: new Int32Array(maxLines * maxLine),
+      finCover: new Int32Array(maxLines * maxLine),
+      finPick: new Int32Array(MAX_FISH),
+      finPool: new Int32Array(maxLines),
+      finPoolMark: new Uint8Array(nUnits),
+      finCoverPick: new Int32Array(MAX_FISH),
+      finCoverMark: new Uint8Array(nUnits),
+      finBaseMark: new Uint8Array(nUnits),
+      finFin: new Int32Array(MAX_FISH * maxLine),
 
       // Fish search: eligible base lines of the current digit and the depth-first selection state.
       baseUnit: new Int32Array(maxLines),
@@ -623,9 +671,10 @@
     return null;
   }
 
-  // One work unit is one tested pair of base lines (skyscraper) or of a row and a column (kite). The parent
-  // budget is checked before the unit that would carry the work done since the last check over
-  // WORK_CHECK_UNITS; a spent limit throws WORK_CAP.
+  // One work unit is one tested combination of the pattern (a pair of base lines, of a row and a column, of a
+  // box and a conjugate unit, or the n base lines of a finned fish). The parent budget is checked before the
+  // unit that would carry the work done since the last check over WORK_CHECK_UNITS; a spent limit throws
+  // WORK_CAP.
   function spend(run) {
     if (run.work >= run.limit) throw WORK_CAP;
     if (run.work + 1 - run.checkedAt > WORK_CHECK_UNITS) {
@@ -870,10 +919,233 @@
     return null;
   }
 
-  // A pattern call (`scan` is scanSkyscraper, scanKite or scanEmptyRectangle) with its own work counter. A
-  // spent work limit and a spent budget are "nothing found" (the logical solver notices the budget at its
-  // next check); cancellation and every other error propagate. The work goes to the optional observer, which
-  // never selects the result.
+  // Lists the eligible base lines of one digit and orientation of the finned fish into the scratch buffers
+  // and returns how many there are. A line is eligible when it is a complete line in which the digit is not
+  // placed, it has at least two cells that can still be the digit, and every such cell (the candidates) has
+  // the line as its only line of its kind and exactly one cover line. The cells and their cover lines go to
+  // `finCell` / `finCover` (`finStride` slots per line, in cell order).
+  function collectFinnedLines(model, state, info, digit, orient) {
+    const cand = state.candidates;
+    const val = state.value;
+    const bit = 1 << (digit - 1);
+    const lines = info.lines[orient];
+    const baseOf = info.lineOf[orient];
+    const coverOf = info.lineOf[1 - orient];
+    let count = 0;
+
+    for (let li = 0; li < lines.length; li++) {
+      const u = lines[li];
+      const cells = model.units[u];
+      const slot = count * info.finStride;
+      let positions = 0;
+      let eligible = true;
+      for (let k = 0; k < cells.length && eligible; k++) {
+        const c = cells[k];
+        if (val[c] !== 0) {
+          if (val[c] === digit) eligible = false;
+          continue;
+        }
+        if ((cand[c] & bit) === 0) continue;
+        if (baseOf[c] !== u || coverOf[c] === -1) {
+          eligible = false;
+        } else {
+          info.finCell[slot + positions] = c;
+          info.finCover[slot + positions] = coverOf[c];
+          positions++;
+        }
+      }
+      if (eligible && positions >= 2) {
+        info.finUnit[count] = u;
+        info.finCount[count] = positions;
+        count++;
+      }
+    }
+    return count;
+  }
+
+  // The finned fish of the chosen base lines (`info.finPick`, indices of the scratch lists) and the chosen
+  // covers (`info.finCoverPick`) or null: the fins (the candidates outside the covers) are nonempty, all in
+  // one single-owner box-like unit, and every base line has a body cell. The targets are the open cells of
+  // the covers that can still be the digit, lie in no base line and see every fin; null when there is none.
+  function finnedFindingOf(model, state, info, f) {
+    const size = f.size;
+    const stride = info.finStride;
+    let fins = 0;
+    let finBox = -1;
+    for (let s = 0; s < size; s++) {
+      const i = info.finPick[s];
+      const slot = i * stride;
+      let body = 0;
+      for (let k = 0; k < info.finCount[i]; k++) {
+        const c = info.finCell[slot + k];
+        if (info.finCoverMark[info.finCover[slot + k]] === 1) {
+          body++;
+          continue;
+        }
+        const box = info.boxOf[c];
+        if (box === -1 || (fins > 0 && box !== finBox)) return null;
+        finBox = box;
+        info.finFin[fins++] = c;
+      }
+      if (body === 0) return null;
+    }
+    if (fins === 0) return null;
+
+    const n = model.cellCount;
+    const at = info.peerAt;
+    const cand = state.candidates;
+    const val = state.value;
+    const bit = f.bit;
+    const owner = info.lineOf[f.orient];
+    const targets = [];
+    for (let s = 0; s < size; s++) {
+      const cells = model.units[info.finCoverPick[s]];
+      for (let k = 0; k < cells.length; k++) {
+        const c = cells[k];
+        if (val[c] !== 0 || (cand[c] & bit) === 0 || info.elimSeen[c] === 1) continue;
+        if (owner[c] !== -1 && info.finBaseMark[owner[c]] === 1) continue;
+        let sees = true;
+        for (let j = 0; j < fins && sees; j++) sees = at[c * n + info.finFin[j]] === 1;
+        if (!sees) continue;
+        info.elimSeen[c] = 1;
+        targets.push(c);
+      }
+    }
+    for (let k = 0; k < targets.length; k++) info.elimSeen[targets[k]] = 0;
+    if (targets.length === 0) return null;
+
+    targets.sort(byNumber);
+    const cells = [];
+    const baseUnits = [];
+    for (let s = 0; s < size; s++) {
+      const i = info.finPick[s];
+      baseUnits.push(info.finUnit[i]);
+      for (let k = 0; k < info.finCount[i]; k++) cells.push(info.finCell[i * stride + k]);
+    }
+    const finCells = Array.prototype.slice.call(info.finFin, 0, fins).sort(byNumber);
+    const coverUnits = Array.prototype.slice.call(info.finCoverPick, 0, size);
+    return {
+      technique: f.id,
+      cells: cells.sort(byNumber),
+      placements: [],
+      eliminations: targets.map(function (c) { return [c, f.digit]; }),
+      i18nKey: 'technique.' + f.id + '.step',
+      i18nArgs: {
+        digit: f.digit,
+        bases: unitLabels(model, baseUnits),
+        covers: unitLabels(model, coverUnits),
+        fins: cellsToLabels(model, finCells)
+      }
+    };
+  }
+
+  // Chooses the covers, `from` being the first pool index to try at `depth` (every combination once, in unit
+  // order, as the pool is in unit order), and tests each combination of `size` covers.
+  function extendCovers(model, state, info, f, poolSize, depth, from) {
+    const size = f.size;
+    const last = poolSize - (size - depth);
+    for (let j = from; j <= last; j++) {
+      info.finCoverPick[depth] = info.finPool[j];
+      let found = null;
+      if (depth + 1 < size) {
+        found = extendCovers(model, state, info, f, poolSize, depth + 1, j + 1);
+      } else {
+        for (let s = 0; s < size; s++) info.finCoverMark[info.finCoverPick[s]] = 1;
+        found = finnedFindingOf(model, state, info, f);
+        for (let s = 0; s < size; s++) info.finCoverMark[info.finCoverPick[s]] = 0;
+      }
+      if (found !== null) return found;
+    }
+    return null;
+  }
+
+  // The finned fish of the chosen base lines (`info.finPick`) or null: every combination of covers among the
+  // covers of the candidates of the lines, in unit order (a cover without a candidate of a base line would
+  // have no body cell).
+  function finnedOf(model, state, info, f) {
+    const size = f.size;
+    const stride = info.finStride;
+    let pool = 0;
+    for (let s = 0; s < size; s++) {
+      const i = info.finPick[s];
+      for (let k = 0; k < info.finCount[i]; k++) {
+        const cover = info.finCover[i * stride + k];
+        if (info.finPoolMark[cover] === 0) {
+          info.finPoolMark[cover] = 1;
+          info.finPool[pool++] = cover;
+        }
+      }
+    }
+    for (let k = 0; k < pool; k++) info.finPoolMark[info.finPool[k]] = 0;
+    if (pool < size) return null;
+    for (let k = 1; k < pool; k++) {
+      const u = info.finPool[k];
+      let m = k - 1;
+      while (m >= 0 && info.finPool[m] > u) {
+        info.finPool[m + 1] = info.finPool[m];
+        m--;
+      }
+      info.finPool[m + 1] = u;
+    }
+    for (let s = 0; s < size; s++) info.finBaseMark[info.finUnit[info.finPick[s]]] = 1;
+    const found = extendCovers(model, state, info, f, pool, 0, 0);
+    for (let s = 0; s < size; s++) info.finBaseMark[info.finUnit[info.finPick[s]]] = 0;
+    return found;
+  }
+
+  // Chooses the base lines (every combination of the `f.count` eligible lines once, in line order); each
+  // complete combination is one work unit.
+  function extendFinnedBases(model, state, info, run, f, depth, from) {
+    const last = f.count - (f.size - depth);
+    for (let i = from; i <= last; i++) {
+      info.finPick[depth] = i;
+      let found = null;
+      if (depth + 1 < f.size) {
+        found = extendFinnedBases(model, state, info, run, f, depth + 1, i + 1);
+      } else {
+        spend(run);
+        found = finnedOf(model, state, info, f);
+      }
+      if (found !== null) return found;
+    }
+    return null;
+  }
+
+  // Every digit, rows then columns as base lines, base combinations in line order, cover combinations in unit
+  // order: the first finned fish of `size` lines that removes something. A board without a complete box-like
+  // unit has no fin box, so it has no finned fish and costs nothing.
+  function scanFinned(model, state, info, run, size, id) {
+    if (info.boxUnits.length === 0) return null;
+    peerTable(model, info);
+    const frame = { size: size, id: id, digit: 0, bit: 0, orient: ROW, count: 0 };
+    for (let digit = 1; digit <= model.digits; digit++) {
+      for (let orient = ROW; orient <= COL; orient++) {
+        const count = collectFinnedLines(model, state, info, digit, orient);
+        if (count < size) continue;
+        frame.digit = digit;
+        frame.bit = 1 << (digit - 1);
+        frame.orient = orient;
+        frame.count = count;
+        const found = extendFinnedBases(model, state, info, run, frame, 0, 0);
+        if (found !== null) return found;
+      }
+    }
+    return null;
+  }
+
+  function scanFinnedXWing(model, state, info, run) {
+    return scanFinned(model, state, info, run, 2, 'finnedXWing');
+  }
+
+  // The shared enumeration at n = 3: not registered here, the finned Swordfish uses it.
+  function scanFinnedSwordfish(model, state, info, run) {
+    return scanFinned(model, state, info, run, 3, 'finnedSwordfish');
+  }
+
+  // A pattern call (`scan` is scanSkyscraper, scanKite, scanEmptyRectangle or scanFinnedXWing) with its own
+  // work counter. A spent work limit and a spent budget are "nothing found" (the logical solver notices the
+  // budget at its next check); cancellation and every other error propagate. The work goes to the optional
+  // observer, which never selects the result.
   function findBounded(id, scan, model, state, ctx, workLimit) {
     const info = infoFor(model, ctx);
     const run = { ctx: ctx, limit: workLimit, work: 0, checkedAt: 0, capped: false };
@@ -1135,6 +1407,9 @@
   define('emptyRectangle', 38, 124, function (model, state, ctx) {
     return findBounded('emptyRectangle', scanEmptyRectangle, model, state, ctx, EMPTY_RECTANGLE_WORK_LIMIT);
   });
+  define('finnedXWing', 40, 126, function (model, state, ctx) {
+    return findBounded('finnedXWing', scanFinnedXWing, model, state, ctx, FINNED_X_WING_WORK_LIMIT);
+  });
   define('swordfish', 42, 130, function (model, state, ctx) {
     return findFish(model, state, ctx, 3, 'swordfish');
   });
@@ -1142,16 +1417,32 @@
     return findFish(model, state, ctx, 4, 'jellyfish');
   });
 
-  // The parameterised searches behind skyscraper, twoStringKite and emptyRectangle, for tests (explicit work
-  // limit); not registered techniques.
+  // The parameterised searches behind skyscraper, twoStringKite, emptyRectangle and finnedXWing, for tests
+  // (explicit work limit); not registered techniques. `finnedFish` is the shared enumeration of the finned
+  // fish with an explicit size: 2 is the finned X-Wing, 3 the finned Swordfish, which no technique registers
+  // yet.
   if (!SG.fishSearch) {
+    const finnedSwordfishSeam = seamOf('finnedSwordfish', scanFinnedSwordfish, FINNED_X_WING_WORK_LIMIT);
+    const finnedXWingSeam = seamOf('finnedXWing', scanFinnedXWing, FINNED_X_WING_WORK_LIMIT);
     SG.fishSearch = Object.freeze({
       SKYSCRAPER_WORK_LIMIT: SKYSCRAPER_WORK_LIMIT,
       KITE_WORK_LIMIT: KITE_WORK_LIMIT,
       EMPTY_RECTANGLE_WORK_LIMIT: EMPTY_RECTANGLE_WORK_LIMIT,
+      FINNED_X_WING_WORK_LIMIT: FINNED_X_WING_WORK_LIMIT,
       skyscraper: seamOf('skyscraper', scanSkyscraper, SKYSCRAPER_WORK_LIMIT),
       twoStringKite: seamOf('twoStringKite', scanKite, KITE_WORK_LIMIT),
-      emptyRectangle: seamOf('emptyRectangle', scanEmptyRectangle, EMPTY_RECTANGLE_WORK_LIMIT)
+      emptyRectangle: seamOf('emptyRectangle', scanEmptyRectangle, EMPTY_RECTANGLE_WORK_LIMIT),
+      finnedXWing: finnedXWingSeam,
+      finnedFish: function (model, state, ctx, opts) {
+        const size = opts === undefined || opts === null ? undefined : opts.size;
+        if (size !== 2 && size !== 3) {
+          const err = new SG.errors.GenerationError('solver.invalidOption',
+            { option: 'fishSearch.finnedFish.size' });
+          err.message = 'solver.invalidOption: fishSearch.finnedFish size must be 2 or 3';
+          throw err;
+        }
+        return (size === 2 ? finnedXWingSeam : finnedSwordfishSeam)(model, state, ctx, opts);
+      }
     });
   }
 })(typeof self !== 'undefined' ? self : globalThis);

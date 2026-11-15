@@ -1,0 +1,11 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=hiddenSingleBox,xyzWing,wWing,uniqueRectangle,forcingChain,nishio --max-puzzles=64 --max-hints=400 --write
+selected 6 technique ID(s); mode write
+replaying 5 puzzle(s) for 6 ID(s) (--max-puzzles=64, --max-hints=400)
+puzzle 1/5 classic9 - - -> 74 hint(s), solved; wanted found: hiddenSingleBox
+puzzle 2/5 classic9 - - -> 73 hint(s), solved; wanted found: xyzWing, wWing
+puzzle 3/5 classic9 - - -> 73 hint(s), solved; wanted found: uniqueRectangle
+puzzle 4/5 classic9 - - -> 77 hint(s), solved; wanted found: forcingChain
+puzzle 5/5 classic9 - - -> 70 hint(s), solved; wanted found: nishio
+the resulting catalogue is not complete and valid; player/js/ui/help-examples.js is untouched:
+  finnedXWing: not selected and not in the saved catalogue
+exit=1 seconds=0.679

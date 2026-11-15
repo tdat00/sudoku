@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=tech-fish --results=tests\artifacts\difficulty-v3\MS09a\tech-fish-results.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   tech-fish: 388 passed  (14.39 s)
+
+Suites: 1
+Tests:  388 total, 388 passed, 0 failed, 0 skipped
+Time:   14.39 s running tests, 14.59 s total
+Results: generator/tests/artifacts/difficulty-v3/MS09a/tech-fish-results.json
+exit=0 seconds=14.810

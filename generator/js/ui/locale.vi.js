@@ -338,6 +338,13 @@
       'chữ số trong cùng một nhóm sẽ quyết định: nếu đầu nhìn thấy mọi chữ số của một phần chứa nó thì phần ' +
       'đó mất chữ số và phần còn lại chứa nó; nếu không thì đầu kia chứa nó. Dù thế nào, chữ số bị loại khỏi ' +
       'mọi ô nhìn thấy cả phần còn lại lẫn đầu kia.',
+    'technique.finnedXWing': 'Finned X-Wing (cánh X có vây)',
+    'technique.finnedXWing.desc': 'Một X-Wing mà các đường gốc có thêm những ô chứa chữ số, gọi là vây, nằm ' +
+      'cùng trong một khối hoặc vùng và ngoài hai đường phủ. Nếu không vây nào chứa chữ số thì các đường gốc ' +
+      'lấp đầy hai đường phủ như X-Wing; nếu một vây chứa nó thì chữ số bị loại khỏi mọi ô nhìn thấy vây đó. ' +
+      'Dù thế nào, chữ số cũng bị loại khỏi mọi ô của đường phủ, nằm ngoài các đường gốc, nhìn thấy tất cả ' +
+      'các vây. Đường gốc chỉ có một ô trên các đường phủ (sashimi) hoạt động y như vậy. Tương tự khi đổi vai ' +
+      'trò hàng và cột.',
     'technique.swordfish': 'Swordfish (cá kiếm)',
     'technique.swordfish.desc': 'Phiên bản ba đường của X-Wing: chữ số chỉ nằm trong cùng ba cột ở ba hàng ' +
       'thì bị loại khỏi phần còn lại của ba cột đó.',
@@ -421,6 +428,11 @@
       'cùng một nhóm, nên một trong hai ô đó là {digit}. Nếu đầu nhìn thấy mọi {digit} của một phần là ' +
       '{digit}, phần đó mất {digit} và phần còn lại chứa {digit}; nếu không thì đầu kia là {digit}. Dù thế ' +
       'nào, {digit} bị loại khỏi mọi ô khác nhìn thấy cả phần còn lại lẫn đầu kia.',
+    'technique.finnedXWing.step': 'Finned X-Wing cho {digit}: trong {bases}, chữ số {digit} chỉ có thể nằm ở ' +
+      '{covers}, trừ các ô vây {fins} cùng nằm trong một khối hoặc vùng. Nếu không ô vây nào là {digit} thì ' +
+      'hai chữ số {digit} của các đường gốc lấp đầy cả hai đường phủ; nếu một ô vây là {digit} thì nó loại ' +
+      '{digit} khỏi mọi ô nhìn thấy nó. Dù thế nào, {digit} cũng bị loại khỏi mọi ô của {covers} nằm ngoài ' +
+      'các đường gốc {bases} và nhìn thấy tất cả các ô vây.',
     'technique.swordfish.step': 'Swordfish cho {digit}: trong {baseUnits}, chữ số {digit} chỉ có thể nằm ở ' +
       '{coverUnits}. Ba chữ số {digit} của các đường gốc lấp đầy cả ba đường phủ, nên {digit} bị loại ' +
       'khỏi mọi ô còn lại của {coverUnits}.',

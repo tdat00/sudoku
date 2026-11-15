@@ -1,0 +1,12 @@
+$ node tests\artifacts\difficulty-v3\MS09a\fixture-data.js
+FIN_RATED {"technique":"finnedXWing","cells":[36,40,63,67,68],"placements":[],"eliminations":[[58,2]],"i18nKey":"technique.finnedXWing.step","i18nArgs":{"digit":2,"bases":["R5","R8"],"covers":["C1","C5"],"fins":["R8C6"]}} xWing: null unique 1
+   elim [[58,2]] R7C5-2 cells R5C1 R5C5 R8C1 R8C5 R8C6
+FIN_SASHIMI {"technique":"finnedXWing","cells":[6,9,18,72,78],"placements":[],"eliminations":[[2,5]],"i18nKey":"technique.finnedXWing.step","i18nArgs":{"digit":5,"bases":["C1","C7"],"covers":["R1","R9"],"fins":["R2C1","R3C1"]}} xWing: null unique 1
+   elim [[2,5]] R1C3-5 cells R1C7 R2C1 R3C1 R9C1 R9C7
+FIN_SPARE {"technique":"finnedXWing","cells":[41,43,59,60,61,62],"placements":[],"eliminations":[[79,3]],"i18nKey":"technique.finnedXWing.step","i18nArgs":{"digit":3,"bases":["R5","R7"],"covers":["C6","C8"],"fins":["R7C7","R7C9"]}} xWing: null unique 1
+   elim [[79,3]] R9C8-3 cells R5C6 R5C8 R7C6 R7C7 R7C8 R7C9
+ER_RATED {"technique":"finnedXWing","cells":[21,24,25,57,62],"placements":[],"eliminations":[[8,4],[17,4]],"i18nKey":"technique.finnedXWing.step","i18nArgs":{"digit":4,"bases":["R3","R7"],"covers":["C4","C9"],"fins":["R3C7","R3C8"]}} xWing: null unique 1
+   elim [[8,4],[17,4]] R1C9-4 R2C9-4 cells R3C4 R3C7 R3C8 R7C4 R7C9
+FIN_ORDINARY (before xWing) null xWing: R2/R7 unique 1
+KITE_ONLY (before kite) null xWing: null unique 1
+exit=0 seconds=0.203

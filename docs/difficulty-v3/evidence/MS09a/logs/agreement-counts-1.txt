@@ -1,0 +1,17 @@
+$ node tests\artifacts\difficulty-v3\MS09a\agreement-counts.js samurai,sohei,butterfly,flower 12
+fishTest12 seed 2026: {"states":60,"hits":43,"genMs":58,"findMs":22}
+fishTest16 seed 2026: {"states":32,"hits":28,"genMs":3333,"findMs":16}
+jigsawLayout seed 4242: {"states":120,"hits":67,"genMs":333,"findMs":12}
+jigsawLayoutTurned seed 4242: {"states":120,"hits":70,"genMs":98,"findMs":10}
+classic9 seed 777: {"states":400,"hits":232,"genMs":80,"findMs":20}
+classic9 seed 99: {"states":400,"hits":226,"genMs":77,"findMs":19}
+classic6 seed 777: {"states":400,"hits":169,"genMs":102,"findMs":4}
+classic4 seed 777: {"states":300,"hits":22,"genMs":27,"findMs":1}
+diagonalX seed 4242: {"states":120,"hits":59,"genMs":41,"findMs":12}
+hyper seed 4242: {"states":120,"hits":58,"genMs":32,"findMs":11}
+jigsaw9 seed 4242: {"states":120,"hits":67,"genMs":342,"findMs":10}
+samurai seed 4242: {"states":12,"hits":9,"genMs":80,"findMs":10}
+sohei seed 4242: {"states":12,"hits":7,"genMs":345,"findMs":8}
+butterfly seed 4242: {"states":12,"hits":0,"genMs":11,"findMs":1}
+flower seed 4242: {"states":12,"hits":6,"genMs":18,"findMs":2}
+exit=0 seconds=5.327
