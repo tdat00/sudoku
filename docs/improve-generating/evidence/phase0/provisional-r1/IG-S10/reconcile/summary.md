@@ -1,0 +1,293 @@
+# IG-S10 / reconcile (provisional-r1, a1)
+
+**PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.**
+
+Evidence status: **provisional (pre-freeze)**. Formal gate: **not-evaluable-pre-freeze**.
+Command status: **complete** (exit 0). Estimate verdict: see report.md: the check-list estimate table, per row.
+
+## Coverage
+
+| planned | completed | censored | errors | unstarted | coverage complete |
+|---|---|---|---|---|---|
+| 1 | 1 | 0 | 0 | 0 | true |
+
+Exclusions: analysis only: no puzzle was generated, nothing was timed
+
+## Sources
+
+| item | value |
+|---|---|
+| runtime label (supplied) | 1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc) |
+| runtime fingerprint | 36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a |
+| runtime files | 63 |
+| harness fingerprint | 9a8afa85b3ff9165648fe6e1267a567c4c62e95ad9126a43e76db2d1ecb364c2 |
+| adapters | none |
+| sources stable | true |
+| firewall clean | true |
+
+CPU: process.cpuUsage of the analysis process (no request, no worker, no generation); informational only; observed quantum n/a ms. A value below the quantum is unresolved and gives no rate or factor.
+
+## Task details
+
+```json
+{
+  "documents": [
+    {
+      "rel": "provisional-r1/coverage.json",
+      "sha256": "3faf6a8cc9caeed6143567d8bc6d3c70e0f5b776b28f3a1c19afe017148e82a7"
+    },
+    {
+      "rel": "provisional-r1/budget-summary.json",
+      "sha256": "c4d9bcdfd4e815deb239bdd8dbc6b2cf67a85bc9a899c908f1b2970bb7ca0320"
+    },
+    {
+      "rel": "provisional-r1/gate.json",
+      "sha256": "86713925f30f89d52b9d5bfa124644104f643565f0b7773f61788d8f75999cc9"
+    },
+    {
+      "rel": "provisional-r1/frozen-rerun-plan.json",
+      "sha256": "caa2c4855a69ebc5f3cbf6c717d6416a72919d68fc9d7813036031ca6f6b4e08"
+    },
+    {
+      "rel": "provisional-r1/report.json",
+      "sha256": "f4594501127300e395f840213eb90a764c66ec4c31eedb75e5b5c199af1f574f"
+    },
+    {
+      "rel": "provisional-r1/report.md",
+      "sha256": "4a291f9bb5a699714994dcb6ac28c342caed4ee85e6c58092817e4c5e6587092"
+    }
+  ],
+  "tests": {
+    "reconcile": {
+      "total": 15,
+      "passed": 15,
+      "failed": 0
+    },
+    "gate": {
+      "total": 13,
+      "passed": 13,
+      "failed": 0
+    },
+    "results": [
+      {
+        "id": "g01-provisional-never-evaluable",
+        "group": "gate",
+        "ok": true,
+        "ms": 0.9,
+        "error": null
+      },
+      {
+        "id": "g02-source-not-attested",
+        "group": "gate",
+        "ok": true,
+        "ms": 0.7,
+        "error": null
+      },
+      {
+        "id": "g03-mismatched-limits",
+        "group": "gate",
+        "ok": true,
+        "ms": 106.4,
+        "error": null
+      },
+      {
+        "id": "g04-incomplete-paired-controls",
+        "group": "gate",
+        "ok": true,
+        "ms": 98,
+        "error": null
+      },
+      {
+        "id": "g05-zero-hits-no-pseudo-count",
+        "group": "gate",
+        "ok": true,
+        "ms": 69.1,
+        "error": null
+      },
+      {
+        "id": "g06-budget-and-censored-stay-in-denominators",
+        "group": "gate",
+        "ok": true,
+        "ms": 99.5,
+        "error": null
+      },
+      {
+        "id": "g07-on-time-lower-bound-without-go",
+        "group": "gate",
+        "ok": true,
+        "ms": 265.7,
+        "error": null
+      },
+      {
+        "id": "g08-non-inferiority-failure",
+        "group": "gate",
+        "ok": true,
+        "ms": 217.4,
+        "error": null
+      },
+      {
+        "id": "g09-invalid-claimed-hit",
+        "group": "gate",
+        "ok": true,
+        "ms": 130.6,
+        "error": null
+      },
+      {
+        "id": "g10-projection-awaits-author-review",
+        "group": "gate",
+        "ok": true,
+        "ms": 194.9,
+        "error": null
+      },
+      {
+        "id": "g11-sample-only-no-request-level",
+        "group": "gate",
+        "ok": true,
+        "ms": 132.7,
+        "error": null
+      },
+      {
+        "id": "g12-unresolved-cpu-and-duplicates",
+        "group": "gate",
+        "ok": true,
+        "ms": 169.7,
+        "error": null
+      },
+      {
+        "id": "g13-requests-origin-and-censoring",
+        "group": "gate",
+        "ok": true,
+        "ms": 72.2,
+        "error": null
+      },
+      {
+        "id": "r01-duplicate-keys-rejected",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 0.6,
+        "error": null
+      },
+      {
+        "id": "r02-silent-exclusions-and-classes",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 0.2,
+        "error": null
+      },
+      {
+        "id": "r03-incompatible-identities",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 0.2,
+        "error": null
+      },
+      {
+        "id": "r04-statistics-keep-pairs-and-denominators",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 1.5,
+        "error": null
+      },
+      {
+        "id": "r05-accepted-evidence-reconciles",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 2109.9,
+        "error": null
+      },
+      {
+        "id": "r06-coverage-specifics",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 0.2,
+        "error": null
+      },
+      {
+        "id": "r07-machine-accounting",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 0.1,
+        "error": null
+      },
+      {
+        "id": "r08-estimate-table-and-interpretation",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 0.2,
+        "error": null
+      },
+      {
+        "id": "r09-greater-than-accounting",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 0,
+        "error": null
+      },
+      {
+        "id": "r10-provenance-keeps-identities-apart",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 0.1,
+        "error": null
+      },
+      {
+        "id": "r11-gate-json-and-frozen-plan",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 0.3,
+        "error": null
+      },
+      {
+        "id": "r12-formats",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 21.8,
+        "error": null
+      },
+      {
+        "id": "r13-plan-and-no-engine",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 130.2,
+        "error": null
+      },
+      {
+        "id": "r14-exact-input-populations",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 19.1,
+        "error": null
+      },
+      {
+        "id": "r15-frozen-closure-inputs",
+        "group": "reconcile",
+        "ok": true,
+        "ms": 0.2,
+        "error": null
+      }
+    ]
+  },
+  "coverage": {
+    "tasksReconciled": 8,
+    "tasksDeferred": 1,
+    "plannedKeys": 480,
+    "completed": 452,
+    "completedByAuditOverlay": 6,
+    "budgetEnded": 13,
+    "censored": 1,
+    "error": 0,
+    "validationUnknown": 0,
+    "unstarted": 8,
+    "observedKeys": 472,
+    "earlyExactSkipped": 0,
+    "aliases": 0,
+    "blocked": 0,
+    "deferredTasks": [
+      "IG-S06"
+    ],
+    "populationsEqualToThePreregistered": true,
+    "problems": 0
+  },
+  "gate": "not-evaluable-pre-freeze"
+}
+```

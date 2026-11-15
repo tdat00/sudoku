@@ -544,3 +544,19 @@ IG-S07 (non-gating, pre-MS07): about 81 % / 77 % of the single mega16 / mega12 N
 wall time lies in legacy `nishio`/`forcingChain`: hotspots, not evidence of cacheability or achievable gains.
 Frozen attribution must distinguish MS07b's new chain families (`forcingChainLong`, `nishioDeep`).
 The interpretation remains with IG-S10.
+
+## Phase-0 measurement round closed (2026-11-15)
+
+The authorised pre-freeze measurement round is closed. The [final report](evidence/phase0/provisional-r1/report-r2.md)
+links the reconciled coverage, final accounting, disabled gate and frozen-rerun proposal.
+IG-S06 remains deferred; IG-S09 Nightmare 706-709 remain unstarted. No catch-up or frozen round is authorised now.
+Difficulty-v3 resumes.
+
+D1-D8 remain future decisions: frozen order/budget; composition after zero yield; projection assumptions and
+non-inferiority margin; four extensions; missing Nightmare pairs; MS07b chain attribution; versioned S7 limits;
+and adapter/guard/footprint carry-overs.
+
+Future work requires A1-A6 as applicable: freeze attestation, budget approval, approved assumptions/margin,
+separate IG-S06 approval, each extension's approval, and a decision on the missing Nightmare pairs.
+All findings remain provisional: the gate is `not-evaluable-pre-freeze`, and no qualification, default,
+bank-route or production decision follows.

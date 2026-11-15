@@ -1,0 +1,1690 @@
+{
+  "schema": "ig-s-frozen-plan/1",
+  "task": "IG-S10",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance, changes a default or authorises the bank route.",
+  "status": "PROPOSAL - grants no execution authority. Every frozen run needs the receipts and approvals below, and its own budget; nothing here is charged to the first round. Every cost figure is a planning scenario: none is a guaranteed upper bound.",
+  "runtimeFingerprintToday": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+  "receipts": {
+    "freeze": {
+      "path": ".\\docs\\improve-generating\\evidence\\phase0\\freeze.json",
+      "schema": "ig-s-freeze/1"
+    },
+    "budget": {
+      "path": ".\\docs\\improve-generating\\evidence\\phase0\\frozen-budget.json",
+      "schema": "ig-s-budget/1"
+    },
+    "note": "both receipts must fingerprint the runtime that is loaded at rerun time; the fingerprint above is only today's pre-freeze reference. The orchestrator supplies them."
+  },
+  "window": {
+    "commandMs": 270000,
+    "windowMs": 258000,
+    "graceMsPerCommand": 45000,
+    "note": "the same low-priority wrapper, 45 s quiet period charged per command, 300 s backstop, difficulty-v3 priority"
+  },
+  "steps": [
+    {
+      "task": "IG-S01",
+      "order": 1,
+      "dependsOn": [],
+      "population": "loader parity on classic4/veryEasy/1 and classic9/hard/1 plus the synthetic self-test",
+      "planOnlyCommand": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S01 -Round frozen-gate -PlanOnly",
+      "command": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S01 -Round frozen-gate -FreezeReceipt '.\\docs\\improve-generating\\evidence\\phase0\\freeze.json' -BudgetReceipt '.\\docs\\improve-generating\\evidence\\phase0\\frozen-budget.json'",
+      "implemented": true,
+      "frozenManifest": {
+        "jobs": 4,
+        "shards": 2,
+        "manifestHash": "7742b88be2d9d5cdacefe6cb1c73ebad7cbda28488db004b1755233d278bae9b",
+        "shardNames": [
+          "self-test (synthetic, 0 keys)",
+          "loader-parity (pipeline, 4 keys)"
+        ]
+      },
+      "adapters": {
+        "used": [
+          {
+            "id": "noop-expose",
+            "hash": "f73aa49991cc0141ef7f9bfe34fc0df39d936e122d600ed2ddf2a59a8f2a2c85"
+          }
+        ],
+        "dryRunOnCurrentRuntime": [
+          {
+            "adapterIds": [
+              "noop-expose"
+            ],
+            "adapterHashes": [
+              "f73aa49991cc0141ef7f9bfe34fc0df39d936e122d600ed2ddf2a59a8f2a2c85"
+            ],
+            "transforms": 1,
+            "patchedFiles": [
+              {
+                "rel": "js/engine/pipeline.js",
+                "beforeHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+                "afterHash": "bbb337187828942258a5a805ed8aa4770b6d52dd3c3349e1c2bf47210ff3e379"
+              }
+            ],
+            "dryRun": "ok on the current runtime (unique anchors, the patch compiles as text)"
+          }
+        ],
+        "reading": "a dry run on the runtime loaded today; the rerun repeats it on the frozen source and stops with unsupported-source (exit 2) for the author if a hook contract changed; never a fallback to the old engine"
+      },
+      "planOnlyProjection": {
+        "projectedMachineMs": 145000,
+        "commands": 2,
+        "basis": "admission estimates plus 45 s per command (the dispatcher's -PlanOnly figure; a PLANNING figure, not a guaranteed upper bound: validation, cleanup, diagnostics and retries are not all in the admission estimates)",
+        "gateBeforeApproval": "frozen-receipt-missing",
+        "budgetBeforeApproval": "canAdmit false until a budget receipt"
+      },
+      "projection": {
+        "basis": "measured occupied time of the final run chain of this round",
+        "measuredOccupiedMs": 5384,
+        "measuredFinalChainCommands": 3,
+        "scale": 1,
+        "firstRoundChargedMs": 237000,
+        "additionsMs": 0,
+        "projectedOccupiedMs": 5384,
+        "graceFormula": "45 s per wrapper command; commandsLow = max(shards, ceil(occupied / 258 s window))",
+        "commandsLow": 2,
+        "commandsAdmissionPlan": 2,
+        "lowChargedMs": 95384,
+        "admissionPlanChargedMs": 145000,
+        "admissionPlanReading": "the dispatcher's admission-estimate plan (a planning figure; not a guaranteed upper bound)",
+        "notes": []
+      }
+    },
+    {
+      "task": "IG-S02",
+      "order": 2,
+      "dependsOn": [
+        "IG-S01"
+      ],
+      "population": "H3: Nightmare on mega16[1,2,3], mega12[1,2,3], samurai[1,2,42], classic9[1,2,3], killer[1,2,3], greaterThan[1,2,3]; native-w1 against attempts-w4 (36 requests)",
+      "planOnlyCommand": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S02 -Round frozen-gate -PlanOnly",
+      "command": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S02 -Round frozen-gate -FreezeReceipt '.\\docs\\improve-generating\\evidence\\phase0\\freeze.json' -BudgetReceipt '.\\docs\\improve-generating\\evidence\\phase0\\frozen-budget.json'",
+      "implemented": true,
+      "frozenManifest": {
+        "jobs": 36,
+        "shards": 8,
+        "manifestHash": "8bcde98828d8edbb965e91f615bafe5d4850fee3f2447e479bfe924af7d92650",
+        "shardNames": [
+          "m16-1 (pipeline, 2 keys)",
+          "m16-2 (pipeline, 2 keys)",
+          "m16-3 (pipeline, 2 keys)",
+          "m12 (pipeline, 6 keys)",
+          "sam (pipeline, 6 keys)",
+          "c9 (pipeline, 6 keys)",
+          "killer (pipeline, 6 keys)",
+          "gt (pipeline, 6 keys)"
+        ]
+      },
+      "adapters": {
+        "used": [
+          {
+            "id": "attempt-pool",
+            "hash": "3813bdb06e947a014f06c6601a017c52870527f0b15fcfa4a455f648acc7bf06"
+          }
+        ],
+        "dryRunOnCurrentRuntime": [
+          {
+            "adapterIds": [
+              "attempt-pool"
+            ],
+            "adapterHashes": [
+              "3813bdb06e947a014f06c6601a017c52870527f0b15fcfa4a455f648acc7bf06"
+            ],
+            "transforms": 5,
+            "patchedFiles": [
+              {
+                "rel": "js/engine/digger.js",
+                "beforeHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+                "afterHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+              }
+            ],
+            "dryRun": "ok on the current runtime (unique anchors, the patch compiles as text)"
+          }
+        ],
+        "reading": "a dry run on the runtime loaded today; the rerun repeats it on the frozen source and stops with unsupported-source (exit 2) for the author if a hook contract changed; never a fallback to the old engine"
+      },
+      "planOnlyProjection": {
+        "projectedMachineMs": 1482000,
+        "commands": 8,
+        "basis": "admission estimates plus 45 s per command (the dispatcher's -PlanOnly figure; a PLANNING figure, not a guaranteed upper bound: validation, cleanup, diagnostics and retries are not all in the admission estimates)",
+        "gateBeforeApproval": "frozen-receipt-missing",
+        "budgetBeforeApproval": "canAdmit false until a budget receipt"
+      },
+      "projection": {
+        "basis": "measured occupied time of the final run chain of this round",
+        "measuredOccupiedMs": 887126,
+        "measuredFinalChainCommands": 8,
+        "scale": 1,
+        "firstRoundChargedMs": 1399885,
+        "additionsMs": 0,
+        "projectedOccupiedMs": 887126,
+        "graceFormula": "45 s per wrapper command; commandsLow = max(shards, ceil(occupied / 258 s window))",
+        "commandsLow": 8,
+        "commandsAdmissionPlan": 8,
+        "lowChargedMs": 1247126,
+        "admissionPlanChargedMs": 1482000,
+        "admissionPlanReading": "the dispatcher's admission-estimate plan (a planning figure; not a guaranteed upper bound)",
+        "notes": []
+      }
+    },
+    {
+      "task": "IG-S03",
+      "order": 3,
+      "dependsOn": [
+        "IG-S02"
+      ],
+      "population": "the 18 saved H3 puzzles audited (four solver sets, injected failures) plus scoped-attempts-w4 on H3 (18) and scoped-native-w1 on six seeds (6)",
+      "planOnlyCommand": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S03 -Round frozen-gate -PlanOnly",
+      "command": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S03 -Round frozen-gate -FreezeReceipt '.\\docs\\improve-generating\\evidence\\phase0\\freeze.json' -BudgetReceipt '.\\docs\\improve-generating\\evidence\\phase0\\frozen-budget.json'",
+      "implemented": true,
+      "frozenManifest": {
+        "jobs": 43,
+        "shards": 11,
+        "manifestHash": "aed12ef8fa3d3b39740f0ad0ba8197d7d86ba505455116ced34fd7d33b11229c",
+        "shardNames": [
+          "audit-1 (pipeline, 10 keys)",
+          "audit-2 (pipeline, 9 keys)",
+          "sc-c9 (pipeline, 3 keys)",
+          "sc-gt (pipeline, 3 keys)",
+          "sc-killer (pipeline, 3 keys)",
+          "sc-m12 (pipeline, 3 keys)",
+          "sc-sam (pipeline, 3 keys)",
+          "sc-m16 (pipeline, 3 keys)",
+          "ser-small (pipeline, 3 keys)",
+          "ser-m12-sam (pipeline, 2 keys)",
+          "ser-m16 (pipeline, 1 keys)"
+        ]
+      },
+      "adapters": {
+        "used": [
+          {
+            "id": "scoped-solver",
+            "hash": "965743b9c8e218708d81db314db78b19cdcba1563de8418aa4cba78562f8c90f"
+          },
+          {
+            "id": "scoped-audit",
+            "hash": "df76326083d5e98de7e55bea3d8a2c45106c8a62ae46f30481adbd25b5b20d8f"
+          },
+          {
+            "id": "attempt-pool",
+            "hash": "3813bdb06e947a014f06c6601a017c52870527f0b15fcfa4a455f648acc7bf06"
+          }
+        ],
+        "dryRunOnCurrentRuntime": [
+          {
+            "adapterIds": [
+              "scoped-solver",
+              "scoped-audit"
+            ],
+            "adapterHashes": [
+              "965743b9c8e218708d81db314db78b19cdcba1563de8418aa4cba78562f8c90f",
+              "df76326083d5e98de7e55bea3d8a2c45106c8a62ae46f30481adbd25b5b20d8f"
+            ],
+            "transforms": 16,
+            "patchedFiles": [
+              {
+                "rel": "../core/js/engine/logical-solver.js",
+                "beforeHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+                "afterHash": "1bbfd95655d541f8b8a2e4fe55e9ab92f383fa5056bbd5f2932524341deb8328"
+              },
+              {
+                "rel": "../core/js/engine/tech-basic.js",
+                "beforeHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+                "afterHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+              },
+              {
+                "rel": "../core/js/engine/tech-subset.js",
+                "beforeHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+                "afterHash": "447d15add676805406d244e6389706f839da6fc6bb59e504f95ee487d2837d9d"
+              },
+              {
+                "rel": "js/engine/pipeline.js",
+                "beforeHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+                "afterHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+              }
+            ],
+            "dryRun": "ok on the current runtime (unique anchors, the patch compiles as text)"
+          },
+          {
+            "adapterIds": [
+              "attempt-pool",
+              "scoped-solver"
+            ],
+            "adapterHashes": [
+              "3813bdb06e947a014f06c6601a017c52870527f0b15fcfa4a455f648acc7bf06",
+              "965743b9c8e218708d81db314db78b19cdcba1563de8418aa4cba78562f8c90f"
+            ],
+            "transforms": 15,
+            "patchedFiles": [
+              {
+                "rel": "../core/js/engine/logical-solver.js",
+                "beforeHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+                "afterHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+              },
+              {
+                "rel": "../core/js/engine/tech-basic.js",
+                "beforeHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+                "afterHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+              },
+              {
+                "rel": "../core/js/engine/tech-subset.js",
+                "beforeHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+                "afterHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+              },
+              {
+                "rel": "js/engine/digger.js",
+                "beforeHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+                "afterHash": "a77962c0b31d9930d5e545349e1140450de5e3cd2e52bca5f25a20fdb1fea109"
+              },
+              {
+                "rel": "js/engine/pipeline.js",
+                "beforeHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+                "afterHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+              }
+            ],
+            "dryRun": "ok on the current runtime (unique anchors, the patch compiles as text)"
+          },
+          {
+            "adapterIds": [
+              "scoped-solver"
+            ],
+            "adapterHashes": [
+              "965743b9c8e218708d81db314db78b19cdcba1563de8418aa4cba78562f8c90f"
+            ],
+            "transforms": 10,
+            "patchedFiles": [
+              {
+                "rel": "../core/js/engine/logical-solver.js",
+                "beforeHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+                "afterHash": "683a0177dd07430d01c4774cf33b19081abfaa11a015fdf9e38bb6e668ccb8eb"
+              },
+              {
+                "rel": "../core/js/engine/tech-basic.js",
+                "beforeHash": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23",
+                "afterHash": "100d2975034430b1dfc5c3fd424a6a4efb1f6ea42decbcf99a9836017fa50252"
+              },
+              {
+                "rel": "../core/js/engine/tech-subset.js",
+                "beforeHash": "3e217f896445e2856963f40cd7ca5650d8362e49719a77e1ead2d5512eda1202",
+                "afterHash": "64a7c7aa5de5ffbf8199c3f93b9e15bca021fcc325abaf1cfcf9bab2ea29d3a5"
+              },
+              {
+                "rel": "js/engine/pipeline.js",
+                "beforeHash": "9c84f575306987c2d68b39d67965c69df957e8622fc4e23979a445955cc52406",
+                "afterHash": "c70648a5cc4d5030e17d8add02398516bdb396fec6d09ee8da852b1ede55041c"
+              }
+            ],
+            "dryRun": "ok on the current runtime (unique anchors, the patch compiles as text)"
+          }
+        ],
+        "reading": "a dry run on the runtime loaded today; the rerun repeats it on the frozen source and stops with unsupported-source (exit 2) for the author if a hook contract changed; never a fallback to the old engine"
+      },
+      "planOnlyProjection": {
+        "projectedMachineMs": 1469000,
+        "commands": 11,
+        "basis": "admission estimates plus 45 s per command (the dispatcher's -PlanOnly figure; a PLANNING figure, not a guaranteed upper bound: validation, cleanup, diagnostics and retries are not all in the admission estimates)",
+        "gateBeforeApproval": "frozen-receipt-missing",
+        "budgetBeforeApproval": "canAdmit false until a budget receipt"
+      },
+      "projection": {
+        "basis": "measured occupied time of the final run chain of this round",
+        "measuredOccupiedMs": 498608,
+        "measuredFinalChainCommands": 11,
+        "scale": 1,
+        "firstRoundChargedMs": 1307230,
+        "additionsMs": 0,
+        "projectedOccupiedMs": 498608,
+        "graceFormula": "45 s per wrapper command; commandsLow = max(shards, ceil(occupied / 258 s window))",
+        "commandsLow": 11,
+        "commandsAdmissionPlan": 11,
+        "lowChargedMs": 993608,
+        "admissionPlanChargedMs": 1469000,
+        "admissionPlanReading": "the dispatcher's admission-estimate plan (a planning figure; not a guaranteed upper bound)",
+        "notes": []
+      }
+    },
+    {
+      "task": "IG-S04",
+      "order": 4,
+      "dependsOn": [
+        "IG-S03"
+      ],
+      "population": "pilot grid seeds 11 and 12, classic9/mega12/mega16/samurai Nightmare, eight modes (64 trials); recomputes the budgets",
+      "planOnlyCommand": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S04 -Round frozen-gate -PlanOnly",
+      "command": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S04 -Round frozen-gate -FreezeReceipt '.\\docs\\improve-generating\\evidence\\phase0\\freeze.json' -BudgetReceipt '.\\docs\\improve-generating\\evidence\\phase0\\frozen-budget.json'",
+      "implemented": true,
+      "frozenManifest": {
+        "jobs": 64,
+        "shards": 6,
+        "manifestHash": "85c4cc788caef2ce8c169850b839ed7b8ac13fd137496eaf398f9329d02e7307",
+        "shardNames": [
+          "s1-large-controls (pipeline, 6 keys)",
+          "s2-small-all (pipeline, 32 keys)",
+          "s3-large-native-f1 (pipeline, 6 keys)",
+          "s4-large-floors (pipeline, 8 keys)",
+          "s5-large-reference (pipeline, 8 keys)",
+          "s6-large-s2-control (pipeline, 4 keys)"
+        ]
+      },
+      "adapters": {
+        "used": [
+          {
+            "id": "frontier-hooks",
+            "hash": "424efd29f49f1c93001074a760b1d898acb3f2eee9aaa791477a32ec68b98143"
+          }
+        ],
+        "dryRunOnCurrentRuntime": [
+          {
+            "adapterIds": [
+              "frontier-hooks"
+            ],
+            "adapterHashes": [
+              "424efd29f49f1c93001074a760b1d898acb3f2eee9aaa791477a32ec68b98143"
+            ],
+            "transforms": 5,
+            "patchedFiles": [
+              {
+                "rel": "../core/js/engine/dfs-solver.js",
+                "beforeHash": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d",
+                "afterHash": "c9956d7f967a0870905d466e9e9b4bc7cbfdec0bf4bb5f609f81b24eb0ab4a19"
+              },
+              {
+                "rel": "../core/js/engine/logical-solver.js",
+                "beforeHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+                "afterHash": "969bace8cc314fad46f0ccaee045d9d835905b72e48d1b8cac966f97d2dd885f"
+              },
+              {
+                "rel": "js/engine/digger.js",
+                "beforeHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+                "afterHash": "e7db29bca4eb575efae5c0d4507829d8ec8714f324de1c33cdd6a9d7ba70d90a"
+              }
+            ],
+            "dryRun": "ok on the current runtime (unique anchors, the patch compiles as text)"
+          }
+        ],
+        "reading": "a dry run on the runtime loaded today; the rerun repeats it on the frozen source and stops with unsupported-source (exit 2) for the author if a hook contract changed; never a fallback to the old engine"
+      },
+      "planOnlyProjection": {
+        "projectedMachineMs": 2740000,
+        "commands": 10,
+        "basis": "admission estimates plus 45 s per command (the dispatcher's -PlanOnly figure; a PLANNING figure, not a guaranteed upper bound: validation, cleanup, diagnostics and retries are not all in the admission estimates)",
+        "gateBeforeApproval": "frozen-receipt-missing",
+        "budgetBeforeApproval": "canAdmit false until a budget receipt"
+      },
+      "projection": {
+        "basis": "measured occupied time of the final run chain of this round",
+        "measuredOccupiedMs": 96406,
+        "measuredFinalChainCommands": 14,
+        "scale": 1,
+        "firstRoundChargedMs": 828329,
+        "additionsMs": 0,
+        "projectedOccupiedMs": 96406,
+        "graceFormula": "45 s per wrapper command; commandsLow = max(shards, ceil(occupied / 258 s window))",
+        "commandsLow": 6,
+        "commandsAdmissionPlan": 10,
+        "lowChargedMs": 366406,
+        "admissionPlanChargedMs": 2740000,
+        "admissionPlanReading": "the dispatcher's admission-estimate plan (a planning figure; not a guaranteed upper bound)",
+        "notes": []
+      }
+    },
+    {
+      "task": "IG-S05",
+      "order": 5,
+      "dependsOn": [
+        "IG-S04 (its budgets are recomputed on the frozen pilot first)"
+      ],
+      "population": "SM2 grid seeds 101-140 (40 clusters per cell), the same four cells and eight modes, at most two samples per trial (1,280 trials) - the decision population of IG-S-Q05",
+      "planOnlyCommand": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S05 -Round frozen-gate -PlanOnly",
+      "command": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S05 -Round frozen-gate -FreezeReceipt '.\\docs\\improve-generating\\evidence\\phase0\\freeze.json' -BudgetReceipt '.\\docs\\improve-generating\\evidence\\phase0\\frozen-budget.json'",
+      "implemented": true,
+      "frozenManifest": {
+        "jobs": 1280,
+        "shards": 1,
+        "manifestHash": "7ce18993495438861b56aafe75e8ee6b59c23faba3f41b1e44e0b23c2c542be3",
+        "shardNames": [
+          "screen (pipeline, 1280 keys)"
+        ]
+      },
+      "adapters": {
+        "used": [
+          {
+            "id": "frontier-hooks",
+            "hash": "424efd29f49f1c93001074a760b1d898acb3f2eee9aaa791477a32ec68b98143"
+          }
+        ],
+        "dryRunOnCurrentRuntime": [
+          {
+            "adapterIds": [
+              "frontier-hooks"
+            ],
+            "adapterHashes": [
+              "424efd29f49f1c93001074a760b1d898acb3f2eee9aaa791477a32ec68b98143"
+            ],
+            "transforms": 5,
+            "patchedFiles": [
+              {
+                "rel": "../core/js/engine/dfs-solver.js",
+                "beforeHash": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d",
+                "afterHash": "c9956d7f967a0870905d466e9e9b4bc7cbfdec0bf4bb5f609f81b24eb0ab4a19"
+              },
+              {
+                "rel": "../core/js/engine/logical-solver.js",
+                "beforeHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+                "afterHash": "969bace8cc314fad46f0ccaee045d9d835905b72e48d1b8cac966f97d2dd885f"
+              },
+              {
+                "rel": "js/engine/digger.js",
+                "beforeHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+                "afterHash": "e7db29bca4eb575efae5c0d4507829d8ec8714f324de1c33cdd6a9d7ba70d90a"
+              }
+            ],
+            "dryRun": "ok on the current runtime (unique anchors, the patch compiles as text)"
+          }
+        ],
+        "reading": "a dry run on the runtime loaded today; the rerun repeats it on the frozen source and stops with unsupported-source (exit 2) for the author if a hook contract changed; never a fallback to the old engine"
+      },
+      "planOnlyProjection": {
+        "projectedMachineMs": 12303000,
+        "commands": 51,
+        "basis": "admission estimates plus 45 s per command (the dispatcher's -PlanOnly figure; a PLANNING figure, not a guaranteed upper bound: validation, cleanup, diagnostics and retries are not all in the admission estimates)",
+        "gateBeforeApproval": "frozen-receipt-missing",
+        "budgetBeforeApproval": "canAdmit false until a budget receipt"
+      },
+      "projection": {
+        "basis": "measured occupied time scaled (x5) plus the stated additions",
+        "measuredOccupiedMs": 326081,
+        "measuredFinalChainCommands": 10,
+        "scale": 5,
+        "firstRoundChargedMs": 841285,
+        "additionsMs": 0,
+        "projectedOccupiedMs": 1630405,
+        "graceFormula": "45 s per wrapper command; commandsLow = max(shards, ceil(occupied / 258 s window))",
+        "commandsLow": 7,
+        "commandsAdmissionPlan": 51,
+        "lowChargedMs": 1945405,
+        "admissionPlanChargedMs": 12303000,
+        "admissionPlanReading": "the dispatcher's admission-estimate plan (a planning figure; not a guaranteed upper bound)",
+        "notes": [
+          "40 clusters instead of 8: the per-trial cost of each cell is unchanged, the trial count is x5 (1,280 trials); the mega16 ordinary-only and frontier budget stops dominate"
+        ]
+      }
+    },
+    {
+      "task": "IG-S06",
+      "order": 6,
+      "dependsOn": [
+        "IG-S05 (frozen SM2 review and its selection)",
+        "a separate budget approval",
+        "implementation of ig-s06 (not written)"
+      ],
+      "population": "held-out request seeds 201-240 on the four frontier cells, native-mixed and the selected frontier only (two modes x 40 = 320 requests, NOT four modes), plus the six-cell two-seed (201, 202) diagnostic population N1/CA4/CQ1/CQ4 (40 primary + 4 optional)",
+      "planOnlyCommand": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S06 -Round frozen-gate -PlanOnly",
+      "command": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S06 -Round frozen-gate -FreezeReceipt '.\\docs\\improve-generating\\evidence\\phase0\\freeze.json' -BudgetReceipt '.\\docs\\improve-generating\\evidence\\phase0\\frozen-budget.json'",
+      "implemented": false,
+      "frozenManifest": null,
+      "status": "NOT IMPLEMENTED: deferred in the first round; no plan, no manifest, no adapter, no command that runs yet",
+      "note": "the command above is the documented form; it fails closed with plan-missing until plans/ig-s06.cjs exists",
+      "projection": {
+        "lowChargedMs": 5758608,
+        "centralChargedMs": 8442154,
+        "guardScenarioChargedMs": 103740000,
+        "commandsLow": 20,
+        "commandsCentral": 29,
+        "commandsGuardScenario": 364,
+        "firstRoundChargedMs": 0,
+        "basis": "formula (see ig06.projection); the guard scenario is a planning scenario with an incomplete upper bound"
+      }
+    },
+    {
+      "task": "IG-S07",
+      "order": 7,
+      "dependsOn": [
+        "IG-S05 (frozen reporting)",
+        "IG-S02/IG-S03 frozen baselines"
+      ],
+      "population": "the nine profiled requests and three controls of this round (same cells and seeds)",
+      "planOnlyCommand": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S07 -Round frozen-gate -PlanOnly",
+      "command": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S07 -Round frozen-gate -FreezeReceipt '.\\docs\\improve-generating\\evidence\\phase0\\freeze.json' -BudgetReceipt '.\\docs\\improve-generating\\evidence\\phase0\\frozen-budget.json'",
+      "implemented": true,
+      "frozenManifest": {
+        "jobs": 12,
+        "shards": 10,
+        "manifestHash": "7bd9745e6147176e1b52f0bc08d7b96314fa17ea74de51e3980e9dbf4c95c224",
+        "shardNames": [
+          "c9 (pipeline, 1 keys)",
+          "m16 (pipeline, 1 keys)",
+          "m12 (pipeline, 1 keys)",
+          "sam (pipeline, 1 keys)",
+          "killer-n (pipeline, 1 keys)",
+          "gt-n (pipeline, 1 keys)",
+          "killer-h (pipeline, 2 keys)",
+          "killer-e (pipeline, 2 keys)",
+          "gt-normal (pipeline, 2 keys)",
+          "lc (pipeline, 0 keys)"
+        ]
+      },
+      "adapters": {
+        "used": [
+          {
+            "id": "profile",
+            "hash": "4d409f0ef2e0297511a4c1100462f8f1042b7fc6a871f63ebeebe2d503eef169"
+          }
+        ],
+        "dryRunOnCurrentRuntime": [
+          {
+            "adapterIds": [
+              "profile"
+            ],
+            "adapterHashes": [
+              "4d409f0ef2e0297511a4c1100462f8f1042b7fc6a871f63ebeebe2d503eef169"
+            ],
+            "transforms": 27,
+            "patchedFiles": [
+              {
+                "rel": "../core/js/engine/dfs-solver.js",
+                "beforeHash": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d",
+                "afterHash": "112d8b5cf58617ddcab458c87c9f3649972cceefb4c0ba3946d6981d6321073d"
+              },
+              {
+                "rel": "../core/js/engine/techniques.js",
+                "beforeHash": "96e98414a205e6bdb872db3b951f41d9ba052fe30df15f419addd61b60aa76ad",
+                "afterHash": "58da7ac8b8f11794ddb8c64133c4cdc5eb4ca9c4585cb2167827dcaa61651634"
+              },
+              {
+                "rel": "../core/js/engine/logical-solver.js",
+                "beforeHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+                "afterHash": "b7c568b4a992e9c518cd2c31c1f4dab67e037e810d6b856919c3146c6e8fdd28"
+              },
+              {
+                "rel": "js/engine/digger.js",
+                "beforeHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+                "afterHash": "fbab33014a0ace41f2f5aaf9b23b932404fbfdd14f22db718d92b5c421512317"
+              }
+            ],
+            "dryRun": "ok on the current runtime (unique anchors, the patch compiles as text)"
+          }
+        ],
+        "reading": "a dry run on the runtime loaded today; the rerun repeats it on the frozen source and stops with unsupported-source (exit 2) for the author if a hook contract changed; never a fallback to the old engine"
+      },
+      "planOnlyProjection": {
+        "projectedMachineMs": 740000,
+        "commands": 9,
+        "basis": "admission estimates plus 45 s per command (the dispatcher's -PlanOnly figure; a PLANNING figure, not a guaranteed upper bound: validation, cleanup, diagnostics and retries are not all in the admission estimates)",
+        "gateBeforeApproval": "frozen-receipt-missing",
+        "budgetBeforeApproval": "canAdmit false until a budget receipt"
+      },
+      "projection": {
+        "basis": "measured occupied time of the final run chain of this round",
+        "measuredOccupiedMs": 254560,
+        "measuredFinalChainCommands": 10,
+        "scale": 1,
+        "firstRoundChargedMs": 711082,
+        "additionsMs": 0,
+        "projectedOccupiedMs": 254560,
+        "graceFormula": "45 s per wrapper command; commandsLow = max(shards, ceil(occupied / 258 s window))",
+        "commandsLow": 10,
+        "commandsAdmissionPlan": 10,
+        "lowChargedMs": 704560,
+        "admissionPlanChargedMs": 740000,
+        "admissionPlanReading": "the dispatcher's admission-estimate plan (a planning figure; not a guaranteed upper bound)",
+        "notes": []
+      }
+    },
+    {
+      "task": "IG-S08",
+      "order": 8,
+      "dependsOn": [
+        "IG-S07"
+      ],
+      "population": "Jigsaw Expert seed 1111 (240 s guard) and the control seed 1100",
+      "planOnlyCommand": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S08 -Round frozen-gate -PlanOnly",
+      "command": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S08 -Round frozen-gate -FreezeReceipt '.\\docs\\improve-generating\\evidence\\phase0\\freeze.json' -BudgetReceipt '.\\docs\\improve-generating\\evidence\\phase0\\frozen-budget.json'",
+      "implemented": true,
+      "frozenManifest": {
+        "jobs": 3,
+        "shards": 2,
+        "manifestHash": "a94d58d901d44527f7cbb4d991e24d4ca6af75979c70fb338eaa725ff1fc5c5f",
+        "shardNames": [
+          "control (pipeline, 2 keys)",
+          "tail (pipeline, 1 keys)"
+        ]
+      },
+      "adapters": {
+        "used": [
+          {
+            "id": "jigsaw-profile",
+            "hash": "69890fe8acaef852f6c19acb10985041a335e8ac55e3f6551bca1b4f6b6e2c62"
+          }
+        ],
+        "dryRunOnCurrentRuntime": [
+          {
+            "adapterIds": [
+              "jigsaw-profile"
+            ],
+            "adapterHashes": [
+              "69890fe8acaef852f6c19acb10985041a335e8ac55e3f6551bca1b4f6b6e2c62"
+            ],
+            "transforms": 32,
+            "patchedFiles": [
+              {
+                "rel": "../core/js/engine/dfs-solver.js",
+                "beforeHash": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d",
+                "afterHash": "33b81e7ad98b8e46b1a42e4f92ff807378aae49cf7b8cf663ee590a16084620e"
+              },
+              {
+                "rel": "../core/js/engine/logical-solver.js",
+                "beforeHash": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed",
+                "afterHash": "378397c110bf815d5f196d67fdfb5a3b5f06474793eae68242632f5456b2bb39"
+              },
+              {
+                "rel": "js/engine/full-grid.js",
+                "beforeHash": "9f633b4f150ef8e12c7cfbe4c64dd98e60d4a9d5ea8d878754d705c508f06889",
+                "afterHash": "be8ae7921919acb9da1160ddd0d0237dacea08b053263cd71d6f165924c837b6"
+              },
+              {
+                "rel": "js/engine/digger.js",
+                "beforeHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+                "afterHash": "19d617fdc210a494922428419c19c17fe6671d6f02ccef03eb2f61ef747ad0d9"
+              },
+              {
+                "rel": "js/variants/jigsaw.js",
+                "beforeHash": "0826ded674ccf417c20216b2ac7b54ce5eadb972390843b62646c0338418faa2",
+                "afterHash": "06148defbf5af0754b1f99f4b6d42a31de13d7008b167cabe5681577d3fca9a3"
+              }
+            ],
+            "dryRun": "ok on the current runtime (unique anchors, the patch compiles as text)"
+          }
+        ],
+        "reading": "a dry run on the runtime loaded today; the rerun repeats it on the frozen source and stops with unsupported-source (exit 2) for the author if a hook contract changed; never a fallback to the old engine"
+      },
+      "planOnlyProjection": {
+        "projectedMachineMs": 282000,
+        "commands": 2,
+        "basis": "admission estimates plus 45 s per command (the dispatcher's -PlanOnly figure; a PLANNING figure, not a guaranteed upper bound: validation, cleanup, diagnostics and retries are not all in the admission estimates)",
+        "gateBeforeApproval": "frozen-receipt-missing",
+        "budgetBeforeApproval": "canAdmit false until a budget receipt"
+      },
+      "projection": {
+        "basis": "measured occupied time of the final run chain of this round",
+        "measuredOccupiedMs": 246029,
+        "measuredFinalChainCommands": 2,
+        "scale": 1,
+        "firstRoundChargedMs": 336394,
+        "additionsMs": 0,
+        "projectedOccupiedMs": 246029,
+        "graceFormula": "45 s per wrapper command; commandsLow = max(shards, ceil(occupied / 258 s window))",
+        "commandsLow": 2,
+        "commandsAdmissionPlan": 2,
+        "lowChargedMs": 336029,
+        "admissionPlanChargedMs": 336029,
+        "admissionPlanReading": "the dispatcher's admission-estimate plan (a planning figure; not a guaranteed upper bound)",
+        "notes": [],
+        "censoredBound": {
+          "lowerBoundMs": 240015,
+          "guardLimitedPlanningMs": 245000,
+          "reading": "a censored run costs at least its 240.015 s lower bound; its 240 s guard (plus a 5 s cleanup allowance) is a planning limit, not a measured or guaranteed upper bound and no safe ceiling is inferred; a tail that disappears costs less",
+          "observedCensored": 1
+        }
+      }
+    },
+    {
+      "task": "IG-S09",
+      "order": 9,
+      "dependsOn": [
+        "IG-S08"
+      ],
+      "population": "Greater-Than Normal 300-319 and Nightmare 700-709 (all ten shards, including the eight rows left unstarted in the first round), trace summary, G0/G1 plus two observer-free controls",
+      "planOnlyCommand": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S09 -Round frozen-gate -PlanOnly",
+      "command": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S09 -Round frozen-gate -FreezeReceipt '.\\docs\\improve-generating\\evidence\\phase0\\freeze.json' -BudgetReceipt '.\\docs\\improve-generating\\evidence\\phase0\\frozen-budget.json'",
+      "implemented": true,
+      "frozenManifest": {
+        "jobs": 62,
+        "shards": 10,
+        "manifestHash": "fbe11577f282f8dcdcc27596a1b721f16c52c0b96c4e671a78a40ae0dd73b21f",
+        "shardNames": [
+          "normal-300-304 (pipeline, 10 keys)",
+          "normal-305-309 (pipeline, 10 keys)",
+          "normal-310-314 (pipeline, 10 keys)",
+          "normal-315-319 (pipeline, 10 keys)",
+          "nightmare-700-701 (pipeline, 4 keys)",
+          "nightmare-702-703 (pipeline, 4 keys)",
+          "nightmare-704-705 (pipeline, 4 keys)",
+          "nightmare-706-707 (pipeline, 4 keys)",
+          "nightmare-708-709 (pipeline, 4 keys)",
+          "observer-control (pipeline, 2 keys)"
+        ]
+      },
+      "adapters": {
+        "used": [
+          {
+            "id": "gt-diagnostic",
+            "hash": "d5fd6349b824de98223eecbbb001327e08b6ece223d95fb1b5d33842e465eaae"
+          }
+        ],
+        "dryRunOnCurrentRuntime": [
+          {
+            "adapterIds": [
+              "gt-diagnostic"
+            ],
+            "adapterHashes": [
+              "d5fd6349b824de98223eecbbb001327e08b6ece223d95fb1b5d33842e465eaae"
+            ],
+            "transforms": 23,
+            "patchedFiles": [
+              {
+                "rel": "../core/js/engine/dfs-solver.js",
+                "beforeHash": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d",
+                "afterHash": "d427ade06947ee721da292cba0376c7c1547b83642ed3d393a830b6afd5bb4c9"
+              },
+              {
+                "rel": "js/engine/digger.js",
+                "beforeHash": "7043ca8faa9ea32748e14b8d197b967b60b3ddf68878b1c00f8a830ba3919f5b",
+                "afterHash": "0181c67cc37b6d1d08afccf435c91a8aa5d737cc9cc1f42276e0930d23f04631"
+              },
+              {
+                "rel": "js/variants/greater-than.js",
+                "beforeHash": "e4e6de520d46ce1ed74730e538fcaa983274ae28836a9542a33a016272e1fb88",
+                "afterHash": "f3da91953527d686f6f03fd05ad7297169ae1281b285c6aadc4116ea353482ad"
+              }
+            ],
+            "dryRun": "ok on the current runtime (unique anchors, the patch compiles as text)"
+          }
+        ],
+        "reading": "a dry run on the runtime loaded today; the rerun repeats it on the frozen source and stops with unsupported-source (exit 2) for the author if a hook contract changed; never a fallback to the old engine"
+      },
+      "planOnlyProjection": {
+        "projectedMachineMs": 1282000,
+        "commands": 10,
+        "basis": "admission estimates plus 45 s per command (the dispatcher's -PlanOnly figure; a PLANNING figure, not a guaranteed upper bound: validation, cleanup, diagnostics and retries are not all in the admission estimates)",
+        "gateBeforeApproval": "frozen-receipt-missing",
+        "budgetBeforeApproval": "canAdmit false until a budget receipt"
+      },
+      "projection": {
+        "basis": "measured occupied time scaled (x1) plus the stated additions",
+        "measuredOccupiedMs": 478193,
+        "measuredFinalChainCommands": 8,
+        "scale": 1,
+        "firstRoundChargedMs": 895678,
+        "additionsMs": 243397,
+        "projectedOccupiedMs": 721590,
+        "graceFormula": "45 s per wrapper command; commandsLow = max(shards, ceil(occupied / 258 s window))",
+        "commandsLow": 10,
+        "commandsAdmissionPlan": 10,
+        "lowChargedMs": 1171590,
+        "admissionPlanChargedMs": 1282000,
+        "admissionPlanReading": "the dispatcher's admission-estimate plan (a planning figure; not a guaranteed upper bound)",
+        "notes": [
+          "the eight unstarted Nightmare rows (4 pairs, 706-709) are priced from the three completed Nightmare shards: mean 61 s occupied per pair (range 38-100 s), x4 pairs; the cost of the unstarted rows is UNKNOWN and priced between the lowest and the highest observed pair, not at zero"
+        ],
+        "unstartedRowsCostBoundsMs": {
+          "low": 151272,
+          "mean": 243397,
+          "high": 399020
+        }
+      }
+    },
+    {
+      "task": "IG-S10",
+      "order": 10,
+      "dependsOn": [
+        "IG-S09",
+        "IG-S06 when it was run"
+      ],
+      "population": "reconciliation of the frozen evidence, the frozen gate inputs (gate.cjs) and the closure report",
+      "planOnlyCommand": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S10 -Round frozen-gate -PlanOnly",
+      "command": "& '.\\generator\\tests\\artifacts\\improve-generating\\phase0\\Invoke-IgTask.ps1' -Task IG-S10 -Round frozen-gate -FreezeReceipt '.\\docs\\improve-generating\\evidence\\phase0\\freeze.json' -BudgetReceipt '.\\docs\\improve-generating\\evidence\\phase0\\frozen-budget.json'",
+      "implemented": true,
+      "frozenManifest": {
+        "jobs": 1,
+        "shards": 1,
+        "manifestHash": "0c63e32a6437345a4ca708ef765eb84889fba310b6e4903da3d38dad185ce5ad",
+        "shardNames": [
+          "reconcile (analysis, 1 keys)"
+        ]
+      },
+      "adapters": {
+        "used": [],
+        "dryRunOnCurrentRuntime": [],
+        "reading": "a dry run on the runtime loaded today; the rerun repeats it on the frozen source and stops with unsupported-source (exit 2) for the author if a hook contract changed; never a fallback to the old engine"
+      },
+      "planOnlyProjection": {
+        "projectedMachineMs": 225000,
+        "commands": 1,
+        "basis": "admission estimates plus 45 s per command (the dispatcher's -PlanOnly figure; a PLANNING figure, not a guaranteed upper bound: validation, cleanup, diagnostics and retries are not all in the admission estimates)",
+        "gateBeforeApproval": "frozen-receipt-missing",
+        "budgetBeforeApproval": "canAdmit false until a budget receipt"
+      },
+      "projection": {
+        "basis": "the task's own allocation (analysis only)",
+        "projectedOccupiedMs": 20000,
+        "commandsLow": 1,
+        "commandsAdmissionPlan": 1,
+        "firstRoundChargedMs": 53535,
+        "lowChargedMs": 65000,
+        "admissionPlanChargedMs": 240000,
+        "notes": []
+      }
+    }
+  ],
+  "ig06": {
+    "implemented": false,
+    "status": "DEFERRED in the first round (not passed, not refuted); this is a proposal for when to implement and run it",
+    "proposal": {
+      "implementWhen": "after the frozen IG-S05 screen has been reviewed by the plan author (Fable) and the pack author (Astra), and after a separate budget approval for IG-S06 itself; the pre-freeze result (0 verified hits in 256 trials, native kinds included) is not the reason to compose anything",
+      "conditionalOnFrozenScreen": "if the frozen screen still finds no variant with verified hits, IG-S06 composes a non-winning F1 default: ask the author whether to run it at all (a full-request frontier with zero grid yield is a cost measurement only)",
+      "developmentEstimate": "90-150 min of development by the pack author's estimate (check-list), separate from machine time",
+      "keepsFromTheFirstRound": "the unchanged selection and budget hashes (selection.json 67420e10..., budgets f0a0c422...); both are re-derived on the frozen pilot first"
+    },
+    "populations": {
+      "confirmatory": {
+        "seeds": "201-240",
+        "cells": [
+          "classic9",
+          "mega12",
+          "mega16",
+          "samurai"
+        ],
+        "modes": [
+          "native-mixed",
+          "selected-frontier"
+        ],
+        "requests": 320,
+        "note": "two modes x 40 requests on each of the four frontier cells, NOT four modes x 40 (the controls and the frontier are the only confirmatory modes; native kinds and proposal-only are compared on the 40 SM2 grid clusters)",
+        "perCell": [
+          {
+            "cell": "classic9",
+            "requests": 80,
+            "modes": [
+              "native-mixed",
+              "selected-frontier"
+            ],
+            "nativeMixedMsPerRequest": 1667,
+            "frontierMsPerRequestCentral": 1667,
+            "frontierMsPerRequestLow": 1045,
+            "requestGuardMs": 180000,
+            "centralOccupiedMs": 133348,
+            "lowOccupiedMs": 108482,
+            "guardOnlyOccupiedMs": 14400000,
+            "sampleShare": 0.6026,
+            "f1SampleCostOverEqualWeightMix": 0.3811025691569748
+          },
+          {
+            "cell": "mega12",
+            "requests": 80,
+            "modes": [
+              "native-mixed",
+              "selected-frontier"
+            ],
+            "nativeMixedMsPerRequest": 7178,
+            "frontierMsPerRequestCentral": 7178,
+            "frontierMsPerRequestLow": 2871,
+            "requestGuardMs": 180000,
+            "centralOccupiedMs": 574215,
+            "lowOccupiedMs": 401950,
+            "guardOnlyOccupiedMs": 14400000,
+            "sampleShare": 0.8352,
+            "f1SampleCostOverEqualWeightMix": 0.28160643272298214
+          },
+          {
+            "cell": "mega16",
+            "requests": 80,
+            "modes": [
+              "native-mixed",
+              "selected-frontier"
+            ],
+            "nativeMixedMsPerRequest": 55999,
+            "frontierMsPerRequestCentral": 55999,
+            "frontierMsPerRequestLow": 11618,
+            "requestGuardMs": 180000,
+            "centralOccupiedMs": 4479890,
+            "lowOccupiedMs": 2704654,
+            "guardOnlyOccupiedMs": 14400000,
+            "sampleShare": 0.9047,
+            "f1SampleCostOverEqualWeightMix": 0.12397964691910872
+          },
+          {
+            "cell": "samurai",
+            "requests": 80,
+            "modes": [
+              "native-mixed",
+              "selected-frontier"
+            ],
+            "nativeMixedMsPerRequest": 13742,
+            "frontierMsPerRequestCentral": 13742,
+            "frontierMsPerRequestLow": 6088,
+            "requestGuardMs": 180000,
+            "centralOccupiedMs": 1099363,
+            "lowOccupiedMs": 793184,
+            "guardOnlyOccupiedMs": 14400000,
+            "sampleShare": 0.7275,
+            "f1SampleCostOverEqualWeightMix": 0.23434720693558397
+          }
+        ]
+      },
+      "diagnostic": {
+        "seeds": [
+          201,
+          202
+        ],
+        "cells": 6,
+        "modes": "N1, CA4, CQ1, CQ4 (CA4 = CQ4 on Killer and Greater-Than, one observation)",
+        "primaryObservations": 40,
+        "optionalLargeBoardCq1": 4,
+        "perCell": [
+          {
+            "cell": "classic9",
+            "seeds": [
+              201,
+              202
+            ],
+            "perSeedMs": 13477,
+            "occupiedMs": 26954,
+            "optionalCq1Ms": 0
+          },
+          {
+            "cell": "mega12",
+            "seeds": [
+              201,
+              202
+            ],
+            "perSeedMs": 61270,
+            "occupiedMs": 122540,
+            "optionalCq1Ms": 0
+          },
+          {
+            "cell": "mega16",
+            "seeds": [
+              201,
+              202
+            ],
+            "perSeedMs": 219612,
+            "occupiedMs": 439224,
+            "optionalCq1Ms": 215230
+          },
+          {
+            "cell": "samurai",
+            "seeds": [
+              201,
+              202
+            ],
+            "perSeedMs": 52504,
+            "occupiedMs": 105009,
+            "optionalCq1Ms": 50040
+          },
+          {
+            "cell": "killer",
+            "seeds": [
+              201,
+              202
+            ],
+            "perSeedMs": 50481,
+            "occupiedMs": 100962,
+            "optionalCq1Ms": 0
+          },
+          {
+            "cell": "greaterThan",
+            "seeds": [
+              201,
+              202
+            ],
+            "perSeedMs": 27824,
+            "occupiedMs": 55649,
+            "optionalCq1Ms": 0
+          }
+        ]
+      }
+    },
+    "projection": {
+      "label": "PLANNING SCENARIOS with an INCOMPLETE upper bound: none of the three is a guaranteed ceiling of a whole IG-S06 run",
+      "formula": "confirmatory: for each cell and mode, requests x the cold wall of the IG-S02 attempts-w4 arm (native-mixed measured; selected frontier UNMEASURED, so priced at the native cost as the central figure); low: the frontier request priced native x (1 - s + s x r), s the IG-S07 sample share, r the F1/equal-weight-mix sample CPU ratio of IG-S05 (a Derived lower figure that credits the unmeasured saving); diagnostic: N1 and CQ1 at the IG-S02 serial wall, CA4 and CQ4 at the pooled wall; commands per phase: max(1, ceil(phase occupied / 258 s window)) for the confirmatory and the diagnostic phase separately; grace 45 s per command; guard scenario: 364 observations (320 confirmatory + 40 primary and 4 optional diagnostic), each its own command at the 180 s request guard plus the 60 s validation guard, plus the grace",
+      "scenarios": {
+        "low": {
+          "occupiedMs": 4858608,
+          "commands": {
+            "confirmatory": 16,
+            "diagnostic": 4,
+            "total": 20
+          },
+          "chargedMs": 5758608
+        },
+        "central": {
+          "occupiedMs": 7137154,
+          "commands": {
+            "confirmatory": 25,
+            "diagnostic": 4,
+            "total": 29
+          },
+          "chargedMs": 8442154
+        },
+        "guardScenario": {
+          "observations": 364,
+          "perRequestMs": 240000,
+          "commands": 364,
+          "occupiedMs": 87360000,
+          "chargedMs": 103740000
+        }
+      },
+      "confirmatoryOccupiedMs": {
+        "low": 4008270,
+        "central": 6286816
+      },
+      "diagnosticOccupiedMs": {
+        "central": 850338,
+        "optionalLargeBoardCq1": 265270
+      },
+      "occupiedMs": {
+        "low": 4858608,
+        "central": 7137154,
+        "guardScenario": 87360000
+      },
+      "commands": {
+        "low": 20,
+        "central": 29,
+        "guardScenario": 364
+      },
+      "chargedMs": {
+        "low": 5758608,
+        "central": 8442154,
+        "guardScenario": 103740000
+      },
+      "omittedFromTheGuardScenario": [
+        "the engine-free scheduler and composition tests (unwrapped, no machine charge expected)",
+        "request re-projection and pool-invariance checks",
+        "startup, validation and cleanup beyond the two named guards",
+        "retries, resumed and failed attempts (each a command with its own grace)",
+        "dev checks and diagnostics outside the shard plan",
+        "the frontier phase-A work of a request that the 180 s guard does not bound separately"
+      ],
+      "uncertainty": "the frontier request cost is unmeasured: the central figure assumes no saving, the low figure the formula; the guard scenario prices every observation at both guards but omits the components listed; a request that reaches the 180 s guard needs its own physical command",
+      "firstRoundAllocation": "24 minutes (not run, not transferable)"
+    }
+  },
+  "extensions": {
+    "status": "four UNAPPROVED Nightmare extensions; none is allowlisted by this pack",
+    "cells": [
+      {
+        "cell": "wordoku",
+        "status": "UNAPPROVED: a separate Nightmare extension; no execution authority; not covered by classic9 or samurai",
+        "cells": {
+          "variantId": "wordoku"
+        },
+        "populations": {
+          "pilot": {
+            "gridSeeds": [
+              11,
+              12
+            ],
+            "modes": 8,
+            "trials": 16
+          },
+          "sm2": {
+            "gridSeeds": "101-140",
+            "modes": 8,
+            "trials": 320
+          },
+          "requests": {
+            "seeds": "201-240",
+            "modes": [
+              "native-mixed",
+              "selected-frontier"
+            ],
+            "requests": 80
+          }
+        },
+        "proxy": "classic9",
+        "proxyScale": 1.01,
+        "proxyBasis": "same 81-cell geometry and 8 attempts; historical Nightmare I5 4.96 s against classic9 R5 4.91 s",
+        "confidence": "very low (the report: no measurement of this cell's frontier or request exists in this pack)",
+        "projection": {
+          "label": "PLANNING SCENARIOS with an incomplete upper bound (validation, cleanup, diagnostics and retries are not all included)",
+          "formula": "per phase: trials x (proxy cell cold wall per trial x screen overhead factor 1.244 x proxy scale), requests x (proxy pooled cold wall x proxy scale); frontier requests priced at the native cost; commands per phase = max(1, ceil(phase occupied / 258 s window)) because the pilot, the screen and the requests cannot share an invocation across their dependency boundaries (each phase reads the previous phase's frozen result); grace 45 s per command; recomputed separately for each scenario",
+          "pilotOccupiedMs": 2772,
+          "sm2OccupiedMs": 55433,
+          "requestsOccupiedMs": 134706,
+          "occupiedMs": 192911,
+          "commands": 3,
+          "commandsByPhase": {
+            "pilot": 1,
+            "sm2": 1,
+            "requests": 1
+          },
+          "chargedMs": 327911,
+          "scenarios": {
+            "low": {
+              "scale": 0.5,
+              "phases": {
+                "pilot": {
+                  "occupiedMs": 1386,
+                  "commands": 1
+                },
+                "sm2": {
+                  "occupiedMs": 27717,
+                  "commands": 1
+                },
+                "requests": {
+                  "occupiedMs": 67353,
+                  "commands": 1
+                }
+              },
+              "occupiedMs": 96456,
+              "commands": 3,
+              "chargedMs": 231456
+            },
+            "central": {
+              "scale": 1,
+              "phases": {
+                "pilot": {
+                  "occupiedMs": 2772,
+                  "commands": 1
+                },
+                "sm2": {
+                  "occupiedMs": 55433,
+                  "commands": 1
+                },
+                "requests": {
+                  "occupiedMs": 134706,
+                  "commands": 1
+                }
+              },
+              "occupiedMs": 192911,
+              "commands": 3,
+              "chargedMs": 327911
+            },
+            "high": {
+              "scale": 2,
+              "phases": {
+                "pilot": {
+                  "occupiedMs": 5543,
+                  "commands": 1
+                },
+                "sm2": {
+                  "occupiedMs": 110867,
+                  "commands": 1
+                },
+                "requests": {
+                  "occupiedMs": 269412,
+                  "commands": 2
+                }
+              },
+              "occupiedMs": 385822,
+              "commands": 4,
+              "chargedMs": 565822
+            }
+          },
+          "scenarioBand": {
+            "lowChargedMs": 231456,
+            "highChargedMs": 565822,
+            "note": "x0.5 to x2 on the occupied time, commands recomputed per scenario: a planning band for a proxy of very low confidence, not a statistical interval and not a guaranteed bound"
+          },
+          "unknownOrCensored": "the frontier behaviour of these boards is unmeasured: a frontier trial that reaches its 45 s sample guard or the 180 s request guard costs up to that guard; none is priced at zero"
+        }
+      },
+      {
+        "cell": "sohei",
+        "status": "UNAPPROVED: a separate Nightmare extension; no execution authority; not covered by classic9 or samurai",
+        "cells": {
+          "variantId": "sohei"
+        },
+        "populations": {
+          "pilot": {
+            "gridSeeds": [
+              11,
+              12
+            ],
+            "modes": 8,
+            "trials": 16
+          },
+          "sm2": {
+            "gridSeeds": "101-140",
+            "modes": 8,
+            "trials": 320
+          },
+          "requests": {
+            "seeds": "201-240",
+            "modes": [
+              "native-mixed",
+              "selected-frontier"
+            ],
+            "requests": 80
+          }
+        },
+        "proxy": "samurai",
+        "proxyScale": 1.028,
+        "proxyBasis": "two-attempt multigrid; CV3 Nightmare 27.49 s against samurai 26.74 s (288 against 369 cells)",
+        "confidence": "very low (the report: no measurement of this cell's frontier or request exists in this pack)",
+        "projection": {
+          "label": "PLANNING SCENARIOS with an incomplete upper bound (validation, cleanup, diagnostics and retries are not all included)",
+          "formula": "per phase: trials x (proxy cell cold wall per trial x screen overhead factor 1.244 x proxy scale), requests x (proxy pooled cold wall x proxy scale); frontier requests priced at the native cost; commands per phase = max(1, ceil(phase occupied / 258 s window)) because the pilot, the screen and the requests cannot share an invocation across their dependency boundaries (each phase reads the previous phase's frozen result); grace 45 s per command; recomputed separately for each scenario",
+          "pilotOccupiedMs": 14351,
+          "sm2OccupiedMs": 287013,
+          "requestsOccupiedMs": 1130198,
+          "occupiedMs": 1431562,
+          "commands": 8,
+          "commandsByPhase": {
+            "pilot": 1,
+            "sm2": 2,
+            "requests": 5
+          },
+          "chargedMs": 1791562,
+          "scenarios": {
+            "low": {
+              "scale": 0.5,
+              "phases": {
+                "pilot": {
+                  "occupiedMs": 7175,
+                  "commands": 1
+                },
+                "sm2": {
+                  "occupiedMs": 143507,
+                  "commands": 1
+                },
+                "requests": {
+                  "occupiedMs": 565099,
+                  "commands": 3
+                }
+              },
+              "occupiedMs": 715781,
+              "commands": 5,
+              "chargedMs": 940781
+            },
+            "central": {
+              "scale": 1,
+              "phases": {
+                "pilot": {
+                  "occupiedMs": 14351,
+                  "commands": 1
+                },
+                "sm2": {
+                  "occupiedMs": 287013,
+                  "commands": 2
+                },
+                "requests": {
+                  "occupiedMs": 1130198,
+                  "commands": 5
+                }
+              },
+              "occupiedMs": 1431562,
+              "commands": 8,
+              "chargedMs": 1791562
+            },
+            "high": {
+              "scale": 2,
+              "phases": {
+                "pilot": {
+                  "occupiedMs": 28701,
+                  "commands": 1
+                },
+                "sm2": {
+                  "occupiedMs": 574027,
+                  "commands": 3
+                },
+                "requests": {
+                  "occupiedMs": 2260396,
+                  "commands": 9
+                }
+              },
+              "occupiedMs": 2863124,
+              "commands": 13,
+              "chargedMs": 3448124
+            }
+          },
+          "scenarioBand": {
+            "lowChargedMs": 940781,
+            "highChargedMs": 3448124,
+            "note": "x0.5 to x2 on the occupied time, commands recomputed per scenario: a planning band for a proxy of very low confidence, not a statistical interval and not a guaranteed bound"
+          },
+          "unknownOrCensored": "the frontier behaviour of these boards is unmeasured: a frontier trial that reaches its 45 s sample guard or the 180 s request guard costs up to that guard; none is priced at zero"
+        }
+      },
+      {
+        "cell": "flower",
+        "status": "UNAPPROVED: a separate Nightmare extension; no execution authority; not covered by classic9 or samurai",
+        "cells": {
+          "variantId": "flower"
+        },
+        "populations": {
+          "pilot": {
+            "gridSeeds": [
+              11,
+              12
+            ],
+            "modes": 8,
+            "trials": 16
+          },
+          "sm2": {
+            "gridSeeds": "101-140",
+            "modes": 8,
+            "trials": 320
+          },
+          "requests": {
+            "seeds": "201-240",
+            "modes": [
+              "native-mixed",
+              "selected-frontier"
+            ],
+            "requests": 80
+          }
+        },
+        "proxy": "samurai",
+        "proxyScale": 0.863,
+        "proxyBasis": "two-attempt multigrid; CV3 Nightmare 23.07 s against samurai 26.74 s (189 against 369 cells)",
+        "confidence": "very low (the report: no measurement of this cell's frontier or request exists in this pack)",
+        "projection": {
+          "label": "PLANNING SCENARIOS with an incomplete upper bound (validation, cleanup, diagnostics and retries are not all included)",
+          "formula": "per phase: trials x (proxy cell cold wall per trial x screen overhead factor 1.244 x proxy scale), requests x (proxy pooled cold wall x proxy scale); frontier requests priced at the native cost; commands per phase = max(1, ceil(phase occupied / 258 s window)) because the pilot, the screen and the requests cannot share an invocation across their dependency boundaries (each phase reads the previous phase's frozen result); grace 45 s per command; recomputed separately for each scenario",
+          "pilotOccupiedMs": 12043,
+          "sm2OccupiedMs": 240866,
+          "requestsOccupiedMs": 948478,
+          "occupiedMs": 1201387,
+          "commands": 6,
+          "commandsByPhase": {
+            "pilot": 1,
+            "sm2": 1,
+            "requests": 4
+          },
+          "chargedMs": 1471387,
+          "scenarios": {
+            "low": {
+              "scale": 0.5,
+              "phases": {
+                "pilot": {
+                  "occupiedMs": 6022,
+                  "commands": 1
+                },
+                "sm2": {
+                  "occupiedMs": 120433,
+                  "commands": 1
+                },
+                "requests": {
+                  "occupiedMs": 474239,
+                  "commands": 2
+                }
+              },
+              "occupiedMs": 600694,
+              "commands": 4,
+              "chargedMs": 780694
+            },
+            "central": {
+              "scale": 1,
+              "phases": {
+                "pilot": {
+                  "occupiedMs": 12043,
+                  "commands": 1
+                },
+                "sm2": {
+                  "occupiedMs": 240866,
+                  "commands": 1
+                },
+                "requests": {
+                  "occupiedMs": 948478,
+                  "commands": 4
+                }
+              },
+              "occupiedMs": 1201387,
+              "commands": 6,
+              "chargedMs": 1471387
+            },
+            "high": {
+              "scale": 2,
+              "phases": {
+                "pilot": {
+                  "occupiedMs": 24087,
+                  "commands": 1
+                },
+                "sm2": {
+                  "occupiedMs": 481731,
+                  "commands": 2
+                },
+                "requests": {
+                  "occupiedMs": 1896957,
+                  "commands": 8
+                }
+              },
+              "occupiedMs": 2402775,
+              "commands": 11,
+              "chargedMs": 2897775
+            }
+          },
+          "scenarioBand": {
+            "lowChargedMs": 780694,
+            "highChargedMs": 2897775,
+            "note": "x0.5 to x2 on the occupied time, commands recomputed per scenario: a planning band for a proxy of very low confidence, not a statistical interval and not a guaranteed bound"
+          },
+          "unknownOrCensored": "the frontier behaviour of these boards is unmeasured: a frontier trial that reaches its 45 s sample guard or the 180 s request guard costs up to that guard; none is priced at zero"
+        }
+      },
+      {
+        "cell": "butterfly",
+        "status": "UNAPPROVED: a separate Nightmare extension; no execution authority; not covered by classic9 or samurai",
+        "cells": {
+          "variantId": "butterfly"
+        },
+        "populations": {
+          "pilot": {
+            "gridSeeds": [
+              11,
+              12
+            ],
+            "modes": 8,
+            "trials": 16
+          },
+          "sm2": {
+            "gridSeeds": "101-140",
+            "modes": 8,
+            "trials": 320
+          },
+          "requests": {
+            "seeds": "201-240",
+            "modes": [
+              "native-mixed",
+              "selected-frontier"
+            ],
+            "requests": 80
+          }
+        },
+        "proxy": "mega12",
+        "proxyScale": 1.384,
+        "proxyBasis": "four attempts and 144 cells like mega12; CV3 Nightmare 32.82 s against mega12 deep 23.72 s",
+        "confidence": "very low (the report: no measurement of this cell's frontier or request exists in this pack)",
+        "projection": {
+          "label": "PLANNING SCENARIOS with an incomplete upper bound (validation, cleanup, diagnostics and retries are not all included)",
+          "formula": "per phase: trials x (proxy cell cold wall per trial x screen overhead factor 1.244 x proxy scale), requests x (proxy pooled cold wall x proxy scale); frontier requests priced at the native cost; commands per phase = max(1, ceil(phase occupied / 258 s window)) because the pilot, the screen and the requests cannot share an invocation across their dependency boundaries (each phase reads the previous phase's frozen result); grace 45 s per command; recomputed separately for each scenario",
+          "pilotOccupiedMs": 11827,
+          "sm2OccupiedMs": 236544,
+          "requestsOccupiedMs": 794509,
+          "occupiedMs": 1042880,
+          "commands": 6,
+          "commandsByPhase": {
+            "pilot": 1,
+            "sm2": 1,
+            "requests": 4
+          },
+          "chargedMs": 1312880,
+          "scenarios": {
+            "low": {
+              "scale": 0.5,
+              "phases": {
+                "pilot": {
+                  "occupiedMs": 5914,
+                  "commands": 1
+                },
+                "sm2": {
+                  "occupiedMs": 118272,
+                  "commands": 1
+                },
+                "requests": {
+                  "occupiedMs": 397254,
+                  "commands": 2
+                }
+              },
+              "occupiedMs": 521440,
+              "commands": 4,
+              "chargedMs": 701440
+            },
+            "central": {
+              "scale": 1,
+              "phases": {
+                "pilot": {
+                  "occupiedMs": 11827,
+                  "commands": 1
+                },
+                "sm2": {
+                  "occupiedMs": 236544,
+                  "commands": 1
+                },
+                "requests": {
+                  "occupiedMs": 794509,
+                  "commands": 4
+                }
+              },
+              "occupiedMs": 1042880,
+              "commands": 6,
+              "chargedMs": 1312880
+            },
+            "high": {
+              "scale": 2,
+              "phases": {
+                "pilot": {
+                  "occupiedMs": 23654,
+                  "commands": 1
+                },
+                "sm2": {
+                  "occupiedMs": 473088,
+                  "commands": 2
+                },
+                "requests": {
+                  "occupiedMs": 1589018,
+                  "commands": 7
+                }
+              },
+              "occupiedMs": 2085760,
+              "commands": 10,
+              "chargedMs": 2535760
+            }
+          },
+          "scenarioBand": {
+            "lowChargedMs": 701440,
+            "highChargedMs": 2535760,
+            "note": "x0.5 to x2 on the occupied time, commands recomputed per scenario: a planning band for a proxy of very low confidence, not a statistical interval and not a guaranteed bound"
+          },
+          "unknownOrCensored": "the frontier behaviour of these boards is unmeasured: a frontier trial that reaches its 45 s sample guard or the 180 s request guard costs up to that guard; none is priced at zero"
+        }
+      }
+    ],
+    "combinedChargedMs": 4903740,
+    "combinedScenarioBandMs": {
+      "low": 2654371,
+      "high": 9447481
+    },
+    "minimumCommandsCentral": {
+      "total": 23,
+      "byCell": {
+        "wordoku": 3,
+        "sohei": 8,
+        "flower": 6,
+        "butterfly": 6
+      }
+    }
+  },
+  "totals": {
+    "frozenTasksWithAHarnessLowChargedMs": 6925108,
+    "frozenTasksWithAHarnessAdmissionPlanChargedMs": 20737029,
+    "ig06CentralChargedMs": 8442154,
+    "ig06LowChargedMs": 5758608,
+    "ig06GuardScenarioChargedMs": 103740000,
+    "extensionsCentralChargedMs": 4903740,
+    "note": "low: measured occupied time scaled plus the minimum grace; admission plan: the dispatcher's plan-only figure (admission estimates plus grace; a planning figure, NOT a guaranteed upper bound); the IG-S06 guard scenario is a planning scenario with an incomplete upper bound; IG-S06 and the extensions are separate lines with their own approvals"
+  },
+  "approvalsNeeded": [
+    {
+      "id": "A1",
+      "who": "orchestrator",
+      "what": "the freeze receipt (ig-s-freeze/1): accepted MS17b/MS18e labels, the runtime and catalogue fingerprints, the accepted limits and defaults, an attestation; a ratingVersion 3 flag or a round name alone is not proof of a freeze"
+    },
+    {
+      "id": "A2",
+      "who": "orchestrator with the plan author (Fable)",
+      "what": "the budget receipt (ig-s-budget/1): the authorised total, per-task figures and source; no frozen run is charged silently to the first round"
+    },
+    {
+      "id": "A3",
+      "who": "plan author (Fable)",
+      "what": "the projection assumption set and the non-inferiority margin that gate.cjs needs before it presents a numeric request-fraction projection; without them it reports projection-awaits-author-review"
+    },
+    {
+      "id": "A4",
+      "who": "plan author (Fable) with the pack author (Astra)",
+      "what": "IG-S06: its implementation, its populations and its own budget (a separate approval; the first-round allocation was not run and does not transfer)"
+    },
+    {
+      "id": "A5",
+      "who": "plan author (Fable) with the pack author (Astra)",
+      "what": "each of the four Nightmare extensions separately (wordoku, sohei, flower, butterfly); none is covered by classic9 or samurai"
+    },
+    {
+      "id": "A6",
+      "who": "pack author (Astra)",
+      "what": "IG-S09 Nightmare 706-709 (eight rows unstarted in the first round): whether the frozen run includes them; no catch-up run is authorised before the freeze"
+    }
+  ],
+  "unmeasured": [
+    "the frontier request cost (IG-S06)",
+    "the cost of the eight IG-S09 rows left unstarted (priced from the observed pairs, not measured)",
+    "frontier phase-A per-finder wall time",
+    "wordoku, sohei, flower and butterfly in every population"
+  ],
+  "assumptions": [
+    "the frozen catalogue may change the window, floors and search (MS07): every projection is from the pre-MS07 catalogue; the 270 s window, 45 s grace and the 258 s packing window are the harness's",
+    "a frozen run that exceeds its receipt stops; none is retried automatically"
+  ],
+  "revision": {
+    "id": "r2",
+    "reason": "pack-author review of r1 (ACCEPT WITH FIXES: F1 verdict scope and statistics, F2 final accounting, F3 projection packing, F4 invalid frozen inputs)",
+    "supersedes": [
+      {
+        "file": "report.json",
+        "sha256": "f4594501127300e395f840213eb90a764c66ec4c31eedb75e5b5c199af1f574f",
+        "bytes": 658187
+      },
+      {
+        "file": "report.md",
+        "sha256": "4a291f9bb5a699714994dcb6ac28c342caed4ee85e6c58092817e4c5e6587092",
+        "bytes": 86574
+      },
+      {
+        "file": "coverage.json",
+        "sha256": "3faf6a8cc9caeed6143567d8bc6d3c70e0f5b776b28f3a1c19afe017148e82a7",
+        "bytes": 83671
+      },
+      {
+        "file": "budget-summary.json",
+        "sha256": "c4d9bcdfd4e815deb239bdd8dbc6b2cf67a85bc9a899c908f1b2970bb7ca0320",
+        "bytes": 41085
+      },
+      {
+        "file": "gate.json",
+        "sha256": "86713925f30f89d52b9d5bfa124644104f643565f0b7773f61788d8f75999cc9",
+        "bytes": 3764
+      },
+      {
+        "file": "frozen-rerun-plan.json",
+        "sha256": "caa2c4855a69ebc5f3cbf6c717d6416a72919d68fc9d7813036031ca6f6b4e08",
+        "bytes": 59470
+      },
+      {
+        "file": "IG-S10/reconcile/command.json",
+        "sha256": "92a1a5b3a88ff3ee953099d0551c1933a844dccedfa14ec5d45ff4d014530866",
+        "bytes": 14560,
+        "status": "complete",
+        "harnessFingerprint": "9a8afa85b3ff9165648fe6e1267a567c4c62e95ad9126a43e76db2d1ecb364c2"
+      }
+    ],
+    "r1CommandHarnessFingerprint": "9a8afa85b3ff9165648fe6e1267a567c4c62e95ad9126a43e76db2d1ecb364c2",
+    "writerHarnessFingerprint": "8f0018b5c36db04a16707d44fd3c3f011ff3a75321c6d9c81e539beb283bd901",
+    "writerRole": "the r2 aggregation (ig10-run.cjs --write-r2): unwrapped, read-only, no engine, no worker, no generation, not charged"
+  }
+}
