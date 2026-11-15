@@ -4,8 +4,8 @@ This file holds the **open questions** for the plan author, the owner's decision
 plan version. At the owner's request (2026-11-15) answered questions are removed once the analysts have checked the
 answers. The full text of IG-S-Q01 to IG-S-Q27 with their answers, the plan author's direction of 2026-11-14 and the
 plan author's positions on IG-S-D1 to IG-S-D6 is in this file at commit `477cd53`; `plan.md` and the reports cite them
-by ID. The answers to IG-S-Q26 and IG-S-Q27 and the corrections accepted from the joint report on version 3 go into
-the next revision of `plan.md`.
+by ID. Plan version 4 has taken in the answers to IG-S-Q26 and IG-S-Q27 and the corrections accepted from the joint
+report on version 3.
 
 ---
 
@@ -190,6 +190,21 @@ owner decision is needed, and IG-S-D1 to IG-S-D6 remain in force.
 - **Sections 1, 2 and 4:** the workers sentence, Q's relation to MS08a, the "real-tier" wording, and butterfly
   Hell 1's scenario at 11.2 to 19.1 s.
 - **Sections 6 and 7:** the pool's enablement rests on F2 and F5b.
+
+## Analysts on plan version 4 (2026-11-15)
+
+Opus (SA1) and Astra (SA2) checked version 4 (`plan.md` at `072612a`) independently against the joint report on
+version 3, the answers IG-S-Q26 and IG-S-Q27, the analysts' notes and the source at `398c832`. **Version 4 is ready as
+the planning basis. No follow-up question; no owner decision is needed.**
+
+- **Fidelity:** JV3-S01 to JV3-S09 and the section 3 corrections are taken in word for word, butterfly Hell 1's
+  phase-1 scenario at 11.2 to 19.1 s included; the F2 pilot, the policy freeze at the end of F2 and F5b with its stop
+  conditions; the scope of the 0.95 tolerance and the CPU statistic as defaults until the targets are named; the
+  pool's enablement on F2 and F5b in sections 6 and 7.
+- **Arithmetic** checked: 13.04 / 26.09 / 72.33 %, 1 / 0.95 = about 5.3 %, 20 / 40 / 80 executions per cell.
+- **Note (no answer needed):** `398c832` is MS08b (Two-String Kite), which also postdates the checkpoint Q: 18 of 520
+  hashes and four reference ratings changed by 1 to 13 points, no level change. The plan's sentence stays correct as
+  pinned to `75b99e6`, its code anchors are unchanged, and F1 re-derives the baseline on the final catalogue.
 
 ## Open questions
 
