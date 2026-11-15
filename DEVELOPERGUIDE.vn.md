@@ -493,7 +493,7 @@ các hàm gọi lúc chạy), và giữ phần logic trong các hàm thuần, ki
 
 Xem [cây thư mục ở bản tiếng Anh](DEVELOPERGUIDE.md#directory-tree): `generator/` gồm `index.html`, `tests.html`, `css/`, `js/engine/`
 (bộ máy sinh đề, không DOM; `js/engine/replay.js` là phần phân tích việc phát lại ở thẻ Các bước tạo đề: nước đi, điểm số và các chế độ xem), `js/variants/`, `js/worker/`, `js/ui/`, `assets/wordlists/` và `tests/` (`tests/suites/`: bộ kiểm
-thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng; `tests/fixtures/manual-corpus.js`: các kho đề theo từng mức của các suite nặng; `tests/replay-fixtures.js` và `tests/replay-goldens.js`: tạo lại và kiểm tra dữ liệu của suite `replay`; `tests/difficulty-recovery.js`: công cụ chẩn đoán đo một yêu cầu cố định của đợt phục hồi độ khó v3; `tests/mega-contract.js`: tầng kiểm tra sâu cho các yêu cầu Nightmare của mega12 và mega16; `tests/pattern-cost.js`: công cụ đo chi phí của các bộ tìm kỹ thuật trên các mẫu thật của chúng, không sinh đề); phần dùng chung với trình chơi nằm
+thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng; `tests/fixtures/manual-corpus.js`: các kho đề theo từng mức của các suite nặng; `tests/replay-fixtures.js` và `tests/replay-goldens.js`: tạo lại và kiểm tra dữ liệu của suite `replay`; `tests/difficulty-recovery.js`: công cụ chẩn đoán đo một yêu cầu cố định của đợt phục hồi độ khó v3; `tests/mega-contract.js`: tầng kiểm tra sâu cho các yêu cầu Nightmare của mega12 và mega16; `tests/pattern-cost.js`: công cụ đo chi phí của các bộ tìm kỹ thuật trên các mẫu thật của chúng, không sinh đề; `tests/fixtures/qualification-records.js`: các hàm thuần của quy trình kiểm định và của phép gộp đủ 135 ô trong `tests/qualify.js --merge`); phần dùng chung với trình chơi nằm
 ở `core/` (bộ máy giải, `exchange`, `wordbook`, `symbols`, `board-view`, css nền và từ điển), tài liệu ở `docs/`.
 
 ## Định dạng trao đổi
@@ -657,9 +657,9 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (52 suite, 3.449 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (53 suite, 3.505 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
-node tests/node-runner.js --all                    # nhanh + thủ công (60 suite)
+node tests/node-runner.js --all                    # nhanh + thủ công (61 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --suite=help --exact="<tên đầy đủ>"   # chỉ các bài có đúng tên đầy đủ này
@@ -668,8 +668,8 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 52 suite, 3.449 bài —
-36 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 3.505 bài —
+37 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
 `variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw` — không thuộc lần chạy mặc định: chạy bằng `--manual` (chỉ các suite này) hoặc
@@ -717,7 +717,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 60 suite, trong đó 52 suite nhanh (3.449 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (3.505 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -970,7 +970,26 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   đạt khi đề hợp lệ và duy nhất, có lời giải trọn vẹn đúng mức yêu cầu, không có cảnh báo approximate **và** cờ `exact`
   của kết quả đúng là `true`, nên một kết quả nằm trong dải nhưng nông là một lần trượt. Một yêu cầu không bao giờ
   nêu `maxAttempts`: mỗi bàn dùng số lần thử mặc định theo cỡ của nó (8, 4 hoặc 2), nên một bàn lớn không tìm được
-  đề đúng mức trong các lần đó sẽ kết thúc bằng kết quả dự phòng, tức là một lần trượt. Lần chạy gần nhất nằm trong
+  đề đúng mức trong các lần đó sẽ kết thúc bằng kết quả dự phòng, tức là một lần trượt.
+  Mỗi đợt kết quả (`--json`) còn ghi công cụ và các mặc định đã dùng: `qualifierHash` (các byte của `qualify.js` và của
+  `tests/fixtures/qualification-records.js`), `acceptance` (`canonical-required-tier`), `ratingVersion` (của chính bộ
+  máy: phiên bản phát triển 2 cho đến khi đánh phiên bản cho cách chấm, nên một mốc kiểm tra không bao giờ là kết quả
+  v3 đã phát hành), `probe`, `earlyStop`, `guardMs`, `attemptPolicy` (quy tắc và mã băm các tệp quyết định nó) và, với
+  mỗi mức, `attempts`, số lần thử tối đa đã cấu hình cho bàn của nó (không phải số lần một yêu cầu đã dùng). `node tests/qualify.js --merge=<thư mục> --jobs=4 --json=<tệp> --markdown=<tệp>`
+  không sinh gì: nó đọc mọi đợt `*.json` trong thư mục và chỉ khi tất cả hợp lệ mới ghi một bản ghi duy nhất cho 15
+  biến thể × 9 mức = 135 ô; nếu không, nó in các vấn đề, thoát với mã 1 và để mọi tệp nguyên như cũ (hai tệp đầu ra được ghi cả hai hoặc không tệp nào, kể cả khi một tệp không đặt được vào chỗ). Nó từ chối một ô
+  thiếu, trùng hay không thuộc ma trận, một lần xem nhanh (probe), jobs khác 4, các đợt của nguồn, công cụ, phiên bản
+  chấm, chính sách số lần thử, máy hay Node khác nhau (commit được ghi riêng cho từng đợt, không bao giờ đem so sánh),
+  các lần chạy chồng nhau về thời gian, một yêu cầu có khóa, chỉ số, seed suy ra, thời gian hay kết quả sai, một bản
+  tóm tắt mà các yêu cầu không cho ra, một kết luận trên
+  ít hơn 40 hoặc 100 kết quả, và một lần dừng sớm mà chứng cứ không biện minh (hơn 10 lần trượt, hoặc hơn 5 yêu cầu
+  vượt ngân sách). Bản ghi giữ siêu dữ liệu của từng đợt, tổng thời gian của các đợt (`shardSeconds`) tách khỏi khoảng
+  thời gian thực của cả đợt thu thập (`wallSpanSeconds`), các số tổng (một đề không hợp lệ được báo, không bao giờ bị
+  giấu) và các danh sách mức suy ra từ kết luận; bảng chính thức không bao giờ là đầu ra. Các hàm thuần là
+  `SG.fixtures.qualificationRecords` (`tests/fixtures/qualification-records.js`), do suite `qualification-records`
+  kiểm thử trên các bản ghi giả, trên bộ lập lịch với các worker giả và trên năm tiến trình thật trong một thư mục riêng
+  (`.scratch-qualification-records/`, git bỏ qua); chi tiết ở [generator/design.md](generator/design.md) §15.4.
+  Lần chạy gần nhất nằm trong
   [docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md).
 - **Hiệu năng** so với ngân sách ở [design.md](generator/design.md) §9.1: `node tests/perf.js --quick`,
   `node tests/perf.js --variant=classic9 --runs=20`. *Mã băm hồi quy* trong `tests/fixtures/regression.js` bảo

@@ -569,10 +569,11 @@ sudoku/                     the repository (see "Layout" in the overview for the
         │                   replay-goldens.js, replay-wire.js, generated, with the helpers of their
         │                   recorders, tool-records.js and replay-recording.js, and the pure helpers of the
         │                   recovery profile driver, recovery-profile.js, of the mega Nightmare deep
-        │                   tier, mega-contract.js, of the pattern-cost tool, pattern-cost.js, and the lazy
+        │                   tier, mega-contract.js, of the pattern-cost tool, pattern-cost.js, of the
+        │                   qualification and its merge, qualification-records.js, and the lazy
         │                   per-level corpora of the heavy suites, manual-corpus.js)
         ├── suites/         the quick set, run by default together with ../core/tests/suites: one *.test.js per
-        │                   area, 36 of the generator's own (found automatically), smoke.test.js among them
+        │                   area, 37 of the generator's own (found automatically), smoke.test.js among them
         └── manual/         the 8 heavy suites (variants, killer, greater-than, perf, difficulty,
                             extra-regions, wordoku, jigsaw), run with --manual or --all
 ```
@@ -901,9 +902,9 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (52 suites, 3,449 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (53 suites, 3,505 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
-node tests/node-runner.js --all                    # quick + manual (60 suites)
+node tests/node-runner.js --all                    # quick + manual (61 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --suite=help --exact="<full name>"   # only the tests of exactly this full name
@@ -912,8 +913,8 @@ node tests/node-runner.js --suite=help --results=<file.json>    # run, and write
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
-**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 52 suites,
-3,449 tests — the 36 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 53 suites,
+3,505 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -963,7 +964,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 60 suites, 52 of them quick (3,449 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 61 suites, 53 of them quick (3,505 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1221,6 +1222,25 @@ on the reference machine and measured by `node tests/perf.js`.
   approximate warning **and** a strictly true `exact` flag of the result, so an in-band shallow result is a miss.
   A request never names `maxAttempts`: each board takes the default of its size (8, 4 or 2), so a large board that
   meets no exact puzzle in those attempts ends in the fallback, which is a miss.
+  Every shard (`--json`) also records the tool and the defaults it ran with: `qualifierHash` (the bytes of `qualify.js`
+  and of `tests/fixtures/qualification-records.js`), `acceptance` (`canonical-required-tier`), `ratingVersion` (the
+  engine's own, the development version 2 until the rating is versioned, so a checkpoint is never a released v3
+  result), `probe`, `earlyStop`, `guardMs`, `attemptPolicy` (the rule and the hashes of the files that decide it) and,
+  for each level, `attempts`, the maximum of attempts configured for its board (not the attempts a request used). `node tests/qualify.js --merge=<folder> --jobs=4 --json=<file>
+  --markdown=<file>` generates nothing: it reads every `*.json` shard of the folder and writes the one record of the
+  15 variants × 9 levels = 135 cells only if everything is valid, otherwise it prints the problems, exits with 1 and
+  leaves every file as it was (the two outputs are written all or none, also when one cannot be put in place). It refuses a missing, duplicate or foreign cell, a probe, jobs other than 4, shards of
+  another source, tool, rating version, attempt policy, machine or Node (the commit is recorded per shard, never
+  compared), overlapping runs, a request with a wrong key, index, derived seed, time or outcome, a summary that its
+  requests do not give, a verdict on fewer than 40 or 100 outcomes, and an early stop that the proof does not justify
+  (more than 10 misses, or more than 5 requests over the budget). The record keeps every shard's metadata, the
+  cumulative shard time (`shardSeconds`) apart from the
+  wall span of the collection (`wallSpanSeconds`), the totals (an invalid puzzle is reported, never hidden) and the
+  support lists derived from the verdicts; no live table is ever an output. The pure helpers are
+  `SG.fixtures.qualificationRecords` (`tests/fixtures/qualification-records.js`), tested by the `qualification-records`
+  suite on synthetic records, on the scheduler with fake workers and on five real processes in a folder of their own
+  (`.scratch-qualification-records/`, ignored by git); the details are in [generator/design.md](generator/design.md)
+  §15.4.
   The last run is in
   [docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md).
 - **Performance** against the budgets of [design.md](generator/design.md) §9.1: `node tests/perf.js --quick`,

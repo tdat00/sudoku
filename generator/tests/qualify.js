@@ -8,6 +8,7 @@
  *
  *   node tests/qualify.js [--variant=id[,id]] [--level=id[,id]] [--jobs=N] [--json=FILE] [--markdown=FILE]
  *                         [--no-early-stop] [--quiet] [--help]
+ *   node tests/qualify.js --merge=DIR --jobs=4 [--json=FILE] [--markdown=FILE] [--quiet]
  *
  * Protocol (section 6). For every variant with its default options and symmetry, and every level, 40
  * puzzles are generated with fixed seeds through the real pipeline (`SG.pipeline.run` with the 120 s
@@ -42,11 +43,36 @@
  *
  * Output: a progress line per level (unless --quiet), then the table and the support list per variant;
  * `--json` writes every request and the summary, `--markdown` the table of
- * docs/difficulty-rating/qualification.md.
+ * docs/difficulty-rating/qualification.md (UTF-8, CRLF, written whole and put in place, so a failed run
+ * leaves no half file).
  * Every request must have an outcome: a worker that stops unexpectedly (also after the last request of a
  * round), loses its IPC channel or answers for a request it was not given fails the whole run, and nothing
  * is published. An offered verdict needs exactly 40 (first round) or 100 (second round) recorded outcomes.
  * Exit code: 0; 1 when the run failed; 2 for a usage error.
+ *
+ * Metadata (difficulty v3, MS07d). Besides the machine, the engine and the times, every shard records
+ * `qualifierHash` (SHA-256 of the bytes of this file and of tests/fixtures/qualification-records.js),
+ * `acceptance` ('canonical-required-tier': the hit above), `ratingVersion` (the one the engine reports; it is
+ * the development version until the rating is versioned, and no shard is a released v3 result), `probe` and
+ * `earlyStop` (the protocol options of the run), `guardMs`, `attemptPolicy` (the size-default attempts rule
+ * and the hashes of the files that decide them; no request names `maxAttempts`) and, for each level,
+ * `attempts`: the maximum of attempts configured for its board (the size default), not the attempts that
+ * a request used.
+ *
+ * Merge (difficulty v3, MS07d). `--merge=DIR --jobs=4 [--json=FILE] [--markdown=FILE]` generates nothing. It
+ * reads every *.json file of the folder DIR (a subfolder is not entered) and writes the record of the 15
+ * variants x 9 levels = 135 cells of checklist Q, but only after everything is valid. A shard is refused for
+ * a missing or different qualifierHash, source hash, ratingVersion, attempt policy or protocol, a probe, jobs
+ * other than 4, another machine or Node than the other shards, a run that overlaps another in time,
+ * a cell twice, outside the matrix or missing, a request with a wrong key, index, derived seed, time or
+ * outcome, a summary that its requests do not give, a verdict on fewer than 40 or 100 outcomes, a second
+ * round without all 40 first outcomes of 30 to 35 hits, and a stop that its proof does not justify (more than
+ * 10 misses, or more than 5 requests over the budget, for the first round or in all). A rejected merge
+ * writes nothing. The record keeps each shard's own metadata, adds `shardSeconds` (the shards' wall times
+ * added up) apart from `wallSpanSeconds` (first start to last end), recomputes every summary and the support
+ * lists, and is written, with its table, after the whole validation (both files or none: an output that
+ * cannot be put in place puts the other back as it was). No live table is a default output, and
+ * the live table is never an output of a merge. Exit code: 0; 1 for a rejected merge; 2 for a usage error.
  */
 
 const fs = require('fs');
@@ -57,18 +83,38 @@ const crypto = require('crypto');
 const childProcess = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
+const RECORDS_FILE = path.join(ROOT, 'tests', 'fixtures', 'qualification-records.js');
+// The live qualification table: no merge ever writes it (the final task composes it around a merged table).
+const LIVE_TABLE = path.resolve(ROOT, '..', 'docs', 'difficulty-rating', 'qualification.md');
 
-/** Section 6 of the joint report. */
-const FIRST_SEEDS = 40;
-const MORE_SEEDS = 60;
-const OFFER_FIRST = 36;
-const BORDER_FROM = 30;
-const OFFER_TOTAL = 90;
-const GUARD_MS = 120000;
-const SEED_BASE = 20260601;
+/**
+ * The pure protocol, decision and merge helpers (tests/fixtures/qualification-records.js, SG.fixtures.
+ * qualificationRecords), run once in a context of their own. The scheduler below and the merge share them.
+ */
+let recordsLib = null;
+function records() {
+  if (recordsLib === null) {
+    const sandbox = vm.createContext({});
+    vm.runInContext(fs.readFileSync(RECORDS_FILE, 'utf8').replace(/^\uFEFF/, ''), sandbox,
+      { filename: RECORDS_FILE });
+    recordsLib = vm.runInContext('SG.fixtures.qualificationRecords', sandbox);
+  }
+  return recordsLib;
+}
+
+/** Section 6 of the joint report (the constants are the helper's, shared with the merge). */
+const PROTOCOL = records().PROTOCOL;
+const FIRST_SEEDS = PROTOCOL.firstSeeds;
+const MORE_SEEDS = PROTOCOL.moreSeeds;
+const OFFER_FIRST = PROTOCOL.offerFirst;
+const BORDER_FROM = PROTOCOL.borderFrom;
+const OFFER_TOTAL = PROTOCOL.offerTotal;
+const GUARD_MS = PROTOCOL.guardMs;
+const SEED_BASE = PROTOCOL.seedBase;
 
 const USAGE = [
   'Usage: node tests/qualify.js [options]',
+  '       node tests/qualify.js --merge=DIR --jobs=4 [--json=FILE] [--markdown=FILE]',
   '',
   '  --variant=a,b     only these variants (default: every registered variant)',
   '  --level=a,b       only these levels (default: all nine)',
@@ -77,14 +123,17 @@ const USAGE = [
   '  --markdown=FILE   write the table (the body of docs/difficulty-rating/qualification.md)',
   '  --no-early-stop   run every seed even when the verdict is already certain',
   '  --probe=N         a quick look, not a qualification: N seeds per level, no second round, no verdict',
+  '  --merge=DIR       no generation: check the *.json shards of DIR and merge them into the complete record',
+  '                    of the 15 variants x 9 levels; needs --jobs=4, takes only --json, --markdown, --quiet',
   '  --quiet           no progress lines',
   '  --help            show this help'
 ].join('\n');
 
 function parseArgs(argv) {
   const opts = {
-    variants: null, levels: null, jobs: Math.max(1, Math.floor(os.cpus().length / 2)), json: null,
-    markdown: null, earlyStop: true, quiet: false, help: false, child: false, probe: 0
+    variants: null, levels: null, jobs: Math.max(1, Math.floor(os.cpus().length / 2)), jobsGiven: false,
+    json: null, markdown: null, earlyStop: true, quiet: false, help: false, child: false, probe: 0,
+    merge: null
   };
   for (const arg of argv) {
     let m;
@@ -94,11 +143,30 @@ function parseArgs(argv) {
     else if (arg === '--quiet') opts.quiet = true;
     else if ((m = /^--variant=(.+)$/.exec(arg))) opts.variants = m[1].split(',');
     else if ((m = /^--level=(.+)$/.exec(arg))) opts.levels = m[1].split(',');
-    else if ((m = /^--jobs=(\d+)$/.exec(arg))) opts.jobs = Math.max(1, parseInt(m[1], 10));
-    else if ((m = /^--probe=(\d+)$/.exec(arg))) opts.probe = Math.max(1, parseInt(m[1], 10));
+    else if ((m = /^--jobs=(\d+)$/.exec(arg))) {
+      opts.jobs = Math.max(1, parseInt(m[1], 10));
+      opts.jobsGiven = true;
+    } else if ((m = /^--probe=(\d+)$/.exec(arg))) opts.probe = Math.max(1, parseInt(m[1], 10));
     else if ((m = /^--json=(.+)$/.exec(arg))) opts.json = m[1];
     else if ((m = /^--markdown=(.+)$/.exec(arg))) opts.markdown = m[1];
-    else throw new Error('Unknown argument: ' + arg);
+    else if ((m = /^--merge=(.*)$/.exec(arg))) {
+      if (m[1] === '') throw new Error('--merge needs the folder of the shards');
+      opts.merge = m[1];
+    } else throw new Error('Unknown argument: ' + arg);
+  }
+  if (opts.merge !== null && !opts.help) {
+    const conflicts = [];
+    if (opts.variants !== null) conflicts.push('--variant');
+    if (opts.levels !== null) conflicts.push('--level');
+    if (opts.probe > 0) conflicts.push('--probe');
+    if (!opts.earlyStop) conflicts.push('--no-early-stop');
+    if (opts.child) conflicts.push('--child');
+    if (conflicts.length > 0) {
+      throw new Error('--merge generates nothing and cannot be combined with ' + conflicts.join(', '));
+    }
+    if (!opts.jobsGiven) {
+      throw new Error('--merge needs --jobs=4: the qualification always runs with 4 workers');
+    }
   }
   return opts;
 }
@@ -120,24 +188,17 @@ function loadSources() {
   return globalThis.SG;
 }
 
-/** FNV-1a of a tag on the base seed (the derivation of tests/soak.js). */
+// The decision itself (seeds, budgets, percentile, hit, verdict, table) is the helper's, as in the merge.
 function seedFor(tag) {
-  let h = (2166136261 ^ SEED_BASE) >>> 0;
-  for (let k = 0; k < tag.length; k++) h = Math.imul(h ^ tag.charCodeAt(k), 16777619) >>> 0;
-  return h;
+  return records().seedFor(tag);
 }
 
-/** p95 budget of a board in milliseconds. */
 function budgetOf(cellCount) {
-  if (cellCount <= 36) return 2000;
-  if (cellCount <= 81) return 10000;
-  return 30000;
+  return records().budgetOf(cellCount);
 }
 
-/** Nearest-rank percentile of a sorted array. */
 function percentile(sorted, p) {
-  if (sorted.length === 0) return 0;
-  return sorted[Math.min(sorted.length - 1, Math.max(0, Math.ceil(p * sorted.length) - 1))];
+  return records().percentile(sorted, p);
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -188,18 +249,22 @@ function child() {
  * that matches is a consistency check and never enough: an absent or false `exact` is a miss.
  */
 function hitOf(out, requested) {
-  return out.valid === true && out.solved === true && out.approximate === false &&
-    out.exact === true && out.achieved === requested;
+  return records().hitOf(out, requested);
 }
 
 // -------------------------------------------------------------------------------------------------
 // Parent: schedules the requests and decides
 // -------------------------------------------------------------------------------------------------
 
-function engineInfo() {
+/** The first 16 hex digits of the SHA-256 over the engine's source files (the identity of the engine). */
+function sourcesHash() {
   const hash = crypto.createHash('sha256');
   for (const rel of sourceFiles()) hash.update(fs.readFileSync(path.join(ROOT, rel)));
-  const info = { sources: hash.digest('hex').slice(0, 16), commit: null, dirty: null };
+  return hash.digest('hex').slice(0, 16);
+}
+
+function engineInfo() {
+  const info = { sources: sourcesHash(), commit: null, dirty: null };
   try {
     info.commit = childProcess.execSync('git rev-parse --short HEAD', { cwd: ROOT, stdio: ['ignore', 'pipe',
       'ignore'] }).toString().trim();
@@ -209,6 +274,29 @@ function engineInfo() {
     // Not a git checkout: the hash of the sources identifies the engine.
   }
   return info;
+}
+
+/** The SHA-256 of the bytes of this file and of its helper: the identity of the tool that wrote a shard. */
+function qualifierHash() {
+  const hash = crypto.createHash('sha256');
+  [__filename, RECORDS_FILE].forEach((file) => {
+    hash.update(fs.readFileSync(file));
+    hash.update('\0');
+  });
+  return hash.digest('hex');
+}
+
+// The files that decide the attempts of a request without `maxAttempts`: the rule, where the pipeline
+// applies it and the size a variant reports.
+const POLICY_FILES = ['js/engine/digger.js', 'js/engine/pipeline.js', 'js/variants/registry.js'];
+
+/** The size-default attempts rule and the hashes of the files that hold it (no maxAttempts is ever named). */
+function attemptPolicy() {
+  const sources = {};
+  POLICY_FILES.forEach((rel) => {
+    sources[rel] = crypto.createHash('sha256').update(fs.readFileSync(path.join(ROOT, rel))).digest('hex');
+  });
+  return { function: 'SG.digger.defaultMaxAttempts', explicitMaxAttempts: false, sources: sources };
 }
 
 function machineInfo(jobs) {
@@ -225,44 +313,15 @@ function machineInfo(jobs) {
  * exactly `FIRST_SEEDS` outcomes in the first round, or `FIRST_SEEDS + MORE_SEEDS` with the second.
  */
 function decide(cell, probe) {
-  const n = cell.done.length;
-  const hits = cell.done.filter((r) => r.hit).length;
-  const sorted = cell.done.map((r) => r.ms).sort((a, b) => a - b);
-  const p95 = percentile(sorted, 0.95);
-  const fast = p95 <= cell.budget;
-  const complete = n === FIRST_SEEDS || n === FIRST_SEEDS + MORE_SEEDS;
-  let verdict;
-  if (probe) verdict = 'probe';
-  else if (cell.stopped || !complete) verdict = 'hidden';
-  else if (n === FIRST_SEEDS) verdict = hits >= OFFER_FIRST && fast ? 'offered' : 'hidden';
-  else verdict = hits >= OFFER_TOTAL && fast ? 'offered' : 'hidden';
-  return {
-    n: n, hits: hits, rate: n > 0 ? hits / n : 0, p50: percentile(sorted, 0.5), p95: p95,
-    max: sorted.length > 0 ? sorted[sorted.length - 1] : 0, verdict: verdict,
-    stopped: cell.stopped || (!probe && !complete ? 'incomplete' : null),
-    errors: cell.done.filter((r) => r.error).length,
-    approximate: cell.done.filter((r) => r.approximate).length,
-    invalid: cell.done.filter((r) => r.valid === false).length
-  };
+  return records().decide(cell, probe);
 }
 
 function fmt(ms) {
-  return ms >= 10000 ? (ms / 1000).toFixed(1) + ' s' : ms >= 1000 ? (ms / 1000).toFixed(2) + ' s'
-    : ms.toFixed(0) + ' ms';
+  return records().fmt(ms);
 }
 
 function markdownOf(summary) {
-  const lines = [];
-  lines.push('| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |');
-  lines.push('|---|---|---:|---:|---:|---:|---:|---:|---:|---|');
-  summary.cells.forEach((c) => {
-    const s = c.summary;
-    const verdict = s.verdict + (s.stopped ? ' (stopped: ' + s.stopped + ')' : '');
-    lines.push('| ' + c.variant + ' | ' + c.level + ' | ' + s.n + ' | ' + s.hits + ' | ' +
-      (100 * s.rate).toFixed(0) + ' % | ' + fmt(s.p50) + ' | ' + fmt(s.p95) + ' | ' + fmt(s.max) + ' | ' +
-      fmt(c.budget) + ' | ' + verdict + ' |');
-  });
-  return lines.join('\n') + '\n';
+  return records().markdownOf(summary);
 }
 
 /** An error in what was asked for (exit code 2, with the usage), not a failure of the run. */
@@ -279,14 +338,14 @@ function parent(opts) {
   const bad = levels.filter((l) => LEVELS.indexOf(l) === -1);
   if (bad.length > 0) throw usageError('unknown level: ' + bad.join(', '));
   const cells = [];
-  for (const def of SG.variants.list()) {
-    if (opts.variants && opts.variants.indexOf(def.id) === -1) continue;
-    const model = def.build({}, SG.rng.create(SEED_BASE).fork('build:' + def.id));
+  for (const entry of records().matrixOf(SG)) {
+    if (opts.variants && opts.variants.indexOf(entry.id) === -1) continue;
     for (const level of LEVELS) {
       if (levels.indexOf(level) === -1) continue;
       cells.push({
-        variant: def.id, level: level, key: def.id + '/' + level, cellCount: model.cellCount,
-        budget: budgetOf(model.cellCount), done: [], pending: 0, queued: FIRST_SEEDS, round: 1, stopped: null
+        variant: entry.id, level: level, key: entry.id + '/' + level, cellCount: entry.cellCount,
+        attempts: entry.attempts, budget: budgetOf(entry.cellCount), done: [], pending: 0,
+        queued: FIRST_SEEDS, round: 1, stopped: null
       });
     }
   }
@@ -303,8 +362,10 @@ function parent(opts) {
 
   const started = Date.now();
   const header = {
-    protocol: 'docs/difficulty-rating/report-detailed.md section 6', seedBase: SEED_BASE,
-    machine: machineInfo(opts.jobs), engine: engineInfo(), started: new Date(started).toISOString()
+    protocol: PROTOCOL.document, seedBase: SEED_BASE, machine: machineInfo(opts.jobs), engine: engineInfo(),
+    qualifierHash: qualifierHash(), acceptance: PROTOCOL.acceptance,
+    ratingVersion: SG.difficulty.RATING_VERSION, probe: opts.probe, earlyStop: opts.earlyStop,
+    guardMs: GUARD_MS, attemptPolicy: attemptPolicy(), started: new Date(started).toISOString()
   };
   if (!opts.quiet) {
     console.log('qualify: ' + cells.length + ' levels, ' + opts.jobs + ' jobs, ' + header.machine.cpu +
@@ -467,18 +528,149 @@ function parent(opts) {
     const summary = Object.assign(header, {
       finished: new Date().toISOString(), seconds: Math.round((Date.now() - started) / 1000),
       cells: cells.map((c) => ({
-        variant: c.variant, level: c.level, cellCount: c.cellCount, budget: c.budget, summary: c.summary,
-        requests: c.done.slice().sort((a, b) => a.index - b.index)
+        variant: c.variant, level: c.level, cellCount: c.cellCount, budget: c.budget, attempts: c.attempts,
+        summary: c.summary, requests: c.done.slice().sort((a, b) => a.index - b.index)
       })),
       support: support
     });
     console.log('');
     console.log(markdownOf(summary));
     Object.keys(support).forEach((id) => console.log(id + ': ' + JSON.stringify(support[id])));
-    if (opts.json) fs.writeFileSync(opts.json, JSON.stringify(summary, null, 1));
-    if (opts.markdown) fs.writeFileSync(opts.markdown, markdownOf(summary));
+    const texts = [];
+    if (opts.json) texts.push({ file: opts.json, text: records().recordText(summary) });
+    if (opts.markdown) texts.push({ file: opts.markdown, text: records().toCrlf(markdownOf(summary)) });
+    publish(texts);
     return 0;
   });
+}
+
+/**
+ * Writes the texts [{ file, text }] whole, all or none. Each goes to `<file>.partial` first. Before the first
+ * one is put in place, the bytes of the existing targets are kept (or the fact that there was none). When a
+ * rename fails, every target already replaced is restored from its copy (or removed), the `.partial` files
+ * are removed and the error says so: every file stays as it was, and no half file is left.
+ */
+function publish(texts) {
+  const before = texts.map((t) => (fs.existsSync(t.file) ? { bytes: fs.readFileSync(t.file) } : null));
+  const placed = [];
+  try {
+    texts.forEach((t) => {
+      fs.mkdirSync(path.dirname(path.resolve(t.file)), { recursive: true });
+      fs.writeFileSync(t.file + '.partial', t.text, 'utf8');
+    });
+    texts.forEach((t, i) => {
+      fs.renameSync(t.file + '.partial', t.file);
+      placed.push(i);
+    });
+  } catch (err) {
+    const stuck = [];
+    placed.forEach((i) => {
+      try {
+        if (before[i] === null) fs.rmSync(texts[i].file, { force: true });
+        else fs.writeFileSync(texts[i].file, before[i].bytes);
+      } catch (restoreError) {
+        stuck.push(texts[i].file);
+      }
+    });
+    texts.forEach((t) => {
+      try {
+        fs.rmSync(t.file + '.partial', { force: true });
+      } catch (removeError) {
+        // The next run writes over it.
+      }
+    });
+    if (placed.length === 0) throw err;
+    throw new Error(err.message + (stuck.length === 0 ?
+      '; the ' + placed.length + ' output(s) already replaced were put back as they were' :
+      '; THE OUTPUTS COULD NOT BE PUT BACK: ' + stuck.join(', ')));
+  }
+}
+
+/** Outputs of a merge that are refused before anything is read: the live table, the shard folder, a repeat */
+function checkMergeOutputs(opts) {
+  const folder = path.resolve(opts.merge);
+  const named = [['--json', opts.json], ['--markdown', opts.markdown]].filter((x) => x[1])
+    .map(([option, file]) => ({ option: option, file: file, abs: path.resolve(file).toLowerCase() }));
+  named.forEach((out) => {
+    if (out.abs === LIVE_TABLE.toLowerCase()) {
+      throw usageError(out.option + ': a merge never writes the live table ' +
+        'docs/difficulty-rating/qualification.md');
+    }
+    const rel = path.relative(folder.toLowerCase(), out.abs);
+    if (rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel))) {
+      throw usageError(out.option + ': ' + out.file + ' is inside the folder of the shards, where the next ' +
+        'merge would read it as a shard');
+    }
+  });
+  if (named.length === 2 && named[0].abs === named[1].abs) {
+    throw usageError('--json and --markdown name the same file');
+  }
+}
+
+/** The problems of a rejected merge on stderr, at most 40 lines. */
+function rejectMerge(problems) {
+  console.error('qualify: the merge is rejected, nothing was written (' + problems.length +
+    (problems.length === 1 ? ' problem):' : ' problems):'));
+  problems.slice(0, 40).forEach((problem) => console.error('  - ' + problem));
+  if (problems.length > 40) console.error('  ... and ' + (problems.length - 40) + ' more');
+  return 1;
+}
+
+/**
+ * --merge=DIR: no generation. Reads every *.json of the folder (a subfolder is not entered), checks the
+ * shards against this tree (tests/fixtures/qualification-records.js) and, only when the whole matrix is
+ * valid, writes the merged record and its table. Returns the exit code: 0, or 1 for a rejected merge.
+ */
+function mergeShards(opts) {
+  const lib = records();
+  checkMergeOutputs(opts);
+  let names;
+  try {
+    names = fs.readdirSync(opts.merge).filter((name) => /\.json$/i.test(name)).sort();
+  } catch (err) {
+    return rejectMerge(['cannot read the folder ' + opts.merge + ': ' + err.message]);
+  }
+  const files = names.map((name) => {
+    try {
+      return { name: name, shard: JSON.parse(fs.readFileSync(path.join(opts.merge, name), 'utf8')) };
+    } catch (err) {
+      return { name: name, error: 'cannot be read as JSON: ' + err.message };
+    }
+  });
+  const SG = loadSources();
+  const result = lib.merge(files, {
+    jobs: opts.jobs, sources: sourcesHash(), qualifierHash: qualifierHash(),
+    ratingVersion: SG.difficulty.RATING_VERSION, attemptPolicy: attemptPolicy(), variants: lib.matrixOf(SG),
+    levels: SG.difficulty.LEVELS.slice()
+  });
+  if (!result.ok) return rejectMerge(result.problems);
+  const record = result.record;
+  const texts = [];
+  if (opts.json) texts.push({ file: opts.json, text: lib.recordText(record) });
+  if (opts.markdown) texts.push({ file: opts.markdown, text: lib.toCrlf(markdownOf(record)) });
+  try {
+    publish(texts);
+  } catch (err) {
+    console.error('qualify: the merge is valid but its files could not be written: ' + err.message);
+    return 1;
+  }
+  const t = record.totals;
+  if (!opts.quiet) {
+    console.log('qualify: merged ' + t.cells + ' cells from ' + record.shards.length + ' shards, ' +
+      t.requests + ' requests, ' + t.offered + ' offered, ' + t.hidden + ' hidden (' + t.stopped +
+      ' stopped early), jobs ' + record.machine.jobs + ', Node ' + record.machine.node + ', engine ' +
+      (record.engine.commits.join(' + ') || '?') + ' sources ' + record.engine.sources + ', rating version ' +
+      record.ratingVersion + ', shards ' + record.shardSeconds + ' s, wall span ' +
+      record.wallSpanSeconds + ' s');
+  }
+  console.log('');
+  console.log(markdownOf(record));
+  Object.keys(record.support).forEach((id) => console.log(id + ': ' + JSON.stringify(record.support[id])));
+  if (t.invalid > 0) {
+    console.error('qualify: CORRECTNESS: ' + t.invalid + ' request(s) returned an invalid or non-unique ' +
+      'puzzle (see "invalid" in the cells); report it, do not publish');
+  }
+  return 0;
 }
 
 function main() {
@@ -498,7 +690,9 @@ function main() {
     console.log(USAGE);
     return;
   }
-  Promise.resolve().then(() => parent(opts)).then((code) => { process.exitCode = code; }, (err) => {
+  Promise.resolve().then(() => (opts.merge !== null ? mergeShards(opts) : parent(opts))).then((code) => {
+    process.exitCode = code;
+  }, (err) => {
     if (err && err.usage) {
       console.error(err.message + '\n\n' + USAGE);
       process.exitCode = 2;

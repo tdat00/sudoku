@@ -53,6 +53,9 @@ not work or a new prerequisite for this checkpoint. No new cap, budget or scope 
   merge/handoff path; do not strip them in favour of only times and hits. Keep their actual counting
   scope and any unavailable value explicit, not zero or an invented whole-request total. This
   retains existing telemetry for the later improvement baseline; it adds no instrumentation project.
+  Qualification shards currently lack `stats` (MS07d): report samples, actual attempts and
+  oracleCalls as unavailable, not zero; a cell's `attempts` is the configured maximum, not observed
+  attempts. Preserve separately sourced soak counters without backfilling qualification rows.
 - **S-AV03 wording:** the reviewed mega16 Nightmare search fails the 30 s budget by its work ceiling,
   not as a tail. Keep that finding source-qualified when comparing it with this checkpoint.
 - **S-AV11 attribution:** keep the Jigsaw 325 s request's stage/cause unassigned until MS18d's stage
@@ -155,8 +158,13 @@ Invoke-Dv3Node -Task MS07e -AllowExit1 -NodeArgs @('tests\node-runner.js','--sui
 
 Complete E's 520 hash identities before merge; **check only**, never --update-hashes in this task.
 Build the checkpoint narrative around the generated table, not by overwriting the live report.
-GQ jobs=4, others jobs=1/no --jobs. Planning allowance: 10-540 seconds/GQ cell, approximately
-1-12 hours total; GG 10-90 minutes. GD uses checklist section 7's complete bounded manifest:
+GQ jobs=4, others jobs=1/no --jobs. GQ time (SA2 ruling after MS07d, S-AV27): for a possibly
+expanding one-cell invocation, project first-round four-worker wall time **plus 60 serial request
+times**, startup and a conservative variance margin, not 60/4. Use applicable source-qualified
+timings; do not assume early stopping. Launch only with a credible <=450 s projection; retain the
+540 s ceiling. Otherwise record S-AV27/unexecuted coverage and continue, without truncation, changed
+jobs/guards or a complete-checkpoint claim. Document configured jobs=4 and the one-worker second
+round. GG 10-90 minutes. GD uses checklist section 7's complete bounded manifest:
 retain the first Nightmare shard and separately run/retain the Hell 1 batch early, then every
 other offered-level/non-batch group exactly once. Project from the MS07b/MS07c pilot and actuals,
 especially the now-nonvacuous Hell 1. If projected above 450 seconds, do not launch that callback;

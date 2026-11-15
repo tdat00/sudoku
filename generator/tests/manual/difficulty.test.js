@@ -375,7 +375,13 @@
       var modules = {
         fs: {
           readFileSync: node.fs.readFileSync, existsSync: node.fs.existsSync,
-          writeFileSync: function (name, text) { written[name] = text; }
+          writeFileSync: function (name, text) { written[name] = text; },
+          renameSync: function (from, to) {
+            written[to] = written[from];
+            delete written[from];
+          },
+          mkdirSync: function () {},
+          rmSync: function (name) { delete written[name]; }
         },
         path: node.path, vm: node.vm, child_process: { fork: fork }, crypto: {},
         os: { cpus: function () { return []; }, totalmem: function () { return 0; } }
@@ -387,14 +393,18 @@
       });
       node.vm.runInContext(node.fs.readFileSync(file, 'utf8'), ctx, { filename: file });
       ctx.fakeSG = {
-        difficulty: { LEVELS: ['veryEasy'] },
+        difficulty: { LEVELS: ['veryEasy'], RATING_VERSION: 2 },
         variants: {
-          list: function () { return [{ id: 'classic4', build: function () { return { cellCount: 16 }; } }]; }
+          list: function () { return [{ id: 'classic4', build: function () { return { cellCount: 16 }; } }]; },
+          cellCountOf: function () { return 16; }
         },
+        digger: { defaultMaxAttempts: function () { return 8; } },
         rng: { create: function () { return { fork: function () { return {}; } }; } }
       };
       node.vm.runInContext('loadSources = function () { return fakeSG; };' +
         'engineInfo = function () { return { sources: "test" }; };' +
+        'qualifierHash = function () { return "test"; };' +
+        'attemptPolicy = function () { return { function: "SG.digger.defaultMaxAttempts" }; };' +
         'machineInfo = function (jobs) { return { cpu: "test", jobs: jobs }; };', ctx);
       return { ctx: ctx, written: written };
     }
