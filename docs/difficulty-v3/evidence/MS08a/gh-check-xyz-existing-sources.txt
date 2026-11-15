@@ -1,0 +1,37 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=xyzWing --sources=tests\artifacts\difficulty-v3\MS08a\sources-xyz-existing.json --max-puzzles=64 --max-hints=400 --check
+selected 1 technique ID(s); mode check
+replaying 22 puzzle(s) for 1 ID(s) (--max-puzzles=64, --max-hints=400)
+puzzle 1/22 classic9 Easy 1 -> 47 hint(s), solved; wanted found: -
+puzzle 2/22 classic9 Nightmare 1156 -> 71 hint(s), solved; wanted found: -
+puzzle 3/22 classic9 Nightmare 75 -> 76 hint(s), solved; wanted found: -
+puzzle 4/22 classic9 Nightmare 44 -> 59 hint(s), solved; wanted found: -
+puzzle 5/22 classic9 Hard 18 -> 62 hint(s), solved; wanted found: -
+puzzle 6/22 classic9 Nightmare 70 -> 76 hint(s), solved; wanted found: xyzWing
+puzzle 7/22 classic9 Hard 55 -> 58 hint(s), solved; wanted found: -
+puzzle 8/22 classic9 Nightmare 176 -> 67 hint(s), solved; wanted found: -
+puzzle 9/22 classic9 Nightmare 692 -> 63 hint(s), solved; wanted found: -
+puzzle 10/22 classic9 Nightmare 989 -> 63 hint(s), solved; wanted found: -
+puzzle 11/22 classic9 Hell 1 644 -> 79 hint(s), solved; wanted found: -
+puzzle 12/22 classic9 Hell 1 214 -> 65 hint(s), solved; wanted found: -
+puzzle 13/22 classic9 Nightmare 561 -> 58 hint(s), solved; wanted found: -
+puzzle 14/22 classic9 Nightmare 828 -> 80 hint(s), solved; wanted found: -
+puzzle 15/22 classic9 Nightmare 13 -> 74 hint(s), solved; wanted found: xyzWing
+puzzle 16/22 classic9 Hell 1 1016 -> 79 hint(s), solved; wanted found: -
+puzzle 17/22 classic9 Nightmare 11 -> 72 hint(s), solved; wanted found: xyzWing
+puzzle 18/22 classic9 Nightmare 1427 -> 71 hint(s), solved; wanted found: xyzWing
+puzzle 19/22 classic9 Nightmare 648 -> 76 hint(s), solved; wanted found: -
+puzzle 20/22 classic9 Nightmare 3 -> 61 hint(s), solved; wanted found: -
+puzzle 21/22 classic9 Hell 1 8 -> 69 hint(s), solved; wanted found: -
+puzzle 22/22 classic9 Hell 2 escargot -> 113 hint(s), solved; wanted found: -
+xyzWing: 24 field(s) differ from help-examples.js
+  givens: saved ".....2..6.2..8..31851....4..3.67.2.............9.43.1..4..., fresh ".83....4...9..6..8...54.39.....8..54...4.1...64..7.....7...
+  values: saved "4.3....8.............3....25.8..1.942148..67376.2..8.5....., fresh "5...92..64.....5...6...8......6.........5..6...52..........
+  notes.3: saved 1, fresh undefined
+  notes.4: saved 17, fresh undefined
+  notes.22: saved 288, fresh undefined
+  notes.40: saved 272, fresh undefined
+  notes.52: saved undefined, fresh 132
+  notes.61: saved undefined, fresh 134
+  ... and 16 more
+help-examples.js differs or lacks an example for 1 of the 1 selected ID(s)
+exit=1 seconds=1.368

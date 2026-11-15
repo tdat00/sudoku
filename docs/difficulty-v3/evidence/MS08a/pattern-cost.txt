@@ -1,0 +1,8 @@
+$ node tests\pattern-cost.js --ids=skyscraper --runs=20 --json=..\docs\difficulty-v3\evidence\MS08a\pattern-cost.json
+pattern-cost: 4 of 4 cases x 20 runs (80 finds), complete true, found 2, none 2, outcome not the fixture's 0, capped 0, wall 0.012 s
+  skyscraper:positive:1 found, work 3 of 50000, ms p50 0.015 p95 0.122 max 0.415
+  skyscraper:positive:2 found, work 21 of 50000, ms p50 0.039 p95 0.054 max 0.063
+  skyscraper:negative:1 none, work 74 of 50000, ms p50 0.017 p95 0.132 max 0.201
+  skyscraper:negative:2 none, work 37 of 50000, ms p50 0.013 p95 0.027 max 0.031
+record: docs/difficulty-v3/evidence/MS08a/pattern-cost.json
+exit=0 seconds=0.529

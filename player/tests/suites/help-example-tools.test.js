@@ -579,7 +579,7 @@
       expect(report.map(function (r) { return [r.id, r.status]; })).toEqual([['nakedSingle', 'match'],
         ['pointing', 'differs'], ['boxLine', 'new']]);
       expect(report[1].diffs.map(T.diffLine)).toEqual(['hint.cells.length: saved 2, fresh 1',
-        'source.step: saved 27, fresh 99']);
+        'source.step: saved 26, fresh 99']);
       expect(JSON.stringify(fresh)).toBe(before);
       expect(T.compare(['nakedSingle'], EXAMPLES, { nakedSingle: clone(EXAMPLES.nakedSingle) })[0].diffs)
         .toEqual([]);

@@ -1,0 +1,4 @@
+$ node tests\replay-fixtures.js --merge=..\docs\difficulty-v3\evidence\MS08a\wire --write
+merged 5 ledgers: all 5 keys exactly once, recorded from the current sources
+wrote generator/tests/fixtures/replay-wire.js (21 lines) from the merged ledgers
+exit=0 seconds=0.416

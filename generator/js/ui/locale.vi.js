@@ -319,6 +319,11 @@
     'technique.xWing.desc': 'Khi một chữ số chỉ có hai ô khả dĩ trên mỗi hàng trong hai hàng, và các ô đó ' +
       'nằm trong cùng hai cột, ta loại chữ số đó khỏi phần còn lại của hai cột ấy (tương tự khi đổi vai ' +
       'trò hàng và cột).',
+    'technique.skyscraper': 'Skyscraper (nhà chọc trời)',
+    'technique.skyscraper.desc': 'Hai hàng (hoặc hai cột) mà trong mỗi hàng một chữ số chỉ có hai ô khả dĩ, ' +
+      'và một ô của mỗi hàng nằm trong cùng một cột (hoặc hàng). Hai ô đó nhìn thấy nhau nên không thể ' +
+      'cùng chứa chữ số này: ít nhất một trong hai ô còn lại chứa nó, và chữ số bị loại khỏi mọi ô nhìn ' +
+      'thấy cả hai ô ấy.',
     'technique.simpleColouring': 'Tô màu đơn giản (Simple Colouring)',
     'technique.simpleColouring.desc': 'Các ô nối nhau bằng quan hệ “hoặc ô này hoặc ô kia” cho một chữ số ' +
       'được tô bằng hai màu. Chỉ một màu là đúng, từ đó lộ ra những ô không thể chứa chữ số đó.',
@@ -392,6 +397,10 @@
     'technique.xWing.step': 'X-Wing cho {digit}: trong {baseUnits}, chữ số {digit} chỉ có thể nằm ở ' +
       '{coverUnits}. Hai chữ số {digit} của các đường gốc lấp đầy cả hai đường phủ, nên {digit} bị loại ' +
       'khỏi mọi ô còn lại của {coverUnits}.',
+    'technique.skyscraper.step': 'Skyscraper cho {digit}: trong {lines}, chữ số {digit} mỗi đường chỉ có thể ' +
+      'nằm ở hai ô, và một ô của mỗi đường nằm chung trên một đường khác, nên hai ô đó không thể cùng là ' +
+      '{digit}. Ít nhất một trong hai ô còn lại, {ends}, là {digit}, nên {digit} bị loại khỏi mọi ô khác ' +
+      'nhìn thấy cả hai ô đó.',
     'technique.swordfish.step': 'Swordfish cho {digit}: trong {baseUnits}, chữ số {digit} chỉ có thể nằm ở ' +
       '{coverUnits}. Ba chữ số {digit} của các đường gốc lấp đầy cả ba đường phủ, nên {digit} bị loại ' +
       'khỏi mọi ô còn lại của {coverUnits}.',

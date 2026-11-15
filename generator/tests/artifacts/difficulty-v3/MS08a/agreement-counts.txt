@@ -1,0 +1,11 @@
+$ node tests\artifacts\difficulty-v3\MS08a\agreement-counts.js
+classic9 400 777 hits 103
+classic9 400 99 hits 111
+classic6 400 777 hits 96
+classic4 300 777 hits 7
+g12 60 2026 hits 22
+g16 32 2026 hits 11
+diagonalX 120 4242 hits 28
+hyper 120 4242 hits 23
+jigsaw9 120 4242 hits 22
+exit=0 seconds=4.325

@@ -1,0 +1,47 @@
+$ node tests\node-runner.js --suite=help,play,i18n
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+FAIL help: 21 passed, 6 failed  (285 ms)
+ok   i18n: 66 passed  (109 ms)
+ok   play: 68 passed  (203 ms)
+
+Failures:
+  FAIL help > help: the sections of the guide > every technique has a translated name and description, and so has its group
+       AssertionError: expected 29 to be 28
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:95:27)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL help > help: an example for every technique > has an example for exactly the techniques of the registry, as a fixed snapshot
+       AssertionError: expected Array(28)["boxLine", "cageCombo", "cageSplit", "forcingChain", "forcingChainLong", "hiddenPair", "hiddenQuad", "hiddenSingleBox", "hiddenSingleLine", "hiddenTriple", "ineqChain", "jellyfish", ...] to equal Array(29)["boxLine", "cageCombo", "cageSplit", "forcingChain", "forcingChainLong", "hiddenPair", "hiddenQuad", "hiddenSingleBox", "hiddenSingleLine", "hiddenTriple", "ineqChain", "jellyfish", ...]
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:129:51)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL help > help: an example for every technique > builds every example without playing: the board, the notes of the cells shown and the hint
+       AssertionError: expected "no example for skyscraper" to be ""
+       at Q:\git\sudoku\player\tests\suites\help.test.js:144:64
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:142:28)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL help > help: an example for every technique > replaying the puzzle of an example with the hint code of the player gives the same hint
+       AssertionError: expected "nakedSingle" to be "pointing"
+       at Q:\git\sudoku\player\tests\suites\help.test.js:178:32
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:163:28)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL help > help: an example for every technique > the hint of each example reads in both languages, with the cells and the move named
+       TypeError: Cannot read properties of null (reading 'model')
+       at Q:\git\sudoku\player\tests\suites\help.test.js:203:48
+       at inLocale (Q:\git\sudoku\player\tests\suites\help.test.js:47:14)
+       at Q:\git\sudoku\player\tests\suites\help.test.js:202:11
+       at Array.forEach (<anonymous>)
+  FAIL help > help: what the user guide claims > its numbers are the numbers of the code: 28 techniques, 100 + 100 puzzles, 8 MB files
+       AssertionError: expected 29 to be 28
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:533:43)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+
+Suites: 3
+Tests:  161 total, 155 passed, 6 failed, 0 skipped
+Time:   598 ms running tests, 656 ms total
+exit=1 seconds=0.765

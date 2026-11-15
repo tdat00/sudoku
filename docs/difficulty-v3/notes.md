@@ -1066,3 +1066,34 @@ passes; Normal CV6 fails at p95 5,361.5 ms against 1,400 ms (S-AV01, unchanged 7
 **Cost of the evidence and of the tier.** The 129 launched cells took 1,523 s against 11,645 s projected (13 %); one cell expanded to a second round. The standing quick cost is **692.1 s** Generator (3,505 of 3,505) and 33.5 s Player
 (1,750 of 1,750), the fingerprints of MS07d; four generation-heavy tests are 392.1 s of it and are the proposal for a move to the manual tier (checkpoint note, section 9; nothing moved). Lock waits 4,054 s (longest 561 s), 20 IR12 compounds.
 Verified here: both quick sets, the CI check. Not verified: any offer, the six cells, a GP run (MS18d).
+
+## MS08a: Skyscraper (the first S3 technique and the template of the following ones)
+
+**What changed.** `skyscraper` (group `fish`, order 112, base cost 33, weight 330, unscoped, no uniqueness assumption) is registered in `core/js/engine/tech-fish.js` and weighted in `difficulty.js`
+(`WEIGHTS.skyscraper = 330`; it sits between `xWing` 320 and `simpleColouring` 360, so the registry order stays nondecreasing and the technique joins the Hard tier and the Expert-and-above floor with no rule change).
+The proof, the `{ digit, lines, ends }` arguments, the work counter (R10: one unit is one tested pair of base lines, limit 50,000 per call, the parent budget checked at entry and before the pair that would carry the work over
+256 units, a spent limit a lost deduction and never an invented one) and the unregistered seam `SG.fishSearch.skyscraper` are in `generator/design.md` section 6.6 and the developer guides. Base lines are complete,
+disjoint units with the digit in exactly two cells and no placement; exactly one shared cover line makes a skyscraper (two is an X-Wing, which `xWing` owns); a target is any open cell of the digit that sees both ends.
+
+**Evidence of soundness.** The fixtures are two real positions that fire it (rows `constructed-hard-1` with three eliminations, columns of seeded puzzle 26 with one) and two negatives (the chain after everything through it is exhausted, and
+an X-Wing left to `xWing`), run through the shared soundness-against-completions and immutability checks of `techniques.test.js`. `tech-fish.test.js` adds geometry (transpose, ownership, partial lines, near misses, ends in one box,
+non-disjoint sub-grids), the work, budget and cancellation contract and an agreement test with an independent enumeration on classic9 (400 states each of seeds 777 and 99, 103 and 111 firings), classic6, classic4, a 12- and a 16-digit board, diagonalX, hyper and
+jigsaw9. Ten in-memory engine mutations (a root as a target, an X-Wing counted, one-end targets, overlapping base lines, the budget checked early, cancellation swallowed, the limit off by one, unsorted ends, an ownerless cover, the
+wrong root) are all detected by the suite (10 of 10). The pattern cost on the four fixtures is 3, 21, 74 and 37 of the 50,000 units, nothing capped; the limit was not adjusted.
+
+**Output differences and what caused each.** Skyscraper takes deductions that Simple Colouring, a chain or nothing at Hard had, so the rating of positions that use one changes. The 26 labelled references keep every level and every
+`v3Expected` entry (so `rated.js` is unchanged); four ratings change: `constructed-hard-1`, `-2` and `-3` are rated by a skyscraper now (560, 563, 554 become 475, 521, 515: the hardest technique is `skyscraper`, 330, not `simpleColouring`, 360) and
+`constructed-nightmare-3` goes from 2,642 to 2,653 (one use). E on the final source: **66 of the 520 regression hashes changed**, all in the cells whose level admits it (`classic6/hard` 2, `classic9/hard` 8, `expert` 8, `master` 10,
+`nightmare` 5, `diagonalX/nightmare` 9, `hyper/hard` 7, `jigsaw9/master` 8, `greaterThan/hard` 9); the wires G09, G11 and G12 and the analyses G01, G04, G06, G11, G12 and G14 changed. The example of the Generation Steps guides (G01, Classic 9 expert, seed
+3275974478) is another puzzle now: score 925 (it was 969), 72 dig-log entries and a jump 47 to 621 caused by Simple Colouring at R2C4 (first use 26 of 61) instead of 235 caused by R6C1; its exchange and its 28 positions are kept, G04 has 29 positions, 13 compact and
+16 details jumps are in the goldens (20 distinct), and the G11 inner peak is 1,964. The pins that follow (replay, steps, player, the seed of the shallow-fallback specimen of the cache, worker and pipeline suites: seed 5 became exact, seed 21 is the new specimen) are in the evidence.
+
+**Help catalogue.** 29 examples: `skyscraper` is new (the source of the saved `simpleColouring` example, Classic 9 Hell 1 seed 214: its replay reaches a skyscraper hint first); `pointing`, `swordfish`, `xyWing` and `simpleColouring` are made again from
+their own sources (a different number of hints applied, or a later hint of the same puzzle); `xyzWing` needed a new real source (its old puzzle no longer needs one): Classic 9 Nightmare seed 11, which also holds the `wWing` example. `--check` of all 29 passes.
+
+**Cost.** The standing quick cost is **699.8 s** Generator on the final tree (692.1 s at MS07e; 691.6 s on the run before the comment re-wrap of the engine, the same four groups: 72.5, 171.2, 308.8 and 139.1 s then, 71.6, 170.4, 318.0 and 139.9 s last; the
+pipeline group moves by 9 s between two runs of the same behaviour; MS07d and MS07e were 679.4 s and 692.1 s on unchanged generation code, so +1.1 % is no signal) and 35.3 s Player; Generator 3,563 and Player 1,807 tests (tech-fish 106 to 155, techniques 187 to 195, technique-weights 6 to 7).
+
+**Verified here, and what is not.** Both quick sets on the final tree, `generator-suites.sh check` (3,563 and 1,807, exit 0), the focused suites of the task, complete E (the wires, the analyses, the merged hashes and the pattern cost, all re-checked on the
+final tree), the complete GH catalogue, the mutations. Not verified: the manual `difficulty` suite (edited for the weight table and the first technique of Hard; the two pure assertions are evaluated by a scratch script, the suite itself is **not run**), any
+qualification or soak, and any offer (unchanged; MS18c's). No new S-AV item: S-AV08 is re-measured at 699.8 s and the other inherited items are as MS07e left them.

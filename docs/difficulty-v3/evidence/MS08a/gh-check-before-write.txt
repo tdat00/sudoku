@@ -1,0 +1,21 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=skyscraper,xyzWing --sources=tests\artifacts\difficulty-v3\MS08a\sources.json --max-puzzles=16 --max-hints=400 --check
+selected 2 technique ID(s); mode check
+replaying 5 puzzle(s) for 2 ID(s) (--max-puzzles=16, --max-hints=400)
+puzzle 1/5 classic9 Hell 1 214 -> 65 hint(s), solved; wanted found: skyscraper
+puzzle 2/5 classic9 Nightmare 70 -> 76 hint(s), solved; wanted found: xyzWing
+puzzle 3/5 classic9 Nightmare 13 -> 74 hint(s), solved; wanted found: xyzWing
+puzzle 4/5 classic9 Nightmare 11 -> 72 hint(s), solved; wanted found: xyzWing
+puzzle 5/5 classic9 Nightmare 1427 -> 71 hint(s), solved; wanted found: xyzWing
+skyscraper: has no example in help-examples.js (a new one)
+xyzWing: 24 field(s) differ from help-examples.js
+  givens: saved ".....2..6.2..8..31851....4..3.67.2.............9.43.1..4..., fresh ".83....4...9..6..8...54.39.....8..54...4.1...64..7.....7...
+  values: saved "4.3....8.............3....25.8..1.942148..67376.2..8.5....., fresh "5...92..64.....5...6...8......6.........5..6...52..........
+  notes.3: saved 1, fresh undefined
+  notes.4: saved 17, fresh undefined
+  notes.22: saved 288, fresh undefined
+  notes.40: saved 272, fresh undefined
+  notes.52: saved undefined, fresh 132
+  notes.61: saved undefined, fresh 134
+  ... and 16 more
+help-examples.js differs or lacks an example for 2 of the 2 selected ID(s)
+exit=1 seconds=0.599

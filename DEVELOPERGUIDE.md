@@ -354,9 +354,9 @@ never shown.
    `signs.cause`; `board.setSignMarks` takes a `cause` list).
 
 The numbers of the examples are the ones of the tests. Classic 9×9 *expert* with seed 3275974478 has 28 positions
-and 29 steps with every move shown; its compact view has 7 steps with the scores 0, 23, 44, 47, 235, 969 and
-969, and the step 47 → 235 (×5.0) is a jump caused by the clue at R6C1 (alone it gives 234; the other removal
-of the move, R4C9, alone gives 47), which is framed. A Classic 9×9 *easy* puzzle with seed 3 replays in 7 steps
+and 29 steps with every move shown; its compact view has 7 steps with the scores 0, 23, 44, 47, 621, 925 and
+925, and the step 47 → 621 (×13.2) is a jump caused by the clue at R2C4 (alone it gives 620; the other removal
+of the move, R8C6, alone gives 47), which is framed. A Classic 9×9 *easy* puzzle with seed 3 replays in 7 steps
 (26 with every move shown): the full solution, three steps of random removals (scores 15, 26 and 44), two
 steps of the guided dig (46 and 100) and the finished puzzle with 34 clues.
 
@@ -849,6 +849,11 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    24 for 6: [docs/difficulty-v3/chain-window-2026-11-15.md](docs/difficulty-v3/chain-window-2026-11-15.md)), read at
    every call. A caller's `maxChainLength` and
    `maxNishioDepth` option can only narrow a window, never widen it, and a wrapper intersects its own range with it.
+   The skyscraper (`core/js/engine/tech-fish.js`, task MS08a) is the other bounded finder: one work unit is one tested
+   pair of base lines, 50,000 per call, the parent budget is checked at entry and before the pair that would carry
+   the work over 256 units since the last check, and a spent limit gives `null`, a lost deduction and never an
+   invented one. `SG.fishSearch.skyscraper(model, state, ctx, { workLimit })` is its unregistered seam for tests with
+   an explicit limit.
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
    `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
@@ -887,7 +892,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    that belongs to the true solution — needs no code of yours: `techniques.test.js` runs it for every registered
    technique. A rare pattern that the seeded random states seldom reach gets deterministic real positions in the
    `SUPPLEMENTS` of that fixture file (`{ name, puzzle, after, propagate }` with an explicit `after` array, a puzzle
-   with one solution; `forcingChainLong` and `nishioDeep` have three real positions each): the sweep runs the
+   with one solution; `forcingChainLong`, `nishioDeep` and `skyscraper` have three real positions each): the sweep runs the
    complete random population of its call site first, never fewer states
    and never a lower firing minimum, and the supplements after it. What a finder costs on its fixtures is measured
    with `tests/pattern-cost.js` (see "Pattern cost" below); a finder reports its work through
@@ -1212,7 +1217,7 @@ on the reference machine and measured by `node tests/perf.js`.
   `SG.fixtures.patternCost` (`tests/fixtures/pattern-cost.js`), tested on fake observations, fake clocks, the real
   fixtures of the chain techniques and the tool itself by the `pattern-cost-tools` suite; its test output goes to a
   folder of its own for each invocation (`.scratch-pattern-cost-tools/<pid-time-random>/` in the repository root,
-  ignored by git) and only that folder is removed. The active fixtures cover `forcingChain`, `forcingChainLong`,
+  ignored by git) and only that folder is removed. The active fixtures cover `skyscraper`, `forcingChain`, `forcingChainLong`,
   `nishio` and `nishioDeep` with real positions (the scoped `lawOfLeftovers` adapter is MS14b's).
 - **Qualification of the levels** — `node tests/qualify.js` runs the protocol that decides which levels each
   variant offers (40 fixed seeds per variant and level through the real pipeline, 60 more for a borderline level,
@@ -1320,7 +1325,7 @@ these are the technical details behind some of them.
   The explanation of a jump describes the generator's own solution and its limited check, never what every solver
   needs, and the work count `checks` of a rating is diagnostic only: it can differ by a few between two runs (the
   subset techniques space their budget checks with a counter that lives across solves), so the tests ignore it.
-- **Difficulty weights are engineering priors**, not measurements of human solvers: the weights of the 28
+- **Difficulty weights are engineering priors**, not measurements of human solvers: the weights of the 29
   techniques and the nine score bands were chosen from measurements of generated puzzles
   ([docs/difficulty-rating/report-detailed.md](docs/difficulty-rating/report-detailed.md)); the Killer weights of `ruleOf45` and
   `cageSplit` are the first candidates for a calibration with people.

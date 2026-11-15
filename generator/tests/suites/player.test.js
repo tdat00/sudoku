@@ -352,9 +352,9 @@
         var one = steps[4];
         var three = steps[3];
         expect([one.kind, one.line, one.key]).toEqual(['guided', 'deeper', 'replay.guided']);
-        expect([one.args.rated, one.args.refused]).toEqual([9, 1]);
+        expect([one.args.rated, one.args.refused]).toEqual([6, 4]);
         expect([three.key, three.args.rounds, three.args.rated, three.args.refused]).toEqual(
-          ['replay.guided.rounds', 3, 38, 5]);
+          ['replay.guided.rounds', 3, 33, 8]);
         var analysis = analysisOf(result);
         var removed = [];
         for (var i = three.first; i <= three.last; i++) removed = removed.concat(analysis.moves[i].removed);
@@ -476,7 +476,7 @@
       var result = goldenResult('G04');
       var analysis = analysisOf(result);
       var steps = stepsOf(result);
-      expect(steps.length).toBe(29);
+      expect(steps.length).toBe(30);
       var exchanges = steps.filter(function (s) { return s.role === 'moves' && analysis.moves[s.position].kind === 'exchange'; });
       expect(exchanges.length).toBe(1);
       exchanges.forEach(function (s) {
@@ -597,26 +597,26 @@
         ['Random removals', 'Clear 14 cells chosen at random: the puzzle can still be solved without their clues.'],
         ['Random removals', 'Try to clear 33 cells chosen at random: 29 cells cleared, 4 cells put back because ' +
           'without their clues, the solver did not finish the puzzle with the techniques of this level.'],
-        ['Choosing clues to remove', 'Across 3 accepted removals, compare 38 possible removals (5 rejected); ' +
-          'the removed clues are at R2C7, R8C3, R3C1, R7C9, R2C5 and R8C5.'],
-        ['Choosing clues to remove', 'Compare 9 possible removals (1 rejected) and choose the removal ' +
-          'preferred by the generator\'s check: R4C9 and R6C1.'],
-        ['Choosing clues to remove', 'Compare 9 possible removals (6 rejected) and choose the removal ' +
+        ['Choosing clues to remove', 'Across 3 accepted removals, compare 33 possible removals (8 rejected); ' +
+          'the removed clues are at R1C5, R9C5, R3C4, R7C6, R2C7 and R8C3.'],
+        ['Choosing clues to remove', 'Compare 6 possible removals (4 rejected) and choose the removal ' +
           'preferred by the generator\'s check: R2C4 and R8C6.'],
-        ['Finished puzzle', 'The finished puzzle: 28 clues.']
+        ['Adjusting the puzzle', 'Adjust the clues to look for a higher-scoring puzzle: clear 2 cells and ' +
+          'restore 2 clues.'],
+        ['Finished puzzle', 'The finished puzzle: 30 clues.']
       ],
       vi: [
         ['Lời giải đầy đủ', 'Điền kín lưới bằng một lời giải ngẫu nhiên tuân theo mọi luật (81 ô).'],
         ['Xóa ngẫu nhiên', 'Bỏ số ở 14 ô được chọn ngẫu nhiên: đề vẫn giải được khi thiếu các số đó.'],
         ['Xóa ngẫu nhiên', 'Thử bỏ số ở 33 ô được chọn ngẫu nhiên: bỏ được số ở 29 ô và khôi phục số ở 4 ô, vì ' +
           'bộ giải chưa giải xong đề bằng các kỹ thuật của mức này khi thiếu các số đó.'],
-        ['Chọn số cho sẵn để bỏ', 'Qua 3 lần chọn phương án bỏ số, đã xét 38 cách bỏ số (5 bị loại); các ô ' +
-          'được bỏ số là R2C7, R8C3, R3C1, R7C9, R2C5 và R8C5.'],
-        ['Chọn số cho sẵn để bỏ', 'Xét 9 cách bỏ số (1 bị loại) và chọn phương án được ưu tiên theo phép ' +
-          'kiểm tra của trình sinh đề: bỏ số ở R4C9 và R6C1.'],
-        ['Chọn số cho sẵn để bỏ', 'Xét 9 cách bỏ số (6 bị loại) và chọn phương án được ưu tiên theo phép ' +
+        ['Chọn số cho sẵn để bỏ', 'Qua 3 lần chọn phương án bỏ số, đã xét 33 cách bỏ số (8 bị loại); các ô ' +
+          'được bỏ số là R1C5, R9C5, R3C4, R7C6, R2C7 và R8C3.'],
+        ['Chọn số cho sẵn để bỏ', 'Xét 6 cách bỏ số (4 bị loại) và chọn phương án được ưu tiên theo phép ' +
           'kiểm tra của trình sinh đề: bỏ số ở R2C4 và R8C6.'],
-        ['Đề hoàn chỉnh', 'Đề hoàn chỉnh: 28 số cho sẵn.']
+        ['Điều chỉnh đề', 'Qua 1 thay đổi trọn vẹn nhằm tìm đề có điểm cao hơn, tổng cộng bỏ số ở 2 ô và ' +
+          'khôi phục 2 số cho sẵn.'],
+        ['Đề hoàn chỉnh', 'Đề hoàn chỉnh: 30 số cho sẵn.']
       ]
     };
 
@@ -669,14 +669,14 @@
           });
         });
         inLocale('en', function () {
-          expect(P.stepMeta(steps[5])).toBe('2 cells removed \u00b7 12 cells put back \u00b7 28 clues left');
-          expect(P.stepMeta(steps[3])).toBe('6 cells removed \u00b7 10 cells put back \u00b7 32 clues left');
+          expect(P.stepMeta(steps[5])).toBe('2 cells cleared \u00b7 2 clues restored \u00b7 30 clues left');
+          expect(P.stepMeta(steps[3])).toBe('6 cells removed \u00b7 16 cells put back \u00b7 32 clues left');
           expect(P.stepMeta(steps[0])).toBe('81 cells');
-          expect(P.stepMeta(steps[6])).toBe('28 clues');
+          expect(P.stepMeta(steps[6])).toBe('30 clues');
         });
       });
-      expect(steps.map(function (s) { return s.table.score; })).toEqual([0, 23, 44, 47, 235, 969, 969]);
-      expect(steps.map(function (s) { return s.table.change; })).toEqual([null, 23, 21, 3, 188, 734, 0]);
+      expect(steps.map(function (s) { return s.table.score; })).toEqual([0, 23, 44, 47, 621, 925, 925]);
+      expect(steps.map(function (s) { return s.table.change; })).toEqual([null, 23, 21, 3, 574, 304, 0]);
     }, 60000);
 
     it('the example of the guides: Classic 9x9 easy, seed 3, replays in 7 steps (26 with every move shown)',
@@ -703,8 +703,8 @@
           });
         });
         var g11 = compactOf(goldenResult('G11'));
-        expect(g11[2].parts[g11[2].parts.length - 1].args.peak).toBe(1967);
-        inLocale('en', function () { expect(P.describeStep(g11[2])).toContain('the score reached 1,967'); });
+        expect(g11[2].parts[g11[2].parts.length - 1].args.peak).toBe(1964);
+        inLocale('en', function () { expect(P.describeStep(g11[2])).toContain('the score reached 1,964'); });
         var plain = compactOf(goldenResult('G12'))[2];
         expect(plain.parts[plain.parts.length - 1].key).toBe('replay.folded.peak');
         expect(plain.parts[plain.parts.length - 1].args.peak).toBe(130);
@@ -837,13 +837,13 @@
       expect(two.before).toEqual({});
       expect(two.counts).toEqual(analysis.ratings[7].counts);
       var four = r.player.tableAt(5);
-      expect([four.state, four.score, four.change]).toEqual(['scored', 235, 188]);
+      expect([four.state, four.score, four.change]).toEqual(['scored', 621, 574]);
       expect(four.before).toEqual(r.player.tableAt(4).counts);
       expect(four.transition).toBe(analysis.transitions[analysis.views.compact.steps[4].transition]);
       expect(four.proof).toBe(analysis.proofs[26]);
       expect(four.proof).not.toBeNull();
       var seven = r.player.tableAt(7);
-      expect([seven.state, seven.score, seven.change]).toEqual(['final', 969, 0]);
+      expect([seven.state, seven.score, seven.change]).toEqual(['final', 925, 0]);
       expect(seven.counts).toEqual(result.rating.techniqueCounts);
       expect(r.player.tableAt(8)).toBeNull();
       expect(r.player.tableAt(-1)).toBeNull();
@@ -914,32 +914,29 @@
       }) });
     }
 
-    it('example: compact step 5 frames R6C1 as the cause, keeps R4C9 as removed, and the board gets the frame',
+    it('example: compact step 5 frames R2C4 as the cause, keeps R8C6 as removed, and the board gets the frame',
       function () {
         var result = goldenResult('G01');
         var r = loadedRig(result);
         var steps = r.player.getSteps();
-        var r6c1 = cellNamed(result, 'R6C1');
-        var r4c9 = cellNamed(result, 'R4C9');
+        var r2c4 = cellNamed(result, 'R2C4');
         var r8c6 = cellNamed(result, 'R8C6');
         expect([steps[4].marks.cause, steps[4].marks.dug, steps[4].marks.causeRestore]).toEqual(
-          [[r6c1], [r4c9], []]);
-        expect(steps[5].marks.cause).toEqual([r8c6]);
+          [[r2c4], [r8c6], []]);
         steps.forEach(function (s, i) {
-          if (i === 4) return;
-          if (i !== 5) expect(s.marks.cause).toEqual([]);
+          if (i !== 4) expect(s.marks.cause).toEqual([]);
           expect(s.marks.causeRestore).toEqual([]);
         });
         r.player.seek(5);
-        expect(r.board.frames['cell--cause']).toEqual([r6c1]);
-        expect(r.board.frames['cell--dug']).toEqual([r4c9]);
+        expect(r.board.frames['cell--cause']).toEqual([r2c4]);
+        expect(r.board.frames['cell--dug']).toEqual([r8c6]);
         r.player.seek(4);
         expect(r.board.frames['cell--cause']).toBeUndefined();
         r.player.seek(0);
         expect(r.board.frames).toEqual({});
         var start = P.viewAt(viewsOf(result).compact, 0);
         expect([start.marks.cause, start.marks.causeRestore]).toEqual([[], []]);
-        expect(P.viewAt(viewsOf(result).compact, 5).marks.cause).toEqual([r6c1]);
+        expect(P.viewAt(viewsOf(result).compact, 5).marks.cause).toEqual([r2c4]);
       }, 60000);
 
     it('Greater-Than: the sign that causes the jump keeps its removed mark and also gets the frame', function () {
@@ -1003,7 +1000,7 @@
           });
         });
       });
-      expect(jumps).toBe(31);
+      expect(jumps).toBe(29);
       expect(framed).toBeGreaterThan(8);
       expect(framed).toBeLessThan(jumps);
     }, 120000);

@@ -91,6 +91,7 @@
     nakedQuad: 260,
     hiddenQuad: 300,
     xWing: 320,
+    skyscraper: 330,
     simpleColouring: 360,
     swordfish: 420,
     jellyfish: 520,

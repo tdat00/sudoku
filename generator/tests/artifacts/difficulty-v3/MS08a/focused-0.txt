@@ -1,0 +1,25 @@
+$ node tests\node-runner.js --suite=tech-fish,techniques,technique-weights,difficulty-floor
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-floor: 48 passed  (27.35 s)
+ok   tech-fish: 106 passed  (5.08 s)
+ok   technique-weights: 6 passed  (2 ms)
+FAIL techniques: 186 passed, 2 failed  (1.69 s)
+
+Failures:
+  FAIL techniques > techniques: registry > has the 23 techniques of the classic ladder registered, in the current registry order
+       AssertionError: expected Array(24)["nakedSingle", "hiddenSingleBox", "hiddenSingleLine", "pointing", "boxLine", "nakedPair", "hiddenPair", "nakedTriple", "hiddenTriple", "nakedQuad", "hiddenQuad", "xWing", ...] to equal Array(23)["nakedSingle", "hiddenSingleBox", "hiddenSingleLine", "pointing", "boxLine", "nakedPair", "hiddenPair", "nakedTriple", "hiddenTriple", "nakedQuad", "hiddenQuad", "xWing", ...]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:63:58)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL techniques > techniques: fixtures (fixtures/techniques.js) > has fixtures for exactly the techniques of the classic ladder (add them for a new one)
+       AssertionError: expected Array(1)["skyscraper"] to equal Array(0)[]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:124:23)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 4
+Tests:  348 total, 346 passed, 2 failed, 0 skipped
+Time:   34.12 s running tests, 34.22 s total
+exit=1 seconds=34.328

@@ -86,6 +86,25 @@
         });
       });
 
+    it('places skyscraper between xWing and simpleColouring: order 112, weight 330, a Hard-tier technique (R11)',
+      function () {
+        var model = SG.techHelper.model('classic9');
+        expect([SG.techniques.get('skyscraper').order, D.WEIGHTS.skyscraper]).toEqual([112, 330]);
+        expect(position('xWing')).toBeLessThan(position('skyscraper'));
+        expect(position('skyscraper')).toBeLessThan(position('simpleColouring'));
+        expect(D.WEIGHTS.xWing).toBeLessThan(D.WEIGHTS.skyscraper);
+        expect(D.WEIGHTS.skyscraper).toBeLessThan(D.WEIGHTS.simpleColouring);
+        // its own weight decides the hardest technique, no tie is needed
+        expect(D.breakdown({ xWing: 1, skyscraper: 1 }, 10).hardest).toBe('skyscraper');
+        expect(D.breakdown({ skyscraper: 1, simpleColouring: 1 }, 10).hardest).toBe('simpleColouring');
+        // 1.25 x 330 is above Normal's maximum (400) and below Hard's (700)
+        expect(D.spec('normal', model).allowedTechniques).not.toContain('skyscraper');
+        expect(D.spec('hard', model).allowedTechniques).toContain('skyscraper');
+        expect(D.spec('hard', model).tierTechniques).toContain('skyscraper');
+        expect(D.spec('expert', model).floorTechniques).toContain('skyscraper');
+        expect(D.spec('hard', model).floorTechniques).not.toContain('skyscraper');
+      });
+
     it('lets a tie of weight and of order fall to the smaller id and still sorts the sequence', function () {
       var ids = ['orderProbeB', 'orderProbeA'];
       try {

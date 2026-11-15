@@ -1,0 +1,13 @@
+$ node tests\artifacts\difficulty-v3\MS08a\g01-compact.js
+cuts [0,7,22,25,26,27] ranks [4,1,2,3,3,3] ratio 2.126621933549811
+jump4 {"ratio":13.2,"newHardest":true,"change":574,"auditScope":null}
+folded5 {"peak":null,"aboveBand":false,"revealed":0,"unscored":0,"restart":null} tier5 newPeak
+audit []
+pos27 compact before.W 1538.75 details 1538.75
+cause {"class":"single-culprit","changes":[{"cell":12,"action":"remove"},{"cell":68,"action":"remove"}],"singles":[{"cell":12,"action":"remove","score":620},{"cell":68,"action":"remove","score":47}],"culprit":{"cell":12,"action":"remove","score":620,"otherScore":47},"largest":null,"sign":null,"k":null,"n":null,"kMove":null,"verifiedOnly":false,"frame":{"kind":"cell","cell":12,"action":"remove"}}
+choice {"kind":"guided","count":null,"chosen":621,"at":67,"rated":5,"refused":3,"others":1,"nulls":0,"max":48}
+proof {"restricted":"stuck","k":26,"n":61,"technique":"simpleColouring","key":"technique.simpleColouring.step","placements":[],"args":{"digit":3,"rule":"trap","colour1":["R1C2","R4C1","R8C3","R9C8"],"colour2":["R2C1","R4C3","R8C9","R9C2"]}}
+before [47,621,"easy","hard"]
+step5 {"tier":"newPeak","cause":null,"before":621,"after":925}
+culprit label R2C4
+exit=0 seconds=0.458

@@ -1,0 +1,37 @@
+mutation 0 (a root may be a target): DETECTED - 155 total, 144 passed, 11 failed, 0 skipped - 5.9 s
+    FAIL tech-fish > skyscraper (R11): geometry > does not authorize an elimination: a root that sees both ends is no external candidate (as listed)
+    FAIL tech-fish > skyscraper (R11): geometry > does not authorize an elimination: a root that sees both ends is no external candidate (transposed)
+    FAIL tech-fish > skyscraper (R11): agreement with an independent enumeration > finds a skyscraper exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > skyscraper (R11): agreement with an independent enumeration > finds a skyscraper exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+mutation 1 (an X-Wing (two shared cover lines) counts as a skyscraper): DETECTED - 155 total, 141 passed, 14 failed, 0 skipped - 5.8 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > counts one unit per tested pair of base lines, from a fresh counter on every call
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+mutation 2 (a target must see only one end): DETECTED - 155 total, 135 passed, 20 failed, 0 skipped - 5.8 s
+    FAIL tech-fish > skyscraper (R11): geometry > does not authorize an elimination: a target that sees only the end R1C8 (as listed)
+    FAIL tech-fish > skyscraper (R11): geometry > does not authorize an elimination: a target that sees only the end R1C8 (transposed)
+    FAIL tech-fish > skyscraper (R11): geometry > does not authorize an elimination: a target that sees only the end R4C7 (as listed)
+    FAIL tech-fish > skyscraper (R11): geometry > does not authorize an elimination: a target that sees only the end R4C7 (transposed)
+mutation 3 (base lines need not be disjoint): DETECTED - 155 total, 154 passed, 1 failed, 0 skipped - 6.9 s
+    FAIL tech-fish > skyscraper (R11): geometry > needs disjoint lines: rows that share a cell are no base lines, however the candidates lie
+mutation 4 (the parent budget is checked one unit early): DETECTED - 155 total, 154 passed, 1 failed, 0 skipped - 6.8 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+mutation 5 (cancellation is swallowed like a spent budget): DETECTED - 155 total, 154 passed, 1 failed, 0 skipped - 6.8 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 6 (the work limit allows one unit more): DETECTED - 155 total, 153 passed, 2 failed, 0 skipped - 6.9 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 7 (the ends are listed in line order, not sorted): DETECTED - 155 total, 145 passed, 10 failed, 0 skipped - 6.0 s
+    FAIL tech-fish > skyscraper (R11): geometry > finds the transposed vector: columns C1 and C4 sharing R2, R7C2 loses the digit
+    FAIL tech-fish > skyscraper (R11): agreement with an independent enumeration > finds a skyscraper exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > skyscraper (R11): agreement with an independent enumeration > finds a skyscraper exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > skyscraper (R11): agreement with an independent enumeration > finds a skyscraper exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+mutation 8 (a cover line without an owner is accepted): DETECTED - 155 total, 154 passed, 1 failed, 0 skipped - 6.8 s
+    FAIL tech-fish > skyscraper (R11): geometry > needs complete lines: an incomplete base row, base column or shared line gives nothing
+mutation 9 (the shared line pair is taken from the wrong root): DETECTED - 155 total, 128 passed, 27 failed, 0 skipped - 5.9 s
+    FAIL tech-fish > skyscraper (R11): geometry > removes the digit from the cell that sees both ends (the vector of R11)
+    FAIL tech-fish > skyscraper (R11): geometry > finds the transposed vector: columns C1 and C4 sharing R2, R7C2 loses the digit
+    FAIL tech-fish > skyscraper (R11): geometry > finds a skyscraper whose ends lie in one box (a target inside that box)
+    FAIL tech-fish > skyscraper (R11): geometry > needs complete lines: an incomplete base row, base column or shared line gives nothing
+detected 10 of 10, 63.6 s

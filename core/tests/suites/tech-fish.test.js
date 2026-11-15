@@ -1,4 +1,4 @@
-// Fish techniques: X-Wing, Simple Colouring, Swordfish, Jellyfish (../core/js/engine/tech-fish.js).
+// Fish techniques: X-Wing, Skyscraper, Simple Colouring, Swordfish, Jellyfish (../core/js/engine/tech-fish.js).
 //
 // Fixtures: the published positions are the example boards of the SudokuWiki strategy pages (X-Wing,
 // Swordfish, Jellyfish, Simple Colouring). Each one is the puzzle plus the candidate grid the page shows when
@@ -6,7 +6,9 @@
 // descriptions (digit, rows, columns, shape, the cells named in the text) are asserted, so a fixture is
 // checked against what the source says, not only against the code under test.
 // Every other check is built from the model's own units or from a solved grid, never from a published
-// board, so it holds for any digit count.
+// board, so it holds for any digit count. The Skyscraper (R11) has no published board in this suite: its
+// geometry vectors are digit maps, every claim is also checked against an independent enumeration
+// (`referenceSkyscrapers`) and its positions are the real unique puzzles of core/tests/fixtures/techniques.js.
 (function () {
   'use strict';
 
@@ -15,7 +17,9 @@
   const H = SG.techHelper;
   const model9 = H.model('classic9');
 
-  const ALL_IDS = ['xWing', 'simpleColouring', 'swordfish', 'jellyfish'];
+  const ALL_IDS = ['xWing', 'skyscraper', 'simpleColouring', 'swordfish', 'jellyfish'];
+  // The techniques that scan every digit and orientation with a budget check of their own.
+  const SCAN_IDS = ['xWing', 'simpleColouring', 'swordfish', 'jellyfish'];
   const FISH_IDS = ['xWing', 'swordfish', 'jellyfish'];
   const FISH_SIZE = { xWing: 2, swordfish: 3, jellyfish: 4 };
 
@@ -667,6 +671,111 @@
     return count;
   }
 
+  const peerSets = new WeakMap();
+
+  /** model.peers as Sets, made once per model. */
+  function peerSetsOf(model) {
+    let sets = peerSets.get(model);
+    if (!sets) {
+      sets = Array.from(model.peers, function (list) { return new Set(list); });
+      peerSets.set(model, sets);
+    }
+    return sets;
+  }
+
+  /**
+   * Every skyscraper of a state (R11) by plain enumeration from the model's units, with none of the tables of
+   * tech-fish.js. A base line is a complete unit of the kind ('row' or 'col') none of whose cells lies in another
+   * complete unit of that kind, in which the digit is not placed and exactly two open cells can still be the
+   * digit, each in exactly one complete unit of the other kind (its cover line). Two base lines are a skyscraper
+   * when exactly one cover line holds a cell of each: those two cells are the roots, the other two the ends (two
+   * shared cover lines are an X-Wing, none is no pattern). The targets are the open cells that still have the
+   * digit, are none of the four cells and see both ends.
+   * @returns {Array<{digit, kind, lines, roots, ends, targets}>} patterns without a target included, in the
+   *   order digit, rows then columns, line pair
+   */
+  function referenceSkyscrapers(model, state) {
+    const found = [];
+    const cand = state.candidates;
+    const val = state.value;
+    const peers = peerSetsOf(model);
+    const isComplete = function (u) {
+      return model.units[u].length === model.digits && !(model.unitMeta[u] && model.unitMeta[u].partial);
+    };
+    const linesOf = function (cell, kind) {
+      return Array.from(model.cellUnits[cell]).filter(function (u) {
+        return model.unitMeta[u].kind === kind && isComplete(u);
+      });
+    };
+    for (let d = 1; d <= model.digits; d++) {
+      const bit = 1 << (d - 1);
+      ['row', 'col'].forEach(function (kind) {
+        const other = kind === 'row' ? 'col' : 'row';
+        const bases = [];
+        unitsOfKind(model, kind).forEach(function (u) {
+          if (!isComplete(u)) return;
+          const cells = Array.from(model.units[u]);
+          if (cells.some(function (c) { return linesOf(c, kind).length !== 1; })) return;
+          if (cells.some(function (c) { return val[c] === d; })) return;
+          const open = cells.filter(function (c) { return val[c] === 0 && (cand[c] & bit) !== 0; });
+          if (open.length !== 2) return;
+          const covers = open.map(function (c) { return linesOf(c, other); });
+          if (covers.some(function (list) { return list.length !== 1; })) return;
+          bases.push({ unit: u, cells: open, covers: covers.map(function (list) { return list[0]; }) });
+        });
+        for (let i = 0; i < bases.length; i++) {
+          for (let j = i + 1; j < bases.length; j++) {
+            const shared = [];
+            for (let p = 0; p < 2; p++) {
+              for (let q = 0; q < 2; q++) {
+                if (bases[i].covers[p] === bases[j].covers[q]) shared.push([p, q]);
+              }
+            }
+            if (shared.length !== 1) continue;
+            const roots = [bases[i].cells[shared[0][0]], bases[j].cells[shared[0][1]]];
+            const ends = [bases[i].cells[1 - shared[0][0]], bases[j].cells[1 - shared[0][1]]];
+            const targets = [];
+            for (let c = 0; c < model.cellCount; c++) {
+              if (roots.indexOf(c) !== -1 || ends.indexOf(c) !== -1) continue;
+              if (val[c] === 0 && (cand[c] & bit) !== 0 && peers[ends[0]].has(c) && peers[ends[1]].has(c)) {
+                targets.push(c);
+              }
+            }
+            found.push({ digit: d, kind: kind, lines: [bases[i].unit, bases[j].unit], roots: roots, ends: ends,
+              targets: targets });
+          }
+        }
+      });
+    }
+    return found;
+  }
+
+  /** The skyscrapers that remove something. */
+  function removingSkyscrapers(model, state) {
+    return referenceSkyscrapers(model, state).filter(function (p) { return p.targets.length > 0; });
+  }
+
+  /** 'cell:digit' of every elimination of a list of reference patterns. */
+  function eliminationKeys(patterns) {
+    const keys = new Set();
+    patterns.forEach(function (p) {
+      p.targets.forEach(function (c) { keys.add(c + ':' + p.digit); });
+    });
+    return keys;
+  }
+
+  /** A blank-board state in which each listed digit stays only on its listed cells (all else is open). */
+  function digitsMap(model, spec) {
+    const eliminate = [];
+    Object.keys(spec).forEach(function (key) {
+      const keep = new Set(spec[key].map(function (label) { return H.cell(model, label); }));
+      for (let c = 0; c < model.cellCount; c++) {
+        if (!keep.has(c)) eliminate.push([c, Number(key)]);
+      }
+    });
+    return H.makeState(model, blankPuzzle(model), { eliminate: eliminate, propagate: false });
+  }
+
   function describeItem(model, item, index) {
     return 'state #' + index + ' (' + item.kind + ')\n  puzzle: ' + H.puzzleString(model, item.givens);
   }
@@ -674,6 +783,7 @@
   describe('fish techniques: registration', function () {
     const EXPECTED = {
       xWing: { baseCost: 32, order: 110 },
+      skyscraper: { baseCost: 33, order: 112 },
       simpleColouring: { baseCost: 36, order: 120 },
       swordfish: { baseCost: 42, order: 130 },
       jellyfish: { baseCost: 56, order: 137 }
@@ -691,7 +801,7 @@
       });
     });
 
-    it('runs in ladder order: xWing, simpleColouring, swordfish, jellyfish', function () {
+    it('runs in ladder order: xWing, skyscraper, simpleColouring, swordfish, jellyfish', function () {
       const order = SG.techniques.list().map(function (def) { return def.id; });
       const at = ALL_IDS.map(function (id) { return order.indexOf(id); });
       at.forEach(function (index) { expect(index).toBeGreaterThanOrEqual(0); });
@@ -929,7 +1039,7 @@
 
     it('calls ctx.check() while it scans', function () {
       const empty = H.makeState(model9, blankPuzzle(model9), { propagate: false });
-      ALL_IDS.forEach(function (id) {
+      SCAN_IDS.forEach(function (id) {
         let calls = 0;
         const ctx = SG.techniques.createContext(model9, { budget: { check: function () { calls++; } } });
         SG.techniques.get(id).find(model9, empty, ctx);
@@ -1110,6 +1220,513 @@
         const finding = runFind('simpleColouring', model9, publishedState(key));
         finding.eliminations.forEach(function (e) { expect(e[1]).toBe(SPECS[key].digit); });
         expect(finding.placements).toEqual([]);
+      });
+    });
+  });
+
+  describe('skyscraper (R11): geometry', function () {
+    // The vector of R11: digit 5 in the rows R1 {C2, C8} and R4 {C2, C7}. The roots R1C2 and R4C2 share C2, the
+    // ends R1C8 and R4C7 differ, and R2C7 sees both (R1C8 through box 3, R4C7 through C7). R6C7 only keeps C7
+    // from being a conjugate column as well, so that the vector holds exactly one skyscraper.
+    const VECTOR = ['R1C2', 'R1C8', 'R4C2', 'R4C7', 'R2C7', 'R6C7'];
+    const WANT = {
+      cells: ['R1C2', 'R1C8', 'R4C2', 'R4C7'],
+      eliminations: [['R2C7', 5]],
+      args: { digit: 5, lines: ['R1', 'R4'], ends: ['R1C8', 'R4C7'] }
+    };
+
+    function skyState(labels) {
+      return digitsMap(model9, { 5: labels });
+    }
+
+    function cellsOf(model, labels) {
+      return labels.map(function (label) { return H.cell(model, label); }).sort(function (a, b) { return a - b; });
+    }
+
+    function unitIndex(model, label) {
+      return model.unitMeta.findIndex(function (meta) { return meta.label === label; });
+    }
+
+    it('removes the digit from the cell that sees both ends (the vector of R11)', function () {
+      const state = skyState(VECTOR);
+      const patterns = removingSkyscrapers(model9, state);
+      expect(patterns.length).toBe(1);
+      expect(patterns[0].targets).toEqual([H.cell(model9, 'R2C7')]);
+      const finding = H.expectFinding(SG.test, 'skyscraper', state, WANT);
+      expect(finding.technique).toBe('skyscraper');
+      expect(finding.i18nKey).toBe('technique.skyscraper.step');
+      expect(finding.placements).toEqual([]);
+      expect(finding.cells).toEqual(cellsOf(model9, WANT.cells));
+      expect(finding.eliminations).toEqual([[H.cell(model9, 'R2C7'), 5]]);
+    });
+
+    it('finds the transposed vector: columns C1 and C4 sharing R2, R7C2 loses the digit', function () {
+      const state = skyState(VECTOR.map(transposeRef));
+      const patterns = removingSkyscrapers(model9, state);
+      expect(patterns.length).toBe(1);
+      expect(patterns[0].kind).toBe('col');
+      H.expectFinding(SG.test, 'skyscraper', state, {
+        cells: WANT.cells.map(transposeRef),
+        eliminations: [['R7C2', 5]],
+        args: { digit: 5, lines: ['C1', 'C4'], ends: ['R7C4', 'R8C1'] }
+      });
+    });
+
+    it('finds a skyscraper whose ends lie in one box (a target inside that box)', function () {
+      const state = skyState(['R1C2', 'R1C4', 'R3C2', 'R3C5', 'R2C5']);
+      const finding = H.expectFinding(SG.test, 'skyscraper', state, {
+        cells: ['R1C2', 'R1C4', 'R3C2', 'R3C5'],
+        eliminations: [['R2C5', 5]],
+        args: { digit: 5, lines: ['R1', 'R3'], ends: ['R1C4', 'R3C5'] }
+      });
+      expect(finding.eliminations).toHaveLength(1);
+    });
+
+    // Each of these has the look of the vector but is no skyscraper that removes anything. They are checked
+    // against the independent enumeration first, so that a mistake of the construction cannot hide a bug.
+    const NEAR_MISSES = [
+      ['a third candidate in the first base row (R1 is no conjugate pair)', VECTOR.concat(['R1C5'])],
+      ['a third candidate in the second base row (R4 is no conjugate pair)', VECTOR.concat(['R4C9'])],
+      ['no shared column: the roots lie in C2 and C3', ['R1C2', 'R1C8', 'R4C3', 'R4C7', 'R2C7', 'R6C7']],
+      ['both ends share a column too: an X-Wing, not a skyscraper', ['R1C2', 'R1C8', 'R4C2', 'R4C8', 'R2C8']],
+      ['a target that sees only the end R1C8', ['R1C2', 'R1C8', 'R4C2', 'R4C7', 'R2C8']],
+      ['a target that sees only the end R4C7', ['R1C2', 'R1C8', 'R4C2', 'R4C7', 'R5C7']],
+      ['a root that sees both ends is no external candidate', ['R1C2', 'R1C5', 'R2C2', 'R2C3']],
+      ['a base row with a single candidate (R4 is no conjugate pair)', ['R1C2', 'R1C8', 'R4C2', 'R2C7', 'R6C7']]
+    ];
+
+    NEAR_MISSES.forEach(function (miss) {
+      [['as listed', miss[1]], ['transposed', miss[1].map(transposeRef)]].forEach(function (variant) {
+        it('does not authorize an elimination: ' + miss[0] + ' (' + variant[0] + ')', function () {
+          const state = skyState(variant[1]);
+          expect(removingSkyscrapers(model9, state)).toEqual([]);
+          H.expectNoFinding(SG.test, 'skyscraper', state);
+        });
+      });
+    });
+
+    it('leaves the X-Wing near miss to xWing, in both orientations', function () {
+      const rows = ['R1C2', 'R1C8', 'R4C2', 'R4C8', 'R2C8'];
+      [rows, rows.map(transposeRef)].forEach(function (labels) {
+        const state = skyState(labels);
+        H.expectNoFinding(SG.test, 'skyscraper', state);
+        const finding = runFind('xWing', model9, state);
+        expect(finding).not.toBeNull();
+        expect(finding.eliminations).toHaveLength(1);
+      });
+    });
+
+    it('needs complete lines: an incomplete base row, base column or shared line gives nothing', function () {
+      const state = skyState(VECTOR);
+      ['R1', 'R4', 'C2'].forEach(function (label) {
+        const complete = Uint8Array.from(SG.techniques.createContext(model9, {}).completeUnits);
+        complete[unitIndex(model9, label)] = 0;
+        const ctx = Object.assign({}, SG.techniques.createContext(model9, {}), { completeUnits: complete });
+        expect([label, SG.techniques.get('skyscraper').find(model9, state, ctx)]).toEqual([label, null]);
+      });
+      expect(runFind('skyscraper', model9, state)).not.toBeNull();
+      const none = new Uint8Array(model9.units.length);
+      const ctx = Object.assign({}, SG.techniques.createContext(model9, {}), { completeUnits: none });
+      expect(SG.techniques.get('skyscraper').find(model9, state, ctx)).toBeNull();
+    });
+
+    it('needs disjoint lines: rows that share a cell are no base lines, however the candidates lie', function () {
+      // On the plain 4 x 4 board the digit map holds a skyscraper (R1 and R3 sharing C1, R2C3 sees both ends;
+      // R4C1 only keeps C1 from being a conjugate column). The extra row X1 shares one cell with each of R1 to R4
+      // (it is a row for the model), so none of them is a disjoint line any more.
+      const plain = buildGridModel('fishTestPlain', 2, 2);
+      const overlapping = buildGridModel('fishTestOverlap', 2, 2, [[3, 4, 9, 14]]);
+      const labels = ['R1C1', 'R1C4', 'R3C1', 'R3C3', 'R2C3', 'R4C1'];
+      H.expectFinding(SG.test, 'skyscraper', digitsMap(plain, { 1: labels }), {
+        cells: ['R1C1', 'R1C4', 'R3C1', 'R3C3'],
+        eliminations: [['R2C3', 1]],
+        args: { digit: 1, lines: ['R1', 'R3'], ends: ['R1C4', 'R3C3'] }
+      });
+      const crossed = digitsMap(overlapping, { 1: labels });
+      expect(removingSkyscrapers(overlapping, crossed)).toEqual([]);
+      H.expectNoFinding(SG.test, 'skyscraper', crossed);
+    });
+
+    it('takes the lowest digit first, then rows before columns', function () {
+      const both = digitsMap(model9, { 3: VECTOR, 2: VECTOR });
+      expect(runFind('skyscraper', model9, both).i18nArgs.digit).toBe(2);
+      // Without R6C7 the vector holds a row skyscraper (R2C7 loses 5) and a column one (R1C8 loses 5).
+      const state = skyState(VECTOR.slice(0, 5));
+      const keys = eliminationKeys(removingSkyscrapers(model9, state));
+      expect(keys.size).toBe(2);
+      expect(keys.has(H.cell(model9, 'R2C7') + ':5')).toBe(true);
+      expect(keys.has(H.cell(model9, 'R1C8') + ':5')).toBe(true);
+      H.expectFinding(SG.test, 'skyscraper', state, WANT);
+    });
+
+    it('gives the same answer for the same state after a call on another state', function () {
+      const a = skyState(VECTOR);
+      const b = skyState(VECTOR.map(transposeRef));
+      const first = JSON.stringify(runFind('skyscraper', model9, a));
+      runFind('skyscraper', model9, b);
+      expect(JSON.stringify(runFind('skyscraper', model9, a))).toBe(first);
+    });
+
+    it('hands out its own data: changing a Finding changes neither the next call nor the state', function () {
+      const state = skyState(VECTOR);
+      const before = SG.model.cloneState(state);
+      const first = runFind('skyscraper', model9, state);
+      const copy = JSON.parse(JSON.stringify(first));
+      first.cells.push(99);
+      first.eliminations.push([1, 1]);
+      first.eliminations[0][0] = 77;
+      first.i18nArgs.lines.push('X');
+      first.i18nArgs.ends.length = 0;
+      first.i18nArgs.digit = 1;
+      expect(runFind('skyscraper', model9, state)).toEqual(copy);
+      expect(state.candidates).toEqual(before.candidates);
+      expect(state.value).toEqual(before.value);
+    });
+  });
+
+  describe('skyscraper (R11): real positions', function () {
+    const entry = SG.fixtures.techniques.byId.skyscraper;
+
+    // The exact Findings of the two real positive fixtures (core/tests/fixtures/techniques.js).
+    const REAL = [
+      { cells: ['R1C2', 'R1C8', 'R8C2', 'R8C9'], eliminations: [['R2C9', 1], ['R7C8', 1], ['R9C8', 1]],
+        args: { digit: 1, lines: ['R1', 'R8'], ends: ['R1C8', 'R8C9'] } },
+      { cells: ['R1C5', 'R2C7', 'R8C5', 'R8C7'], eliminations: [['R1C8', 5]],
+        args: { digit: 5, lines: ['C5', 'C7'], ends: ['R1C5', 'R2C7'] } }
+    ];
+
+    function positionOf(fixture) {
+      return H.stateAfter(model9, fixture.puzzle, fixture.after);
+    }
+
+    it('has two positive and two negative fixtures, positions listed explicitly (no ladder helper)', function () {
+      expect(entry.positive).toHaveLength(2);
+      expect(entry.negative).toHaveLength(2);
+      entry.positive.concat(entry.negative).forEach(function (fixture) {
+        expect(Array.isArray(fixture.after)).toBe(true);
+      });
+      entry.positive.forEach(function (fixture) { expect(fixture.after).not.toContain('skyscraper'); });
+      // nothing left after skyscraper itself; the X-Wing position is the one before xWing (no skyscraper there)
+      expect(entry.negative[0].after).toContain('skyscraper');
+      expect(entry.negative[1].after).not.toContain('skyscraper');
+      expect(entry.negative[1].after).not.toContain('xWing');
+    });
+
+    REAL.forEach(function (want, i) {
+      it('finds the exact Finding of real position ' + (i + 1) + ', sound against an independent completion',
+        function () {
+          const fixture = entry.positive[i];
+          const givens = H.parsePuzzle(model9, fixture.puzzle);
+          // the puzzle has exactly one solution (plain depth first search, no technique)
+          expect(SG.dfs.countSolutions(model9, givens, 2)).toBe(1);
+          const solution = SG.dfs.solve(model9, givens);
+          const state = positionOf(fixture);
+          const finding = H.expectFinding(SG.test, 'skyscraper', state, want);
+          expect(finding.eliminations.length).toBe(want.eliminations.length);
+          finding.eliminations.forEach(function (e) { expect(solution[e[0]]).not.toBe(e[1]); });
+          // the position without the eliminated candidates still completes, and only to that solution
+          const reduced = SG.model.cloneState(state);
+          finding.eliminations.forEach(function (e) {
+            expect(SG.constraints.eliminate(model9, reduced, e[0], e[1])).toBe(true);
+          });
+          const done = SG.dfs.searchFrom(model9, reduced, { limit: 2 });
+          expect(done.found).toBe(1);
+          expect(Array.from(done.solution)).toEqual(Array.from(solution));
+          // the first skyscraper in order is the Finding (the independent enumeration agrees)
+          const first = removingSkyscrapers(model9, state)[0];
+          expect(first.targets).toEqual(finding.eliminations.map(function (e) { return e[0]; }));
+        });
+
+      it('finds the transposed real position ' + (i + 1) + ' with the transposed eliminations', function () {
+        const fixture = entry.positive[i];
+        const turned = transposeCells(fixture.puzzle, function (cells) { return cells.join(''); });
+        const state = H.stateAfter(model9, turned, fixture.after);
+        const wanted = new Set(want.eliminations.map(function (e) {
+          return H.cell(model9, transposeRef(e[0])) + ':' + e[1];
+        }));
+        const keys = eliminationKeys(removingSkyscrapers(model9, state));
+        wanted.forEach(function (key) { expect(keys.has(key)).toBe(true); });
+        const finding = runFind('skyscraper', model9, state);
+        expect(finding).not.toBeNull();
+        expect(H.findingProblems(model9, state, finding, { technique: 'skyscraper',
+          solution: SG.dfs.solve(model9, H.parsePuzzle(model9, turned)) })).toEqual([]);
+      });
+    });
+
+    it('finds nothing at the negative positions: nothing left after it, and an X-Wing is no skyscraper', function () {
+      entry.negative.forEach(function (fixture) {
+        const state = positionOf(fixture);
+        H.expectNoFinding(SG.test, 'skyscraper', state);
+        expect(removingSkyscrapers(model9, state)).toEqual([]);
+      });
+      const xWing = positionOf(entry.negative[1]);
+      expect(runFind('xWing', model9, xWing)).not.toBeNull();
+    });
+  });
+
+  describe('skyscraper (R11): work limit, budget and cancellation', function () {
+    // The digit d may only go in the columns d - 1 and d (mod 16) of every row of a 16 digit board. All 16 rows
+    // are conjugate pairs with the same two cover lines, so each of the 120 pairs of rows is an X-Wing (no
+    // skyscraper): a call tests 16 digits x 120 pairs = 1920 pairs and finds nothing.
+    const FLOOD_WORK = 1920;
+    let flood = null;
+
+    function floodState() {
+      if (flood === null) {
+        const model = modelOfDigits(16);
+        const eliminate = [];
+        for (let c = 0; c < model.cellCount; c++) {
+          const col = model.layout.cellCol[c];
+          for (let d = 1; d <= 16; d++) {
+            if (col !== d - 1 && col !== d % 16) eliminate.push([c, d]);
+          }
+        }
+        flood = { model: model, state: H.makeState(model, blankPuzzle(model), { eliminate: eliminate,
+          propagate: false }) };
+      }
+      return flood;
+    }
+
+    const VECTOR = ['R1C2', 'R1C8', 'R4C2', 'R4C7', 'R2C7', 'R6C7'];
+
+    function caught(fn) {
+      try {
+        fn();
+      } catch (err) {
+        return err;
+      }
+      return null;
+    }
+
+    function observed(model, state, options, ctxOptions) {
+      const records = [];
+      const ctx = SG.techniques.createContext(model, Object.assign({
+        onPatternWork: function (r) { records.push(r); }
+      }, ctxOptions));
+      const finding = SG.fishSearch.skyscraper(model, state, ctx, options);
+      return { finding: finding, records: records, record: records[0] };
+    }
+
+    it('has R10\'s limit of 50000 tested pairs, and the registered finder reports it', function () {
+      expect(SG.fishSearch.SKYSCRAPER_WORK_LIMIT).toBe(50000);
+      const state = digitsMap(model9, { 5: VECTOR });
+      const records = [];
+      const ctx = SG.techniques.createContext(model9, { onPatternWork: function (r) { records.push(r); } });
+      expect(SG.techniques.get('skyscraper').find(model9, state, ctx)).not.toBeNull();
+      expect(records).toEqual([{ id: 'skyscraper', work: 1, limit: 50000, capHit: null, retained: null }]);
+    });
+
+    it('counts one unit per tested pair of base lines, from a fresh counter on every call', function () {
+      const f = floodState();
+      const first = observed(f.model, f.state);
+      expect(first.finding).toBeNull();
+      expect(first.record).toEqual({ id: 'skyscraper', work: FLOOD_WORK, limit: 50000, capHit: null,
+        retained: null });
+      const second = observed(f.model, f.state);
+      expect(second.record).toEqual(first.record);
+      expect(second.record).not.toBe(first.record);
+      // a position without a conjugate pair costs nothing; a finding stops the count where it is found
+      const empty = H.makeState(model9, blankPuzzle(model9), { propagate: false });
+      expect(observed(model9, empty).record.work).toBe(0);
+      const found = observed(model9, digitsMap(model9, { 5: VECTOR }));
+      expect(found.finding).not.toBeNull();
+      expect(found.record.work).toBe(1);
+    });
+
+    it('ends a call whose limit is spent with nothing found (never a finding), and says so', function () {
+      const f = floodState();
+      [0, 1, 100, FLOOD_WORK - 1].forEach(function (limit) {
+        const out = observed(f.model, f.state, { workLimit: limit });
+        expect(out.finding).toBeNull();
+        expect(out.record).toEqual({ id: 'skyscraper', work: limit, limit: limit, capHit: 'work',
+          retained: null });
+      });
+      const exact = observed(f.model, f.state, { workLimit: FLOOD_WORK });
+      expect(exact.record.capHit).toBeNull();
+      expect(exact.record.work).toBe(FLOOD_WORK);
+      // a limit of 0 loses the vector's deduction; the first tested pair finds it with a limit of 1
+      const state = digitsMap(model9, { 5: VECTOR });
+      const lost = observed(model9, state, { workLimit: 0 });
+      expect(lost.finding).toBeNull();
+      expect(lost.record.capHit).toBe('work');
+      const kept = observed(model9, state, { workLimit: 1 });
+      expect(kept.finding).toEqual(observed(model9, state).finding);
+      expect(kept.record.capHit).toBeNull();
+    });
+
+    it('floors a fractional limit and rejects an invalid one with solver.invalidOption', function () {
+      const f = floodState();
+      expect(observed(f.model, f.state, { workLimit: 2.9 }).record.work).toBe(2);
+      [-1, NaN, Infinity, '5', null].forEach(function (workLimit) {
+        const err = caught(function () { observed(f.model, f.state, { workLimit: workLimit }); });
+        expect([String(workLimit), err && err.code]).toEqual([String(workLimit), 'solver.invalidOption']);
+      });
+    });
+
+    /**
+     * The work done at each check of the parent budget: a context whose k-th check throws a spent budget lets the
+     * record of the (swallowed) call tell how many pairs were tested at that check.
+     */
+    function checkWorks(model, state, options) {
+      const base = SG.techniques.createContext(model, {});
+      function attempt(target) {
+        let k = 0;
+        let record = null;
+        const ctx = Object.assign({}, base, {
+          options: { onPatternWork: function (r) { record = r; } },
+          check: function () {
+            k++;
+            if (k === target) throw new SG.errors.GenerationError('budget.exceeded', { reason: 'nodes' });
+          }
+        });
+        const finding = SG.fishSearch.skyscraper(model, state, ctx, options);
+        return { checks: k, record: record, finding: finding };
+      }
+      const free = attempt(0);
+      const works = [];
+      for (let target = 1; target <= free.checks; target++) {
+        const spent = attempt(target);
+        expect(spent.finding).toBeNull();
+        expect(spent.record.capHit).toBeNull();
+        works.push(spent.record.work);
+      }
+      const gaps = works.map(function (w, i) { return w - (i === 0 ? 0 : works[i - 1]); });
+      gaps.push(free.record.work - works[works.length - 1]);
+      return { works: works, gaps: gaps, max: Math.max.apply(null, gaps), free: free };
+    }
+
+    it('checks the parent budget at entry and so that at most 256 pairs pass between two checks', function () {
+      const f = floodState();
+      const out = checkWorks(f.model, f.state);
+      expect(out.works[0]).toBe(0);
+      expect(out.works).toEqual([0, 256, 512, 768, 1024, 1280, 1536, 1792]);
+      expect(out.max).toBeLessThanOrEqual(256);
+      expect(out.free.checks).toBe(8);
+      // a call that ends at its limit keeps the same cadence
+      const capped = checkWorks(f.model, f.state, { workLimit: 1000 });
+      expect(capped.works).toEqual([0, 256, 512, 768]);
+      // a small call has only the entry check
+      expect(checkWorks(model9, digitsMap(model9, { 5: VECTOR })).works).toEqual([0]);
+    });
+
+    it('reports a spent budget as nothing found and lets cancellation and other errors through', function () {
+      const f = floodState();
+      const parent = SG.budget.create({ nodes: 3 });
+      const spent = observed(f.model, f.state, undefined, { budget: parent });
+      expect(spent.finding).toBeNull();
+      expect(spent.records).toHaveLength(1);
+      expect(spent.record.capHit).toBeNull();
+      expect(spent.record.work).toBeLessThan(FLOOD_WORK);
+      // capHit null is no proof of a complete scan: the caller's budget still fails after the call
+      expect(caught(function () { parent.check(); }).code).toBe('budget.exceeded');
+
+      const budget = SG.budget.create({});
+      budget.cancel();
+      const records = [];
+      const err = caught(function () {
+        SG.techniques.get('skyscraper').find(f.model, f.state, SG.techniques.createContext(f.model, {
+          budget: budget, onPatternWork: function (r) { records.push(r); } }));
+      });
+      expect(err.code).toBe('budget.cancelled');
+      expect(records).toEqual([]);
+
+      // cancellation in the middle of the scan, and an error that is not a budget error
+      [['budget.cancelled', true], ['boom', false]].forEach(function (kind) {
+        let k = 0;
+        const ctx = Object.assign({}, SG.techniques.createContext(f.model, {}), {
+          check: function () {
+            if (++k === 3) {
+              throw kind[1] ? new SG.errors.GenerationError(kind[0], { reason: 'cancelled' }) : new Error(kind[0]);
+            }
+          }
+        });
+        const thrown = caught(function () { SG.techniques.get('skyscraper').find(f.model, f.state, ctx); });
+        expect(thrown).toBeTruthy();
+        expect(kind[1] ? thrown.code : thrown.message).toBe(kind[0]);
+        expect(k).toBe(3);
+      });
+    });
+
+    it('is not fooled by a hostile or absent observer', function () {
+      const state = digitsMap(model9, { 5: VECTOR });
+      const plain = JSON.stringify(runFind('skyscraper', model9, state));
+      ['not a function', null, 7].forEach(function (observer) {
+        const ctx = SG.techniques.createContext(model9, { onPatternWork: observer });
+        expect(JSON.stringify(SG.techniques.get('skyscraper').find(model9, state, ctx))).toBe(plain);
+      });
+    });
+  });
+
+  describe('skyscraper (R11): agreement with an independent enumeration', function () {
+    const cache = {};
+
+    function itemsOf(model, count, seed) {
+      const key = model.variantId + '/' + model.digits + '/' + seed;
+      if (!cache[key]) {
+        cache[key] = H.randomStatesWithKnownSolution(model, SG.testkit.rng.create(seed), count);
+      }
+      return cache[key];
+    }
+
+    /** The Finding is the first pattern of the enumeration that removes something, field by field. */
+    function agree(model, item, index) {
+      const patterns = removingSkyscrapers(model, item.state);
+      const finding = runFind('skyscraper', model, item.state);
+      check((finding !== null) === (patterns.length > 0), 'skyscraper ' + (finding !== null
+        ? 'reported a pattern that the enumeration does not know' : 'missed a pattern the enumeration found') +
+        '\n  ' + describeItem(model, item, index));
+      if (finding === null) return false;
+      const first = patterns[0];
+      check(finding.i18nArgs.digit === first.digit, 'digit ' + finding.i18nArgs.digit + ' is not the first ' +
+        'pattern\'s ' + first.digit + '\n  ' + describeItem(model, item, index));
+      check(JSON.stringify(finding.eliminations) === JSON.stringify(first.targets.map(function (c) {
+        return [c, first.digit];
+      })), 'the eliminations are not those of the first pattern\n  ' + describeItem(model, item, index));
+      check(JSON.stringify(finding.cells) === JSON.stringify(first.roots.concat(first.ends)
+        .sort(function (a, b) { return a - b; })), 'the cells are not the four cells of the first pattern\n  ' +
+        describeItem(model, item, index));
+      check(JSON.stringify(finding.i18nArgs.lines) === JSON.stringify(first.lines.map(function (u) {
+        return unitLabel(model, u);
+      })), 'the base lines are not those of the first pattern\n  ' + describeItem(model, item, index));
+      check(JSON.stringify(finding.i18nArgs.ends) === JSON.stringify(first.ends.slice()
+        .sort(function (a, b) { return a - b; }).map(function (c) { return H.label(model, c); })),
+      'the ends are not those of the first pattern\n  ' + describeItem(model, item, index));
+      return true;
+    }
+
+    [['classic9', 400, 777, 50], ['classic9', 400, 99, 50], ['classic6', 400, 777, 50],
+      ['classic4', 300, 777, 3]].forEach(function (setup) {
+      it('finds a skyscraper exactly when one exists and removes exactly its candidates on ' + setup[0] +
+        ' (seed ' + setup[2] + ')', function () {
+        const model = H.model(setup[0]);
+        let withPattern = 0;
+        itemsOf(model, setup[1], setup[2]).forEach(function (item, index) {
+          if (agree(model, item, index)) withPattern++;
+        });
+        expect(withPattern).toBeGreaterThanOrEqual(setup[3]);
+      });
+    });
+
+    [12, 16].forEach(function (D) {
+      it('agrees on ' + D + ' digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)', function () {
+        const model = modelOfDigits(D);
+        let withPattern = 0;
+        itemsOf(model, D === 12 ? 60 : 32, 2026).forEach(function (item, index) {
+          if (agree(model, item, index)) withPattern++;
+        });
+        expect(withPattern).toBeGreaterThanOrEqual(D === 12 ? 10 : 5);
+      });
+    });
+
+    ['diagonalX', 'hyper', 'jigsaw9'].forEach(function (variant) {
+      it('agrees on ' + variant + ' (extra regions or irregular regions are real peers)', function () {
+        if (!SG.testkit.hasVariant(variant)) SG.test.skip('no board of ' + variant + ' can be built here');
+        const model = H.model(variant);
+        let withPattern = 0;
+        itemsOf(model, 120, 4242).forEach(function (item, index) {
+          if (agree(model, item, index)) withPattern++;
+        });
+        expect(withPattern).toBeGreaterThanOrEqual(10);
       });
     });
   });

@@ -146,14 +146,14 @@ manifest. Any added suite owns its r6c CI group/manifest entry. Return the inher
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (SA1 review of the technique template: accept, IR67-IR72; one evidence-only fix IR68 applied; IR67 routed to MS07f) |
+| Start | 2026-11-15 14:18:29 (+07:00), base `7fe14fb` |
+| End | 2026-11-15 16:19:59 developer (final tree over `7ab77b1`, a pack-only commit that landed at 15:03); 16:25-16:42 SA1 review; 16:45-16:47 IR68 evidence fix; orchestrator commit |
+| Duration | 2 h 1 min developer + 2 min fix; about 17 min SA1 review |
+| Model | claude-sonnet-5.5 (developer); claude-opus-5.5 (SA1 review; orchestrator) |
+| Token usage | 411 model calls; 143,306,879 input tokens (142,057,403 cache reads); 372,573 output tokens |
+| AI credits | about 2,105 (developer) |
+| Verification | `skyscraper` in `core/js/engine/tech-fish.js` (fish group, order 112, weight 330, base cost 33, unscoped, `assumesUniqueness: false`), `WEIGHTS.skyscraper = 330` (between `xWing` and `simpleColouring`: Hard tier, Expert-and-above floor, no rule change). Proof: two whole-line-disjoint complete parallel lines with exactly two candidates and exactly one shared cover line; eliminations from cells seeing both free ends; two shared covers remain X-Wing. Limits: one unit per tested line pair, 50,000 per call (structural maximum 6,318 on Samurai, so never binding), parent budget at entry and every 256 units, spent limit gives `null`. `tech-fish` 106 -> 155 tests (R11 vector and transpose, near misses, limit/budget/cancellation, independent enumeration on nine board types); 10/10 mutations detected; generic soundness sweep. **E** (wires, analyses, hashes under IR12; recorded again after an engine comment re-wrap, reproduced exactly): 66 of 520 hashes changed, all at Hard or above in cells admitting the technique (recounted by SA1); wires G09, G11, G12 and analyses G01, G04, G06, G11, G12, G14 changed; four reference ratings changed (constructed-hard-1/2/3 560->475, 563->521, 554->515; constructed-nightmare-3 2,642->2,653), no level or `v3Expected` change; G01 is a different guide example (925, was 969). Help catalogue 29 examples (`skyscraper` new; five regenerated from their own sources, `xyzWing` from a new source), GH `--check` 29/29. Quick sets on the final tree: Generator 3,563/3,563 (699.8 s, sum of the four group walls), Player 1,807/1,807 (35.3 s wall); CI check passes. Orchestrator: locked focused re-run 470/470 (`tech-fish`, `techniques`, `technique-weights`, `help`, `i18n`); CI check |
+| Acceptance | MS08a-B01, B02, T01, T02, T03 pass. Evidence `docs/difficulty-v3/evidence/MS08a/evidence.md`; review `docs/difficulty-v3/claude-opus-5.5/18-review-of-ms08a.md` |
+| Issues & resolutions | SA1 rulings: pin refreshes in `cache`, `worker`, `pipeline`, Generator `player` and Player `help-example-tools` suites are in scope (recorded values, like-for-like matchers; the shallow-fallback specimen moved from seed 5 to the lowest qualifying seed 21); `generator-quick.json` information fields accepted; the manual `difficulty` suite edited but not run, accepted under the existing item; `lines`/`ends` reading correct; IR12 compounds correct. IR67 (stale quick-set totals in both developer guides and both designs) routed to MS07f with binding text; IR68 (base commit and timing conventions in `evidence.md`) fixed; IR69 whole-line disjointness accepted (never fires on Butterfly; never wrong). No named item; S-AV08 699.8 s / 35.3 s |
+| Handoff | **IR72 is the template checklist (A-J) for MS08b and every later technique task** (proof and geometry, registration and weight, limits and cost, fixtures and soundness, integration, mutations, E protocol, help examples, ownership of generated-output pins, run rules). MS07f inputs: baseline `quick-final-2` (Generator `519cd665…`, Player `222e69cf…`), 699.8 s / 35.3 s, Generator 3,563 and Player 1,807 tests (expected after the move 3,560; pipeline 151; Generator `player` 69; manual +4); re-project the three ratio tests and the two mega16 requests on this source |

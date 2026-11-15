@@ -59,14 +59,14 @@
   }
 
   describe('techniques: registry', function () {
-    it('has the 23 techniques of the classic ladder registered, in the current registry order', function () {
+    it('has the 24 techniques of the classic ladder registered, in the current registry order', function () {
       expect(classic.map(function (t) { return t.id; })).toEqual(F.registryOrder);
-      expect(F.registryOrder.length).toBe(23);
+      expect(F.registryOrder.length).toBe(24);
     });
 
     it('keeps the v2 ladder as history: the old ids keep their relative order in the expanded registry, ' +
       'jellyfish apart', function () {
-        var added = ['forcingChainLong', 'nishioDeep'];
+        var added = ['skyscraper', 'forcingChainLong', 'nishioDeep'];
         function oldIds(list) {
           return list.filter(function (id) { return id !== 'jellyfish' && added.indexOf(id) === -1; });
         }
@@ -125,10 +125,11 @@
       expect(stale).toEqual([]);
     });
 
-    it('puts the positive positions of a replaced entry where its id is reached in the registry (MS07b)',
-      function () {
+    it('puts the positive positions of a replaced or added entry where its id is reached in the registry ' +
+      '(MS07b, MS08a)', function () {
         var replaced = F.ids.filter(function (id) { return F.byId[id] !== F.historyV2.byId[id]; });
-        expect(replaced.sort()).toEqual(['forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep']);
+        expect(replaced.sort()).toEqual(['forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep',
+          'skyscraper']);
         replaced.forEach(function (id) {
           var below = F.registryOrder.slice(0, F.registryOrder.indexOf(id));
           F.byId[id].positive.forEach(function (fixture) {

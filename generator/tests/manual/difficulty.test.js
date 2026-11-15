@@ -192,7 +192,8 @@
         expect(specs[0].allowedTechniques).toEqual(['nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine']);
         // The edges of the pruning rule: 1.25 x weight against the band maximum.
         var firsts = { easy: ['pointing', 'boxLine', 'nakedPair'], normal: ['hiddenPair', 'hiddenQuad'],
-          hard: ['xWing', 'jellyfish'], expert: ['xyWing', 'xyzWing'], master: ['wWing', 'forcingChain'],
+          hard: ['xWing', 'skyscraper', 'jellyfish'], expert: ['xyWing', 'xyzWing'],
+          master: ['wWing', 'forcingChain'],
           nightmare: ['forcingChainLong', 'nishio'], hell1: ['nishioDeep'] };
         Object.keys(firsts).forEach(function (level) {
           var i = idx(level);
@@ -626,9 +627,10 @@
       expect(D.WEIGHTS).toEqual({
         nakedSingle: 1, hiddenSingleBox: 1.25, hiddenSingleLine: 1.5, pointing: 40, boxLine: 50,
         nakedPair: 120, hiddenPair: 145, nakedTriple: 180, hiddenTriple: 220, nakedQuad: 260, hiddenQuad: 300,
-        xWing: 320, simpleColouring: 360, swordfish: 420, jellyfish: 520, xyWing: 650, xyzWing: 750,
-        wWing: 850, uniqueRectangle: 900, forcingChain: 1100, forcingChainLong: 1400, nishio: 1700,
-        nishioDeep: 2600, cageCombo: 40, ruleOf45: 260, cageSplit: 520, ineqChain: 40, minMaxForcing: 180
+        xWing: 320, skyscraper: 330, simpleColouring: 360, swordfish: 420, jellyfish: 520, xyWing: 650,
+        xyzWing: 750, wWing: 850, uniqueRectangle: 900, forcingChain: 1100, forcingChainLong: 1400,
+        nishio: 1700, nishioDeep: 2600, cageCombo: 40, ruleOf45: 260, cageSplit: 520, ineqChain: 40,
+        minMaxForcing: 180
       });
       SG.techniques.list().forEach(function (t) { expect(D.weightOf(t.id)).toBe(D.WEIGHTS[t.id]); });
       expectCode(function () { D.weightOf('noSuchTechnique'); }, 'difficulty.unknownTechnique');

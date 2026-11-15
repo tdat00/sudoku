@@ -1,0 +1,12 @@
+$ node tests\node-runner.js --suite=cache,worker,pipeline --filter=MS05b1-T0
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   cache: 1 passed  (455 ms)
+ok   pipeline: 28 passed  (1.06 s)
+ok   worker: 1 passed  (421 ms)
+
+Suites: 3
+Tests:  30 total, 30 passed, 0 failed, 0 skipped
+Time:   1.94 s running tests, 2.06 s total
+exit=0 seconds=2.164

@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "82cdc4d968e10a558cd728f6ccd830ed8dfc10e339124b3b9b1ed6de9e9fdc72",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "7fe14fb9ba97330ececfa411dbb163032d9d76bc",
+  "dirty": true,
+  "generatedAt": "2026-11-15T07:49:57.019Z",
+  "argv": ["--hash-key=jigsaw9/normal","--hash-from=10","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS08a\\hashes\\jigsaw9-normal-10.json"],
+  "records": [
+    {"key":"jigsaw9/normal#144","variant":"jigsaw9","level":"normal","seed":144,"hash":"6101aba1cdef118d","ms":248,"overrides":[]},
+    {"key":"jigsaw9/normal#233","variant":"jigsaw9","level":"normal","seed":233,"hash":"7238027967442e45","ms":45,"overrides":[]},
+    {"key":"jigsaw9/normal#377","variant":"jigsaw9","level":"normal","seed":377,"hash":"a503ec29aed16c35","ms":18,"overrides":[]},
+    {"key":"jigsaw9/normal#610","variant":"jigsaw9","level":"normal","seed":610,"hash":"55bbc11b89197faf","ms":17,"overrides":[]},
+    {"key":"jigsaw9/normal#987","variant":"jigsaw9","level":"normal","seed":987,"hash":"ac82ffd4783b28e8","ms":130,"overrides":[]}
+  ]
+}

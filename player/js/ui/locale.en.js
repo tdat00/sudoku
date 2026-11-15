@@ -187,6 +187,11 @@
     'technique.xWing.desc': 'When a digit has only two possible cells in each of two rows, and they lie ' +
       'in the same two columns, the digit can be removed from the rest of those columns (and the same ' +
       'with rows and columns swapped).',
+    'technique.skyscraper': 'Skyscraper',
+    'technique.skyscraper.desc': 'Two rows (or two columns) in which a digit has only two possible cells ' +
+      'each, and one cell of each lies in the same column (or row). Those two cells see each other, so ' +
+      'they cannot both hold the digit: at least one of the other two does, and the digit is removed from ' +
+      'every cell that sees both of them.',
     'technique.simpleColouring': 'Simple Colouring',
     'technique.simpleColouring.desc': 'Cells linked by "one or the other" for a single digit are painted ' +
       'in two colours. Exactly one colour is true, which exposes cells that cannot hold the digit.',
@@ -263,6 +268,10 @@
     'technique.xWing.step': 'X-Wing on {digit}: in {baseUnits}, the digit {digit} can only go in ' +
       '{coverUnits}. The two {digit}s of the base lines fill both cover lines, so {digit} is removed from ' +
       'every other cell of {coverUnits}.',
+    'technique.skyscraper.step': 'Skyscraper on {digit}: in {lines}, the digit {digit} can only go in two ' +
+      'cells each, and one cell of each lies on a common line, so those two cannot both be {digit}. At ' +
+      'least one of the other two cells, {ends}, is {digit}, so {digit} is removed from every other cell ' +
+      'that sees both of them.',
     'technique.swordfish.step': 'Swordfish on {digit}: in {baseUnits}, the digit {digit} can only go in ' +
       '{coverUnits}. The three {digit}s of the base lines fill all three cover lines, so {digit} is ' +
       'removed from every other cell of {coverUnits}.',

@@ -1,0 +1,10 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=skyscraper,xyzWing --sources=tests\artifacts\difficulty-v3\MS08a\sources.json --max-puzzles=16 --max-hints=400 --write
+selected 2 technique ID(s); mode write
+replaying 5 puzzle(s) for 2 ID(s) (--max-puzzles=16, --max-hints=400)
+puzzle 1/5 classic9 Hell 1 214 -> 65 hint(s), solved; wanted found: skyscraper
+puzzle 2/5 classic9 Nightmare 70 -> 76 hint(s), solved; wanted found: xyzWing
+puzzle 3/5 classic9 Nightmare 13 -> 74 hint(s), solved; wanted found: xyzWing
+puzzle 4/5 classic9 Nightmare 11 -> 72 hint(s), solved; wanted found: xyzWing
+puzzle 5/5 classic9 Nightmare 1427 -> 71 hint(s), solved; wanted found: xyzWing
+wrote player/js/ui/help-examples.js (29 examples; 2 selected: skyscraper, xyzWing; the others kept)
+exit=0 seconds=0.547

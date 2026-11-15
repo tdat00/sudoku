@@ -1,9 +1,10 @@
 /**
- * Fish techniques (group `fish`): X-Wing, Swordfish, Jellyfish and Simple Colouring; registers itself in
- * SG.techniques.
+ * Fish techniques (group `fish`): X-Wing, Skyscraper, Swordfish, Jellyfish and Simple Colouring; registers
+ * itself in SG.techniques.
  *
  *   id               baseCost  order
  *   xWing                32     110     basic fish of size 2
+ *   skyscraper           33     112     two lines with two candidates each, one end pair in a common line
  *   simpleColouring      36     120     chains of strong links, two colours
  *   swordfish            42     130     basic fish of size 3
  *   jellyfish            56     137     basic fish of size 4 (before the wings: weight 520 < xyWing 650)
@@ -33,6 +34,25 @@
  * A component whose two-colouring fails (an odd cycle of strong links) or in which both colours wrap is
  * contradictory and ignored.
  *
+ * Skyscraper (rating v3, R11): for a digit d take two base lines of one orientation (complete units,
+ * disjoint: no cell of either lies in another line of its kind) that each have exactly two cells that can
+ * still be d. Each line holds d exactly once, so one of its two cells is d. The four cells are distinct and
+ * each has one cover line (the owner line of the other orientation). Exactly ONE cover line holds a cell of
+ * each base line: those two cells (the roots) see each other, so they cannot both be d, and at least one of
+ * the other two cells (the ends) is d. d is removed from every other cell that sees both ends (real peers,
+ * so any unit shape and extra regions count). Two shared cover lines are an X-Wing, which belongs to
+ * xWing; no shared cover line is no pattern. A skyscraper is looked for in the order digit, rows then
+ * columns as base lines, line pair; the first pattern with an elimination is returned, with the four cells
+ * in `cells`.
+ *
+ * Skyscraper work (R10). One unit is one tested pair of base lines (the second line extending the first),
+ * limit 50000 per call (`SG.fishSearch.SKYSCRAPER_WORK_LIMIT`); a spent limit ends the call with null (a lost
+ * deduction, never an invented one). The parent budget is checked at entry and before the pair that would
+ * carry the work done since the last check over 256 units; the counter is local to the call. A spent budget
+ * ('budget.exceeded') is "nothing found" as for the chain finders, cancellation and every other error
+ * propagate. `ctx.options.onPatternWork(record)` observes each call and never selects its result:
+ * { id, work, limit, capHit (null | 'work'), retained (null) }, a fresh object per call.
+ *
  * Performance: per model data (the lines, the owner line of every cell, all scratch buffers) is built once in
  * a WeakMap, so `find` allocates only the Finding it returns. The fish search is a depth-first selection of
  * base lines that drops a branch as soon as its covers outnumber n. `find` is not re-entrant (it shares the
@@ -48,6 +68,14 @@
   const ORIENTATION_NAMES = ['row', 'col'];
   /** Largest fish size (Jellyfish); sizes the per-line cover lists. */
   const MAX_FISH = 4;
+
+  // R10 work policy of the Skyscraper: the units one call may spend (tested pairs of base lines) and how many
+  // may pass between two checks of the parent budget.
+  const SKYSCRAPER_WORK_LIMIT = 50000;
+  const WORK_CHECK_UNITS = 256;
+
+  // Thrown through the pair loops of a skyscraper call whose work limit is spent.
+  const WORK_CAP = Object.freeze({ capHit: 'work' });
 
   const infos = new WeakMap();
 
@@ -68,6 +96,19 @@
     return owner;
   }
 
+  // unit -> 1 for a line none of whose cells lies in another line of its kind (a disjoint line), else 0.
+  function disjointTable(model, lineUnits, owner, disjoint) {
+    for (let i = 0; i < lineUnits.length; i++) {
+      const u = lineUnits[i];
+      const cells = model.units[u];
+      let alone = 1;
+      for (let k = 0; k < cells.length; k++) {
+        if (owner[cells[k]] !== u) alone = 0;
+      }
+      disjoint[u] = alone;
+    }
+  }
+
   // Builds (once per model and `completeUnits` table) the lines and every scratch buffer; `ctx.completeUnits`
   // decides which units count as lines.
   function infoFor(model, ctx) {
@@ -85,11 +126,23 @@
       else if (kind === 'col') cols.push(u);
     }
     const maxLines = Math.max(rows.length, cols.length, 1);
+    const lineOf = [ownerTable(model, rows), ownerTable(model, cols)];
+    const disjoint = new Uint8Array(nUnits);
+    disjointTable(model, rows, lineOf[ROW], disjoint);
+    disjointTable(model, cols, lineOf[COL], disjoint);
 
     info = {
       complete: ctx.completeUnits,
       lines: [Int32Array.from(rows), Int32Array.from(cols)],
-      lineOf: [ownerTable(model, rows), ownerTable(model, cols)],
+      lineOf: lineOf,
+      disjoint: disjoint,
+
+      // Skyscraper: the base lines of the current digit and orientation (their two cells and the cover
+      // line of each), and the peers of the second end.
+      skyUnit: new Int32Array(maxLines),
+      skyCell: new Int32Array(maxLines * 2),
+      skyCover: new Int32Array(maxLines * 2),
+      peerMark: new Uint8Array(nCells),
 
       // Fish search: eligible base lines of the current digit and the depth-first selection state.
       baseUnit: new Int32Array(maxLines),
@@ -303,6 +356,178 @@
     return null;
   }
 
+  // Lists the lines of one orientation that hold the digit in exactly two cells (the base lines of a
+  // skyscraper) into the scratch buffers, with the cover line of each of the two cells; returns how many
+  // there are. A line is skipped when it is not disjoint from the other lines of its kind, already has the
+  // digit placed, holds it in another number of cells, or one of its cells has no cover line of its own.
+  function collectLinkedLines(model, state, info, digit, orient) {
+    const cand = state.candidates;
+    const val = state.value;
+    const bit = 1 << (digit - 1);
+    const lines = info.lines[orient];
+    const coverOf = info.lineOf[1 - orient];
+    let count = 0;
+
+    for (let li = 0; li < lines.length; li++) {
+      const u = lines[li];
+      if (info.disjoint[u] === 0) continue;
+      const cells = model.units[u];
+      const slot = count * 2;
+      let positions = 0;
+      let eligible = true;
+      for (let k = 0; k < cells.length && eligible; k++) {
+        const c = cells[k];
+        if (val[c] !== 0) {
+          if (val[c] === digit) eligible = false;
+          continue;
+        }
+        if ((cand[c] & bit) === 0) continue;
+        if (positions === 2 || coverOf[c] === -1) {
+          eligible = false;
+        } else {
+          info.skyCell[slot + positions] = c;
+          info.skyCover[slot + positions] = coverOf[c];
+          positions++;
+        }
+      }
+      if (eligible && positions === 2) info.skyUnit[count++] = u;
+    }
+    return count;
+  }
+
+  // The skyscraper of the linked lines i < j (indices of the scratch lists) or null: exactly one cover line
+  // holds a cell of each line (the roots); the other two cells are the ends, and every other cell that still
+  // has the digit and sees both ends loses it.
+  function skyscraperOf(model, state, info, digit, i, j) {
+    const a = 2 * i;
+    const b = 2 * j;
+    let rootA = 0;
+    let rootB = 0;
+    let shared = 0;
+    for (let p = 0; p < 2; p++) {
+      for (let q = 0; q < 2; q++) {
+        if (info.skyCover[a + p] === info.skyCover[b + q]) {
+          shared++;
+          rootA = p;
+          rootB = q;
+        }
+      }
+    }
+    // Two shared cover lines are an X-Wing, none is no pattern.
+    if (shared !== 1) return null;
+    const roots = [info.skyCell[a + rootA], info.skyCell[b + rootB]];
+    const endA = info.skyCell[a + 1 - rootA];
+    const endB = info.skyCell[b + 1 - rootB];
+    const cand = state.candidates;
+    const val = state.value;
+    const bit = 1 << (digit - 1);
+
+    const peersB = model.peers[endB];
+    for (let k = 0; k < peersB.length; k++) info.peerMark[peersB[k]] = 1;
+    const targets = [];
+    const peersA = model.peers[endA];
+    for (let k = 0; k < peersA.length; k++) {
+      const c = peersA[k];
+      if (info.peerMark[c] === 1 && val[c] === 0 && (cand[c] & bit) !== 0 && c !== roots[0] &&
+          c !== roots[1] && c !== endB) {
+        targets.push(c);
+      }
+    }
+    for (let k = 0; k < peersB.length; k++) info.peerMark[peersB[k]] = 0;
+    if (targets.length === 0) return null;
+
+    targets.sort(byNumber);
+    const eliminations = [];
+    for (let k = 0; k < targets.length; k++) {
+      if (k === 0 || targets[k] !== targets[k - 1]) eliminations.push([targets[k], digit]);
+    }
+    const ends = endA < endB ? [endA, endB] : [endB, endA];
+    return {
+      technique: 'skyscraper',
+      cells: [roots[0], roots[1], endA, endB].sort(byNumber),
+      placements: [],
+      eliminations: eliminations,
+      i18nKey: 'technique.skyscraper.step',
+      i18nArgs: {
+        digit: digit,
+        lines: unitLabels(model, [info.skyUnit[i], info.skyUnit[j]]),
+        ends: cellsToLabels(model, ends)
+      }
+    };
+  }
+
+  // One tested pair of base lines is one work unit. The parent budget is checked before the unit that would
+  // carry the work done since the last check over WORK_CHECK_UNITS; a spent limit throws WORK_CAP.
+  function spend(run) {
+    if (run.work >= run.limit) throw WORK_CAP;
+    if (run.work + 1 - run.checkedAt > WORK_CHECK_UNITS) {
+      run.ctx.check();
+      run.checkedAt = run.work;
+    }
+    run.work++;
+  }
+
+  // Every digit, rows then columns as base lines, line pairs in line order: the first skyscraper that removes
+  // something.
+  function scanSkyscraper(model, state, info, run) {
+    for (let digit = 1; digit <= model.digits; digit++) {
+      for (let orient = ROW; orient <= COL; orient++) {
+        const count = collectLinkedLines(model, state, info, digit, orient);
+        for (let i = 0; i < count - 1; i++) {
+          for (let j = i + 1; j < count; j++) {
+            spend(run);
+            const found = skyscraperOf(model, state, info, digit, i, j);
+            if (found !== null) return found;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  // A skyscraper call with its own work counter. A spent work limit and a spent budget are "nothing found"
+  // (the logical solver notices the budget at its next check); cancellation and every other error propagate.
+  // The work goes to the optional observer, which never selects the result.
+  function findSkyscraper(model, state, ctx, workLimit) {
+    const info = infoFor(model, ctx);
+    const run = { ctx: ctx, limit: workLimit, work: 0, checkedAt: 0, capped: false };
+    let found = null;
+    try {
+      ctx.check();
+      found = scanSkyscraper(model, state, info, run);
+    } catch (err) {
+      if (err === WORK_CAP) run.capped = true;
+      else if (!(err && err.code === 'budget.exceeded')) throw err;
+    }
+    const observer = ctx.options ? ctx.options.onPatternWork : undefined;
+    if (typeof observer === 'function') {
+      observer({
+        id: 'skyscraper',
+        work: run.work,
+        limit: workLimit,
+        capHit: run.capped ? 'work' : null,
+        retained: null
+      });
+    }
+    return found;
+  }
+
+  // The seam of the tests: the same search with an explicit work limit (absent = SKYSCRAPER_WORK_LIMIT).
+  function skyscraperSeam(model, state, ctx, opts) {
+    let limit = SKYSCRAPER_WORK_LIMIT;
+    const given = opts === undefined || opts === null ? undefined : opts.workLimit;
+    if (given !== undefined) {
+      if (typeof given !== 'number' || !Number.isFinite(given) || given < 0) {
+        const err = new SG.errors.GenerationError('solver.invalidOption',
+          { option: 'fishSearch.skyscraper.workLimit' });
+        err.message = 'solver.invalidOption: fishSearch.skyscraper workLimit must be a number of at least 0';
+        throw err;
+      }
+      limit = Math.floor(given);
+    }
+    return findSkyscraper(model, state, ctx, limit);
+  }
+
   // Fills unitCount / unitA / unitB for one digit: 2 for a strong link (unitA, unitB are its cells),
   // otherwise -1 for a unit that cannot give one (incomplete, digit placed) or the candidate count capped at
   // 3. Returns the number of links.
@@ -511,6 +736,9 @@
   define('xWing', 32, 110, function (model, state, ctx) {
     return findFish(model, state, ctx, 2, 'xWing');
   });
+  define('skyscraper', 33, 112, function (model, state, ctx) {
+    return findSkyscraper(model, state, ctx, SKYSCRAPER_WORK_LIMIT);
+  });
   define('simpleColouring', 36, 120, findSimpleColouring);
   define('swordfish', 42, 130, function (model, state, ctx) {
     return findFish(model, state, ctx, 3, 'swordfish');
@@ -518,4 +746,12 @@
   define('jellyfish', 56, 137, function (model, state, ctx) {
     return findFish(model, state, ctx, 4, 'jellyfish');
   });
+
+  // The parameterised search behind skyscraper, for tests (explicit work limit); not a registered technique.
+  if (!SG.fishSearch) {
+    SG.fishSearch = Object.freeze({
+      SKYSCRAPER_WORK_LIMIT: SKYSCRAPER_WORK_LIMIT,
+      skyscraper: skyscraperSeam
+    });
+  }
 })(typeof self !== 'undefined' ? self : globalThis);

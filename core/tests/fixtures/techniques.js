@@ -28,7 +28,7 @@
  * `byId` (and `ids`) is the ACTIVE map: the historical one plus the explicit `CURRENT` entries, which replace
  * an ID's fixtures from now on without touching a v2 position. A later technique adds its entry to CURRENT,
  * built from explicit `after` lists or an initial real puzzle state. MS07b replaces the four chain IDs
- * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way.
+ * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way; MS08a adds skyscraper.
  */
 (function () {
   'use strict';
@@ -45,15 +45,16 @@
   ];
 
   /**
-   * The 23 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
-   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the two chain
-   * windows added by MS07b (forcingChainLong, nishioDeep).
+   * The 24 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
+   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the three
+   * techniques added since: skyscraper (MS08a) and the two chain windows forcingChainLong and nishioDeep
+   * (MS07b).
    */
   var REGISTRY_ORDER = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
-    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'simpleColouring', 'swordfish',
-    'jellyfish', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle', 'forcingChain', 'forcingChainLong', 'nishio',
-    'nishioDeep'
+    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'simpleColouring',
+    'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle', 'forcingChain',
+    'forcingChainLong', 'nishio', 'nishioDeep'
   ];
 
   /** The techniques the ladder tries before `id`: the position after them is where `id` is reached. */
@@ -754,12 +755,22 @@
    */
   var BELOW_CHAINS = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
-    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'simpleColouring', 'swordfish',
-    'jellyfish', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle'
+    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'simpleColouring',
+    'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle'
   ];
   var THROUGH_SHORT_CHAIN = BELOW_CHAINS.concat(['forcingChain']);
   var THROUGH_LONG_CHAIN = THROUGH_SHORT_CHAIN.concat(['forcingChainLong']);
   var THROUGH_NISHIO = THROUGH_LONG_CHAIN.concat(['nishio']);
+
+  // Where skyscraper is reached under rating v3 (MS08a): the techniques before it in the registry, and the same
+  // plus itself. Explicit copies, so that a technique registered later cannot move a position.
+  var BELOW_SKYSCRAPER = [
+    'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
+    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing'
+  ];
+  var THROUGH_SKYSCRAPER = BELOW_SKYSCRAPER.concat(['skyscraper']);
+  // The position where xWing itself is reached (a copy of the ids before it).
+  var BEFORE_XWING = BELOW_SKYSCRAPER.slice(0, BELOW_SKYSCRAPER.indexOf('xWing'));
 
   // Real unique puzzles. The first two are the puzzles of the v2 chain fixtures; the next three are famous
   // puzzles of tests/fixtures/classic.js; the last three are minimal puzzles dug by SG.testkit.dig from the
@@ -777,14 +788,66 @@
   var DUG_379 = '......4..4..8...15.5...7....8...19....23.8.......64.7........8614.........9.2...3';
   var DUG_155 = '...284.....51..83.....53....9.........8.....6.6..351.437.....6....4.2..88.......7';
 
+  // Real unique puzzles of the skyscraper fixtures (MS08a). SKY_ROWS is 'constructed-hard-1' of
+  // tests/fixtures/rated.js (dug by SG.digger.generate, then frozen): two rows with two candidates of digit 1.
+  // SKY_COLS is puzzle 26 (counting from 0) of the seeded corpus of H.randomStatesWithKnownSolution(classic9,
+  // seed 20260101), the one of the states #104-#107 of the sweep of techniques.test.js: two columns with two
+  // candidates of digit 5. SKY_SPARE is 'constructed-hard-3', a third real position for the soundness
+  // supplements. X_WING is the puzzle of the first v2 xWing fixture (its position holds a genuine X-Wing) and
+  // COLOURING that of the v2 simpleColouring negative.
+  var SKY_ROWS = '4.6..5..9.5.4.93....3........129..3...25.38...3..461........6....46.8.2.6..9..5.3';
+  var SKY_COLS = '.374.12...4...3........91.3..4...915...........27.........6.7..82........592...8.';
+  var SKY_SPARE = '4....65...623.......38..2......47.8..1.....4..7.53......9..81.......349...72....3';
+  var X_WING = '9.2.....8......1..41.85..39.....8.....3.....78..6.45.2...29..1..5...........614..';
+  var COLOURING = '....154........2..1.62..7...52..8.....79.23......54..8..3....9.5......6.7.......2';
+
   /**
-   * Current fixtures that replace a historical entry, in the shape of the entries of the map. The short chain
-   * fixtures have at most 4 links, so that they are forcingChain's under C = 4 and C = 6 alike. The long ones
-   * are the 5- and 6-link shortest proofs of two dug puzzles: forcingChainLong's under the selected C = 4
-   * (MS07c; under C = 6 they would be forcingChain's). The negatives include positions where a shorter ID owns
-   * the proof, one of them at the window boundary: a chain of 5 links is not forcingChain's.
+   * Current fixtures that replace a historical entry or belong to an ID registered since (skyscraper, MS08a), in
+   * the shape of the entries of the map. The short chain fixtures have at most 4 links, so that they are
+   * forcingChain's under C = 4 and C = 6 alike. The long ones are the 5- and 6-link shortest proofs of two dug
+   * puzzles: forcingChainLong's under the selected C = 4 (MS07c; under C = 6 they would be forcingChain's). The
+   * negatives include positions where a shorter ID owns the proof, one of them at the window boundary: a chain
+   * of 5 links is not forcingChain's.
    */
   var CURRENT = {
+    skyscraper: {
+      positive: [
+        {
+          name: 'skyscraper on digit 1, rows R1 and R8 sharing C2 (constructed-hard-1)',
+          puzzle: SKY_ROWS,
+          after: BELOW_SKYSCRAPER,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[17, 1], [61, 1], [79, 1]]
+          }
+        },
+        {
+          name: 'skyscraper on digit 5, columns C5 and C7 sharing R8 (a seeded dug puzzle)',
+          puzzle: SKY_COLS,
+          after: BELOW_SKYSCRAPER,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[7, 5]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'skyscraper has nothing left to do once the techniques through it are exhausted',
+          puzzle: COLOURING,
+          after: THROUGH_SKYSCRAPER,
+          propagate: true
+        },
+        {
+          name: 'skyscraper leaves a genuine X-Wing (two shared covers) to xWing',
+          puzzle: X_WING,
+          after: BEFORE_XWING,
+          propagate: true
+        }
+      ]
+    },
     forcingChain: {
       positive: [
         {
@@ -944,9 +1007,19 @@
    * links nor a guess inside a guess (0 firings in 120 states), so the two new chain IDs get three real
    * positions each. The dug puzzles are the stuck positions of forcingChain under the selected C = 4: the
    * shortest chains of the first two have 5 and 6 links (7 and 8 once forcingChain had exhausted every chain of
-   * up to 6 links).
+   * up to 6 links). MS08a: skyscraper is not rare (65 firings in the 300 random states), so its three real
+   * positions, the two positive fixtures and 'constructed-hard-3', only add deterministic states on top of the
+   * unchanged random population and its minimum of 3 firings.
    */
   var SUPPLEMENTS = {
+    skyscraper: [
+      { name: 'skyscraper on rows (constructed-hard-1)', puzzle: SKY_ROWS, after: BELOW_SKYSCRAPER,
+        propagate: true },
+      { name: 'skyscraper on columns (a seeded dug puzzle)', puzzle: SKY_COLS, after: BELOW_SKYSCRAPER,
+        propagate: true },
+      { name: 'skyscraper on rows (constructed-hard-3)', puzzle: SKY_SPARE, after: BELOW_SKYSCRAPER,
+        propagate: true }
+    ],
     forcingChainLong: [
       { name: 'a long chain of 5 links (dug puzzle)', puzzle: DUG_24, after: THROUGH_SHORT_CHAIN, propagate: true },
       { name: 'a long chain of 6 links (dug puzzle)', puzzle: DUG_379, after: THROUGH_SHORT_CHAIN, propagate: true },

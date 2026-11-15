@@ -342,9 +342,9 @@ Phần việc kỹ thuật (cấu hình, mô hình bàn cờ, các lần đào t
    `signs.cause`; `board.setSignMarks` nhận thêm danh sách `cause`).
 
 Các con số của ví dụ là những con số của các bài kiểm thử. Sudoku Cổ điển 9×9 mức *chuyên gia* với seed 3275974478
-có 28 vị trí và 29 bước khi hiện từng thay đổi; chế độ xem gọn của nó có 7 bước với điểm 0, 23, 44, 47, 235, 969 và
-969, và bước 47 → 235 (×5,0) là một bước tăng vọt do số cho sẵn ở R6C1 gây ra (bỏ riêng nó cho 234 điểm; lần bỏ còn
-lại của nước đi, R4C9, bỏ riêng cho 47), được đánh khung. Một đề Sudoku Cổ điển 9×9 mức *dễ* với seed 3 phát lại
+có 28 vị trí và 29 bước khi hiện từng thay đổi; chế độ xem gọn của nó có 7 bước với điểm 0, 23, 44, 47, 621, 925 và
+925, và bước 47 → 621 (×13,2) là một bước tăng vọt do số cho sẵn ở R2C4 gây ra (bỏ riêng nó cho 620 điểm; lần bỏ còn
+lại của nước đi, R8C6, bỏ riêng cho 47), được đánh khung. Một đề Sudoku Cổ điển 9×9 mức *dễ* với seed 3 phát lại
 trong 7 bước (26 bước khi hiện từng thay đổi): lời giải đầy đủ, ba bước xóa ngẫu nhiên (điểm 15, 26 và 44), hai
 bước đào có định hướng (46 và 100) và đề hoàn chỉnh với 34 số cho sẵn.
 
@@ -603,7 +603,12 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    chọn từ số lần đạt chính xác của 72 yêu cầu Nightmare mới, 36 so với 24 của 6:
    [docs/difficulty-v3/chain-window-2026-11-15.md](docs/difficulty-v3/chain-window-2026-11-15.md)), đọc ở
    mỗi lần gọi. Tùy chọn `maxChainLength` và `maxNishioDepth` của người gọi chỉ có thể thu hẹp một khoảng, không bao
-   giờ mở rộng, và lớp bao lấy giao của khoảng của nó với tùy chọn đó.
+   giờ mở rộng, và lớp bao lấy giao của khoảng của nó với tùy chọn đó. Skyscraper (`core/js/engine/tech-fish.js`,
+   nhiệm vụ MS08a) là bộ tìm có giới hạn còn lại: một đơn vị công việc là một cặp đường gốc được thử, 50.000 mỗi lần
+   gọi, ngân sách của nơi gọi được kiểm tra khi vào và trước cặp làm công việc kể từ lần kiểm tra trước vượt 256 đơn
+   vị, và khi hết giới hạn thì trả `null`, tức là mất một phép suy luận chứ không bao giờ bịa ra một phép suy luận.
+   `SG.fishSearch.skyscraper(model, state, ctx, { workLimit })` là cổng không đăng ký của các bài kiểm thử để đặt
+   một giới hạn tường minh.
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
    [Cách hoạt động](#cách-hoạt-động) — và trong các danh sách script của trình chơi (`index.html`, `help.html`,
    `tests.html`, `tests/node-runner.js`), vì kỹ thuật nằm trong bộ máy dùng chung (`core/js/engine/`) và gợi ý
@@ -961,7 +966,7 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   (`tests/fixtures/pattern-cost.js`), do suite `pattern-cost-tools` kiểm thử trên các quan sát giả, đồng hồ giả, các
   mẫu thật của các kỹ thuật chuỗi và chính công cụ; đầu ra thử nghiệm của nó nằm trong một thư mục riêng cho mỗi lần
   gọi (`.scratch-pattern-cost-tools/<pid-thời-gian-ngẫu-nhiên>/` ở gốc kho mã, bị git bỏ qua) và chỉ thư mục đó bị xóa.
-  Các mẫu đang dùng bao gồm `forcingChain`, `forcingChainLong`, `nishio` và `nishioDeep` bằng các thế cờ thật (bộ
+  Các mẫu đang dùng bao gồm `skyscraper`, `forcingChain`, `forcingChainLong`, `nishio` và `nishioDeep` bằng các thế cờ thật (bộ
   chuyển đổi có phạm vi `lawOfLeftovers` thuộc MS14b).
 - **Kiểm định các mức** — `node tests/qualify.js` chạy quy trình quyết định mỗi biến thể có những mức nào (40
   seed cố định cho mỗi biến thể và mức qua pipeline thật, thêm 60 seed cho mức ở ranh giới, ngân sách thời gian
@@ -1066,7 +1071,7 @@ Các hạn chế mà người dùng nhận thấy được liệt kê trong hư�
   giờ là điều mọi người giải đều cần, và số đếm công việc `checks` của một lần chấm điểm chỉ để chẩn đoán: nó có thể
   lệch vài đơn vị giữa hai lần chạy (các kỹ thuật tập con cách quãng các lần kiểm tra ngân sách bằng một bộ đếm sống
   qua nhiều lần giải), nên các bài kiểm thử bỏ qua nó.
-- **Trọng số độ khó là giá trị ước lượng kỹ thuật**, chưa phải số đo trên người giải: trọng số của 28 kỹ thuật
+- **Trọng số độ khó là giá trị ước lượng kỹ thuật**, chưa phải số đo trên người giải: trọng số của 29 kỹ thuật
   và chín khoảng điểm được chọn từ các phép đo trên đề do máy tạo
   ([docs/difficulty-rating/report-detailed.md](docs/difficulty-rating/report-detailed.md)); trọng số Sát thủ của `ruleOf45` và
   `cageSplit` là những ứng viên đầu tiên cần hiệu chỉnh với người chơi thật.
