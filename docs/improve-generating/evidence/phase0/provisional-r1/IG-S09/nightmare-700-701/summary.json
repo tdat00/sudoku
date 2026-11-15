@@ -1,0 +1,390 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S09",
+  "shard": "nightmare-700-701",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "formalGate": "not-evaluable-pre-freeze",
+  "status": "complete",
+  "exit": 0,
+  "coverage": {
+    "planned": 4,
+    "completed": 4,
+    "censored": 0,
+    "errors": 0,
+    "unstarted": 0,
+    "complete": true,
+    "exclusions": [
+      "a captured request is a diagnostic run with observation hooks and trace summary: never an uninstrumented headline",
+      "the post-timing diagnosis (independent rating, minimality, probes) and the harness validation are outside every generation time",
+      "the observer-free controls are overhead comparators, not new headline measurements"
+    ]
+  },
+  "sources": {
+    "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "files": 63,
+    "harnessFingerprint": "9da69f60fbd2d71eeaec2949f805ba8fac3c6f2c6bf88b5848398e5b16c128ed",
+    "adapterIds": [
+      "gt-diagnostic"
+    ],
+    "adapterHashes": [
+      "d5fd6349b824de98223eecbbb001327e08b6ece223d95fb1b5d33842e465eaae"
+    ],
+    "sourceStable": true,
+    "firewallClean": true
+  },
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 108.8116,
+      "changesSeen": 7,
+      "incrementsMs": [
+        15,
+        16,
+        31,
+        16,
+        16,
+        15
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    },
+    "commandCpuMs": 214672,
+    "processAgeAtHostMs": 580.0565
+  },
+  "pairedRows": [
+    {
+      "pairId": "greaterThan:nightmare:700",
+      "reference": {
+        "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g0",
+        "outcome": "complete",
+        "readyWallMs": 12089.1529,
+        "coldWallMs": 12215.056,
+        "cpuTotalMs": 15578,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "c3ad877f41c966b9af26fca5f285dfceb46ab07100ebba1d60c82e8f0278587b"
+      },
+      "prototype": {
+        "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g1",
+        "outcome": "complete",
+        "readyWallMs": 67782.9348,
+        "coldWallMs": 67891.7777,
+        "cpuTotalMs": 71094,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "c3ad877f41c966b9af26fca5f285dfceb46ab07100ebba1d60c82e8f0278587b"
+      },
+      "cpuFactor": 4.563743741173449,
+      "readyWallFactor": 5.606921788539874,
+      "coldWallFactor": 5.558040642629883
+    },
+    {
+      "pairId": "greaterThan:nightmare:701",
+      "reference": {
+        "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g0",
+        "outcome": "complete",
+        "readyWallMs": 16291.105299999996,
+        "coldWallMs": 16395.73609999998,
+        "cpuTotalMs": 21484,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "5a9233a9e3c827de854829f51fef9fcedec71a4e146c1c0a8977877c5f1e8288"
+      },
+      "prototype": {
+        "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g1",
+        "outcome": "complete",
+        "readyWallMs": 100844.69559999999,
+        "coldWallMs": 100950.2858,
+        "cpuTotalMs": 104781,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "5a9233a9e3c827de854829f51fef9fcedec71a4e146c1c0a8977877c5f1e8288"
+      },
+      "cpuFactor": 4.877164401415007,
+      "readyWallFactor": 6.190169036596923,
+      "coldWallFactor": 6.1571060417348455
+    }
+  ],
+  "arms": {
+    "reference": {
+      "requests": 2,
+      "complete": 2,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 0,
+      "readyWallMs": {
+        "n": 2,
+        "p50": 12089.1529,
+        "p95": 16291.105299999996,
+        "max": 16291.105299999996,
+        "upperMedian": 16291.105299999996,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 2,
+        "p50": 12215.056,
+        "p95": 16395.73609999998,
+        "max": 16395.73609999998,
+        "upperMedian": 16395.73609999998,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 2,
+        "p50": 15578,
+        "p95": 21484,
+        "max": 21484,
+        "upperMedian": 21484,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 2,
+          "cpuMs": 37062,
+          "wallMs": 28663.923499999997
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 2,
+          "cpuMs": 37062,
+          "wallMs": 28663.923499999997
+        }
+      },
+      "cpuTotalAggregateMs": 37062,
+      "cpuAggregateStatus": "resolved",
+      "wallChargedMs": 28663.923499999997,
+      "verifiedHits": 2,
+      "hitsPerCpuSecond": 0.05396362851438131,
+      "hitsPerColdWallSecond": 0.06977411867569351
+    },
+    "prototype": {
+      "requests": 2,
+      "complete": 2,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 0,
+      "readyWallMs": {
+        "n": 2,
+        "p50": 67782.9348,
+        "p95": 100844.69559999999,
+        "max": 100844.69559999999,
+        "upperMedian": 100844.69559999999,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 2,
+        "p50": 67891.7777,
+        "p95": 100950.2858,
+        "max": 100950.2858,
+        "upperMedian": 100950.2858,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 2,
+        "p50": 71094,
+        "p95": 104781,
+        "max": 104781,
+        "upperMedian": 104781,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 2,
+          "cpuMs": 175875,
+          "wallMs": 168886.6988
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 2,
+          "cpuMs": 175875,
+          "wallMs": 168886.6988
+        }
+      },
+      "cpuTotalAggregateMs": 175875,
+      "cpuAggregateStatus": "resolved",
+      "wallChargedMs": 168886.6988,
+      "verifiedHits": 2,
+      "hitsPerCpuSecond": 0.011371712864250177,
+      "hitsPerColdWallSecond": 0.011842258829207454
+    }
+  },
+  "estimateVerdict": "diagnostic only: no guided pool, setup-clue policy change or IR29 adoption follows from it (IG-S-Q16, B03)",
+  "extra": {
+    "arms": {
+      "reference": "G0: the native first-allowed sign pass, with capture",
+      "prototype": "G1: native restricted solve first in the first technique sign pass, with the same capture",
+      "control": "observer-free native request (no capture hooks)"
+    },
+    "identity": {
+      "pairs": [
+        {
+          "pairId": "greaterThan:nightmare:700",
+          "kind": "arms",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "samples": 46,
+          "passes": 278,
+          "removals": 7361,
+          "budgetPresent": false,
+          "firstDifference": null,
+          "g0Digest": "6332da1ef85c61f60c3de47e49ea733178337a4f43de584e93b394cdec6a64d9",
+          "g1Digest": "6332da1ef85c61f60c3de47e49ea733178337a4f43de584e93b394cdec6a64d9"
+        },
+        {
+          "pairId": "greaterThan:nightmare:701",
+          "kind": "arms",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "samples": 56,
+          "passes": 320,
+          "removals": 8673,
+          "budgetPresent": false,
+          "firstDifference": null,
+          "g0Digest": "72274a3e1bbbbfc0b0cc4cc95a353dabf2433df8550a52e5ed7a65ba05b0acce",
+          "g1Digest": "72274a3e1bbbbfc0b0cc4cc95a353dabf2433df8550a52e5ed7a65ba05b0acce"
+        }
+      ],
+      "failed": 0,
+      "ok": 2,
+      "guardBinding": 0,
+      "notComparable": 0,
+      "deferred": 0,
+      "complete": true
+    },
+    "requests": [
+      {
+        "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g0",
+        "arm": "g0",
+        "outcome": "complete",
+        "readyWallMs": 12089.1529,
+        "cpuTotalMs": 15578,
+        "samples": 46,
+        "dfsCalls": 36873,
+        "dfsChecks": 182694,
+        "diagStatus": "complete",
+        "diagWallMs": 186.1949999999997,
+        "problems": []
+      },
+      {
+        "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g1",
+        "arm": "g1",
+        "outcome": "complete",
+        "readyWallMs": 67782.9348,
+        "cpuTotalMs": 71094,
+        "samples": 46,
+        "dfsCalls": 32854,
+        "dfsChecks": 169133,
+        "diagStatus": "reused-only",
+        "diagWallMs": null,
+        "problems": []
+      },
+      {
+        "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g1",
+        "arm": "g1",
+        "outcome": "complete",
+        "readyWallMs": 100844.69559999999,
+        "cpuTotalMs": 104781,
+        "samples": 56,
+        "dfsCalls": 43168,
+        "dfsChecks": 277195,
+        "diagStatus": "complete",
+        "diagWallMs": 186.56649999998626,
+        "problems": []
+      },
+      {
+        "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g0",
+        "arm": "g0",
+        "outcome": "complete",
+        "readyWallMs": 16291.105299999996,
+        "cpuTotalMs": 21484,
+        "samples": 56,
+        "dfsCalls": 48044,
+        "dfsChecks": 298089,
+        "diagStatus": "reused-only",
+        "diagWallMs": null,
+        "problems": []
+      }
+    ],
+    "guardSettings": {
+      "minimalNodeCap": 200000,
+      "probeNodeCap": 200000,
+      "probeStepCap": 100000,
+      "probeGroups": 3,
+      "diagBudgetMs": 30000
+    },
+    "chain": {
+      "attempts": [
+        "a1"
+      ],
+      "resumed": false,
+      "startedBefore": [],
+      "startedHere": [
+        "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g0",
+        "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g1",
+        "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g1",
+        "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g0"
+      ],
+      "rerunKeys": [],
+      "noRerun": true,
+      "unstartedAfter": []
+    }
+  },
+  "notes": []
+}

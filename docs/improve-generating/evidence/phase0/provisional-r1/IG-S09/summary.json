@@ -1,0 +1,3616 @@
+{
+  "schema": "ig09-summary/1",
+  "task": "IG-S09",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "revision": "r1",
+  "title": "IG-S09 Greater-Than miss predicate and solve-first diagnostic (provisional, pre-freeze; pre-MS07)",
+  "population": {
+    "normal": "Greater-Than Normal, literal seeds 300-319 (20 paired requests)",
+    "nightmare": "Greater-Than Nightmare, literal seeds 700-709 (10 paired requests)",
+    "request": "trace SUMMARY (the historical diagnostic population), other options and defaults native; arm order alternates by seed index",
+    "controls": "observer-free native Normal 300 and Nightmare 700, inside the runner and the priority wrapper"
+  },
+  "coverage": {
+    "requestsRecorded": 52,
+    "completed": 52,
+    "censoredOrFailed": [],
+    "unstarted": [],
+    "plannedPairs": 30,
+    "controlsRecorded": 2,
+    "population": {
+      "normal": {
+        "pairsRecorded": 20,
+        "pairsPlanned": 20
+      },
+      "nightmare": {
+        "pairsRecorded": 6,
+        "pairsPlanned": 10
+      },
+      "unstartedRows": [
+        {
+          "key": "IG-S09/nightmare-706-707/greaterThan:nightmare:706/g0",
+          "level": "nightmare",
+          "seed": 706,
+          "arm": "g0"
+        },
+        {
+          "key": "IG-S09/nightmare-706-707/greaterThan:nightmare:706/g1",
+          "level": "nightmare",
+          "seed": 706,
+          "arm": "g1"
+        },
+        {
+          "key": "IG-S09/nightmare-706-707/greaterThan:nightmare:707/g1",
+          "level": "nightmare",
+          "seed": 707,
+          "arm": "g1"
+        },
+        {
+          "key": "IG-S09/nightmare-706-707/greaterThan:nightmare:707/g0",
+          "level": "nightmare",
+          "seed": 707,
+          "arm": "g0"
+        },
+        {
+          "key": "IG-S09/nightmare-708-709/greaterThan:nightmare:708/g0",
+          "level": "nightmare",
+          "seed": 708,
+          "arm": "g0"
+        },
+        {
+          "key": "IG-S09/nightmare-708-709/greaterThan:nightmare:708/g1",
+          "level": "nightmare",
+          "seed": 708,
+          "arm": "g1"
+        },
+        {
+          "key": "IG-S09/nightmare-708-709/greaterThan:nightmare:709/g1",
+          "level": "nightmare",
+          "seed": 709,
+          "arm": "g1"
+        },
+        {
+          "key": "IG-S09/nightmare-708-709/greaterThan:nightmare:709/g0",
+          "level": "nightmare",
+          "seed": 709,
+          "arm": "g0"
+        }
+      ],
+      "unstartedSeeds": [
+        "nightmare 706",
+        "nightmare 707",
+        "nightmare 708",
+        "nightmare 709"
+      ],
+      "controls": {
+        "planned": 2,
+        "recorded": 2
+      },
+      "note": "unstarted rows are planned and never started (budget-limited by the pack author's ruling): not excluded, not failed, not replaced"
+    }
+  },
+  "arms": {
+    "g0": "the native first-allowed sign pass with the capture",
+    "g1": "the native restricted solve (assumeUniqueness false) first in the first technique sign pass of every sample only; a complete sound proof skips that candidate's DFS count; otherwise the native count and the original reason"
+  },
+  "parity": {
+    "pairs": {
+      "total": 26,
+      "identityOk": 26,
+      "guardBindingDifference": 0,
+      "mismatch": 0,
+      "notComparable": 0,
+      "deferred": 0
+    },
+    "controls": [
+      {
+        "pairId": "control:greaterThan:normal:300",
+        "verdict": "identity-ok"
+      },
+      {
+        "pairId": "control:greaterThan:nightmare:700",
+        "verdict": "identity-ok"
+      }
+    ]
+  },
+  "physicalWork": {
+    "normal": {
+      "g0": {
+        "requests": 20,
+        "samples": 394,
+        "cumulativeOverTheRequest": {
+          "dfsCalls": 253800,
+          "dfsChecks": 1093830,
+          "restrictedSolves": 41738
+        },
+        "signPasses": {
+          "firstTechnique": {
+            "passes": 394,
+            "removals": 42552,
+            "accepted": 40197,
+            "rejectedAmbiguous": 2087,
+            "rejectedTechniques": 268,
+            "errors": 0,
+            "dfsCalls": 42552,
+            "dfsChecks": 10216,
+            "restrictedSolves": 40465,
+            "skippedDfs": 0,
+            "wallMs": 10508.912,
+            "perRemoval": {
+              "dfsCalls": 1,
+              "dfsChecks": 0.24,
+              "restrictedSolves": 0.951,
+              "skippedDfs": 0
+            },
+            "perPass": {
+              "dfsCalls": 108,
+              "dfsChecks": 25.929,
+              "restrictedSolves": 102.703,
+              "skippedDfs": 0,
+              "wallMs": 26.672
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 40197,
+                "dfsCalls": 40197,
+                "dfsChecks": 3649,
+                "solves": 40197
+              },
+              "ambiguous": {
+                "n": 2087,
+                "dfsCalls": 2087,
+                "dfsChecks": 5828,
+                "solves": 0
+              },
+              "techniques": {
+                "n": 268,
+                "dfsCalls": 268,
+                "dfsChecks": 739,
+                "solves": 268
+              }
+            },
+            "g1": {
+              "tried": 0,
+              "proved": 0,
+              "stuckAmbiguous": 0,
+              "stuckUnique": 0,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          },
+          "laterTechnique": {
+            "passes": 145,
+            "removals": 847,
+            "accepted": 145,
+            "rejectedAmbiguous": 619,
+            "rejectedTechniques": 83,
+            "errors": 0,
+            "dfsCalls": 847,
+            "dfsChecks": 2309,
+            "restrictedSolves": 228,
+            "skippedDfs": 0,
+            "wallMs": 149.583,
+            "perRemoval": {
+              "dfsCalls": 1,
+              "dfsChecks": 2.726,
+              "restrictedSolves": 0.269,
+              "skippedDfs": 0
+            },
+            "perPass": {
+              "dfsCalls": 5.841,
+              "dfsChecks": 15.924,
+              "restrictedSolves": 1.572,
+              "skippedDfs": 0,
+              "wallMs": 1.032
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 145,
+                "dfsCalls": 145,
+                "dfsChecks": 70,
+                "solves": 145
+              },
+              "ambiguous": {
+                "n": 619,
+                "dfsCalls": 619,
+                "dfsChecks": 2025,
+                "solves": 0
+              },
+              "techniques": {
+                "n": 83,
+                "dfsCalls": 83,
+                "dfsChecks": 214,
+                "solves": 83
+              }
+            },
+            "g1": {
+              "tried": 0,
+              "proved": 0,
+              "stuckAmbiguous": 0,
+              "stuckUnique": 0,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          },
+          "minimal": {
+            "passes": 539,
+            "removals": 3057,
+            "accepted": 193,
+            "rejectedAmbiguous": 2864,
+            "rejectedTechniques": 0,
+            "errors": 0,
+            "dfsCalls": 3057,
+            "dfsChecks": 12595,
+            "restrictedSolves": 0,
+            "skippedDfs": 0,
+            "wallMs": 419.99,
+            "perRemoval": {
+              "dfsCalls": 1,
+              "dfsChecks": 4.12,
+              "restrictedSolves": 0,
+              "skippedDfs": 0
+            },
+            "perPass": {
+              "dfsCalls": 5.672,
+              "dfsChecks": 23.367,
+              "restrictedSolves": 0,
+              "skippedDfs": 0,
+              "wallMs": 0.779
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 193,
+                "dfsCalls": 193,
+                "dfsChecks": 710,
+                "solves": 0
+              },
+              "ambiguous": {
+                "n": 2864,
+                "dfsCalls": 2864,
+                "dfsChecks": 11885,
+                "solves": 0
+              },
+              "techniques": {
+                "n": 0,
+                "dfsCalls": 0,
+                "dfsChecks": 0,
+                "solves": 0
+              }
+            },
+            "g1": {
+              "tried": 0,
+              "proved": 0,
+              "stuckAmbiguous": 0,
+              "stuckUnique": 0,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          },
+          "all": {
+            "passes": 1078,
+            "removals": 46456,
+            "accepted": 40535,
+            "rejectedAmbiguous": 5570,
+            "rejectedTechniques": 351,
+            "errors": 0,
+            "dfsCalls": 46456,
+            "dfsChecks": 25120,
+            "restrictedSolves": 40693,
+            "skippedDfs": 0,
+            "wallMs": 11078.485,
+            "perRemoval": {
+              "dfsCalls": 1,
+              "dfsChecks": 0.541,
+              "restrictedSolves": 0.876,
+              "skippedDfs": 0
+            },
+            "perPass": {
+              "dfsCalls": 43.095,
+              "dfsChecks": 23.302,
+              "restrictedSolves": 37.749,
+              "skippedDfs": 0,
+              "wallMs": 10.277
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 40535,
+                "dfsCalls": 40535,
+                "dfsChecks": 4429,
+                "solves": 40342
+              },
+              "ambiguous": {
+                "n": 5570,
+                "dfsCalls": 5570,
+                "dfsChecks": 19738,
+                "solves": 0
+              },
+              "techniques": {
+                "n": 351,
+                "dfsCalls": 351,
+                "dfsChecks": 953,
+                "solves": 351
+              }
+            },
+            "g1": {
+              "tried": 0,
+              "proved": 0,
+              "stuckAmbiguous": 0,
+              "stuckUnique": 0,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          }
+        },
+        "perRequest": {
+          "dfsCalls": {
+            "n": 20,
+            "p50": 1512,
+            "p95": 35211,
+            "max": 46106,
+            "upperMedian": 11503,
+            "note": null
+          },
+          "dfsChecks": {
+            "n": 20,
+            "p50": 1282,
+            "p95": 155721,
+            "max": 168800,
+            "upperMedian": 42582,
+            "note": null
+          },
+          "restrictedSolves": {
+            "n": 20,
+            "p50": 1295,
+            "p95": 5138,
+            "max": 6009,
+            "upperMedian": 1383,
+            "note": null
+          },
+          "removals": {
+            "n": 20,
+            "p50": 1495,
+            "p95": 5673,
+            "max": 6674,
+            "upperMedian": 1619,
+            "note": null
+          }
+        },
+        "perRequestRows": [
+          {
+            "key": "IG-S09/normal-300-304/greaterThan:normal:300/g0",
+            "dfsCalls": 11944,
+            "dfsChecks": 61744,
+            "restrictedSolves": 1816,
+            "inSignPassesDfsCalls": 2029,
+            "inSignPassesDfsChecks": 1178,
+            "inSignPassesSolves": 1769,
+            "removals": 2029,
+            "passes": 54,
+            "outsideSignPassesDfsCalls": 9915,
+            "outsideSignPassesDfsChecks": 60566,
+            "outsideSignPassesSolves": 47
+          },
+          {
+            "key": "IG-S09/normal-300-304/greaterThan:normal:301/g0",
+            "dfsCalls": 139,
+            "dfsChecks": 429,
+            "restrictedSolves": 105,
+            "inSignPassesDfsCalls": 137,
+            "inSignPassesDfsChecks": 381,
+            "inSignPassesSolves": 102,
+            "removals": 137,
+            "passes": 4,
+            "outsideSignPassesDfsCalls": 2,
+            "outsideSignPassesDfsChecks": 48,
+            "outsideSignPassesSolves": 3
+          },
+          {
+            "key": "IG-S09/normal-300-304/greaterThan:normal:302/g0",
+            "dfsCalls": 1130,
+            "dfsChecks": 1191,
+            "restrictedSolves": 965,
+            "inSignPassesDfsCalls": 1117,
+            "inSignPassesDfsChecks": 1110,
+            "inSignPassesSolves": 938,
+            "removals": 1117,
+            "passes": 32,
+            "outsideSignPassesDfsCalls": 13,
+            "outsideSignPassesDfsChecks": 81,
+            "outsideSignPassesSolves": 27
+          },
+          {
+            "key": "IG-S09/normal-300-304/greaterThan:normal:303/g0",
+            "dfsCalls": 23747,
+            "dfsChecks": 114796,
+            "restrictedSolves": 3629,
+            "inSignPassesDfsCalls": 4045,
+            "inSignPassesDfsChecks": 2438,
+            "inSignPassesSolves": 3526,
+            "removals": 4045,
+            "passes": 100,
+            "outsideSignPassesDfsCalls": 19702,
+            "outsideSignPassesDfsChecks": 112358,
+            "outsideSignPassesSolves": 103
+          },
+          {
+            "key": "IG-S09/normal-300-304/greaterThan:normal:304/g0",
+            "dfsCalls": 1030,
+            "dfsChecks": 493,
+            "restrictedSolves": 948,
+            "inSignPassesDfsCalls": 1018,
+            "inSignPassesDfsChecks": 435,
+            "inSignPassesSolves": 926,
+            "removals": 1018,
+            "passes": 18,
+            "outsideSignPassesDfsCalls": 12,
+            "outsideSignPassesDfsChecks": 58,
+            "outsideSignPassesSolves": 22
+          },
+          {
+            "key": "IG-S09/normal-305-309/greaterThan:normal:305/g0",
+            "dfsCalls": 231,
+            "dfsChecks": 218,
+            "restrictedSolves": 209,
+            "inSignPassesDfsCalls": 227,
+            "inSignPassesDfsChecks": 163,
+            "inSignPassesSolves": 205,
+            "removals": 227,
+            "passes": 4,
+            "outsideSignPassesDfsCalls": 4,
+            "outsideSignPassesDfsChecks": 55,
+            "outsideSignPassesSolves": 4
+          },
+          {
+            "key": "IG-S09/normal-305-309/greaterThan:normal:306/g0",
+            "dfsCalls": 844,
+            "dfsChecks": 520,
+            "restrictedSolves": 743,
+            "inSignPassesDfsCalls": 834,
+            "inSignPassesDfsChecks": 468,
+            "inSignPassesSolves": 724,
+            "removals": 834,
+            "passes": 22,
+            "outsideSignPassesDfsCalls": 10,
+            "outsideSignPassesDfsChecks": 52,
+            "outsideSignPassesSolves": 19
+          },
+          {
+            "key": "IG-S09/normal-305-309/greaterThan:normal:307/g0",
+            "dfsCalls": 711,
+            "dfsChecks": 407,
+            "restrictedSolves": 631,
+            "inSignPassesDfsCalls": 701,
+            "inSignPassesDfsChecks": 342,
+            "inSignPassesSolves": 617,
+            "removals": 701,
+            "passes": 16,
+            "outsideSignPassesDfsCalls": 10,
+            "outsideSignPassesDfsChecks": 65,
+            "outsideSignPassesSolves": 14
+          },
+          {
+            "key": "IG-S09/normal-305-309/greaterThan:normal:308/g0",
+            "dfsCalls": 34199,
+            "dfsChecks": 140437,
+            "restrictedSolves": 4118,
+            "inSignPassesDfsCalls": 4523,
+            "inSignPassesDfsChecks": 1860,
+            "inSignPassesSolves": 4017,
+            "removals": 4523,
+            "passes": 90,
+            "outsideSignPassesDfsCalls": 29676,
+            "outsideSignPassesDfsChecks": 138577,
+            "outsideSignPassesSolves": 101
+          },
+          {
+            "key": "IG-S09/normal-305-309/greaterThan:normal:309/g0",
+            "dfsCalls": 12636,
+            "dfsChecks": 55799,
+            "restrictedSolves": 2424,
+            "inSignPassesDfsCalls": 2750,
+            "inSignPassesDfsChecks": 1858,
+            "inSignPassesSolves": 2364,
+            "removals": 2750,
+            "passes": 68,
+            "outsideSignPassesDfsCalls": 9886,
+            "outsideSignPassesDfsChecks": 53941,
+            "outsideSignPassesSolves": 60
+          },
+          {
+            "key": "IG-S09/normal-310-314/greaterThan:normal:310/g0",
+            "dfsCalls": 46106,
+            "dfsChecks": 155721,
+            "restrictedSolves": 6009,
+            "inSignPassesDfsCalls": 6674,
+            "inSignPassesDfsChecks": 2797,
+            "inSignPassesSolves": 5863,
+            "removals": 6674,
+            "passes": 146,
+            "outsideSignPassesDfsCalls": 39432,
+            "outsideSignPassesDfsChecks": 152924,
+            "outsideSignPassesSolves": 146
+          },
+          {
+            "key": "IG-S09/normal-310-314/greaterThan:normal:311/g0",
+            "dfsCalls": 363,
+            "dfsChecks": 173,
+            "restrictedSolves": 318,
+            "inSignPassesDfsCalls": 358,
+            "inSignPassesDfsChecks": 125,
+            "inSignPassesSolves": 310,
+            "removals": 358,
+            "passes": 10,
+            "outsideSignPassesDfsCalls": 5,
+            "outsideSignPassesDfsChecks": 48,
+            "outsideSignPassesSolves": 8
+          },
+          {
+            "key": "IG-S09/normal-310-314/greaterThan:normal:312/g0",
+            "dfsCalls": 708,
+            "dfsChecks": 537,
+            "restrictedSolves": 634,
+            "inSignPassesDfsCalls": 699,
+            "inSignPassesDfsChecks": 482,
+            "inSignPassesSolves": 620,
+            "removals": 699,
+            "passes": 14,
+            "outsideSignPassesDfsCalls": 9,
+            "outsideSignPassesDfsChecks": 55,
+            "outsideSignPassesSolves": 14
+          },
+          {
+            "key": "IG-S09/normal-310-314/greaterThan:normal:313/g0",
+            "dfsCalls": 23532,
+            "dfsChecks": 115812,
+            "restrictedSolves": 3376,
+            "inSignPassesDfsCalls": 3733,
+            "inSignPassesDfsChecks": 1790,
+            "inSignPassesSolves": 3300,
+            "removals": 3733,
+            "passes": 78,
+            "outsideSignPassesDfsCalls": 19799,
+            "outsideSignPassesDfsChecks": 114022,
+            "outsideSignPassesSolves": 76
+          },
+          {
+            "key": "IG-S09/normal-310-314/greaterThan:normal:314/g0",
+            "dfsCalls": 1410,
+            "dfsChecks": 1103,
+            "restrictedSolves": 1256,
+            "inSignPassesDfsCalls": 1395,
+            "inSignPassesDfsChecks": 1028,
+            "inSignPassesSolves": 1230,
+            "removals": 1395,
+            "passes": 28,
+            "outsideSignPassesDfsCalls": 15,
+            "outsideSignPassesDfsChecks": 75,
+            "outsideSignPassesSolves": 26
+          },
+          {
+            "key": "IG-S09/normal-315-319/greaterThan:normal:315/g0",
+            "dfsCalls": 23502,
+            "dfsChecks": 119532,
+            "restrictedSolves": 3596,
+            "inSignPassesDfsCalls": 3895,
+            "inSignPassesDfsChecks": 1305,
+            "inSignPassesSolves": 3513,
+            "removals": 3895,
+            "passes": 78,
+            "outsideSignPassesDfsCalls": 19607,
+            "outsideSignPassesDfsChecks": 118227,
+            "outsideSignPassesSolves": 83
+          },
+          {
+            "key": "IG-S09/normal-315-319/greaterThan:normal:316/g0",
+            "dfsCalls": 23342,
+            "dfsChecks": 112254,
+            "restrictedSolves": 3145,
+            "inSignPassesDfsCalls": 3534,
+            "inSignPassesDfsChecks": 2077,
+            "inSignPassesSolves": 3071,
+            "removals": 3534,
+            "passes": 76,
+            "outsideSignPassesDfsCalls": 19808,
+            "outsideSignPassesDfsChecks": 110177,
+            "outsideSignPassesSolves": 74
+          },
+          {
+            "key": "IG-S09/normal-315-319/greaterThan:normal:317/g0",
+            "dfsCalls": 11503,
+            "dfsChecks": 42582,
+            "restrictedSolves": 1383,
+            "inSignPassesDfsCalls": 1619,
+            "inSignPassesDfsChecks": 1154,
+            "inSignPassesSolves": 1344,
+            "removals": 1619,
+            "passes": 48,
+            "outsideSignPassesDfsCalls": 9884,
+            "outsideSignPassesDfsChecks": 41428,
+            "outsideSignPassesSolves": 39
+          },
+          {
+            "key": "IG-S09/normal-315-319/greaterThan:normal:318/g0",
+            "dfsCalls": 35211,
+            "dfsChecks": 168800,
+            "restrictedSolves": 5138,
+            "inSignPassesDfsCalls": 5673,
+            "inSignPassesDfsChecks": 2938,
+            "inSignPassesSolves": 4998,
+            "removals": 5673,
+            "passes": 146,
+            "outsideSignPassesDfsCalls": 29538,
+            "outsideSignPassesDfsChecks": 165862,
+            "outsideSignPassesSolves": 140
+          },
+          {
+            "key": "IG-S09/normal-315-319/greaterThan:normal:319/g0",
+            "dfsCalls": 1512,
+            "dfsChecks": 1282,
+            "restrictedSolves": 1295,
+            "inSignPassesDfsCalls": 1495,
+            "inSignPassesDfsChecks": 1191,
+            "inSignPassesSolves": 1256,
+            "removals": 1495,
+            "passes": 46,
+            "outsideSignPassesDfsCalls": 17,
+            "outsideSignPassesDfsChecks": 91,
+            "outsideSignPassesSolves": 39
+          }
+        ]
+      },
+      "g1": {
+        "requests": 20,
+        "samples": 394,
+        "cumulativeOverTheRequest": {
+          "dfsCalls": 213603,
+          "dfsChecks": 1090181,
+          "restrictedSolves": 43825
+        },
+        "signPasses": {
+          "firstTechnique": {
+            "passes": 394,
+            "removals": 42552,
+            "accepted": 40197,
+            "rejectedAmbiguous": 2087,
+            "rejectedTechniques": 268,
+            "errors": 0,
+            "dfsCalls": 2355,
+            "dfsChecks": 6567,
+            "restrictedSolves": 42552,
+            "skippedDfs": 40197,
+            "wallMs": 8919.757,
+            "perRemoval": {
+              "dfsCalls": 0.055,
+              "dfsChecks": 0.154,
+              "restrictedSolves": 1,
+              "skippedDfs": 0.945
+            },
+            "perPass": {
+              "dfsCalls": 5.977,
+              "dfsChecks": 16.668,
+              "restrictedSolves": 108,
+              "skippedDfs": 102.023,
+              "wallMs": 22.639
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 40197,
+                "dfsCalls": 0,
+                "dfsChecks": 0,
+                "solves": 40197
+              },
+              "ambiguous": {
+                "n": 2087,
+                "dfsCalls": 2087,
+                "dfsChecks": 5828,
+                "solves": 2087
+              },
+              "techniques": {
+                "n": 268,
+                "dfsCalls": 268,
+                "dfsChecks": 739,
+                "solves": 268
+              }
+            },
+            "g1": {
+              "tried": 42552,
+              "proved": 40197,
+              "stuckAmbiguous": 2087,
+              "stuckUnique": 268,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          },
+          "laterTechnique": {
+            "passes": 145,
+            "removals": 847,
+            "accepted": 145,
+            "rejectedAmbiguous": 619,
+            "rejectedTechniques": 83,
+            "errors": 0,
+            "dfsCalls": 847,
+            "dfsChecks": 2309,
+            "restrictedSolves": 228,
+            "skippedDfs": 0,
+            "wallMs": 139.371,
+            "perRemoval": {
+              "dfsCalls": 1,
+              "dfsChecks": 2.726,
+              "restrictedSolves": 0.269,
+              "skippedDfs": 0
+            },
+            "perPass": {
+              "dfsCalls": 5.841,
+              "dfsChecks": 15.924,
+              "restrictedSolves": 1.572,
+              "skippedDfs": 0,
+              "wallMs": 0.961
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 145,
+                "dfsCalls": 145,
+                "dfsChecks": 70,
+                "solves": 145
+              },
+              "ambiguous": {
+                "n": 619,
+                "dfsCalls": 619,
+                "dfsChecks": 2025,
+                "solves": 0
+              },
+              "techniques": {
+                "n": 83,
+                "dfsCalls": 83,
+                "dfsChecks": 214,
+                "solves": 83
+              }
+            },
+            "g1": {
+              "tried": 0,
+              "proved": 0,
+              "stuckAmbiguous": 0,
+              "stuckUnique": 0,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          },
+          "minimal": {
+            "passes": 539,
+            "removals": 3057,
+            "accepted": 193,
+            "rejectedAmbiguous": 2864,
+            "rejectedTechniques": 0,
+            "errors": 0,
+            "dfsCalls": 3057,
+            "dfsChecks": 12595,
+            "restrictedSolves": 0,
+            "skippedDfs": 0,
+            "wallMs": 397.959,
+            "perRemoval": {
+              "dfsCalls": 1,
+              "dfsChecks": 4.12,
+              "restrictedSolves": 0,
+              "skippedDfs": 0
+            },
+            "perPass": {
+              "dfsCalls": 5.672,
+              "dfsChecks": 23.367,
+              "restrictedSolves": 0,
+              "skippedDfs": 0,
+              "wallMs": 0.738
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 193,
+                "dfsCalls": 193,
+                "dfsChecks": 710,
+                "solves": 0
+              },
+              "ambiguous": {
+                "n": 2864,
+                "dfsCalls": 2864,
+                "dfsChecks": 11885,
+                "solves": 0
+              },
+              "techniques": {
+                "n": 0,
+                "dfsCalls": 0,
+                "dfsChecks": 0,
+                "solves": 0
+              }
+            },
+            "g1": {
+              "tried": 0,
+              "proved": 0,
+              "stuckAmbiguous": 0,
+              "stuckUnique": 0,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          },
+          "all": {
+            "passes": 1078,
+            "removals": 46456,
+            "accepted": 40535,
+            "rejectedAmbiguous": 5570,
+            "rejectedTechniques": 351,
+            "errors": 0,
+            "dfsCalls": 6259,
+            "dfsChecks": 21471,
+            "restrictedSolves": 42780,
+            "skippedDfs": 40197,
+            "wallMs": 9457.087,
+            "perRemoval": {
+              "dfsCalls": 0.135,
+              "dfsChecks": 0.462,
+              "restrictedSolves": 0.921,
+              "skippedDfs": 0.865
+            },
+            "perPass": {
+              "dfsCalls": 5.806,
+              "dfsChecks": 19.917,
+              "restrictedSolves": 39.685,
+              "skippedDfs": 37.288,
+              "wallMs": 8.773
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 40535,
+                "dfsCalls": 338,
+                "dfsChecks": 780,
+                "solves": 40342
+              },
+              "ambiguous": {
+                "n": 5570,
+                "dfsCalls": 5570,
+                "dfsChecks": 19738,
+                "solves": 2087
+              },
+              "techniques": {
+                "n": 351,
+                "dfsCalls": 351,
+                "dfsChecks": 953,
+                "solves": 351
+              }
+            },
+            "g1": {
+              "tried": 42552,
+              "proved": 40197,
+              "stuckAmbiguous": 2087,
+              "stuckUnique": 268,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          }
+        },
+        "perRequest": {
+          "dfsCalls": {
+            "n": 20,
+            "p50": 292,
+            "p95": 30283,
+            "max": 40297,
+            "upperMedian": 10190,
+            "note": null
+          },
+          "dfsChecks": {
+            "n": 20,
+            "p50": 1122,
+            "p95": 155466,
+            "max": 168333,
+            "upperMedian": 42410,
+            "note": null
+          },
+          "restrictedSolves": {
+            "n": 20,
+            "p50": 1351,
+            "p95": 5362,
+            "max": 6326,
+            "upperMedian": 1461,
+            "note": null
+          },
+          "removals": {
+            "n": 20,
+            "p50": 1495,
+            "p95": 5673,
+            "max": 6674,
+            "upperMedian": 1619,
+            "note": null
+          }
+        },
+        "perRequestRows": [
+          {
+            "key": "IG-S09/normal-300-304/greaterThan:normal:300/g1",
+            "dfsCalls": 10207,
+            "dfsChecks": 61614,
+            "restrictedSolves": 1901,
+            "inSignPassesDfsCalls": 292,
+            "inSignPassesDfsChecks": 1048,
+            "inSignPassesSolves": 1854,
+            "removals": 2029,
+            "passes": 54,
+            "outsideSignPassesDfsCalls": 9915,
+            "outsideSignPassesDfsChecks": 60566,
+            "outsideSignPassesSolves": 47
+          },
+          {
+            "key": "IG-S09/normal-300-304/greaterThan:normal:301/g1",
+            "dfsCalls": 42,
+            "dfsChecks": 334,
+            "restrictedSolves": 114,
+            "inSignPassesDfsCalls": 40,
+            "inSignPassesDfsChecks": 286,
+            "inSignPassesSolves": 111,
+            "removals": 137,
+            "passes": 4,
+            "outsideSignPassesDfsCalls": 2,
+            "outsideSignPassesDfsChecks": 48,
+            "outsideSignPassesSolves": 3
+          },
+          {
+            "key": "IG-S09/normal-300-304/greaterThan:normal:302/g1",
+            "dfsCalls": 211,
+            "dfsChecks": 956,
+            "restrictedSolves": 1010,
+            "inSignPassesDfsCalls": 198,
+            "inSignPassesDfsChecks": 875,
+            "inSignPassesSolves": 983,
+            "removals": 1117,
+            "passes": 32,
+            "outsideSignPassesDfsCalls": 13,
+            "outsideSignPassesDfsChecks": 81,
+            "outsideSignPassesSolves": 27
+          },
+          {
+            "key": "IG-S09/normal-300-304/greaterThan:normal:303/g1",
+            "dfsCalls": 20270,
+            "dfsChecks": 114466,
+            "restrictedSolves": 3798,
+            "inSignPassesDfsCalls": 568,
+            "inSignPassesDfsChecks": 2108,
+            "inSignPassesSolves": 3695,
+            "removals": 4045,
+            "passes": 100,
+            "outsideSignPassesDfsCalls": 19702,
+            "outsideSignPassesDfsChecks": 112358,
+            "outsideSignPassesSolves": 103
+          },
+          {
+            "key": "IG-S09/normal-300-304/greaterThan:normal:304/g1",
+            "dfsCalls": 104,
+            "dfsChecks": 387,
+            "restrictedSolves": 994,
+            "inSignPassesDfsCalls": 92,
+            "inSignPassesDfsChecks": 329,
+            "inSignPassesSolves": 972,
+            "removals": 1018,
+            "passes": 18,
+            "outsideSignPassesDfsCalls": 12,
+            "outsideSignPassesDfsChecks": 58,
+            "outsideSignPassesSolves": 22
+          },
+          {
+            "key": "IG-S09/normal-305-309/greaterThan:normal:305/g1",
+            "dfsCalls": 26,
+            "dfsChecks": 148,
+            "restrictedSolves": 220,
+            "inSignPassesDfsCalls": 22,
+            "inSignPassesDfsChecks": 93,
+            "inSignPassesSolves": 216,
+            "removals": 227,
+            "passes": 4,
+            "outsideSignPassesDfsCalls": 4,
+            "outsideSignPassesDfsChecks": 55,
+            "outsideSignPassesSolves": 4
+          },
+          {
+            "key": "IG-S09/normal-305-309/greaterThan:normal:306/g1",
+            "dfsCalls": 132,
+            "dfsChecks": 492,
+            "restrictedSolves": 779,
+            "inSignPassesDfsCalls": 122,
+            "inSignPassesDfsChecks": 440,
+            "inSignPassesSolves": 760,
+            "removals": 834,
+            "passes": 22,
+            "outsideSignPassesDfsCalls": 10,
+            "outsideSignPassesDfsChecks": 52,
+            "outsideSignPassesSolves": 19
+          },
+          {
+            "key": "IG-S09/normal-305-309/greaterThan:normal:307/g1",
+            "dfsCalls": 98,
+            "dfsChecks": 365,
+            "restrictedSolves": 663,
+            "inSignPassesDfsCalls": 88,
+            "inSignPassesDfsChecks": 300,
+            "inSignPassesSolves": 649,
+            "removals": 701,
+            "passes": 16,
+            "outsideSignPassesDfsCalls": 10,
+            "outsideSignPassesDfsChecks": 65,
+            "outsideSignPassesSolves": 14
+          },
+          {
+            "key": "IG-S09/normal-305-309/greaterThan:normal:308/g1",
+            "dfsCalls": 30209,
+            "dfsChecks": 140266,
+            "restrictedSolves": 4325,
+            "inSignPassesDfsCalls": 533,
+            "inSignPassesDfsChecks": 1689,
+            "inSignPassesSolves": 4224,
+            "removals": 4523,
+            "passes": 90,
+            "outsideSignPassesDfsCalls": 29676,
+            "outsideSignPassesDfsChecks": 138577,
+            "outsideSignPassesSolves": 101
+          },
+          {
+            "key": "IG-S09/normal-305-309/greaterThan:normal:309/g1",
+            "dfsCalls": 10308,
+            "dfsChecks": 55440,
+            "restrictedSolves": 2566,
+            "inSignPassesDfsCalls": 422,
+            "inSignPassesDfsChecks": 1499,
+            "inSignPassesSolves": 2506,
+            "removals": 2750,
+            "passes": 68,
+            "outsideSignPassesDfsCalls": 9886,
+            "outsideSignPassesDfsChecks": 53941,
+            "outsideSignPassesSolves": 60
+          },
+          {
+            "key": "IG-S09/normal-310-314/greaterThan:normal:310/g1",
+            "dfsCalls": 40297,
+            "dfsChecks": 155466,
+            "restrictedSolves": 6326,
+            "inSignPassesDfsCalls": 865,
+            "inSignPassesDfsChecks": 2542,
+            "inSignPassesSolves": 6180,
+            "removals": 6674,
+            "passes": 146,
+            "outsideSignPassesDfsCalls": 39432,
+            "outsideSignPassesDfsChecks": 152924,
+            "outsideSignPassesSolves": 146
+          },
+          {
+            "key": "IG-S09/normal-310-314/greaterThan:normal:311/g1",
+            "dfsCalls": 56,
+            "dfsChecks": 162,
+            "restrictedSolves": 333,
+            "inSignPassesDfsCalls": 51,
+            "inSignPassesDfsChecks": 114,
+            "inSignPassesSolves": 325,
+            "removals": 358,
+            "passes": 10,
+            "outsideSignPassesDfsCalls": 5,
+            "outsideSignPassesDfsChecks": 48,
+            "outsideSignPassesSolves": 8
+          },
+          {
+            "key": "IG-S09/normal-310-314/greaterThan:normal:312/g1",
+            "dfsCalls": 96,
+            "dfsChecks": 424,
+            "restrictedSolves": 665,
+            "inSignPassesDfsCalls": 87,
+            "inSignPassesDfsChecks": 369,
+            "inSignPassesSolves": 651,
+            "removals": 699,
+            "passes": 14,
+            "outsideSignPassesDfsCalls": 9,
+            "outsideSignPassesDfsChecks": 55,
+            "outsideSignPassesSolves": 14
+          },
+          {
+            "key": "IG-S09/normal-310-314/greaterThan:normal:313/g1",
+            "dfsCalls": 20263,
+            "dfsChecks": 115551,
+            "restrictedSolves": 3543,
+            "inSignPassesDfsCalls": 464,
+            "inSignPassesDfsChecks": 1529,
+            "inSignPassesSolves": 3467,
+            "removals": 3733,
+            "passes": 78,
+            "outsideSignPassesDfsCalls": 19799,
+            "outsideSignPassesDfsChecks": 114022,
+            "outsideSignPassesSolves": 76
+          },
+          {
+            "key": "IG-S09/normal-310-314/greaterThan:normal:314/g1",
+            "dfsCalls": 192,
+            "dfsChecks": 842,
+            "restrictedSolves": 1325,
+            "inSignPassesDfsCalls": 177,
+            "inSignPassesDfsChecks": 767,
+            "inSignPassesSolves": 1299,
+            "removals": 1395,
+            "passes": 28,
+            "outsideSignPassesDfsCalls": 15,
+            "outsideSignPassesDfsChecks": 75,
+            "outsideSignPassesSolves": 26
+          },
+          {
+            "key": "IG-S09/normal-315-319/greaterThan:normal:315/g1",
+            "dfsCalls": 20015,
+            "dfsChecks": 119423,
+            "restrictedSolves": 3763,
+            "inSignPassesDfsCalls": 408,
+            "inSignPassesDfsChecks": 1196,
+            "inSignPassesSolves": 3680,
+            "removals": 3895,
+            "passes": 78,
+            "outsideSignPassesDfsCalls": 19607,
+            "outsideSignPassesDfsChecks": 118227,
+            "outsideSignPassesSolves": 83
+          },
+          {
+            "key": "IG-S09/normal-315-319/greaterThan:normal:316/g1",
+            "dfsCalls": 20312,
+            "dfsChecks": 111980,
+            "restrictedSolves": 3326,
+            "inSignPassesDfsCalls": 504,
+            "inSignPassesDfsChecks": 1803,
+            "inSignPassesSolves": 3252,
+            "removals": 3534,
+            "passes": 76,
+            "outsideSignPassesDfsCalls": 19808,
+            "outsideSignPassesDfsChecks": 110177,
+            "outsideSignPassesSolves": 74
+          },
+          {
+            "key": "IG-S09/normal-315-319/greaterThan:normal:317/g1",
+            "dfsCalls": 10190,
+            "dfsChecks": 42410,
+            "restrictedSolves": 1461,
+            "inSignPassesDfsCalls": 306,
+            "inSignPassesDfsChecks": 982,
+            "inSignPassesSolves": 1422,
+            "removals": 1619,
+            "passes": 48,
+            "outsideSignPassesDfsCalls": 9884,
+            "outsideSignPassesDfsChecks": 41428,
+            "outsideSignPassesSolves": 39
+          },
+          {
+            "key": "IG-S09/normal-315-319/greaterThan:normal:318/g1",
+            "dfsCalls": 30283,
+            "dfsChecks": 168333,
+            "restrictedSolves": 5362,
+            "inSignPassesDfsCalls": 745,
+            "inSignPassesDfsChecks": 2471,
+            "inSignPassesSolves": 5222,
+            "removals": 5673,
+            "passes": 146,
+            "outsideSignPassesDfsCalls": 29538,
+            "outsideSignPassesDfsChecks": 165862,
+            "outsideSignPassesSolves": 140
+          },
+          {
+            "key": "IG-S09/normal-315-319/greaterThan:normal:319/g1",
+            "dfsCalls": 292,
+            "dfsChecks": 1122,
+            "restrictedSolves": 1351,
+            "inSignPassesDfsCalls": 275,
+            "inSignPassesDfsChecks": 1031,
+            "inSignPassesSolves": 1312,
+            "removals": 1495,
+            "passes": 46,
+            "outsideSignPassesDfsCalls": 17,
+            "outsideSignPassesDfsChecks": 91,
+            "outsideSignPassesSolves": 39
+          }
+        ]
+      }
+    },
+    "nightmare": {
+      "g0": {
+        "requests": 6,
+        "samples": 175,
+        "cumulativeOverTheRequest": {
+          "dfsCalls": 147473,
+          "dfsChecks": 919824,
+          "restrictedSolves": 18044
+        },
+        "signPasses": {
+          "firstTechnique": {
+            "passes": 175,
+            "removals": 18900,
+            "accepted": 16359,
+            "rejectedAmbiguous": 2541,
+            "rejectedTechniques": 0,
+            "errors": 0,
+            "dfsCalls": 18900,
+            "dfsChecks": 98993,
+            "restrictedSolves": 16359,
+            "skippedDfs": 0,
+            "wallMs": 23780.715,
+            "perRemoval": {
+              "dfsCalls": 1,
+              "dfsChecks": 5.238,
+              "restrictedSolves": 0.866,
+              "skippedDfs": 0
+            },
+            "perPass": {
+              "dfsCalls": 108,
+              "dfsChecks": 565.674,
+              "restrictedSolves": 93.48,
+              "skippedDfs": 0,
+              "wallMs": 135.89
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 16359,
+                "dfsCalls": 16359,
+                "dfsChecks": 65301,
+                "solves": 16359
+              },
+              "ambiguous": {
+                "n": 2541,
+                "dfsCalls": 2541,
+                "dfsChecks": 33692,
+                "solves": 0
+              },
+              "techniques": {
+                "n": 0,
+                "dfsCalls": 0,
+                "dfsChecks": 0,
+                "solves": 0
+              }
+            },
+            "g1": {
+              "tried": 0,
+              "proved": 0,
+              "stuckAmbiguous": 0,
+              "stuckUnique": 0,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          },
+          "laterTechnique": {
+            "passes": 376,
+            "removals": 4525,
+            "accepted": 917,
+            "rejectedAmbiguous": 3608,
+            "rejectedTechniques": 0,
+            "errors": 0,
+            "dfsCalls": 4525,
+            "dfsChecks": 42076,
+            "restrictedSolves": 917,
+            "skippedDfs": 0,
+            "wallMs": 3325.352,
+            "perRemoval": {
+              "dfsCalls": 1,
+              "dfsChecks": 9.299,
+              "restrictedSolves": 0.203,
+              "skippedDfs": 0
+            },
+            "perPass": {
+              "dfsCalls": 12.035,
+              "dfsChecks": 111.904,
+              "restrictedSolves": 2.439,
+              "skippedDfs": 0,
+              "wallMs": 8.844
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 917,
+                "dfsCalls": 917,
+                "dfsChecks": 8412,
+                "solves": 917
+              },
+              "ambiguous": {
+                "n": 3608,
+                "dfsCalls": 3608,
+                "dfsChecks": 33664,
+                "solves": 0
+              },
+              "techniques": {
+                "n": 0,
+                "dfsCalls": 0,
+                "dfsChecks": 0,
+                "solves": 0
+              }
+            },
+            "g1": {
+              "tried": 0,
+              "proved": 0,
+              "stuckAmbiguous": 0,
+              "stuckUnique": 0,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          },
+          "minimal": {
+            "passes": 551,
+            "removals": 6149,
+            "accepted": 0,
+            "rejectedAmbiguous": 6149,
+            "rejectedTechniques": 0,
+            "errors": 0,
+            "dfsCalls": 6149,
+            "dfsChecks": 82870,
+            "restrictedSolves": 0,
+            "skippedDfs": 0,
+            "wallMs": 1276.224,
+            "perRemoval": {
+              "dfsCalls": 1,
+              "dfsChecks": 13.477,
+              "restrictedSolves": 0,
+              "skippedDfs": 0
+            },
+            "perPass": {
+              "dfsCalls": 11.16,
+              "dfsChecks": 150.399,
+              "restrictedSolves": 0,
+              "skippedDfs": 0,
+              "wallMs": 2.316
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 0,
+                "dfsCalls": 0,
+                "dfsChecks": 0,
+                "solves": 0
+              },
+              "ambiguous": {
+                "n": 6149,
+                "dfsCalls": 6149,
+                "dfsChecks": 82870,
+                "solves": 0
+              },
+              "techniques": {
+                "n": 0,
+                "dfsCalls": 0,
+                "dfsChecks": 0,
+                "solves": 0
+              }
+            },
+            "g1": {
+              "tried": 0,
+              "proved": 0,
+              "stuckAmbiguous": 0,
+              "stuckUnique": 0,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          },
+          "all": {
+            "passes": 1102,
+            "removals": 29574,
+            "accepted": 17276,
+            "rejectedAmbiguous": 12298,
+            "rejectedTechniques": 0,
+            "errors": 0,
+            "dfsCalls": 29574,
+            "dfsChecks": 223939,
+            "restrictedSolves": 17276,
+            "skippedDfs": 0,
+            "wallMs": 28382.291,
+            "perRemoval": {
+              "dfsCalls": 1,
+              "dfsChecks": 7.572,
+              "restrictedSolves": 0.584,
+              "skippedDfs": 0
+            },
+            "perPass": {
+              "dfsCalls": 26.837,
+              "dfsChecks": 203.211,
+              "restrictedSolves": 15.677,
+              "skippedDfs": 0,
+              "wallMs": 25.755
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 17276,
+                "dfsCalls": 17276,
+                "dfsChecks": 73713,
+                "solves": 17276
+              },
+              "ambiguous": {
+                "n": 12298,
+                "dfsCalls": 12298,
+                "dfsChecks": 150226,
+                "solves": 0
+              },
+              "techniques": {
+                "n": 0,
+                "dfsCalls": 0,
+                "dfsChecks": 0,
+                "solves": 0
+              }
+            },
+            "g1": {
+              "tried": 0,
+              "proved": 0,
+              "stuckAmbiguous": 0,
+              "stuckUnique": 0,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          }
+        },
+        "perRequest": {
+          "dfsCalls": {
+            "n": 6,
+            "p50": 24480,
+            "p95": 48044,
+            "max": 48044,
+            "upperMedian": 36077,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          },
+          "dfsChecks": {
+            "n": 6,
+            "p50": 182694,
+            "p95": 298089,
+            "max": 298089,
+            "upperMedian": 203716,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          },
+          "restrictedSolves": {
+            "n": 6,
+            "p50": 2892,
+            "p95": 5383,
+            "max": 5383,
+            "upperMedian": 4083,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          },
+          "removals": {
+            "n": 6,
+            "p50": 4901,
+            "p95": 8673,
+            "max": 8673,
+            "upperMedian": 6662,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          }
+        },
+        "perRequestRows": [
+          {
+            "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g0",
+            "dfsCalls": 36873,
+            "dfsChecks": 182694,
+            "restrictedSolves": 4424,
+            "inSignPassesDfsCalls": 7361,
+            "inSignPassesDfsChecks": 50068,
+            "inSignPassesSolves": 4231,
+            "removals": 7361,
+            "passes": 278,
+            "outsideSignPassesDfsCalls": 29512,
+            "outsideSignPassesDfsChecks": 132626,
+            "outsideSignPassesSolves": 193
+          },
+          {
+            "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g0",
+            "dfsCalls": 48044,
+            "dfsChecks": 298089,
+            "restrictedSolves": 5383,
+            "inSignPassesDfsCalls": 8673,
+            "inSignPassesDfsChecks": 66491,
+            "inSignPassesSolves": 5155,
+            "removals": 8673,
+            "passes": 320,
+            "outsideSignPassesDfsCalls": 39371,
+            "outsideSignPassesDfsChecks": 231598,
+            "outsideSignPassesSolves": 228
+          },
+          {
+            "key": "IG-S09/nightmare-702-703/greaterThan:nightmare:702/g0",
+            "dfsCalls": 24480,
+            "dfsChecks": 224492,
+            "restrictedSolves": 2892,
+            "inSignPassesDfsCalls": 4901,
+            "inSignPassesDfsChecks": 41737,
+            "inSignPassesSolves": 2765,
+            "removals": 4901,
+            "passes": 190,
+            "outsideSignPassesDfsCalls": 19579,
+            "outsideSignPassesDfsChecks": 182755,
+            "outsideSignPassesSolves": 127
+          },
+          {
+            "key": "IG-S09/nightmare-702-703/greaterThan:nightmare:703/g0",
+            "dfsCalls": 1837,
+            "dfsChecks": 9712,
+            "restrictedSolves": 1157,
+            "inSignPassesDfsCalls": 1819,
+            "inSignPassesDfsChecks": 9553,
+            "inSignPassesSolves": 1103,
+            "removals": 1819,
+            "passes": 72,
+            "outsideSignPassesDfsCalls": 18,
+            "outsideSignPassesDfsChecks": 159,
+            "outsideSignPassesSolves": 54
+          },
+          {
+            "key": "IG-S09/nightmare-704-705/greaterThan:nightmare:704/g0",
+            "dfsCalls": 162,
+            "dfsChecks": 1121,
+            "restrictedSolves": 105,
+            "inSignPassesDfsCalls": 158,
+            "inSignPassesDfsChecks": 1032,
+            "inSignPassesSolves": 100,
+            "removals": 158,
+            "passes": 6,
+            "outsideSignPassesDfsCalls": 4,
+            "outsideSignPassesDfsChecks": 89,
+            "outsideSignPassesSolves": 5
+          },
+          {
+            "key": "IG-S09/nightmare-704-705/greaterThan:nightmare:705/g0",
+            "dfsCalls": 36077,
+            "dfsChecks": 203716,
+            "restrictedSolves": 4083,
+            "inSignPassesDfsCalls": 6662,
+            "inSignPassesDfsChecks": 55058,
+            "inSignPassesSolves": 3922,
+            "removals": 6662,
+            "passes": 236,
+            "outsideSignPassesDfsCalls": 29415,
+            "outsideSignPassesDfsChecks": 148658,
+            "outsideSignPassesSolves": 161
+          }
+        ]
+      },
+      "g1": {
+        "requests": 6,
+        "samples": 175,
+        "cumulativeOverTheRequest": {
+          "dfsCalls": 131114,
+          "dfsChecks": 854523,
+          "restrictedSolves": 20585
+        },
+        "signPasses": {
+          "firstTechnique": {
+            "passes": 175,
+            "removals": 18900,
+            "accepted": 16359,
+            "rejectedAmbiguous": 2541,
+            "rejectedTechniques": 0,
+            "errors": 0,
+            "dfsCalls": 2541,
+            "dfsChecks": 33692,
+            "restrictedSolves": 18900,
+            "skippedDfs": 16359,
+            "wallMs": 277863.654,
+            "perRemoval": {
+              "dfsCalls": 0.134,
+              "dfsChecks": 1.783,
+              "restrictedSolves": 1,
+              "skippedDfs": 0.866
+            },
+            "perPass": {
+              "dfsCalls": 14.52,
+              "dfsChecks": 192.526,
+              "restrictedSolves": 108,
+              "skippedDfs": 93.48,
+              "wallMs": 1587.792
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 16359,
+                "dfsCalls": 0,
+                "dfsChecks": 0,
+                "solves": 16359
+              },
+              "ambiguous": {
+                "n": 2541,
+                "dfsCalls": 2541,
+                "dfsChecks": 33692,
+                "solves": 2541
+              },
+              "techniques": {
+                "n": 0,
+                "dfsCalls": 0,
+                "dfsChecks": 0,
+                "solves": 0
+              }
+            },
+            "g1": {
+              "tried": 18900,
+              "proved": 16359,
+              "stuckAmbiguous": 2541,
+              "stuckUnique": 0,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          },
+          "laterTechnique": {
+            "passes": 376,
+            "removals": 4525,
+            "accepted": 917,
+            "rejectedAmbiguous": 3608,
+            "rejectedTechniques": 0,
+            "errors": 0,
+            "dfsCalls": 4525,
+            "dfsChecks": 42076,
+            "restrictedSolves": 917,
+            "skippedDfs": 0,
+            "wallMs": 3331.543,
+            "perRemoval": {
+              "dfsCalls": 1,
+              "dfsChecks": 9.299,
+              "restrictedSolves": 0.203,
+              "skippedDfs": 0
+            },
+            "perPass": {
+              "dfsCalls": 12.035,
+              "dfsChecks": 111.904,
+              "restrictedSolves": 2.439,
+              "skippedDfs": 0,
+              "wallMs": 8.86
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 917,
+                "dfsCalls": 917,
+                "dfsChecks": 8412,
+                "solves": 917
+              },
+              "ambiguous": {
+                "n": 3608,
+                "dfsCalls": 3608,
+                "dfsChecks": 33664,
+                "solves": 0
+              },
+              "techniques": {
+                "n": 0,
+                "dfsCalls": 0,
+                "dfsChecks": 0,
+                "solves": 0
+              }
+            },
+            "g1": {
+              "tried": 0,
+              "proved": 0,
+              "stuckAmbiguous": 0,
+              "stuckUnique": 0,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          },
+          "minimal": {
+            "passes": 551,
+            "removals": 6149,
+            "accepted": 0,
+            "rejectedAmbiguous": 6149,
+            "rejectedTechniques": 0,
+            "errors": 0,
+            "dfsCalls": 6149,
+            "dfsChecks": 82870,
+            "restrictedSolves": 0,
+            "skippedDfs": 0,
+            "wallMs": 1281.388,
+            "perRemoval": {
+              "dfsCalls": 1,
+              "dfsChecks": 13.477,
+              "restrictedSolves": 0,
+              "skippedDfs": 0
+            },
+            "perPass": {
+              "dfsCalls": 11.16,
+              "dfsChecks": 150.399,
+              "restrictedSolves": 0,
+              "skippedDfs": 0,
+              "wallMs": 2.326
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 0,
+                "dfsCalls": 0,
+                "dfsChecks": 0,
+                "solves": 0
+              },
+              "ambiguous": {
+                "n": 6149,
+                "dfsCalls": 6149,
+                "dfsChecks": 82870,
+                "solves": 0
+              },
+              "techniques": {
+                "n": 0,
+                "dfsCalls": 0,
+                "dfsChecks": 0,
+                "solves": 0
+              }
+            },
+            "g1": {
+              "tried": 0,
+              "proved": 0,
+              "stuckAmbiguous": 0,
+              "stuckUnique": 0,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          },
+          "all": {
+            "passes": 1102,
+            "removals": 29574,
+            "accepted": 17276,
+            "rejectedAmbiguous": 12298,
+            "rejectedTechniques": 0,
+            "errors": 0,
+            "dfsCalls": 13215,
+            "dfsChecks": 158638,
+            "restrictedSolves": 19817,
+            "skippedDfs": 16359,
+            "wallMs": 282476.585,
+            "perRemoval": {
+              "dfsCalls": 0.447,
+              "dfsChecks": 5.364,
+              "restrictedSolves": 0.67,
+              "skippedDfs": 0.553
+            },
+            "perPass": {
+              "dfsCalls": 11.992,
+              "dfsChecks": 143.955,
+              "restrictedSolves": 17.983,
+              "skippedDfs": 14.845,
+              "wallMs": 256.331
+            },
+            "byOutcome": {
+              "accepted": {
+                "n": 17276,
+                "dfsCalls": 917,
+                "dfsChecks": 8412,
+                "solves": 17276
+              },
+              "ambiguous": {
+                "n": 12298,
+                "dfsCalls": 12298,
+                "dfsChecks": 150226,
+                "solves": 2541
+              },
+              "techniques": {
+                "n": 0,
+                "dfsCalls": 0,
+                "dfsChecks": 0,
+                "solves": 0
+              }
+            },
+            "g1": {
+              "tried": 18900,
+              "proved": 16359,
+              "stuckAmbiguous": 2541,
+              "stuckUnique": 0,
+              "fallbackContradiction": 0,
+              "fallbackError": 0,
+              "fallbackShape": 0,
+              "unsoundProof": 0
+            }
+          }
+        },
+        "perRequest": {
+          "dfsCalls": {
+            "n": 6,
+            "p50": 21882,
+            "p95": 43168,
+            "max": 43168,
+            "upperMedian": 32350,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          },
+          "dfsChecks": {
+            "n": 6,
+            "p50": 169133,
+            "p95": 277195,
+            "max": 277195,
+            "upperMedian": 186253,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          },
+          "restrictedSolves": {
+            "n": 6,
+            "p50": 3318,
+            "p95": 6123,
+            "max": 6123,
+            "upperMedian": 4676,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          },
+          "removals": {
+            "n": 6,
+            "p50": 4901,
+            "p95": 8673,
+            "max": 8673,
+            "upperMedian": 6662,
+            "note": "p95 is the observed maximum, not a production-tail estimate"
+          }
+        },
+        "perRequestRows": [
+          {
+            "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g1",
+            "dfsCalls": 32854,
+            "dfsChecks": 169133,
+            "restrictedSolves": 5049,
+            "inSignPassesDfsCalls": 3342,
+            "inSignPassesDfsChecks": 36507,
+            "inSignPassesSolves": 4856,
+            "removals": 7361,
+            "passes": 278,
+            "outsideSignPassesDfsCalls": 29512,
+            "outsideSignPassesDfsChecks": 132626,
+            "outsideSignPassesSolves": 193
+          },
+          {
+            "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g1",
+            "dfsCalls": 43168,
+            "dfsChecks": 277195,
+            "restrictedSolves": 6123,
+            "inSignPassesDfsCalls": 3797,
+            "inSignPassesDfsChecks": 45597,
+            "inSignPassesSolves": 5895,
+            "removals": 8673,
+            "passes": 320,
+            "outsideSignPassesDfsCalls": 39371,
+            "outsideSignPassesDfsChecks": 231598,
+            "outsideSignPassesSolves": 228
+          },
+          {
+            "key": "IG-S09/nightmare-702-703/greaterThan:nightmare:702/g1",
+            "dfsCalls": 21882,
+            "dfsChecks": 213953,
+            "restrictedSolves": 3318,
+            "inSignPassesDfsCalls": 2303,
+            "inSignPassesDfsChecks": 31198,
+            "inSignPassesSolves": 3191,
+            "removals": 4901,
+            "passes": 190,
+            "outsideSignPassesDfsCalls": 19579,
+            "outsideSignPassesDfsChecks": 182755,
+            "outsideSignPassesSolves": 127
+          },
+          {
+            "key": "IG-S09/nightmare-702-703/greaterThan:nightmare:703/g1",
+            "dfsCalls": 795,
+            "dfsChecks": 7159,
+            "restrictedSolves": 1303,
+            "inSignPassesDfsCalls": 777,
+            "inSignPassesDfsChecks": 7000,
+            "inSignPassesSolves": 1249,
+            "removals": 1819,
+            "passes": 72,
+            "outsideSignPassesDfsCalls": 18,
+            "outsideSignPassesDfsChecks": 159,
+            "outsideSignPassesSolves": 54
+          },
+          {
+            "key": "IG-S09/nightmare-704-705/greaterThan:nightmare:704/g1",
+            "dfsCalls": 65,
+            "dfsChecks": 830,
+            "restrictedSolves": 116,
+            "inSignPassesDfsCalls": 61,
+            "inSignPassesDfsChecks": 741,
+            "inSignPassesSolves": 111,
+            "removals": 158,
+            "passes": 6,
+            "outsideSignPassesDfsCalls": 4,
+            "outsideSignPassesDfsChecks": 89,
+            "outsideSignPassesSolves": 5
+          },
+          {
+            "key": "IG-S09/nightmare-704-705/greaterThan:nightmare:705/g1",
+            "dfsCalls": 32350,
+            "dfsChecks": 186253,
+            "restrictedSolves": 4676,
+            "inSignPassesDfsCalls": 2935,
+            "inSignPassesDfsChecks": 37595,
+            "inSignPassesSolves": 4515,
+            "removals": 6662,
+            "passes": 236,
+            "outsideSignPassesDfsCalls": 29415,
+            "outsideSignPassesDfsChecks": 148658,
+            "outsideSignPassesSolves": 161
+          }
+        ]
+      }
+    }
+  },
+  "physicalDifference": [
+    {
+      "cohort": "normal",
+      "firstTechniquePass": {
+        "dfsCallsG0": 42552,
+        "dfsCallsG1": 2355,
+        "dfsCallsSavedBySkips": 40197,
+        "dfsChecksG0": 10216,
+        "dfsChecksG1": 6567,
+        "restrictedSolvesG0": 40465,
+        "restrictedSolvesG1": 42552,
+        "extraRestrictedSolves": 2087,
+        "solvesOnCandidatesTheCountRejectsG1": 2087,
+        "wallMsG0": 10508.912,
+        "wallMsG1": 8919.757,
+        "wallRatioG0OverG1": 1.1781612436302917,
+        "removalsG0": 42552,
+        "removalsG1": 42552
+      },
+      "regression": "no regression in the first technique pass"
+    },
+    {
+      "cohort": "nightmare",
+      "firstTechniquePass": {
+        "dfsCallsG0": 18900,
+        "dfsCallsG1": 2541,
+        "dfsCallsSavedBySkips": 16359,
+        "dfsChecksG0": 98993,
+        "dfsChecksG1": 33692,
+        "restrictedSolvesG0": 16359,
+        "restrictedSolvesG1": 18900,
+        "extraRestrictedSolves": 2541,
+        "solvesOnCandidatesTheCountRejectsG1": 2541,
+        "wallMsG0": 23780.715,
+        "wallMsG1": 277863.654,
+        "wallRatioG0OverG1": 0.0855841152941867,
+        "removalsG0": 18900,
+        "removalsG1": 18900
+      },
+      "regression": "the first technique pass took more wall time in G1 although it skipped 16359 count(s)"
+    }
+  ],
+  "g1Results": {
+    "proved": 56556,
+    "stuckAmbiguous": 4628,
+    "stuckUnique": 268,
+    "fallbackContradiction": 0,
+    "fallbackError": 0,
+    "fallbackShape": 0,
+    "unsoundProof": 0,
+    "tried": 61452
+  },
+  "generationTime": {
+    "normal": {
+      "level": "normal",
+      "pairsCompleted": 20,
+      "requestsRecorded": 40,
+      "g0": {
+        "readyWallMs": {
+          "n": 20,
+          "p50": 405.82530000000406,
+          "p95": 5318.054199999999,
+          "max": 7494.0819,
+          "upperMedian": 1692.7055,
+          "note": null
+        },
+        "cpuTotalMs": {
+          "n": 20,
+          "p50": 969,
+          "p95": 8453,
+          "max": 12704,
+          "upperMedian": 2922,
+          "note": null
+        },
+        "sumReadyWallMs": 41297.649,
+        "sumCpuTotalMs": 70388,
+        "cpuResolution": [
+          "resolved"
+        ]
+      },
+      "g1": {
+        "readyWallMs": {
+          "n": 20,
+          "p50": 364.02750000000015,
+          "p95": 5245.070100000001,
+          "max": 6893.196399999999,
+          "upperMedian": 1744.3999000000003,
+          "note": null
+        },
+        "cpuTotalMs": {
+          "n": 20,
+          "p50": 719,
+          "p95": 9187,
+          "max": 11688,
+          "upperMedian": 3079,
+          "note": null
+        },
+        "sumReadyWallMs": 40078.55,
+        "sumCpuTotalMs": 68046,
+        "cpuResolution": [
+          "resolved"
+        ]
+      },
+      "ratioOfCohortTotals": {
+        "direction": "G0 / G1 (a value below 1 means G1 took longer)",
+        "readyWallSumG0OverSumG1": 1.0304177418552545,
+        "cpuSumG0OverSumG1": 1.0344178937777386,
+        "numeratorMs": {
+          "readyWallG0": 41297.649,
+          "cpuG0": 70388
+        },
+        "denominatorMs": {
+          "readyWallG1": 40078.55,
+          "cpuG1": 68046
+        },
+        "note": "a ratio of cohort totals: long requests weigh more; it is not a median of paired ratios"
+      },
+      "paired": {
+        "direction": "G0 / G1 per pair",
+        "perPairReadyWallRatioG0OverG1": {
+          "n": 20,
+          "p50": 1.0834199247631737,
+          "p95": 1.2178914657397304,
+          "max": 1.2222187782466136,
+          "upperMedian": 1.0871708080158577,
+          "note": null
+        },
+        "perPairCpuRatioG0OverG1": {
+          "n": 20,
+          "p50": 1.0810728436452302,
+          "p95": 1.3783783783783783,
+          "max": 1.3946037099494097,
+          "upperMedian": 1.0869267624914443,
+          "note": null
+        },
+        "g0RanFirst": {
+          "pairs": 10,
+          "medianPerPairReadyWallRatioG0OverG1": 1.0871708080158577
+        },
+        "g1RanFirst": {
+          "pairs": 10,
+          "medianPerPairReadyWallRatioG0OverG1": 1.0235575260553624
+        },
+        "note": "paired summaries of per-pair ratios (n pairs; p95 is the observed maximum); time-separated pairs (one request after the other, alternating order); an instrumented run is not an uninstrumented headline; the ratio of one pair carries no tail estimate; an unresolved CPU interval is unknown (null)"
+      },
+      "stageSplitSumMs": {
+        "g0": {
+          "engineMs": 41194.877,
+          "fullGridAndModelSetupMs": 95.221,
+          "signPlacementMs": 18.06,
+          "setupCluePlacementMs": 261.014,
+          "signPassFirstTechniqueMs": 10508.912,
+          "signPassLaterTechniqueMs": 149.583,
+          "signPassMinimalMs": 419.99,
+          "tuningMs": 240.147,
+          "afterStrategyMs": 55.034,
+          "localSearchMs": 29387.607,
+          "otherMs": 59.297
+        },
+        "g1": {
+          "engineMs": 39976.733,
+          "fullGridAndModelSetupMs": 93.805,
+          "signPlacementMs": 17.725,
+          "setupCluePlacementMs": 230.646,
+          "signPassFirstTechniqueMs": 8919.757,
+          "signPassLaterTechniqueMs": 139.371,
+          "signPassMinimalMs": 397.959,
+          "tuningMs": 207.792,
+          "afterStrategyMs": 53.786,
+          "localSearchMs": 29856.783,
+          "otherMs": 59.118
+        },
+        "g1MinusG0": {
+          "engineMs": -1218.144,
+          "fullGridAndModelSetupMs": -1.416,
+          "signPlacementMs": -0.335,
+          "setupCluePlacementMs": -30.368,
+          "signPassFirstTechniqueMs": -1589.155,
+          "signPassLaterTechniqueMs": -10.212,
+          "signPassMinimalMs": -22.031,
+          "tuningMs": -32.355,
+          "afterStrategyMs": -1.248,
+          "localSearchMs": 469.176,
+          "otherMs": -0.179
+        },
+        "reading": "the stages are the same code with the same inputs in both arms except the first technique sign pass: only signPassFirstTechniqueMs differs by design (and the setup-free parts it feeds none); any other difference is measurement noise or time separation and is attributed to nothing"
+      }
+    },
+    "nightmare": {
+      "level": "nightmare",
+      "pairsCompleted": 6,
+      "requestsRecorded": 12,
+      "g0": {
+        "readyWallMs": {
+          "n": 6,
+          "p50": 9705.083,
+          "p95": 16291.105299999996,
+          "max": 16291.105299999996,
+          "upperMedian": 11570.51260000001,
+          "note": "p95 is the observed maximum, not a production-tail estimate"
+        },
+        "cpuTotalMs": {
+          "n": 6,
+          "p50": 12688,
+          "p95": 21484,
+          "max": 21484,
+          "upperMedian": 15578,
+          "note": "p95 is the observed maximum, not a production-tail estimate"
+        },
+        "sumReadyWallMs": 51949.021,
+        "sumCpuTotalMs": 68672,
+        "cpuResolution": [
+          "resolved"
+        ]
+      },
+      "g1": {
+        "readyWallMs": {
+          "n": 6,
+          "p50": 60496.8566,
+          "p95": 100844.69559999999,
+          "max": 100844.69559999999,
+          "upperMedian": 64602.102300000006,
+          "note": "p95 is the observed maximum, not a production-tail estimate"
+        },
+        "cpuTotalMs": {
+          "n": 6,
+          "p50": 64313,
+          "p95": 104781,
+          "max": 104781,
+          "upperMedian": 67281,
+          "note": "p95 is the observed maximum, not a production-tail estimate"
+        },
+        "sumReadyWallMs": 305887.321,
+        "sumCpuTotalMs": 320717,
+        "cpuResolution": [
+          "resolved"
+        ]
+      },
+      "ratioOfCohortTotals": {
+        "direction": "G0 / G1 (a value below 1 means G1 took longer)",
+        "readyWallSumG0OverSumG1": 0.16983057888823055,
+        "cpuSumG0OverSumG1": 0.2141202368443207,
+        "numeratorMs": {
+          "readyWallG0": 51949.021,
+          "cpuG0": 68672
+        },
+        "denominatorMs": {
+          "readyWallG1": 305887.321,
+          "cpuG1": 320717
+        },
+        "note": "a ratio of cohort totals: long requests weigh more; it is not a median of paired ratios"
+      },
+      "paired": {
+        "direction": "G0 / G1 per pair",
+        "perPairReadyWallRatioG0OverG1": {
+          "n": 6,
+          "p50": 0.17396468007992483,
+          "p95": 0.3818286754371009,
+          "max": 0.3818286754371009,
+          "upperMedian": 0.17835098075452463,
+          "note": "p95 is the observed maximum, not a production-tail estimate"
+        },
+        "perPairCpuRatioG0OverG1": {
+          "n": 6,
+          "p50": 0.20604787904241914,
+          "p95": 0.48845867460908415,
+          "max": 0.48845867460908415,
+          "upperMedian": 0.21911835035305371,
+          "note": "p95 is the observed maximum, not a production-tail estimate"
+        },
+        "g0RanFirst": {
+          "pairs": 3,
+          "medianPerPairReadyWallRatioG0OverG1": 0.17835098075452463
+        },
+        "g1RanFirst": {
+          "pairs": 3,
+          "medianPerPairReadyWallRatioG0OverG1": 0.17396468007992483
+        },
+        "note": "paired summaries of per-pair ratios (n pairs; p95 is the observed maximum); time-separated pairs (one request after the other, alternating order); an instrumented run is not an uninstrumented headline; the ratio of one pair carries no tail estimate; an unresolved CPU interval is unknown (null)"
+      },
+      "stageSplitSumMs": {
+        "g0": {
+          "engineMs": 51911.447,
+          "fullGridAndModelSetupMs": 29.807,
+          "signPlacementMs": 6.361,
+          "setupCluePlacementMs": 134.966,
+          "signPassFirstTechniqueMs": 23780.715,
+          "signPassLaterTechniqueMs": 3325.352,
+          "signPassMinimalMs": 1276.224,
+          "tuningMs": 4496.22,
+          "afterStrategyMs": 92.151,
+          "localSearchMs": 18746.884,
+          "otherMs": 22.764
+        },
+        "g1": {
+          "engineMs": 305848.233,
+          "fullGridAndModelSetupMs": 30.032,
+          "signPlacementMs": 5.967,
+          "setupCluePlacementMs": 135.019,
+          "signPassFirstTechniqueMs": 277863.654,
+          "signPassLaterTechniqueMs": 3331.543,
+          "signPassMinimalMs": 1281.388,
+          "tuningMs": 4489.045,
+          "afterStrategyMs": 85.953,
+          "localSearchMs": 18603.281,
+          "otherMs": 22.349
+        },
+        "g1MinusG0": {
+          "engineMs": 253936.786,
+          "fullGridAndModelSetupMs": 0.225,
+          "signPlacementMs": -0.394,
+          "setupCluePlacementMs": 0.053,
+          "signPassFirstTechniqueMs": 254082.939,
+          "signPassLaterTechniqueMs": 6.191,
+          "signPassMinimalMs": 5.164,
+          "tuningMs": -7.175,
+          "afterStrategyMs": -6.198,
+          "localSearchMs": -143.603,
+          "otherMs": -0.415
+        },
+        "reading": "the stages are the same code with the same inputs in both arms except the first technique sign pass: only signPassFirstTechniqueMs differs by design (and the setup-free parts it feeds none); any other difference is measurement noise or time separation and is attributed to nothing"
+      }
+    }
+  },
+  "localStage": {
+    "normal": {
+      "g0": {
+        "requests": 20,
+        "requestsWithALocalSearch": 11,
+        "requestsWithACappedLocalSearch": 10,
+        "measuredLocalStageShareOfAllRequestTime": {
+          "numerator": 29387.607,
+          "denominator": 41194.875,
+          "share": 0.713
+        },
+        "requestGroupShareOfTimeOfRequestsWithACappedLocal": {
+          "numerator": 38850.364,
+          "denominator": 41194.875,
+          "share": 0.943
+        },
+        "measuredLocalStageShareInsideThoseRequests": {
+          "numerator": 29386.006,
+          "denominator": 38850.364,
+          "share": 0.756
+        },
+        "localSearchEndReasons": {
+          "proposals": 21,
+          "null": 2
+        },
+        "engineWallDenominatorMs": 41194.875,
+        "note": "time = the worker run (engine wall) of the same completed requests, instrumented; the old 95 % is a request-group share, the measured local-stage fraction is measuredLocalStageShareOfAllRequestTime (all requests of this cohort and arm) and measuredLocalStageShareInsideThoseRequests (inside the capped ones)"
+      },
+      "g1": {
+        "requests": 20,
+        "requestsWithALocalSearch": 11,
+        "requestsWithACappedLocalSearch": 10,
+        "measuredLocalStageShareOfAllRequestTime": {
+          "numerator": 29856.783,
+          "denominator": 39976.734,
+          "share": 0.747
+        },
+        "requestGroupShareOfTimeOfRequestsWithACappedLocal": {
+          "numerator": 37958.679,
+          "denominator": 39976.734,
+          "share": 0.95
+        },
+        "measuredLocalStageShareInsideThoseRequests": {
+          "numerator": 29855.146,
+          "denominator": 37958.679,
+          "share": 0.787
+        },
+        "localSearchEndReasons": {
+          "proposals": 21,
+          "null": 2
+        },
+        "engineWallDenominatorMs": 39976.734,
+        "note": "time = the worker run (engine wall) of the same completed requests, instrumented; the old 95 % is a request-group share, the measured local-stage fraction is measuredLocalStageShareOfAllRequestTime (all requests of this cohort and arm) and measuredLocalStageShareInsideThoseRequests (inside the capped ones)"
+      }
+    },
+    "nightmare": {
+      "g0": {
+        "requests": 6,
+        "requestsWithALocalSearch": 4,
+        "requestsWithACappedLocalSearch": 4,
+        "measuredLocalStageShareOfAllRequestTime": {
+          "numerator": 18746.884,
+          "denominator": 51911.447,
+          "share": 0.361
+        },
+        "requestGroupShareOfTimeOfRequestsWithACappedLocal": {
+          "numerator": 49627.1,
+          "denominator": 51911.447,
+          "share": 0.956
+        },
+        "measuredLocalStageShareInsideThoseRequests": {
+          "numerator": 18746.884,
+          "denominator": 49627.1,
+          "share": 0.378
+        },
+        "localSearchEndReasons": {
+          "proposals": 12
+        },
+        "engineWallDenominatorMs": 51911.447,
+        "note": "time = the worker run (engine wall) of the same completed requests, instrumented; the old 95 % is a request-group share, the measured local-stage fraction is measuredLocalStageShareOfAllRequestTime (all requests of this cohort and arm) and measuredLocalStageShareInsideThoseRequests (inside the capped ones)"
+      },
+      "g1": {
+        "requests": 6,
+        "requestsWithALocalSearch": 4,
+        "requestsWithACappedLocalSearch": 4,
+        "measuredLocalStageShareOfAllRequestTime": {
+          "numerator": 18603.281,
+          "denominator": 305848.232,
+          "share": 0.061
+        },
+        "requestGroupShareOfTimeOfRequestsWithACappedLocal": {
+          "numerator": 293697.094,
+          "denominator": 305848.232,
+          "share": 0.96
+        },
+        "measuredLocalStageShareInsideThoseRequests": {
+          "numerator": 18603.281,
+          "denominator": 293697.094,
+          "share": 0.063
+        },
+        "localSearchEndReasons": {
+          "proposals": 12
+        },
+        "engineWallDenominatorMs": 305848.232,
+        "note": "time = the worker run (engine wall) of the same completed requests, instrumented; the old 95 % is a request-group share, the measured local-stage fraction is measuredLocalStageShareOfAllRequestTime (all requests of this cohort and arm) and measuredLocalStageShareInsideThoseRequests (inside the capped ones)"
+      }
+    }
+  },
+  "guards": {
+    "g0": {
+      "requests": 26,
+      "dugSamples": 569,
+      "signPassCountAndSolve": {
+        "externalBudgetSeenBySamples": 0,
+        "ofSamples": 569,
+        "limit": "none: the digger passes the request budget (null in these requests) and the sign passes create no node or step slice",
+        "consumption": "DFS search-node checks (cumulative over the request) 2013654 in 401273 count calls; the solver's own budget checks: not instrumented",
+        "guardThatBound": "none observed (no guard exists on this path to bind)",
+        "bounds": "MAX_TUNE_ROUNDS 8: the largest number of tune rounds seen is 7; the solvability-help loop is bounded by the cell count (probes per sample, max 4)"
+      },
+      "uniquenessCountSlice": {
+        "name": "UNIQUE_NODES (digger.js countWithin: keeper offers and the local search)",
+        "limit": "200000 search nodes per count",
+        "calls": 324639,
+        "nodesUsedCumulative": 5194180,
+        "largestSingleCountNodes": 315,
+        "trips": 0,
+        "guardThatBound": "none: no count reached the slice"
+      },
+      "safetyUniquenessCount": {
+        "limit": "none (passes the request budget, null here)",
+        "consumption": "not instrumented separately: it is inside the after-strategy part of a sample"
+      },
+      "stageBObjective": {
+        "name": "OBJECTIVE_STEPS (digger.js digGuidedSteps / boundedObjective)",
+        "limit": "100000 solver steps per solve",
+        "entriesObserved": 0,
+        "consumption": "not reached: the sign strategy does not run stage B",
+        "guardThatBound": "none"
+      },
+      "attemptCaps": {
+        "name": "CAP_RATINGS 1024 / CAP_PROPOSALS 32768 / SHALLOW_SEARCH_RATINGS 256 per attempt (wire.work)",
+        "attempts": 59,
+        "ratingsMax": 61,
+        "proposalsMax": 32768,
+        "capHits": {
+          "proposals": 33,
+          "null": 2
+        }
+      }
+    },
+    "g1": {
+      "requests": 26,
+      "dugSamples": 569,
+      "signPassCountAndSolve": {
+        "externalBudgetSeenBySamples": 0,
+        "ofSamples": 569,
+        "limit": "none: the digger passes the request budget (null in these requests) and the sign passes create no node or step slice",
+        "consumption": "DFS search-node checks (cumulative over the request) 1944704 in 344717 count calls; the solver's own budget checks: not instrumented",
+        "guardThatBound": "none observed (no guard exists on this path to bind)",
+        "bounds": "MAX_TUNE_ROUNDS 8: the largest number of tune rounds seen is 7; the solvability-help loop is bounded by the cell count (probes per sample, max 4)"
+      },
+      "uniquenessCountSlice": {
+        "name": "UNIQUE_NODES (digger.js countWithin: keeper offers and the local search)",
+        "limit": "200000 search nodes per count",
+        "calls": 324639,
+        "nodesUsedCumulative": 5194180,
+        "largestSingleCountNodes": 315,
+        "trips": 0,
+        "guardThatBound": "none: no count reached the slice"
+      },
+      "safetyUniquenessCount": {
+        "limit": "none (passes the request budget, null here)",
+        "consumption": "not instrumented separately: it is inside the after-strategy part of a sample"
+      },
+      "stageBObjective": {
+        "name": "OBJECTIVE_STEPS (digger.js digGuidedSteps / boundedObjective)",
+        "limit": "100000 solver steps per solve",
+        "entriesObserved": 0,
+        "consumption": "not reached: the sign strategy does not run stage B",
+        "guardThatBound": "none"
+      },
+      "attemptCaps": {
+        "name": "CAP_RATINGS 1024 / CAP_PROPOSALS 32768 / SHALLOW_SEARCH_RATINGS 256 per attempt (wire.work)",
+        "attempts": 59,
+        "ratingsMax": 61,
+        "proposalsMax": 32768,
+        "capHits": {
+          "proposals": 33,
+          "null": 2
+        }
+      }
+    }
+  },
+  "observerOverhead": [
+    {
+      "control": "IG-S09/observer-control/greaterThan:normal:300/native",
+      "g0": "IG-S09/normal-300-304/greaterThan:normal:300/g0",
+      "level": "normal",
+      "seed": 300,
+      "status": "n = 1, time-separated",
+      "compatibility": {
+        "runtimeFingerprint": {
+          "control": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+          "g0": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+          "equal": true
+        },
+        "harnessFingerprint": {
+          "control": "9da69f60fbd2d71eeaec2949f805ba8fac3c6f2c6bf88b5848398e5b16c128ed",
+          "g0": "9da69f60fbd2d71eeaec2949f805ba8fac3c6f2c6bf88b5848398e5b16c128ed",
+          "equal": true
+        },
+        "trace": {
+          "control": "summary",
+          "g0": "summary",
+          "equal": true
+        },
+        "configuration": {
+          "equal": true,
+          "digestEqual": true
+        },
+        "outputDigests": {
+          "equal": true,
+          "sections": {
+            "equal": true,
+            "differing": []
+          }
+        },
+        "exactness": {
+          "control": [
+            true,
+            true
+          ],
+          "g0": [
+            true,
+            true
+          ],
+          "equal": true
+        },
+        "instrumentation": {
+          "control": [],
+          "g0": [
+            "gt-diagnostic"
+          ],
+          "note": "the control carries no adapter and no capture hook; G0 carries gt-diagnostic"
+        },
+        "priorityWrapper": {
+          "control": true,
+          "note": "the control ran inside the runner under the wrapper's lock"
+        }
+      },
+      "compatible": true,
+      "controlReadyWallMs": 2087.3855000000003,
+      "g0ReadyWallMs": 2098.2125,
+      "readyWallRatioG0OverControl": 1.0051868713277925,
+      "readyWallDifferenceMs": 10.827,
+      "controlCpuTotalMs": 3515,
+      "g0CpuTotalMs": 3609,
+      "cpuRatioG0OverControl": 1.02674253200569,
+      "cpuResolution": [
+        "resolved",
+        "resolved"
+      ],
+      "g0WorkerRunMs": 2091.1449,
+      "g0CaptureBuildMs": 2.5513999999998305,
+      "note": "the control ran in another command at another time; ratio = captured G0 / observer-free control; one singleton per cohort gives no uncertainty estimate, no population-wide overhead, no statement about uninstrumented latency in general and no correction of any G1 timing"
+    },
+    {
+      "control": "IG-S09/observer-control/greaterThan:nightmare:700/native",
+      "g0": "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g0",
+      "level": "nightmare",
+      "seed": 700,
+      "status": "n = 1, time-separated",
+      "compatibility": {
+        "runtimeFingerprint": {
+          "control": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+          "g0": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+          "equal": true
+        },
+        "harnessFingerprint": {
+          "control": "9da69f60fbd2d71eeaec2949f805ba8fac3c6f2c6bf88b5848398e5b16c128ed",
+          "g0": "9da69f60fbd2d71eeaec2949f805ba8fac3c6f2c6bf88b5848398e5b16c128ed",
+          "equal": true
+        },
+        "trace": {
+          "control": "summary",
+          "g0": "summary",
+          "equal": true
+        },
+        "configuration": {
+          "equal": true,
+          "digestEqual": true
+        },
+        "outputDigests": {
+          "equal": true,
+          "sections": {
+            "equal": true,
+            "differing": []
+          }
+        },
+        "exactness": {
+          "control": [
+            true,
+            true
+          ],
+          "g0": [
+            true,
+            true
+          ],
+          "equal": true
+        },
+        "instrumentation": {
+          "control": [],
+          "g0": [
+            "gt-diagnostic"
+          ],
+          "note": "the control carries no adapter and no capture hook; G0 carries gt-diagnostic"
+        },
+        "priorityWrapper": {
+          "control": true,
+          "note": "the control ran inside the runner under the wrapper's lock"
+        }
+      },
+      "compatible": true,
+      "controlReadyWallMs": 12173.0213,
+      "g0ReadyWallMs": 12089.1529,
+      "readyWallRatioG0OverControl": 0.9931103053274045,
+      "readyWallDifferenceMs": -83.868,
+      "controlCpuTotalMs": 16610,
+      "g0CpuTotalMs": 15578,
+      "cpuRatioG0OverControl": 0.9378687537627935,
+      "cpuResolution": [
+        "resolved",
+        "resolved"
+      ],
+      "g0WorkerRunMs": 12082.0437,
+      "g0CaptureBuildMs": 0.6069000000006781,
+      "note": "the control ran in another command at another time; ratio = captured G0 / observer-free control; one singleton per cohort gives no uncertainty estimate, no population-wide overhead, no statement about uninstrumented latency in general and no correction of any G1 timing"
+    }
+  ],
+  "diagnosisCost": {
+    "note": "post-timing, outside every generation figure: an unpatched instance per request (rating, minimality, probes), separate from the harness's own final-puzzle validation, the observer-free controls and the development check",
+    "diagnosisWallMs": 3289.538,
+    "diagnosisCpuMs": 4638,
+    "diagnosisSampleRowsWallMs": 812.271,
+    "diagnosisProbeRowsWallMs": 30.909,
+    "diagnosisWorkerStartAndOtherWallMs": 2446.357,
+    "validationWallMs": 5204.321,
+    "validationCpuMs": 5899,
+    "reuse": [
+      {
+        "cohort": "normal",
+        "g0": {
+          "requests": 20,
+          "diagnosisStatuses": {
+            "complete": 10,
+            "reused-only": 10
+          },
+          "rows": 394,
+          "unstartedSamples": 0,
+          "reusedSamples": 160
+        },
+        "g1": {
+          "requests": 20,
+          "diagnosisStatuses": {
+            "reused-only": 10,
+            "complete": 10
+          },
+          "rows": 394,
+          "unstartedSamples": 0,
+          "reusedSamples": 234
+        }
+      },
+      {
+        "cohort": "nightmare",
+        "g0": {
+          "requests": 6,
+          "diagnosisStatuses": {
+            "complete": 3,
+            "reused-only": 3
+          },
+          "rows": 175,
+          "unstartedSamples": 0,
+          "reusedSamples": 103
+        },
+        "g1": {
+          "requests": 6,
+          "diagnosisStatuses": {
+            "reused-only": 3,
+            "complete": 3
+          },
+          "rows": 175,
+          "unstartedSamples": 0,
+          "reusedSamples": 72
+        }
+      }
+    ]
+  },
+  "missSplit": {
+    "normal": {
+      "g0": {
+        "requests": 20,
+        "split": {
+          "samples": 394,
+          "buckets": {
+            "exact": 18,
+            "shallow": 21,
+            "above-or-unrated": 0,
+            "below-trap": 83,
+            "below-tune": 85,
+            "below-setup2": 187,
+            "other-below": 0,
+            "unconfirmed": 0
+          },
+          "exact": 18,
+          "misses": 376,
+          "below": 355,
+          "trapEligible": 83,
+          "trapProven": 83,
+          "trapUnknown": 0,
+          "unconfirmed": 0,
+          "trapLowerShareOfMisses": {
+            "numerator": 83,
+            "denominator": 376
+          },
+          "trapUnconfirmedEligible": 0,
+          "trapUpperShareOfMisses": {
+            "numerator": 83,
+            "denominator": 376,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "minimalityCoverage": {
+            "requiredForTrap": 83,
+            "decided": 83,
+            "unknown": 0
+          }
+        },
+        "coverage": {
+          "requests": 20,
+          "diagnosisStatuses": {
+            "complete": 10,
+            "reused-only": 10
+          },
+          "rows": 394,
+          "unstartedSamples": 0,
+          "reusedSamples": 160
+        },
+        "shares": {
+          "exact": {
+            "numerator": 18,
+            "denominator": 394,
+            "share": 0.046
+          },
+          "shallow": {
+            "numerator": 21,
+            "denominator": 394,
+            "share": 0.053
+          },
+          "aboveOrUnrated": {
+            "numerator": 0,
+            "denominator": 394,
+            "share": 0
+          },
+          "belowTrap": {
+            "numerator": 83,
+            "denominator": 394,
+            "share": 0.211
+          },
+          "belowTune": {
+            "numerator": 85,
+            "denominator": 394,
+            "share": 0.216
+          },
+          "belowSetup2": {
+            "numerator": 187,
+            "denominator": 394,
+            "share": 0.475
+          },
+          "otherBelow": {
+            "numerator": 0,
+            "denominator": 394,
+            "share": 0
+          },
+          "unconfirmed": {
+            "numerator": 0,
+            "denominator": 394,
+            "share": 0
+          }
+        },
+        "sharesOfMisses": {
+          "namedTrapLower": {
+            "numerator": 83,
+            "denominator": 376
+          },
+          "namedTrapUpper": {
+            "numerator": 83,
+            "denominator": 376,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "belowTune": {
+            "numerator": 85,
+            "denominator": 376,
+            "share": 0.226
+          },
+          "belowSetup2": {
+            "numerator": 187,
+            "denominator": 376,
+            "share": 0.497
+          },
+          "shallow": {
+            "numerator": 21,
+            "denominator": 376,
+            "share": 0.056
+          }
+        },
+        "eligibleBeforeMinimality": {
+          "cheapFloorClauseTrue": {
+            "numerator": 96,
+            "denominator": 394,
+            "share": 0.244
+          },
+          "belowAndFloorClause": {
+            "numerator": 83,
+            "denominator": 394,
+            "share": 0.211
+          },
+          "minimalityAsked": {
+            "requiredForTrap": 83,
+            "decided": 83,
+            "unknown": 0
+          },
+          "note": "only a sample that satisfies the clue-floor clause and the complete canonical below-band clause needs a minimality proof; the rest is not-required-for-trap (never an implied proof)"
+        },
+        "setupOrigins": {
+          "allSamples": {
+            "samples": 394,
+            "groups": {
+              "clue-floor": 4851,
+              "unit-floor": 280,
+              "help": 112,
+              "tune": 145
+            },
+            "cells": {
+              "clue-floor": 9579,
+              "unit-floor": 536,
+              "help": 224,
+              "tune": 287
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 394,
+              "unit-floor": 219,
+              "help": 94,
+              "tune": 91
+            }
+          },
+          "misses": {
+            "samples": 376,
+            "groups": {
+              "clue-floor": 4629,
+              "unit-floor": 273,
+              "help": 110,
+              "tune": 142
+            },
+            "cells": {
+              "clue-floor": 9141,
+              "unit-floor": 523,
+              "help": 220,
+              "tune": 281
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 376,
+              "unit-floor": 212,
+              "help": 92,
+              "tune": 88
+            }
+          },
+          "belowSetup2ExcessOrigin": {
+            "unit-floor only": 109,
+            "help only": 35,
+            "unit-floor and help": 43,
+            "neither (the clue-floor groups overshoot)": 0
+          }
+        }
+      },
+      "g1": {
+        "requests": 20,
+        "split": {
+          "samples": 394,
+          "buckets": {
+            "exact": 18,
+            "shallow": 21,
+            "above-or-unrated": 0,
+            "below-trap": 83,
+            "below-tune": 85,
+            "below-setup2": 187,
+            "other-below": 0,
+            "unconfirmed": 0
+          },
+          "exact": 18,
+          "misses": 376,
+          "below": 355,
+          "trapEligible": 83,
+          "trapProven": 83,
+          "trapUnknown": 0,
+          "unconfirmed": 0,
+          "trapLowerShareOfMisses": {
+            "numerator": 83,
+            "denominator": 376
+          },
+          "trapUnconfirmedEligible": 0,
+          "trapUpperShareOfMisses": {
+            "numerator": 83,
+            "denominator": 376,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "minimalityCoverage": {
+            "requiredForTrap": 83,
+            "decided": 83,
+            "unknown": 0
+          }
+        },
+        "coverage": {
+          "requests": 20,
+          "diagnosisStatuses": {
+            "reused-only": 10,
+            "complete": 10
+          },
+          "rows": 394,
+          "unstartedSamples": 0,
+          "reusedSamples": 234
+        },
+        "shares": {
+          "exact": {
+            "numerator": 18,
+            "denominator": 394,
+            "share": 0.046
+          },
+          "shallow": {
+            "numerator": 21,
+            "denominator": 394,
+            "share": 0.053
+          },
+          "aboveOrUnrated": {
+            "numerator": 0,
+            "denominator": 394,
+            "share": 0
+          },
+          "belowTrap": {
+            "numerator": 83,
+            "denominator": 394,
+            "share": 0.211
+          },
+          "belowTune": {
+            "numerator": 85,
+            "denominator": 394,
+            "share": 0.216
+          },
+          "belowSetup2": {
+            "numerator": 187,
+            "denominator": 394,
+            "share": 0.475
+          },
+          "otherBelow": {
+            "numerator": 0,
+            "denominator": 394,
+            "share": 0
+          },
+          "unconfirmed": {
+            "numerator": 0,
+            "denominator": 394,
+            "share": 0
+          }
+        },
+        "sharesOfMisses": {
+          "namedTrapLower": {
+            "numerator": 83,
+            "denominator": 376
+          },
+          "namedTrapUpper": {
+            "numerator": 83,
+            "denominator": 376,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "belowTune": {
+            "numerator": 85,
+            "denominator": 376,
+            "share": 0.226
+          },
+          "belowSetup2": {
+            "numerator": 187,
+            "denominator": 376,
+            "share": 0.497
+          },
+          "shallow": {
+            "numerator": 21,
+            "denominator": 376,
+            "share": 0.056
+          }
+        },
+        "eligibleBeforeMinimality": {
+          "cheapFloorClauseTrue": {
+            "numerator": 96,
+            "denominator": 394,
+            "share": 0.244
+          },
+          "belowAndFloorClause": {
+            "numerator": 83,
+            "denominator": 394,
+            "share": 0.211
+          },
+          "minimalityAsked": {
+            "requiredForTrap": 83,
+            "decided": 83,
+            "unknown": 0
+          },
+          "note": "only a sample that satisfies the clue-floor clause and the complete canonical below-band clause needs a minimality proof; the rest is not-required-for-trap (never an implied proof)"
+        },
+        "setupOrigins": {
+          "allSamples": {
+            "samples": 394,
+            "groups": {
+              "clue-floor": 4851,
+              "unit-floor": 280,
+              "help": 112,
+              "tune": 145
+            },
+            "cells": {
+              "clue-floor": 9579,
+              "unit-floor": 536,
+              "help": 224,
+              "tune": 287
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 394,
+              "unit-floor": 219,
+              "help": 94,
+              "tune": 91
+            }
+          },
+          "misses": {
+            "samples": 376,
+            "groups": {
+              "clue-floor": 4629,
+              "unit-floor": 273,
+              "help": 110,
+              "tune": 142
+            },
+            "cells": {
+              "clue-floor": 9141,
+              "unit-floor": 523,
+              "help": 220,
+              "tune": 281
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 376,
+              "unit-floor": 212,
+              "help": 92,
+              "tune": 88
+            }
+          },
+          "belowSetup2ExcessOrigin": {
+            "unit-floor only": 109,
+            "help only": 35,
+            "unit-floor and help": 43,
+            "neither (the clue-floor groups overshoot)": 0
+          }
+        }
+      }
+    },
+    "nightmare": {
+      "g0": {
+        "requests": 6,
+        "split": {
+          "samples": 175,
+          "buckets": {
+            "exact": 6,
+            "shallow": 56,
+            "above-or-unrated": 0,
+            "below-trap": 19,
+            "below-tune": 87,
+            "below-setup2": 7,
+            "other-below": 0,
+            "unconfirmed": 0
+          },
+          "exact": 6,
+          "misses": 169,
+          "below": 113,
+          "trapEligible": 19,
+          "trapProven": 19,
+          "trapUnknown": 0,
+          "unconfirmed": 0,
+          "trapLowerShareOfMisses": {
+            "numerator": 19,
+            "denominator": 169
+          },
+          "trapUnconfirmedEligible": 0,
+          "trapUpperShareOfMisses": {
+            "numerator": 19,
+            "denominator": 169,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "minimalityCoverage": {
+            "requiredForTrap": 19,
+            "decided": 19,
+            "unknown": 0
+          }
+        },
+        "coverage": {
+          "requests": 6,
+          "diagnosisStatuses": {
+            "complete": 3,
+            "reused-only": 3
+          },
+          "rows": 175,
+          "unstartedSamples": 0,
+          "reusedSamples": 103
+        },
+        "shares": {
+          "exact": {
+            "numerator": 6,
+            "denominator": 175,
+            "share": 0.034
+          },
+          "shallow": {
+            "numerator": 56,
+            "denominator": 175,
+            "share": 0.32
+          },
+          "aboveOrUnrated": {
+            "numerator": 0,
+            "denominator": 175,
+            "share": 0
+          },
+          "belowTrap": {
+            "numerator": 19,
+            "denominator": 175,
+            "share": 0.109
+          },
+          "belowTune": {
+            "numerator": 87,
+            "denominator": 175,
+            "share": 0.497
+          },
+          "belowSetup2": {
+            "numerator": 7,
+            "denominator": 175,
+            "share": 0.04
+          },
+          "otherBelow": {
+            "numerator": 0,
+            "denominator": 175,
+            "share": 0
+          },
+          "unconfirmed": {
+            "numerator": 0,
+            "denominator": 175,
+            "share": 0
+          }
+        },
+        "sharesOfMisses": {
+          "namedTrapLower": {
+            "numerator": 19,
+            "denominator": 169
+          },
+          "namedTrapUpper": {
+            "numerator": 19,
+            "denominator": 169,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "belowTune": {
+            "numerator": 87,
+            "denominator": 169,
+            "share": 0.515
+          },
+          "belowSetup2": {
+            "numerator": 7,
+            "denominator": 169,
+            "share": 0.041
+          },
+          "shallow": {
+            "numerator": 56,
+            "denominator": 169,
+            "share": 0.331
+          }
+        },
+        "eligibleBeforeMinimality": {
+          "cheapFloorClauseTrue": {
+            "numerator": 25,
+            "denominator": 175,
+            "share": 0.143
+          },
+          "belowAndFloorClause": {
+            "numerator": 19,
+            "denominator": 175,
+            "share": 0.109
+          },
+          "minimalityAsked": {
+            "requiredForTrap": 19,
+            "decided": 19,
+            "unknown": 0
+          },
+          "note": "only a sample that satisfies the clue-floor clause and the complete canonical below-band clause needs a minimality proof; the rest is not-required-for-trap (never an implied proof)"
+        },
+        "setupOrigins": {
+          "allSamples": {
+            "samples": 175,
+            "groups": {
+              "clue-floor": 1575,
+              "unit-floor": 0,
+              "help": 42,
+              "tune": 376
+            },
+            "cells": {
+              "clue-floor": 3109,
+              "unit-floor": 0,
+              "help": 84,
+              "tune": 744
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 175,
+              "unit-floor": 0,
+              "help": 36,
+              "tune": 142
+            }
+          },
+          "misses": {
+            "samples": 169,
+            "groups": {
+              "clue-floor": 1521,
+              "unit-floor": 0,
+              "help": 37,
+              "tune": 362
+            },
+            "cells": {
+              "clue-floor": 3001,
+              "unit-floor": 0,
+              "help": 74,
+              "tune": 716
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 169,
+              "unit-floor": 0,
+              "help": 32,
+              "tune": 136
+            }
+          },
+          "belowSetup2ExcessOrigin": {
+            "unit-floor only": 0,
+            "help only": 7,
+            "unit-floor and help": 0,
+            "neither (the clue-floor groups overshoot)": 0
+          }
+        }
+      },
+      "g1": {
+        "requests": 6,
+        "split": {
+          "samples": 175,
+          "buckets": {
+            "exact": 6,
+            "shallow": 56,
+            "above-or-unrated": 0,
+            "below-trap": 19,
+            "below-tune": 87,
+            "below-setup2": 7,
+            "other-below": 0,
+            "unconfirmed": 0
+          },
+          "exact": 6,
+          "misses": 169,
+          "below": 113,
+          "trapEligible": 19,
+          "trapProven": 19,
+          "trapUnknown": 0,
+          "unconfirmed": 0,
+          "trapLowerShareOfMisses": {
+            "numerator": 19,
+            "denominator": 169
+          },
+          "trapUnconfirmedEligible": 0,
+          "trapUpperShareOfMisses": {
+            "numerator": 19,
+            "denominator": 169,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "minimalityCoverage": {
+            "requiredForTrap": 19,
+            "decided": 19,
+            "unknown": 0
+          }
+        },
+        "coverage": {
+          "requests": 6,
+          "diagnosisStatuses": {
+            "reused-only": 3,
+            "complete": 3
+          },
+          "rows": 175,
+          "unstartedSamples": 0,
+          "reusedSamples": 72
+        },
+        "shares": {
+          "exact": {
+            "numerator": 6,
+            "denominator": 175,
+            "share": 0.034
+          },
+          "shallow": {
+            "numerator": 56,
+            "denominator": 175,
+            "share": 0.32
+          },
+          "aboveOrUnrated": {
+            "numerator": 0,
+            "denominator": 175,
+            "share": 0
+          },
+          "belowTrap": {
+            "numerator": 19,
+            "denominator": 175,
+            "share": 0.109
+          },
+          "belowTune": {
+            "numerator": 87,
+            "denominator": 175,
+            "share": 0.497
+          },
+          "belowSetup2": {
+            "numerator": 7,
+            "denominator": 175,
+            "share": 0.04
+          },
+          "otherBelow": {
+            "numerator": 0,
+            "denominator": 175,
+            "share": 0
+          },
+          "unconfirmed": {
+            "numerator": 0,
+            "denominator": 175,
+            "share": 0
+          }
+        },
+        "sharesOfMisses": {
+          "namedTrapLower": {
+            "numerator": 19,
+            "denominator": 169
+          },
+          "namedTrapUpper": {
+            "numerator": 19,
+            "denominator": 169,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "belowTune": {
+            "numerator": 87,
+            "denominator": 169,
+            "share": 0.515
+          },
+          "belowSetup2": {
+            "numerator": 7,
+            "denominator": 169,
+            "share": 0.041
+          },
+          "shallow": {
+            "numerator": 56,
+            "denominator": 169,
+            "share": 0.331
+          }
+        },
+        "eligibleBeforeMinimality": {
+          "cheapFloorClauseTrue": {
+            "numerator": 25,
+            "denominator": 175,
+            "share": 0.143
+          },
+          "belowAndFloorClause": {
+            "numerator": 19,
+            "denominator": 175,
+            "share": 0.109
+          },
+          "minimalityAsked": {
+            "requiredForTrap": 19,
+            "decided": 19,
+            "unknown": 0
+          },
+          "note": "only a sample that satisfies the clue-floor clause and the complete canonical below-band clause needs a minimality proof; the rest is not-required-for-trap (never an implied proof)"
+        },
+        "setupOrigins": {
+          "allSamples": {
+            "samples": 175,
+            "groups": {
+              "clue-floor": 1575,
+              "unit-floor": 0,
+              "help": 42,
+              "tune": 376
+            },
+            "cells": {
+              "clue-floor": 3109,
+              "unit-floor": 0,
+              "help": 84,
+              "tune": 744
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 175,
+              "unit-floor": 0,
+              "help": 36,
+              "tune": 142
+            }
+          },
+          "misses": {
+            "samples": 169,
+            "groups": {
+              "clue-floor": 1521,
+              "unit-floor": 0,
+              "help": 37,
+              "tune": 362
+            },
+            "cells": {
+              "clue-floor": 3001,
+              "unit-floor": 0,
+              "help": 74,
+              "tune": 716
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 169,
+              "unit-floor": 0,
+              "help": 32,
+              "tune": 136
+            }
+          },
+          "belowSetup2ExcessOrigin": {
+            "unit-floor only": 0,
+            "help only": 7,
+            "unit-floor and help": 0,
+            "neither (the clue-floor groups overshoot)": 0
+          }
+        }
+      }
+    }
+  },
+  "minimality": {
+    "unknownEligible": 0,
+    "unconfirmedSamples": 0
+  },
+  "probes": {
+    "requests": 52,
+    "withAMissedSample": 48,
+    "withAboveFloorGroups": 26,
+    "withProbe": 26,
+    "groupsProbed": 30,
+    "groupsDone": 30,
+    "groupsUnstarted": 0,
+    "note": "limited counterfactual coverage of one sample per request: not a population intervention coverage"
+  },
+  "probeResults": {
+    "blockedByRule": {
+      "clueFloor": 0,
+      "unitFloor": 20,
+      "neither": 10
+    },
+    "uniquenessAfterRemoval": {
+      "unique": 20,
+      "notUnique": 10,
+      "unknown": 0
+    },
+    "solveAfterRemoval": {
+      "solved": 20,
+      "stuck": 10,
+      "contradiction": 0,
+      "unknownOrError": 0
+    }
+  },
+  "machine": {
+    "entries": [
+      {
+        "shard": "normal-300-304",
+        "attemptId": "a1",
+        "occupiedMs": 18188,
+        "chargedMs": 63188,
+        "priorityWaitMs": 54220,
+        "status": "complete",
+        "wrapperExit": 0
+      },
+      {
+        "shard": "normal-305-309",
+        "attemptId": "a1",
+        "occupiedMs": 19681,
+        "chargedMs": 64681,
+        "priorityWaitMs": 45093,
+        "status": "complete",
+        "wrapperExit": 0
+      },
+      {
+        "shard": "normal-310-314",
+        "attemptId": "a1",
+        "occupiedMs": 27864,
+        "chargedMs": 72864,
+        "priorityWaitMs": 45106,
+        "status": "complete",
+        "wrapperExit": 0
+      },
+      {
+        "shard": "normal-315-319",
+        "attemptId": "a1",
+        "occupiedMs": 34472,
+        "chargedMs": 79472,
+        "priorityWaitMs": 84211,
+        "status": "complete",
+        "wrapperExit": 0
+      },
+      {
+        "shard": "nightmare-700-701",
+        "attemptId": "a1",
+        "occupiedMs": 199897,
+        "chargedMs": 244897,
+        "priorityWaitMs": 45082,
+        "status": "complete",
+        "wrapperExit": 0
+      },
+      {
+        "shard": "nightmare-702-703",
+        "attemptId": "a1",
+        "occupiedMs": 90250,
+        "chargedMs": 135250,
+        "priorityWaitMs": 45098,
+        "status": "complete",
+        "wrapperExit": 0
+      },
+      {
+        "shard": "nightmare-704-705",
+        "attemptId": "a1",
+        "occupiedMs": 75939,
+        "chargedMs": 120939,
+        "priorityWaitMs": 45107,
+        "status": "complete",
+        "wrapperExit": 0
+      },
+      {
+        "shard": "observer-control",
+        "attemptId": "a1",
+        "occupiedMs": 17352,
+        "chargedMs": 62352,
+        "priorityWaitMs": 550270,
+        "status": "complete",
+        "wrapperExit": 0
+      }
+    ],
+    "devCheck": {
+      "occupiedMs": 7035,
+      "chargedMs": 52035,
+      "priorityWaitMs": 0
+    },
+    "chargedMs": 895678,
+    "allocationMs": 900000,
+    "approvedExtraMs": 90000,
+    "ceilingMs": 990000,
+    "remainingMs": 94322,
+    "priorityWaitMs": 914187,
+    "approvals": [
+      {
+        "task": "IG-S09",
+        "extraMs": 90000,
+        "by": "Astra (pack author), 2026-11-15: observer-control only"
+      }
+    ]
+  },
+  "sources": {
+    "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "harnessFingerprints": [
+      "9da69f60fbd2d71eeaec2949f805ba8fac3c6f2c6bf88b5848398e5b16c128ed"
+    ],
+    "adapterIds": [
+      "gt-diagnostic"
+    ],
+    "adapterHashes": [
+      "d5fd6349b824de98223eecbbb001327e08b6ece223d95fb1b5d33842e465eaae"
+    ],
+    "sourceStable": true,
+    "firewallClean": true,
+    "node": "v26.13.0",
+    "platform": "win32 10.0.26300 x64",
+    "cpuModel": "AMD EPYC 7763 64-Core Processor",
+    "logicalProcessors": 16
+  },
+  "writer": {
+    "harnessFingerprint": "89105175e8324e903886a9aad31eeca27f4e04dc7ca7229edb32880ce2e758b6",
+    "aggregatorSha256": "350e74ddae18c96df30a49a6122165041945199393f141426a770ec90c75f275",
+    "revision": "r1",
+    "role": "the report writer (this file is part of the harness fingerprint); the fingerprints the commands recorded are in Sources"
+  },
+  "historical": {
+    "source": "docs/difficulty-v3/cv6-guided-sign-dig-2026-11-14.md (MS05e before data; seeds 300-319 Normal; historical, a different instrument and source label, never a substitute for these paired observations)",
+    "samples": 394,
+    "attempts": 41,
+    "exact": 18,
+    "shallow": 21,
+    "below": 355,
+    "misses": 376,
+    "namedTrap": 83,
+    "trapShareOfMisses": "83 of 376 (22.1 %)",
+    "setupTwoAbove": "187 of 376 (49.7 %)",
+    "belowAfterTuneReveal": "85 of 376 (22.6 %)",
+    "requestsWithCappedLocal": 21,
+    "cappedLocalRequestGroupShareOfTime": "95 % (a request-group share, not a stage share)"
+  },
+  "criteria": [
+    {
+      "id": "B01",
+      "status": "met for the recorded requests",
+      "evidence": "miss-split.json: the exact predicate \"complete canonical rating below the requested band AND finalClues <= spec.minClues + 1 AND an independently proved minimal sign set (removing each remaining sign admits another solution; a count cap is unknown, not minimal)\", cheap clauses before minimality; normal: G0 394 samples, G1 394; nightmare: G0 175 samples, G1 175; minimality unknown for 0 eligible and 0 unconfirmed samples (denominators and unknowns are in the tables); scoped to the recorded requests (Normal 20/20 pairs, Nightmare 6/10 pairs); no global G1 winner and no production adoption follows"
+    },
+    {
+      "id": "B02",
+      "status": "met for the recorded requests",
+      "evidence": "whole-pass and whole-request physical DFS calls / checks / skips, per removal, per pass and per request, in the Physical work tables; no saving is inferred from a per-probe cost; scoped to the recorded requests (Normal 20/20 pairs, Nightmare 6/10 pairs); no global G1 winner and no production adoption follows"
+    },
+    {
+      "id": "B03",
+      "status": "met",
+      "evidence": "a diagnostic only: no guided pool, setup-clue policy change or IR29 adoption is made or authorised; G1 is a private in-memory order; scoped to the recorded requests (Normal 20/20 pairs, Nightmare 6/10 pairs); no global G1 winner and no production adoption follows"
+    },
+    {
+      "id": "T01",
+      "status": "met",
+      "evidence": "G1 skipped 56556 count(s) only after a complete, non-uniqueness-assuming proof; stuck 4896 (native count run); fallbacks: contradiction 0, error 0, other shape 0, uniqueness-assuming proof 0"
+    },
+    {
+      "id": "T02",
+      "status": "met for the recorded pairs",
+      "evidence": "pairs: {\"total\":26,\"identityOk\":26,\"guardBindingDifference\":0,\"mismatch\":0,\"notComparable\":0,\"deferred\":0}; a guard-binding-difference is classified apart, never counted as identity; the eight unstarted request rows have no identity result"
+    },
+    {
+      "id": "T03",
+      "status": "PARTIAL",
+      "evidence": "Normal 20/20 pairs; Nightmare 6/10 pairs; 8 experimental request rows unstarted (Nightmare seeds 706, 707, 708, 709; budget-limited by the pack author's ruling, not excluded, failed or replaced); the controls (2/2) are a separate population. Every recorded sample, setup origin, local stage and capped / unknown check is accounted for in samples.json and miss-split.json; unstarted or timed-out rows stay unconfirmed"
+    },
+    {
+      "id": "T04",
+      "status": "met",
+      "evidence": "generation cpu / wall (request) and diagnosis / validation wall and cpu are separate fields (Diagnosis cost)"
+    },
+    {
+      "id": "T05",
+      "status": "met for the coverage established",
+      "evidence": "2 of 2 singleton observer-free controls recorded, 2 compatible with their captured G0 (source, trace, configuration, output digests); two singletons do not establish population-wide overhead and do not justify correcting any G1 timing; capture build time is reported; no instrumented number is called an uninstrumented headline"
+    }
+  ],
+  "deviations": [
+    "Partial, budget-limited diagnostic: Nightmare seeds 706-709 (eight request rows) were never started; the pack author ruled that they are not finished in this pre-freeze round. Normal 300-319 is complete (20 of 20 pairs); Nightmare is 6 of 10 pairs. Conclusions are scoped to the recorded requests: no global G1 winner, no production adoption.",
+    "Proof reuse is symmetric: whichever arm of a pair runs first is diagnosed in full and the other reuses a row only when the full canonical input (level, solution, givens, signs), the runtime fingerprint and the guard settings match; the donor is recorded per sample (validationReusedFrom). An unreached row stays unknown (unconfirmed). Accepted by the pack author.",
+    "Three development-check requests (Normal seed 300: G0, G1 and an observer-free native request, command IG-S09/dev-check, charged 52.04 s) validated the instrumentation before the shards; they are not cohort observations and not substitutes for the controls, and they are in no table.",
+    "The catalogue is taken from the ready message of the first request of each command (no separate probe); the sources were fingerprint-checked and the adapter transforms dry-run before any generation. Accepted by the pack author.",
+    "The observer-free controls ran in their own command (observer-control) under the harness fingerprint of the shards (no harness edit between the shards and the controls), inside the runner and the priority wrapper; they are singletons and a separate population.",
+    "Reporting writer revision r1: this report was written after the commands; the aggregator is a harness file, so the writer fingerprint differs from the fingerprint the commands recorded (both are in Sources). Raw records are unchanged. Pure tests, plan-only runs, the transform dry-run and the aggregator dry runs ran unwrapped (no engine, no worker thread).",
+    "DFS \"checks\" are search-node checks of the depth-first count; propagation checks and the solver's own budget checks are not instrumented (null), never zero."
+  ]
+}

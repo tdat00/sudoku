@@ -1,0 +1,1331 @@
+{
+  "schema": "ig09-setup-probes/2",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "method": "for the first missed (not exact) sign-dug sample of each request, at most the first three above-floor setup groups (unit-floor rule or solvability help) in their recorded order, after timing, against the saved post-setup, full-signs parent: the pure clue-floor / unit-floor rule, a bounded uniqueness count and the allowed-set solve after the removal. The second-running arm of a pair reuses the first-running arm's rows when the whole probe input (solution, parent, signs, groups, floors, source, guards) is identical: a reused row is a copy, not a second execution",
+  "coverage": {
+    "requests": 52,
+    "withAMissedSample": 48,
+    "withAboveFloorGroups": 26,
+    "requestsWithProbeRows": 26,
+    "requestsThatExecutedAProbe": 13,
+    "requestsThatReusedAProbe": 13,
+    "donorRequestsReusedByAnother": 13,
+    "groupRowsExecuted": 15,
+    "groupRowsReusedCopies": 15,
+    "groupRowsListed": 30,
+    "groupRowsDone": 30,
+    "groupRowsNotDone": 0,
+    "note": "Limited counterfactual coverage of one sample per request: not a population intervention coverage. The listed rows are 15 executed group checks plus 15 reused copies; they are never 30 independent probe executions"
+  },
+  "results": {
+    "executed": {
+      "groupRows": 15,
+      "done": 15,
+      "notDone": 0,
+      "blockedByRule": {
+        "clueFloor": 0,
+        "unitFloor": 10,
+        "neither": 5
+      },
+      "uniquenessAfterRemoval": {
+        "unique": 10,
+        "notUnique": 5,
+        "unknown": 0
+      },
+      "solveAfterRemoval": {
+        "solved": 10,
+        "stuck": 5,
+        "contradiction": 0,
+        "unknownOrError": 0
+      }
+    },
+    "reusedCopies": {
+      "groupRows": 15,
+      "done": 15,
+      "notDone": 0,
+      "blockedByRule": {
+        "clueFloor": 0,
+        "unitFloor": 10,
+        "neither": 5
+      },
+      "uniquenessAfterRemoval": {
+        "unique": 10,
+        "notUnique": 5,
+        "unknown": 0
+      },
+      "solveAfterRemoval": {
+        "solved": 10,
+        "stuck": 5,
+        "contradiction": 0,
+        "unknownOrError": 0
+      }
+    },
+    "reading": "The executed rows are the observations; the reused copies repeat a donor row and are listed apart, never added to the executed results"
+  },
+  "requests": [
+    {
+      "key": "IG-S09/normal-300-304/greaterThan:normal:300/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 300,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-300-304/greaterThan:normal:300/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 300,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-300-304/greaterThan:normal:301/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 301,
+      "firstMissedSample": null,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-300-304/greaterThan:normal:301/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 301,
+      "firstMissedSample": null,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-300-304/greaterThan:normal:302/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 302,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-300-304/greaterThan:normal:302/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 302,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-300-304/greaterThan:normal:303/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 303,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-300-304/greaterThan:normal:303/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 303,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-300-304/greaterThan:normal:304/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 304,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "executed",
+        "reusedFrom": null,
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              38,
+              42
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 24,
+              "unitsBelowFloor": [
+                4
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 0.7131999999983236,
+            "uniquenessNodes": 2,
+            "solveSteps": 88
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-300-304/greaterThan:normal:304/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 304,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "reused",
+        "reusedFrom": "IG-S09/normal-300-304/greaterThan:normal:304/g0",
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              38,
+              42
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 24,
+              "unitsBelowFloor": [
+                4
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 0.7131999999983236,
+            "uniquenessNodes": 2,
+            "solveSteps": 88
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-305-309/greaterThan:normal:305/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 305,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "executed",
+        "reusedFrom": null,
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              12,
+              68
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 25,
+              "unitsBelowFloor": [
+                1,
+                7
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 2.6116000000000668,
+            "uniquenessNodes": 2,
+            "solveSteps": 94
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-305-309/greaterThan:normal:305/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 305,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "reused",
+        "reusedFrom": "IG-S09/normal-305-309/greaterThan:normal:305/g1",
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              12,
+              68
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 25,
+              "unitsBelowFloor": [
+                1,
+                7
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 2.6116000000000668,
+            "uniquenessNodes": 2,
+            "solveSteps": 94
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-305-309/greaterThan:normal:306/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 306,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "executed",
+        "reusedFrom": null,
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              40
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 24,
+              "unitsBelowFloor": [
+                4
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 1.1790000000000873,
+            "uniquenessNodes": 2,
+            "solveSteps": 94
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-305-309/greaterThan:normal:306/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 306,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "reused",
+        "reusedFrom": "IG-S09/normal-305-309/greaterThan:normal:306/g0",
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              40
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 24,
+              "unitsBelowFloor": [
+                4
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 1.1790000000000873,
+            "uniquenessNodes": 2,
+            "solveSteps": 94
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-305-309/greaterThan:normal:307/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 307,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "executed",
+        "reusedFrom": null,
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              39,
+              41
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 24,
+              "unitsBelowFloor": [
+                4
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 0.8894000000000233,
+            "uniquenessNodes": 2,
+            "solveSteps": 96
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-305-309/greaterThan:normal:307/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 307,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "reused",
+        "reusedFrom": "IG-S09/normal-305-309/greaterThan:normal:307/g1",
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              39,
+              41
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 24,
+              "unitsBelowFloor": [
+                4
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 0.8894000000000233,
+            "uniquenessNodes": 2,
+            "solveSteps": 96
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-305-309/greaterThan:normal:308/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 308,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 2,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 2,
+        "execution": "executed",
+        "reusedFrom": null,
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              37,
+              43
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 26,
+              "unitsBelowFloor": [
+                4
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 1.0437999999994645,
+            "uniquenessNodes": 2,
+            "solveSteps": 81
+          },
+          {
+            "phase": "unit-floor",
+            "cells": [
+              17,
+              63
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 26,
+              "unitsBelowFloor": [
+                9,
+                17
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 0.6715999999996711,
+            "uniquenessNodes": 2,
+            "solveSteps": 83
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-305-309/greaterThan:normal:308/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 308,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 2,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 2,
+        "execution": "reused",
+        "reusedFrom": "IG-S09/normal-305-309/greaterThan:normal:308/g0",
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              37,
+              43
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 26,
+              "unitsBelowFloor": [
+                4
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 1.0437999999994645,
+            "uniquenessNodes": 2,
+            "solveSteps": 81
+          },
+          {
+            "phase": "unit-floor",
+            "cells": [
+              17,
+              63
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 26,
+              "unitsBelowFloor": [
+                9,
+                17
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 0.6715999999996711,
+            "uniquenessNodes": 2,
+            "solveSteps": 83
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-305-309/greaterThan:normal:309/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 309,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "executed",
+        "reusedFrom": null,
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              10,
+              70
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 24,
+              "unitsBelowFloor": [
+                18,
+                26
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 1.3174999999973807,
+            "uniquenessNodes": 2,
+            "solveSteps": 93
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-305-309/greaterThan:normal:309/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 309,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "reused",
+        "reusedFrom": "IG-S09/normal-305-309/greaterThan:normal:309/g1",
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              10,
+              70
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 24,
+              "unitsBelowFloor": [
+                18,
+                26
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 1.3174999999973807,
+            "uniquenessNodes": 2,
+            "solveSteps": 93
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-310-314/greaterThan:normal:310/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 310,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-310-314/greaterThan:normal:310/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 310,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-310-314/greaterThan:normal:311/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 311,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-310-314/greaterThan:normal:311/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 311,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-310-314/greaterThan:normal:312/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 312,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "executed",
+        "reusedFrom": null,
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              38,
+              42
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 24,
+              "unitsBelowFloor": [
+                4
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 0.7695999999996275,
+            "uniquenessNodes": 2,
+            "solveSteps": 83
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-310-314/greaterThan:normal:312/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 312,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "reused",
+        "reusedFrom": "IG-S09/normal-310-314/greaterThan:normal:312/g0",
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              38,
+              42
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 24,
+              "unitsBelowFloor": [
+                4
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 0.7695999999996275,
+            "uniquenessNodes": 2,
+            "solveSteps": 83
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-310-314/greaterThan:normal:313/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 313,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-310-314/greaterThan:normal:313/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 313,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-310-314/greaterThan:normal:314/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 314,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-310-314/greaterThan:normal:314/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 314,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-315-319/greaterThan:normal:315/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 315,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "executed",
+        "reusedFrom": null,
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              32,
+              48
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 24,
+              "unitsBelowFloor": [
+                22
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 0.6003000000000611,
+            "uniquenessNodes": 2,
+            "solveSteps": 83
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-315-319/greaterThan:normal:315/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 315,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "reused",
+        "reusedFrom": "IG-S09/normal-315-319/greaterThan:normal:315/g1",
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              32,
+              48
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 24,
+              "unitsBelowFloor": [
+                22
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 0.6003000000000611,
+            "uniquenessNodes": 2,
+            "solveSteps": 83
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-315-319/greaterThan:normal:316/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 316,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-315-319/greaterThan:normal:316/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 316,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/normal-315-319/greaterThan:normal:317/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 317,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "executed",
+        "reusedFrom": null,
+        "rows": [
+          {
+            "phase": "help",
+            "cells": [
+              6,
+              74
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": false,
+              "cluesAfter": 25,
+              "unitsBelowFloor": []
+            },
+            "uniquenessAfterRemoval": "not-unique",
+            "solveAfterRemoval": "stuck",
+            "wallMs": 2.880300000000716,
+            "uniquenessNodes": 5,
+            "solveSteps": 562
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-315-319/greaterThan:normal:317/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 317,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "reused",
+        "reusedFrom": "IG-S09/normal-315-319/greaterThan:normal:317/g1",
+        "rows": [
+          {
+            "phase": "help",
+            "cells": [
+              6,
+              74
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": false,
+              "cluesAfter": 25,
+              "unitsBelowFloor": []
+            },
+            "uniquenessAfterRemoval": "not-unique",
+            "solveAfterRemoval": "stuck",
+            "wallMs": 2.880300000000716,
+            "uniquenessNodes": 5,
+            "solveSteps": 562
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-315-319/greaterThan:normal:318/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 318,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 2,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 2,
+        "execution": "executed",
+        "reusedFrom": null,
+        "rows": [
+          {
+            "phase": "help",
+            "cells": [
+              21,
+              59
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": false,
+              "cluesAfter": 27,
+              "unitsBelowFloor": []
+            },
+            "uniquenessAfterRemoval": "not-unique",
+            "solveAfterRemoval": "stuck",
+            "wallMs": 2.3528999999980442,
+            "uniquenessNodes": 5,
+            "solveSteps": 526
+          },
+          {
+            "phase": "help",
+            "cells": [
+              33,
+              47
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": false,
+              "cluesAfter": 27,
+              "unitsBelowFloor": []
+            },
+            "uniquenessAfterRemoval": "not-unique",
+            "solveAfterRemoval": "stuck",
+            "wallMs": 0.7590999999993073,
+            "uniquenessNodes": 5,
+            "solveSteps": 529
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-315-319/greaterThan:normal:318/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 318,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 2,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 2,
+        "execution": "reused",
+        "reusedFrom": "IG-S09/normal-315-319/greaterThan:normal:318/g0",
+        "rows": [
+          {
+            "phase": "help",
+            "cells": [
+              21,
+              59
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": false,
+              "cluesAfter": 27,
+              "unitsBelowFloor": []
+            },
+            "uniquenessAfterRemoval": "not-unique",
+            "solveAfterRemoval": "stuck",
+            "wallMs": 2.3528999999980442,
+            "uniquenessNodes": 5,
+            "solveSteps": 526
+          },
+          {
+            "phase": "help",
+            "cells": [
+              33,
+              47
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": false,
+              "cluesAfter": 27,
+              "unitsBelowFloor": []
+            },
+            "uniquenessAfterRemoval": "not-unique",
+            "solveAfterRemoval": "stuck",
+            "wallMs": 0.7590999999993073,
+            "uniquenessNodes": 5,
+            "solveSteps": 529
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-315-319/greaterThan:normal:319/g1",
+      "arm": "g1",
+      "level": "normal",
+      "seed": 319,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "executed",
+        "reusedFrom": null,
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              37,
+              43
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 24,
+              "unitsBelowFloor": [
+                4
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 1.7436999999990803,
+            "uniquenessNodes": 2,
+            "solveSteps": 105
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/normal-315-319/greaterThan:normal:319/g0",
+      "arm": "g0",
+      "level": "normal",
+      "seed": 319,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "reused",
+        "reusedFrom": "IG-S09/normal-315-319/greaterThan:normal:319/g1",
+        "rows": [
+          {
+            "phase": "unit-floor",
+            "cells": [
+              37,
+              43
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": true,
+              "cluesAfter": 24,
+              "unitsBelowFloor": [
+                4
+              ]
+            },
+            "uniquenessAfterRemoval": "unique",
+            "solveAfterRemoval": "solved",
+            "wallMs": 1.7436999999990803,
+            "uniquenessNodes": 2,
+            "solveSteps": 105
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g0",
+      "arm": "g0",
+      "level": "nightmare",
+      "seed": 700,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:700/g1",
+      "arm": "g1",
+      "level": "nightmare",
+      "seed": 700,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g1",
+      "arm": "g1",
+      "level": "nightmare",
+      "seed": 701,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/nightmare-700-701/greaterThan:nightmare:701/g0",
+      "arm": "g0",
+      "level": "nightmare",
+      "seed": 701,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/nightmare-702-703/greaterThan:nightmare:702/g0",
+      "arm": "g0",
+      "level": "nightmare",
+      "seed": 702,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "executed",
+        "reusedFrom": null,
+        "rows": [
+          {
+            "phase": "help",
+            "cells": [
+              23,
+              57
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": false,
+              "cluesAfter": 18,
+              "unitsBelowFloor": []
+            },
+            "uniquenessAfterRemoval": "not-unique",
+            "solveAfterRemoval": "stuck",
+            "wallMs": 2.044799999999668,
+            "uniquenessNodes": 6,
+            "solveSteps": 699
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/nightmare-702-703/greaterThan:nightmare:702/g1",
+      "arm": "g1",
+      "level": "nightmare",
+      "seed": 702,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "reused",
+        "reusedFrom": "IG-S09/nightmare-702-703/greaterThan:nightmare:702/g0",
+        "rows": [
+          {
+            "phase": "help",
+            "cells": [
+              23,
+              57
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": false,
+              "cluesAfter": 18,
+              "unitsBelowFloor": []
+            },
+            "uniquenessAfterRemoval": "not-unique",
+            "solveAfterRemoval": "stuck",
+            "wallMs": 2.044799999999668,
+            "uniquenessNodes": 6,
+            "solveSteps": 699
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/nightmare-702-703/greaterThan:nightmare:703/g1",
+      "arm": "g1",
+      "level": "nightmare",
+      "seed": 703,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "executed",
+        "reusedFrom": null,
+        "rows": [
+          {
+            "phase": "help",
+            "cells": [
+              22,
+              58
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": false,
+              "cluesAfter": 18,
+              "unitsBelowFloor": []
+            },
+            "uniquenessAfterRemoval": "not-unique",
+            "solveAfterRemoval": "stuck",
+            "wallMs": 11.332699999999022,
+            "uniquenessNodes": 5,
+            "solveSteps": 664
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/nightmare-702-703/greaterThan:nightmare:703/g0",
+      "arm": "g0",
+      "level": "nightmare",
+      "seed": 703,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 1,
+      "probe": {
+        "status": "done",
+        "groupsPlanned": 1,
+        "execution": "reused",
+        "reusedFrom": "IG-S09/nightmare-702-703/greaterThan:nightmare:703/g1",
+        "rows": [
+          {
+            "phase": "help",
+            "cells": [
+              22,
+              58
+            ],
+            "status": "done",
+            "block": {
+              "floorBlock": false,
+              "unitBlock": false,
+              "cluesAfter": 18,
+              "unitsBelowFloor": []
+            },
+            "uniquenessAfterRemoval": "not-unique",
+            "solveAfterRemoval": "stuck",
+            "wallMs": 11.332699999999022,
+            "uniquenessNodes": 5,
+            "solveSteps": 664
+          }
+        ]
+      }
+    },
+    {
+      "key": "IG-S09/nightmare-704-705/greaterThan:nightmare:704/g0",
+      "arm": "g0",
+      "level": "nightmare",
+      "seed": 704,
+      "firstMissedSample": null,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/nightmare-704-705/greaterThan:nightmare:704/g1",
+      "arm": "g1",
+      "level": "nightmare",
+      "seed": 704,
+      "firstMissedSample": null,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/nightmare-704-705/greaterThan:nightmare:705/g1",
+      "arm": "g1",
+      "level": "nightmare",
+      "seed": 705,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    },
+    {
+      "key": "IG-S09/nightmare-704-705/greaterThan:nightmare:705/g0",
+      "arm": "g0",
+      "level": "nightmare",
+      "seed": 705,
+      "firstMissedSample": 0,
+      "aboveFloorGroupsAvailable": 0,
+      "probe": null
+    }
+  ]
+}

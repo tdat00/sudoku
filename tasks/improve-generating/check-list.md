@@ -51,7 +51,7 @@ is separate. No silent retries or new seed searches may spend the reserve.
 | [ ] | IG-S06 | [06](06-composed-request-confirmation.md) | DEFERRED this pre-freeze round: held-out requests and sample lanes | Reschedule after frozen SM2 review | 90-150 min | 24 min (deferred) | Full-request composition remains unmeasured, not passed or refuted |
 | [x] | IG-S07 | [07](07-sm1-profiles.md) | SM1 stage/finder profiles and overhead | IG-S05 reporting/accounting closure; IG-S02/03 baselines; IG-S06 waived | 60-90 min | 12 min | Sample/local/finder shares behind the time factors |
 | [x] | IG-S08 | [08](08-sm3-jigsaw-attribution.md) | Bounded SM3 Jigsaw tail attribution | IG-S07 accepted | 30-60 min | 6 min | Jigsaw Expert seed1111, not a guessed tail fix |
-| [ ] | IG-S09 | [09](09-greater-than-diagnostic.md) | Greater-Than miss split and solve-first diagnostic | IG-S08 accepted | 60-90 min | 15 min | Q16; S-AV01; sign-pass and local-work assumptions |
+| [x] | IG-S09 | [09](09-greater-than-diagnostic.md) | Greater-Than miss split and solve-first diagnostic | IG-S08 accepted | 60-90 min | 15 min | Q16; S-AV01; sign-pass and local-work assumptions |
 | [ ] | IG-S10 | [10](10-reconcile-and-freeze-handoff.md) | Results reconciliation and frozen-rerun handoff | IG-S09 accepted | 30-60 min | 4 min | Every estimate versus its measured scope; provisional gate report |
 | | Reserve | author/orchestrator approval only | Splitting unstarted work or investigated failures | explicit approval | | 8 min | Never an automatic rerun allowance |
 | | **Total** | | | | | **180 min** | **172 planned +8 reserve** |
@@ -419,5 +419,5 @@ pause exit handling for the supplied wrapper. No measurements or production chan
 | IG-S06 | Deferred (pre-freeze) | 2026-11-15 scheduling decision above; no IG-S06 measurements | Not run | No winning frontier variant; not passed or refuted | M4 deferred |
 | IG-S07 | Accepted | runs `0feb1ea57bd4`, r2 `5027a528f03a`; `IG-S07/summary-r2` | 710.6 s of 720 s (+12 s admission) /1,185 s waits | chains 77-81 % of mega profiles; conditional scenarios; loop check 13/13 | M4 SM1 |
 | IG-S08 | Accepted | runs `fe2bae1efce6`, r3 `82b623923934`; `IG-S08/summary-r3` | 336.4 s of 360 s /90.3 s waits | seed 1111 censored at 240.015 s; full-grid DFS 99.5 % (attempt 4, after restart 50); Q07(b); no ceiling changed | SM3 (no milestone) |
-| IG-S09 | | | | | |
+| IG-S09 | Accepted (partial) | commands `9da69f60…`, r2 `d414ebac…`, harness `bbd5db2da6cd…`; `IG-S09/summary-r2` | 895.7 s of 990 s (+90 s observer-control) /914.2 s known waits | Normal 20/20, Nightmare 6/10, controls 2/2; eight rows unstarted; G0/G1 totals Normal 1.030, Nightmare 0.170; F1-F5 closed | Q16 diagnostic (no milestone) |
 | IG-S10 | | | | | |

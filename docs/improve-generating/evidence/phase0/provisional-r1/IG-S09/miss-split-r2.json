@@ -1,0 +1,793 @@
+{
+  "schema": "ig09-miss-split/1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "predicate": "complete canonical rating below the requested band AND finalClues <= spec.minClues + 1 AND an independently proved minimal sign set (removing each remaining sign admits another solution; a count cap is unknown, not minimal)",
+  "buckets": [
+    "exact",
+    "shallow",
+    "above-or-unrated",
+    "below-trap",
+    "below-tune",
+    "below-setup2",
+    "other-below",
+    "unconfirmed"
+  ],
+  "order": "exact; shallow in-band; above/not-rated/stuck; below + named trap; below + post-setup tune reveal; below + no tune reveal + setup at least two above the floor; other/unknown below; unconfirmed (no independent canonical rating). The predicate order prevents double counting.",
+  "levels": [
+    "veryEasy",
+    "easy",
+    "normal",
+    "hard",
+    "expert",
+    "master",
+    "nightmare",
+    "hell1",
+    "hell2"
+  ],
+  "historical": {
+    "source": "docs/difficulty-v3/cv6-guided-sign-dig-2026-11-14.md (MS05e before data; seeds 300-319 Normal; historical, a different instrument and source label, never a substitute for these paired observations)",
+    "samples": 394,
+    "attempts": 41,
+    "exact": 18,
+    "shallow": 21,
+    "below": 355,
+    "misses": 376,
+    "namedTrap": 83,
+    "trapShareOfMisses": "83 of 376 (22.1 %)",
+    "setupTwoAbove": "187 of 376 (49.7 %)",
+    "belowAfterTuneReveal": "85 of 376 (22.6 %)",
+    "requestsWithCappedLocal": 21,
+    "cappedLocalRequestGroupShareOfTime": "95 % (a request-group share, not a stage share)"
+  },
+  "cohorts": {
+    "normal": {
+      "g0": {
+        "requests": 20,
+        "split": {
+          "samples": 394,
+          "buckets": {
+            "exact": 18,
+            "shallow": 21,
+            "above-or-unrated": 0,
+            "below-trap": 83,
+            "below-tune": 85,
+            "below-setup2": 187,
+            "other-below": 0,
+            "unconfirmed": 0
+          },
+          "exact": 18,
+          "misses": 376,
+          "below": 355,
+          "trapEligible": 83,
+          "trapProven": 83,
+          "trapUnknown": 0,
+          "unconfirmed": 0,
+          "trapLowerShareOfMisses": {
+            "numerator": 83,
+            "denominator": 376
+          },
+          "trapUnconfirmedEligible": 0,
+          "trapUpperShareOfMisses": {
+            "numerator": 83,
+            "denominator": 376,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "minimalityCoverage": {
+            "requiredForTrap": 83,
+            "decided": 83,
+            "unknown": 0
+          }
+        },
+        "coverage": {
+          "requests": 20,
+          "diagnosisStatuses": {
+            "complete": 10,
+            "reused-only": 10
+          },
+          "rows": 394,
+          "unstartedSamples": 0,
+          "unfinishedSamples": "not recorded (r1 records): a missing row is unstarted or unfinished",
+          "reusedSamples": 160,
+          "longestDiagnosisWallMs": 150.55
+        },
+        "shares": {
+          "exact": {
+            "numerator": 18,
+            "denominator": 394,
+            "share": 0.046
+          },
+          "shallow": {
+            "numerator": 21,
+            "denominator": 394,
+            "share": 0.053
+          },
+          "aboveOrUnrated": {
+            "numerator": 0,
+            "denominator": 394,
+            "share": 0
+          },
+          "belowTrap": {
+            "numerator": 83,
+            "denominator": 394,
+            "share": 0.211
+          },
+          "belowTune": {
+            "numerator": 85,
+            "denominator": 394,
+            "share": 0.216
+          },
+          "belowSetup2": {
+            "numerator": 187,
+            "denominator": 394,
+            "share": 0.475
+          },
+          "otherBelow": {
+            "numerator": 0,
+            "denominator": 394,
+            "share": 0
+          },
+          "unconfirmed": {
+            "numerator": 0,
+            "denominator": 394,
+            "share": 0
+          }
+        },
+        "sharesOfMisses": {
+          "namedTrapLower": {
+            "numerator": 83,
+            "denominator": 376
+          },
+          "namedTrapUpper": {
+            "numerator": 83,
+            "denominator": 376,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "belowTune": {
+            "numerator": 85,
+            "denominator": 376,
+            "share": 0.226
+          },
+          "belowSetup2": {
+            "numerator": 187,
+            "denominator": 376,
+            "share": 0.497
+          },
+          "shallow": {
+            "numerator": 21,
+            "denominator": 376,
+            "share": 0.056
+          }
+        },
+        "eligibleBeforeMinimality": {
+          "cheapFloorClauseTrue": {
+            "numerator": 96,
+            "denominator": 394,
+            "share": 0.244
+          },
+          "belowAndFloorClause": {
+            "numerator": 83,
+            "denominator": 394,
+            "share": 0.211
+          },
+          "minimalityAsked": {
+            "requiredForTrap": 83,
+            "decided": 83,
+            "unknown": 0
+          },
+          "note": "only a sample that satisfies the clue-floor clause and the complete canonical below-band clause needs a minimality proof; the rest is not-required-for-trap (never an implied proof)"
+        },
+        "setupOrigins": {
+          "allSamples": {
+            "samples": 394,
+            "groups": {
+              "clue-floor": 4851,
+              "unit-floor": 280,
+              "help": 112,
+              "tune": 145
+            },
+            "cells": {
+              "clue-floor": 9579,
+              "unit-floor": 536,
+              "help": 224,
+              "tune": 287
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 394,
+              "unit-floor": 219,
+              "help": 94,
+              "tune": 91
+            }
+          },
+          "misses": {
+            "samples": 376,
+            "groups": {
+              "clue-floor": 4629,
+              "unit-floor": 273,
+              "help": 110,
+              "tune": 142
+            },
+            "cells": {
+              "clue-floor": 9141,
+              "unit-floor": 523,
+              "help": 220,
+              "tune": 281
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 376,
+              "unit-floor": 212,
+              "help": 92,
+              "tune": 88
+            }
+          },
+          "belowSetup2ExcessOrigin": {
+            "unit-floor only": 109,
+            "help only": 35,
+            "unit-floor and help": 43,
+            "neither (the clue-floor groups overshoot)": 0
+          }
+        }
+      },
+      "g1": {
+        "requests": 20,
+        "split": {
+          "samples": 394,
+          "buckets": {
+            "exact": 18,
+            "shallow": 21,
+            "above-or-unrated": 0,
+            "below-trap": 83,
+            "below-tune": 85,
+            "below-setup2": 187,
+            "other-below": 0,
+            "unconfirmed": 0
+          },
+          "exact": 18,
+          "misses": 376,
+          "below": 355,
+          "trapEligible": 83,
+          "trapProven": 83,
+          "trapUnknown": 0,
+          "unconfirmed": 0,
+          "trapLowerShareOfMisses": {
+            "numerator": 83,
+            "denominator": 376
+          },
+          "trapUnconfirmedEligible": 0,
+          "trapUpperShareOfMisses": {
+            "numerator": 83,
+            "denominator": 376,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "minimalityCoverage": {
+            "requiredForTrap": 83,
+            "decided": 83,
+            "unknown": 0
+          }
+        },
+        "coverage": {
+          "requests": 20,
+          "diagnosisStatuses": {
+            "reused-only": 10,
+            "complete": 10
+          },
+          "rows": 394,
+          "unstartedSamples": 0,
+          "unfinishedSamples": "not recorded (r1 records): a missing row is unstarted or unfinished",
+          "reusedSamples": 234,
+          "longestDiagnosisWallMs": 127.981
+        },
+        "shares": {
+          "exact": {
+            "numerator": 18,
+            "denominator": 394,
+            "share": 0.046
+          },
+          "shallow": {
+            "numerator": 21,
+            "denominator": 394,
+            "share": 0.053
+          },
+          "aboveOrUnrated": {
+            "numerator": 0,
+            "denominator": 394,
+            "share": 0
+          },
+          "belowTrap": {
+            "numerator": 83,
+            "denominator": 394,
+            "share": 0.211
+          },
+          "belowTune": {
+            "numerator": 85,
+            "denominator": 394,
+            "share": 0.216
+          },
+          "belowSetup2": {
+            "numerator": 187,
+            "denominator": 394,
+            "share": 0.475
+          },
+          "otherBelow": {
+            "numerator": 0,
+            "denominator": 394,
+            "share": 0
+          },
+          "unconfirmed": {
+            "numerator": 0,
+            "denominator": 394,
+            "share": 0
+          }
+        },
+        "sharesOfMisses": {
+          "namedTrapLower": {
+            "numerator": 83,
+            "denominator": 376
+          },
+          "namedTrapUpper": {
+            "numerator": 83,
+            "denominator": 376,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "belowTune": {
+            "numerator": 85,
+            "denominator": 376,
+            "share": 0.226
+          },
+          "belowSetup2": {
+            "numerator": 187,
+            "denominator": 376,
+            "share": 0.497
+          },
+          "shallow": {
+            "numerator": 21,
+            "denominator": 376,
+            "share": 0.056
+          }
+        },
+        "eligibleBeforeMinimality": {
+          "cheapFloorClauseTrue": {
+            "numerator": 96,
+            "denominator": 394,
+            "share": 0.244
+          },
+          "belowAndFloorClause": {
+            "numerator": 83,
+            "denominator": 394,
+            "share": 0.211
+          },
+          "minimalityAsked": {
+            "requiredForTrap": 83,
+            "decided": 83,
+            "unknown": 0
+          },
+          "note": "only a sample that satisfies the clue-floor clause and the complete canonical below-band clause needs a minimality proof; the rest is not-required-for-trap (never an implied proof)"
+        },
+        "setupOrigins": {
+          "allSamples": {
+            "samples": 394,
+            "groups": {
+              "clue-floor": 4851,
+              "unit-floor": 280,
+              "help": 112,
+              "tune": 145
+            },
+            "cells": {
+              "clue-floor": 9579,
+              "unit-floor": 536,
+              "help": 224,
+              "tune": 287
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 394,
+              "unit-floor": 219,
+              "help": 94,
+              "tune": 91
+            }
+          },
+          "misses": {
+            "samples": 376,
+            "groups": {
+              "clue-floor": 4629,
+              "unit-floor": 273,
+              "help": 110,
+              "tune": 142
+            },
+            "cells": {
+              "clue-floor": 9141,
+              "unit-floor": 523,
+              "help": 220,
+              "tune": 281
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 376,
+              "unit-floor": 212,
+              "help": 92,
+              "tune": 88
+            }
+          },
+          "belowSetup2ExcessOrigin": {
+            "unit-floor only": 109,
+            "help only": 35,
+            "unit-floor and help": 43,
+            "neither (the clue-floor groups overshoot)": 0
+          }
+        }
+      }
+    },
+    "nightmare": {
+      "g0": {
+        "requests": 6,
+        "split": {
+          "samples": 175,
+          "buckets": {
+            "exact": 6,
+            "shallow": 56,
+            "above-or-unrated": 0,
+            "below-trap": 19,
+            "below-tune": 87,
+            "below-setup2": 7,
+            "other-below": 0,
+            "unconfirmed": 0
+          },
+          "exact": 6,
+          "misses": 169,
+          "below": 113,
+          "trapEligible": 19,
+          "trapProven": 19,
+          "trapUnknown": 0,
+          "unconfirmed": 0,
+          "trapLowerShareOfMisses": {
+            "numerator": 19,
+            "denominator": 169
+          },
+          "trapUnconfirmedEligible": 0,
+          "trapUpperShareOfMisses": {
+            "numerator": 19,
+            "denominator": 169,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "minimalityCoverage": {
+            "requiredForTrap": 19,
+            "decided": 19,
+            "unknown": 0
+          }
+        },
+        "coverage": {
+          "requests": 6,
+          "diagnosisStatuses": {
+            "complete": 3,
+            "reused-only": 3
+          },
+          "rows": 175,
+          "unstartedSamples": 0,
+          "unfinishedSamples": "not recorded (r1 records): a missing row is unstarted or unfinished",
+          "reusedSamples": 103,
+          "longestDiagnosisWallMs": 186.195
+        },
+        "shares": {
+          "exact": {
+            "numerator": 6,
+            "denominator": 175,
+            "share": 0.034
+          },
+          "shallow": {
+            "numerator": 56,
+            "denominator": 175,
+            "share": 0.32
+          },
+          "aboveOrUnrated": {
+            "numerator": 0,
+            "denominator": 175,
+            "share": 0
+          },
+          "belowTrap": {
+            "numerator": 19,
+            "denominator": 175,
+            "share": 0.109
+          },
+          "belowTune": {
+            "numerator": 87,
+            "denominator": 175,
+            "share": 0.497
+          },
+          "belowSetup2": {
+            "numerator": 7,
+            "denominator": 175,
+            "share": 0.04
+          },
+          "otherBelow": {
+            "numerator": 0,
+            "denominator": 175,
+            "share": 0
+          },
+          "unconfirmed": {
+            "numerator": 0,
+            "denominator": 175,
+            "share": 0
+          }
+        },
+        "sharesOfMisses": {
+          "namedTrapLower": {
+            "numerator": 19,
+            "denominator": 169
+          },
+          "namedTrapUpper": {
+            "numerator": 19,
+            "denominator": 169,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "belowTune": {
+            "numerator": 87,
+            "denominator": 169,
+            "share": 0.515
+          },
+          "belowSetup2": {
+            "numerator": 7,
+            "denominator": 169,
+            "share": 0.041
+          },
+          "shallow": {
+            "numerator": 56,
+            "denominator": 169,
+            "share": 0.331
+          }
+        },
+        "eligibleBeforeMinimality": {
+          "cheapFloorClauseTrue": {
+            "numerator": 25,
+            "denominator": 175,
+            "share": 0.143
+          },
+          "belowAndFloorClause": {
+            "numerator": 19,
+            "denominator": 175,
+            "share": 0.109
+          },
+          "minimalityAsked": {
+            "requiredForTrap": 19,
+            "decided": 19,
+            "unknown": 0
+          },
+          "note": "only a sample that satisfies the clue-floor clause and the complete canonical below-band clause needs a minimality proof; the rest is not-required-for-trap (never an implied proof)"
+        },
+        "setupOrigins": {
+          "allSamples": {
+            "samples": 175,
+            "groups": {
+              "clue-floor": 1575,
+              "unit-floor": 0,
+              "help": 42,
+              "tune": 376
+            },
+            "cells": {
+              "clue-floor": 3109,
+              "unit-floor": 0,
+              "help": 84,
+              "tune": 744
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 175,
+              "unit-floor": 0,
+              "help": 36,
+              "tune": 142
+            }
+          },
+          "misses": {
+            "samples": 169,
+            "groups": {
+              "clue-floor": 1521,
+              "unit-floor": 0,
+              "help": 37,
+              "tune": 362
+            },
+            "cells": {
+              "clue-floor": 3001,
+              "unit-floor": 0,
+              "help": 74,
+              "tune": 716
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 169,
+              "unit-floor": 0,
+              "help": 32,
+              "tune": 136
+            }
+          },
+          "belowSetup2ExcessOrigin": {
+            "unit-floor only": 0,
+            "help only": 7,
+            "unit-floor and help": 0,
+            "neither (the clue-floor groups overshoot)": 0
+          }
+        }
+      },
+      "g1": {
+        "requests": 6,
+        "split": {
+          "samples": 175,
+          "buckets": {
+            "exact": 6,
+            "shallow": 56,
+            "above-or-unrated": 0,
+            "below-trap": 19,
+            "below-tune": 87,
+            "below-setup2": 7,
+            "other-below": 0,
+            "unconfirmed": 0
+          },
+          "exact": 6,
+          "misses": 169,
+          "below": 113,
+          "trapEligible": 19,
+          "trapProven": 19,
+          "trapUnknown": 0,
+          "unconfirmed": 0,
+          "trapLowerShareOfMisses": {
+            "numerator": 19,
+            "denominator": 169
+          },
+          "trapUnconfirmedEligible": 0,
+          "trapUpperShareOfMisses": {
+            "numerator": 19,
+            "denominator": 169,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "minimalityCoverage": {
+            "requiredForTrap": 19,
+            "decided": 19,
+            "unknown": 0
+          }
+        },
+        "coverage": {
+          "requests": 6,
+          "diagnosisStatuses": {
+            "reused-only": 3,
+            "complete": 3
+          },
+          "rows": 175,
+          "unstartedSamples": 0,
+          "unfinishedSamples": "not recorded (r1 records): a missing row is unstarted or unfinished",
+          "reusedSamples": 72,
+          "longestDiagnosisWallMs": 201.149
+        },
+        "shares": {
+          "exact": {
+            "numerator": 6,
+            "denominator": 175,
+            "share": 0.034
+          },
+          "shallow": {
+            "numerator": 56,
+            "denominator": 175,
+            "share": 0.32
+          },
+          "aboveOrUnrated": {
+            "numerator": 0,
+            "denominator": 175,
+            "share": 0
+          },
+          "belowTrap": {
+            "numerator": 19,
+            "denominator": 175,
+            "share": 0.109
+          },
+          "belowTune": {
+            "numerator": 87,
+            "denominator": 175,
+            "share": 0.497
+          },
+          "belowSetup2": {
+            "numerator": 7,
+            "denominator": 175,
+            "share": 0.04
+          },
+          "otherBelow": {
+            "numerator": 0,
+            "denominator": 175,
+            "share": 0
+          },
+          "unconfirmed": {
+            "numerator": 0,
+            "denominator": 175,
+            "share": 0
+          }
+        },
+        "sharesOfMisses": {
+          "namedTrapLower": {
+            "numerator": 19,
+            "denominator": 169
+          },
+          "namedTrapUpper": {
+            "numerator": 19,
+            "denominator": 169,
+            "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+          },
+          "belowTune": {
+            "numerator": 87,
+            "denominator": 169,
+            "share": 0.515
+          },
+          "belowSetup2": {
+            "numerator": 7,
+            "denominator": 169,
+            "share": 0.041
+          },
+          "shallow": {
+            "numerator": 56,
+            "denominator": 169,
+            "share": 0.331
+          }
+        },
+        "eligibleBeforeMinimality": {
+          "cheapFloorClauseTrue": {
+            "numerator": 25,
+            "denominator": 175,
+            "share": 0.143
+          },
+          "belowAndFloorClause": {
+            "numerator": 19,
+            "denominator": 175,
+            "share": 0.109
+          },
+          "minimalityAsked": {
+            "requiredForTrap": 19,
+            "decided": 19,
+            "unknown": 0
+          },
+          "note": "only a sample that satisfies the clue-floor clause and the complete canonical below-band clause needs a minimality proof; the rest is not-required-for-trap (never an implied proof)"
+        },
+        "setupOrigins": {
+          "allSamples": {
+            "samples": 175,
+            "groups": {
+              "clue-floor": 1575,
+              "unit-floor": 0,
+              "help": 42,
+              "tune": 376
+            },
+            "cells": {
+              "clue-floor": 3109,
+              "unit-floor": 0,
+              "help": 84,
+              "tune": 744
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 175,
+              "unit-floor": 0,
+              "help": 36,
+              "tune": 142
+            }
+          },
+          "misses": {
+            "samples": 169,
+            "groups": {
+              "clue-floor": 1521,
+              "unit-floor": 0,
+              "help": 37,
+              "tune": 362
+            },
+            "cells": {
+              "clue-floor": 3001,
+              "unit-floor": 0,
+              "help": 74,
+              "tune": 716
+            },
+            "samplesWithGroupsOf": {
+              "clue-floor": 169,
+              "unit-floor": 0,
+              "help": 32,
+              "tune": 136
+            }
+          },
+          "belowSetup2ExcessOrigin": {
+            "unit-floor only": 0,
+            "help only": 7,
+            "unit-floor and help": 0,
+            "neither (the clue-floor groups overshoot)": 0
+          }
+        }
+      }
+    }
+  },
+  "reading": "An ending category is not an intervention coverage: no \"only N % can benefit\" conclusion follows. The origin of a setup reveal (clue-floor rule, unit-floor rule, solvability help) is not proof that it is necessary now."
+}

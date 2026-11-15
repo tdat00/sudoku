@@ -1,0 +1,600 @@
+{
+  "schema": "ig-s-phase0/1",
+  "task": "IG-S09",
+  "shard": "normal-300-304",
+  "round": "provisional-r1",
+  "attemptId": "a1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance or changes a default.",
+  "formalGate": "not-evaluable-pre-freeze",
+  "status": "complete",
+  "exit": 0,
+  "coverage": {
+    "planned": 10,
+    "completed": 10,
+    "censored": 0,
+    "errors": 0,
+    "unstarted": 0,
+    "complete": true,
+    "exclusions": [
+      "a captured request is a diagnostic run with observation hooks and trace summary: never an uninstrumented headline",
+      "the post-timing diagnosis (independent rating, minimality, probes) and the harness validation are outside every generation time",
+      "the observer-free controls are overhead comparators, not new headline measurements"
+    ]
+  },
+  "sources": {
+    "runtimeLabel": "1c042ad (label supplied by the pack; runtime f7be90f, unchanged by ef8a9cc)",
+    "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+    "files": 63,
+    "harnessFingerprint": "9da69f60fbd2d71eeaec2949f805ba8fac3c6f2c6bf88b5848398e5b16c128ed",
+    "adapterIds": [
+      "gt-diagnostic"
+    ],
+    "adapterHashes": [
+      "d5fd6349b824de98223eecbbb001327e08b6ece223d95fb1b5d33842e465eaae"
+    ],
+    "sourceStable": true,
+    "firewallClean": true
+  },
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 77.66140000000007,
+      "changesSeen": 7,
+      "incrementsMs": [
+        16,
+        16,
+        15,
+        16,
+        16,
+        15
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    },
+    "commandCpuMs": 24313,
+    "processAgeAtHostMs": 582.9117
+  },
+  "pairedRows": [
+    {
+      "pairId": "greaterThan:normal:300",
+      "reference": {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:300/g0",
+        "outcome": "complete",
+        "readyWallMs": 2098.2125,
+        "coldWallMs": 2220.5757,
+        "cpuTotalMs": 3609,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "ec8e1f4c4cc71276ccdfba087208b380d504108e01083d8d4057780531d98505"
+      },
+      "prototype": {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:300/g1",
+        "outcome": "complete",
+        "readyWallMs": 1976.4296,
+        "coldWallMs": 2084.8504999999996,
+        "cpuTotalMs": 3218,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "ec8e1f4c4cc71276ccdfba087208b380d504108e01083d8d4057780531d98505"
+      },
+      "cpuFactor": 0.8916597395400387,
+      "readyWallFactor": 0.9419587386882882,
+      "coldWallFactor": 0.9388783728471853
+    },
+    {
+      "pairId": "greaterThan:normal:301",
+      "reference": {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:301/g0",
+        "outcome": "complete",
+        "readyWallMs": 77.76910000000044,
+        "coldWallMs": 184.69870000000083,
+        "cpuTotalMs": 281,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "cbd1f998257bb629dc1ada1c2e2a34b575a6aef4e0a0f04bccde6de4af811cca"
+      },
+      "prototype": {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:301/g1",
+        "outcome": "complete",
+        "readyWallMs": 74.6822000000002,
+        "coldWallMs": 182.07529999999952,
+        "cpuTotalMs": 235,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "cbd1f998257bb629dc1ada1c2e2a34b575a6aef4e0a0f04bccde6de4af811cca"
+      },
+      "cpuFactor": 0.8362989323843416,
+      "readyWallFactor": 0.9603068570936243,
+      "coldWallFactor": 0.9857963266660713
+    },
+    {
+      "pairId": "greaterThan:normal:302",
+      "reference": {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:302/g0",
+        "outcome": "complete",
+        "readyWallMs": 298.03420000000006,
+        "coldWallMs": 403.2334000000001,
+        "cpuTotalMs": 827,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "517cf6ebfc55e579482512cdadec9cbc907c18b6ef8ec40b6afdb65fc72ae528"
+      },
+      "prototype": {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:302/g1",
+        "outcome": "complete",
+        "readyWallMs": 250.08100000000013,
+        "coldWallMs": 355.1196,
+        "cpuTotalMs": 593,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "517cf6ebfc55e579482512cdadec9cbc907c18b6ef8ec40b6afdb65fc72ae528"
+      },
+      "cpuFactor": 0.717049576783555,
+      "readyWallFactor": 0.839101686987601,
+      "coldWallFactor": 0.880680023033806
+    },
+    {
+      "pairId": "greaterThan:normal:303",
+      "reference": {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:303/g0",
+        "outcome": "complete",
+        "readyWallMs": 3757.3328999999994,
+        "coldWallMs": 3866.1938999999984,
+        "cpuTotalMs": 6031,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "60e93ae4b035ed5d648268e8bcbef8b5aac860caa307471638b77191ae323581"
+      },
+      "prototype": {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:303/g1",
+        "outcome": "complete",
+        "readyWallMs": 3670.8566,
+        "coldWallMs": 3777.8757000000005,
+        "cpuTotalMs": 6109,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "60e93ae4b035ed5d648268e8bcbef8b5aac860caa307471638b77191ae323581"
+      },
+      "cpuFactor": 1.0129331785773503,
+      "readyWallFactor": 0.9769846584528086,
+      "coldWallFactor": 0.9771562931698801
+    },
+    {
+      "pairId": "greaterThan:normal:304",
+      "reference": {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:304/g0",
+        "outcome": "complete",
+        "readyWallMs": 271.84389999999985,
+        "coldWallMs": 378.71880000000056,
+        "cpuTotalMs": 577,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "4f5bd9090048f09c557f5d3a4f6e0ed85a31ed16bfec80d7dd7a98c3a8d552f4"
+      },
+      "prototype": {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:304/g1",
+        "outcome": "complete",
+        "readyWallMs": 234.1918999999998,
+        "coldWallMs": 337.1738999999998,
+        "cpuTotalMs": 546,
+        "cpuResolutionStatus": "resolved",
+        "claimedExact": true,
+        "verifiedExact": true,
+        "puzzleHash": "4f5bd9090048f09c557f5d3a4f6e0ed85a31ed16bfec80d7dd7a98c3a8d552f4"
+      },
+      "cpuFactor": 0.9462738301559792,
+      "readyWallFactor": 0.861494041249408,
+      "coldWallFactor": 0.8903014584963812
+    }
+  ],
+  "arms": {
+    "reference": {
+      "requests": 5,
+      "complete": 5,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 0,
+      "readyWallMs": {
+        "n": 5,
+        "p50": 298.03420000000006,
+        "p95": 3757.3328999999994,
+        "max": 3757.3328999999994,
+        "upperMedian": 298.03420000000006,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 5,
+        "p50": 403.2334000000001,
+        "p95": 3866.1938999999984,
+        "max": 3866.1938999999984,
+        "upperMedian": 403.2334000000001,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 5,
+        "p50": 827,
+        "p95": 6031,
+        "max": 6031,
+        "upperMedian": 827,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 5,
+          "cpuMs": 11325,
+          "wallMs": 7147.458299999999
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 5,
+          "cpuMs": 11325,
+          "wallMs": 7147.458299999999
+        }
+      },
+      "cpuTotalAggregateMs": 11325,
+      "cpuAggregateStatus": "resolved",
+      "wallChargedMs": 7147.458299999999,
+      "verifiedHits": 5,
+      "hitsPerCpuSecond": 0.44150110375275936,
+      "hitsPerColdWallSecond": 0.699549376874294
+    },
+    "prototype": {
+      "requests": 5,
+      "complete": 5,
+      "censored": 0,
+      "errors": 0,
+      "validationUnknown": 0,
+      "unstarted": 0,
+      "readyWallMs": {
+        "n": 5,
+        "p50": 250.08100000000013,
+        "p95": 3670.8566,
+        "max": 3670.8566,
+        "upperMedian": 250.08100000000013,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "coldWallMs": {
+        "n": 5,
+        "p50": 355.1196,
+        "p95": 3777.8757000000005,
+        "max": 3777.8757000000005,
+        "upperMedian": 355.1196,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "cpuTotalMs": {
+        "n": 5,
+        "p50": 593,
+        "p95": 6109,
+        "max": 6109,
+        "upperMedian": 593,
+        "note": "p95 is the observed maximum, not a production-tail estimate"
+      },
+      "censoredColdWallMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null,
+        "upperMedian": null,
+        "note": null
+      },
+      "spent": {
+        "complete": {
+          "requests": 5,
+          "cpuMs": 10701,
+          "wallMs": 6790.512299999999
+        },
+        "censored": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "errors": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "validationUnknown": {
+          "requests": 0,
+          "cpuMs": 0,
+          "wallMs": 0
+        },
+        "total": {
+          "requests": 5,
+          "cpuMs": 10701,
+          "wallMs": 6790.512299999999
+        }
+      },
+      "cpuTotalAggregateMs": 10701,
+      "cpuAggregateStatus": "resolved",
+      "wallChargedMs": 6790.512299999999,
+      "verifiedHits": 5,
+      "hitsPerCpuSecond": 0.46724605177086254,
+      "hitsPerColdWallSecond": 0.7363214701783252
+    }
+  },
+  "estimateVerdict": "diagnostic only: no guided pool, setup-clue policy change or IR29 adoption follows from it (IG-S-Q16, B03)",
+  "extra": {
+    "arms": {
+      "reference": "G0: the native first-allowed sign pass, with capture",
+      "prototype": "G1: native restricted solve first in the first technique sign pass, with the same capture",
+      "control": "observer-free native request (no capture hooks)"
+    },
+    "identity": {
+      "pairs": [
+        {
+          "pairId": "greaterThan:normal:300",
+          "kind": "arms",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "samples": 18,
+          "passes": 54,
+          "removals": 2029,
+          "budgetPresent": false,
+          "firstDifference": null,
+          "g0Digest": "9f44a498a2d5566979b710d072363674a102a5df092e1d2c8b19335506d6d23f",
+          "g1Digest": "9f44a498a2d5566979b710d072363674a102a5df092e1d2c8b19335506d6d23f"
+        },
+        {
+          "pairId": "greaterThan:normal:301",
+          "kind": "arms",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "samples": 1,
+          "passes": 4,
+          "removals": 137,
+          "budgetPresent": false,
+          "firstDifference": null,
+          "g0Digest": "781380b89401962e44cc1321714663377829786c396c78f94fba11b8daf67647",
+          "g1Digest": "781380b89401962e44cc1321714663377829786c396c78f94fba11b8daf67647"
+        },
+        {
+          "pairId": "greaterThan:normal:302",
+          "kind": "arms",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "samples": 9,
+          "passes": 32,
+          "removals": 1117,
+          "budgetPresent": false,
+          "firstDifference": null,
+          "g0Digest": "8e0a342359d8caa05a6294089d813aca9ea90ac003901b012b4d797d79c6192b",
+          "g1Digest": "8e0a342359d8caa05a6294089d813aca9ea90ac003901b012b4d797d79c6192b"
+        },
+        {
+          "pairId": "greaterThan:normal:303",
+          "kind": "arms",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "samples": 36,
+          "passes": 100,
+          "removals": 4045,
+          "budgetPresent": false,
+          "firstDifference": null,
+          "g0Digest": "5ec58631f1b4ce544f7195d91c434e0ac35bc23f818427abdae1ef5e44f6ae0a",
+          "g1Digest": "5ec58631f1b4ce544f7195d91c434e0ac35bc23f818427abdae1ef5e44f6ae0a"
+        },
+        {
+          "pairId": "greaterThan:normal:304",
+          "kind": "arms",
+          "verdict": "identity-ok",
+          "problems": [],
+          "differing": [],
+          "samples": 9,
+          "passes": 18,
+          "removals": 1018,
+          "budgetPresent": false,
+          "firstDifference": null,
+          "g0Digest": "144d1871ad8ab93dfea293e28665f93fe80409e2499645bd8d3c0d89001d8090",
+          "g1Digest": "144d1871ad8ab93dfea293e28665f93fe80409e2499645bd8d3c0d89001d8090"
+        }
+      ],
+      "failed": 0,
+      "ok": 5,
+      "guardBinding": 0,
+      "notComparable": 0,
+      "deferred": 0,
+      "complete": true
+    },
+    "requests": [
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:300/g0",
+        "arm": "g0",
+        "outcome": "complete",
+        "readyWallMs": 2098.2125,
+        "cpuTotalMs": 3609,
+        "samples": 18,
+        "dfsCalls": 11944,
+        "dfsChecks": 61744,
+        "diagStatus": "complete",
+        "diagWallMs": 112.95969999999988,
+        "problems": []
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:300/g1",
+        "arm": "g1",
+        "outcome": "complete",
+        "readyWallMs": 1976.4296,
+        "cpuTotalMs": 3218,
+        "samples": 18,
+        "dfsCalls": 10207,
+        "dfsChecks": 61614,
+        "diagStatus": "reused-only",
+        "diagWallMs": null,
+        "problems": []
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:301/g1",
+        "arm": "g1",
+        "outcome": "complete",
+        "readyWallMs": 74.6822000000002,
+        "cpuTotalMs": 235,
+        "samples": 1,
+        "dfsCalls": 42,
+        "dfsChecks": 334,
+        "diagStatus": "complete",
+        "diagWallMs": 96.68019999999979,
+        "problems": []
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:301/g0",
+        "arm": "g0",
+        "outcome": "complete",
+        "readyWallMs": 77.76910000000044,
+        "cpuTotalMs": 281,
+        "samples": 1,
+        "dfsCalls": 139,
+        "dfsChecks": 429,
+        "diagStatus": "reused-only",
+        "diagWallMs": null,
+        "problems": []
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:302/g0",
+        "arm": "g0",
+        "outcome": "complete",
+        "readyWallMs": 298.03420000000006,
+        "cpuTotalMs": 827,
+        "samples": 9,
+        "dfsCalls": 1130,
+        "dfsChecks": 1191,
+        "diagStatus": "complete",
+        "diagWallMs": 101.42180000000008,
+        "problems": []
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:302/g1",
+        "arm": "g1",
+        "outcome": "complete",
+        "readyWallMs": 250.08100000000013,
+        "cpuTotalMs": 593,
+        "samples": 9,
+        "dfsCalls": 211,
+        "dfsChecks": 956,
+        "diagStatus": "reused-only",
+        "diagWallMs": null,
+        "problems": []
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:303/g1",
+        "arm": "g1",
+        "outcome": "complete",
+        "readyWallMs": 3670.8566,
+        "cpuTotalMs": 6109,
+        "samples": 36,
+        "dfsCalls": 20270,
+        "dfsChecks": 114466,
+        "diagStatus": "complete",
+        "diagWallMs": 125.4966000000004,
+        "problems": []
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:303/g0",
+        "arm": "g0",
+        "outcome": "complete",
+        "readyWallMs": 3757.3328999999994,
+        "cpuTotalMs": 6031,
+        "samples": 36,
+        "dfsCalls": 23747,
+        "dfsChecks": 114796,
+        "diagStatus": "reused-only",
+        "diagWallMs": null,
+        "problems": []
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:304/g0",
+        "arm": "g0",
+        "outcome": "complete",
+        "readyWallMs": 271.84389999999985,
+        "cpuTotalMs": 577,
+        "samples": 9,
+        "dfsCalls": 1030,
+        "dfsChecks": 493,
+        "diagStatus": "complete",
+        "diagWallMs": 107.19779999999992,
+        "problems": []
+      },
+      {
+        "key": "IG-S09/normal-300-304/greaterThan:normal:304/g1",
+        "arm": "g1",
+        "outcome": "complete",
+        "readyWallMs": 234.1918999999998,
+        "cpuTotalMs": 546,
+        "samples": 9,
+        "dfsCalls": 104,
+        "dfsChecks": 387,
+        "diagStatus": "reused-only",
+        "diagWallMs": null,
+        "problems": []
+      }
+    ],
+    "guardSettings": {
+      "minimalNodeCap": 200000,
+      "probeNodeCap": 200000,
+      "probeStepCap": 100000,
+      "probeGroups": 3,
+      "diagBudgetMs": 30000
+    },
+    "chain": {
+      "attempts": [
+        "a1"
+      ],
+      "resumed": false,
+      "startedBefore": [],
+      "startedHere": [
+        "IG-S09/normal-300-304/greaterThan:normal:300/g0",
+        "IG-S09/normal-300-304/greaterThan:normal:300/g1",
+        "IG-S09/normal-300-304/greaterThan:normal:301/g1",
+        "IG-S09/normal-300-304/greaterThan:normal:301/g0",
+        "IG-S09/normal-300-304/greaterThan:normal:302/g0",
+        "IG-S09/normal-300-304/greaterThan:normal:302/g1",
+        "IG-S09/normal-300-304/greaterThan:normal:303/g1",
+        "IG-S09/normal-300-304/greaterThan:normal:303/g0",
+        "IG-S09/normal-300-304/greaterThan:normal:304/g0",
+        "IG-S09/normal-300-304/greaterThan:normal:304/g1"
+      ],
+      "rerunKeys": [],
+      "noRerun": true,
+      "unstartedAfter": []
+    }
+  },
+  "notes": []
+}

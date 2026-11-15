@@ -1,0 +1,379 @@
+{
+  "schema": "ig09-dev-check/1",
+  "task": "IG-S09",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "notice": "development check before the shards: its requests are not part of any shard",
+  "startedAt": "2026-11-15T02:49:34.308Z",
+  "runtimeFingerprint": "36b2b8327f348fc6fc39471f34608c6679b9f3fc34e48178563cc4424173b50a",
+  "harnessFingerprint": "8b0d0d39a12c78e34de18b84f8a9a1699fc11afd23674024f8ffaceddb259f62",
+  "manifestHash": "6228c6853ae720dbb1f3f05e72475860d937046cbb57a0a01c291cf65a23108f",
+  "cpu": {
+    "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+    "quantumMs": 16,
+    "probe": {
+      "api": "process.cpuUsage (user+system of the host process, worker threads included; read once at the host)",
+      "probeWallMs": 85.828,
+      "changesSeen": 7,
+      "incrementsMs": [
+        16,
+        15,
+        16,
+        15,
+        16,
+        15
+      ],
+      "minIncrementMs": 15,
+      "quantumMs": 16
+    }
+  },
+  "jobs": [
+    {
+      "key": "IG-S09/normal-300-304/greaterThan:normal:300/g0",
+      "arm": "g0",
+      "estimateMs": 8000,
+      "occupiedMs": 2473.6748000000002,
+      "outcome": "complete",
+      "claimedExact": true,
+      "verifiedExact": true,
+      "recordProblems": [],
+      "captureProblems": [],
+      "identityViolation": null,
+      "readyWallMs": 2119.4008000000003,
+      "cpuTotalMs": 3656,
+      "cpuResolutionStatus": "resolved",
+      "engineElapsedMs": 2114.3401,
+      "captureBuildMs": 0.4078999999996995,
+      "workerRunMs": 2114.3401,
+      "samples": 18,
+      "totals": {
+        "dfsCalls": 11944,
+        "dfsChecks": 61744,
+        "restrictedSolves": 1816,
+        "countWithinCalls": 9897,
+        "countWithinNodes": 192706,
+        "countWithinTrips": 0,
+        "guidedEntries": 0
+      },
+      "passes": 54,
+      "g1": null,
+      "diag": {
+        "status": "complete",
+        "wallMs": 116.55420000000004,
+        "cpuMs": 173,
+        "plan": {
+          "dugSamples": 17,
+          "toDiagnose": 17,
+          "reused": 0
+        },
+        "reuse": {
+          "samples": 0,
+          "diagnosed": 17,
+          "sources": []
+        },
+        "unstarted": [],
+        "rows": 17,
+        "probe": null,
+        "workerDone": {
+          "stopped": null,
+          "rows": 17,
+          "wallMs": 26.23389999999972
+        }
+      },
+      "validation": {
+        "wallMs": 95.98170000000027,
+        "cpuMs": 109,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "validationStatus": "verified",
+      "puzzleHash": "ec8e1f4c4cc71276ccdfba087208b380d504108e01083d8d4057780531d98505",
+      "digests": "9f44a498a2d5566979b710d072363674a102a5df092e1d2c8b19335506d6d23f",
+      "recordBytes": 85984,
+      "attemptsWork": [
+        {
+          "attempt": 1,
+          "ratings": 14,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 2,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 2,
+              "shallowLimit": 256,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "attempt": 2,
+          "ratings": 5,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ]
+    },
+    {
+      "key": "IG-S09/normal-300-304/greaterThan:normal:300/g1",
+      "arm": "g1",
+      "estimateMs": 8000,
+      "occupiedMs": 2184.6775999999995,
+      "outcome": "complete",
+      "claimedExact": true,
+      "verifiedExact": true,
+      "recordProblems": [],
+      "captureProblems": [],
+      "identityViolation": null,
+      "readyWallMs": 1967.4006000000004,
+      "cpuTotalMs": 3188,
+      "cpuResolutionStatus": "resolved",
+      "engineElapsedMs": 1962.1038000000003,
+      "captureBuildMs": 0.3764000000001033,
+      "workerRunMs": 1962.1038000000003,
+      "samples": 18,
+      "totals": {
+        "dfsCalls": 10207,
+        "dfsChecks": 61614,
+        "restrictedSolves": 1901,
+        "countWithinCalls": 9897,
+        "countWithinNodes": 192706,
+        "countWithinTrips": 0,
+        "guidedEntries": 0
+      },
+      "passes": 54,
+      "g1": {
+        "tried": 1836,
+        "proved": 1737,
+        "stuckAmbiguous": 85,
+        "stuckUnique": 14,
+        "fallbackContradiction": 0,
+        "fallbackError": 0,
+        "fallbackShape": 0,
+        "unsoundProof": 0
+      },
+      "diag": {
+        "status": "reused-only",
+        "wallMs": null,
+        "cpuMs": null,
+        "plan": {
+          "dugSamples": 17,
+          "toDiagnose": 0,
+          "reused": 17
+        },
+        "reuse": {
+          "samples": 17,
+          "diagnosed": 0,
+          "sources": [
+            "IG-S09/normal-300-304/greaterThan:normal:300/g0"
+          ]
+        },
+        "unstarted": [],
+        "rows": 17,
+        "probe": null
+      },
+      "validation": {
+        "wallMs": 95.83749999999964,
+        "cpuMs": 109,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "validationStatus": "verified",
+      "puzzleHash": "ec8e1f4c4cc71276ccdfba087208b380d504108e01083d8d4057780531d98505",
+      "digests": "9f44a498a2d5566979b710d072363674a102a5df092e1d2c8b19335506d6d23f",
+      "recordBytes": 88979,
+      "attemptsWork": [
+        {
+          "attempt": 1,
+          "ratings": 14,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 2,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 2,
+              "shallowLimit": 256,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "attempt": 2,
+          "ratings": 5,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ]
+    },
+    {
+      "key": "IG-S09/observer-control/greaterThan:normal:300/native",
+      "arm": null,
+      "estimateMs": 8000,
+      "occupiedMs": 2168.7539000000006,
+      "outcome": "complete",
+      "claimedExact": true,
+      "verifiedExact": true,
+      "recordProblems": [],
+      "captureProblems": null,
+      "identityViolation": null,
+      "readyWallMs": 1974.7686000000003,
+      "cpuTotalMs": 3546,
+      "cpuResolutionStatus": "resolved",
+      "engineElapsedMs": 1974.0306,
+      "captureBuildMs": null,
+      "workerRunMs": null,
+      "samples": null,
+      "totals": null,
+      "passes": null,
+      "g1": null,
+      "diag": null,
+      "validation": {
+        "wallMs": 96.42979999999989,
+        "cpuMs": 126,
+        "solutionValid": true,
+        "givensAgree": true,
+        "structureValid": true,
+        "unique": true,
+        "canonicalEqual": true
+      },
+      "validationStatus": "verified",
+      "puzzleHash": "ec8e1f4c4cc71276ccdfba087208b380d504108e01083d8d4057780531d98505",
+      "digests": "9f44a498a2d5566979b710d072363674a102a5df092e1d2c8b19335506d6d23f",
+      "recordBytes": 3780,
+      "attemptsWork": null
+    }
+  ],
+  "identity": {
+    "pairs": [
+      {
+        "pairId": "greaterThan:normal:300",
+        "kind": "arms",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "samples": 18,
+        "passes": 54,
+        "removals": 2029,
+        "budgetPresent": false,
+        "firstDifference": null,
+        "g0Digest": "9f44a498a2d5566979b710d072363674a102a5df092e1d2c8b19335506d6d23f",
+        "g1Digest": "9f44a498a2d5566979b710d072363674a102a5df092e1d2c8b19335506d6d23f"
+      }
+    ],
+    "failed": 0,
+    "ok": 1,
+    "guardBinding": 0,
+    "notComparable": 0,
+    "deferred": 0,
+    "complete": true
+  },
+  "controlIdentity": {
+    "pairs": [
+      {
+        "pairId": "control:greaterThan:normal:300",
+        "kind": "control",
+        "verdict": "identity-ok",
+        "problems": [],
+        "differing": [],
+        "g0Key": "IG-S09/normal-300-304/greaterThan:normal:300/g0",
+        "g0Digest": "9f44a498a2d5566979b710d072363674a102a5df092e1d2c8b19335506d6d23f",
+        "controlDigest": "9f44a498a2d5566979b710d072363674a102a5df092e1d2c8b19335506d6d23f"
+      }
+    ],
+    "failed": 0,
+    "ok": 1,
+    "guardBinding": 0,
+    "notComparable": 0,
+    "deferred": 0,
+    "complete": true
+  },
+  "split": {
+    "g0": {
+      "samples": 17,
+      "buckets": {
+        "exact": 1,
+        "shallow": 2,
+        "above-or-unrated": 0,
+        "below-trap": 4,
+        "below-tune": 4,
+        "below-setup2": 6,
+        "other-below": 0,
+        "unconfirmed": 0
+      },
+      "exact": 1,
+      "misses": 16,
+      "below": 14,
+      "trapEligible": 4,
+      "trapProven": 4,
+      "trapUnknown": 0,
+      "unconfirmed": 0,
+      "trapLowerShareOfMisses": {
+        "numerator": 4,
+        "denominator": 16
+      },
+      "trapUnconfirmedEligible": 0,
+      "trapUpperShareOfMisses": {
+        "numerator": 4,
+        "denominator": 16,
+        "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+      },
+      "minimalityCoverage": {
+        "requiredForTrap": 4,
+        "decided": 4,
+        "unknown": 0
+      }
+    },
+    "g1": {
+      "samples": 17,
+      "buckets": {
+        "exact": 1,
+        "shallow": 2,
+        "above-or-unrated": 0,
+        "below-trap": 4,
+        "below-tune": 4,
+        "below-setup2": 6,
+        "other-below": 0,
+        "unconfirmed": 0
+      },
+      "exact": 1,
+      "misses": 16,
+      "below": 14,
+      "trapEligible": 4,
+      "trapProven": 4,
+      "trapUnknown": 0,
+      "unconfirmed": 0,
+      "trapLowerShareOfMisses": {
+        "numerator": 4,
+        "denominator": 16
+      },
+      "trapUnconfirmedEligible": 0,
+      "trapUpperShareOfMisses": {
+        "numerator": 4,
+        "denominator": 16,
+        "note": "upper: proven traps plus eligible samples whose minimality is unknown plus samples with no confirmed rating that satisfy the cheap clue-floor clause"
+      },
+      "minimalityCoverage": {
+        "requiredForTrap": 4,
+        "decided": 4,
+        "unknown": 0
+      }
+    }
+  },
+  "endedAt": "2026-11-15T02:49:41.304Z",
+  "occupiedMs": 7035
+}
