@@ -1,0 +1,104 @@
+merged 14 ledgers: all 14 keys exactly once, recorded from the current sources
+G01: matches replay-goldens.js
+G02: matches replay-goldens.js
+G03: matches replay-goldens.js
+G04: matches replay-goldens.js
+G05: matches replay-goldens.js
+G06: matches replay-goldens.js
+G07: 21 fields differ from replay-goldens.js
+  counts.details: saved 34, fresh 33
+  rows[5][1]: saved 32, fresh 31
+  rows[5][3]: saved 55, fresh 57
+  rows[5][4]: saved 2391, fresh 2310
+  rows[5][5]: saved 2250, fresh 2169
+  rows[6][1]: saved 32, fresh 31
+  rows[6][3]: saved 55, fresh 57
+  rows[6][4]: saved 2391, fresh 2310
+  details.length: saved 34, fresh 33
+  details[31]: saved 2394, fresh 2310
+  details[32]: saved 2391, fresh 2310
+  folds[0].end: saved 2391, fresh 2310
+  folds[0].restored: saved 4, fresh 2
+  jumps[0].to: saved 2391, fresh 2310
+  jumps[0].after.W: saved 7691, fresh 6333
+  jumps[0].after.R: saved 944.65426, fresh 862.960485
+  jumps[0].after.V: saved 46.315789, fresh 47.010309
+  jumps[0].after.E: saved 55, fresh 57
+  jumps[0].firstUse.k: saved 26, fresh 33
+  jumps[0].firstUse.n: saved 69, fresh 74
+  jumps[0].effects: saved "remove candidate 2@R5C6", fresh "remove candidate 4@R5C6"
+G08: matches replay-goldens.js
+G09: matches replay-goldens.js
+G10: matches replay-goldens.js
+G11: 161 fields differ from replay-goldens.js
+  counts.compact: saved 6, fresh 8
+  counts.details: saved 114, fresh 110
+  board.signsTo: saved 3, fresh 4
+  rows.length: saved 6, fresh 8
+  rows[2][1]: saved 108, fresh 49
+  rows[2][2]: saved "C+I+A+IM/Mixed", fresh "C+I/Mixed"
+  rows[2][3]: saved 50, fresh 57
+  rows[2][4]: saved 119, fresh 129
+  rows[2][5]: saved 119, fresh 129
+  rows[3][1]: saved 109, fresh 65
+  rows[3][3]: saved 50, fresh 57
+  rows[3][4]: saved 119, fresh 133
+  rows[3][5]: saved 0, fresh 4
+  rows[4][1]: saved 111, fresh 100
+  rows[4][3]: saved 50, fresh 57
+  rows[4][4]: saved 994, fresh 549
+  rows[4][5]: saved 875, fresh 416
+  rows[4][6]: saved "xyWing", fresh "skyscraper"
+  rows[5][1]: saved 111, fresh 102
+  rows[5][2]: saved "F/Final", fresh "I/Signs"
+  rows[5][3]: saved 50, fresh 57
+  rows[5][4]: saved 994, fresh 549
+  rows[5][6]: saved "xyWing", fresh "skyscraper"
+  details.length: saved 114, fresh 110
+  details[2]: saved 137, fresh 131
+  ... and 136 more
+G12: 156 fields differ from replay-goldens.js
+  counts.compact: saved 6, fresh 7
+  counts.details: saved 106, fresh 111
+  board.signsTo: saved 6, fresh 4
+  rows.length: saved 6, fresh 7
+  rows[2][3]: saved 57, fresh 59
+  rows[2][4]: saved 127, fresh 132
+  rows[2][5]: saved 127, fresh 132
+  rows[3][1]: saved 92, fresh 99
+  rows[3][3]: saved 57, fresh 59
+  rows[3][4]: saved 130, fresh 133
+  rows[3][5]: saved 3, fresh 1
+  rows[4][1]: saved 103, fresh 107
+  rows[4][2]: saved "I/Signs", fresh "IM+A/Mixed"
+  rows[4][3]: saved 57, fresh 53
+  rows[4][4]: saved 594, fresh 513
+  rows[4][5]: saved 464, fresh 380
+  rows[4][6]: saved "skyscraper", fresh "xWing"
+  rows[5][1]: saved 103, fresh 108
+  rows[5][2]: saved "F/Final", fresh "I/Signs"
+  rows[5][3]: saved 57, fresh 53
+  rows[5][4]: saved 594, fresh 647
+  rows[5][5]: saved 0, fresh 134
+  rows[5][6]: saved "skyscraper", fresh "emptyRectangle"
+  rows[5][9]: saved "—", fresh "N"
+  details.length: saved 106, fresh 111
+  ... and 131 more
+G13: matches replay-goldens.js
+G14: 15 fields differ from replay-goldens.js
+  rows[3][4]: saved 1646, fresh 1685
+  rows[3][5]: saved 1581, fresh 1620
+  rows[4][4]: saved 3674, fresh 3663
+  rows[4][5]: saved 2028, fresh 1978
+  rows[5][5]: saved 2746, fresh 2757
+  details[69]: saved 1646, fresh 1685
+  details[70]: saved 1660, fresh 1698
+  details[72]: saved 3674, fresh 3663
+  details[73]: saved 3893, fresh 3885
+  jumps[0].to: saved 1646, fresh 1685
+  jumps[0].after.W: saved 2628.75, fresh 3008.75
+  jumps[0].after.R: saved 484.326851, fresh 522.828908
+  jumps[0].singles[0].score: saved 1652, fresh 1623
+  jumps[0].firstUse.k: saved 84, fresh 85
+  jumps[0].firstUse.n: saved 146, fresh 147
+replay-goldens.js differs; regenerate it with node tests/replay-goldens.js --write only if the generator changed on purpose

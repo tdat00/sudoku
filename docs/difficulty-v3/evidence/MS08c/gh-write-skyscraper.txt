@@ -1,0 +1,14 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=skyscraper --sources=tests\artifacts\difficulty-v3\MS08c\sources-skyscraper.json --max-puzzles=8 --max-hints=400 --write
+selected 1 technique ID(s); mode write
+note: 1 source(s) beyond --max-puzzles=8 are not replayed
+replaying 8 puzzle(s) for 1 ID(s) (--max-puzzles=8, --max-hints=400)
+puzzle 1/8 classic9 Nightmare 648 -> 76 hint(s), solved; wanted found: skyscraper
+puzzle 2/8 classic9 Nightmare 3 -> 61 hint(s), solved; wanted found: skyscraper
+puzzle 3/8 classic9 Nightmare 1156 -> 72 hint(s), solved; wanted found: skyscraper
+puzzle 4/8 classic9 Nightmare 75 -> 76 hint(s), solved; wanted found: skyscraper
+puzzle 5/8 classic9 Nightmare 44 -> 59 hint(s), solved; wanted found: skyscraper
+puzzle 6/8 classic9 Nightmare 13 -> 74 hint(s), solved; wanted found: skyscraper
+puzzle 7/8 classic9 Nightmare 561 -> 58 hint(s), solved; wanted found: skyscraper
+puzzle 8/8 classic9 Hard 18 -> 62 hint(s), solved; wanted found: skyscraper
+wrote player/js/ui/help-examples.js (31 examples; 1 selected: skyscraper; the others kept)
+exit=0 seconds=0.523

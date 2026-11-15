@@ -332,6 +332,12 @@
     'technique.simpleColouring': 'Tô màu đơn giản (Simple Colouring)',
     'technique.simpleColouring.desc': 'Các ô nối nhau bằng quan hệ “hoặc ô này hoặc ô kia” cho một chữ số ' +
       'được tô bằng hai màu. Chỉ một màu là đúng, từ đó lộ ra những ô không thể chứa chữ số đó.',
+    'technique.emptyRectangle': 'Empty Rectangle (hình chữ nhật rỗng)',
+    'technique.emptyRectangle.desc': 'Trong một khối (hoặc vùng) một chữ số chỉ có thể nằm trong một hàng và ' +
+      'một cột của khối, thành hai phần không có ô chung. Một cặp ô ngoài khối là hai ô duy nhất có thể chứa ' +
+      'chữ số trong cùng một nhóm sẽ quyết định: nếu đầu nhìn thấy mọi chữ số của một phần chứa nó thì phần ' +
+      'đó mất chữ số và phần còn lại chứa nó; nếu không thì đầu kia chứa nó. Dù thế nào, chữ số bị loại khỏi ' +
+      'mọi ô nhìn thấy cả phần còn lại lẫn đầu kia.',
     'technique.swordfish': 'Swordfish (cá kiếm)',
     'technique.swordfish.desc': 'Phiên bản ba đường của X-Wing: chữ số chỉ nằm trong cùng ba cột ở ba hàng ' +
       'thì bị loại khỏi phần còn lại của ba cột đó.',
@@ -410,6 +416,11 @@
       'thể nằm ở hai ô, và các ô {bridge} (cầu nối) nằm trong cùng một khối (hoặc vùng), nên chúng không thể ' +
       'cùng là {digit}. Ít nhất một trong hai ô còn lại, {ends}, là {digit}, nên {digit} bị loại khỏi mọi ô ' +
       'khác nhìn thấy cả hai ô đó.',
+    'technique.emptyRectangle.step': 'Empty Rectangle cho {digit}: trong {box}, chữ số {digit} chỉ có thể nằm ở ' +
+      'các ô của {lines}, thành hai phần không có ô chung. {ends} là hai ô duy nhất có thể chứa {digit} trong ' +
+      'cùng một nhóm, nên một trong hai ô đó là {digit}. Nếu đầu nhìn thấy mọi {digit} của một phần là ' +
+      '{digit}, phần đó mất {digit} và phần còn lại chứa {digit}; nếu không thì đầu kia là {digit}. Dù thế ' +
+      'nào, {digit} bị loại khỏi mọi ô khác nhìn thấy cả phần còn lại lẫn đầu kia.',
     'technique.swordfish.step': 'Swordfish cho {digit}: trong {baseUnits}, chữ số {digit} chỉ có thể nằm ở ' +
       '{coverUnits}. Ba chữ số {digit} của các đường gốc lấp đầy cả ba đường phủ, nên {digit} bị loại ' +
       'khỏi mọi ô còn lại của {coverUnits}.',

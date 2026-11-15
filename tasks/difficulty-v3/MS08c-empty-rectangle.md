@@ -112,14 +112,14 @@ Return the inherited/new item list, actual gates and CI membership.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (orchestrator check against IR72 A-J; outside the analyst review set). The developer stopped before E with five questions; the pack author (SA2) accepted all five and the four named conventions as implemented |
+| Start | 2026-11-15 20:40:50 (+07:00), base `398c832` |
+| End | 2026-11-15 21:29 stop before E; 21:32-21:41 SA2 ruling; 21:42-22:33 E and final evidence; orchestrator re-check and commit |
+| Duration | 1 h 43 min developer (49 min to the question + 51 min after the ruling); about 9 min SA2 ruling |
+| Model | claude-sonnet-5.5 (developer); gpt-6-astra (SA2 ruling); claude-opus-5.5 (orchestrator) |
+| Token usage | 314 model calls; 115,753,456 input tokens (114,318,791 cache reads); 389,220 output tokens |
+| AI credits | about 1,891 (developer) |
+| Verification | `emptyRectangle` in `core/js/engine/tech-fish.js` (fish group, order 124, base cost 38, unscoped, `assumesUniqueness: false`), `WEIGHTS.emptyRectangle = 380` (between `simpleColouring` 360 and `swordfish` 420: Hard tier). Pattern: a box-like unit (`box` or `region`) whose candidates of the digit lie on one row arm and one column arm with an empty intersection, candidate ownership as `findFish` (the box as the only box-like owner, exactly one complete row and column); an external conjugate pair in any complete unit (rows, columns, boxes, regions, diagonals, windows) with both cells outside the box; a target sees all of arm B and q; pattern cells are never targets. Finding `{ cells (sorted union), box (unit label), lines (unit order), ends (cell order) }` with no positional role encoding. Work unit: one `(digit, box, conjugate unit)` combination, at most eight trials, counted before rejection checks; limit 50,000, budget at entry and at most every 256 units; structural maximum 44,955 on Samurai (90 %), 2,187 on 9x9. Skyscraper and Two-String Kite unchanged (18,688 lines on 2,336 states against `398c832`). `tech-fish` 236 -> 317 tests (vector, transpose, bare vector with both rectangles, labelled decoy variant, ten near misses each way, `referenceRectangles` agreement on every board class incl. Jigsaw and the four multi-grid boards, Samurai ownership negative); 27/27 mutants (two earlier runs kept). **E** (once, on the frozen final source): 29 of 520 hashes changed, none below Hard (classic9 hard 1, expert 4, master 1, nightmare 2; diagonalX nightmare 9; hyper hard 1; jigsaw9 master 10; greaterThan hard 1); wires G09 (counters), G11 and G12 (re-dug Greater-Than puzzles); analyses G07, G11, G12 (hardest technique now `emptyRectangle`), G14. Reference ratings: 2 change (platinum-blonde 5,676 -> 5,665; constructed-nightmare-2 2,661 -> 2,637), no level. Help catalogue 31 (`emptyRectangle` new; `skyscraper` moved; three regenerated from their own sources), 31/31 on the final check. Quick sets: Generator 3,742/3,742 (308.4 s; +1.6 % for +2.5 % tests), Player 1,987/1,987 (39.9 s); fingerprints match; CI check passes. Orchestrator: locked gate suites 587/587 (`tech-fish` 317, `techniques` 213, `technique-weights` 9, `difficulty-floor` 48; 39.7 s); CI shard check 3,742 |
+| Acceptance | MS08c-B01, B02, T01, T02, T03 met; IR72 A-J pass (A design §6.6 with the SA2 clarifications and the work-unit definition, reference enumeration on every class; B weight and 2 rating changes, 0 levels; C limits, cadence, structural maxima; D positives, negatives, supplements; E bilingual docs and totals; F 27/27; G complete E; H 31/31 help; I pin table; J fingerprints) |
+| Issues & resolutions | **Questions before E (as instructed after MS08b):** which units may hold the external pair, the Finding's content, the work unit, the first-pattern order of the two-rectangle vector, and the wording; SA2 accepted all as implemented and asked for the work-unit definition to be recorded precisely (done in design §6.6). Twelve Generator pins and one Player pin refreshed like for like after E (table in the evidence). Honest gaps stated in the evidence: the lock waits of the wire and analysis compounds, the pin runs and the first differential were not recorded; a 0.8 s firing-rate probe ran unlocked before the switch to `Invoke-Dv3Node` (permitted by SA2); the lock status of some under-10 s probes is not recorded. No new S-AV item; S-AV08 re-measured (308.4 s / 39.9 s) |
+| Handoff | To MS09a: box-like units `box`/`region` with the single-owner rule; external pairs from any complete unit; the fish group now holds Skyscraper (112), Two-String Kite (114) and Empty Rectangle (124) with shared helpers and reference enumerations; IR72 A-J is the checklist; base quick totals Generator 3,742 (308.4 s) and Player 1,987 (39.9 s); help catalogue 31; ask before E |

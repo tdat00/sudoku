@@ -1,0 +1,18 @@
+$ node tests\node-runner.js --suite=replay,steps,player
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   player: 69 passed  (24.20 s)
+ok   replay: 154 passed  (15.18 s)
+FAIL steps: 56 passed, 1 failed  (15.68 s)
+
+Failures:
+  FAIL steps > stepView: the callout of a score jump > names the cause of a move per class, on the goldens
+       AssertionError: expected "After the sign between R1C5 and R1C4 is removed, the generator's solution uses Nishio (trial and error) once; previou..." to contain "After the sign between R2C4 and R1C4 is removed, "
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1070:33)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 3
+Tests:  280 total, 279 passed, 1 failed, 0 skipped
+Time:   55.07 s running tests, 55.17 s total
+exit=1 seconds=55.299

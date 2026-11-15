@@ -695,7 +695,7 @@
     it('tells what a compact step folds: the inner peak (above the level with clues restored, or plain) ' +
       'and nothing for a step that folds nothing',
       function () {
-        [['G11', 2]].forEach(function (c) {
+        [['G11', 6]].forEach(function (c) {
           var step = compactOf(goldenResult(c[0]))[c[1]];
           var folded = step.parts[step.parts.length - 1];
           expect(folded.key).toBe('replay.folded.reveal');
@@ -705,11 +705,11 @@
           });
         });
         var g11 = compactOf(goldenResult('G11'));
-        expect(g11[2].parts[g11[2].parts.length - 1].args.peak).toBe(1964);
-        inLocale('en', function () { expect(P.describeStep(g11[2])).toContain('the score reached 1,964'); });
+        expect(g11[6].parts[g11[6].parts.length - 1].args.peak).toBe(2876);
+        inLocale('en', function () { expect(P.describeStep(g11[6])).toContain('the score reached 2,876'); });
         var plain = compactOf(goldenResult('G12'))[2];
         expect(plain.parts[plain.parts.length - 1].key).toBe('replay.folded.peak');
-        expect(plain.parts[plain.parts.length - 1].args.peak).toBe(130);
+        expect(plain.parts[plain.parts.length - 1].args.peak).toBe(133);
         var g06 = compactOf(goldenResult('G06'));
         g06.slice(0, 4).forEach(function (s) {
           s.parts.forEach(function (part) { expect(part.key).not.toMatch(/^replay\.folded/); });
@@ -946,22 +946,22 @@
       var r = loadedRig(result);
       r.player.setView('details');
       var steps = r.player.getSteps();
-      var step = steps[111];
-      var SIGN_JUMPS = { 62: 7, 104: 43, 107: 75, 111: 6 };
+      var step = steps[104];
+      var SIGN_JUMPS = { 67: 67, 104: 5 };
       expect(step.table.transition.cause.class).toBe('single-sign');
-      expect(step.signs.cause).toEqual([6]);
-      expect(step.signs.removed).toContain(6);
+      expect(step.signs.cause).toEqual([5]);
+      expect(step.signs.removed).toContain(5);
       expect(step.marks.cause).toEqual([]);
       expect(step.marks.causeRestore).toEqual([]);
       steps.forEach(function (s, i) {
         expect(s.signs.cause).toEqual(SIGN_JUMPS[i] === undefined ? [] : [SIGN_JUMPS[i]]);
       });
-      r.player.seek(112);
-      expect(r.board.signMarks.cause).toEqual([6]);
-      expect(r.board.signMarks.removed).toContain(6);
+      r.player.seek(105);
+      expect(r.board.signMarks.cause).toEqual([5]);
+      expect(r.board.signMarks.removed).toContain(5);
       expect(r.board.signMarks.removed).toEqual(step.signs.removed);
       expect(r.board.frames['cell--cause']).toBeUndefined();
-      r.player.seek(111);
+      r.player.seek(104);
       expect(r.board.signMarks.cause).toEqual([]);
       r.player.last();
       expect(r.board.signMarks).toBeNull();
@@ -1002,7 +1002,7 @@
           });
         });
       });
-      expect(jumps).toBe(29);
+      expect(jumps).toBe(27);
       expect(framed).toBeGreaterThan(8);
       expect(framed).toBeLessThan(jumps);
     }, 120000);

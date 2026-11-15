@@ -1,0 +1,39 @@
+$ node tests\artifacts\difficulty-v3\MS08c\fish-differential.js
+classic9 seed 777: 400 states, 234 findings of the two
+classic9 seed 99: 400 states, 240 findings of the two
+classic9 seed 20260101: 300 states, 143 findings of the two
+classic6 seed 777: 400 states, 218 findings of the two
+classic4 seed 777: 300 states, 25 findings of the two
+fishTest12 seed 2026: 60 states, 50 findings of the two
+fishTest16 seed 2026: 32 states, 29 findings of the two
+diagonalX seed 4242: 120 states, 53 findings of the two
+hyper seed 4242: 120 states, 52 findings of the two
+jigsaw9 seed 4242: 120 states, 50 findings of the two
+killer seed 4242: 12 states, 9 findings of the two
+greaterThan seed 4242: 12 states, 9 findings of the two
+wordoku seed 4242: 12 states, 5 findings of the two
+samurai seed 4242: 12 states, 5 findings of the two
+sohei seed 4242: 12 states, 4 findings of the two
+butterfly seed 4242: 12 states, 0 findings of the two
+flower seed 4242: 12 states, 0 findings of the two
+OLD 18688 lines cddcba226029f09eaf3b1088f768918a95588941c21ce2e35c092be107e49d22
+classic9 seed 777: 400 states, 234 findings of the two
+classic9 seed 99: 400 states, 240 findings of the two
+classic9 seed 20260101: 300 states, 143 findings of the two
+classic6 seed 777: 400 states, 218 findings of the two
+classic4 seed 777: 300 states, 25 findings of the two
+fishTest12 seed 2026: 60 states, 50 findings of the two
+fishTest16 seed 2026: 32 states, 29 findings of the two
+diagonalX seed 4242: 120 states, 53 findings of the two
+hyper seed 4242: 120 states, 52 findings of the two
+jigsaw9 seed 4242: 120 states, 50 findings of the two
+killer seed 4242: 12 states, 9 findings of the two
+greaterThan seed 4242: 12 states, 9 findings of the two
+wordoku seed 4242: 12 states, 5 findings of the two
+samurai seed 4242: 12 states, 5 findings of the two
+sohei seed 4242: 12 states, 4 findings of the two
+butterfly seed 4242: 12 states, 0 findings of the two
+flower seed 4242: 12 states, 0 findings of the two
+NEW 18688 lines cddcba226029f09eaf3b1088f768918a95588941c21ce2e35c092be107e49d22
+IDENTICAL: the skyscraper and the kite of the base commit and of the working tree agree on every line
+exit=0 seconds=10.375

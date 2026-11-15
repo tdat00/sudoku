@@ -1,0 +1,8 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=hiddenSingleBox,hiddenTriple,twoStringKite --max-puzzles=64 --max-hints=400 --write
+selected 3 technique ID(s); mode write
+replaying 3 puzzle(s) for 3 ID(s) (--max-puzzles=64, --max-hints=400)
+puzzle 1/3 classic9 - - -> 72 hint(s), solved; wanted found: hiddenSingleBox
+puzzle 2/3 classic9 - - -> 61 hint(s), solved; wanted found: hiddenTriple
+puzzle 3/3 classic9 - - -> 70 hint(s), solved; wanted found: twoStringKite
+wrote player/js/ui/help-examples.js (31 examples; 3 selected: hiddenSingleBox, hiddenTriple, twoStringKite; the others kept)
+exit=0 seconds=0.400

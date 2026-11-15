@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS08c\manual-difficulty-pure.js
+weight table equal: true
+allowed techniques follow the rule at every level: true
+firsts per level hold: true
+exit=0 seconds=0.176

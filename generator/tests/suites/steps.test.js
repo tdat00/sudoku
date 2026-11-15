@@ -817,7 +817,7 @@
       });
     });
 
-    it('marks 13 compact and 16 details jumps over the 14 goldens, and one first rated puzzle per view',
+    it('marks 13 compact and 14 details jumps over the 14 goldens, and one first rated puzzle per view',
       function () {
         var jumps = { compact: 0, details: 0 };
         inLocale('en', function () {
@@ -852,7 +852,7 @@
             });
           });
         });
-        expect(jumps).toEqual({ compact: 13, details: 16 });
+        expect(jumps).toEqual({ compact: 13, details: 14 });
       }, 120000);
 
     it('the example: the first rated puzzle, the new hardest technique without a badge, an unchanged total',
@@ -911,13 +911,13 @@
         expect(text.rowLabel.technique).toBe(a.table.transition.after.hardest);
         var b = stepAt(fall, 104);
         var drop = textOfStep(b);
-        expect(b.table.transition.before.total).toBe(1964);
-        expect(b.table.transition.after.total).toBe(1264);
+        expect(b.table.transition.before.total).toBe(2876);
+        expect(b.table.transition.after.total).toBe(1081);
         expect(drop.badge).toBeNull();
-        expect(drop.total).toBe(SG.i18n.formatNumber(1264) + ' (\u2212700)');
-        expect(drop.total).toBe('1,264 (\u2212700)');
-        expect(drop.line).toContain('now uses W-Wing (weight 850)');
-        expect(drop.rowLabel.technique).toBe('wWing');
+        expect(drop.total).toBe(SG.i18n.formatNumber(1081) + ' (\u2212' + SG.i18n.formatNumber(1795) + ')');
+        expect(drop.total).toBe('1,081 (\u22121,795)');
+        expect(drop.line).toContain('now uses XY-Wing (weight 650)');
+        expect(drop.rowLabel.technique).toBe('xyWing');
         expect(drop.totalHighlight).toBe(false);
       });
     }, 120000);
@@ -1066,8 +1066,8 @@
         .toBe('Removing each clue alone gives 50 and 50; removing the whole group gives 2,461.');
       expect(third('G09', 37).sentences[2]).toBe('Removing the clue at R3C5 alone gives 524, versus 562 for the ' +
         'whole symmetric group, which is always displayed as one complete change.');
-      var sign = third('G11', 110, 'details');
-      expect(sign.sentences[0]).toContain('After the sign between R2C4 and R1C4 is removed, ');
+      var sign = third('G11', 103, 'details');
+      expect(sign.sentences[0]).toContain('After the sign between R1C5 and R1C4 is removed, ');
       expect(sign.sentences[2]).toBe('This step removes one sign; there is no smaller sign-removal move to show.');
       expect(third('G13', 114).sentences[2])
         .toBe('Removing the clue at G2-R8C9 alone gives 1,858; removing the clue at G3-R2C1 alone gives 72.');
@@ -1088,7 +1088,7 @@
     }
 
     it('a jump over several moves says in which complete change the new technique first appears', function () {
-      [['G11', 111, 'compact'], ['G12', 103, 'compact']].forEach(function (c) {
+      [['G11', 100, 'compact'], ['G12', 107, 'compact']].forEach(function (c) {
         var res = golden(c[0]);
         var analysis = analysisOf(res);
         var step = stepAt(viewsOf(res)[c[2]].steps, c[1]);

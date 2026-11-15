@@ -94,6 +94,7 @@
     skyscraper: 330,
     twoStringKite: 340,
     simpleColouring: 360,
+    emptyRectangle: 380,
     swordfish: 420,
     jellyfish: 520,
     xyWing: 650,

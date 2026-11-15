@@ -19,7 +19,8 @@
   const H = SG.techHelper;
   const model9 = H.model('classic9');
 
-  const ALL_IDS = ['xWing', 'skyscraper', 'twoStringKite', 'simpleColouring', 'swordfish', 'jellyfish'];
+  const ALL_IDS = ['xWing', 'skyscraper', 'twoStringKite', 'simpleColouring', 'emptyRectangle', 'swordfish',
+    'jellyfish'];
   // The techniques that scan every digit and orientation with a budget check of their own.
   const SCAN_IDS = ['xWing', 'simpleColouring', 'swordfish', 'jellyfish'];
   const FISH_IDS = ['xWing', 'swordfish', 'jellyfish'];
@@ -354,7 +355,8 @@
    * (an overlapped box of a multi-grid board belongs to two grids); `extraRegions` lists them as a second unit
    * of kind 'region' (a box-like unit of the other kind: the owners are counted over both kinds); `columnsFirst`
    * puts the columns before the rows in the unit list (the unit order of a multi-grid board does not keep rows
-   * first); `noBoxes` leaves the boxes out (a Latin square: only rows and columns).
+   * first); `reverseRows` lists the rows in the opposite order (the unit order then differs from the cell order);
+   * `noBoxes` leaves the boxes out (a Latin square: only rows and columns).
    */
   function buildGridModel(variantId, boxRows, boxCols, extraRows, options) {
     const opts = options || {};
@@ -383,6 +385,10 @@
     for (let c = 0; c < D; c++) {
       colUnits.push(Array.from({ length: D }, function (_, r) { return r * D + c; }));
       colMeta.push({ kind: 'col', gridIndex: 0, label: 'C' + (c + 1) });
+    }
+    if (opts.reverseRows) {
+      rowUnits.reverse();
+      rowMeta.reverse();
     }
     const first = opts.columnsFirst ? [colUnits, colMeta] : [rowUnits, rowMeta];
     const second = opts.columnsFirst ? [rowUnits, rowMeta] : [colUnits, colMeta];
@@ -929,6 +935,107 @@
     return referenceKites(model, state).filter(function (p) { return p.targets.length > 0; });
   }
 
+  /**
+   * Every empty rectangle of a state (R11, restricted form) by plain enumeration from the model's units, with none
+   * of the tables of tech-fish.js. A box is a complete unit of kind 'box' or 'region' that does not hold the digit
+   * yet; its candidates are the open cells that can still be the digit, at least two, and each needs exactly one
+   * complete box-like unit (counted over both kinds, this one), exactly one complete row and exactly one complete
+   * column. For every complete row r and complete column c the rectangle (r, c) holds when each candidate lies in
+   * exactly one of them (so none at the intersection, none in a third line) and both arms are nonempty: the row
+   * arm is the candidates in r, the column arm those in c. A pair is a complete unit of any kind in which the
+   * digit is not placed and exactly two open cells can still be the digit, both outside the box. For an ordered
+   * pair (p, q) and an arm A that p sees completely (peers), B is the other arm; the targets are the open cells
+   * that still have the digit, are no candidate of the box, p or q, see q and see every cell of B.
+   * @returns {Array<{digit, box, lines, p, q, side, targets}>} every pattern, with or without a target, in the
+   *   order digit, box, pair unit, row, column, side (A = the row arm, then the column arm), p (the lower cell of
+   *   the pair first); `lines` are the row and the column in unit order
+   */
+  function referenceRectangles(model, state) {
+    const found = [];
+    const cand = state.candidates;
+    const val = state.value;
+    const peers = peerSetsOf(model);
+    const isComplete = function (u) {
+      return model.units[u].length === model.digits && !(model.unitMeta[u] && model.unitMeta[u].partial);
+    };
+    const holders = function (cell, test) {
+      return Array.from(model.cellUnits[cell]).filter(function (u) {
+        return isComplete(u) && test(model.unitMeta[u].kind);
+      });
+    };
+    const isBoxLike = function (kind) { return kind === 'box' || kind === 'region'; };
+    const rows = unitsOfKind(model, 'row').filter(isComplete);
+    const cols = unitsOfKind(model, 'col').filter(isComplete);
+    const setOf = function (u) { return new Set(model.units[u]); };
+    const rowSets = rows.map(setOf);
+    const colSets = cols.map(setOf);
+    for (let d = 1; d <= model.digits; d++) {
+      const bit = 1 << (d - 1);
+      const open = function (cells) {
+        return Array.from(cells).filter(function (c) { return val[c] === 0 && (cand[c] & bit) !== 0; });
+      };
+      const pairs = [];
+      model.units.forEach(function (cells, u) {
+        if (!isComplete(u) || cells.some(function (c) { return val[c] === d; })) return;
+        const two = open(cells);
+        if (two.length === 2) pairs.push({ unit: u, cells: two.sort(function (a, b) { return a - b; }) });
+      });
+      model.units.forEach(function (cells, box) {
+        if (!isComplete(box) || !isBoxLike(model.unitMeta[box].kind)) return;
+        if (cells.some(function (c) { return val[c] === d; })) return;
+        const inside = open(cells);
+        if (inside.length < 2) return;
+        const owned = inside.every(function (c) {
+          const own = holders(c, isBoxLike);
+          return own.length === 1 && own[0] === box && holders(c, function (k) { return k === 'row'; }).length === 1 &&
+            holders(c, function (k) { return k === 'col'; }).length === 1;
+        });
+        if (!owned) return;
+        const mark = new Set(inside);
+        // the rectangles of the box: every complete row and column such that each candidate lies in exactly one
+        const shapes = [];
+        rows.forEach(function (r, ri) {
+          cols.forEach(function (c, ci) {
+            if (inside.some(function (s) { return rowSets[ri].has(s) === colSets[ci].has(s); })) return;
+            const rowArm = inside.filter(function (s) { return rowSets[ri].has(s); });
+            const colArm = inside.filter(function (s) { return colSets[ci].has(s); });
+            if (rowArm.length > 0 && colArm.length > 0) {
+              shapes.push({ lines: r < c ? [r, c] : [c, r], arms: [rowArm, colArm] });
+            }
+          });
+        });
+        pairs.forEach(function (pair) {
+          if (pair.cells.some(function (c) { return mark.has(c); })) return;
+          shapes.forEach(function (shape) {
+            [[shape.arms[0], shape.arms[1]], [shape.arms[1], shape.arms[0]]].forEach(function (arms, side) {
+              [0, 1].forEach(function (role) {
+                const p = pair.cells[role];
+                const q = pair.cells[1 - role];
+                if (!arms[0].every(function (a) { return peers[p].has(a); })) return;
+                const targets = [];
+                for (let t = 0; t < model.cellCount; t++) {
+                  if (mark.has(t) || t === p || t === q) continue;
+                  if (val[t] === 0 && (cand[t] & bit) !== 0 && peers[q].has(t) &&
+                    arms[1].every(function (b) { return peers[b].has(t); })) {
+                    targets.push(t);
+                  }
+                }
+                found.push({ digit: d, box: box, lines: shape.lines, p: p, q: q, side: side, inside: inside,
+                  targets: targets });
+              });
+            });
+          });
+        });
+      });
+    }
+    return found;
+  }
+
+  /** The empty rectangles that remove something. */
+  function removingRectangles(model, state) {
+    return referenceRectangles(model, state).filter(function (p) { return p.targets.length > 0; });
+  }
+
   /** A blank-board state in which each listed digit stays only on its listed cells (all else is open). */
   function digitsMap(model, spec) {
     const eliminate = [];
@@ -951,6 +1058,7 @@
       skyscraper: { baseCost: 33, order: 112 },
       twoStringKite: { baseCost: 34, order: 114 },
       simpleColouring: { baseCost: 36, order: 120 },
+      emptyRectangle: { baseCost: 38, order: 124 },
       swordfish: { baseCost: 42, order: 130 },
       jellyfish: { baseCost: 56, order: 137 }
     };
@@ -967,12 +1075,13 @@
       });
     });
 
-    it('runs in ladder order: xWing, skyscraper, twoStringKite, simpleColouring, swordfish, jellyfish', function () {
-      const order = SG.techniques.list().map(function (def) { return def.id; });
-      const at = ALL_IDS.map(function (id) { return order.indexOf(id); });
-      at.forEach(function (index) { expect(index).toBeGreaterThanOrEqual(0); });
-      expect(at.slice().sort(function (a, b) { return a - b; })).toEqual(at);
-    });
+    it('runs in ladder order: xWing, skyscraper, twoStringKite, simpleColouring, emptyRectangle, swordfish, ' +
+      'jellyfish', function () {
+        const order = SG.techniques.list().map(function (def) { return def.id; });
+        const at = ALL_IDS.map(function (id) { return order.indexOf(id); });
+        at.forEach(function (index) { expect(index).toBeGreaterThanOrEqual(0); });
+        expect(at.slice().sort(function (a, b) { return a - b; })).toEqual(at);
+      });
 
     it('puts jellyfish after swordfish and cageSplit and before the wings, as its weight says (rating v3)',
       function () {
@@ -2760,6 +2869,923 @@
 
     it('agrees on the multi-grid boards (overlapped boxes and lines have no single owner)', function () {
       const minimum = { samurai: 2, sohei: 3, butterfly: 0, flower: 0 };
+      const boards = Object.keys(minimum).filter(function (variant) { return SG.testkit.hasVariant(variant); });
+      if (boards.length === 0) SG.test.skip('no multi-grid board can be built here');
+      boards.forEach(function (variant) {
+        const model = H.model(variant);
+        let withPattern = 0;
+        itemsOf(model, 12, 4242).forEach(function (item, index) {
+          if (agree(model, item, index)) withPattern++;
+        });
+        expect([variant, withPattern >= minimum[variant]]).toEqual([variant, true]);
+      });
+    });
+  });
+
+  describe('emptyRectangle (R11): geometry', function () {
+    // The vector of R11: box B1, digit 5, the row arm A = {R2C1, R2C3} and the column arm B = {R1C2, R3C2}, no 5 at
+    // the intersection R2C2. The conjugate pair of column C5 is p = R2C5 (it sees both cells of A along R2) and
+    // q = R7C5; R7C2 sees every cell of B (along C2) and q (along R7), so it loses the 5. With only these seven
+    // cells the row R7 is a conjugate pair too (R7C2, R7C5) and its rectangle removes the 5 from R2C5: the vector
+    // is symmetrical. A decoy 5 at R7C9 makes R7 a row of three, so that the vector holds exactly one rectangle.
+    const BARE = ['R2C1', 'R2C3', 'R1C2', 'R3C2', 'R2C5', 'R7C5', 'R7C2'];
+    const VECTOR = BARE.concat(['R7C9']);
+    const WANT = {
+      cells: ['R1C2', 'R2C1', 'R2C3', 'R2C5', 'R3C2', 'R7C5'],
+      eliminations: [['R7C2', 5]],
+      args: { digit: 5, box: 'B1', lines: ['R2', 'C2'], ends: ['R2C5', 'R7C5'] }
+    };
+
+    function rectState(labels) {
+      return digitsMap(model9, { 5: labels });
+    }
+
+    function unitIndex(model, label) {
+      return model.unitMeta.findIndex(function (meta) { return meta.label === label; });
+    }
+
+    function inCellOrder(labels) {
+      return labels.slice().sort(function (a, b) { return H.cell(model9, a) - H.cell(model9, b); });
+    }
+
+    function cellsOf(labels) {
+      return inCellOrder(labels).map(function (ref) { return H.cell(model9, ref); });
+    }
+
+    it('removes the digit from the cell that sees all of B and q (the vector of R11)', function () {
+      const state = rectState(VECTOR);
+      const patterns = removingRectangles(model9, state);
+      expect(patterns).toHaveLength(1);
+      expect(patterns[0].targets).toEqual([H.cell(model9, 'R7C2')]);
+      expect([patterns[0].p, patterns[0].q]).toEqual([H.cell(model9, 'R2C5'), H.cell(model9, 'R7C5')]);
+      expect(patterns[0].side).toBe(0);
+      const finding = H.expectFinding(SG.test, 'emptyRectangle', state, WANT);
+      expect(finding.technique).toBe('emptyRectangle');
+      expect(finding.i18nKey).toBe('technique.emptyRectangle.step');
+      expect(finding.placements).toEqual([]);
+      expect(finding.cells).toEqual(cellsOf(WANT.cells));
+      expect(finding.eliminations).toEqual([[H.cell(model9, 'R7C2'), 5]]);
+    });
+
+    it('finds the transposed vector, where the column arm is A: R5C2 and R5C7 are the pair, R2C7 loses the digit',
+      function () {
+        const state = rectState(VECTOR.map(transposeRef));
+        const patterns = removingRectangles(model9, state);
+        expect(patterns).toHaveLength(1);
+        expect(patterns[0].side).toBe(1);
+        H.expectFinding(SG.test, 'emptyRectangle', state, {
+          cells: WANT.cells.map(transposeRef),
+          eliminations: [['R2C7', 5]],
+          args: { digit: 5, box: 'B1', lines: ['R2', 'C2'], ends: inCellOrder(['R5C2', 'R5C7']) }
+        });
+      });
+
+    it('is symmetrical on the bare vector: the pair of R7 gives a second rectangle that removes R2C5', function () {
+      const state = rectState(BARE);
+      const patterns = removingRectangles(model9, state);
+      expect(patterns).toHaveLength(2);
+      expect(patterns.map(function (p) { return p.targets[0]; }).sort(function (a, b) { return a - b; }))
+        .toEqual([H.cell(model9, 'R2C5'), H.cell(model9, 'R7C2')]);
+      // the pair unit in unit order decides which of the two is the Finding: the row R7 comes before the column C5
+      const finding = runFind('emptyRectangle', model9, state);
+      expect(finding.eliminations).toEqual([[H.cell(model9, 'R2C5'), 5]]);
+      expect(finding.i18nArgs.ends).toEqual(['R7C2', 'R7C5']);
+    });
+
+    // The box 5 holds the arms R5 {C4, C6} (the row arm) and C5 {R4, R6} (the column arm), nothing at R5C5. The
+    // pair of the column x passes the row R5 at p and the row y at q; its target is where the row y meets the
+    // column C5. The decoy keeps the row y from being a second pair.
+    const FOUR = [
+      { name: 'pair on the left, q above', p: 'R5C2', q: 'R1C2', target: 'R1C5', decoy: 'R1C9' },
+      { name: 'pair on the left, q below', p: 'R5C2', q: 'R9C2', target: 'R9C5', decoy: 'R9C9' },
+      { name: 'pair on the right, q above', p: 'R5C8', q: 'R1C8', target: 'R1C5', decoy: 'R1C1' },
+      { name: 'pair on the right, q below', p: 'R5C8', q: 'R9C8', target: 'R9C5', decoy: 'R9C1' }
+    ];
+
+    FOUR.forEach(function (item) {
+      it('finds the rectangle of box 5 with the ' + item.name + ', as listed and transposed', function () {
+        [['as listed', function (ref) { return ref; }, ['R5', 'C5'], 0],
+          ['transposed', transposeRef, ['R5', 'C5'], 1]].forEach(function (variant) {
+          const turn = variant[1];
+          const labels = ['R5C4', 'R5C6', 'R4C5', 'R6C5', item.p, item.q, item.target, item.decoy].map(turn);
+          const state = rectState(labels);
+          const patterns = removingRectangles(model9, state);
+          expect(patterns).toHaveLength(1);
+          expect(patterns[0].targets).toEqual([H.cell(model9, turn(item.target))]);
+          expect(patterns[0].side).toBe(variant[3]);
+          H.expectFinding(SG.test, 'emptyRectangle', state, {
+            cells: ['R5C4', 'R5C6', 'R4C5', 'R6C5', item.p, item.q].map(turn),
+            eliminations: [[turn(item.target), 5]],
+            args: { digit: 5, box: 'B5', lines: variant[2], ends: inCellOrder([item.p, item.q].map(turn)) }
+          });
+        });
+      });
+    });
+
+    it('finds a rectangle whose arms are single cells: a pair of box cells in different rows and columns is two ' +
+      'rectangles, the first in (row, column) order is named', function () {
+      // B1 holds R1C1 and R2C2: rows R1 and R2 with the columns C2 and C1 are two rectangles with the same arms.
+      // p = R1C5 sees R1C1 along R1, q = R6C5 closes the pair of C5, R6C2 sees R2C2 and q; the decoy R6C9 keeps
+      // R6 from being a pair, R6C2 is the target.
+      const labels = ['R1C1', 'R2C2', 'R1C5', 'R6C5', 'R6C2', 'R6C9'];
+      const state = rectState(labels);
+      const patterns = removingRectangles(model9, state);
+      expect(patterns.length).toBeGreaterThanOrEqual(2);
+      expect(patterns[0].lines).toEqual([unitIndex(model9, 'R1'), unitIndex(model9, 'C2')]);
+      expect(patterns[1].lines).toEqual([unitIndex(model9, 'R2'), unitIndex(model9, 'C1')]);
+      H.expectFinding(SG.test, 'emptyRectangle', state, {
+        cells: ['R1C1', 'R2C2', 'R1C5', 'R6C5'],
+        eliminations: [['R6C2', 5]],
+        args: { digit: 5, box: 'B1', lines: ['R1', 'C2'], ends: ['R1C5', 'R6C5'] }
+      });
+    });
+
+    // Each of these has the look of the vector but is no rectangle that removes anything. They are checked
+    // against the independent enumeration first, so that a mistake of the construction cannot hide a bug.
+    const NEAR_MISSES = [
+      ['a candidate at the intersection (R2C2): the arms share a cell', VECTOR.concat(['R2C2'])],
+      ['a candidate in a third line of the box (R3C3)', VECTOR.concat(['R3C3'])],
+      ['a candidate of the box in a third row and column (R1C1 and R3C3 with R2C2 empty)',
+        ['R1C1', 'R3C3', 'R2C5', 'R7C5', 'R7C2', 'R7C9']],
+      ['one arm empty: every candidate of the box in the row R2 (pointing), no column arm',
+        ['R2C1', 'R2C3', 'R2C5', 'R7C5', 'R7C2', 'R7C9']],
+      ['a target that sees only R1C2 of B (R1C8 along R1; the pair is C5 with R1C5)',
+        ['R2C1', 'R2C3', 'R1C2', 'R3C2', 'R2C5', 'R1C5', 'R1C8']],
+      ['a cell that sees q but no cell of B (R7C3 instead of R7C2)',
+        ['R2C1', 'R2C3', 'R1C2', 'R3C2', 'R2C5', 'R7C5', 'R7C3', 'R7C9']],
+      ['a cell that sees all of B but not q (R8C2 instead of R7C2)',
+        ['R2C1', 'R2C3', 'R1C2', 'R3C2', 'R2C5', 'R7C5', 'R8C2', 'R7C9']],
+      ['p in R3: it sees no cell of A', ['R2C1', 'R2C3', 'R1C2', 'R3C2', 'R3C5', 'R7C5', 'R7C2', 'R7C9']],
+      ['a pair that is no pair: a third candidate in the column C5 (R4C5)', VECTOR.concat(['R4C5'])],
+      ['a pair cell inside the box: the pair of the column C1 is R2C1 and R7C1',
+        ['R2C1', 'R1C2', 'R3C2', 'R7C1', 'R7C2', 'R7C9']]
+    ];
+
+    NEAR_MISSES.forEach(function (miss) {
+      [['as listed', miss[1]], ['transposed', miss[1].map(transposeRef)]].forEach(function (variant) {
+        it('does not authorize an elimination: ' + miss[0] + ' (' + variant[0] + ')', function () {
+          const state = rectState(variant[1]);
+          expect(removingRectangles(model9, state)).toEqual([]);
+          H.expectNoFinding(SG.test, 'emptyRectangle', state);
+        });
+      });
+    });
+
+    it('leaves the pointing near miss to pointing and a locked-pair neighbour to its own technique', function () {
+      const state = rectState(NEAR_MISSES[3][1]);
+      expect(runFind('pointing', model9, state)).not.toBeNull();
+      H.expectNoFinding(SG.test, 'emptyRectangle', state);
+    });
+
+    it('needs complete units: an incomplete box, pair unit, arm row or arm column gives nothing', function () {
+      const state = rectState(VECTOR);
+      ['B1', 'C5', 'R2', 'C2'].forEach(function (label) {
+        const complete = Uint8Array.from(SG.techniques.createContext(model9, {}).completeUnits);
+        complete[unitIndex(model9, label)] = 0;
+        const ctx = Object.assign({}, SG.techniques.createContext(model9, {}), { completeUnits: complete });
+        expect([label, SG.techniques.get('emptyRectangle').find(model9, state, ctx)]).toEqual([label, null]);
+      });
+      expect(runFind('emptyRectangle', model9, state)).not.toBeNull();
+      const none = new Uint8Array(model9.units.length);
+      const ctx = Object.assign({}, SG.techniques.createContext(model9, {}), { completeUnits: none });
+      expect(SG.techniques.get('emptyRectangle').find(model9, state, ctx)).toBeNull();
+    });
+
+    it('skips a box that already holds the digit and a pair unit in which the digit is placed', function () {
+      [['R3C3', 'the box B1'], ['R5C5', 'the column C5 of the pair']].forEach(function (placing) {
+        const state = SG.model.cloneState(rectState(VECTOR));
+        const at = H.cell(model9, placing[0]);
+        state.value[at] = 5;
+        state.candidates[at] = 1 << 4;
+        expect([placing[1], removingRectangles(model9, state)]).toEqual([placing[1], []]);
+        H.expectNoFinding(SG.test, 'emptyRectangle', state, { model: model9 });
+      });
+    });
+
+    it('needs candidates with a single row, column and box (an extra row through a box cell spoils the box)',
+      function () {
+        // The 4 x 4 position: box 1 holds R2C1 and R1C2 (two rectangles with single-cell arms), the pair of the
+        // row R2 is R2C1 and R2C4, that of C4 is R2C4 and R4C4 (p = R2C4 sees R2C1 along R2), R4C2 sees R1C2 along
+        // C2 and q = R4C4 along R4, and the decoy R4C3 keeps the row R4 from being a pair. An extra row X1 through
+        // R1C2 gives that cell two rows: it has no single owner, so the box gives nothing.
+        const labels = ['R2C1', 'R1C2', 'R2C4', 'R4C4', 'R4C2', 'R4C3'];
+        const plain = buildGridModel('fishTestPlain', 2, 2);
+        H.expectFinding(SG.test, 'emptyRectangle', digitsMap(plain, { 1: labels }), {
+          eliminations: [['R4C2', 1]],
+          args: { digit: 1, box: 'B1', lines: ['R1', 'C1'], ends: ['R2C4', 'R4C4'] }
+        });
+        const crossed = buildGridModel('fishTestOverlap', 2, 2, [[1, 6, 11, 12]]);
+        const state = digitsMap(crossed, { 1: labels });
+        expect(removingRectangles(crossed, state)).toEqual([]);
+        H.expectNoFinding(SG.test, 'emptyRectangle', state);
+        // the same extra row through a cell outside the box leaves the rectangles alone
+        const outside = buildGridModel('fishTestOutside', 2, 2, [[8, 9, 14, 15]]);
+        expect(removingRectangles(outside, digitsMap(outside, { 1: labels }))).toHaveLength(2);
+        H.expectFinding(SG.test, 'emptyRectangle', digitsMap(outside, { 1: labels }), {
+          eliminations: [['R4C2', 1]]
+        });
+      });
+
+    it('needs a box that is the only box-like unit of its candidates (an overlapped box has two owners)',
+      function () {
+        const labels = ['R2C1', 'R1C2', 'R2C4', 'R4C4', 'R4C2', 'R4C3'];
+        const plain = buildGridModel('fishTestPlain', 2, 2);
+        expect(removingRectangles(plain, digitsMap(plain, { 1: labels }))).toHaveLength(2);
+        [['fishTestBoxes', { extraBoxes: [0] }, 'a box doubled'],
+          ['fishTestBoxAndRegion', { extraRegions: [0] }, 'a box and a region over the same cells']
+        ].forEach(function (setup) {
+          const doubled = buildGridModel(setup[0], 2, 2, undefined, setup[1]);
+          const state = digitsMap(doubled, { 1: labels });
+          expect([setup[2], removingRectangles(doubled, state)]).toEqual([setup[2], []]);
+          H.expectNoFinding(SG.test, 'emptyRectangle', state);
+        });
+        // another box doubled leaves the rectangle alone
+        const other = buildGridModel('fishTestBoxes2', 2, 2, undefined, { extraBoxes: [3] });
+        H.expectFinding(SG.test, 'emptyRectangle', digitsMap(other, { 1: labels }), {
+          eliminations: [['R4C2', 1]]
+        });
+      });
+
+    it('counts a box of any kind of box-like unit and none on a Latin square', function () {
+      const labels = ['R2C1', 'R1C2', 'R2C4', 'R4C4', 'R4C2', 'R4C3'];
+      const square = buildGridModel('fishTestLatin', 2, 2, undefined, { noBoxes: true });
+      const state = digitsMap(square, { 1: labels });
+      expect(referenceRectangles(square, state)).toEqual([]);
+      H.expectNoFinding(SG.test, 'emptyRectangle', state);
+    });
+
+    it('lists the two lines and names the rectangles in unit order, whatever kind comes first and however the ' +
+      'rows are listed', function () {
+      const labels = ['R2C1', 'R1C2', 'R2C4', 'R4C4', 'R4C2', 'R4C3'];
+      // columns before rows: the lines are listed as C1, R1
+      const columnsFirst = buildGridModel('fishTestColumnsFirst', 2, 2, undefined, { columnsFirst: true });
+      const first = H.expectFinding(SG.test, 'emptyRectangle', digitsMap(columnsFirst, { 1: labels }), {
+        eliminations: [['R4C2', 1]],
+        args: { digit: 1, box: 'B1', lines: ['C1', 'R1'], ends: ['R2C4', 'R4C4'] }
+      });
+      expect(first.i18nArgs.lines).toEqual(['C1', 'R1']);
+      // rows in reverse order (R4, R3, R2, R1): of the two rectangles of the box (R1, C1) and (R2, C2) the one of
+      // the row R2 comes first, in (row, column) unit order, and it is the one that is named
+      const reversed = buildGridModel('fishTestReversedRows', 2, 2, undefined, { reverseRows: true });
+      const state = digitsMap(reversed, { 1: labels });
+      const patterns = removingRectangles(reversed, state);
+      expect(patterns.map(function (p) { return p.lines.map(function (u) { return unitLabel(reversed, u); }); }))
+        .toEqual([['R2', 'C2'], ['R1', 'C1']]);
+      H.expectFinding(SG.test, 'emptyRectangle', state, {
+        eliminations: [['R4C2', 1]],
+        args: { digit: 1, box: 'B1', lines: ['R2', 'C2'], ends: ['R2C4', 'R4C4'] }
+      });
+    });
+
+    it('takes the pair of the lowest unit first, then the lowest digit and the lowest box', function () {
+      // The digit 3 and the digit 2 both hold the vector: the digit 2 is named. In one digit, the pairs C5 and C6:
+      // the column C5 comes first.
+      const both = digitsMap(model9, { 3: VECTOR, 2: VECTOR });
+      expect(runFind('emptyRectangle', model9, both).i18nArgs.digit).toBe(2);
+      // R2C6 and R7C6 close a second pair of columns, C6, with the same target R7C2 as C5
+      const two = rectState(VECTOR.concat(['R2C6', 'R7C6']));
+      const patterns = removingRectangles(model9, two);
+      expect(patterns.length).toBe(2);
+      expect(patterns.map(function (p) { return p.p; })).toEqual([H.cell(model9, 'R2C5'), H.cell(model9, 'R2C6')]);
+      expect(runFind('emptyRectangle', model9, two).i18nArgs.ends).toEqual(['R2C5', 'R7C5']);
+    });
+
+    it('gives the same answer for the same state after a call on another state', function () {
+      const a = rectState(VECTOR);
+      const b = rectState(VECTOR.map(transposeRef));
+      const first = JSON.stringify(runFind('emptyRectangle', model9, a));
+      runFind('emptyRectangle', model9, b);
+      expect(JSON.stringify(runFind('emptyRectangle', model9, a))).toBe(first);
+    });
+
+    it('hands out its own data: changing a Finding changes neither the next call nor the state', function () {
+      const state = rectState(VECTOR);
+      const before = SG.model.cloneState(state);
+      const first = runFind('emptyRectangle', model9, state);
+      const copy = JSON.parse(JSON.stringify(first));
+      first.cells.push(99);
+      first.eliminations.push([1, 1]);
+      first.eliminations[0][0] = 77;
+      first.i18nArgs.lines.push('X');
+      first.i18nArgs.ends.length = 0;
+      first.i18nArgs.box = 'X';
+      first.i18nArgs.digit = 1;
+      expect(runFind('emptyRectangle', model9, state)).toEqual(copy);
+      expect(state.candidates).toEqual(before.candidates);
+      expect(state.value).toEqual(before.value);
+    });
+  });
+
+  describe('emptyRectangle (R11): real positions', function () {
+    const entry = SG.fixtures.techniques.byId.emptyRectangle;
+
+    // The exact Findings of the two real positive fixtures (core/tests/fixtures/techniques.js).
+    const REAL = [
+      { cells: ['R4C2', 'R4C4', 'R8C2', 'R9C3'], eliminations: [['R9C4', 5]],
+        args: { digit: 5, box: 'B7', lines: ['R8', 'C3'], ends: ['R4C2', 'R4C4'] } },
+      { cells: ['R2C3', 'R2C8', 'R3C1', 'R7C8'], eliminations: [['R7C1', 6]],
+        args: { digit: 6, box: 'B1', lines: ['R2', 'C1'], ends: ['R2C8', 'R7C8'] } }
+    ];
+
+    function positionOf(fixture) {
+      return H.stateAfter(model9, fixture.puzzle, fixture.after);
+    }
+
+    it('has two positive and three negative fixtures, positions listed explicitly (no ladder helper)', function () {
+      expect(entry.positive).toHaveLength(2);
+      expect(entry.negative).toHaveLength(3);
+      entry.positive.concat(entry.negative).forEach(function (fixture) {
+        expect(Array.isArray(fixture.after)).toBe(true);
+      });
+      entry.positive.forEach(function (fixture) { expect(fixture.after).not.toContain('emptyRectangle'); });
+      entry.positive.forEach(function (fixture) { expect(fixture.after).toContain('simpleColouring'); });
+      // nothing left after the rectangle itself; the general rectangle is reached before it; the kite position
+      // is the one before the kite
+      expect(entry.negative[0].after).toContain('emptyRectangle');
+      expect(entry.negative[1].after).not.toContain('emptyRectangle');
+      expect(entry.negative[2].after).not.toContain('twoStringKite');
+      expect(entry.negative[2].after).toContain('skyscraper');
+    });
+
+    REAL.forEach(function (want, i) {
+      it('finds the exact Finding of real position ' + (i + 1) + ', sound against an independent completion',
+        function () {
+          const fixture = entry.positive[i];
+          const givens = H.parsePuzzle(model9, fixture.puzzle);
+          // the puzzle has exactly one solution (plain depth first search, no technique)
+          expect(SG.dfs.countSolutions(model9, givens, 2)).toBe(1);
+          const solution = SG.dfs.solve(model9, givens);
+          const state = positionOf(fixture);
+          const finding = H.expectFinding(SG.test, 'emptyRectangle', state, want);
+          expect(finding.eliminations.length).toBe(want.eliminations.length);
+          finding.eliminations.forEach(function (e) { expect(solution[e[0]]).not.toBe(e[1]); });
+          // the position without the eliminated candidates still completes, and only to that solution
+          const reduced = SG.model.cloneState(state);
+          finding.eliminations.forEach(function (e) {
+            expect(SG.constraints.eliminate(model9, reduced, e[0], e[1])).toBe(true);
+          });
+          const done = SG.dfs.searchFrom(model9, reduced, { limit: 2 });
+          expect(done.found).toBe(1);
+          expect(Array.from(done.solution)).toEqual(Array.from(solution));
+          // the first rectangle in order is the Finding (the independent enumeration agrees)
+          const first = removingRectangles(model9, state)[0];
+          expect(first.targets).toEqual(finding.eliminations.map(function (e) { return e[0]; }));
+          expect(unitLabel(model9, first.box)).toBe(want.args.box);
+        });
+
+      it('finds the transposed real position ' + (i + 1) + ' with the transposed eliminations', function () {
+        const fixture = entry.positive[i];
+        const turned = transposeCells(fixture.puzzle, function (cells) { return cells.join(''); });
+        const state = H.stateAfter(model9, turned, fixture.after);
+        const wanted = new Set(want.eliminations.map(function (e) {
+          return H.cell(model9, transposeRef(e[0])) + ':' + e[1];
+        }));
+        const keys = eliminationKeys(removingRectangles(model9, state));
+        wanted.forEach(function (key) { expect(keys.has(key)).toBe(true); });
+        const finding = runFind('emptyRectangle', model9, state);
+        expect(finding).not.toBeNull();
+        expect(H.findingProblems(model9, state, finding, { technique: 'emptyRectangle',
+          solution: SG.dfs.solve(model9, H.parsePuzzle(model9, turned)) })).toEqual([]);
+      });
+    });
+
+    it('finds nothing at the negative positions: nothing left after it, a general rectangle, a kite', function () {
+      entry.negative.forEach(function (fixture) {
+        const state = positionOf(fixture);
+        H.expectNoFinding(SG.test, 'emptyRectangle', state);
+        expect(removingRectangles(model9, state)).toEqual([]);
+      });
+      expect(runFind('twoStringKite', model9, positionOf(entry.negative[2]))).not.toBeNull();
+    });
+
+    it('has a negative whose general rectangle (a candidate at the intersection) is not the restricted form',
+      function () {
+        // Box B5 holds the digit 1 in R5C6, R6C4 and R6C6: the row R6 {C4, C6} and the column C6 {R5, R6} meet in
+        // R6C6, a candidate. The general rectangle (p = R6C7 sees R6C4 and R6C6, q = R9C7, B = R5C6) would remove
+        // the 1 from R9C6, which sees R5C6 along C6 and q along R9. The restricted technique says nothing, and the
+        // 1 of R9C6 is not the solution (the general rectangle is sound; the restricted form does not claim it).
+        const fixture = entry.negative[1];
+        const state = positionOf(fixture);
+        const solution = SG.dfs.solve(model9, H.parsePuzzle(model9, fixture.puzzle));
+        const open = function (label) {
+          return (state.value[H.cell(model9, label)] === 0) && (state.candidates[H.cell(model9, label)] & 1) === 1;
+        };
+        ['R5C6', 'R6C4', 'R6C6', 'R6C7', 'R9C7', 'R9C6'].forEach(function (label) {
+          expect([label, open(label)]).toEqual([label, true]);
+        });
+        const box = Array.from(model9.units[unitsOfKind(model9, 'box')[4]]).filter(function (c) {
+          return state.value[c] === 0 && (state.candidates[c] & 1) !== 0;
+        });
+        expect(box).toEqual(['R5C6', 'R6C4', 'R6C6'].map(function (label) { return H.cell(model9, label); }));
+        expect(solution[H.cell(model9, 'R9C6')]).not.toBe(1);
+        const peers = peerSetsOf(model9);
+        expect(peers[H.cell(model9, 'R9C7')].has(H.cell(model9, 'R9C6'))).toBe(true);
+        expect(peers[H.cell(model9, 'R5C6')].has(H.cell(model9, 'R9C6'))).toBe(true);
+        expect(peers[H.cell(model9, 'R6C7')].has(H.cell(model9, 'R6C4'))).toBe(true);
+        expect(peers[H.cell(model9, 'R6C7')].has(H.cell(model9, 'R6C6'))).toBe(true);
+        H.expectNoFinding(SG.test, 'emptyRectangle', state);
+      });
+  });
+
+  describe('emptyRectangle (R11): work limit, budget and cancellation', function () {
+    // Digits 1 to 3 on a 16 digit board: two cells in every row, every column and every box (the cells of the
+    // permutations P and Q, box (rb, cb) holds P at its local (i, i) and Q at (i - 1, i + 1) with
+    // i = (cb - rb) mod 4), in different rows and columns of the box, so each box has two rectangles and each of
+    // the 48 units of the digit is a conjugate pair: a call tests 3 digits x 16 boxes x 48 units = 2304 pairs.
+    const FLOOD_DIGITS = 3;
+    const FLOOD_WORK = FLOOD_DIGITS * 16 * 48;
+    let flood = null;
+
+    function floodState() {
+      if (flood === null) {
+        const model = modelOfDigits(16);
+        const keep = new Set();
+        for (let rb = 0; rb < 4; rb++) {
+          for (let cb = 0; cb < 4; cb++) {
+            const i = ((cb - rb) % 4 + 4) % 4;
+            keep.add((4 * rb + i) * 16 + 4 * cb + i);
+            keep.add((4 * rb + (i + 3) % 4) * 16 + 4 * cb + (i + 1) % 4);
+          }
+        }
+        const eliminate = [];
+        for (let c = 0; c < model.cellCount; c++) {
+          if (keep.has(c)) continue;
+          for (let d = 1; d <= FLOOD_DIGITS; d++) eliminate.push([c, d]);
+        }
+        flood = { model: model, state: H.makeState(model, blankPuzzle(model), { eliminate: eliminate,
+          propagate: false }) };
+      }
+      return flood;
+    }
+
+    const VECTOR = ['R2C1', 'R2C3', 'R1C2', 'R3C2', 'R2C5', 'R7C5', 'R7C2', 'R7C9'];
+
+    function caught(fn) {
+      try {
+        fn();
+      } catch (err) {
+        return err;
+      }
+      return null;
+    }
+
+    function observed(model, state, options, ctxOptions) {
+      const records = [];
+      const ctx = SG.techniques.createContext(model, Object.assign({
+        onPatternWork: function (r) { records.push(r); }
+      }, ctxOptions));
+      const finding = SG.fishSearch.emptyRectangle(model, state, ctx, options);
+      return { finding: finding, records: records, record: records[0] };
+    }
+
+    it('has no rectangle in the flood position, which a plain enumeration confirms', function () {
+      const f = floodState();
+      expect(removingRectangles(f.model, f.state)).toEqual([]);
+      expect(referenceRectangles(f.model, f.state).length).toBeGreaterThan(0);
+      H.expectNoFinding(SG.test, 'emptyRectangle', f.state);
+    });
+
+    it('has R10\'s limit of 50000 tested pairs, and the registered finder reports it', function () {
+      expect(SG.fishSearch.EMPTY_RECTANGLE_WORK_LIMIT).toBe(50000);
+      const state = digitsMap(model9, { 5: VECTOR });
+      const records = [];
+      const ctx = SG.techniques.createContext(model9, { onPatternWork: function (r) { records.push(r); } });
+      expect(SG.techniques.get('emptyRectangle').find(model9, state, ctx)).not.toBeNull();
+      expect(records).toEqual([{ id: 'emptyRectangle', work: 1, limit: 50000, capHit: null, retained: null }]);
+    });
+
+    it('counts one unit per tested pair of a box and a conjugate unit, from a fresh counter on every call',
+      function () {
+        const f = floodState();
+        const first = observed(f.model, f.state);
+        expect(first.finding).toBeNull();
+        expect(first.record).toEqual({ id: 'emptyRectangle', work: FLOOD_WORK, limit: 50000, capHit: null,
+          retained: null });
+        const second = observed(f.model, f.state);
+        expect(second.record).toEqual(first.record);
+        expect(second.record).not.toBe(first.record);
+        // a position without a conjugate pair costs nothing; a finding stops the count where it is found
+        const empty = H.makeState(model9, blankPuzzle(model9), { propagate: false });
+        expect(observed(model9, empty).record.work).toBe(0);
+        const found = observed(model9, digitsMap(model9, { 5: VECTOR }));
+        expect(found.finding).not.toBeNull();
+        expect(found.record.work).toBe(1);
+        // the pair of C5 and the pair of C2 (R1C2, R3C2: both cells inside the box, counted and rejected) are the
+        // only units with two cells; nothing is found
+        const none = observed(model9, digitsMap(model9, { 5: ['R2C1', 'R2C3', 'R1C2', 'R3C2', 'R2C5', 'R7C5'] }));
+        expect(none.finding).toBeNull();
+        expect(none.record.work).toBe(2);
+      });
+
+    it('has no rectangle and costs no work on a board without boxes (a Latin square), unlike the same position ' +
+      'with them', function () {
+      const labels = ['R2C1', 'R1C2', 'R2C4', 'R4C4', 'R4C2', 'R4C3'];
+      const plain = buildGridModel('fishTestPlain', 2, 2);
+      const square = buildGridModel('fishTestLatin', 2, 2, undefined, { noBoxes: true });
+      const out = observed(square, digitsMap(square, { 1: labels }));
+      expect(out.finding).toBeNull();
+      expect(out.record.work).toBe(0);
+      const control = observed(plain, digitsMap(plain, { 1: labels }));
+      expect(control.finding).not.toBeNull();
+      expect(control.record.work).toBeGreaterThan(0);
+    });
+
+    it('ends a call whose limit is spent with nothing found (never a finding), and says so', function () {
+      const f = floodState();
+      [0, 1, 100, FLOOD_WORK - 1].forEach(function (limit) {
+        const out = observed(f.model, f.state, { workLimit: limit });
+        expect(out.finding).toBeNull();
+        expect(out.record).toEqual({ id: 'emptyRectangle', work: limit, limit: limit, capHit: 'work',
+          retained: null });
+      });
+      const exact = observed(f.model, f.state, { workLimit: FLOOD_WORK });
+      expect(exact.record.capHit).toBeNull();
+      expect(exact.record.work).toBe(FLOOD_WORK);
+      // a limit of 0 loses the vector's deduction; the first tested pair finds it with a limit of 1
+      const state = digitsMap(model9, { 5: VECTOR });
+      const lost = observed(model9, state, { workLimit: 0 });
+      expect(lost.finding).toBeNull();
+      expect(lost.record.capHit).toBe('work');
+      const kept = observed(model9, state, { workLimit: 1 });
+      expect(kept.finding).toEqual(observed(model9, state).finding);
+      expect(kept.record.capHit).toBeNull();
+    });
+
+    it('floors a fractional limit and rejects an invalid one with solver.invalidOption', function () {
+      const f = floodState();
+      expect(observed(f.model, f.state, { workLimit: 2.9 }).record.work).toBe(2);
+      [-1, NaN, Infinity, '5', null].forEach(function (workLimit) {
+        const err = caught(function () { observed(f.model, f.state, { workLimit: workLimit }); });
+        expect([String(workLimit), err && err.code]).toEqual([String(workLimit), 'solver.invalidOption']);
+        expect(err.message).toContain('fishSearch.emptyRectangle');
+      });
+    });
+
+    /**
+     * The work done at each check of the parent budget: a context whose k-th check throws a spent budget lets the
+     * record of the (swallowed) call tell how many pairs were tested at that check.
+     */
+    function checkWorks(model, state, options) {
+      const base = SG.techniques.createContext(model, {});
+      function attempt(target) {
+        let k = 0;
+        let record = null;
+        const ctx = Object.assign({}, base, {
+          options: { onPatternWork: function (r) { record = r; } },
+          check: function () {
+            k++;
+            if (k === target) throw new SG.errors.GenerationError('budget.exceeded', { reason: 'nodes' });
+          }
+        });
+        const finding = SG.fishSearch.emptyRectangle(model, state, ctx, options);
+        return { checks: k, record: record, finding: finding };
+      }
+      const free = attempt(0);
+      const works = [];
+      for (let target = 1; target <= free.checks; target++) {
+        const spent = attempt(target);
+        expect(spent.finding).toBeNull();
+        expect(spent.record.capHit).toBeNull();
+        works.push(spent.record.work);
+      }
+      const gaps = works.map(function (w, i) { return w - (i === 0 ? 0 : works[i - 1]); });
+      gaps.push(free.record.work - works[works.length - 1]);
+      return { works: works, gaps: gaps, max: Math.max.apply(null, gaps), free: free };
+    }
+
+    it('checks the parent budget at entry and so that at most 256 pairs pass between two checks', function () {
+      const f = floodState();
+      const out = checkWorks(f.model, f.state);
+      expect(out.works[0]).toBe(0);
+      expect(out.works).toEqual([0, 256, 512, 768, 1024, 1280, 1536, 1792, 2048]);
+      expect(out.max).toBeLessThanOrEqual(256);
+      expect(out.free.checks).toBe(9);
+      // a call that ends at its limit keeps the same cadence
+      const capped = checkWorks(f.model, f.state, { workLimit: 1000 });
+      expect(capped.works).toEqual([0, 256, 512, 768]);
+      // a small call has only the entry check
+      expect(checkWorks(model9, digitsMap(model9, { 5: VECTOR })).works).toEqual([0]);
+    });
+
+    it('reports a spent budget as nothing found and lets cancellation and other errors through', function () {
+      const f = floodState();
+      const parent = SG.budget.create({ nodes: 3 });
+      const spent = observed(f.model, f.state, undefined, { budget: parent });
+      expect(spent.finding).toBeNull();
+      expect(spent.records).toHaveLength(1);
+      expect(spent.record.capHit).toBeNull();
+      expect(spent.record.work).toBeLessThan(FLOOD_WORK);
+      // capHit null is no proof of a complete scan: the caller's budget still fails after the call
+      expect(caught(function () { parent.check(); }).code).toBe('budget.exceeded');
+
+      const budget = SG.budget.create({});
+      budget.cancel();
+      const records = [];
+      const err = caught(function () {
+        SG.techniques.get('emptyRectangle').find(f.model, f.state, SG.techniques.createContext(f.model, {
+          budget: budget, onPatternWork: function (r) { records.push(r); } }));
+      });
+      expect(err.code).toBe('budget.cancelled');
+      expect(records).toEqual([]);
+
+      // cancellation in the middle of the scan, and an error that is not a budget error
+      [['budget.cancelled', true], ['boom', false]].forEach(function (kind) {
+        let k = 0;
+        const ctx = Object.assign({}, SG.techniques.createContext(f.model, {}), {
+          check: function () {
+            if (++k === 3) {
+              throw kind[1] ? new SG.errors.GenerationError(kind[0], { reason: 'cancelled' }) : new Error(kind[0]);
+            }
+          }
+        });
+        const thrown = caught(function () { SG.techniques.get('emptyRectangle').find(f.model, f.state, ctx); });
+        expect(thrown).toBeTruthy();
+        expect(kind[1] ? thrown.code : thrown.message).toBe(kind[0]);
+        expect(k).toBe(3);
+      });
+    });
+
+    it('answers correctly after a call that ended inside a box (the marks of the box are cleared)', function () {
+      // A call that ends at its limit, or with a finding, leaves the marks of its box set: the box B1 of the
+      // vector. The next call, on a rectangle in the box B4 whose target R3C2 is a cell of the first box, must
+      // not take that cell for a candidate of its own box.
+      const vector = digitsMap(model9, { 5: VECTOR });
+      const second = digitsMap(model9, { 5: ['R5C1', 'R5C3', 'R4C2', 'R6C2', 'R5C7', 'R3C7', 'R3C2', 'R3C9'] });
+      const want = JSON.stringify(runFind('emptyRectangle', model9, second));
+      expect(JSON.parse(want).eliminations).toEqual([[H.cell(model9, 'R3C2'), 5]]);
+      [{ workLimit: 0 }, undefined].forEach(function (options) {
+        const first = observed(model9, vector, options);
+        expect(first.finding === null).toBe(options !== undefined);
+        expect(JSON.stringify(runFind('emptyRectangle', model9, second))).toBe(want);
+      });
+    });
+
+    it('is not fooled by a hostile or absent observer', function () {
+      const state = digitsMap(model9, { 5: VECTOR });
+      const plain = JSON.stringify(runFind('emptyRectangle', model9, state));
+      ['not a function', null, 7].forEach(function (observer) {
+        const ctx = SG.techniques.createContext(model9, { onPatternWork: observer });
+        expect(JSON.stringify(SG.techniques.get('emptyRectangle').find(model9, state, ctx))).toBe(plain);
+      });
+    });
+  });
+
+  describe('emptyRectangle (R11): a region as the box, and the ownership on multi-grid boards', function () {
+    // A region of a jigsaw board is a box-like unit. J5 of JIGSAW_LAYOUT holds R3C2, R4C2, R4C3, R4C4, R5C2, R5C3,
+    // R5C4, R6C2 and R6C3. Its candidates R4C3 and R4C4 (the row arm A, row R4) and R3C2, R5C2 and R6C2 (the
+    // column arm B, column C2) leave the intersection R4C2 empty. The pair of the column C7 is p = R4C7 (it sees
+    // A along R4) and q = R9C7; R9C2 sees B along C2 and q along R9, and the decoy R9C9 keeps R9 from being a pair.
+    const JIGSAW = ['R4C3', 'R4C4', 'R3C2', 'R5C2', 'R6C2', 'R4C7', 'R9C7', 'R9C2', 'R9C9'];
+
+    function inCellOrderOf(model, labels) {
+      return labels.slice().sort(function (a, b) { return H.cell(model, a) - H.cell(model, b); });
+    }
+
+    it('has no box on the jigsaw board: its nine regions are the box-like units', function () {
+      const board = jigsawBoard(false);
+      [board, jigsawBoard(true)].concat(SG.testkit.hasVariant('jigsaw9') ? [H.model('jigsaw9')] : [])
+        .forEach(function (model) {
+          expect(unitsOfKind(model, 'box')).toEqual([]);
+          expect(unitsOfKind(model, 'region')).toHaveLength(9);
+        });
+      expect(unitLabel(board, crossUnit(board, H.cell(board, 'R4C3'), 'region'))).toBe('J5');
+    });
+
+    it('finds the rectangle of a region: the vector on the jigsaw board (J5, arms in R4 and C2)', function () {
+      const board = jigsawBoard(false);
+      const state = digitsMap(board, { 5: JIGSAW });
+      const patterns = removingRectangles(board, state);
+      expect(patterns).toHaveLength(1);
+      expect(patterns[0].targets).toEqual([H.cell(board, 'R9C2')]);
+      expect(unitLabel(board, patterns[0].box)).toBe('J5');
+      const finding = H.expectFinding(SG.test, 'emptyRectangle', state, {
+        cells: ['R4C3', 'R4C4', 'R3C2', 'R5C2', 'R6C2', 'R4C7', 'R9C7'],
+        eliminations: [['R9C2', 5]],
+        args: { digit: 5, box: 'J5', lines: ['R4', 'C2'], ends: ['R4C7', 'R9C7'] }
+      });
+      expect(finding.placements).toEqual([]);
+    });
+
+    it('finds the transposed vector on the transposed jigsaw board (the column arm is A)', function () {
+      const turned = jigsawBoard(true);
+      const state = digitsMap(turned, { 5: JIGSAW.map(transposeRef) });
+      const patterns = removingRectangles(turned, state);
+      expect(patterns).toHaveLength(1);
+      expect(patterns[0].side).toBe(1);
+      expect(patterns[0].targets).toEqual([H.cell(turned, 'R2C9')]);
+      expect(unitLabel(turned, patterns[0].box)).toBe('J5');
+      H.expectFinding(SG.test, 'emptyRectangle', state, {
+        cells: ['R4C3', 'R4C4', 'R3C2', 'R5C2', 'R6C2', 'R4C7', 'R9C7'].map(transposeRef),
+        eliminations: [['R2C9', 5]],
+        args: { digit: 5, box: 'J5', lines: ['R2', 'C4'], ends: inCellOrderOf(turned, ['R7C4', 'R7C9']) }
+      });
+    });
+
+    // Near misses on the jigsaw board, checked first against the independent enumeration: a candidate at the
+    // intersection R4C2, a candidate of the region in a third line (R5C4), and a pair cell inside the region.
+    const JIGSAW_MISSES = [
+      ['a candidate at the intersection R4C2', JIGSAW.concat(['R4C2'])],
+      ['a candidate of the region in a third line (R5C4)', JIGSAW.concat(['R5C4'])],
+      ['p lies in R5, which sees no cell of the row arm', ['R4C3', 'R4C4', 'R3C2', 'R5C2', 'R6C2', 'R5C7', 'R9C7',
+        'R9C2', 'R9C9']]
+    ];
+
+    JIGSAW_MISSES.forEach(function (miss) {
+      [['as listed', false], ['transposed', true]].forEach(function (variant) {
+        it('does not authorize an elimination on the jigsaw board: ' + miss[0] + ' (' + variant[0] + ')',
+          function () {
+            const board = jigsawBoard(variant[1]);
+            const state = digitsMap(board, { 5: variant[1] ? miss[1].map(transposeRef) : miss[1] });
+            expect(removingRectangles(board, state)).toEqual([]);
+            H.expectNoFinding(SG.test, 'emptyRectangle', state);
+          });
+      });
+    });
+
+    it('has a region as the only box-like unit of a board of rows, columns and regions (the 4 x 4 board)',
+      function () {
+        // The 4 x 4 grid with its boxes taken out and listed as regions instead: the same rectangle as on the
+        // plain board (box 1 holds R2C1 and R1C2; the pair of C4 is R2C4 and R4C4; R4C2 is the target).
+        const labels = ['R2C1', 'R1C2', 'R2C4', 'R4C4', 'R4C2', 'R4C3'];
+        const plain = buildGridModel('fishTestPlainRegions', 2, 2);
+        const regions = SG.model.create({
+          variantId: 'fishTestRegions', digits: 4, cellCount: 16,
+          units: plain.units.map(function (cells) { return Array.from(cells); }),
+          unitMeta: plain.unitMeta.map(function (meta) {
+            return meta.kind === 'box' ? { kind: 'region', gridIndex: 0, label: meta.label.replace('B', 'J') } : meta;
+          }),
+          layout: plain.layout
+        });
+        expect(unitsOfKind(regions, 'box')).toEqual([]);
+        const state = digitsMap(regions, { 1: labels });
+        expect(removingRectangles(regions, state).length).toBeGreaterThan(0);
+        H.expectFinding(SG.test, 'emptyRectangle', state, {
+          cells: ['R1C2', 'R2C1', 'R2C4', 'R4C4'],
+          eliminations: [['R4C2', 1]],
+          args: { digit: 1, box: 'J1', lines: ['R1', 'C1'], ends: ['R2C4', 'R4C4'] }
+        });
+      });
+
+    // The Samurai: the grids G1 to G4 each share a corner box with the center grid G5, so a cell of such a box has
+    // two boxes and lies in a row and a column of two grids. Nothing of this board is excluded wholesale: the
+    // rectangle of an unshared box (G1-B1) is found, the same digit map moved onto the shared box G1-B9 is not.
+    function samurai() {
+      if (!SG.testkit.hasVariant('samurai')) SG.test.skip('no board of samurai can be built here');
+      return H.model('samurai');
+    }
+
+    function boxesOf(model, label) {
+      return Array.from(model.cellUnits[H.cell(model, label)]).filter(function (u) {
+        return model.unitMeta[u].kind === 'box';
+      });
+    }
+
+    function inGrid(prefix, labels) {
+      return labels.map(function (label) { return prefix + label; });
+    }
+
+    it('finds the rectangle of an unshared box of the Samurai (the vector in the box G1-B1)', function () {
+      const board = samurai();
+      expect(boxesOf(board, 'G1-R2C1')).toHaveLength(1);
+      const labels = inGrid('G1-', ['R2C1', 'R2C3', 'R1C2', 'R3C2', 'R2C5', 'R7C5', 'R7C2', 'R7C9']);
+      const state = digitsMap(board, { 5: labels });
+      const patterns = removingRectangles(board, state);
+      expect(patterns).toHaveLength(1);
+      expect(patterns[0].targets).toEqual([H.cell(board, 'G1-R7C2')]);
+      H.expectFinding(SG.test, 'emptyRectangle', state, {
+        cells: inGrid('G1-', ['R1C2', 'R2C1', 'R2C3', 'R2C5', 'R3C2', 'R7C5']),
+        eliminations: [['G1-R7C2', 5]],
+        args: { digit: 5, box: 'G1-B1', lines: ['G1-R2', 'G1-C2'], ends: ['G1-R2C5', 'G1-R7C5'] }
+      });
+    });
+
+    it('finds nothing in a shared box of the Samurai: its cells have two boxes, rows and columns', function () {
+      const board = samurai();
+      // The same shape in the corner box G1-B9 (= G5-B1): the row arm G1-R8 {C7, C9}, the column arm G1-C8 {R7, R9},
+      // G1-R8C8 empty, the pair of G1-C3 (p = G1-R8C3 sees the row arm along G1-R8, q = G1-R2C3) and the target
+      // G1-R2C8. Every cell of the box has two boxes (and a row and a column of two grids).
+      const labels = inGrid('G1-', ['R8C7', 'R8C9', 'R7C8', 'R9C8', 'R8C3', 'R2C3', 'R2C8', 'R2C1']);
+      ['G1-R8C7', 'G1-R8C9', 'G1-R7C8', 'G1-R9C8'].forEach(function (label) {
+        expect(boxesOf(board, label)).toHaveLength(2);
+      });
+      const state = digitsMap(board, { 5: labels });
+      expect(removingRectangles(board, state)).toEqual([]);
+      H.expectNoFinding(SG.test, 'emptyRectangle', state);
+    });
+  });
+
+  describe('emptyRectangle (R11): agreement with an independent enumeration', function () {
+    const cache = {};
+
+    function itemsOf(model, count, seed) {
+      const key = model.variantId + '/' + model.digits + '/' + seed;
+      if (!cache[key]) {
+        cache[key] = H.randomStatesWithKnownSolution(model, SG.testkit.rng.create(seed), count);
+      }
+      return cache[key];
+    }
+
+    function ascending(list) {
+      return list.slice().sort(function (a, b) { return a - b; });
+    }
+
+    /** The Finding is the first pattern of the enumeration that removes something, field by field. */
+    function agree(model, item, index) {
+      const patterns = removingRectangles(model, item.state);
+      const finding = runFind('emptyRectangle', model, item.state);
+      check((finding !== null) === (patterns.length > 0), 'emptyRectangle ' + (finding !== null
+        ? 'reported a pattern that the enumeration does not know' : 'missed a pattern the enumeration found') +
+        '\n  ' + describeItem(model, item, index));
+      if (finding === null) return false;
+      const first = patterns[0];
+      check(finding.i18nArgs.digit === first.digit, 'digit ' + finding.i18nArgs.digit + ' is not the first ' +
+        'pattern\'s ' + first.digit + '\n  ' + describeItem(model, item, index));
+      check(JSON.stringify(finding.eliminations) === JSON.stringify(first.targets.map(function (c) {
+        return [c, first.digit];
+      })), 'the eliminations are not those of the first pattern\n  ' + describeItem(model, item, index));
+      check(JSON.stringify(finding.cells) === JSON.stringify(ascending(first.inside.concat([first.p, first.q]))),
+        'the cells are not the candidates of the box and the pair of the first pattern\n  ' +
+        describeItem(model, item, index));
+      check(finding.i18nArgs.box === unitLabel(model, first.box), 'the box is not that of the first pattern\n  ' +
+        describeItem(model, item, index));
+      check(JSON.stringify(finding.i18nArgs.lines) === JSON.stringify(first.lines.map(function (u) {
+        return unitLabel(model, u);
+      })), 'the lines are not those of the first pattern\n  ' + describeItem(model, item, index));
+      check(JSON.stringify(finding.i18nArgs.ends) === JSON.stringify(ascending([first.p, first.q]).map(function (c) {
+        return H.label(model, c);
+      })), 'the ends are not those of the first pattern\n  ' + describeItem(model, item, index));
+      return true;
+    }
+
+    [['classic9', 400, 777, 100], ['classic9', 400, 99, 100], ['classic6', 400, 777, 100],
+      ['classic4', 300, 777, 10]].forEach(function (setup) {
+      it('finds a rectangle exactly when one exists and removes exactly its candidates on ' + setup[0] +
+        ' (seed ' + setup[2] + ')', function () {
+        const model = H.model(setup[0]);
+        let withPattern = 0;
+        itemsOf(model, setup[1], setup[2]).forEach(function (item, index) {
+          if (agree(model, item, index)) withPattern++;
+        });
+        expect(withPattern).toBeGreaterThanOrEqual(setup[3]);
+      });
+    });
+
+    [12, 16].forEach(function (D) {
+      it('agrees on ' + D + ' digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)', function () {
+        const model = modelOfDigits(D);
+        let withPattern = 0;
+        itemsOf(model, D === 12 ? 60 : 32, 2026).forEach(function (item, index) {
+          if (agree(model, item, index)) withPattern++;
+        });
+        expect(withPattern).toBeGreaterThanOrEqual(D === 12 ? 20 : 10);
+      });
+    });
+
+    [['diagonalX', 30], ['hyper', 30]].forEach(function (setup) {
+      it('agrees on ' + setup[0] + ' (extra regions are real peers and strong links of the pair)', function () {
+        if (!SG.testkit.hasVariant(setup[0])) SG.test.skip('no board of ' + setup[0] + ' can be built here');
+        const model = H.model(setup[0]);
+        let withPattern = 0;
+        itemsOf(model, 120, 4242).forEach(function (item, index) {
+          if (agree(model, item, index)) withPattern++;
+        });
+        expect(withPattern).toBeGreaterThanOrEqual(setup[1]);
+      });
+    });
+
+    it('agrees on the jigsaw board and on its transpose, where the irregular regions are the boxes', function () {
+      [jigsawBoard(false), jigsawBoard(true)].forEach(function (model) {
+        let withPattern = 0;
+        itemsOf(model, 120, 4242).forEach(function (item, index) {
+          if (agree(model, item, index)) withPattern++;
+        });
+        expect([model.variantId, withPattern >= 40]).toEqual([model.variantId, true]);
+      });
+    });
+
+    it('agrees on the jigsaw9 board of the environment, whatever its layout (no minimum: the layouts differ)',
+      function () {
+        if (!SG.testkit.hasVariant('jigsaw9')) SG.test.skip('no board of jigsaw9 can be built here');
+        const model = H.model('jigsaw9');
+        expect(unitsOfKind(model, 'box')).toEqual([]);
+        itemsOf(model, 120, 4242).forEach(function (item, index) { agree(model, item, index); });
+      });
+
+    it('stays sound on the irregular jigsaw boards: every rectangle removes only candidates that are not the ' +
+      'solution', function () {
+      [jigsawBoard(false), jigsawBoard(true)].forEach(function (model) {
+        const stats = H.assertSound(SG.test, 'emptyRectangle',
+          { model: model, states: itemsOf(model, 120, 4242), minFirings: 40 });
+        expect([model.variantId, stats.firings >= 40]).toEqual([model.variantId, true]);
+      });
+      if (SG.testkit.hasVariant('jigsaw9')) {
+        const own = H.model('jigsaw9');
+        H.assertSound(SG.test, 'emptyRectangle', { model: own, states: itemsOf(own, 120, 4242), minFirings: 0 });
+      }
+    });
+
+    it('agrees on the multi-grid boards (shared boxes, rows and columns have no single owner)', function () {
+      const minimum = { samurai: 3, sohei: 4, butterfly: 1, flower: 3 };
       const boards = Object.keys(minimum).filter(function (variant) { return SG.testkit.hasVariant(variant); });
       if (boards.length === 0) SG.test.skip('no multi-grid board can be built here');
       boards.forEach(function (variant) {

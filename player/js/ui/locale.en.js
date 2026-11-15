@@ -200,6 +200,12 @@
     'technique.simpleColouring': 'Simple Colouring',
     'technique.simpleColouring.desc': 'Cells linked by "one or the other" for a single digit are painted ' +
       'in two colours. Exactly one colour is true, which exposes cells that cannot hold the digit.',
+    'technique.emptyRectangle': 'Empty Rectangle',
+    'technique.emptyRectangle.desc': 'In a box (or region) a digit can only go in one row and one column of the ' +
+      'box, in two parts that share no cell. A pair of cells outside the box that are the only two cells for ' +
+      'the digit in their unit decides: if the end that sees every digit of one part holds it, that part loses ' +
+      'it and the other part holds it; otherwise the other end holds it. Either way the digit is removed from ' +
+      'every cell that sees the whole other part and the other end.',
     'technique.swordfish': 'Swordfish',
     'technique.swordfish.desc': 'The three-line version of X-Wing: a digit confined to the same three ' +
       'columns in three rows can be removed from the rest of those columns.',
@@ -281,6 +287,11 @@
       'cells each, and the cells {bridge} (the bridge) lie in the same box or region, so they cannot both be ' +
       '{digit}. At least one of the other two cells, {ends}, is {digit}, so {digit} is removed from every ' +
       'other cell that sees both of them.',
+    'technique.emptyRectangle.step': 'Empty Rectangle on {digit}: in {box}, the digit {digit} can only go in the ' +
+      'cells of {lines}, in two parts that share no cell. {ends} are the only two cells for {digit} in their ' +
+      'unit, so one of them is {digit}. If the end that sees every {digit} of one part is {digit}, that part ' +
+      'loses it and the other part holds it; if it is not, the other end is {digit}. Either way {digit} is ' +
+      'removed from every other cell that sees the whole other part and the other end.',
     'technique.swordfish.step': 'Swordfish on {digit}: in {baseUnits}, the digit {digit} can only go in ' +
       '{coverUnits}. The three {digit}s of the base lines fill all three cover lines, so {digit} is ' +
       'removed from every other cell of {coverUnits}.',

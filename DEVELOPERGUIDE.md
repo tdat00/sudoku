@@ -849,15 +849,22 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    24 for 6: [docs/difficulty-v3/chain-window-2026-11-15.md](docs/difficulty-v3/chain-window-2026-11-15.md)), read at
    every call. A caller's `maxChainLength` and
    `maxNishioDepth` option can only narrow a window, never widen it, and a wrapper intersects its own range with it.
-   The skyscraper and the two-string kite (`core/js/engine/tech-fish.js`, tasks MS08a and MS08b) are the other bounded
-   finders: one work unit is one tested pair of base lines (skyscraper) or one tested pair of a row and a column
-   (kite), 50,000 per call, the parent budget is checked at entry and before the unit that would carry the work over
+   The skyscraper, the two-string kite and the empty rectangle (`core/js/engine/tech-fish.js`, tasks MS08a to MS08c)
+   are the other bounded finders: one work unit is one tested pair of base lines (skyscraper), one tested pair of a
+   row and a column (kite) or one tested pair of a box and a conjugate unit of a digit (empty rectangle, which makes
+   at most eight trials inside the unit: two rectangles, two choices of the arm A, two of the pair end p), 50,000 per
+   call, the parent budget is checked at entry and before the unit that would carry the work over
    256 units since the last check, and a spent limit gives `null`, a lost deduction and never an invented one.
-   `SG.fishSearch.skyscraper` and `SG.fishSearch.twoStringKite(model, state, ctx, { workLimit })` are their
-   unregistered seams for tests with an explicit limit. The bridge of a kite lies in one box-like unit, a box or a
+   `SG.fishSearch.skyscraper`, `SG.fishSearch.twoStringKite` and `SG.fishSearch.emptyRectangle(model, state, ctx,
+   { workLimit })` are their unregistered seams for tests with an explicit limit. The bridge of a kite lies in one
+   box-like unit, a box or a
    jigsaw region (kind `box` or `region`, complete, and the only one holding the cell), so the kite also fires on
    Jigsaw boards; an overlapped box of a multi-grid board has two owners and bridges nothing, a diagonal or a window
-   is no box, and only whole lines that no other line of their kind touches count.
+   is no box, and only whole lines that no other line of their kind touches count. The box of an empty rectangle is
+   a box-like unit in the same sense, and each of its candidates needs that box as its only box-like owner and one
+   complete row and one complete column (so a shared box of a multi-grid board gives no rectangle); its conjugate
+   pair is any complete unit (a row, a column, a box, a region, a diagonal, a window) in which the digit has exactly
+   two candidates, both outside the box.
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
    `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
@@ -896,7 +903,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    that belongs to the true solution — needs no code of yours: `techniques.test.js` runs it for every registered
    technique. A rare pattern that the seeded random states seldom reach gets deterministic real positions in the
    `SUPPLEMENTS` of that fixture file (`{ name, puzzle, after, propagate }` with an explicit `after` array, a puzzle
-   with one solution; `forcingChainLong`, `nishioDeep`, `skyscraper` and `twoStringKite` have three real positions each): the sweep runs the
+   with one solution; `forcingChainLong`, `nishioDeep`, `skyscraper`, `twoStringKite` and `emptyRectangle` have three real positions each): the sweep runs the
    complete random population of its call site first, never fewer states
    and never a lower firing minimum, and the supplements after it. What a finder costs on its fixtures is measured
    with `tests/pattern-cost.js` (see "Pattern cost" below); a finder reports its work through
@@ -911,7 +918,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (53 suites, 3,651 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (53 suites, 3,742 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (61 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -923,7 +930,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 53 suites,
-3,651 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+3,742 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -980,7 +987,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 61 suites, 53 of them quick (3,651 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 61 suites, 53 of them quick (3,742 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1228,7 +1235,7 @@ on the reference machine and measured by `node tests/perf.js`.
   `SG.fixtures.patternCost` (`tests/fixtures/pattern-cost.js`), tested on fake observations, fake clocks, the real
   fixtures of the chain techniques and the tool itself by the `pattern-cost-tools` suite; its test output goes to a
   folder of its own for each invocation (`.scratch-pattern-cost-tools/<pid-time-random>/` in the repository root,
-  ignored by git) and only that folder is removed. The active fixtures cover `skyscraper`, `twoStringKite`,
+  ignored by git) and only that folder is removed. The active fixtures cover `skyscraper`, `twoStringKite`, `emptyRectangle`,
   `forcingChain`, `forcingChainLong`, `nishio` and `nishioDeep` with real positions (the scoped `lawOfLeftovers`
   adapter is MS14b's).
 - **Qualification of the levels** — `node tests/qualify.js` runs the protocol that decides which levels each
@@ -1388,7 +1395,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (30, 1,897 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (30, 1,987 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

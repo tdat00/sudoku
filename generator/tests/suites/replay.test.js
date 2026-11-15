@@ -1190,7 +1190,7 @@
     });
 
     slow('has the same end position as a jump in one view and not in the other (G11, G12, G01)', function () {
-      [['G11', 111, [119, 994], [998, 994]], ['G12', 103, [130, 594], [598, 594]]].forEach(function (c) {
+      [['G11', 100, [133, 549], [553, 549]], ['G12', 107, [133, 513], [2488, 513]]].forEach(function (c) {
         var analysis = analysisOf(c[0]);
         var compact = toPosition(analysis, 'compact', c[1]);
         var details = toPosition(analysis, 'details', c[1]);
@@ -1199,14 +1199,14 @@
         expect(details.tier).not.toBe('jump');
         expect(details.ratio).toBeNull();
       });
-      expect(toPosition(analysisOf('G11'), 'details', 111).change).toBe(-4);
-      expect(toPosition(analysisOf('G12'), 'details', 103).change).toBe(-4);
+      expect(toPosition(analysisOf('G11'), 'details', 100).change).toBe(-4);
+      expect(toPosition(analysisOf('G12'), 'details', 107).change).toBe(-1975);
       var g01 = analysisOf('G01');
       expect(toPosition(g01, 'compact', 27).before.W).toBeCloseTo(1518.75, 6);
       expect(toPosition(g01, 'details', 27).before.W).toBeCloseTo(1518.75, 6);
     });
 
-    slow('has 13 compact, 16 details and 20 distinct jump transitions in the 14 goldens', function () {
+    slow('has 13 compact, 14 details and 18 distinct jump transitions in the 14 goldens', function () {
       var count = { compact: 0, details: 0 };
       var distinctJumps = {};
       GOLDENS.forEach(function (g) {
@@ -1216,13 +1216,13 @@
           distinctJumps[g.id + ':' + t.from + '>' + t.to + ':' + t.before.total + '>' + t.after.total] = true;
         });
       });
-      expect(count).toEqual({ compact: 13, details: 16 });
-      expect(Object.keys(distinctJumps)).toHaveLength(20);
+      expect(count).toEqual({ compact: 13, details: 14 });
+      expect(Object.keys(distinctJumps)).toHaveLength(18);
     });
 
     slow('labels a new hardest technique also at a flat or lower score (details: G13, G11)', function () {
       [['G13', 101, 70, 70, 'hiddenSingleBox', 'nakedSingle'],
-        ['G11', 104, 1964, 1264, 'wWing', 'forcingChain']
+        ['G11', 104, 2876, 1081, 'xyWing', 'nishio']
       ].forEach(function (c) {
         var t = toPosition(analysisOf(c[0]), 'details', c[1]);
         expect([t.before.total, t.after.total, t.change]).toEqual([c[2], c[3], c[3] - c[2]]);
@@ -1535,7 +1535,7 @@
       expect(guarded.ratings.every(function (r) { return r.status !== 'capped'; })).toBe(true);
     });
 
-    slow('has a cause, a choice and a proof for every jump of the goldens: 13 compact and 16 details', function () {
+    slow('has a cause, a choice and a proof for every jump of the goldens: 13 compact and 14 details', function () {
       var count = { compact: 0, details: 0 };
       GOLDENS.forEach(function (g) {
         var analysis = analysisOf(g.id);
@@ -1558,10 +1558,10 @@
         });
         expect(Object.keys(analysis.proofs).map(Number)).toEqual(Object.keys(ends).map(Number));
       });
-      expect(count).toEqual({ compact: 13, details: 16 });
+      expect(count).toEqual({ compact: 13, details: 14 });
     });
 
-    slow('frames the details jumps too: G06 R5C9 and the four sign jumps of G11', function () {
+    slow('frames the details jumps too: G06 R5C9 and the two sign jumps of G11', function () {
       var g06 = analysisOf('G06');
       var t = toPosition(g06, 'details', 27);
       expect([t.before.total, t.after.total, t.cause.class]).toEqual([48, 492, 'single-culprit']);
@@ -1569,7 +1569,7 @@
       expect(t.cause.culprit.otherScore).toBe(48);
       var g11 = jumpsOf(analysisOf('G11'), 'details');
       expect(g11.map(function (x) { return x.cause.frame; })).toEqual([
-        { kind: 'sign', sign: 7 }, { kind: 'sign', sign: 43 }, { kind: 'sign', sign: 75 }, { kind: 'sign', sign: 6 }]);
+        { kind: 'sign', sign: 67 }, { kind: 'sign', sign: 5 }]);
       expect(g11.every(function (x) { return x.cause.changes.length === 0 && x.cause.sign !== null; })).toBe(true);
     });
 

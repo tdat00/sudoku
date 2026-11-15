@@ -28,8 +28,8 @@
  * `byId` (and `ids`) is the ACTIVE map: the historical one plus the explicit `CURRENT` entries, which replace
  * an ID's fixtures from now on without touching a v2 position. A later technique adds its entry to CURRENT,
  * built from explicit `after` lists or an initial real puzzle state. MS07b replaces the four chain IDs
- * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way; MS08a adds skyscraper and
- * MS08b twoStringKite.
+ * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way; MS08a adds skyscraper,
+ * MS08b twoStringKite and MS08c emptyRectangle.
  */
 (function () {
   'use strict';
@@ -46,16 +46,16 @@
   ];
 
   /**
-   * The 25 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
-   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the four
-   * techniques added since: skyscraper (MS08a), twoStringKite (MS08b) and the two chain windows
-   * forcingChainLong and nishioDeep (MS07b).
+   * The 26 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
+   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the five
+   * techniques added since: skyscraper (MS08a), twoStringKite (MS08b), emptyRectangle (MS08c) and the two chain
+   * windows forcingChainLong and nishioDeep (MS07b).
    */
   var REGISTRY_ORDER = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite',
-    'simpleColouring', 'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle',
-    'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep'
+    'simpleColouring', 'emptyRectangle', 'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing',
+    'uniqueRectangle', 'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep'
   ];
 
   /** The techniques the ladder tries before `id`: the position after them is where `id` is reached. */
@@ -757,7 +757,8 @@
   var BELOW_CHAINS = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite',
-    'simpleColouring', 'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle'
+    'simpleColouring', 'emptyRectangle', 'swordfish', 'jellyfish', 'xyWing', 'xyzWing', 'wWing',
+    'uniqueRectangle'
   ];
   var THROUGH_SHORT_CHAIN = BELOW_CHAINS.concat(['forcingChain']);
   var THROUGH_LONG_CHAIN = THROUGH_SHORT_CHAIN.concat(['forcingChainLong']);
@@ -777,6 +778,11 @@
   // the same plus itself.
   var BELOW_KITE = THROUGH_SKYSCRAPER.slice();
   var THROUGH_KITE = BELOW_KITE.concat(['twoStringKite']);
+
+  // Where emptyRectangle is reached (MS08c): the techniques before it in the registry (through simpleColouring),
+  // and the same plus itself.
+  var BELOW_ER = THROUGH_KITE.concat(['simpleColouring']);
+  var THROUGH_ER = BELOW_ER.concat(['emptyRectangle']);
 
   // Real unique puzzles. The first two are the puzzles of the v2 chain fixtures; the next three are famous
   // puzzles of tests/fixtures/classic.js; the last three are minimal puzzles dug by SG.testkit.dig from the
@@ -819,9 +825,25 @@
   var KITE_SPARE = '76.....8.........4.....32...5....8.6...1..97...15.....4...8.69.82..9.4.....7.....';
   var SKY_ONLY = '......6..8.21.....3.7..8..9.314.6..........5...47..163..6..........12.7.4..8..5.2';
 
+  // Real unique puzzles of the emptyRectangle fixtures (MS08c). ER_RATED is 'constructed-nightmare-2' of
+  // tests/fixtures/rated.js (digit 5, box 7, its row arm R8C2 and column arm R9C3, the pair of row R4). ER_SEEDED
+  // is state #512 (puzzle 128) of the seeded corpus of H.randomStatesWithKnownSolution(classic9, seed 99), which
+  // the 1200-state sweep of tech-fish.test.js shares (digit 6, box 1, the arms R2C3 and R3C1, the pair of column
+  // C8). ER_SPARE is state #608 (puzzle 152) of the same corpus, a third real position for the soundness
+  // supplements. ER_GENERAL is state #280 (puzzle 70) of the corpus of seed 20260101: its position has a general
+  // empty rectangle (digit 1, box 5, a candidate at the intersection R6C6) that removes R9C6, which the
+  // restricted form does not know. KITE_ONLY is puzzle 1 of the v2 swordfish fixture: its position before
+  // twoStringKite has a kite and no empty rectangle.
+  var ER_RATED = '..3....9.5..6..1...97.8...2....74..67..9.8..18..16....3...1.56...6..3..9.1....8..';
+  var ER_SEEDED = '..92......1......8.7..9.24..8.....53....386..5.....1.......2...1.2..583.8....4..1';
+  var ER_SPARE = '.....1.7.25.......17...5......9....6.96.8...7.......2.....678..4...2..5..8.5..6.9';
+  var ER_GENERAL = '48..1....5....7.....125..9....7.84.....9..5.6.7........12....47......86.894....3.';
+  var KITE_ONLY = '........6.1.672..4....39871..2....4.......1..34..61.28....8.53.93.......6........';
+
   /**
    * Current fixtures that replace a historical entry or belong to an ID registered since (skyscraper, MS08a;
-   * twoStringKite, MS08b), in the shape of the entries of the map. The short chain fixtures have at most 4
+   * twoStringKite, MS08b; emptyRectangle, MS08c), in the shape of the entries of the map. The short chain fixtures
+   * have at most 4
    * links, so that they are forcingChain's under C = 4 and C = 6 alike. The long ones are the 5- and 6-link
    * shortest proofs of two dug puzzles: forcingChainLong's under the selected C = 4 (MS07c; under C = 6 they
    * would be forcingChain's). The negatives include positions where a shorter ID owns the proof, one of them at
@@ -906,6 +928,50 @@
           name: 'twoStringKite leaves a genuine skyscraper (two rows with a common cover column) to skyscraper',
           puzzle: SKY_ONLY,
           after: BELOW_SKYSCRAPER,
+          propagate: true
+        }
+      ]
+    },
+    emptyRectangle: {
+      positive: [
+        {
+          name: 'emptyRectangle on digit 5 in box 7, arms R8C2 and R9C3, the pair of row R4 (a constructed puzzle)',
+          puzzle: ER_RATED,
+          after: BELOW_ER,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[75, 5]]
+          }
+        },
+        {
+          name: 'emptyRectangle on digit 6 in box 1, arms R2C3 and R3C1, the pair of column C8 (a seeded dug puzzle)',
+          puzzle: ER_SEEDED,
+          after: BELOW_ER,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[54, 6]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'emptyRectangle has nothing left to do once the techniques through it are exhausted',
+          puzzle: COLOURING,
+          after: THROUGH_ER,
+          propagate: true
+        },
+        {
+          name: 'emptyRectangle is no rectangle with a candidate at the intersection (R6C6 holds the 1)',
+          puzzle: ER_GENERAL,
+          after: BELOW_ER,
+          propagate: true
+        },
+        {
+          name: 'emptyRectangle leaves a genuine two-string kite to twoStringKite',
+          puzzle: KITE_ONLY,
+          after: BELOW_KITE,
           propagate: true
         }
       ]
@@ -1073,7 +1139,8 @@
    * positions, the two positive fixtures and 'constructed-hard-3', only add deterministic states on top of the
    * unchanged random population and its minimum of 3 firings. MS08b: twoStringKite is not rare either (114
    * firings in the 300 random states), so its three real positions, the two positive fixtures and a third
-   * puzzle, are added on top in the same way.
+   * puzzle, are added on top in the same way. MS08c: emptyRectangle fires in about half of the random states
+   * (144 firings in the 300 of the sweep), so its three real positions are added on top in the same way.
    */
   var SUPPLEMENTS = {
     skyscraper: [
@@ -1090,6 +1157,14 @@
       { name: 'twoStringKite bridged in box 7 (a seeded dug puzzle)', puzzle: KITE_SEEDED, after: BELOW_KITE,
         propagate: true },
       { name: 'twoStringKite on digit 1 (a second seeded dug puzzle)', puzzle: KITE_SPARE, after: BELOW_KITE,
+        propagate: true }
+    ],
+    emptyRectangle: [
+      { name: 'emptyRectangle on digit 5 in box 7 (a constructed puzzle)', puzzle: ER_RATED, after: BELOW_ER,
+        propagate: true },
+      { name: 'emptyRectangle on digit 6 in box 1 (a seeded dug puzzle)', puzzle: ER_SEEDED, after: BELOW_ER,
+        propagate: true },
+      { name: 'emptyRectangle on digit 1 in box 8 (a second seeded dug puzzle)', puzzle: ER_SPARE, after: BELOW_ER,
         propagate: true }
     ],
     forcingChainLong: [

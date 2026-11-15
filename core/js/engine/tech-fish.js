@@ -1,12 +1,13 @@
 /**
- * Fish techniques (group `fish`): X-Wing, Skyscraper, Two-string kite, Swordfish, Jellyfish and Simple
- * Colouring; registers itself in SG.techniques.
+ * Fish techniques (group `fish`): X-Wing, Skyscraper, Two-string kite, Empty Rectangle, Swordfish, Jellyfish
+ * and Simple Colouring; registers itself in SG.techniques.
  *
  *   id               baseCost  order
  *   xWing                32     110     basic fish of size 2
  *   skyscraper           33     112     two lines with two candidates each, one end pair in a common line
  *   twoStringKite        34     114     a row pair and a column pair, one cell of each in the same box
  *   simpleColouring      36     120     chains of strong links, two colours
+ *   emptyRectangle       38     124     a box with a row arm and a column arm of a digit, and a strong link
  *   swordfish            42     130     basic fish of size 3
  *   jellyfish            56     137     basic fish of size 4 (before the wings: weight 520 < xyWing 650)
  *
@@ -61,15 +62,37 @@
  * order); the first pattern with an elimination is returned, with the four cells in `cells`, the row and the
  * column in `lines` (unit order), the two bridge cells in `bridge` and the two ends in `ends` (cell order).
  *
- * Work (R10), the same for both patterns. A work unit of the skyscraper is one tested pair of base lines (the
- * second line extending the first), one of the kite is one tested pair of a row and a column of a digit
- * (every one of its up to four bridges is tested inside the unit). The limit is 50000 per call
- * (`SG.fishSearch.SKYSCRAPER_WORK_LIMIT`, `SG.fishSearch.KITE_WORK_LIMIT`); a spent limit ends the call with
- * null (a lost deduction, never an invented one). The parent budget is checked at entry and before the unit
- * that would carry the work done since the last check over 256 units; the counter is local to the call. A
- * spent budget ('budget.exceeded') is "nothing found" as for the chain finders, cancellation and every other
- * error propagate. `ctx.options.onPatternWork(record)` observes each call and never selects its result:
- * { id, work, limit, capHit (null | 'work'), retained (null) }, a fresh object per call.
+ * Empty Rectangle (rating v3, R11, restricted form): for a digit d take a complete box-like unit U (kind
+ * 'box' or 'region') that does not hold d yet. The cells of U that can still be d (its candidates) must
+ * split into a row arm, the candidates in one row r, and a column arm, those in one column c, both nonempty
+ * and with no candidate at the cell where r and c meet (the empty intersection). A candidate in a third
+ * line, or at the intersection, gives no rectangle. Every candidate needs a single owner: U is the only
+ * box-like unit holding it and it has one complete row and one complete column (candidate ownership as in
+ * the fish search), so an overlapped box of a multi-grid board spoils the rectangle, as it does for the
+ * skyscraper and the kite. U holds d exactly once. An external conjugate pair is a complete unit V (any kind,
+ * like the strong links of Simple Colouring) with exactly two cells p and q that can still be d, both outside
+ * U: one of them is d.
+ * Call A an arm whose every cell p sees (real peers), and B the other arm. If p is d, d leaves all of A, so a
+ * cell of B is d. If q is d, q is d. So B or q holds d, and d is removed from every cell that sees all of B
+ * and sees q. The candidates of U, p and q are never targets. Both arms are tried as A, and both cells of
+ * the pair as p. A rectangle is looked for in the order digit, box (unit order), pair unit (unit order),
+ * arm lines (the one or two rectangles of the box in (row, column) unit order), A = the row arm then the
+ * column arm, p = the lower cell then the higher cell of the pair; the first pattern with an elimination is
+ * returned, with the candidates of U and the two cells of the pair in `cells` (cell order), the box label in
+ * `box`, the row and the column in `lines` (unit order) and the two cells of the pair in `ends` (cell order).
+ *
+ * Work (R10), the same for the three patterns. A work unit of the skyscraper is one tested pair of base lines
+ * (the second line extending the first), one of the kite is one tested pair of a row and a column of a digit
+ * (every one of its up to four bridges is tested inside the unit), one of the empty rectangle is one tested
+ * pair of a box and a conjugate unit of a digit, and inside the unit at most eight trials are made (two
+ * rectangles of the box, two choices of A, two choices of p). The limit is 50000 per call
+ * (`SG.fishSearch.SKYSCRAPER_WORK_LIMIT`, `KITE_WORK_LIMIT`, `EMPTY_RECTANGLE_WORK_LIMIT`); a spent limit
+ * ends the call with null (a lost deduction, never an invented one). The parent budget is checked at entry
+ * and before the unit that would carry the work done since the last check over 256 units; the counter is
+ * local to the call. A spent budget ('budget.exceeded') is "nothing found" as for the chain finders,
+ * cancellation and every other error propagate. `ctx.options.onPatternWork(record)` observes each call and
+ * never selects its result: { id, work, limit, capHit (null | 'work'), retained (null) }, a fresh object per
+ * call.
  *
  * Performance: per model data (the lines, the owner line of every cell, all scratch buffers) is built once in
  * a WeakMap, so `find` allocates only the Finding it returns. The fish search is a depth-first selection of
@@ -87,11 +110,12 @@
   /** Largest fish size (Jellyfish); sizes the per-line cover lists. */
   const MAX_FISH = 4;
 
-  // R10 work policy of the Skyscraper and the Two-string kite: the units one call may spend (tested pairs of
-  // base lines, tested pairs of a row and a column) and how many may pass between two checks of the parent
-  // budget.
+  // R10 work policy of the Skyscraper, the Two-string kite and the Empty Rectangle: the units one call may
+  // spend (tested pairs of base lines, of a row and a column, of a box and a conjugate unit) and how many may
+  // pass between two checks of the parent budget.
   const SKYSCRAPER_WORK_LIMIT = 50000;
   const KITE_WORK_LIMIT = 50000;
+  const EMPTY_RECTANGLE_WORK_LIMIT = 50000;
   const WORK_CHECK_UNITS = 256;
 
   // Thrown through the unit loops of a pattern call whose work limit is spent.
@@ -148,6 +172,8 @@
       else if (kind === 'box' || kind === 'region') boxLike.push(u);
     }
     const maxLines = Math.max(rows.length, cols.length, 1);
+    let maxBox = 1;
+    for (let i = 0; i < boxLike.length; i++) maxBox = Math.max(maxBox, model.units[boxLike[i]].length);
     const lineOf = [ownerTable(model, rows), ownerTable(model, cols)];
     const disjoint = new Uint8Array(nUnits);
     disjointTable(model, rows, lineOf[ROW], disjoint);
@@ -162,6 +188,19 @@
       // -1 for a cell in none or in several (overlapped boxes)
       boxOf: ownerTable(model, boxLike),
       hasBox: boxLike.length > 0,
+      boxUnits: Int32Array.from(boxLike),
+
+      // Empty Rectangle: the candidates of the current box (a mark per cell too), the one or two arm lines of
+      // the box (row unit, column unit) and the row arm and the column arm of each of them, and the peer
+      // table (built on the first use).
+      erCell: new Int32Array(maxBox),
+      erMark: new Uint8Array(nCells),
+      erLine: new Int32Array(4),
+      erArm: [new Int32Array(maxBox), new Int32Array(maxBox), new Int32Array(maxBox), new Int32Array(maxBox)],
+      erArmSize: new Int32Array(4),
+      erConfigs: 0,
+      erCount: 0,
+      peerAt: null,
 
       // Skyscraper: the base lines of the current digit and orientation (their two cells and the cover
       // line of each), and the peers of the second end.
@@ -633,9 +672,208 @@
     return null;
   }
 
-  // A pattern call (`scan` is scanSkyscraper or scanKite) with its own work counter. A spent work limit and a
-  // spent budget are "nothing found" (the logical solver notices the budget at its next check); cancellation
-  // and every other error propagate. The work goes to the optional observer, which never selects the result.
+  // The candidates of the digit in the complete box-like unit u go to `info.erCell` (and the count is
+  // returned) when the box can hold an empty rectangle of the digit, else 0: the digit is not placed in the
+  // box, there are at least two candidates, and every candidate has a single box (this one), row and column.
+  function collectBoxCells(model, state, info, digit, u) {
+    const cand = state.candidates;
+    const val = state.value;
+    const bit = 1 << (digit - 1);
+    const cells = model.units[u];
+    let count = 0;
+    for (let k = 0; k < cells.length; k++) {
+      const c = cells[k];
+      if (val[c] !== 0) {
+        if (val[c] === digit) return 0;
+        continue;
+      }
+      if ((cand[c] & bit) === 0) continue;
+      if (info.boxOf[c] !== u || info.lineOf[ROW][c] === -1 || info.lineOf[COL][c] === -1) return 0;
+      info.erCell[count++] = c;
+    }
+    return count >= 2 ? count : 0;
+  }
+
+  // Tests the arm lines (row unit r, column unit c) against the `count` candidates of `info.erCell`: each
+  // lies in the row r or in the column c, none in both (the intersection is no candidate), and both arms are
+  // nonempty. On success the lines and the two arms go to slot `slot` of the scratch buffers.
+  function armsOf(info, count, r, c, slot) {
+    const rowArm = info.erArm[2 * slot];
+    const colArm = info.erArm[2 * slot + 1];
+    let rows = 0;
+    let cols = 0;
+    for (let i = 0; i < count; i++) {
+      const s = info.erCell[i];
+      const inRow = info.lineOf[ROW][s] === r;
+      if (inRow === (info.lineOf[COL][s] === c)) return false;
+      if (inRow) rowArm[rows++] = s;
+      else colArm[cols++] = s;
+    }
+    if (rows === 0 || cols === 0) return false;
+    info.erArmSize[2 * slot] = rows;
+    info.erArmSize[2 * slot + 1] = cols;
+    info.erLine[2 * slot] = r;
+    info.erLine[2 * slot + 1] = c;
+    return true;
+  }
+
+  // The empty rectangles of the box whose candidates are in `info.erCell[0 .. count - 1]`: the first
+  // candidate is in the row arm (the column is then that of the first candidate outside its row) or in the
+  // column arm (the row is then that of the first candidate outside its column), so there are at most
+  // two, and two only for a pair of candidates in different rows and columns. They go to the scratch slots
+  // in (row, column) unit order; returns how many.
+  function rectanglesOf(info, count) {
+    const first = info.erCell[0];
+    const row = info.lineOf[ROW][first];
+    const col = info.lineOf[COL][first];
+    let otherCol = -1;
+    let otherRow = -1;
+    for (let i = 0; i < count && (otherCol === -1 || otherRow === -1); i++) {
+      const s = info.erCell[i];
+      if (otherCol === -1 && info.lineOf[ROW][s] !== row) otherCol = info.lineOf[COL][s];
+      if (otherRow === -1 && info.lineOf[COL][s] !== col) otherRow = info.lineOf[ROW][s];
+    }
+    let found = 0;
+    if (otherCol !== -1 && armsOf(info, count, row, otherCol, found)) found++;
+    if (otherRow !== -1 && armsOf(info, count, otherRow, col, found)) found++;
+    if (found === 2 && (info.erLine[2] < info.erLine[0] ||
+      (info.erLine[2] === info.erLine[0] && info.erLine[3] < info.erLine[1]))) {
+      for (let k = 0; k < 2; k++) {
+        const arm = info.erArm[k];
+        info.erArm[k] = info.erArm[2 + k];
+        info.erArm[2 + k] = arm;
+        const size = info.erArmSize[k];
+        info.erArmSize[k] = info.erArmSize[2 + k];
+        info.erArmSize[2 + k] = size;
+        const line = info.erLine[k];
+        info.erLine[k] = info.erLine[2 + k];
+        info.erLine[2 + k] = line;
+      }
+    }
+    return found;
+  }
+
+  // The cells of the tested rectangle: every cell that still has the digit, sees q and sees every cell of the
+  // arm B, and is neither a candidate of the box nor p. Null when there is none.
+  function rectangleEliminations(model, state, info, digit, armB, sizeB, p, q) {
+    const cand = state.candidates;
+    const val = state.value;
+    const bit = 1 << (digit - 1);
+    const n = model.cellCount;
+    const at = info.peerAt;
+    const peersQ = model.peers[q];
+    const targets = [];
+    for (let k = 0; k < peersQ.length; k++) {
+      const t = peersQ[k];
+      if (t === p || val[t] !== 0 || (cand[t] & bit) === 0 || info.erMark[t] === 1) continue;
+      let seesB = true;
+      for (let i = 0; i < sizeB && seesB; i++) seesB = at[t * n + armB[i]] === 1;
+      if (seesB) targets.push(t);
+    }
+    if (targets.length === 0) return null;
+
+    targets.sort(byNumber);
+    const eliminations = [];
+    for (let k = 0; k < targets.length; k++) {
+      if (k === 0 || targets[k] !== targets[k - 1]) eliminations.push([targets[k], digit]);
+    }
+    return eliminations;
+  }
+
+  // The empty rectangle of the box u (the scratch buffers hold its candidates, rectangles and arms) with the
+  // conjugate pair of the unit v, or null: for each rectangle, the row arm then the column arm as A, the
+  // lower cell then the higher cell of the pair as p; the first test that removes something decides.
+  function emptyRectangleOf(model, state, info, digit, u, v) {
+    const n = model.cellCount;
+    const low = info.unitA[v] < info.unitB[v] ? info.unitA[v] : info.unitB[v];
+    const high = info.unitA[v] < info.unitB[v] ? info.unitB[v] : info.unitA[v];
+    if (info.erMark[low] === 1 || info.erMark[high] === 1) return null;
+    for (let k = 0; k < info.erConfigs; k++) {
+      for (let side = 0; side < 2; side++) {
+        const armA = info.erArm[2 * k + side];
+        const sizeA = info.erArmSize[2 * k + side];
+        const armB = info.erArm[2 * k + 1 - side];
+        const sizeB = info.erArmSize[2 * k + 1 - side];
+        for (let role = 0; role < 2; role++) {
+          const p = role === 0 ? low : high;
+          const q = role === 0 ? high : low;
+          let seesA = true;
+          for (let i = 0; i < sizeA && seesA; i++) seesA = info.peerAt[p * n + armA[i]] === 1;
+          if (!seesA) continue;
+          const eliminations = rectangleEliminations(model, state, info, digit, armB, sizeB, p, q);
+          if (eliminations === null) continue;
+
+          const cells = [p, q];
+          for (let i = 0; i < info.erCount; i++) cells.push(info.erCell[i]);
+          const rowUnit = info.erLine[2 * k];
+          const colUnit = info.erLine[2 * k + 1];
+          return {
+            technique: 'emptyRectangle',
+            cells: cells.sort(byNumber),
+            placements: [],
+            eliminations: eliminations,
+            i18nKey: 'technique.emptyRectangle.step',
+            i18nArgs: {
+              digit: digit,
+              box: model.unitMeta[u].label,
+              lines: unitLabels(model, rowUnit < colUnit ? [rowUnit, colUnit] : [colUnit, rowUnit]),
+              ends: cellsToLabels(model, [low, high])
+            }
+          };
+        }
+      }
+    }
+    return null;
+  }
+
+  // The peer table of the model (1 where two cells see each other), built on the first use.
+  function peerTable(model, info) {
+    if (info.peerAt === null) {
+      const n = model.cellCount;
+      const at = new Uint8Array(n * n);
+      for (let c = 0; c < n; c++) {
+        const ps = model.peers[c];
+        for (let k = 0; k < ps.length; k++) at[c * n + ps[k]] = 1;
+      }
+      info.peerAt = at;
+    }
+  }
+
+  // Every digit, boxes in unit order, conjugate units in unit order: the first empty rectangle that removes
+  // something. A board without a complete box-like unit has no rectangle and costs nothing. The marks of the
+  // candidates of a box are cleared when its pairs are done; a call that ends inside a box (a finding, a
+  // spent limit or a spent budget) leaves them, so the scan clears them at its start.
+  function scanEmptyRectangle(model, state, info, run) {
+    if (info.boxUnits.length === 0) return null;
+    peerTable(model, info);
+    info.erMark.fill(0);
+    const nUnits = model.units.length;
+    for (let digit = 1; digit <= model.digits; digit++) {
+      if (findStrongLinks(model, state, run.ctx, info, digit) === 0) continue;
+      for (let b = 0; b < info.boxUnits.length; b++) {
+        const u = info.boxUnits[b];
+        const count = collectBoxCells(model, state, info, digit, u);
+        if (count === 0) continue;
+        info.erConfigs = rectanglesOf(info, count);
+        if (info.erConfigs === 0) continue;
+        info.erCount = count;
+        for (let i = 0; i < count; i++) info.erMark[info.erCell[i]] = 1;
+        for (let v = 0; v < nUnits; v++) {
+          if (info.unitCount[v] !== 2) continue;
+          spend(run);
+          const found = emptyRectangleOf(model, state, info, digit, u, v);
+          if (found !== null) return found;
+        }
+        for (let i = 0; i < count; i++) info.erMark[info.erCell[i]] = 0;
+      }
+    }
+    return null;
+  }
+
+  // A pattern call (`scan` is scanSkyscraper, scanKite or scanEmptyRectangle) with its own work counter. A
+  // spent work limit and a spent budget are "nothing found" (the logical solver notices the budget at its
+  // next check); cancellation and every other error propagate. The work goes to the optional observer, which
+  // never selects the result.
   function findBounded(id, scan, model, state, ctx, workLimit) {
     const info = infoFor(model, ctx);
     const run = { ctx: ctx, limit: workLimit, work: 0, checkedAt: 0, capped: false };
@@ -894,6 +1132,9 @@
     return findBounded('twoStringKite', scanKite, model, state, ctx, KITE_WORK_LIMIT);
   });
   define('simpleColouring', 36, 120, findSimpleColouring);
+  define('emptyRectangle', 38, 124, function (model, state, ctx) {
+    return findBounded('emptyRectangle', scanEmptyRectangle, model, state, ctx, EMPTY_RECTANGLE_WORK_LIMIT);
+  });
   define('swordfish', 42, 130, function (model, state, ctx) {
     return findFish(model, state, ctx, 3, 'swordfish');
   });
@@ -901,14 +1142,16 @@
     return findFish(model, state, ctx, 4, 'jellyfish');
   });
 
-  // The parameterised searches behind skyscraper and twoStringKite, for tests (explicit work limit); not
-  // registered techniques.
+  // The parameterised searches behind skyscraper, twoStringKite and emptyRectangle, for tests (explicit work
+  // limit); not registered techniques.
   if (!SG.fishSearch) {
     SG.fishSearch = Object.freeze({
       SKYSCRAPER_WORK_LIMIT: SKYSCRAPER_WORK_LIMIT,
       KITE_WORK_LIMIT: KITE_WORK_LIMIT,
+      EMPTY_RECTANGLE_WORK_LIMIT: EMPTY_RECTANGLE_WORK_LIMIT,
       skyscraper: seamOf('skyscraper', scanSkyscraper, SKYSCRAPER_WORK_LIMIT),
-      twoStringKite: seamOf('twoStringKite', scanKite, KITE_WORK_LIMIT)
+      twoStringKite: seamOf('twoStringKite', scanKite, KITE_WORK_LIMIT),
+      emptyRectangle: seamOf('emptyRectangle', scanEmptyRectangle, EMPTY_RECTANGLE_WORK_LIMIT)
     });
   }
 })(typeof self !== 'undefined' ? self : globalThis);

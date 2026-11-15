@@ -1,0 +1,10 @@
+merged 104 ledgers: all 520 keys exactly once, recorded from the current sources
+CHANGED classic9/hard: seeds 4181
+CHANGED classic9/expert: seeds 8, 610, 1597, 10946
+CHANGED classic9/master: seeds 13
+CHANGED classic9/nightmare: seeds 13, 55
+CHANGED diagonalX/nightmare: seeds 3, 5, 21, 34, 55, 89, 144, 987, 10946
+CHANGED hyper/hard: seeds 2
+CHANGED jigsaw9/master: seeds 1, 3, 5, 34, 55, 144, 233, 610, 987, 10946
+CHANGED greaterThan/hard: seeds 34
+regression hashes: 29 of 520 puzzles changed (merged ledgers, nothing generated)

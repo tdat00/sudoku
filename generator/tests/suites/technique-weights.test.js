@@ -124,6 +124,25 @@
         expect(D.spec('hard', model).floorTechniques).not.toContain('twoStringKite');
       });
 
+    it('places emptyRectangle between simpleColouring and swordfish: order 124, weight 380, a Hard-tier ' +
+      'technique (R11)', function () {
+        var model = SG.techHelper.model('classic9');
+        expect([SG.techniques.get('emptyRectangle').order, D.WEIGHTS.emptyRectangle]).toEqual([124, 380]);
+        expect(position('simpleColouring')).toBeLessThan(position('emptyRectangle'));
+        expect(position('emptyRectangle')).toBeLessThan(position('swordfish'));
+        expect(D.WEIGHTS.simpleColouring).toBeLessThan(D.WEIGHTS.emptyRectangle);
+        expect(D.WEIGHTS.emptyRectangle).toBeLessThan(D.WEIGHTS.swordfish);
+        // its own weight decides the hardest technique, no tie is needed
+        expect(D.breakdown({ simpleColouring: 1, emptyRectangle: 1 }, 10).hardest).toBe('emptyRectangle');
+        expect(D.breakdown({ emptyRectangle: 1, swordfish: 1 }, 10).hardest).toBe('swordfish');
+        // 1.25 x 380 is above Normal's maximum (400) and below Hard's (700)
+        expect(D.spec('normal', model).allowedTechniques).not.toContain('emptyRectangle');
+        expect(D.spec('hard', model).allowedTechniques).toContain('emptyRectangle');
+        expect(D.spec('hard', model).tierTechniques).toContain('emptyRectangle');
+        expect(D.spec('expert', model).floorTechniques).toContain('emptyRectangle');
+        expect(D.spec('hard', model).floorTechniques).not.toContain('emptyRectangle');
+      });
+
     it('lets a tie of weight and of order fall to the smaller id and still sorts the sequence', function () {
       var ids = ['orderProbeB', 'orderProbeA'];
       try {

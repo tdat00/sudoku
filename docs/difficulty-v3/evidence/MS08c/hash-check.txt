@@ -1,0 +1,2 @@
+merged 104 ledgers: all 520 keys exactly once, recorded from the current sources
+regression hashes: all 520 puzzles unchanged (merged ledgers, nothing generated)

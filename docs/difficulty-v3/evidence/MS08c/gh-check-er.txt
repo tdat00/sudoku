@@ -1,0 +1,10 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=emptyRectangle --sources=tests\artifacts\difficulty-v3\MS08c\sources.json --max-puzzles=8 --max-hints=400 --check
+selected 1 technique ID(s); mode check
+replaying 4 puzzle(s) for 1 ID(s) (--max-puzzles=8, --max-hints=400)
+puzzle 1/4 classic9 Hell 1 214 -> 70 hint(s), solved; wanted found: emptyRectangle
+puzzle 2/4 classic9 Nightmare 828 -> 80 hint(s), solved; wanted found: emptyRectangle
+puzzle 3/4 classic9 Nightmare 692 -> 61 hint(s), solved; wanted found: emptyRectangle
+puzzle 4/4 classic9 Nightmare 1156 -> 72 hint(s), solved; wanted found: emptyRectangle
+emptyRectangle: matches help-examples.js
+help-examples.js is up to date for the 1 selected ID(s)
+exit=0 seconds=0.435

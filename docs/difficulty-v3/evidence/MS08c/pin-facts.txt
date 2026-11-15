@@ -1,0 +1,36 @@
+$ node tests\artifacts\difficulty-v3\MS08c\pin-facts.js
+jump transitions compact 13 details 14 distinct 18
+== G11 compact 8 details 110 final score 963
+compact 0 pos 0 role solution tier null  lastpart replay.solution {"filled":81,"unit":"cell"}
+compact 1 pos 0 role structure tier null 0>0 from 0 to 0 class null hardest null>null new false lastpart replay.signs {"signs":108}
+compact 2 pos 49 role moves tier first 0>129 from 0 to 49 class null hardest null>ineqChain new false lastpart replay.folded.peak {"peak":131}
+compact 3 pos 65 role moves tier null 129>133 from 49 to 65 class null hardest ineqChain>ineqChain new false lastpart replay.signDig.all {"removed":16,"signs":44,"unit":"sign"}
+compact 4 pos 100 role moves tier jump 133>549 from 65 to 100 class multi-move hardest ineqChain>skyscraper new true lastpart replay.folded.peak {"peak":562}
+compact 5 pos 102 role moves tier null 549>549 from 100 to 102 class null hardest skyscraper>skyscraper new false lastpart replay.signDig.all {"removed":2,"signs":7,"unit":"sign"}
+compact 6 pos 107 role moves tier newPeak 549>963 from 102 to 107 class null hardest skyscraper>xyWing new true lastpart replay.folded.reveal {"peak":2876,"revealed":4}
+compact 7 pos 107 role final tier null 963>963 from 107 to 107 class null hardest xyWing>xyWing new false lastpart replay.final.signs {"clues":28,"signs":4}
+details#105 newPeak flat/lower 2876>1081 change -1795 hardest nishio>xyWing ratio null
+details#67 133>562 class single-sign frame {"kind":"sign","sign":67} signs.cause [67]
+details#104 549>2876 class single-sign frame {"kind":"sign","sign":5} signs.cause [5]
+== G12 compact 7 details 111 final score 647
+compact 0 pos 0 role solution tier null  lastpart replay.solution {"filled":81,"unit":"cell"}
+compact 1 pos 0 role structure tier null 0>0 from 0 to 0 class null hardest null>null new false lastpart replay.signs {"signs":108}
+compact 2 pos 22 role moves tier first 0>132 from 0 to 22 class null hardest null>ineqChain new false lastpart replay.folded.peak {"peak":133}
+compact 3 pos 99 role moves tier null 132>133 from 22 to 99 class null hardest ineqChain>ineqChain new false lastpart replay.folded.peak {"peak":138}
+compact 4 pos 107 role moves tier jump 133>513 from 99 to 107 class multi-move hardest ineqChain>xWing new true lastpart replay.folded.reveal {"peak":3171,"revealed":6}
+compact 5 pos 108 role moves tier newPeak 513>647 from 107 to 108 class null hardest xWing>emptyRectangle new true lastpart replay.signDig.some {"tried":5,"removed":1,"kept":4,"reason":"ambiguous","signs":4,"unit":"sign"}
+compact 6 pos 108 role final tier null 647>647 from 108 to 108 class null hardest emptyRectangle>emptyRectangle new false lastpart replay.final.signs {"clues":28,"signs":4}
+details#104 newPeak flat/lower 3026>2686 change -340 hardest nishio>forcingChainLong ratio null
+details#101 133>3171 class single-sign frame {"kind":"sign","sign":34} signs.cause [34]
+G11 compact jump to 100 (133>549) details transitions to the same end [{"from":99,"tier":null,"b":553,"a":549,"change":-4,"ratio":null}]
+G12 compact jump to 107 (133>513) details transitions to the same end [{"from":106,"tier":null,"b":2488,"a":513,"change":-1975,"ratio":null}]
+fold G07 compact 5 replay.folded.reveal {"peak":3183,"revealed":2}
+fold G10 compact 6 replay.folded.reveal {"peak":2668,"revealed":18}
+fold G11 compact 2 replay.folded.peak {"peak":131}
+fold G11 compact 4 replay.folded.peak {"peak":562}
+fold G11 compact 6 replay.folded.reveal {"peak":2876,"revealed":4}
+fold G12 compact 2 replay.folded.peak {"peak":133}
+fold G12 compact 3 replay.folded.peak {"peak":138}
+fold G12 compact 4 replay.folded.reveal {"peak":3171,"revealed":6}
+player jumps 27 framed 15
+exit=0 seconds=15.257

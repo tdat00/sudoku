@@ -1,0 +1,157 @@
+mutation 0 (a candidate of the box may be a target (the box marks are not read)): DETECTED - 317 total, 307 passed, 10 failed, 0 skipped - 10 failing, 10 of the empty rectangle - 9.6 s
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on 12 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on 16 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on diagonalX (extra regions are real peers and strong links of the pair)
+mutation 1 (the pair end p may be a target): DETECTED - 317 total, 314 passed, 3 failed, 0 skipped - 3 failing, 3 of the empty rectangle - 10.3 s
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on hyper (extra regions are real peers and strong links of the pair)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on the jigsaw board and on its transpose, where the irregular regions are the boxes
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on the jigsaw9 board of the environment, whatever its layout (no minimum: the layouts differ)
+mutation 2 (a candidate at the intersection is accepted (the general rectangle: it joins the row arm)): DETECTED - 317 total, 299 passed, 18 failed, 0 skipped - 18 failing, 18 of the empty rectangle - 9.6 s
+    FAIL tech-fish > emptyRectangle (R11): geometry > does not authorize an elimination: a candidate at the intersection (R2C2): the arms share a cell (as listed)
+    FAIL tech-fish > emptyRectangle (R11): geometry > does not authorize an elimination: a candidate at the intersection (R2C2): the arms share a cell (transposed)
+    FAIL tech-fish > emptyRectangle (R11): geometry > does not authorize an elimination: a target that sees only R1C2 of B (R1C8 along R1; the pair is C5 with R1C5) (as listed)
+    FAIL tech-fish > emptyRectangle (R11): real positions > finds nothing at the negative positions: nothing left after it, a general rectangle, a kite
+    FAIL tech-fish > emptyRectangle (R11): real positions > has a negative whose general rectangle (a candidate at the intersection) is not the restricted form
+    FAIL tech-fish > emptyRectangle (R11): a region as the box, and the ownership on multi-grid boards > does not authorize an elimination on the jigsaw board: a candidate at the intersection R4C2 (as listed)
+mutation 3 (a candidate in a third line is accepted (it joins the column arm)): DETECTED - 317 total, 304 passed, 13 failed, 0 skipped - 13 failing, 13 of the empty rectangle - 9.5 s
+    FAIL tech-fish > emptyRectangle (R11): real positions > finds nothing at the negative positions: nothing left after it, a general rectangle, a kite
+    FAIL tech-fish > emptyRectangle (R11): real positions > has a negative whose general rectangle (a candidate at the intersection) is not the restricted form
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic4 (seed 777)
+mutation 4 (a target that sees only the first cell of B): DETECTED - 317 total, 299 passed, 18 failed, 0 skipped - 18 failing, 15 of the empty rectangle - 9.3 s
+    FAIL tech-fish > emptyRectangle (R11): geometry > does not authorize an elimination: a target that sees only R1C2 of B (R1C8 along R1; the pair is C5 with R1C5) (as listed)
+    FAIL tech-fish > emptyRectangle (R11): geometry > does not authorize an elimination: a target that sees only R1C2 of B (R1C8 along R1; the pair is C5 with R1C5) (transposed)
+    FAIL tech-fish > emptyRectangle (R11): real positions > finds nothing at the negative positions: nothing left after it, a general rectangle, a kite
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+mutation 5 (p that sees only the first cell of A): DETECTED - 317 total, 302 passed, 15 failed, 0 skipped - 15 failing, 12 of the empty rectangle - 9.4 s
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on 12 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on 16 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on diagonalX (extra regions are real peers and strong links of the pair)
+mutation 6 (a target that sees p instead of q): DETECTED - 317 total, 270 passed, 47 failed, 0 skipped - 47 failing, 43 of the empty rectangle - 9.3 s
+    FAIL tech-fish > emptyRectangle (R11): geometry > removes the digit from the cell that sees all of B and q (the vector of R11)
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the transposed vector, where the column arm is A: R5C2 and R5C7 are the pair, R2C7 loses the digit
+    FAIL tech-fish > emptyRectangle (R11): geometry > is symmetrical on the bare vector: the pair of R7 gives a second rectangle that removes R2C5
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the left, q above, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the left, q below, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the right, q above, as listed and transposed
+mutation 7 (the ownership rule dropped (a box, row or column of several owners is accepted)): DETECTED - 317 total, 314 passed, 3 failed, 0 skipped - 3 failing, 3 of the empty rectangle - 10.5 s
+    FAIL tech-fish > emptyRectangle (R11): geometry > needs complete units: an incomplete box, pair unit, arm row or arm column gives nothing
+    FAIL tech-fish > emptyRectangle (R11): geometry > needs candidates with a single row, column and box (an extra row through a box cell spoils the box)
+    FAIL tech-fish > emptyRectangle (R11): geometry > needs a box that is the only box-like unit of its candidates (an overlapped box has two owners)
+mutation 8 (an overlapped box (two owners) counts as the box of its cells): DETECTED - 317 total, 314 passed, 3 failed, 0 skipped - 3 failing, 1 of the empty rectangle - 10.4 s
+    FAIL tech-fish > twoStringKite (R11): geometry > needs a box that is the only box of both bridge cells (an overlapped box has two owners)
+    FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > counts the owners of a cell over both kinds: a box and a region over the same cells bridge nothing
+    FAIL tech-fish > emptyRectangle (R11): geometry > needs a box that is the only box-like unit of its candidates (an overlapped box has two owners)
+mutation 9 (the parent budget is checked one unit early): DETECTED - 317 total, 314 passed, 3 failed, 0 skipped - 3 failing, 1 of the empty rectangle - 10.4 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+mutation 10 (cancellation is swallowed like a spent budget): DETECTED - 317 total, 314 passed, 3 failed, 0 skipped - 3 failing, 1 of the empty rectangle - 10.4 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 11 (the work limit allows one unit more): DETECTED - 317 total, 310 passed, 7 failed, 0 skipped - 7 failing, 3 of the empty rectangle - 10.5 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 12 (the two lines are listed row first, not in unit order): DETECTED - 317 total, 316 passed, 1 failed, 0 skipped - 1 failing, 1 of the empty rectangle - 10.5 s
+    FAIL tech-fish > emptyRectangle (R11): geometry > lists the two lines and names the rectangles in unit order, whatever kind comes first and however the rows are listed
+mutation 13 (the ends are listed p first, not in cell order): DETECTED - 317 total, 304 passed, 13 failed, 0 skipped - 13 failing, 13 of the empty rectangle - 9.7 s
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the left, q above, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the right, q above, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic4 (seed 777)
+mutation 14 (the cells are not sorted): DETECTED - 317 total, 305 passed, 12 failed, 0 skipped - 12 failing, 12 of the empty rectangle - 9.4 s
+    FAIL tech-fish > emptyRectangle (R11): geometry > removes the digit from the cell that sees all of B and q (the vector of R11)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic4 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on 12 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+mutation 15 (the cells leave out the conjugate pair): DETECTED - 317 total, 293 passed, 24 failed, 0 skipped - 24 failing, 24 of the empty rectangle - 9.6 s
+    FAIL tech-fish > emptyRectangle (R11): geometry > removes the digit from the cell that sees all of B and q (the vector of R11)
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the transposed vector, where the column arm is A: R5C2 and R5C7 are the pair, R2C7 loses the digit
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the left, q above, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the left, q below, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the right, q above, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the right, q below, as listed and transposed
+mutation 16 (an incomplete unit counts as a line, a box or a pair): DETECTED - 317 total, 312 passed, 5 failed, 0 skipped - 5 failing, 1 of the empty rectangle - 10.6 s
+    FAIL tech-fish > fish: what the routine must not use > honours ctx.completeUnits: with no complete line there is no fish
+    FAIL tech-fish > fish: what the routine must not use > honours ctx.completeUnits for one line: an incomplete base row breaks the pattern
+    FAIL tech-fish > skyscraper (R11): geometry > needs complete lines: an incomplete base row, base column or shared line gives nothing
+    FAIL tech-fish > twoStringKite (R11): geometry > needs complete lines and a complete box: an incomplete row, column or box gives nothing
+    FAIL tech-fish > emptyRectangle (R11): geometry > needs complete units: an incomplete box, pair unit, arm row or arm column gives nothing
+mutation 17 (the wrong anchor: p must see B, the target sees A): DETECTED - 317 total, 306 passed, 11 failed, 0 skipped - 11 failing, 11 of the empty rectangle - 9.5 s
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic4 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on 12 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on 16 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+mutation 18 (a pair cell inside the box is accepted): DETECTED - 317 total, 313 passed, 4 failed, 0 skipped - 4 failing, 4 of the empty rectangle - 10.3 s
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on diagonalX (extra regions are real peers and strong links of the pair)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on hyper (extra regions are real peers and strong links of the pair)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on the jigsaw board and on its transpose, where the irregular regions are the boxes
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > agrees on the jigsaw9 board of the environment, whatever its layout (no minimum: the layouts differ)
+mutation 19 (only the first rectangle of a box is tested (the second arm lines are skipped)): DETECTED - 317 total, 290 passed, 27 failed, 0 skipped - 27 failing, 27 of the empty rectangle - 9.8 s
+    FAIL tech-fish > emptyRectangle (R11): geometry > removes the digit from the cell that sees all of B and q (the vector of R11)
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the transposed vector, where the column arm is A: R5C2 and R5C7 are the pair, R2C7 loses the digit
+    FAIL tech-fish > emptyRectangle (R11): geometry > is symmetrical on the bare vector: the pair of R7 gives a second rectangle that removes R2C5
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the left, q above, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the left, q below, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the right, q above, as listed and transposed
+mutation 20 (only the row arm is tried as A): DETECTED - 317 total, 296 passed, 21 failed, 0 skipped - 21 failing, 21 of the empty rectangle - 9.6 s
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the transposed vector, where the column arm is A: R5C2 and R5C7 are the pair, R2C7 loses the digit
+    FAIL tech-fish > emptyRectangle (R11): geometry > is symmetrical on the bare vector: the pair of R7 gives a second rectangle that removes R2C5
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the left, q above, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the left, q below, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the right, q above, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the right, q below, as listed and transposed
+mutation 21 (only the lower cell of the pair is tried as p): DETECTED - 317 total, 303 passed, 14 failed, 0 skipped - 14 failing, 14 of the empty rectangle - 9.4 s
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the left, q above, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the right, q above, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > answers correctly after a call that ended inside a box (the marks of the box are cleared)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+mutation 22 (a box that already holds the digit is still a box): DETECTED - 317 total, 316 passed, 1 failed, 0 skipped - 1 failing, 1 of the empty rectangle - 10.4 s
+    FAIL tech-fish > emptyRectangle (R11): geometry > skips a box that already holds the digit and a pair unit in which the digit is placed
+mutation 23 (the marks of an earlier call are not cleared): DETECTED - 317 total, 301 passed, 16 failed, 0 skipped - 16 failing, 15 of the empty rectangle - 9.7 s
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds the rectangle of box 5 with the pair on the left, q above, as listed and transposed
+    FAIL tech-fish > emptyRectangle (R11): geometry > finds a rectangle whose arms are single cells: a pair of box cells in different rows and columns is two rectangles, the first in (row, column) order is named
+    FAIL tech-fish > emptyRectangle (R11): real positions > finds the exact Finding of real position 2, sound against an independent completion
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > answers correctly after a call that ended inside a box (the marks of the box are cleared)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > emptyRectangle (R11): agreement with an independent enumeration > finds a rectangle exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+mutation 24 (the unit is not counted (no work is spent on a pair)): DETECTED - 317 total, 309 passed, 8 failed, 0 skipped - 8 failing, 8 of the empty rectangle - 10.4 s
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > has R10's limit of 50000 tested pairs, and the registered finder reports it
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > counts one unit per tested pair of a box and a conjugate unit, from a fresh counter on every call
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > has no rectangle and costs no work on a board without boxes (a Latin square), unlike the same position with them
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+mutation 25 (box-only eligibility: a region of a jigsaw board is not a box-like unit): DETECTED - 317 total, 303 passed, 14 failed, 0 skipped - 14 failing, 7 of the empty rectangle - 9.9 s
+    FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > bridges through a region: the vector on the jigsaw board (J4 holds R3C5 and R4C7)
+    FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > finds the transposed vector on the transposed jigsaw board (J4 holds R5C3 and R7C4)
+    FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > counts the owners of a cell over both kinds: a box and a region over the same cells bridge nothing
+    FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > has a region as the only box-like unit of a board of rows, columns and regions (the jigsaw layout)
+    FAIL tech-fish > twoStringKite (R11): agreement with an independent enumeration > agrees on the jigsaw board and on its transpose, where the irregular regions are the bridges
+    FAIL tech-fish > twoStringKite (R11): agreement with an independent enumeration > agrees on the jigsaw9 board of the environment, whatever its layout (no minimum: the layouts differ)
+mutation 26 (the second rectangle is named first (the lines are not in (row, column) order)): DETECTED - 317 total, 316 passed, 1 failed, 0 skipped - 1 failing, 1 of the empty rectangle - 10.5 s
+    FAIL tech-fish > emptyRectangle (R11): geometry > lists the two lines and names the rectangles in unit order, whatever kind comes first and however the rows are listed
+detected 27 of 27, 268.4 s
