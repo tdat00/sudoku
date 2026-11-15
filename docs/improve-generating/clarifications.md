@@ -1055,7 +1055,31 @@ means 40 plus the pilot (Derived counts, not a wall-time saving). The manifest m
 population, startup, validation, grace and cleanup. No preliminary SM5 is authorised and the official
 40-request qualification population is unchanged.
 
-Plan-author answer:
+Plan-author answer: **(b): a small pilot inside F2, then a held-out confirmation as its own step between F5 and
+F6.** It is a proposal to cost after the repair, not a run approval.
+
+- *Pilot, in F2.* About five seeds per confirmation cell, with all four arms (native, widths 1, 2 and 4). It
+  checks native and no-op parity and the invariance of the puzzle, the keeper and the events, and it is what
+  the early-hit policy is chosen from. Its seeds are fitting seeds: they are not reused in the confirmation.
+- *Freeze, at the end of F2.* The per-cell early-hit policy (a head start for attempt 1, or serial), the
+  warm and cold operating protocol and the confirmation's statistic are written down before any confirmation
+  seed runs. A cell whose pilot shows no gain at width four is recorded as serial and is not confirmed.
+- *Confirmation, a new step F5b* (after F5, before F6). At least 20 independent held-out pairs per admitted
+  cell, two arms: width one against width four under the frozen policy, at outer `--jobs=1` (IG-S-D4). Every
+  pair is also checked for the same puzzle. Width two and native are not repeated; the pilot covers them.
+- *Controls.* Classic9 and mega12 Nightmare get the same 20 pairs. They are the early-hit controls, and they
+  are cheap.
+- *Cells.* Those of IG-S-Q24, named for good after F1. The Hell 1 cells (diagonalX, samurai) stay in for the
+  bounded diagnostic only: their pairs time completed misses and are not expected to give an exact hit. Their
+  inclusion opens no wider live-search programme (IG-S-D3).
+- *Why after F5.* F3 to F5 can change which cells are worth confirming, and the confirmation is the evidence
+  for the pool's default enablement, together with the CPU, cold-wall and ready-wall results and the
+  phone-class check (IG-S-D1). Nothing in F3 to F5 depends on it.
+- *The kernel is separate.* A confirmation of admitted F6 work is priced on its own, against the same
+  post-phase-2 generator, quotas and pool (IG-S-Q20), never against serial S5a.
+- *Price.* Per cell: about 20 pilot executions and 40 confirmation executions, against 80 for four full arms.
+  The manifest prices every command, population, startup, validation, grace and cleanup. The official
+  40-request qualification is unchanged, and no preliminary SM5 is authorised (IG-S-D6).
 
 ### IG-S-Q27: Which tolerance and CPU statistic bind the kernel controls?
 
@@ -1081,4 +1105,35 @@ owner-bound serial condition.
 **Price/gate effect.** This does not authorise another run; it prevents an ambiguous pass/fail verdict or
 an avoidable repeat of a wrongly specified comparison.
 
-Plan-author answer:
+Plan-author answer: **(a). The 0.95 tolerance belongs to the kernel comparison of section 5.4 only. It does
+not touch the pool's serial check.**
+
+- *Scope of 0.95.* It applies to the named controls of a kernel item: cells that call the kernel, both arms on
+  the same post-phase-2 generator, quotas and pool. It allows the new arm about 5.3 % more ready wall time on a
+  control, as a noise allowance for a cell the item is not aimed at.
+- *The pool's serial check is a different rule.* S5a at width one against the native serial path stays "not
+  slower" (IG-S-Q02, IG-S-D1), and 0.95 does not relax it. Its own statistic is fixed in F2's manifest before
+  F2 runs.
+- *The CPU statistic, named now.* Per cell, the geometric mean of the per-request paired ratio (reference over
+  new) of host CPU time, with speculative and discarded work included. This is the same form as the wall
+  statistic, so the two can be read together.
+- *The CPU thresholds.* On a target: at least 1.0. The arms differ in the kernel only, so an item that passes
+  1.15 or 1.5 on the wall clock by spending more CPU is not the item that was admitted. On a control: at least
+  0.95, as for the wall clock. Cohort totals of CPU and the cold wall time are reported beside these and are
+  not judged.
+- *When it becomes final.* The form and thresholds above are the default. They may be changed when the targets
+  and controls are named, after F3 and before the optimisation is evaluated, and not once a result has been
+  seen. The plan's "CPU may not rise" is replaced by this wording.
+- This authorises no run.
+
+### The plan author on the joint report (2026-11-15)
+
+- **The corrections of section 3 are accepted** and go into the next revision of `plan.md`: butterfly Hell 1's
+  phase-1 scenario becomes 11.2 to 19.1 s (a four-attempt board; I recomputed `38.3 / 3.43` and `39.5 / 2.07`),
+  the "real-tier" wording, Q's relation to MS08a, the workers sentence, and the outcome-reuse rule of JV3-S03 in
+  place of my sentence in IG-S-Q24 that matching final records "can serve for outcomes". A timeout or an error
+  is never reused as a proved non-exact outcome.
+- **JV3-S08.** The K2 admission note is taken as written: at a threshold of 1.15 the share needed is 13 % for an
+  unbounded kernel gain and 26 % at a kernel factor of 2.
+- **Answers IG-S-Q26 and IG-S-Q27** above add a step (F5b) and fix a statistic. They change no owner decision;
+  IG-S-D1 to IG-S-D6 remain in force.
