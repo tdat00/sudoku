@@ -4,9 +4,8 @@
 > its section 9 addendum is this file at commit `adb7184`; version 1 is at `1437774`. Version 3 folds in the
 > joint report on version 2 ([plan-v2-joint-report.md](plan-v2-joint-report.md): its answers, its corrections
 > JV2-S01 to JV2-S16, its candidate table and its frozen-round scope), the plan-author answers IG-S-Q19 to
-> IG-S-Q25 and the owner decisions IG-S-D1 to IG-S-D6 ([clarifications.md](clarifications.md)). It is written
-> as one current document: the layered "version 2" notes and the addendum are merged into the sections they
-> belong to. The full mechanism text of the items that version 3 parks or drops stays in version 2.
+> IG-S-Q25 and the owner decisions IG-S-D1 to IG-S-D6 ([clarifications.md](clarifications.md)).
+> The full mechanism text of the items that version 3 parks or drops stays in version 2.
 >
 > **Version 3 is smaller and retargeted.** On the rating-v3 source the Nightmare cells that versions 1 and 2
 > aimed at pass by the rating change alone. What remains for this feature is tail and failure time, robustness
@@ -28,30 +27,9 @@ records:
 
 - **R3:** [evidence/phase0/provisional-r1/report-r3.md](evidence/phase0/provisional-r1/report-r3.md), the
   provisional generator round on the old runtime, with errata E1 to E10.
-- **Q:** the difficulty-v3 checkpoint `../difficulty-v3/qualification-checkpoint-2026-11-15.md` (MS07e, on the
-  MS07d runtime).
+- **Q:** the difficulty-v3 checkpoint `docs/difficulty-v3/qualification-checkpoint-2026-11-15.md` at `75b99e6`
+  (MS07e, on the MS07d runtime).
 - **Smoke:** `evidence/phase0/smoke-rating-v3-8b70875/smoke-report-r2.md`.
-
-## 0. What version 3 changes
-
-1. **The targets are re-derived** (section 2). Passing Nightmare cells become regression controls. The targets
-   are the remaining time failures, Killer, the robustness tail and the diagnosis of Hell 1.
-2. **S1, S2 and the Nightmare frontier screen leave the mandatory scope**, with the attempt sweep. They return
-   only for a named cell that fails on the final catalogue. This is prioritisation, not a refutation.
-3. **S5a is pursued selectively** (OD-S5, decided (B)): up to four workers, with an early-hit path and a serial
-   fallback. It is a tail and failure-time item. "Up to 1.6 times the CPU" was not a bound and is withdrawn.
-4. **No kernel factor is priced.** K2 is a conditional prototype after profiling, K4 a small diagnostic, K1 and
-   the chain work parked, K3 dropped from this feature, K5 dropped as already present.
-5. **A contract boundary** separates the rating's intrinsic finder semantics from generator-only quotas
-   (section 3.1, IG-S-Q19). No generator version licenses a change of the canonical rating.
-6. **The kernel gate is defined** (section 5.4, IG-S-Q20): a paired whole-request factor per named target.
-7. **The frozen round is reduced and staged**, F0 to F6 (section 5), after a narrowed harness repair
-   (IG-S-D2). Its protocol is inner width four at outer `--jobs=1` (IG-S-D4).
-8. **Hell 1 stays unoffered and is diagnosed first** (IG-S-D3). No bank is designed before the final catalogue.
-9. **Withdrawn statements.** The Nightmare band did not widen "from about 220 to about 590 points": it is
-   `[1500, 2400)` before and after MS07 (JV2-S04). The "1,296 solves per sample" and "10 times fewer solves"
-   costing is retired (JV2-S05). The other corrections of the joint report's section 6 are taken in where
-   their subject appears.
 
 ## 1. Goal, non-goals and constraints
 
@@ -93,8 +71,8 @@ expansion; forty was the first-round target, not the count in every cell. It pub
 
 The cause of the change is the rating, not the search: with the short-chain cutoff at 4, a proof of five or
 more links is in the Nightmare tier, so a dug puzzle is usually exact at the first attempt
-(`../difficulty-v3/chain-window-2026-11-15.md`). The generator still runs every request in one worker, and the
-size-default attempts are still 8, 4 and 2.
+(`docs/difficulty-v3/chain-window-2026-11-15.md` at `75b99e6`). The generator still runs every request in one worker,
+and the size-default attempts are still 8, 4 and 2.
 
 ### 2.2 Targets and controls (M: Q; treatment: joint)
 
