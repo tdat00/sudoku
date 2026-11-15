@@ -76,6 +76,15 @@ catalogue (`-Round frozen-gate`, with a freeze receipt and a budget receipt).
 | `ig09-aggregate.cjs` | IG-S09 documents from evidence only: `samples.json`, `sign-passes.json`, `setup-probes.json`, `miss-split.json`, `order-parity.json`, `summary.json/md` (`--suffix=-r2 --revision=<text>` for a revision). |
 | `ig09-dev-check.cjs` | IG-S09: one wrapped development check (the whole per-job flow on the real engine for Normal seed 300: G0, G1 and the observer-free control) written beside the task evidence with its own `command.json` (the charge). |
 | `ig09-test.cjs` | IG-S09 tests: pure cases (the patched `greater-than.js` on a fake of the engine pieces, the oracle cases, the classification, the diagnosis on a fake instance, reuse, probes, plan, transforms, glue, aggregator; `node ig09-test.cjs`, no engine, no thread). |
+| `plans/ig-s10.cjs` | IG-S10: the one analysis shard `reconcile` (kind `analysis`, one logical job, 180 s admission estimate: 225 s of the 240 s allocation with the grace). |
+| `ig10-run.cjs` | IG-S10 glue for `run.cjs` (`runAnalysis`, no engine and no worker): the synthetic tests, `buildAll` (every round-level document in memory), the write-once outputs and the frozen closure; `--dry-run` builds everything in memory; `--write-r2` writes the r2 revision (unwrapped, read-only). |
+| `reconcile.cjs` | IG-S10: the accepted evidence read back (hashes, parsed summaries), the coverage reconciliation (classification, duplicate / silent-exclusion / identity rules, the Killer audit overlay, auxiliary commands, excluded observations) and the machine accounting of the whole round. |
+| `reconcile-report.cjs` | IG-S10: the headline cohort recomputed from the raw records (per-seed rows, cohort summaries, paired seed-cluster intervals, on-time lower bounds), the SM2, SM1, SM3 and Greater-Than sections, the cross-checks against the accepted summaries, the decisions for the author. |
+| `reconcile-build.cjs` | IG-S10: the thirteen-row estimate table (no numeric verdict threshold: descriptive differences, the IG-S02 S5a rule, partial S3 "no material net gain demonstrated"), the provenance block (measurement, report-writer and corrected-harness fingerprints apart) and the machine block. |
+| `reconcile-render.cjs` | IG-S10: the report markdown, rendered from the report JSON alone. |
+| `frozen-plan.cjs` | IG-S10: the frozen-rerun plan: the one-command frozen rerun of every task, populations, 40-seed expansions, adapter dry runs on the current source, planning-scenario costs (formula, proxy, grace, per-phase command counts, unknown and censored bounds; none a guaranteed upper bound), IG-S06 and the four unapproved Nightmare extensions, the approvals needed. |
+| `gate.cjs` | IG-S10: the frozen-gate evaluator (pure): receipts, limits, 40-cluster coverage, distinct grid and request seed populations, paired bootstrap, non-inferiority, the on-time exact lower bound, request level (a claimed-exact request that failed verification is invalid evidence); it publishes inputs and never a go or a no-go. |
+| `ig10-test.cjs` | IG-S10 tests: 14 synthetic gate cases on 40-cluster fixtures and 19 reconciliation cases (rules on synthetic inputs; the accepted evidence reconciled; accounting invariants before and after the command; verdict scope; projection packing; populations; formats; the r2 bundle; no engine); `node ig10-test.cjs`, no engine, no thread. |
 
 ## Commands
 
@@ -706,3 +715,59 @@ Invoke-IgNode -Repo sudoku -Task 'IG-S09-dev' -NodeArgs @('generator\tests\artif
   The revision r2 (`--suffix=-r2 --revision=r2`) publishes beside the preserved r1 files: the counter units, the executed versus reused probe split, the failure accounting (a
   recorded stop is never a met T01), the diagnosis allowance, and the wait provenance (the ledger-recorded waits of the shard / control commands are a known partial figure, not an
   all-task total; the development check's wait is unknown; the charge is reconciled with the common budget reader, the development check charged once).
+
+## IG-S10: reconciliation and the frozen-rerun handoff (pre-MS07)
+
+Analysis only: one shard (`reconcile`, kind `analysis`) through the same dispatcher and the same low-priority wrapper (a 4-minute allocation: 45 s quiet-admission grace plus
+analysis). It loads no engine, starts no worker and generates no puzzle; `run.cjs` sends an `analysis` shard to `ig10-run.cjs` `runAnalysis` before any host exists. Everything
+is provisional (pre-freeze); the real `gate.json` stays `not-evaluable-pre-freeze`.
+
+```powershell
+# the plan (no engine, nothing timed, nothing written)
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S10 -Round provisional-r1 -PlanOnly
+# the one reconciliation shard (the synthetic tests first; nothing is written if one fails)
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S10 -Round provisional-r1
+# development only, no engine, no thread, nothing written: the 33 pure cases, and the whole build in memory
+node generator\tests\artifacts\improve-generating\phase0\ig10-test.cjs
+node generator\tests\artifacts\improve-generating\phase0\ig10-run.cjs --dry-run [--no-tests] [--out=<folder inside the harness>]
+# revision r2 (after the pack author's review of r1): unwrapped and read-only, no engine, no worker, no ledger entry; writes the six r2 files once beside the unchanged r1 files
+node generator\tests\artifacts\improve-generating\phase0\ig10-run.cjs --write-r2
+# frozen closure, after the separately approved frozen tasks and both receipts (gate.json, coverage.json and budget-summary.json of the frozen round)
+& '.\generator\tests\artifacts\improve-generating\phase0\Invoke-IgTask.ps1' -Task IG-S10 -Round frozen-gate -FreezeReceipt '.\docs\improve-generating\evidence\phase0\freeze.json' -BudgetReceipt '.\docs\improve-generating\evidence\phase0\frozen-budget.json'
+```
+
+- **Outputs** (round folder `docs/improve-generating/evidence/phase0/provisional-r1/`, written once, `report.json` carries the hashes of the others): `coverage.json`,
+  `budget-summary.json`, `gate.json`, `frozen-rerun-plan.json`, `report.json`, `report.md`; the shard evidence (`IG-S10/reconcile/`: `command.json`, `records.json`, `summary.json/md`,
+  journal, firewall) is the usual one. **Revision r2** adds `coverage-r2.json`, `budget-summary-r2.json`, `gate-r2.json`, `frozen-rerun-plan-r2.json`, `report-r2.json` and
+  `report-r2.md` beside them (the r1 files stay unchanged; every r2 document carries `revision.supersedes` with the r1 hashes, the r1 command's harness fingerprint and the r2 writer's
+  distinct harness fingerprint; `report-r2.json` carries the hashes of the others). r2 corrects the verdict scope and statistics, the final accounting (IG-S10's own ledger entry and the
+  0.470 s IG-S07 pre-check debit, kept apart from the wrapped-command counts), the projection packing and the frozen-input validation.
+- **Inputs.** The accepted revisions only (IG-S02 `summary-r2` with the Killer audit sidecar, IG-S03 `summary-r3`, IG-S04 `summary-r2` and `budgets-r2`, IG-S05 `summary-r2`, IG-S07
+  `summary-r2`, IG-S08 `summary-r3`, IG-S09 `summary-r2`), each hashed; the raw records behind the headline pairs, the grid trials and the Greater-Than pairs are recomputed and
+  checked against the summaries (a cross-check that disagrees stops the shard). A missing document stops: absent evidence is never a silent exclusion.
+- **Coverage.** Every manifest key of IG-S01 to IG-S09 is completed, completed by audit overlay (the six IG-S02 Killer rows whose stored records stay `error`), budget-ended, censored,
+  an error, validation unknown or explicitly unstarted; IG-S06 is deferred (no manifest). Duplicate keys, a record outside the manifest, a lost key, another runtime, changed sources, a
+  firewall difference, a label other than provisional or a gate state other than `not-evaluable-pre-freeze` are problems and stop the shard. Commands outside every shard (audit, retest,
+  development check) and observations that enter no count are listed. The harness never runs git.
+- **Estimate table.** The check-list's thirteen rows with original estimates labelled P. No numeric verdict threshold is used (the pack names none): a "Today" anchor and an SM1 share are
+  shown with their descriptive difference; the S5a factor follows the IG-S02 rule against the report's planning range (no pair reaching it is labelled "planning-factor estimate refuted
+  on these pairs", which does not refute the usefulness of the improvement); partial S3 had no assigned gain forecast and reads "no material net gain demonstrated" (the median of the
+  paired incremental ratios) with the full-S3 forecast untested/inconclusive.
+  Cohorts are never mixed: trace-off headline pairs (IG-S02/S03), two-sample grid trials (IG-S04/S05), profiled requests (IG-S07), the censored attribution (IG-S08), the trace-summary
+  Greater-Than cohort (IG-S09). The IG-S09 counter erratum (`counts.dfsEntries` are `countSolutions` calls) is applied everywhere.
+- **Gate evaluator** (`gate.cjs`, pure): input is records; it returns the receipts' state, the limits comparison, per decision cell the 40-cluster coverage, verified hit rates per CPU
+  and wall second over all spent work, paired whole-cluster bootstrap differences against both native kinds, non-inferiority on positive-baseline cells, the projection inputs on
+  zero-baseline cells and the request-level on-time exact lower bound (exact one-sided 95 % binomial, seeds assumed independent). It never returns a go or a no-go: the cell verdicts are
+  `invalid-evidence`, `inconclusive` or `inputs-collected-awaits-author-decision`; without an approved assumption set the projection is `projection-awaits-author-review`; sample-only
+  evidence is `not-established-sample-only` at request level. Invalid evidence (`frozen-invalid-evidence`, the gate stays disabled): a claimed-exact grid trial or full request whose
+  verification failed, a planned grid or request seed list that is not distinct (forty copies of one seed), a grid trial whose cluster is not its seed. In the frozen closure the receipt's
+  `limitsAndDefaults` keys (`defaults`, `guards`, `budgetHash`) are compared with the run's catalogue defaults, guards and the frozen IG-S04 budget hash. Decision owners are the plan author
+  (Fable), advised by the pack author (Astra).
+- **Frozen plan** (`frozen-rerun-plan.json`): a PROPOSAL that grants nothing. For each task the exact command, `-PlanOnly` form, dependencies, population, the frozen manifest, the adapter
+  dry run on today's runtime and the planning-scenario cost (the first round's measured occupied time scaled to the frozen population plus 45 s per command, against the dispatcher's
+  admission plan, which is a planning figure and not a guaranteed upper bound; IG-S09's unstarted rows priced between the lowest and highest observed pair, IG-S08's censored tail with its
+  lower bound and a guard-limited planning figure, no inferred ceiling). IG-S06 is not implemented: its populations (two modes x 40 requests on four cells, plus the 201/202 diagnostic
+  population), formula, per-phase command counts and a guard scenario (one command per request at the 180 s request guard plus the 60 s validation guard; omitted components listed, so an
+  incomplete upper bound) and a conditional proposal are listed. Wordoku, sohei, flower and butterfly are four separate unapproved Nightmare extensions (pilot 11, 12, SM2 101-140,
+  requests 201-240) priced from named proxies with a scenario band; the pilot, the screen and the requests are separate commands (each at least one, recomputed for the low, central and
+  high scenario).

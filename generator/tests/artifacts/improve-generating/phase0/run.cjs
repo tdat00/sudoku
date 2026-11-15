@@ -30,7 +30,8 @@ const SELF_TEST_ESTIMATE_MS = 15000;
 
 // Task glue loaded lazily: a task that runs its own kind of request (IG-S02: a pool) registers its module here.
 const TASK_HOOKS = { 'IG-S02': './ig02-run.cjs', 'IG-S03': './ig03-run.cjs', 'IG-S04': './ig04-run.cjs',
-  'IG-S05': './ig05-run.cjs', 'IG-S07': './ig07-run.cjs', 'IG-S08': './ig08-run.cjs', 'IG-S09': './ig09-run.cjs' };
+  'IG-S05': './ig05-run.cjs', 'IG-S07': './ig07-run.cjs', 'IG-S08': './ig08-run.cjs', 'IG-S09': './ig09-run.cjs',
+  'IG-S10': './ig10-run.cjs' };
 
 function taskHooks(task) {
   return Object.prototype.hasOwnProperty.call(TASK_HOOKS, task) ? require(TASK_HOOKS[task]) : null;
@@ -555,6 +556,15 @@ async function runShard(opts, repoRoot) {
   if (!shard) throw new HarnessError('plan-missing', 'unknown shard ' + opts.shard);
   if (shard.kind === 'synthetic') {
     throw new HarnessError('shard-kind', shard.shard + ' is a synthetic shard: it is run by self-test.cjs');
+  }
+  // An analysis shard reads evidence and writes documents: no engine, no worker, no request (IG-S10).
+  if (shard.kind === 'analysis') {
+    const analysisHooks = taskHooks(opts.task);
+    if (!analysisHooks || typeof analysisHooks.runAnalysis !== 'function') {
+      throw new HarnessError('plan-missing', opts.task + ' has no analysis runner');
+    }
+    return analysisHooks.runAnalysis({ opts: opts, repoRoot: repoRoot, manifest: manifest, shard: shard,
+      host: { processStartedAt: processStartedAt } });
   }
   const evidenceRoot = evidenceRootOf(repoRoot);
   const roundDir = path.join(evidenceRoot, opts.round);

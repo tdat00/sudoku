@@ -1,0 +1,78 @@
+{
+  "manifest": {
+    "schema": "ig-s-phase0/1",
+    "task": "IG-S10",
+    "round": "provisional-r1",
+    "evidenceStatus": "provisional (pre-freeze)",
+    "guards": {
+      "commandMs": 270000,
+      "requestMs": 180000,
+      "sampleMs": 45000,
+      "jigsawMs": 240000,
+      "validationMs": 60000,
+      "wrapperLimitMs": 300000,
+      "graceMs": 45000,
+      "finalizeReserveMs": 8000,
+      "startMarginMs": 2000,
+      "minWindowMs": 15000
+    },
+    "pairOrder": [],
+    "shards": [
+      {
+        "shard": "reconcile",
+        "kind": "analysis",
+        "blockKeys": [
+          "IG-S10/reconcile/reconcile"
+        ],
+        "jobKeys": [
+          "IG-S10/reconcile/reconcile"
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "blockKey": "IG-S10/reconcile/reconcile",
+        "shard": "reconcile",
+        "jobKeys": [
+          "IG-S10/reconcile/reconcile"
+        ],
+        "estimateMs": 180000
+      }
+    ],
+    "jobs": [
+      {
+        "key": "IG-S10/reconcile/reconcile",
+        "blockKey": "IG-S10/reconcile/reconcile",
+        "shard": "reconcile",
+        "order": 0,
+        "seedIndex": 0,
+        "pairId": null,
+        "gridCluster": null,
+        "requestSeed": null,
+        "variantId": "reconcile",
+        "puzzleVariant": null,
+        "level": null,
+        "mode": "analysis",
+        "arm": null,
+        "recordKind": "analysis",
+        "solverMode": "analysis",
+        "executor": "analysis",
+        "adapterIds": [],
+        "request": null,
+        "estimateMs": 180000,
+        "guardScope": "command"
+      }
+    ],
+    "manifestHash": "aa07fbb116a1a93579f76f0998af574d5917dc710c1e413e826c1139693283fa"
+  },
+  "attemptKeys": [
+    "IG-S10/reconcile/reconcile"
+  ],
+  "runKeys": [
+    "IG-S10/reconcile/reconcile"
+  ],
+  "physicalPlan": {
+    "windowMs": 183000,
+    "commands": 1
+  }
+}

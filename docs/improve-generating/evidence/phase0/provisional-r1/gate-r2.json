@@ -1,0 +1,166 @@
+{
+  "schema": "ig-s-gate/1",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "state": "not-evaluable-pre-freeze",
+  "formalGateEnabled": false,
+  "formalVerdict": null,
+  "decisionOwner": "the plan author (Fable), advised by the pack author (Astra): this evaluator publishes inputs and never a go or a no-go",
+  "projection": "projection-awaits-author-review",
+  "requestLevel": "not-established",
+  "reasons": [
+    "pre-freeze round: no gate is evaluated whatever the numbers or a frozen flag say"
+  ],
+  "limits": null,
+  "cells": {},
+  "notes": [
+    "no automatic go or no-go: the plan author decides the feasibility from the published inputs",
+    "pre-freeze observations are descriptive only: they cannot enable a cell, select an allowance, change a default or authorise the bank route"
+  ],
+  "usedAsFormalGate": false,
+  "task": "IG-S10",
+  "descriptiveInputs": {
+    "classic9": {
+      "clusters": 8,
+      "modesWithAllTrials": 8,
+      "verifiedHitsByMode": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      },
+      "ratesPerCpuAndWallSecond": "all zero",
+      "paired": "all intervals degenerate [0, 0]",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      }
+    },
+    "mega12": {
+      "clusters": 8,
+      "modesWithAllTrials": 8,
+      "verifiedHitsByMode": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      },
+      "ratesPerCpuAndWallSecond": "all zero",
+      "paired": "all intervals degenerate [0, 0]",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      }
+    },
+    "mega16": {
+      "clusters": 8,
+      "modesWithAllTrials": 8,
+      "verifiedHitsByMode": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      },
+      "ratesPerCpuAndWallSecond": "all zero",
+      "paired": "all intervals degenerate [0, 0]",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      }
+    },
+    "samurai": {
+      "clusters": 8,
+      "modesWithAllTrials": 8,
+      "verifiedHitsByMode": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      },
+      "ratesPerCpuAndWallSecond": "all zero",
+      "paired": "all intervals degenerate [0, 0]",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      }
+    }
+  },
+  "coverageOfTheInputs": {
+    "sm2": "eight grid clusters per cell, all eight modes, 256 trials, 0 verified hits in every mode; descriptive only",
+    "requests": "no full-request evidence: IG-S06 deferred (sample-only evidence cannot establish a request-level qualification)",
+    "headline": "three paired seeds per cell: the on-time lower bound cannot exceed 0.368 (not a gate input)"
+  },
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance, changes a default or authorises the bank route.",
+  "zeroBaselineFeasibility": "projection-awaits-author-review",
+  "syntheticTests": {
+    "passed": 14,
+    "total": 14,
+    "note": "synthetic 40-cluster fixtures only; not a real frozen decision"
+  },
+  "revision": {
+    "id": "r2",
+    "reason": "pack-author review of r1 (ACCEPT WITH FIXES: F1 verdict scope and statistics, F2 final accounting, F3 projection packing, F4 invalid frozen inputs)",
+    "supersedes": [
+      {
+        "file": "report.json",
+        "sha256": "f4594501127300e395f840213eb90a764c66ec4c31eedb75e5b5c199af1f574f",
+        "bytes": 658187
+      },
+      {
+        "file": "report.md",
+        "sha256": "4a291f9bb5a699714994dcb6ac28c342caed4ee85e6c58092817e4c5e6587092",
+        "bytes": 86574
+      },
+      {
+        "file": "coverage.json",
+        "sha256": "3faf6a8cc9caeed6143567d8bc6d3c70e0f5b776b28f3a1c19afe017148e82a7",
+        "bytes": 83671
+      },
+      {
+        "file": "budget-summary.json",
+        "sha256": "c4d9bcdfd4e815deb239bdd8dbc6b2cf67a85bc9a899c908f1b2970bb7ca0320",
+        "bytes": 41085
+      },
+      {
+        "file": "gate.json",
+        "sha256": "86713925f30f89d52b9d5bfa124644104f643565f0b7773f61788d8f75999cc9",
+        "bytes": 3764
+      },
+      {
+        "file": "frozen-rerun-plan.json",
+        "sha256": "caa2c4855a69ebc5f3cbf6c717d6416a72919d68fc9d7813036031ca6f6b4e08",
+        "bytes": 59470
+      },
+      {
+        "file": "IG-S10/reconcile/command.json",
+        "sha256": "92a1a5b3a88ff3ee953099d0551c1933a844dccedfa14ec5d45ff4d014530866",
+        "bytes": 14560,
+        "status": "complete",
+        "harnessFingerprint": "9a8afa85b3ff9165648fe6e1267a567c4c62e95ad9126a43e76db2d1ecb364c2"
+      }
+    ],
+    "r1CommandHarnessFingerprint": "9a8afa85b3ff9165648fe6e1267a567c4c62e95ad9126a43e76db2d1ecb364c2",
+    "writerHarnessFingerprint": "8f0018b5c36db04a16707d44fd3c3f011ff3a75321c6d9c81e539beb283bd901",
+    "writerRole": "the r2 aggregation (ig10-run.cjs --write-r2): unwrapped, read-only, no engine, no worker, no generation, not charged"
+  }
+}

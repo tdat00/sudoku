@@ -1,0 +1,120 @@
+{
+  "schema": "ig-s-gate/1",
+  "round": "provisional-r1",
+  "evidenceStatus": "provisional (pre-freeze)",
+  "state": "not-evaluable-pre-freeze",
+  "formalGateEnabled": false,
+  "formalVerdict": null,
+  "decisionOwner": "the plan author (Astra) with Fable: this evaluator publishes inputs and never a go or a no-go",
+  "projection": "projection-awaits-author-review",
+  "requestLevel": "not-established",
+  "reasons": [
+    "pre-freeze round: no gate is evaluated whatever the numbers or a frozen flag say"
+  ],
+  "limits": null,
+  "cells": {},
+  "notes": [
+    "no automatic go or no-go: the plan author decides the feasibility from the published inputs",
+    "pre-freeze observations are descriptive only: they cannot enable a cell, select an allowance, change a default or authorise the bank route"
+  ],
+  "usedAsFormalGate": false,
+  "task": "IG-S10",
+  "descriptiveInputs": {
+    "classic9": {
+      "clusters": 8,
+      "modesWithAllTrials": 8,
+      "verifiedHitsByMode": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      },
+      "ratesPerCpuAndWallSecond": "all zero",
+      "paired": "all intervals degenerate [0, 0]",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      }
+    },
+    "mega12": {
+      "clusters": 8,
+      "modesWithAllTrials": 8,
+      "verifiedHitsByMode": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      },
+      "ratesPerCpuAndWallSecond": "all zero",
+      "paired": "all intervals degenerate [0, 0]",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      }
+    },
+    "mega16": {
+      "clusters": 8,
+      "modesWithAllTrials": 8,
+      "verifiedHitsByMode": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      },
+      "ratesPerCpuAndWallSecond": "all zero",
+      "paired": "all intervals degenerate [0, 0]",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      }
+    },
+    "samurai": {
+      "clusters": 8,
+      "modesWithAllTrials": 8,
+      "verifiedHitsByMode": {
+        "proposal-only": 0,
+        "ordinary-only": 0,
+        "F0": 0,
+        "F1": 0,
+        "FC": 0,
+        "FM": 0,
+        "FU": 0,
+        "FS": 0
+      },
+      "ratesPerCpuAndWallSecond": "all zero",
+      "paired": "all intervals degenerate [0, 0]",
+      "selection": {
+        "selected": "F1",
+        "winner": false,
+        "reason": "all-zero-verified-hits"
+      }
+    }
+  },
+  "coverageOfTheInputs": {
+    "sm2": "eight grid clusters per cell, all eight modes, 256 trials, 0 verified hits in every mode; descriptive only",
+    "requests": "no full-request evidence: IG-S06 deferred (sample-only evidence cannot establish a request-level qualification)",
+    "headline": "three paired seeds per cell: the on-time lower bound cannot exceed 0.368 (not a gate input)"
+  },
+  "provisionalNotice": "PROVISIONAL (pre-freeze). Not an offer, qualification or gate result; nothing here enables a cell, selects an allowance, changes a default or authorises the bank route.",
+  "zeroBaselineFeasibility": "projection-awaits-author-review",
+  "syntheticTests": {
+    "passed": 13,
+    "total": 13,
+    "note": "synthetic 40-cluster fixtures only; not a real frozen decision"
+  }
+}

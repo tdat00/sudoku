@@ -1353,6 +1353,25 @@
       "chargedMs": 62352,
       "attemptId": "a1",
       "task": "IG-S09"
+    },
+    {
+      "seq": 71,
+      "attemptId": "a1",
+      "wrapperSeconds": 8.535,
+      "chargedMs": 53535,
+      "note": null,
+      "task": "IG-S10",
+      "wrapperTask": "IG-S10/reconcile",
+      "chargedGraceMs": 45000,
+      "occupiedMs": 8535,
+      "round": "provisional-r1",
+      "requestedAt": "2026-11-15T04:59:49.5745385Z",
+      "status": "complete",
+      "shard": "reconcile",
+      "wrapperExit": 0,
+      "priorityWaitMs": 1347934,
+      "commandJson": "IG-S10/reconcile/command.json",
+      "endedAt": "2026-11-15T05:22:26.0438012Z"
     }
   ]
 }
