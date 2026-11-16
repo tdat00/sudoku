@@ -22,6 +22,8 @@ The first-allowed sign pass is the MS06a baseline; the rejected candidate remain
 
 The pack uses execution-order IDs: **MS03 is tooling (old report MS04); MS04 is orders (old MS03)**.
 The accepted order is unchanged. Historical analyst documents/answers keep their old labels.
+Section 2's GC-01 scheduling exception moves only inactive MS14a preparation ahead of MS13c;
+IDs stay stable and the active-technique/milestone completion order remains unchanged.
 Large parent rows are milestones, not dispatches or extra commits. Their suffixed files are
 normally independently accepted 20-60-active-minute tasks. **S-OD2 recovery is the explicit
 exception:** r1-r5 (including r5p/r5m), post-selection b3 and r6a have step evidence only.
@@ -94,13 +96,13 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [x] | MS11b | [MS11b](MS11b-hidden-rectangle.md) | Hidden UR | MS11a | M, 35-50 min | Shared wings | M11b | 29 |
 | [x] | MS11c | [MS11c](MS11c-bug-plus-one.md) | BUG+1 | MS11b | M, 45-60 min | Shared wings | M11 | 30 |
 | [x] | MS12 | [MS12](MS12-xy-chain.md) | Restricted XY-chain | MS11c | M, 50-60 min | Shared chains | M12 | 31 |
-| [ ] | MS13 | MS13a-MS13c | Grouped chains (parent) | MS12 | split | Solver/UI | M13 | 32-34 |
+| [ ] | MS13 | MS13a-MS13c | Grouped chains (parent) | MS12 | split | Solver/UI | M13 | 32-33,35 |
 | [x] | MS13a | [MS13a](MS13a-group-graph-and-proof-checker.md) | Inactive graph/proof checker | MS12 | M, 50-60 min | Shared chains | M13a | 32 |
 | [x] | MS13b | [MS13b](MS13b-group-proof-consumers.md) | Group-proof consumers | MS13a | M, 35-50 min | Both app UI | M13b | 33 |
-| [ ] | MS13c | [MS13c](MS13c-activate-grouped-chains.md) | Grouped-chain activation | MS13b + GC-01 owner answer | M, 50-60 min | Shared chains | M13 | 34 |
-| [ ] | MS14 | MS14a-MS14c | Leftovers/cage regressions (parent) | MS13c | split | Shared solver | M14 | 35-37 |
-| [ ] | MS14a | [MS14a](MS14a-leftover-support-kernel.md) | Inactive multiset support | MS13c | M, 50-60 min | Shared subsets | M14a | 35 |
-| [ ] | MS14b | [MS14b](MS14b-register-law-of-leftovers.md) | Law of leftovers integration | MS14a | M, 40-55 min | Shared subsets | M14b | 36 |
+| [ ] | MS13c | [MS13c](MS13c-activate-grouped-chains.md) | Grouped-chain activation | MS13b + MS14a + GC-01 owner answer | M, 50-60 min | Shared chains | M13 | 35 |
+| [ ] | MS14 | MS14a-MS14c | Leftovers/cage regressions (parent) | MS13c for activation/closure; MS14a prep may precede | split | Shared solver | M14 | 34,36-37 |
+| [ ] | MS14a | [MS14a](MS14a-leftover-support-kernel.md) | Inactive multiset support | MS13b | M, 50-60 min + inactive E | Shared subsets | M14a | 34 |
+| [ ] | MS14b | [MS14b](MS14b-register-law-of-leftovers.md) | Law of leftovers integration | MS14a + MS13c | M, 40-55 min | Shared subsets | M14b | 36 |
 | [ ] | MS14c | [MS14c](MS14c-killer-interaction-regressions.md) | Existing Killer regressions | MS14b | S, 25-40 min | Core tests | M14 | 37 |
 | [ ] | MS15 | MS15a-MS15b | ALS-XZ (parent) | MS14c | split | Shared ALS | M15 | 38-39 |
 | [ ] | MS15a | [MS15a](MS15a-als-enumerator.md) | Inactive bounded ALS enumerator | MS14c | M, 45-60 min | Shared ALS | M15a | 38 |
@@ -176,6 +178,33 @@ their normal acceptance remains required. No proposed choice is active before a 
 and pack amendment. MS14a/MS15a kernels likewise precede their registrations. Final GQ is MS18c,
 after all S3, MS17b and final rechecks MS18b.
 No intermediate pruning. Parent milestones are not additional waves or commits.
+
+**GC-01 wait — sole inactive-preparation exception (SA2, 2026-11-17).** The current accepted
+implementation boundary is MS13b, `55d11ee`. Dispatch **MS14a -> MS13c (GC-01 answered and
+pack amended) -> MS14b -> MS14c**, then the unchanged remainder. Swap only the still-future
+MS14a/MS13c wave numbers to 34/35; do not renumber IDs, change Done marks or rewrite historical
+logs. MS14a requires MS13b, MS13c also waits for accepted MS14a, and MS14b explicitly requires
+both MS14a and MS13c. The parent MS14 dependency governs activation/closure, not this inactive
+preparation. No further later task may run ahead. If the owner answers while MS14a is running,
+finish/review/commit MS14a first; if still unanswered after that, wait. Never park a dirty task
+or run a second developer. The posted owner question remains unchanged; this is a scheduling
+supersession of the pack author's blanket hold, not an answer to GC-01 or an owner-policy change.
+
+MS14a depends only on the existing subset/model/unit APIs and stays unregistered. Its
+`tech-subset.js` change invalidates all three E source identities, so it owns fresh complete
+5-wire/14-analysis/520-hash records and current-source merge-checks with no canonical writes,
+plus GH `--check`, both quick sets and CI, under the existing inactive rule and command bounds.
+Its old "no heavy gate" sentence is not an E waiver. MS13c starts from accepted MS14a and runs
+its already-required full activation E on that source; it absorbs the source, not missing
+predecessor evidence. No canonical fixture transaction, activation scope, gate or review is moved.
+
+MS13b's **4,416 Generator / 2,658 Player** tests and 37 catalogue entries are the source-qualified
+baseline. MS14a derives/reports its actual larger quick inventories and costs, preserves both
+apps' accepted consumers/docs and maintains CI projections before handoff. MS13c uses that new
+baseline rather than restoring MS13b's totals or whole files. The new tests remain in subsequent
+quick sets; historical passes are not relabelled as current-source measurements. Full S3 scope,
+active registration/milestone order, GC-01's options and the S-OD4 review matrix stay unchanged,
+so no new owner decision is needed for this limited preparatory scheduling change.
 
 **Preservation:** no reset/discard of b1, provisional allowance, off-by-default switch, seed
 substitution, browser-budget raise or further checkpoint branch commit. G13 persistence and
@@ -652,7 +681,7 @@ No implementer chooses an alternative from the original reports.
 | JF-01 / S-OD10 | Owner, Discord, 2026-11-16 22:20 (+07:00), "Chọn A.": MS12/Jellyfish only, approve option A exactly (classic9 corpus seed 4242, indices 0-19,999 ascending, <=64 sources/chunk, <=400 hints, eight-minute tool deadline, credible <=450 s admission, 540 s process ceiling, locks/15 s gaps; reuse/materialize once and account for construction). Stop at the first verified-source chunk and complete all 37 GH/quick/CI gates; otherwise report ranges and stop at the bound. No option B, budget reset, changed GH contract or permission for another task. The unchanged question and adjacent owner answer are in `clarifications-resolved.md`; S-AV35 tracks completion/audit. |
 | IR72 I1/G/J / CI projection maintenance, SA2 2026-11-16 | From MS10a, tasks owning quick verification may raise manifest timing projections without adding a suite: `max(old, 10 * ceil(1.5 * measured process seconds / 10))`, with source-qualified before/after evidence and the section 2 guards. A projection miss alone is not a stop. Each shard stays <=450 s; unchanged CI arithmetic must fit actual workflow limits (Generator 1800 s, Player 900 s). No tier/membership, factor, overhead, timeout or test-contract change; no change to IR12/GQ/GP planning rules. MS18e audits final projections and actual remote durations. |
 | IR72 inactive source-identity closure, SA2 at MS13a | "No update" means no changed canonical output, not stale-source E acceptance. Starting MS13a, record each complete E family whose required identity changed and merge-check without fixture writes; retain/check still-current families. MS13a needs all five wires, fourteen analyses and 520 hashes; MS13b is conditional on its actual identities; MS13c owns activation E. This overrides conflicting no-heavy wording for E provenance only, adds no GP/GQ/GS/discovery, and never authorizes hash retagging, partial-corpus substitution or unexplained output updates. See section 7. |
-| GC-01 / pending owner decision, SA2 2026-11-17 | MS07b/IR54 explicitly retains unbounded local work for `forcingChain`; a shared grouped cap cannot silently replace it. A singleton fallback also needs an explicit minimum-proof domain, not merely `if null then retry`. The owner question in MS13c offers A (bounded grouped attempt, short-only complete-singleton fallback on local caps, same parent budget) or B (explicitly bound both whole forcing IDs, no fallback). Neither is approved. Hold MS13c and later serial dispatch until the answer is recorded and the pack amended; inactive MS13a and consumer-only MS13b may finish. S-AV36 carries construction/cap numbers to MS13c/MS18d/MS18e; R10's one new-limit adjustment is not authority to change this work policy, R9 windows or earlier limits. |
+| GC-01 / pending owner decision; sole MS14a scheduling exception, SA2 2026-11-17 | MS07b/IR54 explicitly retains unbounded local work for `forcingChain`; a shared grouped cap cannot silently replace it. A singleton fallback also needs an explicit minimum-proof domain, not merely `if null then retry`. The posted question and options A/B stay unchanged; neither is approved. **Only inactive MS14a may run ahead**, after accepted MS13b, with its own complete current-source E/GH/quick/CI closure. Then MS13c waits for both accepted MS14a and the recorded owner answer/pack amendment; MS14b requires both and no other task jumps the hold. This replaces only the pack author's blanket preparation hold, not an owner decision, active registration order or gate. Section 2 defines source/quick handoff; S-AV36 stays with MS13c/MS18d/MS18e. R10's one new-limit adjustment cannot decide GC-01, R9 windows or earlier limits. |
 | FS22 implementation disposition, updated by S-OD3/S-OD4 and B1 | MS05r2 absorbed consumers; b3 follows r5p/r5/r5m under the approved contracts, not passed original mega limits. Lazy per-level I5/CV3 remains; the mega CV3 cells run live under B1 with their own checks. Syntax is not GD evidence. MS14c stays corpus-free; final I5 remains per level. |
 | SA1 IR02 / IR04, implementation review 2026-11-14 | Binding B1 is copied into MS05b3: live mega CV3, no record provider/replay entry point/reuse code or edits to the deep tool/fixture/SOURCE_FILES. r6a/r6b check both currentMatches hashes explicitly; retain only a proved exact-diff non-generation-file mismatch, else execute their named MEGA-REFRESH step. Original hashes/records remain untouched. |
 | FS12-FS16 / FS20 implementation dispositions; CV6-05 sign handoff | `acceptReveal` receives current/next exact flags. A cells guided winner refused by the apply table ends that pass; local acceptance retains `next.score < spec.max`. MS06c1 transports null/inert metadata with no production draw; MS06c2 draws once and activates all candidate-comparing stages. The real `signs` strategy receives but ignores `options.target`; `digger-target` proves its originating target reaches the selected result. No partial intermediate policy, sign comparator, new RNG stream or post-exact polishing. |

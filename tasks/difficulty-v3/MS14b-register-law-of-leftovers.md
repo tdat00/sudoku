@@ -2,7 +2,7 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS14a accepted |
+| Depends on | MS14a and MS13c accepted |
 | Size / active time | Medium; 40-55 minutes plus gates |
 | Owner / milestone | Shared subset / both apps; M14b |
 | Authority | R10/R17/R20/R21; SA2-Q-S09/S11 |
@@ -21,6 +21,11 @@ Out: new Killer technique, non-Jigsaw scope or changing earlier pattern limits.
 
 AGENTS/checklist and B; no Git/pack/log edits. Core tests build models without Generator-only code.
 Real help uses MS03c cellRegion, never an invented candidate-state format.
+
+**GC-01 scheduling exception, 2026-11-17:** inactive MS14a may precede MS13c, but this registration
+may not. Start only after both are accepted, using the current post-MS13c source, quick inventory
+and E baseline. Keep MS14a's kernel/helper/tests and MS13c's accepted grouped-chain policy intact.
+This task still owns its full B/E/GH/cost/quick/CI closure; neither predecessor's E replaces it.
 
 ## Inputs & context
 

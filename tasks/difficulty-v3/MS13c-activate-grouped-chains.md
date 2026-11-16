@@ -2,7 +2,7 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS13b accepted; GC-01 owner answer incorporated into this brief |
+| Depends on | MS13b and the run-ahead MS14a accepted; GC-01 owner answer incorporated into this brief |
 | Size / active time | Medium; 50-60 minutes plus E/GH/GP |
 | Owner / milestone | Shared chains and both apps; M13 complete |
 | Authority | R9/R10/R16/R20/R21; IR54; GC-01 pending |
@@ -187,6 +187,35 @@ owner's explicit approval just as B's replacement of IR54 does.
 and the minimum-proof domain. The pack author records the answer and amends this brief before
 dispatch. Until then MS13a's inactive closure and MS13b's consumer work may finish, but MS13c
 and later serial tasks are not dispatched. No new S-OD number is assigned before an answer.
+
+### Dispatch-only scheduling exception — SA2, 2026-11-17
+
+The posted GC-01 question above is retained unchanged. Its blanket hold on later preparation
+is superseded **only for inactive MS14a**: after accepted MS13b (`55d11ee`), run MS14a to its
+own accepted/committed boundary, then MS13c once GC-01 is answered and the pack amended,
+then MS14b and MS14c. One task/writer at a time. An owner answer arriving during MS14a does
+not preempt that task or permit a second writer. If the answer is still absent after MS14a,
+wait; no other run-ahead is authorized.
+
+This changes preparatory scheduling, not either GC-01 option, the active technique order,
+milestone completion order, limits, qualification, review rules or full S3 scope. MS14a
+depends on the existing model/bit/unit APIs and remains unregistered; it needs no grouped
+chain result. MS14b registration still requires this task's acceptance. No owner decision
+is needed for this isolated scheduling exception; GC-01's policy decision still needs one.
+
+Start MS13c from the **accepted MS14a source**, retaining its inactive kernel, tests, fixture
+helper and current documentation/CI metadata. Capture that actual baseline's source identities
+and quick inventories; MS13b's 4,416 Generator / 2,658 Player totals remain historical, not
+the expected post-MS14a totals. Do not copy a pre-MS14a guide, manifest or whole source file
+over the accepted additions.
+
+MS14a owns complete current-source inactive E (five wires, fourteen analyses, 520 hashes,
+all check-only) before acceptance. Its canonical values must match the preceding boundary.
+MS13c's already-required full activation E then includes the accepted MS14a source; it does
+not absorb an unfinished MS14a gate or retag its ledgers. Compare against the unchanged
+canonical baseline, explain the activation's changes and record all families on final source.
+No extra activation E family or rerun of an accepted task is added merely by reordering;
+MS14a's tests remain in the subsequent complete quick sets. MS14b's full E remains its own.
 
 ## Files to create/modify
 
