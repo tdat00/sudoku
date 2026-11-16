@@ -1,0 +1,8 @@
+$ node tests\replay-fixtures.js --merge=..\docs\difficulty-v3\evidence\MS12\wire --check
+  G09.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+merge refused: 5 problems; nothing was written
+  G10.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G11.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G12.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G13.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+exit=1 seconds=0.457

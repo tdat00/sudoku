@@ -982,6 +982,34 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    and decoder, grouping does not apply to the XY-chain, and no seam override widens the registered finder's 12 edges
    and 50,000 units. The proof, the equivalent mutant, the cost, the reach and the effect are in `generator/design.md`,
    "The XY-chain".
+   **The grouped chain graph** (`core/js/engine/tech-chain.js`, task MS13a; **inactive**: no registered finder, no seam
+   call and no rating reads it, so every Finding, observer record, hash and wire is unchanged).
+   `SG.chainGraph.build(model, state, ctx[, { groupLimit, workLimit }])` returns
+   `{ nodes, weak, strong, complete, work, capHit }`; the frozen `SG.chainGraph.LIMITS` is
+   `{ groups: 4096, work: 50000 }`. A node is `{ cells, digit }`: `cells` ascending and distinct, each an open cell that
+   still holds the 1-based `digit`; it is true when at least one listed cell holds it, so a true group never licenses
+   placing an arbitrary member (a group node has its own representation, not the arithmetic `cell * digits + digit`
+   decoding of the atomic graph). `nodes` lists the singletons (one per open candidate, ascending by cell and digit),
+   then the groups sorted by the numeric key `[digit, ...cells]`, a shorter prefix first. A group is the set of open
+   cells that hold a digit in the intersection of a complete `box` or `region` unit with a complete `row` or `col`
+   unit, when there are at least two (identical groups are kept once); windows, diagonals and every other unit
+   generate no group of their own but still give strong links and, through `model.peers`, weak links. Two nodes of
+   one digit are weakly linked when they are disjoint and every cross pair of their cells sees each other, and
+   strongly linked when they are disjoint and together are exactly the open occurrences of the digit in one complete
+   unit where it is not placed; different digits link only as the singletons of one cell (weak always, strong when
+   the cell is bivalue). One work unit is one tested combination: every candidate group (before deduplication),
+   every pair of candidates of one cell and **every** pair of nodes of one digit, also those that the first-cell
+   prefilter rejects. The default limits are 50,000 units (a blank 9×9 board needs 84,807, so it returns incomplete
+   by default and a test builds it with a finite `workLimit`) and 4,096 distinct groups (enforced while the groups
+   are collected: a duplicate costs work and no slot; exactly the limit is allowed). The options replace either limit
+   with a finite number of at least 0 (floored; anything else is `solver.invalidOption`); there is no unbounded mode.
+   A graph that cannot be completed is `complete: false` with **empty** arrays and `capHit` `'work'`, `'nodes'` (the
+   quota) or `null` (a spent parent budget); empty arrays never mean that no proof exists, only that no usable graph
+   was built. Cancellation and errors propagate, and the builder publishes no observer record. The independent
+   oracle is `SG.chainProofs` (`core/tests/fixtures/chain-proofs.js`), which recomputes the nodes, the edges, the
+   work and the proofs from the model and the state. The activation (MS13c) applies grouping to `forcingChain` and
+   `forcingChainLong` only, never to the XY-chain, and shares the 50,000-unit allowance between the construction and
+   the search instead of resetting it.
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
    `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
@@ -1035,7 +1063,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (53 suites, 4,368 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (53 suites, 4,408 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (61 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -1047,7 +1075,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 53 suites,
-4,368 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+4,408 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -1104,7 +1132,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 61 suites, 53 of them quick (4,368 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 61 suites, 53 of them quick (4,408 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1512,7 +1540,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (30, 2,607 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (30, 2,647 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

@@ -1,0 +1,177 @@
+{
+  "id": "diagonalX",
+  "cellCount": 81,
+  "digits": 9,
+  "units": 29,
+  "populations": {
+    "constructed: blank": {
+      "calls": 1,
+      "defaultComplete": 0,
+      "cappedWork": 1,
+      "cappedNodes": 0,
+      "defaultWork": {
+        "min": 50000,
+        "median": 50000,
+        "p95": 50000,
+        "max": 50000
+      },
+      "liftedComplete": 1,
+      "liftedWork": {
+        "min": 84807,
+        "median": 84807,
+        "p95": 84807,
+        "max": 84807
+      },
+      "over50000": 1,
+      "nodesMax": 1215,
+      "groupsMax": 486,
+      "liftedMeanMs": 3.782
+    },
+    "synthetic: initial": {
+      "calls": 6,
+      "defaultComplete": 6,
+      "cappedWork": 0,
+      "cappedNodes": 0,
+      "defaultWork": {
+        "min": 2722,
+        "median": 15196,
+        "p95": 18494,
+        "max": 18494
+      },
+      "liftedComplete": 6,
+      "liftedWork": {
+        "min": 2722,
+        "median": 15196,
+        "p95": 18494,
+        "max": 18494
+      },
+      "over50000": 0,
+      "nodesMax": 513,
+      "groupsMax": 220,
+      "liftedMeanMs": 0.675
+    },
+    "synthetic: propagated": {
+      "calls": 6,
+      "defaultComplete": 6,
+      "cappedWork": 0,
+      "cappedNodes": 0,
+      "defaultWork": {
+        "min": 0,
+        "median": 12516,
+        "p95": 16573,
+        "max": 16573
+      },
+      "liftedComplete": 6,
+      "liftedWork": {
+        "min": 0,
+        "median": 12516,
+        "p95": 16573,
+        "max": 16573
+      },
+      "over50000": 0,
+      "nodesMax": 504,
+      "groupsMax": 214,
+      "liftedMeanMs": 0.401
+    },
+    "synthetic: pruned": {
+      "calls": 12,
+      "defaultComplete": 12,
+      "cappedWork": 0,
+      "cappedNodes": 0,
+      "defaultWork": {
+        "min": 0,
+        "median": 4304,
+        "p95": 12579,
+        "max": 12579
+      },
+      "liftedComplete": 12,
+      "liftedWork": {
+        "min": 0,
+        "median": 4304,
+        "p95": 12579,
+        "max": 12579
+      },
+      "over50000": 0,
+      "nodesMax": 444,
+      "groupsMax": 184,
+      "liftedMeanMs": 0.266
+    },
+    "synthetic: many wrong candidates": {
+      "calls": 6,
+      "defaultComplete": 6,
+      "cappedWork": 0,
+      "cappedNodes": 0,
+      "defaultWork": {
+        "min": 1279,
+        "median": 2868,
+        "p95": 4291,
+        "max": 4291
+      },
+      "liftedComplete": 6,
+      "liftedWork": {
+        "min": 1279,
+        "median": 2868,
+        "p95": 4291,
+        "max": 4291
+      },
+      "over50000": 0,
+      "nodesMax": 265,
+      "groupsMax": 80,
+      "liftedMeanMs": 0.255
+    },
+    "ladder: chain-group positions": {
+      "calls": 84,
+      "defaultComplete": 84,
+      "cappedWork": 0,
+      "cappedNodes": 0,
+      "defaultWork": {
+        "min": 2633,
+        "median": 9002,
+        "p95": 14757,
+        "max": 16419
+      },
+      "liftedComplete": 84,
+      "liftedWork": {
+        "min": 2633,
+        "median": 9002,
+        "p95": 14757,
+        "max": 16419
+      },
+      "over50000": 0,
+      "nodesMax": 496,
+      "groupsMax": 209,
+      "liftedMeanMs": 0.602
+    }
+  },
+  "notes": {
+    "blank": {
+      "work": 84807,
+      "nodes": 1215,
+      "expectedWork": 84807,
+      "groups": 486
+    },
+    "ladder": {
+      "puzzles": 6,
+      "puzzlesReachingChains": 3,
+      "positions": 84,
+      "stuckEnds": 0,
+      "outcomes": [
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved"
+      ],
+      "steps": [
+        64,
+        0,
+        64,
+        0,
+        43,
+        0
+      ]
+    }
+  },
+  "seconds": 0.4
+}

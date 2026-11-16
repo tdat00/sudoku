@@ -1,0 +1,81 @@
+$ node tests\artifacts\difficulty-v3\MS13a\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS13a\mutations-final-2.txt
+mutation 0 (a weak link is decided by the first cells of the two nodes only): DETECTED - 40 total, 31 passed, 9 failed, 0 skipped - 9 failing - 1.1 s
+mutation 1 (a weak link needs only ONE crossing pair of cells that see each other): DETECTED - 40 total, 31 passed, 9 failed, 0 skipped - 9 failing - 1.1 s
+mutation 2 (overlapping nodes are not told apart from disjoint ones): DETECTED - 40 total, 28 passed, 12 failed, 0 skipped - 12 failing - 1.2 s
+mutation 3 (a strong link only needs the nodes to cover at most the occurrences of the unit (a subset)): DETECTED - 40 total, 26 passed, 14 failed, 0 skipped - 14 failing - 1.0 s
+mutation 4 (every unit is taken for a complete one (a partial unit gives strong links and groups)): DETECTED - 40 total, 34 passed, 6 failed, 0 skipped - 6 failing - 1.4 s
+mutation 5 (a digit that is already placed in the unit still gives a strong link): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 6 (the second node of a strong link need not lie inside the unit): DETECTED - 40 total, 26 passed, 14 failed, 0 skipped - 14 failing - 1.0 s
+mutation 7 (groups come from units that are not complete (a partial cage)): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 8 (groups come from a box or region that is not complete (only the line is asked)): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 9 (groups come from a row or column that is not complete (only the box or region is asked)): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 10 (a column is no line): DETECTED - 40 total, 24 passed, 16 failed, 0 skipped - 16 failing - 0.8 s
+mutation 11 (a window or a diagonal (any other kind) generates groups like a box): DETECTED - 40 total, 38 passed, 2 failed, 0 skipped - 2 failing - 1.5 s
+mutation 12 (a region generates no group (only the kind box does)): DETECTED - 40 total, 37 passed, 3 failed, 0 skipped - 3 failing - 1.5 s
+mutation 13 (an intersection needs three cells to give a group): DETECTED - 40 total, 36 passed, 4 failed, 0 skipped - 4 failing - 1.1 s
+mutation 14 (a single occurrence in an intersection is a group (a second copy of the singleton)): DETECTED - 40 total, 26 passed, 14 failed, 0 skipped - 14 failing - 1.1 s
+mutation 15 (a solved cell counts as an occurrence in an intersection): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 16 (a solved cell is a singleton node): DETECTED - 40 total, 33 passed, 7 failed, 0 skipped - 7 failing - 1.3 s
+mutation 17 (a bivalue strong link for every cell with two or more candidates): DETECTED - 40 total, 32 passed, 8 failed, 0 skipped - 8 failing - 1.0 s
+mutation 18 (two candidates of one cell are not weakly linked): DETECTED - 40 total, 32 passed, 8 failed, 0 skipped - 8 failing - 0.9 s
+mutation 19 (a repeated group is tested against the quota (a duplicate spends a slot)): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 20 (the groups are sorted descending): DETECTED - 40 total, 28 passed, 12 failed, 0 skipped - 12 failing - 1.1 s
+mutation 21 (the groups are not sorted (the order of their generation)): DETECTED - 40 total, 33 passed, 7 failed, 0 skipped - 7 failing - 1.2 s
+mutation 22 (the key order puts the larger digit first): DETECTED - 40 total, 34 passed, 6 failed, 0 skipped - 6 failing - 1.1 s
+mutation 23 (the key order puts a longer prefix first): DETECTED - 40 total, 37 passed, 3 failed, 0 skipped - 3 failing - 1.5 s
+mutation 24 (the singletons of a cell come highest digit first): DETECTED - 40 total, 32 passed, 8 failed, 0 skipped - 8 failing - 1.0 s
+mutation 25 (the state is written (the candidate of a singleton is consumed)): DETECTED - 40 total, 9 passed, 31 failed, 0 skipped - 31 failing - 0.5 s
+mutation 26 (adjacency lists (weak) are not sorted): DETECTED - 40 total, 33 passed, 7 failed, 0 skipped - 7 failing - 1.1 s
+mutation 27 (adjacency lists (strong) are not sorted): DETECTED - 40 total, 35 passed, 5 failed, 0 skipped - 5 failing - 1.2 s
+mutation 28 (the peer matrix is not symmetric): DETECTED - 40 total, 29 passed, 11 failed, 0 skipped - 11 failing - 1.1 s
+mutation 29 (the geometry of the first model is kept for every model (a stale cache)): DETECTED - 40 total, 5 passed, 35 failed, 0 skipped - 35 failing - 0.3 s
+mutation 30 (the default group limit is 4097): DETECTED - 40 total, 38 passed, 2 failed, 0 skipped - 2 failing - 2.0 s
+mutation 31 (the default work limit is 50001): DETECTED - 40 total, 37 passed, 3 failed, 0 skipped - 3 failing - 1.9 s
+mutation 32 (the quota allows one group more than the limit (>)): DETECTED - 40 total, 38 passed, 2 failed, 0 skipped - 2 failing - 1.9 s
+mutation 33 (the quota refuses the last allowed group (limit - 1)): DETECTED - 40 total, 38 passed, 2 failed, 0 skipped - 2 failing - 1.6 s
+mutation 34 (the quota is checked only after the whole set of groups was collected): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.8 s
+mutation 35 (a group candidate is not charged): DETECTED - 40 total, 31 passed, 9 failed, 0 skipped - 9 failing - 1.1 s
+mutation 36 (the work limit is off by one (a unit may be charged past it)): DETECTED - 40 total, 33 passed, 7 failed, 0 skipped - 7 failing - 1.8 s
+mutation 37 (a pair of nodes whose first cells do not meet is not charged): DETECTED - 40 total, 35 passed, 5 failed, 0 skipped - 5 failing - 1.2 s
+mutation 38 (the pairs of candidates of a cell are not charged): DETECTED - 40 total, 35 passed, 5 failed, 0 skipped - 5 failing - 1.1 s
+mutation 39 (the budget is checked one unit early (>=)): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.8 s
+mutation 40 (the budget is checked 257 units late (> 512)): DETECTED - 40 total, 36 passed, 4 failed, 0 skipped - 4 failing - 1.8 s
+mutation 41 (the entry check is dropped): DETECTED - 40 total, 35 passed, 5 failed, 0 skipped - 5 failing - 1.9 s
+mutation 42 (the check after the model-only set-up is dropped): DETECTED - 40 total, 35 passed, 5 failed, 0 skipped - 5 failing - 1.9 s
+mutation 43 (the scan of the cells of the state does not count its steps): DETECTED - 40 total, 38 passed, 2 failed, 0 skipped - 2 failing - 1.8 s
+mutation 44 (the scan of the cells of the intersections does not count its steps): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 2.6 s
+mutation 45 (the scan of the cells of the complete units does not count its steps): DETECTED - 40 total, 35 passed, 5 failed, 0 skipped - 5 failing - 1.9 s
+mutation 46 (a scan step is checked every 255 steps): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 2.0 s
+mutation 47 (a scan step is checked every 257 steps): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 48 (a scan step is checked every 512 steps): DETECTED - 40 total, 35 passed, 5 failed, 0 skipped - 5 failing - 1.9 s
+mutation 49 (cancellation and every other error are swallowed): DETECTED - 40 total, 38 passed, 2 failed, 0 skipped - 2 failing - 1.9 s
+mutation 50 (a spent budget is reported as a work cap): DETECTED - 40 total, 36 passed, 4 failed, 0 skipped - 4 failing - 1.8 s
+mutation 51 (the quota is reported as a work cap): DETECTED - 40 total, 38 passed, 2 failed, 0 skipped - 2 failing - 1.8 s
+mutation 52 (the quota is reported with the old tag "groups"): DETECTED - 40 total, 38 passed, 2 failed, 0 skipped - 2 failing - 1.8 s
+mutation 53 (an incomplete graph says it is complete): DETECTED - 40 total, 31 passed, 9 failed, 0 skipped - 9 failing - 1.8 s
+mutation 54 (an incomplete graph returns a partial node list): DETECTED - 40 total, 33 passed, 7 failed, 0 skipped - 7 failing - 1.8 s
+mutation 55 (the options accept Infinity): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 56 (the options refuse 0): DETECTED - 40 total, 35 passed, 5 failed, 0 skipped - 5 failing - 1.8 s
+mutation 57 (the options are not floored): DETECTED - 40 total, 37 passed, 3 failed, 0 skipped - 3 failing - 1.8 s
+mutation 58 (null options are not refused cleanly): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 59 (checker: a weak link compares the first cells only): DETECTED - 40 total, 32 passed, 8 failed, 0 skipped - 8 failing - 1.1 s
+mutation 60 (checker: a strong link compares the number of occurrences, not the cells): DETECTED - 40 total, 27 passed, 13 failed, 0 skipped - 13 failing - 1.2 s
+mutation 61 (checker: a digit placed in a unit is ignored): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 62 (checker: a target needs to be linked to either end): DETECTED - 40 total, 37 passed, 3 failed, 0 skipped - 3 failing - 1.8 s
+mutation 63 (checker: a forced or contradiction proof may start from a group): DETECTED - 40 total, 37 passed, 3 failed, 0 skipped - 3 failing - 1.9 s
+mutation 64 (checker: the placements of a proof are not compared): DETECTED - 40 total, 37 passed, 3 failed, 0 skipped - 3 failing - 1.9 s
+mutation 65 (checker: a placement is rejected when its candidate is also a member of a group of the proof (the old over-restriction)): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 66 (checker: the strong edges of a path are not checked): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.8 s
+mutation 67 (checker: the weak edges of a path are not checked): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 68 (checker: extra edges of a graph are not counted): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 69 (checker: the order of the cells of a node is not checked): DETECTED - 40 total, 38 passed, 2 failed, 0 skipped - 2 failing - 1.9 s
+mutation 70 (checker: the expected work charges only a quarter of the pairs of a digit): DETECTED - 40 total, 37 passed, 3 failed, 0 skipped - 3 failing - 1.3 s
+mutation 71 (checker: the expected groups come from every complete unit that is no line (windows and diagonals too)): DETECTED - 40 total, 38 passed, 2 failed, 0 skipped - 2 failing - 1.5 s
+mutation 72 (checker: the expected ticks leave out the cells of the complete units): DETECTED - 40 total, 37 passed, 3 failed, 0 skipped - 3 failing - 1.9 s
+mutation 73 (checker: a weak edge that fails in a solution is not reported): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 74 (checker: a strong edge that fails in a solution is not reported): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 75 (checker: the targets of an endpoints proof are not compared): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 76 (checker: the length of a proof is not checked): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 1.9 s
+mutation 77 (EQUIVALENT (argued): the complete-unit guard of the cover test (occ is zero for a unit that is not complete)): NOT DETECTED, EQUIVALENT (argued) - 40 total, 40 passed, 0 failed, 0 skipped - 0 failing - 1.9 s
+detected 77 of 78, survivors 1, 122.7 s
+exit=0 seconds=122.768

@@ -3504,6 +3504,1454 @@
       });
   });
 
+  // ---------------------------------------------------------------------------------------------------------------
+  // The canonical grouped graph (R16, MS13a), INACTIVE: `SG.chainGraph.build` is read by no registered finder. Its
+  // independent checker is `SG.chainProofs` (core/tests/fixtures/chain-proofs.js): it recomputes candidate membership,
+  // every cross pair of peers and the complete-unit coverage from the model and the state, and shares nothing with the
+  // builder. The suites below compare the builder with it, and test the checker itself on malformed graphs and proofs.
+  // ---------------------------------------------------------------------------------------------------------------
+
+  var CP = SG.chainProofs;
+  var CG = SG.chainGraph;
+
+  function graphOf(m, state, options, ctxOptions) {
+    return CG.build(m, state, ctxFor(m, ctxOptions), options);
+  }
+
+  function snapshotOf(state) {
+    return { candidates: Array.from(state.candidates), value: Array.from(state.value), unsolved: state.unsolvedCount };
+  }
+
+  /** The index of the node { cells, digit } in a graph, or -1. */
+  function indexOfNode(graph, cells, digit) {
+    for (var i = 0; i < graph.nodes.length; i++) {
+      if (graph.nodes[i].digit === digit && same(graph.nodes[i].cells, cells)) return i;
+    }
+    return -1;
+  }
+
+  function listed(graph, kind, i, j) {
+    return graph[kind][i].indexOf(j) !== -1 && graph[kind][j].indexOf(i) !== -1;
+  }
+
+  function edgeTotal(lists) {
+    return lists.reduce(function (sum, list) { return sum + list.length; }, 0) / 2;
+  }
+
+  /** A position where only the listed cells hold anything, the digit `digit` alone (so the graph is just its own). */
+  function digitOnly(m, digit, cells) {
+    var state = SG.model.initState(m);
+    for (var c = 0; c < m.cellCount; c++) state.candidates[c] = cells.indexOf(c) === -1 ? 0 : bitOf(digit);
+    return state;
+  }
+
+  /** A context whose parent-budget check counts its calls and throws `failWith` at the `failAt`-th one. */
+  function checkingCtx(m, failAt, failWith) {
+    var ctx = Object.assign({}, ctxFor(m), { check: function () {
+      ctx.checks++;
+      if (ctx.checks === failAt) throw failWith;
+    } });
+    ctx.checks = 0;
+    return ctx;
+  }
+
+  function spentBudget() {
+    return new SG.errors.GenerationError('budget.exceeded', { reason: 'nodes' });
+  }
+
+  /**
+   * classic9 and two 3 x 3 windows that overlap the boxes (R2C2..R4C4 and R6C6..R8C8), of the given kind: 'window'
+   * (a complete unit that gives strong and weak links but generates no group) or 'region' (a box-like unit whose
+   * intersections with a line are groups, overlapping those of the boxes); `diagonal` adds the main diagonal ('diag').
+   */
+  var extraModels = {};
+  function extraUnitsModel(windowKind, diagonal) {
+    var tag = 'chain-' + windowKind + (diagonal ? '-diag' : '');
+    if (!extraModels[tag]) {
+      var base = SG.fixtures.models.boxGrid(tag + '-base', 3, 3);
+      var units = Array.prototype.map.call(base.units, function (u) { return Array.from(u); });
+      var meta = Array.prototype.slice.call(base.unitMeta);
+      [[1, 1], [5, 5]].forEach(function (origin, k) {
+        var cells = [];
+        for (var r = 0; r < 3; r++) for (var c = 0; c < 3; c++) cells.push((origin[0] + r) * 9 + origin[1] + c);
+        units.push(cells);
+        meta.push({ kind: windowKind, gridIndex: 0, label: 'W' + (k + 1) });
+      });
+      if (diagonal) {
+        units.push([0, 10, 20, 30, 40, 50, 60, 70, 80]);
+        meta.push({ kind: 'diag', gridIndex: 0, label: 'D1' });
+      }
+      extraModels[tag] = SG.model.create({ variantId: tag, digits: 9, units: units, unitMeta: meta,
+        layout: base.layout });
+    }
+    return extraModels[tag];
+  }
+
+  function windowModel() {
+    return extraUnitsModel('window', true);
+  }
+
+  function regionModel() {
+    return extraUnitsModel('region', false);
+  }
+
+  /** classic9 and a partial all-different "cage" of R2C1 and R2C4 (a box-like unit that is not complete). */
+  var cages9 = null;
+  function cageModel() {
+    if (cages9 === null) {
+      var base = SG.fixtures.models.boxGrid('chain-cage-base', 3, 3);
+      var units = Array.prototype.map.call(base.units, function (u) { return Array.from(u); });
+      var meta = Array.prototype.slice.call(base.unitMeta);
+      units.push([9, 12]);
+      meta.push({ kind: 'cage', gridIndex: 0, label: 'K1', partial: true });
+      cages9 = SG.model.create({ variantId: 'chain-cage', digits: 9, units: units, unitMeta: meta,
+        layout: base.layout });
+    }
+    return cages9;
+  }
+
+  /** `grids` independent 4 x 4 boards side by side: 4 digits, 16 groups of two cells per digit and grid. */
+  var farms = {};
+  function gridFarm(grids) {
+    if (!farms[grids]) {
+      var units = [];
+      var meta = [];
+      var cellRow = [];
+      var cellCol = [];
+      for (var g = 0; g < grids; g++) {
+        var base = g * 16;
+        for (var i = 0; i < 4; i++) {
+          var row = [];
+          var col = [];
+          for (var k = 0; k < 4; k++) {
+            row.push(base + i * 4 + k);
+            col.push(base + k * 4 + i);
+          }
+          units.push(row, col);
+          meta.push({ kind: 'row', gridIndex: g, label: 'G' + g + 'R' + (i + 1) },
+            { kind: 'col', gridIndex: g, label: 'G' + g + 'C' + (i + 1) });
+        }
+        for (var b = 0; b < 4; b++) {
+          var top = Math.floor(b / 2) * 2;
+          var left = (b % 2) * 2;
+          units.push([base + top * 4 + left, base + top * 4 + left + 1, base + (top + 1) * 4 + left,
+            base + (top + 1) * 4 + left + 1]);
+          meta.push({ kind: 'box', gridIndex: g, label: 'G' + g + 'B' + (b + 1) });
+        }
+        for (var c = 0; c < 16; c++) {
+          cellRow.push(0);
+          cellCol.push(base + c);
+        }
+      }
+      farms[grids] = SG.model.create({ variantId: 'chain-farm-' + grids, digits: 4, units: units, unitMeta: meta,
+        layout: { rows: 1, cols: grids * 16, cellRow: cellRow, cellCol: cellCol } });
+    }
+    return farms[grids];
+  }
+
+  /**
+   * classic9 and three extra units that are NOT complete, each crossing a complete unit of the right kind: a region
+   * of four cells (too short) on row 2, a region of nine cells marked partial on rows 2 and 4, and a unit of kind 'row'
+   * marked partial through boxes 1, 5 and 9 (the cells of the main diagonal).
+   */
+  var incomplete9 = null;
+  function incompleteModel() {
+    if (incomplete9 === null) {
+      var base = SG.fixtures.models.boxGrid('chain-incomplete-base', 3, 3);
+      var units = Array.prototype.map.call(base.units, function (u) { return Array.from(u); });
+      var meta = Array.prototype.slice.call(base.unitMeta);
+      [[[9, 10, 11, 12], 'region', false, 'S1'], [[9, 10, 11, 12, 13, 27, 28, 29, 30], 'region', true, 'S2'],
+        [[0, 10, 20, 30, 40, 50, 60, 70, 80], 'row', true, 'S3']].forEach(function (spec) {
+        var entry = { kind: spec[1], gridIndex: 0, label: spec[3] };
+        if (spec[2]) entry.partial = true;
+        units.push(spec[0]);
+        meta.push(entry);
+      });
+      incomplete9 = SG.model.create({ variantId: 'chain-incomplete', digits: 9, units: units, unitMeta: meta,
+        layout: base.layout });
+    }
+    return incomplete9;
+  }
+
+  /**
+   * `rows` independent complete rows of four cells (digits 1..4) and `loose` more cells in partial cages of at most
+   * four: the scans of a build are 8 * rows + loose steps (every cell, and the cells of the complete rows).
+   */
+  var rowFarms = {};
+  function rowFarm(rows, loose) {
+    var tag = rows + '-' + loose;
+    if (!rowFarms[tag]) {
+      var units = [];
+      var meta = [];
+      var cells = rows * 4 + loose;
+      for (var r = 0; r < rows; r++) {
+        units.push([r * 4, r * 4 + 1, r * 4 + 2, r * 4 + 3]);
+        meta.push({ kind: 'row', gridIndex: 0, label: 'R' + (r + 1) });
+      }
+      for (var first = rows * 4; first < cells; first += 4) {
+        var cage = [];
+        for (var c = first; c < Math.min(cells, first + 4); c++) cage.push(c);
+        units.push(cage);
+        meta.push({ kind: 'cage', gridIndex: 0, label: 'K' + (first + 1), partial: true });
+      }
+      var cellCol = [];
+      for (var k = 0; k < cells; k++) cellCol.push(k);
+      rowFarms[tag] = SG.model.create({ variantId: 'chain-rowfarm-' + tag, digits: 4, units: units, unitMeta: meta,
+        layout: { rows: 1, cols: cells, cellRow: cellCol.map(function () { return 0; }), cellCol: cellCol } });
+    }
+    return rowFarms[tag];
+  }
+
+  describe('grouped graph (R16, inactive): the API and the registered kernels', function () {
+    it('exposes build and the two limits of R10 (4096 additional nodes, 50000 tested combinations) only', function () {
+      expect(Object.keys(CG).sort()).toEqual(['LIMITS', 'build']);
+      expect(CG.LIMITS).toEqual({ groups: 4096, work: 50000 });
+      expect(Object.isFrozen(CG.LIMITS)).toBe(true);
+      var graph = graphOf(model4, SG.model.initState(model4));
+      expect(Object.keys(graph)).toEqual(['nodes', 'weak', 'strong', 'complete', 'work', 'capHit']);
+    });
+
+    it('is referenced by nothing but its own table: the registered finders and the seam keep the singleton graph',
+      function () {
+        if (!SG.test.node) SG.test.skip('needs the Node file system; skipped in the browser');
+        var text = SG.test.node.fs.readFileSync(
+          SG.test.node.path.join(SG.test.node.root, '../core/js/engine/tech-chain.js'), 'utf8')
+          .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^[ \t]*\/\/.*$/gm, '');
+        function count(pattern) { return (text.match(pattern) || []).length; }
+        expect(count(/\bbuildGraph\b/g)).toBe(2); // its declaration and the entry of SG.chainGraph
+        expect(count(/\bconstructGraph\b/g)).toBe(2); // its declaration and the one call inside buildGraph
+        ['findXyChain', 'findForcingChain', 'findForcingChainLong', 'findNishio', 'findNishioDeep', 'forcingWith',
+          'scanForcing', 'chainForcing', 'chainNishio', 'buildStrongLinks', 'scratchFor'].forEach(function (name) {
+          var body = new RegExp('\\n  function ' + name + '\\([\\s\\S]*?\\n  }\\r?\\n').exec(text);
+          expect([name, body !== null]).toEqual([name, true]);
+          expect([name, /Graph|graph/.test(body[0])]).toEqual([name, false]);
+        });
+      });
+
+    it('changes no Finding and no observer record of the registered finders and the seam, built in between or not',
+      function () {
+        var items = H.randomStatesWithKnownSolution(model9, SG.testkit.rng.create(8701), 10)
+          .concat(prunedStates(model6, SG.testkit.rng.create(8702), 10, function (r) { return 0.05 + 0.2 * r.next(); }));
+        function results() {
+          return items.map(function (item) {
+            var m = item.state.unsolvedCount > 0 && item.solution.length === 36 ? model6 : model9;
+            var out = ['xyChain', 'forcingChain', 'forcingChainLong', 'nishio'].map(function (id) {
+              var records = [];
+              var finding = run(id, m, item.state, { onPatternWork: function (r) { records.push(r); } });
+              return { finding: finding, records: records };
+            });
+            var seamRecords = [];
+            var seam = SG.chainSearch.forcing(m, item.state, ctxFor(m, { onPatternWork: function (r) {
+              seamRecords.push(r);
+            } }), { id: 'probe', minLength: 1, maxLength: 8 });
+            out.push({ finding: seam, records: seamRecords });
+            return out;
+          });
+        }
+        var before = JSON.stringify(results());
+        items.forEach(function (item) {
+          var m = item.solution.length === 36 ? model6 : model9;
+          expect(graphOf(m, item.state, { workLimit: 1000000 }).complete).toBe(true);
+        });
+        expect(JSON.stringify(results())).toBe(before);
+      });
+  });
+
+  describe('grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time', function () {
+    // Predicate vectors on boards where one digit stays in the listed cells only (every other digit is untouched).
+    // They are synthetic unit tests of the obligations, never help examples of the product. Every vector is checked
+    // with the independent predicates of SG.chainProofs and with the builder (where both nodes are canonical).
+    function node(cells, digit) {
+      return { cells: cells, digit: digit === undefined ? 5 : digit };
+    }
+
+    /** Asserts the two relations with the checker, and in the builder's graph when both nodes are in it. */
+    function links(m, state, a, b, weak, strong, label) {
+      expect([label, 'checker weak', CP.weakLinked(m, state, a, b)]).toEqual([label, 'checker weak', weak]);
+      expect([label, 'checker strong', CP.strongLinked(m, state, a, b)]).toEqual([label, 'checker strong', strong]);
+      var graph = graphOf(m, state);
+      expect(CP.graphProblems(m, state, graph)).toEqual([]);
+      var i = indexOfNode(graph, a.cells, a.digit);
+      var j = indexOfNode(graph, b.cells, b.digit);
+      if (i !== -1 && j !== -1) {
+        expect([label, 'builder weak', listed(graph, 'weak', i, j)]).toEqual([label, 'builder weak', weak]);
+        expect([label, 'builder strong', listed(graph, 'strong', i, j)]).toEqual([label, 'builder strong', strong]);
+      }
+      return graph;
+    }
+
+    it('same-digit weak: disjoint groups and EVERY cross pair in conflict (R1C1 R1C2 against R2C1 R2C2: all four)',
+      function () {
+        var state = digitOnly(model9, 5, [0, 1, 9, 10]);
+        var graph = links(model9, state, node([0, 1]), node([9, 10]), true, true, 'two rows of a box');
+        // the same cells read the other way: the two columns of the box are weak, too, and they overlap the rows
+        expect(indexOfNode(graph, [0, 9], 5)).not.toBe(-1);
+        links(model9, state, node([0, 9]), node([1, 10]), true, true, 'two columns of a box');
+        links(model9, state, node([0, 1]), node([0, 9]), false, false, 'groups that share R1C1');
+      });
+
+    it('same-digit weak: one missing pair is no link, however convenient the other pairs are', function () {
+      // R1C1 sees R4C1 and R5C1 (a column) but R1C2 sees neither: two of the four pairs, not a link
+      var state = digitOnly(model9, 5, [0, 1, 27, 36]);
+      var graph = links(model9, state, node([0, 1]), node([27, 36]), false, false, 'two of four pairs');
+      var group = indexOfNode(graph, [0, 1], 5);
+      var low = indexOfNode(graph, [27], 5);
+      expect([indexOfNode(graph, [0], 5) !== -1, listed(graph, 'weak', indexOfNode(graph, [0], 5), low)])
+        .toEqual([true, true]);
+      expect(listed(graph, 'weak', group, low)).toBe(false); // R1C1 sees R4C1, the group {R1C1, R1C2} does not
+      expect(listed(graph, 'weak', group, indexOfNode(graph, [36], 5))).toBe(false);
+      // exactly one missing pair: R1C1 R1C2 against R1C4 and R4C1 (R1C2 does not see R4C1); a node the builder has no
+      // reason to hold, so only the independent predicate speaks
+      var three = digitOnly(model9, 5, [0, 1, 3, 27]);
+      expect(CP.weakLinked(model9, three, node([0, 1]), node([3, 27]))).toBe(false);
+      expect(CP.weakLinked(model9, three, node([0, 1]), node([3]))).toBe(true);
+      expect(CP.weakLinked(model9, three, node([0]), node([3, 27]))).toBe(true);
+    });
+
+    it('overlapping groups are never weak or strong, even when together they are all the occurrences of a unit',
+      function () {
+        // classic9: {R1C1, R1C2} (box 1, row 1) and {R1C1, R2C1} (box 1, column 1) share R1C1 and together are all of box 1
+        var shared = digitOnly(model9, 5, [0, 1, 9]);
+        links(model9, shared, node([0, 1]), node([0, 9]), false, false, 'two groups that share a cell');
+        // an overlap that fakes the count: six cells of box 1 hold the digit, and its row 1 and column 3 parts are
+        // 3 + 3 cells, but together they cover only five of them (they share R1C3): no strong link
+        var faked9 = digitOnly(model9, 5, [0, 1, 2, 10, 11, 20]);
+        links(model9, faked9, node([0, 1, 2]), node([2, 11, 20]), false, false, 'row and column parts of one box');
+        // a model with extra regions on top of the boxes: the box and the region of row 2 overlap
+        var m = regionModel();
+        // row 2 holds the digit in R2C1..R2C4 only: the box gives {C1,C2,C3}, the region {C2,C3,C4} (they overlap)
+        var state = digitOnly(m, 5, [9, 10, 11, 12]);
+        var graph = links(m, state, node([9, 10, 11]), node([10, 11, 12]), false, false, 'box and region of a row');
+        expect(indexOfNode(graph, [9, 10, 11], 5)).not.toBe(-1);
+        expect(indexOfNode(graph, [10, 11, 12], 5)).not.toBe(-1);
+        // the disjoint singleton and group of the same row are the strong link of the row
+        links(m, state, node([9, 10, 11]), node([12]), true, true, 'a group and the rest of the row');
+        links(m, state, node([9]), node([10, 11, 12]), true, true, 'the rest of the row and a group');
+        // an overlap that fakes the count: six cells of row 2 hold the digit, and the box and the region groups are
+        // 3 + 3 cells, but together they cover only four of them: no strong link; the two boxes of the row are one
+        var faked = digitOnly(m, 5, [9, 10, 11, 12, 13, 14]);
+        links(m, faked, node([9, 10, 11]), node([10, 11, 12]), false, false, 'overlap with the count of the row');
+        links(m, faked, node([9, 10, 11]), node([12, 13, 14]), true, true, 'the two boxes of the row');
+      });
+
+    it('same-digit strong: disjoint nodes that are exactly the occurrences of a complete unit; one more is no link',
+      function () {
+        // row 1 holds the digit in R1C1, R1C2 and R1C4 only: the box 1 part {R1C1, R1C2} and R1C4 are the whole row
+        var exact = digitOnly(model9, 5, [0, 1, 3]);
+        links(model9, exact, node([0, 1]), node([3]), true, true, 'exactly the occurrences of the row');
+        // one more occurrence in the row (R1C7, in another box): the nodes no longer cover the row
+        var more = digitOnly(model9, 5, [0, 1, 3, 6]);
+        var graph = links(model9, more, node([0, 1]), node([3]), true, false, 'one more occurrence in the row');
+        // the group is the whole box 1 and not the whole row: it has no strong link at all
+        expect(graph.strong[indexOfNode(graph, [0, 1], 5)]).toEqual([]);
+        // an occurrence of another unit does not matter: R3C3 is in box 1 but not in row 1
+        links(model9, digitOnly(model9, 5, [0, 1, 3, 20]), node([0, 1]), node([3]), true, true, 'outside the row');
+        // a digit that is already placed in the unit gives no strong link (a state that is not peer consistent)
+        var placed = digitOnly(model9, 5, [0, 1, 3]);
+        placed.value[8] = 5;
+        placed.candidates[8] = bitOf(5);
+        links(model9, placed, node([0, 1]), node([3]), true, false, 'the digit is placed in the row');
+      });
+
+    it('a partial unit gives weak links (all-different) and never a strong one, whatever it covers', function () {
+      var m = partialUnitModel();
+      // the partial group is R1C1, R2C2 and R3C3 (cells 0, 5, 10); R2C2 and R3C3 share only that unit
+      var partial = digitOnly(m, 1, [5, 10]);
+      links(m, partial, node([5], 1), node([10], 1), true, false, 'only a partial unit holds both');
+      var three = digitOnly(m, 1, [0, 5, 10]);
+      links(m, three, node([0], 1), node([5], 1), true, true, 'a box holds exactly both');
+      links(m, three, node([5], 1), node([10], 1), true, false, 'the partial unit would hold all three');
+    });
+
+    it('groups come from complete boxes and regions with complete lines only: a partial cage, a window and a ' +
+      'diagonal make none, but windows and diagonals still link', function () {
+        var m = cageModel();
+        // R2C1 and R2C4 are in the partial cage and in row 2, but in no common box
+        var state = digitOnly(m, 5, [9, 12]);
+        var graph = graphOf(m, state);
+        expect(graph.complete).toBe(true);
+        expect(indexOfNode(graph, [9, 12], 5)).toBe(-1);
+        expect(CP.graphProblems(m, state, graph)).toEqual([]);
+        links(m, state, node([9]), node([12]), true, true, 'the cage is weak, the complete row strong');
+        // a window is a complete unit of another kind: its intersection with row 2 is no group, but the box part is
+        var windows = windowModel();
+        var wstate = digitOnly(windows, 5, [10, 11, 12]);
+        var wgraph = graphOf(windows, wstate);
+        expect(indexOfNode(wgraph, [10, 11, 12], 5)).toBe(-1);
+        expect(indexOfNode(wgraph, [10, 11], 5)).not.toBe(-1);
+        expect(CP.graphProblems(windows, wstate, wgraph)).toEqual([]);
+        // the window and the diagonal give strong links: the only two places of the digit in them (nothing else joins
+        // R2C3 with R4C2, or R1C1 with R9C9), and their peers give weak links
+        links(windows, digitOnly(windows, 5, [11, 28]), node([11]), node([28]), true, true, 'the two cells of a window');
+        links(windows, digitOnly(windows, 5, [0, 80]), node([0]), node([80]), true, true, 'the two cells of the diagonal');
+        links(windows, digitOnly(windows, 5, [11, 28, 12]), node([11]), node([28]), true, false,
+          'a third occurrence in the window');
+        // the key order puts a prefix first: {R2C2, R2C3} (the box part of the row) before {R2C2, R2C3, R2C4} (the
+        // part of a region); both are groups of box-like units
+        var regions = regionModel();
+        var rstate = digitOnly(regions, 5, [10, 11, 12]);
+        var rgraph = graphOf(regions, rstate);
+        expect(indexOfNode(rgraph, [10, 11], 5)).not.toBe(-1);
+        expect(indexOfNode(rgraph, [10, 11, 12], 5)).not.toBe(-1);
+        expect(indexOfNode(rgraph, [10, 11], 5)).toBeLessThan(indexOfNode(rgraph, [10, 11, 12], 5));
+        expect(CP.graphProblems(regions, rstate, rgraph)).toEqual([]);
+      });
+
+    it('a box, a region or a line that is not complete makes no group: too short, or marked partial, whatever its ' +
+      'cells hold; the complete ones beside it still do', function () {
+        var m = incompleteModel();
+        // the digit in R2C1..R2C5 (9..13), R4C1..R4C4 (27..30), R1C1 (0) and the diagonal cells 10, 20, 40
+        var state = digitOnly(m, 5, [0, 9, 10, 11, 12, 13, 20, 27, 28, 29, 30, 40]);
+        var graph = graphOf(m, state);
+        expect(graph.complete).toBe(true);
+        expect(CP.graphProblems(m, state, graph)).toEqual([]);
+        // the short region S1 (9..12) and the partial region S2 (9..13 on row 2, 27..30 on row 4) make none
+        expect(indexOfNode(graph, [9, 10, 11, 12], 5)).toBe(-1);
+        expect(indexOfNode(graph, [9, 10, 11, 12, 13], 5)).toBe(-1);
+        expect(indexOfNode(graph, [27, 28, 29, 30], 5)).toBe(-1);
+        // the partial row-kind unit S3 crosses box 1 in R1C1, R2C2 and R3C3 (0, 10, 20): no group of it either
+        expect(indexOfNode(graph, [0, 10, 20], 5)).toBe(-1);
+        expect(indexOfNode(graph, [0, 10], 5)).toBe(-1);
+        expect(indexOfNode(graph, [10, 20], 5)).toBe(-1);
+        // the complete boxes and rows of the same position do: box 1 with row 2, box 4 with row 4, box 2 with row 2
+        expect(indexOfNode(graph, [9, 10, 11], 5)).not.toBe(-1);
+        expect(indexOfNode(graph, [27, 28, 29], 5)).not.toBe(-1);
+        expect(indexOfNode(graph, [12, 13], 5)).not.toBe(-1);
+        // and the graph is as large as the checker's expectation, which generates from complete units only
+        expect(graph.nodes.length).toBe(CP.expectedNodes(m, state).nodes.length);
+      });
+
+    it('a solved cell is no occurrence: one open 5 beside a solved 5 in an intersection forms no group', function () {
+      // a state that is not peer consistent: R1C3 is solved with the 5 and R1C1 still holds it
+      var state = digitOnly(model9, 5, [0]);
+      state.value[2] = 5;
+      state.candidates[2] = bitOf(5);
+      var graph = graphOf(model9, state);
+      expect(graph.nodes).toEqual([{ cells: [0], digit: 5 }]);
+      expect(CP.graphProblems(model9, state, graph)).toEqual([]);
+      // and a solved cell is no singleton node, however many candidates the state keeps for it
+      var solved = digitOnly(model9, 5, [0, 1]);
+      solved.value[1] = 5;
+      expect(graphOf(model9, solved).nodes).toEqual([{ cells: [0], digit: 5 }]);
+    });
+
+    it('different digits link only as the singletons of one cell: weak always, strong for a bivalue cell', function () {
+      var state = SG.model.initState(model9);
+      state.candidates[0] = bitOf(3) | bitOf(5);
+      state.candidates[1] = bitOf(3) | bitOf(5) | bitOf(7);
+      state.candidates[2] = bitOf(1); // R1C3 does not hold the 5: R1C1 and R1C2 are the box 1 part of row 1
+      for (var c = 3; c < model9.cellCount; c++) state.candidates[c] = 0; // nothing else, to keep the graph small
+      var graph = graphOf(model9, state);
+      expect(CP.graphProblems(model9, state, graph)).toEqual([]);
+      links(model9, state, node([0], 3), node([0], 5), true, true, 'a bivalue cell');
+      links(model9, state, node([1], 3), node([1], 5), true, false, 'a trivalue cell');
+      links(model9, state, node([1], 5), node([1], 7), true, false, 'another pair of a trivalue cell');
+      // a group never links to another digit, not even to a candidate of one of its own cells
+      var group = indexOfNode(graph, [0, 1], 5);
+      expect(group).not.toBe(-1);
+      expect(graph.weak[group].map(function (i) { return graph.nodes[i].digit; }).filter(function (d) {
+        return d !== 5;
+      })).toEqual([]);
+      expect(graph.strong[group].map(function (i) { return graph.nodes[i].digit; }).filter(function (d) {
+        return d !== 5;
+      })).toEqual([]);
+      links(model9, state, node([0, 1], 5), node([0], 3), false, false, 'a group and a candidate of one member cell');
+      // two candidates of two cells are not linked either
+      links(model9, state, node([0], 3), node([1], 5), false, false, 'different digits in two cells');
+    });
+  });
+
+  describe('grouped graph (R16, inactive): agreement with the independent checker', function () {
+    var BIG = { workLimit: 100000000 };
+    var samurai = SG.fixtures.models.samurai();
+
+    function pruned(m, count, seed, low, span) {
+      return prunedStates(m, SG.testkit.rng.create(seed), count, function (r) { return low + span * r.next(); });
+    }
+
+    /** The positions of this block: { label, model, state, solution (null when there is none to hold) }. */
+    var positions = null;
+    function corpus() {
+      if (positions !== null) return positions;
+      positions = [];
+      function add(label, m, items) {
+        items.forEach(function (item, i) {
+          positions.push({ label: label + ' #' + i, model: m, state: item.state, solution: item.solution || null });
+        });
+      }
+      add('classic9 puzzle', model9, H.randomStatesWithKnownSolution(model9, SG.testkit.rng.create(8801), 6));
+      add('classic9 pruned', model9, pruned(model9, 10, 8802, 0.03, 0.2));
+      add('classic6 pruned', model6, pruned(model6, 16, 8803, 0.05, 0.3));
+      add('classic4 pruned', model4, pruned(model4, 16, 8804, 0.05, 0.5));
+      var model12 = SG.fixtures.models.boxGrid('chain-box12', 3, 4);
+      var model16 = SG.fixtures.models.boxGrid('chain-box16', 4, 4);
+      add('12 digits pruned', model12, pruned(model12, 2, 8805, 0.02, 0.06));
+      add('16 digits pruned', model16, pruned(model16, 1, 8806, 0.01, 0.03));
+      add('samurai pruned', samurai, pruned(samurai, 1, 8807, 0.01, 0.04));
+      var partial = partialUnitModel();
+      add('partial unit pruned', partial, pruned(partial, 24, 8808, 0.05, 0.5));
+      var rng = SG.testkit.rng.create(8809);
+      for (var k = 0; k < 3; k++) {
+        var irregular = irregularModel(rng.fork('model.' + k), 'chain-graph-irregular-' + k);
+        add('irregular 6x6 #' + k + ' pruned', irregular, pruned(irregular, 8, 8810 + k, 0.05, 0.3));
+      }
+      var windows = windowModel();
+      add('windows and diagonal pruned', windows, pruned(windows, 8, 8820, 0.03, 0.15));
+      var regions = regionModel();
+      add('overlapping regions pruned', regions, pruned(regions, 8, 8821, 0.03, 0.15));
+      add('blank classic9', model9, [{ state: SG.model.initState(model9) }]);
+      add('blank windows and diagonal', windows, [{ state: SG.model.initState(windows) }]);
+      add('blank overlapping regions', regions, [{ state: SG.model.initState(regions) }]);
+      add('blank classic4', model4, [{ state: SG.model.initState(model4) }]);
+      return positions;
+    }
+
+    it('is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it ' +
+      'charges', function () {
+        var seen = { positions: 0, groups: 0, groupWeak: 0, groupStrong: 0, groupGroupStrong: 0, nodes: 0 };
+        corpus().forEach(function (item) {
+          var graph = graphOf(item.model, item.state, BIG);
+          expect([item.label, graph.complete, graph.capHit]).toEqual([item.label, true, null]);
+          expect([item.label, CP.graphProblems(item.model, item.state, graph)]).toEqual([item.label, []]);
+          expect([item.label, graph.work]).toEqual([item.label, CP.expectedWork(item.model, item.state).total]);
+          if (item.solution !== null) {
+            expect([item.label, CP.solutionProblems(item.model, graph, item.solution)]).toEqual([item.label, []]);
+          }
+          seen.positions++;
+          seen.nodes += graph.nodes.length;
+          graph.nodes.forEach(function (node, i) {
+            if (node.cells.length > 1) seen.groups++;
+            graph.weak[i].forEach(function (j) {
+              if (j > i && node.cells.length > 1 && graph.nodes[j].cells.length > 1) seen.groupWeak++;
+            });
+            graph.strong[i].forEach(function (j) {
+              if (j <= i) return;
+              if (node.cells.length > 1 || graph.nodes[j].cells.length > 1) seen.groupStrong++;
+              if (node.cells.length > 1 && graph.nodes[j].cells.length > 1) seen.groupGroupStrong++;
+            });
+          });
+        });
+        // the corpus is not vacuous: groups, weak links between groups and strong links with groups all occur
+        expect(seen.positions).toBeGreaterThanOrEqual(90);
+        expect(seen.groups).toBeGreaterThan(2000);
+        expect(seen.groupWeak).toBeGreaterThan(500);
+        expect(seen.groupStrong).toBeGreaterThan(100);
+        expect(seen.groupGroupStrong).toBeGreaterThan(10);
+      });
+
+    it('keeps the old graph on the singletons: the weak and strong links of the forcingChain checker, pair by pair',
+      function () {
+        var compared = 0;
+        corpus().forEach(function (item) {
+          if (item.model.cellCount > 100) return;
+          var graph = graphOf(item.model, item.state, BIG);
+          var singles = 0;
+          while (singles < graph.nodes.length && graph.nodes[singles].cells.length === 1) singles++;
+          for (var i = 0; i < singles; i++) {
+            for (var j = i + 1; j < singles; j++) {
+              var a = [graph.nodes[i].cells[0], graph.nodes[i].digit];
+              var b = [graph.nodes[j].cells[0], graph.nodes[j].digit];
+              if (weakLinked(item.model, item.state, a, b) !== listed(graph, 'weak', i, j)) {
+                fail(item.label + ': the weak link of ' + JSON.stringify(a) + ' and ' + JSON.stringify(b) + ' differs');
+              }
+              if (strongLinked(item.model, item.state, a, b) !== listed(graph, 'strong', i, j)) {
+                fail(item.label + ': the strong link of ' + JSON.stringify(a) + ' and ' + JSON.stringify(b) +
+                  ' differs');
+              }
+              compared++;
+            }
+          }
+        });
+        expect(compared).toBeGreaterThan(500000);
+      });
+
+    it('deduplicates groups on the same cells and sorts them by [digit, ...cells], after the singletons', function () {
+      // two boxes on the same cells (the overlap of a Samurai board) give one node, not two
+      var blank = SG.model.initState(samurai);
+      var wanted = CP.expectedNodes(samurai, blank);
+      expect(wanted.raw.length).toBeGreaterThan(wanted.groups.length);
+      var graph = graphOf(samurai, blank, BIG);
+      expect(graph.nodes.slice(0, wanted.singletons.length)).toEqual(wanted.singletons);
+      expect(graph.nodes.slice(wanted.singletons.length)).toEqual(wanted.groups);
+      expect(graph.work).toBe(CP.expectedWork(samurai, blank).total);
+      // the key order, written here once more: the digit, then the cells element by element, a prefix first
+      function before(a, b) {
+        if (a.digit !== b.digit) return a.digit < b.digit;
+        for (var k = 0; k < Math.min(a.cells.length, b.cells.length); k++) {
+          if (a.cells[k] !== b.cells[k]) return a.cells[k] < b.cells[k];
+        }
+        return a.cells.length < b.cells.length;
+      }
+      corpus().forEach(function (item) {
+        var nodes = graphOf(item.model, item.state, BIG).nodes;
+        var first = nodes.findIndex(function (node) { return node.cells.length > 1; });
+        for (var i = first + 1; first !== -1 && i < nodes.length; i++) {
+          if (!before(nodes[i - 1], nodes[i])) fail(item.label + ': groups ' + (i - 1) + ' and ' + i + ' are not in key order');
+        }
+      });
+    });
+
+    it('builds a blank classic9 board with more nodes than cells x digits, in the order of the brief', function () {
+      // 729 singletons, then 54 groups for each digit: the old tables (one entry per cell and digit) could not hold
+      // it; the default work limit of 50,000 is not enough for it (84,807 units), so the limit is lifted here
+      var blank = SG.model.initState(model9);
+      var graph = graphOf(model9, blank, BIG);
+      expect(graph.complete).toBe(true);
+      expect(graph.nodes.length).toBe(81 * 9 + 54 * 9);
+      expect(graph.nodes.length).toBeGreaterThan(model9.cellCount * model9.digits);
+      expect(graph.weak.length).toBe(graph.nodes.length);
+      expect(graph.strong.length).toBe(graph.nodes.length);
+      expect(graph.work).toBe(84807);
+      expect(CP.graphProblems(model9, blank, graph)).toEqual([]);
+      expect(graph.nodes[0]).toEqual({ cells: [0], digit: 1 });
+      expect(graph.nodes[1]).toEqual({ cells: [0], digit: 2 });
+      expect(graph.nodes[9]).toEqual({ cells: [1], digit: 1 });
+      expect(graph.nodes[729]).toEqual({ cells: [0, 1, 2], digit: 1 });
+      expect(graph.nodes[730]).toEqual({ cells: [0, 9, 18], digit: 1 });
+      expect(graph.nodes[729 + 53]).toEqual({ cells: [78, 79, 80], digit: 1 });
+      expect(graph.nodes[729 + 54]).toEqual({ cells: [0, 1, 2], digit: 2 });
+      expect(graph.nodes[graph.nodes.length - 1]).toEqual({ cells: [78, 79, 80], digit: 9 });
+    });
+  });
+
+  describe('grouped graph (R16, inactive): limits, budget and the incomplete-graph rule', function () {
+    // The blank classic9 board: 486 group candidates, 81 cells x 36 candidate pairs, and 9 digits x C(135, 2) = 81,405
+    // pairs of nodes of one digit (every pair is charged, before the test that its first cells see each other)
+    var BLANK_WORK = 84807;
+    var LIFTED = 100000000;
+    var BIG = { workLimit: LIFTED };
+
+    function blank9() {
+      return SG.model.initState(model9);
+    }
+
+    /** The graph of an incomplete call is empty: nothing a search could mistake for the whole graph. */
+    function expectIncomplete(graph, capHit, work) {
+      expect([graph.complete, graph.capHit, graph.work]).toEqual([false, capHit, work]);
+      expect(graph.nodes).toEqual([]);
+      expect(graph.weak).toEqual([]);
+      expect(graph.strong).toEqual([]);
+    }
+
+    it('charges one unit per tested combination: a group candidate, a pair of candidates of a cell, and every pair ' +
+      'of nodes of a digit', function () {
+        expect(CP.expectedWork(model9, blank9())).toEqual({ groups: 486, cells: 2916, pairs: 81405, total: BLANK_WORK });
+        expect(graphOf(model9, blank9(), BIG).work).toBe(BLANK_WORK);
+        // the nodes of a position that is all solved: nothing to test
+        var solved = H.makeState(model9, F.unique[0].solution, { propagate: false });
+        expect(graphOf(model9, solved)).toEqual({ nodes: [], weak: [], strong: [], complete: true, work: 0,
+          capHit: null });
+        // the pairs whose first cells do not see each other are charged, too: three cells that see nothing of each
+        // other cost the three pairs
+        var sparse = digitOnly(model9, 5, [0, 40, 80]);
+        expect(graphOf(model9, sparse).work).toBe(3);
+        expect(CP.expectedWork(model9, sparse)).toEqual({ groups: 0, cells: 0, pairs: 3, total: 3 });
+      });
+
+    it('stops at the work limit: W is complete, W - 1 an empty incomplete graph with capHit "work" and work = the ' +
+      'limit', function () {
+        var state = blank9();
+        var full = graphOf(model9, state, BIG);
+        [BLANK_WORK, BLANK_WORK + 0.9, BLANK_WORK + 1, LIFTED].forEach(function (limit) {
+          expect([limit, JSON.stringify(graphOf(model9, state, { workLimit: limit }))])
+            .toEqual([limit, JSON.stringify(full)]);
+        });
+        [[BLANK_WORK - 1, BLANK_WORK - 1], [BLANK_WORK - 0.5, BLANK_WORK - 1], [50000, 50000], [1000, 1000],
+          [486, 486], [487, 487], [1, 1], [0.9, 0], [0, 0]].forEach(function (row) {
+          expectIncomplete(graphOf(model9, state, { workLimit: row[0] }), 'work', row[1]);
+        });
+        // the default limit is 50000: the blank classic9 board needs 84,807 units and is incomplete, not a reason to
+        // raise the limit; a blank Samurai board is past it, too
+        expectIncomplete(graphOf(model9, state), 'work', 50000);
+        expectIncomplete(graphOf(SG.fixtures.models.samurai(), SG.model.initState(SG.fixtures.models.samurai())),
+          'work', 50000);
+        // a position of the real kind (most of the candidates gone) is well within it
+        var real = prunedStates(model9, SG.testkit.rng.create(8903), 2, function () { return 0.1; })[1];
+        expect(graphOf(model9, real.state).complete).toBe(true);
+      });
+
+    it('refuses the 4097th additional node (limit 4096, default) and builds 4096 of them, more nodes than ' +
+      'cells x digits', function () {
+        var farm = gridFarm(65);
+        function position(extra) {
+          var state = SG.model.initState(farm);
+          for (var c = 1024; c < 1040; c++) state.candidates[c] = 0; // the 65th board holds nothing
+          if (extra) {
+            state.candidates[1024] = bitOf(1);
+            state.candidates[1025] = bitOf(1);
+          }
+          return state;
+        }
+        var graph = graphOf(farm, position(false), BIG);
+        expect([graph.complete, graph.capHit, graph.nodes.length]).toEqual([true, null, 4096 + 4096]);
+        expect(graph.nodes.filter(function (node) { return node.cells.length > 1; }).length).toBe(4096);
+        expect(graph.nodes.length).toBeGreaterThan(farm.cellCount * farm.digits);
+        expect(CP.expectedNodes(farm, position(false)).groups.length).toBe(4096);
+        // one more distinct group, one more refusal: at its own attempt (the 4097th), before any pair of nodes was
+        // tested, with a work limit that is no obstacle
+        expect(CP.expectedNodes(farm, position(true)).groups.length).toBe(4097);
+        expectIncomplete(graphOf(farm, position(true), BIG), 'nodes', 4097);
+        expectIncomplete(graphOf(farm, position(true)), 'nodes', 4097);
+        // allowing 4096 groups does not promise a complete graph: with the default limits the board is past 50,000
+        expectIncomplete(graphOf(farm, position(false)), 'work', 50000);
+      });
+
+    it('takes the quota of additional nodes from the option too, and enforces it while the groups are collected',
+      function () {
+        var state = blank9();
+        function quota(limit) { return graphOf(model9, state, { groupLimit: limit, workLimit: LIFTED }); }
+        expect(quota(486).complete).toBe(true);
+        expect(quota(486.9).complete).toBe(true);
+        expect(quota(100000).complete).toBe(true);
+        // exactly the limit is allowed; the next distinct group refuses at its own attempt, not after the whole set
+        expectIncomplete(quota(485), 'nodes', 486);
+        expectIncomplete(quota(485.5), 'nodes', 486);
+        expectIncomplete(quota(10), 'nodes', 11);
+        expectIncomplete(quota(0), 'nodes', 1);
+        // the work cap and the quota: whichever is reached first
+        expectIncomplete(graphOf(model9, state, { groupLimit: 10, workLimit: 5 }), 'work', 5);
+        expectIncomplete(graphOf(model9, state, { groupLimit: 10, workLimit: 11 }), 'nodes', 11);
+        expectIncomplete(graphOf(model9, state, { groupLimit: 10, workLimit: 10 }), 'work', 10);
+        // a model without lines has no group: a quota of 0 costs nothing
+        var ring = ringModel(6);
+        var ringState = SG.model.initState(ring);
+        expect(graphOf(ring, ringState, { groupLimit: 0 }).complete).toBe(true);
+        expect(CP.graphProblems(ring, ringState, graphOf(ring, ringState))).toEqual([]);
+        // a Samurai board repeats a group on the cells of two boxes: a repeat spends work and no slot, so a quota
+        // of the number of distinct groups is enough, and one less refuses between that many and all attempts
+        var samurai = SG.fixtures.models.samurai();
+        var empty = SG.model.initState(samurai);
+        var unique = CP.expectedNodes(samurai, empty).groups.length;
+        var attempts = CP.expectedNodes(samurai, empty).raw.length;
+        expect(attempts).toBeGreaterThan(unique);
+        var enough = graphOf(samurai, empty, { groupLimit: unique, workLimit: LIFTED });
+        expect([enough.complete, enough.nodes.length - CP.expectedNodes(samurai, empty).singletons.length])
+          .toEqual([true, unique]);
+        var refused = graphOf(samurai, empty, { groupLimit: unique - 1, workLimit: LIFTED });
+        expectIncomplete(refused, 'nodes', refused.work);
+        expect(refused.work).toBeGreaterThanOrEqual(unique);
+        expect(refused.work).toBeLessThanOrEqual(attempts);
+      });
+
+    it('refuses options that are not a finite number of at least 0 with solver.invalidOption, and floors the ' +
+      'others', function () {
+        var state = SG.model.initState(model4);
+        [-1, NaN, Infinity, -Infinity, '5', null, {}, [], true].forEach(function (bad) {
+          ['workLimit', 'groupLimit'].forEach(function (key) {
+            var options = {};
+            options[key] = bad;
+            var err = caught(function () { graphOf(model4, state, options); });
+            expect([key, String(bad), err && err.code]).toEqual([key, String(bad), 'solver.invalidOption']);
+            expect(err.message).toContain(key);
+          });
+        });
+        [null, 5, 'x', true].forEach(function (bad) {
+          var err = caught(function () { graphOf(model4, state, bad); });
+          expect([String(bad), err && err.code]).toEqual([String(bad), 'solver.invalidOption']);
+        });
+        expect(graphOf(model4, state, {}).complete).toBe(true);
+        expect(graphOf(model4, state, { workLimit: undefined, groupLimit: undefined }).complete).toBe(true);
+        expectIncomplete(graphOf(model4, state, { workLimit: 7.9 }), 'work', 7);
+      });
+
+    /** The work at each parent-budget check of a call: the `k`-th check throws a spent budget, the call reports. */
+    function checkWorks(m, state, options) {
+      var free = checkingCtx(m);
+      var whole = CG.build(m, state, free, options);
+      var works = [];
+      for (var k = 1; k <= free.checks; k++) {
+        var counting = checkingCtx(m, k, spentBudget());
+        var graph = CG.build(m, state, counting, options);
+        expect([k, graph.complete, graph.capHit, counting.checks]).toEqual([k, false, null, k]);
+        works.push(graph.work);
+      }
+      return { checks: free.checks, works: works, work: whole.work, graph: whole };
+    }
+
+    it('checks the parent budget at entry, after the set-up, once per 256 steps of its uncharged scans and so that ' +
+      'no more than 256 charged units pass between two checks', function () {
+        // a position of 81 cells: its scans are 486 steps (the cells, 162 cells of intersections, 243 cells of units)
+        var ticks = CP.expectedTicks(model9);
+        expect(ticks).toBe(81 + 162 + 243);
+        [486, 487, 512, 600, 767, 768, 769, 1000, 3000].forEach(function (limit) {
+          var counting = checkingCtx(model9);
+          var graph = CG.build(model9, blank9(), counting, { workLimit: limit });
+          expect([limit, graph.work, counting.checks])
+            .toEqual([limit, limit, 2 + Math.floor(ticks / 256) + Math.floor((limit - 1) / 256)]);
+        });
+        // every check, one by one: the work done when each one ran, in order
+        var seen = checkWorks(model9, blank9(), { workLimit: 3000 });
+        expect(seen.checks).toBe(2 + 1 + Math.floor(2999 / 256));
+        // the entry and the one after the set-up come with no work, the 256th charged unit is the third check, and the
+        // check in the scan of the units (the 256th step of 486) comes after the 486 group candidates
+        expect(seen.works.slice(0, 5)).toEqual([0, 0, 256, 486, 512]);
+        var gaps = seen.works.map(function (w, i) { return w - (i === 0 ? 0 : seen.works[i - 1]); });
+        gaps.push(seen.work - seen.works[seen.works.length - 1]);
+        expect(Math.max.apply(null, gaps)).toBeLessThanOrEqual(256);
+        // a position with nothing to test still checks at entry, after the set-up and in its scans
+        var solved = H.makeState(model9, F.unique[0].solution, { propagate: false });
+        var empty = checkingCtx(model9);
+        CG.build(model9, solved, empty);
+        expect(empty.checks).toBe(2 + Math.floor(ticks / 256));
+      });
+
+    it('checks during the uncharged scans of a larger board, with no work done yet, and in charged cadence after',
+      function () {
+        var farm = gridFarm(20);
+        var ticks = CP.expectedTicks(farm);
+        expect(ticks).toBe(320 + 640 + 960);
+        var seen = checkWorks(farm, SG.model.initState(farm), { workLimit: 3000 });
+        expect(seen.checks).toBe(2 + Math.floor(ticks / 256) + Math.floor(2999 / 256));
+        // entry, set-up, and the 256th cell of the state: three checks before any unit is charged
+        expect(seen.works.slice(0, 3)).toEqual([0, 0, 0]);
+        var gaps = seen.works.map(function (w, i) { return w - (i === 0 ? 0 : seen.works[i - 1]); });
+        gaps.push(seen.work - seen.works[seen.works.length - 1]);
+        expect(Math.max.apply(null, gaps)).toBeLessThanOrEqual(256);
+      });
+
+    it('checks once per 256 scan steps exactly, not per 255 or 257: positions of 255, 256, 511 and 512 steps',
+      function () {
+        // rowFarm(r, k) scans 8 * r + k steps; with a work limit of 0 nothing is charged, so only the scans check
+        [[31, 7, 255], [32, 0, 256], [63, 7, 511], [64, 0, 512], [95, 7, 767], [96, 0, 768]].forEach(function (spec) {
+          var m = rowFarm(spec[0], spec[1]);
+          expect(CP.expectedTicks(m)).toBe(spec[2]);
+          var counting = checkingCtx(m);
+          var graph = CG.build(m, SG.model.initState(m), counting, { workLimit: 0 });
+          expect([spec[2], graph.complete, graph.work, graph.capHit, counting.checks])
+            .toEqual([spec[2], false, 0, 'work', 2 + Math.floor(spec[2] / 256)]);
+        });
+      });
+
+    it('accounts the same cold and warm: a model whose geometry is built by the call, and one that already has it',
+      function () {
+        function fresh(tag) { return SG.fixtures.models.boxGrid('chain-cold-' + tag, 3, 3); }
+        var cold = fresh('a');
+        var first = checkingCtx(cold);
+        var coldGraph = CG.build(cold, SG.model.initState(cold), first, { workLimit: 5000 });
+        var second = checkingCtx(cold);
+        var warmGraph = CG.build(cold, SG.model.initState(cold), second, { workLimit: 5000 });
+        expect([first.checks, coldGraph.work, coldGraph.capHit]).toEqual([second.checks, warmGraph.work, warmGraph.capHit]);
+        expect(second.checks).toBe(2 + 1 + Math.floor(4999 / 256));
+        // the interruption in the set-up (checks 1 and 2): no work, no cap, and no broken cache for the next call
+        [1, 2].forEach(function (k) {
+          var model = fresh('b' + k);
+          expectIncomplete(CG.build(model, SG.model.initState(model), checkingCtx(model, k, spentBudget())), null, 0);
+          var again = CG.build(model, SG.model.initState(model), checkingCtx(model), { workLimit: 5000 });
+          expect([k, again.work, again.capHit]).toEqual([k, 5000, 'work']);
+        });
+        // cancellation in the set-up propagates, cold or warm
+        var model = fresh('c');
+        var cancelled = new SG.errors.GenerationError('budget.cancelled', { reason: 'cancelled' });
+        expect(caught(function () { CG.build(model, SG.model.initState(model), checkingCtx(model, 2, cancelled)); }))
+          .toBe(cancelled);
+        expect(caught(function () { CG.build(model, SG.model.initState(model), checkingCtx(model, 2, cancelled)); }))
+          .toBe(cancelled);
+      });
+
+    it('turns a spent budget into an empty incomplete graph without a cap, at the check where it ran out', function () {
+      var state = blank9();
+      var seen = checkWorks(model9, state, { workLimit: 3000 });
+      expect(seen.works.length).toBe(seen.checks);
+      expectIncomplete(CG.build(model9, state, checkingCtx(model9, 1, spentBudget())), null, 0);
+      expect(CG.build(model9, state, checkingCtx(model9, seen.checks + 1, spentBudget()), { workLimit: 3000 }).capHit)
+        .toBe('work');
+      // a real budget of 3 nodes: the entry check, the set-up and the 256th charged unit pass, the fourth check runs out
+      var parent = SG.budget.create({ nodes: 3 });
+      expectIncomplete(graphOf(model9, state, undefined, { budget: parent }), null, 486);
+      // capHit null is no proof of a complete scan: the caller's own budget still fails after the call
+      expect(caught(function () { parent.check(); }).code).toBe('budget.exceeded');
+      // and the same state builds again afterwards
+      expect(graphOf(model9, state, BIG).complete).toBe(true);
+    });
+
+    it('lets cancellation and every other error through, with no result', function () {
+      var state = blank9();
+      var budget = SG.budget.create({});
+      budget.cancel();
+      expect(caught(function () { graphOf(model9, state, undefined, { budget: budget }); }).code)
+        .toBe('budget.cancelled');
+      var late = new SG.errors.GenerationError('budget.cancelled', { reason: 'cancelled' });
+      expect(caught(function () { CG.build(model9, state, checkingCtx(model9, 4, late)); })).toBe(late);
+      var boom = new Error('boom');
+      expect(caught(function () { CG.build(model9, state, checkingCtx(model9, 1, boom)); })).toBe(boom);
+      expect(caught(function () { CG.build(model9, state, checkingCtx(model9, 2, boom)); })).toBe(boom);
+      expect(caught(function () { CG.build(model9, state, checkingCtx(model9, 40, boom)); })).toBe(boom);
+      // a cap is not an error: both caps return normally
+      expect(caught(function () { graphOf(model9, state, { workLimit: 5 }); })).toBeNull();
+      expect(caught(function () { graphOf(model9, state, { groupLimit: 5 }); })).toBeNull();
+    });
+  });
+
+  describe('grouped graph (R16, inactive): ownership, determinism and state reuse', function () {
+    var BIG = { workLimit: 100000000 };
+
+    function position() {
+      return prunedStates(model9, SG.testkit.rng.create(8901), 3, function (r) { return 0.05 + 0.1 * r.next(); })[1];
+    }
+
+    it('never writes to the state, the model or the context', function () {
+      var pos = position();
+      var before = snapshotOf(pos.state);
+      var ctx = ctxFor(model9);
+      var completeUnits = Array.from(ctx.completeUnits);
+      var graph = CG.build(model9, pos.state, ctx, BIG);
+      expect(graph.complete).toBe(true);
+      expect(snapshotOf(pos.state)).toEqual(before);
+      expect(Array.from(ctx.completeUnits)).toEqual(completeUnits);
+      expect(Object.isFrozen(model9)).toBe(true);
+    });
+
+    it('returns arrays of its own: changing a graph changes neither the next one nor the earlier ones', function () {
+      var state = position().state;
+      var a = graphOf(model9, state, BIG);
+      var b = graphOf(model9, state, BIG);
+      expect(a).toEqual(b);
+      var group = a.nodes.findIndex(function (node) { return node.cells.length > 1 && a.weak[a.nodes.indexOf(node)].length > 0; });
+      expect(group).not.toBe(-1);
+      [[a.nodes, b.nodes], [a.weak, b.weak], [a.strong, b.strong], [a.nodes[group], b.nodes[group]],
+        [a.nodes[group].cells, b.nodes[group].cells], [a.weak[group], b.weak[group]],
+        [a.nodes[0].cells, b.nodes[0].cells]].forEach(function (pair, i) {
+        expect([i, pair[0] === pair[1]]).toEqual([i, false]);
+      });
+      var snapshot = JSON.stringify(b);
+      a.nodes.push({ cells: [0], digit: 1 });
+      a.nodes[group].cells.push(99);
+      a.nodes[group].digit = 0;
+      a.nodes[0].cells[0] = 80;
+      a.weak[group].push(5);
+      a.weak[group].reverse();
+      a.strong[0].length = 0;
+      a.complete = false;
+      expect(JSON.stringify(b)).toBe(snapshot);
+      expect(JSON.stringify(graphOf(model9, state, BIG))).toBe(snapshot);
+      // the empty arrays of an incomplete graph are new, too
+      var capped = graphOf(model9, state, { workLimit: 0 });
+      capped.nodes.push(1);
+      capped.weak.push([]);
+      expect(graphOf(model9, state, { workLimit: 0 }).nodes).toEqual([]);
+      expect(graphOf(model9, state, { workLimit: 0 }).weak).toEqual([]);
+    });
+
+    it('answers the same after other calls: other positions and models, the finders, capped and refused calls',
+      function () {
+        var state = position().state;
+        var base = JSON.stringify(graphOf(model9, state, BIG));
+        graphOf(model6, SG.model.initState(model6));
+        graphOf(partialUnitModel(), SG.model.initState(partialUnitModel()));
+        graphOf(gridFarm(65), SG.model.initState(gridFarm(65)));
+        graphOf(model9, state, { workLimit: 10 });
+        graphOf(model9, state, { groupLimit: 0 });
+        CG.build(model9, state, checkingCtx(model9, 2, spentBudget()));
+        caught(function () { graphOf(model9, state, { workLimit: -1 }); });
+        run('forcingChain', model9, state);
+        run('xyChain', model9, state);
+        SG.chainSearch.forcing(model9, state, ctxFor(model9), { id: 'probe', minLength: 1, maxLength: 8 });
+        expect(JSON.stringify(graphOf(model9, state, BIG))).toBe(base);
+        expect(JSON.stringify(CG.build(model9, state, SG.techniques.createContext(model9, { budget: SG.budget.create({}) }),
+          BIG))).toBe(base);
+      });
+
+    it('follows a state that is changed in place (no candidate cache), and equal candidates give one graph, ' +
+      'whatever order they were reached in', function () {
+        var pos = position();
+        var state = pos.state;
+        var earlier = SG.model.cloneState(state);
+        var first = graphOf(model9, state, BIG);
+        // remove wrong candidates of open cells (the solution digit stays), then place a value of the solution
+        var removals = [];
+        for (var c = 0; c < model9.cellCount && removals.length < 20; c++) {
+          if (state.value[c] !== 0) continue;
+          for (var d = 1; d <= 9 && removals.length < 20; d++) {
+            if (d !== pos.solution[c] && (state.candidates[c] & bitOf(d)) !== 0) {
+              removals.push([c, d]);
+              state.candidates[c] &= ~bitOf(d);
+            }
+          }
+        }
+        expect(removals.length).toBe(20);
+        var second = graphOf(model9, state, BIG);
+        expect(JSON.stringify(second)).not.toBe(JSON.stringify(first));
+        expect(CP.graphProblems(model9, state, second)).toEqual([]);
+        expect(CP.graphProblems(model9, earlier, first)).toEqual([]); // the earlier graph still tells the earlier state
+        expect(JSON.stringify(graphOf(model9, SG.model.cloneState(state), BIG))).toBe(JSON.stringify(second));
+        var open = [];
+        for (var k = 0; k < model9.cellCount; k++) if (state.value[k] === 0) open.push(k);
+        expect(SG.constraints.assign(model9, state, open[0], pos.solution[open[0]])).toBe(true);
+        var third = graphOf(model9, state, BIG);
+        expect(CP.graphProblems(model9, state, third)).toEqual([]);
+        expect(third.nodes.length).toBeLessThan(second.nodes.length);
+        // the same candidates removed in the reverse order from a copy: the same node order and the same graph
+        var forward = SG.model.cloneState(earlier);
+        var backward = SG.model.cloneState(earlier);
+        removals.forEach(function (r) { forward.candidates[r[0]] &= ~bitOf(r[1]); });
+        removals.slice().reverse().forEach(function (r) { backward.candidates[r[0]] &= ~bitOf(r[1]); });
+        expect(JSON.stringify(graphOf(model9, backward, BIG))).toBe(JSON.stringify(graphOf(model9, forward, BIG)));
+        expect(JSON.stringify(graphOf(model9, forward, BIG))).toBe(JSON.stringify(second));
+      });
+  });
+
+  describe('grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs',
+    function () {
+      var FIVE = 5;
+
+      function step(cells, truth) {
+        return { cells: cells, digit: FIVE, truth: truth };
+      }
+
+      function link(lists, a, b) {
+        lists[a].push(b);
+        lists[b].push(a);
+        lists[a].sort(function (x, y) { return x - y; });
+        lists[b].sort(function (x, y) { return x - y; });
+      }
+
+      function unlink(lists, a, b) {
+        lists[a].splice(lists[a].indexOf(b), 1);
+        lists[b].splice(lists[b].indexOf(a), 1);
+      }
+
+      it('flags a node that is not a set of open candidates of one digit, ascending and distinct', function () {
+        var state = digitOnly(model9, FIVE, [0, 1, 3]);
+        state.value[8] = FIVE; // a solved cell
+        state.candidates[8] = bitOf(FIVE);
+        expect(CP.nodeProblems(model9, state, { cells: [0, 1], digit: FIVE })).toEqual([]);
+        expect(CP.nodeProblems(model9, state, { cells: [0, 1, 3], digit: FIVE })).toEqual([]);
+        [[null, 'not a node'], [{ cells: 'x', digit: FIVE }, 'not a node'], [{ cells: [0, 1], digit: 0 }, 'digit'],
+          [{ cells: [0, 1], digit: 10 }, 'digit'], [{ cells: [0, 1], digit: 1.5 }, 'digit'],
+          [{ cells: [], digit: FIVE }, 'at least one cell'], [{ cells: [1, 0], digit: FIVE }, 'ascending'],
+          [{ cells: [1, 1], digit: FIVE }, 'ascending'], [{ cells: [0, 81], digit: FIVE }, 'does not exist'],
+          [{ cells: [-1, 0], digit: FIVE }, 'does not exist'], [{ cells: [0, 2], digit: FIVE }, 'does not hold'],
+          [{ cells: [0, 8], digit: FIVE }, 'does not hold'], [{ cells: [0, 1], digit: 4 }, 'does not hold']
+        ].forEach(function (row, i) {
+          var problems = CP.nodeProblems(model9, state, row[0]).join(' | ');
+          expect([i, problems.indexOf(row[1]) !== -1]).toEqual([i, true]);
+        });
+        // a node that is not a valid node is no end of a weak or a strong link
+        expect(CP.weakLinked(model9, state, { cells: [0, 2], digit: FIVE }, { cells: [3], digit: FIVE })).toBe(false);
+        expect(CP.strongLinked(model9, state, { cells: [0, 1], digit: FIVE }, { cells: [3, 2], digit: FIVE })).toBe(false);
+      });
+
+      it('flags every way a graph can differ from the canonical graph of its position', function () {
+        var m = model9;
+        // groups {R1C1, R1C2} and {R4C1, R5C1}, the singletons of both, and R1C4, R1C7
+        var state = digitOnly(m, FIVE, [0, 1, 3, 6, 27, 36]);
+        var good = graphOf(m, state);
+        expect(CP.graphProblems(m, state, good)).toEqual([]);
+        var group = indexOfNode(good, [0, 1], FIVE);
+        var other = indexOfNode(good, [27, 36], FIVE);
+        var s0 = indexOfNode(good, [0], FIVE);
+        var s3 = indexOfNode(good, [3], FIVE);
+        var s27 = indexOfNode(good, [27], FIVE);
+        var s36 = indexOfNode(good, [36], FIVE);
+        expect([group, other, s0, s3, s27, s36].every(function (i) { return i !== -1; })).toBe(true);
+        // the real edges that the cases below remove: R1C1 sees R4C1, and R4C1 and R5C1 are all of box 4
+        expect(listed(good, 'weak', s0, s27)).toBe(true);
+        expect(listed(good, 'strong', s27, s36)).toBe(true);
+        expect(listed(good, 'weak', group, other)).toBe(false);
+        expect(listed(good, 'strong', group, s3)).toBe(false);
+        var wide = good.weak.findIndex(function (list) { return list.length >= 2; });
+        var cases = {
+          'a weak link through one convenient peer pair': function (g) { link(g.weak, group, s27); },
+          'a weak link between groups that see each other twice': function (g) { link(g.weak, group, other); },
+          'a strong link with one more occurrence in the row': function (g) { link(g.strong, group, s3); },
+          'a missing weak link': function (g) { unlink(g.weak, s0, s27); },
+          'a missing strong link': function (g) { unlink(g.strong, s27, s36); },
+          'a link listed one way only': function (g) { g.weak[s0].splice(g.weak[s0].indexOf(s27), 1); },
+          'an adjacency list out of order': function (g) { g.weak[wide].reverse(); },
+          'a duplicate in an adjacency list': function (g) { g.weak[wide].push(g.weak[wide][0]); },
+          'a node linked to itself': function (g) { g.strong[group].push(group); },
+          'a link to a node that does not exist': function (g) { g.weak[group].push(g.nodes.length); },
+          'two nodes swapped': function (g) {
+            var t = g.nodes[0];
+            g.nodes[0] = g.nodes[1];
+            g.nodes[1] = t;
+          },
+          'the last node dropped': function (g) { g.nodes.pop(); },
+          'a node that is no box-line intersection': function (g) { g.nodes.push({ cells: [0, 3], digit: FIVE }); },
+          'a group with its cells in the wrong order': function (g) { g.nodes[group].cells.reverse(); },
+          'a node of the wrong digit': function (g) { g.nodes[s0].digit = 4; },
+          'an adjacency list missing': function (g) { g.strong.pop(); },
+          'a graph that says it is incomplete': function (g) { g.complete = false; },
+          'a cap on a complete graph': function (g) { g.capHit = 'work'; },
+          'a work that is no count': function (g) { g.work = -1; },
+          'a key more': function (g) { g.extra = 1; }
+        };
+        Object.keys(cases).forEach(function (name) {
+          var bad = JSON.parse(JSON.stringify(good));
+          cases[name](bad);
+          expect([name, CP.graphProblems(m, state, bad).length > 0]).toEqual([name, true]);
+        });
+        expect(CP.graphProblems(m, state, null).length).toBe(1);
+        // a strong link through a partial unit is invalid whatever it covers
+        var partial = partialUnitModel();
+        var pstate = digitOnly(partial, 1, [5, 10]);
+        var pgood = graphOf(partial, pstate);
+        expect(CP.graphProblems(partial, pstate, pgood)).toEqual([]);
+        var bad = JSON.parse(JSON.stringify(pgood));
+        link(bad.strong, indexOfNode(pgood, [5], 1), indexOfNode(pgood, [10], 1));
+        expect(CP.graphProblems(partial, pstate, bad).length).toBeGreaterThan(0);
+        // and one more occurrence in a unit: the two nodes of the vector are weak, no longer strong
+        var more = digitOnly(m, FIVE, [0, 1, 3, 6]);
+        var mgood = graphOf(m, more);
+        var mbad = JSON.parse(JSON.stringify(mgood));
+        link(mbad.strong, indexOfNode(mgood, [0, 1], FIVE), indexOfNode(mgood, [3], FIVE));
+        expect(CP.graphProblems(m, more, mgood)).toEqual([]);
+        expect(CP.graphProblems(m, more, mbad).length).toBeGreaterThan(0);
+        // a link between candidates of different digits in different cells is listed nowhere in a canonical graph
+        var two = digitOnly(m, FIVE, [0, 4]);
+        two.candidates[0] |= bitOf(3);
+        two.candidates[4] |= bitOf(7);
+        var tgood = graphOf(m, two);
+        expect(CP.graphProblems(m, two, tgood)).toEqual([]);
+        [['weak', tgood.weak], ['strong', tgood.strong]].forEach(function (kind) {
+          var tbad = JSON.parse(JSON.stringify(tgood));
+          link(tbad[kind[0]], indexOfNode(tgood, [0], 3), indexOfNode(tgood, [4], 7));
+          expect([kind[0], CP.graphProblems(m, two, tbad).length > 0]).toEqual([kind[0], true]);
+        });
+      });
+
+      it('flags an edge that fails in a known solution: a weak link between two true nodes, a strong one between two ' +
+        'false nodes', function () {
+          var pos = prunedStates(model9, SG.testkit.rng.create(8960), 1, function () { return 0.1; })[0];
+          var graph = graphOf(model9, pos.state);
+          expect(CP.solutionProblems(model9, graph, pos.solution)).toEqual([]);
+          function single(cell, digit) { return indexOfNode(graph, [cell], digit); }
+          function wrong(cell) {
+            for (var d = 1; d <= 9; d++) if (d !== pos.solution[cell] && single(cell, d) !== -1) return single(cell, d);
+            return -1;
+          }
+          var open = [];
+          for (var c = 0; c < model9.cellCount && open.length < 2; c++) {
+            if (pos.state.value[c] === 0 && wrong(c) !== -1) open.push(c);
+          }
+          var trueA = single(open[0], pos.solution[open[0]]);
+          var trueB = single(open[1], pos.solution[open[1]]);
+          var falseA = wrong(open[0]);
+          var falseB = wrong(open[1]);
+          expect([trueA, trueB, falseA, falseB].indexOf(-1)).toBe(-1);
+          var bad = JSON.parse(JSON.stringify(graph));
+          link(bad.weak, trueA, trueB);
+          expect(CP.solutionProblems(model9, bad, pos.solution).join(' ')).toContain('both nodes true');
+          bad = JSON.parse(JSON.stringify(graph));
+          link(bad.strong, falseA, falseB);
+          expect(CP.solutionProblems(model9, bad, pos.solution).join(' ')).toContain('both nodes false');
+        });
+
+      // The proof of the vector: R1C1 or R1C2 or R2C1 holds the 5, so R3C1, R3C2 and R3C3 lose it. Row 1 holds the 5 in
+      // R1C1, R1C2 and R1C5 only, row 2 in R2C1 and R2C5 only. If {R1C1, R1C2} is false, R1C5 is true (strong link of the
+      // row), so R2C5 is false (they see each other), so R2C1 is true (strong link of row 2). R3C1 to R3C3 see all three.
+      var VECTOR = [0, 1, 4, 9, 13, 18, 19, 20];
+
+      function vectorState() {
+        return digitOnly(model9, FIVE, VECTOR);
+      }
+
+      function vectorFinding() {
+        return {
+          technique: 'groupedChain',
+          cells: [0, 1, 4, 9, 13],
+          placements: [],
+          eliminations: [[18, FIVE], [19, FIVE], [20, FIVE]],
+          i18nKey: 'technique.groupedChain.step',
+          i18nArgs: { proofVersion: 2, kind: 'endpoints', length: 3,
+            chains: [[step([0, 1], 0), step([4], 1), step([13], 0), step([9], 1)]] }
+        };
+      }
+
+      it('accepts the proof of the vector and finds its three edges in the builder\'s graph', function () {
+        var state = vectorState();
+        expect(CP.pathProblems(model9, state, vectorFinding())).toEqual([]);
+        expect(CP.pathProblems(model9, state, vectorFinding(), { canonical: true })).toEqual([]);
+        expect(CP.targets(model9, state, step([0, 1], 0), step([9], 1))).toEqual([[18, FIVE], [19, FIVE], [20, FIVE]]);
+        var graph = graphOf(model9, state);
+        var group = indexOfNode(graph, [0, 1], FIVE);
+        var s4 = indexOfNode(graph, [4], FIVE);
+        var s13 = indexOfNode(graph, [13], FIVE);
+        var s9 = indexOfNode(graph, [9], FIVE);
+        expect(listed(graph, 'strong', group, s4)).toBe(true); // the rest of row 1
+        expect(listed(graph, 'weak', s4, s13)).toBe(true); // one column, one box
+        expect(listed(graph, 'strong', s13, s9)).toBe(true); // the rest of row 2
+        // a legacy triple for a singleton step is read as the same node
+        var mixed = vectorFinding();
+        mixed.i18nArgs.chains[0][1] = [4, FIVE, 1];
+        expect(CP.pathProblems(model9, state, mixed)).toEqual([]);
+      });
+
+      it('flags every way the proof of the vector can be wrong', function () {
+        var state = vectorState();
+        var extra = digitOnly(model9, FIVE, VECTOR.concat([6])); // one more occurrence in row 1: R1C7
+        var cases = [
+          ['a polarity that does not alternate', state, function (f) { f.i18nArgs.chains[0][1].truth = 0; },
+            'false node must be followed by a true node'],
+          ['a true node followed by a true node', state, function (f) { f.i18nArgs.chains[0][2].truth = 1; },
+            'true node must be followed by a false node'],
+          ['a member that is no candidate', state, function (f) { f.i18nArgs.chains[0][0].cells = [0, 1, 2]; },
+            'does not hold candidate'],
+          ['members out of order', state, function (f) { f.i18nArgs.chains[0][0].cells = [1, 0]; }, 'ascending'],
+          ['a weak edge between cells that do not see each other', state, function (f) {
+            f.i18nArgs.chains[0][2].cells = [20];
+          }, 'not a weak edge'],
+          ['a strong edge that does not cover the unit', extra, function () {}, 'not a strong edge'],
+          ['a target that is missing', state, function (f) { f.eliminations = [[18, FIVE], [19, FIVE]]; },
+            'eliminations'],
+          ['a target that sees only one end', state, function (f) { f.eliminations.push([27, FIVE]); }, 'eliminations'],
+          ['a target of another digit', state, function (f) { f.eliminations[0] = [18, 4]; }, 'eliminations'],
+          ['a placement into a member of a true group', state, function (f) { f.placements = [[0, FIVE]]; },
+            'placements'],
+          ['a placement from an endpoints proof', state, function (f) { f.placements = [[9, FIVE]]; }, 'placements'],
+          ['no proofVersion for a group step', state, function (f) { delete f.i18nArgs.proofVersion; },
+            'needs proofVersion 2'],
+          ['an argument more', state, function (f) { f.i18nArgs.digit = FIVE; }, 'i18nArgs keys'],
+          ['a length that is no count of edges', state, function (f) { f.i18nArgs.length = 2; }, 'length'],
+          ['cells out of order', state, function (f) { f.cells = [4, 0, 1, 9, 13]; }, 'ascending union'],
+          ['a proof cell that is not listed', state, function (f) { f.cells = [0, 1, 4, 9]; }, 'ascending union'],
+          ['an unknown kind', state, function (f) { f.i18nArgs.kind = 'weird'; }, 'unknown kind'],
+          ['a chain of one node', state, function (f) { f.i18nArgs.chains[0] = [step([0, 1], 0)]; },
+            'at least two nodes'],
+          ['a step that is no node', state, function (f) { f.i18nArgs.chains[0][1] = { digit: FIVE, truth: 1 }; },
+            'a step is'],
+          ['no chain', state, function (f) { f.i18nArgs.chains = []; }, 'chains is missing']
+        ];
+        cases.forEach(function (row) {
+          var finding = vectorFinding();
+          row[2](finding);
+          var problems = CP.pathProblems(model9, row[1], finding).join(' | ');
+          expect([row[0], problems.indexOf(row[3]) !== -1]).toEqual([row[0], true]);
+        });
+        // a group is no canonical node unless a box and a line make it
+        var odd = vectorFinding();
+        odd.i18nArgs.chains[0][1] = step([0, 4], 1);
+        expect(CP.pathProblems(model9, state, odd).join(' | ')).not.toContain('canonical');
+        expect(CP.pathProblems(model9, state, odd, { canonical: true }).join(' | ')).toContain('not a canonical node');
+      });
+
+      it('lets a forced or a contradiction proof start from a singleton only, and never place an arbitrary member',
+        function () {
+          var state = vectorState();
+          // a forced proof from the group {R1C1, R1C2}: two chains to the two polarities of {R1C5}
+          var forced = {
+            technique: 'groupedChain', cells: [0, 1, 4], placements: [[0, FIVE]], eliminations: [],
+            i18nKey: 'technique.groupedChain.step',
+            i18nArgs: { proofVersion: 2, kind: 'forced', length: 1,
+              chains: [[step([0, 1], 0), step([4], 1)], [step([0, 1], 0), step([4], 0)]] }
+          };
+          var text = CP.pathProblems(model9, state, forced).join(' | ');
+          expect(text).toContain('must start from a singleton');
+          expect(text).toContain('placements [[0,5]] are not []'); // a group's truth places no member
+          var contradiction = JSON.parse(JSON.stringify(forced));
+          contradiction.i18nArgs.kind = 'contradiction';
+          contradiction.placements = [];
+          contradiction.eliminations = [[0, FIVE]];
+          contradiction.i18nArgs.chains = [[step([0, 1], 1), step([4], 0)], [step([0, 1], 1), step([4], 1)]];
+          expect(CP.pathProblems(model9, state, contradiction).join(' | ')).toContain('must start from a singleton');
+        });
+
+      // SA2's vector (the amended brief): a singleton root (cell 0, digit 1) is placed by two contradictory paths, and
+      // it is also a member of the group G = {cell 0, cell 1} for the 1 that two of the proof's nodes are. Digits 1..4,
+      // 16 cells in four rows ([0,1,9,15], [2,10,3,4], [5,6,7,8], [11,12,13,14]); the box [0,1,2,10], the row
+      // [0,1,9,15] and four more complete units; cells 10 to 15 are fixed to 4.
+      function reproducer() {
+        var m = SG.model.create({ variantId: 'chain-sa2-vector', digits: 4,
+          units: [[0, 1, 2, 10], [0, 3, 4, 11], [1, 3, 8, 12], [0, 5, 6, 13], [5, 2, 7, 14], [0, 1, 9, 15]],
+          unitMeta: [{ kind: 'box', label: 'B1' }, { label: 'X1' }, { label: 'X2' }, { label: 'X3' }, { label: 'X4' },
+            { kind: 'row', label: 'R1' }],
+          layout: { rows: 4, cols: 4, cellRow: [0, 0, 1, 1, 1, 2, 2, 2, 2, 0, 1, 3, 3, 3, 3, 0],
+            cellCol: [0, 1, 0, 2, 3, 0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 3] } });
+        var state = SG.model.initState(m);
+        [[1, 2], [1, 2, 3], [1, 2, 3], [1, 3], [2, 3], [1, 2], [1, 3], [1, 2, 3], [1, 2, 3], [2, 3]]
+          .forEach(function (digits, c) {
+            state.candidates[c] = digits.reduce(function (mask, d) { return mask | bitOf(d); }, 0);
+          });
+        for (var c = 10; c < 16; c++) {
+          state.value[c] = 4;
+          state.candidates[c] = bitOf(4);
+        }
+        state.unsolvedCount = 10;
+        var finding = {
+          technique: 'groupedChain', cells: [0, 1, 2, 3, 5], placements: [[0, 1]], eliminations: [],
+          i18nKey: 'technique.groupedChain.step',
+          i18nArgs: { proofVersion: 2, kind: 'forced', length: 5, chains: [
+            [{ cells: [0], digit: 1, truth: 0 }, { cells: [0], digit: 2, truth: 1 }, { cells: [5], digit: 2, truth: 0 },
+              { cells: [5], digit: 1, truth: 1 }, { cells: [2], digit: 1, truth: 0 },
+              { cells: [0, 1], digit: 1, truth: 1 }],
+            [{ cells: [0], digit: 1, truth: 0 }, { cells: [3], digit: 1, truth: 1 },
+              { cells: [0, 1], digit: 1, truth: 0 }]] }
+        };
+        return { model: m, state: state, finding: finding };
+      }
+
+      it('accepts a forced singleton root that is also a member of a group inside its own proof (SA2 vector)',
+        function () {
+          var v = reproducer();
+          var graph = graphOf(v.model, v.state);
+          expect(CP.graphProblems(v.model, v.state, graph)).toEqual([]);
+          var group = indexOfNode(graph, [0, 1], 1);
+          expect(group).not.toBe(-1);
+          // every edge of both paths is in the canonical graph
+          [v.finding.i18nArgs.chains[0], v.finding.i18nArgs.chains[1]].forEach(function (chain) {
+            for (var i = 1; i < chain.length; i++) {
+              var a = indexOfNode(graph, chain[i - 1].cells, chain[i - 1].digit);
+              var b = indexOfNode(graph, chain[i].cells, chain[i].digit);
+              expect([a !== -1, b !== -1]).toEqual([true, true]);
+              expect(listed(graph, chain[i - 1].truth === 0 ? 'strong' : 'weak', a, b)).toBe(true);
+            }
+          });
+          expect(CP.pathProblems(v.model, v.state, v.finding)).toEqual([]);
+          expect(CP.pathProblems(v.model, v.state, v.finding, { canonical: true })).toEqual([]);
+          // the state completes in exactly one way, which holds every edge, and the placement is its cell 0
+          var completion = [1, 2, 3, 3, 2, 2, 3, 1, 1, 3, 4, 4, 4, 4, 4, 4];
+          expect(CP.solutionProblems(v.model, graph, completion)).toEqual([]);
+          var found = [];
+          var cells = [];
+          function fill(c) {
+            if (c === 10) {
+              var ok = Array.prototype.every.call(v.model.units, function (u) {
+                return [1, 2, 3, 4].every(function (d) {
+                  return Array.prototype.filter.call(u, function (x) { return (x < 10 ? cells[x] : 4) === d; }).length === 1;
+                });
+              });
+              if (ok) found.push(cells.slice().concat([4, 4, 4, 4, 4, 4]));
+              return;
+            }
+            for (var d = 1; d <= 4; d++) {
+              if ((v.state.candidates[c] & bitOf(d)) === 0) continue;
+              cells[c] = d;
+              fill(c + 1);
+            }
+          }
+          fill(0);
+          expect(found).toEqual([completion]);
+          expect(completion[v.finding.placements[0][0]]).toBe(v.finding.placements[0][1]);
+          // the negatives stay: placing the other member of the group, or nothing, or starting from the group
+          var other = JSON.parse(JSON.stringify(v.finding));
+          other.placements = [[1, 1]];
+          expect(CP.pathProblems(v.model, v.state, other).join(' | ')).toContain('placements [[1,1]] are not [[0,1]]');
+          var none = JSON.parse(JSON.stringify(v.finding));
+          none.placements = [];
+          expect(CP.pathProblems(v.model, v.state, none).length).toBeGreaterThan(0);
+          var fromGroup = JSON.parse(JSON.stringify(v.finding));
+          fromGroup.i18nArgs.chains.forEach(function (chain) { chain[0].cells = [0, 1]; });
+          expect(CP.pathProblems(v.model, v.state, fromGroup).join(' | ')).toContain('must start from a singleton');
+        });
+
+      it('reads the legacy triples of the real forcingChain Findings like the old checker does, and as version 2',
+        function () {
+          function versionTwo(finding) {
+            var args = finding.i18nArgs;
+            var cells = [];
+            args.chains.forEach(function (chain) {
+              chain.forEach(function (s) { if (cells.indexOf(s[0]) === -1) cells.push(s[0]); });
+            });
+            return Object.assign({}, finding, { cells: cells.sort(function (a, b) { return a - b; }),
+              i18nArgs: { proofVersion: 2, kind: args.kind, length: args.length, chains: args.chains.map(function (chain) {
+                return chain.map(function (s) { return { cells: [s[0]], digit: s[1], truth: s[2] }; });
+              }) } });
+          }
+          var kinds = {};
+          CHAIN_FIXTURES.forEach(function (fx) {
+            var state = fixtureState(fx);
+            var finding = run('forcingChain', model9, state) || run('forcingChainLong', model9, state);
+            expect(finding).not.toBeNull();
+            expect([fx.name, chainProblems(model9, state, finding)]).toEqual([fx.name, []]);
+            expect([fx.name, CP.pathProblems(model9, state, finding)]).toEqual([fx.name, []]);
+            var two = versionTwo(finding);
+            expect([fx.name, CP.pathProblems(model9, state, two, { canonical: true })]).toEqual([fx.name, []]);
+            kinds[finding.i18nArgs.kind] = (kinds[finding.i18nArgs.kind] || 0) + 1;
+            // the same proof with its start made a group of two cells is no proof of a placement or an elimination
+            if (finding.i18nArgs.kind !== 'endpoints') {
+              var grouped = JSON.parse(JSON.stringify(two));
+              grouped.i18nArgs.chains.forEach(function (chain) {
+                chain[0].cells = [chain[0].cells[0], chain[1].cells[0]].sort(function (a, b) { return a - b; });
+              });
+              expect([fx.name, CP.pathProblems(model9, state, grouped).join(' | ').indexOf('singleton') !== -1])
+                .toEqual([fx.name, true]);
+            }
+          });
+          expect(Object.keys(kinds).sort()).toEqual(['contradiction', 'endpoints', 'forced']);
+        });
+
+      /**
+       * The endpoint proofs of a grouped graph, by a breadth first search over its literals (written here from the
+       * adjacency lists alone): from a node taken false, strong edges lead to true nodes and weak edges to false ones;
+       * the first true node that shares a target with the start ends the proof of that start.
+       */
+      function groupedProofs(m, state, graph, maxEdges, limit) {
+        var out = [];
+        var order = [];
+        graph.nodes.forEach(function (node, i) { if (node.cells.length > 1) order.push(i); });
+        graph.nodes.forEach(function (node, i) { if (node.cells.length === 1) order.push(i); });
+        function shared(a, b) {
+          return graph.weak[a].some(function (j) { return graph.nodes[j].cells.length === 1 && graph.weak[b].indexOf(j) !== -1; });
+        }
+        for (var o = 0; o < order.length && out.length < limit; o++) {
+          var s = order[o];
+          var parent = {};
+          var depth = {};
+          var queue = [2 * s];
+          parent[2 * s] = -1;
+          depth[2 * s] = 0;
+          for (var head = 0; head < queue.length; head++) {
+            var lit = queue[head];
+            if (depth[lit] >= maxEdges) continue;
+            var node = lit >> 1;
+            var truth = lit & 1;
+            var next = truth === 0 ? graph.strong[node] : graph.weak[node];
+            for (var k = 0; k < next.length; k++) {
+              var to = 2 * next[k] + (truth ^ 1);
+              if (parent[to] !== undefined) continue;
+              parent[to] = lit;
+              depth[to] = depth[lit] + 1;
+              queue.push(to);
+              if ((to & 1) === 1 && next[k] !== s && shared(s, next[k])) {
+                var path = [];
+                for (var x = to; x !== -1; x = parent[x]) path.unshift(x);
+                var chain = path.map(function (l) {
+                  return { cells: graph.nodes[l >> 1].cells.slice(), digit: graph.nodes[l >> 1].digit, truth: l & 1 };
+                });
+                var cells = [];
+                chain.forEach(function (n) { n.cells.forEach(function (c) { if (cells.indexOf(c) === -1) cells.push(c); }); });
+                out.push({ technique: 'groupedChain', cells: cells.sort(function (a, b) { return a - b; }),
+                  placements: [], eliminations: CP.targets(m, state, graph.nodes[s], graph.nodes[next[k]]),
+                  i18nKey: 'technique.groupedChain.step',
+                  i18nArgs: { proofVersion: 2, kind: 'endpoints', length: chain.length - 1, chains: [chain] } });
+                head = queue.length;
+                break;
+              }
+            }
+          }
+        }
+        return out;
+      }
+
+      it('accepts every endpoint proof that a search over the grouped graph finds, and none removes a solution ' +
+        'candidate', function () {
+          var counts = { states: 0, proofs: 0, withGroup: 0, groupEnds: 0, targets: 0 };
+          prunedStates(model9, SG.testkit.rng.create(8950), 40, function (r) { return 0.04 + 0.2 * r.next(); })
+            .forEach(function (item, i) {
+              var graph = graphOf(model9, item.state, { workLimit: 100000000 });
+              var support = i < 6 ? supportedMasks(model9, item.state) : null;
+              counts.states++;
+              groupedProofs(model9, item.state, graph, 7, 5).forEach(function (finding) {
+                expect(['state ' + i, CP.pathProblems(model9, item.state, finding, { canonical: true })])
+                  .toEqual(['state ' + i, []]);
+                finding.eliminations.forEach(function (e) {
+                  if (item.solution[e[0]] === e[1]) fail('state ' + i + ' removes a candidate of the solution');
+                });
+                if (support !== null) expect(oracleProblems(model9, item.state, finding, support)).toEqual([]);
+                var chain = finding.i18nArgs.chains[0];
+                counts.proofs++;
+                counts.targets += finding.eliminations.length;
+                if (chain.some(function (node) { return node.cells.length > 1; })) counts.withGroup++;
+                if (chain[0].cells.length > 1 || chain[chain.length - 1].cells.length > 1) counts.groupEnds++;
+              });
+            });
+          expect(counts.proofs).toBeGreaterThanOrEqual(100);
+          expect(counts.withGroup).toBeGreaterThanOrEqual(50);
+          expect(counts.groupEnds).toBeGreaterThanOrEqual(20);
+          expect(counts.targets).toBeGreaterThanOrEqual(counts.proofs);
+        });
+    });
+
   // Acceptance: nightmare puzzles that the lower technique groups cannot finish
   describe('chain group: nightmare puzzles', function () {
     /** Applies the four chain ids (and the singles they unlock) until none finds anything. */

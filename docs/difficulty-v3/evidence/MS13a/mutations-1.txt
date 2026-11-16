@@ -1,0 +1,272 @@
+mutation 0 (a weak link is decided by the first cells of the two nodes only): DETECTED - 34 total, 26 passed, 8 failed, 0 skipped - 8 failing - 1.2 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: one missing pair is no link, however convenient the other pairs are
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > builds a blank classic9 board with more nodes than cells x digits, in the order of the brief
+    FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > follows a state that is changed in place (no candidate cache), and equal candidates give one graph, whatever order they were reached in
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags every way a graph can differ from the canonical graph of its position
+mutation 1 (a weak link needs only ONE crossing pair of cells that see each other): DETECTED - 34 total, 26 passed, 8 failed, 0 skipped - 8 failing - 1.3 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: one missing pair is no link, however convenient the other pairs are
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > builds a blank classic9 board with more nodes than cells x digits, in the order of the brief
+    FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > follows a state that is changed in place (no candidate cache), and equal candidates give one graph, whatever order they were reached in
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags every way a graph can differ from the canonical graph of its position
+mutation 2 (overlapping nodes are not told apart from disjoint ones): DETECTED - 34 total, 25 passed, 9 failed, 0 skipped - 9 failing - 1.9 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: disjoint groups and EVERY cross pair in conflict (R1C1 R1C2 against R2C1 R2C2: all four)
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: one missing pair is no link, however convenient the other pairs are
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > overlapping groups are never weak or strong, even when together they are all the occurrences of a unit
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit strong: disjoint nodes that are exactly the occurrences of a complete unit; one more is no link
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > follows a state that is changed in place (no candidate cache), and equal candidates give one graph, whatever order they were reached in
+mutation 3 (a strong link only needs the nodes to cover at most the occurrences of the unit (a subset)): DETECTED - 34 total, 22 passed, 12 failed, 0 skipped - 12 failing - 1.2 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: disjoint groups and EVERY cross pair in conflict (R1C1 R1C2 against R2C1 R2C2: all four)
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: one missing pair is no link, however convenient the other pairs are
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > overlapping groups are never weak or strong, even when together they are all the occurrences of a unit
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit strong: disjoint nodes that are exactly the occurrences of a complete unit; one more is no link
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+mutation 4 (every unit is taken for a complete one (a partial unit gives strong links and groups)): DETECTED - 34 total, 29 passed, 5 failed, 0 skipped - 5 failing - 2.1 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > a partial unit gives weak links (all-different) and never a strong one, whatever it covers
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > groups come from complete box-like units and complete lines only (a partial cage makes none)
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > keeps the old graph on the singletons: the weak and strong links of the forcingChain checker, pair by pair
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags every way a graph can differ from the canonical graph of its position
+mutation 5 (a digit that is already placed in the unit still gives a strong link): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped - 1 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit strong: disjoint nodes that are exactly the occurrences of a complete unit; one more is no link
+mutation 6 (the second node of a strong link need not lie inside the unit): DETECTED - 34 total, 23 passed, 11 failed, 0 skipped - 11 failing - 1.3 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: disjoint groups and EVERY cross pair in conflict (R1C1 R1C2 against R2C1 R2C2: all four)
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: one missing pair is no link, however convenient the other pairs are
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit strong: disjoint nodes that are exactly the occurrences of a complete unit; one more is no link
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > a partial unit gives weak links (all-different) and never a strong one, whatever it covers
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+mutation 7 (groups come from units that are not complete (a partial cage)): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped - 1 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > groups come from complete box-like units and complete lines only (a partial cage makes none)
+mutation 8 (a column is no line): DETECTED - 34 total, 20 passed, 14 failed, 0 skipped - 14 failing - 0.7 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: disjoint groups and EVERY cross pair in conflict (R1C1 R1C2 against R2C1 R2C2: all four)
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: one missing pair is no link, however convenient the other pairs are
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > deduplicates groups on the same cells and sorts them by [digit, ...cells], after the singletons
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > builds a blank classic9 board with more nodes than cells x digits, in the order of the brief
+mutation 9 (an intersection needs three cells to give a group): DETECTED - 34 total, 32 passed, 2 failed, 0 skipped - 2 failing - 1.8 s
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses the 4097th additional node (limit 4096, default) and builds 4096 of them, more nodes than cells x digits
+mutation 10 (a single occurrence in an intersection is a group (a second copy of the singleton)): DETECTED - 34 total, 23 passed, 11 failed, 0 skipped - 11 failing - 1.2 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: one missing pair is no link, however convenient the other pairs are
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > overlapping groups are never weak or strong, even when together they are all the occurrences of a unit
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit strong: disjoint nodes that are exactly the occurrences of a complete unit; one more is no link
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > a partial unit gives weak links (all-different) and never a strong one, whatever it covers
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > groups come from complete box-like units and complete lines only (a partial cage makes none)
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+mutation 11 (a solved cell counts as an occurrence in an intersection): NOT DETECTED (exit 0) - 34 total, 34 passed, 0 failed, 0 skipped - 0 failing - 2.5 s
+mutation 12 (a solved cell is a singleton node): DETECTED - 34 total, 30 passed, 4 failed, 0 skipped - 4 failing - 2.0 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit strong: disjoint nodes that are exactly the occurrences of a complete unit; one more is no link
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > charges one unit per tested combination: a group, a pair of candidates of a cell, a node pair of a digit whose first cells meet
+    FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > follows a state that is changed in place (no candidate cache), and equal candidates give one graph, whatever order they were reached in
+mutation 13 (a bivalue strong link for every cell with two or more candidates): DETECTED - 34 total, 27 passed, 7 failed, 0 skipped - 7 failing - 1.1 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > keeps the old graph on the singletons: the weak and strong links of the forcingChain checker, pair by pair
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > builds a blank classic9 board with more nodes than cells x digits, in the order of the brief
+    FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > follows a state that is changed in place (no candidate cache), and equal candidates give one graph, whatever order they were reached in
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags an edge that fails in a known solution: a weak link between two true nodes, a strong one between two false node
+mutation 14 (two candidates of one cell are not weakly linked): DETECTED - 34 total, 28 passed, 6 failed, 0 skipped - 6 failing - 1.1 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > keeps the old graph on the singletons: the weak and strong links of the forcingChain checker, pair by pair
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > builds a blank classic9 board with more nodes than cells x digits, in the order of the brief
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > takes the limit of additional nodes from the option too: N is built, N - 1 is refused, 0 means no group
+    FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > follows a state that is changed in place (no candidate cache), and equal candidates give one graph, whatever order they were reached in
+mutation 15 (groups that repeat on the same cells are not deduplicated): DETECTED - 34 total, 31 passed, 3 failed, 0 skipped - 3 failing - 1.9 s
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > deduplicates groups on the same cells and sorts them by [digit, ...cells], after the singletons
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > takes the limit of additional nodes from the option too: N is built, N - 1 is refused, 0 means no group
+mutation 16 (the groups are sorted descending): DETECTED - 34 total, 24 passed, 10 failed, 0 skipped - 10 failing - 1.1 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: disjoint groups and EVERY cross pair in conflict (R1C1 R1C2 against R2C1 R2C2: all four)
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: one missing pair is no link, however convenient the other pairs are
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > overlapping groups are never weak or strong, even when together they are all the occurrences of a unit
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > groups come from complete box-like units and complete lines only (a partial cage makes none)
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+mutation 17 (the key order puts the larger digit first): DETECTED - 34 total, 29 passed, 5 failed, 0 skipped - 5 failing - 1.0 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > deduplicates groups on the same cells and sorts them by [digit, ...cells], after the singletons
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > builds a blank classic9 board with more nodes than cells x digits, in the order of the brief
+    FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > follows a state that is changed in place (no candidate cache), and equal candidates give one graph, whatever order they were reached in
+mutation 18 (the key order puts a longer prefix first): DETECTED - 34 total, 31 passed, 3 failed, 0 skipped - 3 failing - 2.2 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > groups come from complete box-like units and complete lines only (a partial cage makes none)
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > deduplicates groups on the same cells and sorts them by [digit, ...cells], after the singletons
+mutation 19 (the singletons of a cell come highest digit first): DETECTED - 34 total, 28 passed, 6 failed, 0 skipped - 6 failing - 0.9 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > deduplicates groups on the same cells and sorts them by [digit, ...cells], after the singletons
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > builds a blank classic9 board with more nodes than cells x digits, in the order of the brief
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > takes the limit of additional nodes from the option too: N is built, N - 1 is refused, 0 means no group
+    FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > follows a state that is changed in place (no candidate cache), and equal candidates give one graph, whatever order they were reached in
+mutation 20 (the state is written (the candidate of a singleton is consumed)): DETECTED - 34 total, 7 passed, 27 failed, 0 skipped - 27 failing - 0.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the API and the registered kernels > changes no Finding and no observer record of the registered finders and the seam, built in between or not
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: disjoint groups and EVERY cross pair in conflict (R1C1 R1C2 against R2C1 R2C2: all four)
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: one missing pair is no link, however convenient the other pairs are
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > overlapping groups are never weak or strong, even when together they are all the occurrences of a unit
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit strong: disjoint nodes that are exactly the occurrences of a complete unit; one more is no link
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > a partial unit gives weak links (all-different) and never a strong one, whatever it covers
+mutation 21 (adjacency lists (weak) are not sorted): DETECTED - 34 total, 29 passed, 5 failed, 0 skipped - 5 failing - 1.2 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > builds a blank classic9 board with more nodes than cells x digits, in the order of the brief
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > takes the limit of additional nodes from the option too: N is built, N - 1 is refused, 0 means no group
+    FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > follows a state that is changed in place (no candidate cache), and equal candidates give one graph, whatever order they were reached in
+mutation 22 (adjacency lists (strong) are not sorted): DETECTED - 34 total, 31 passed, 3 failed, 0 skipped - 3 failing - 1.9 s
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > takes the limit of additional nodes from the option too: N is built, N - 1 is refused, 0 means no group
+    FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > follows a state that is changed in place (no candidate cache), and equal candidates give one graph, whatever order they were reached in
+mutation 23 (the peer matrix is not symmetric): DETECTED - 34 total, 20 passed, 14 failed, 0 skipped - 14 failing - 1.2 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: disjoint groups and EVERY cross pair in conflict (R1C1 R1C2 against R2C1 R2C2: all four)
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > overlapping groups are never weak or strong, even when together they are all the occurrences of a unit
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit strong: disjoint nodes that are exactly the occurrences of a complete unit; one more is no link
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > deduplicates groups on the same cells and sorts them by [digit, ...cells], after the singletons
+mutation 24 (the geometry of the first model is kept for every model (a stale cache)): DETECTED - 34 total, 5 passed, 29 failed, 0 skipped - 29 failing - 0.3 s
+    FAIL tech-chain > grouped graph (R16, inactive): the API and the registered kernels > exposes build and the two limits of R10 (4096 additional nodes, 50000 tested combinations) only
+    FAIL tech-chain > grouped graph (R16, inactive): the API and the registered kernels > changes no Finding and no observer record of the registered finders and the seam, built in between or not
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: disjoint groups and EVERY cross pair in conflict (R1C1 R1C2 against R2C1 R2C2: all four)
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: one missing pair is no link, however convenient the other pairs are
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > overlapping groups are never weak or strong, even when together they are all the occurrences of a unit
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit strong: disjoint nodes that are exactly the occurrences of a complete unit; one more is no link
+mutation 25 (the default group limit is 4097): DETECTED - 34 total, 32 passed, 2 failed, 0 skipped - 2 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the API and the registered kernels > exposes build and the two limits of R10 (4096 additional nodes, 50000 tested combinations) only
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses the 4097th additional node (limit 4096, default) and builds 4096 of them, more nodes than cells x digits
+mutation 26 (the default work limit is 50001): DETECTED - 34 total, 31 passed, 3 failed, 0 skipped - 3 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the API and the registered kernels > exposes build and the two limits of R10 (4096 additional nodes, 50000 tested combinations) only
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > stops at the work limit: W is complete, W - 1 an empty incomplete graph with capHit "work" and work = the limit
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses the 4097th additional node (limit 4096, default) and builds 4096 of them, more nodes than cells x digits
+mutation 27 (the group limit is off by one (>=)): DETECTED - 34 total, 32 passed, 2 failed, 0 skipped - 2 failing - 2.2 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses the 4097th additional node (limit 4096, default) and builds 4096 of them, more nodes than cells x digits
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > takes the limit of additional nodes from the option too: N is built, N - 1 is refused, 0 means no group
+mutation 28 (the group limit is off by one (one more allowed)): DETECTED - 34 total, 32 passed, 2 failed, 0 skipped - 2 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses the 4097th additional node (limit 4096, default) and builds 4096 of them, more nodes than cells x digits
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > takes the limit of additional nodes from the option too: N is built, N - 1 is refused, 0 means no group
+mutation 29 (the work limit is off by one (a unit may be charged past it)): DETECTED - 34 total, 30 passed, 4 failed, 0 skipped - 4 failing - 2.4 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > stops at the work limit: W is complete, W - 1 an empty incomplete graph with capHit "work" and work = the limit
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses the 4097th additional node (limit 4096, default) and builds 4096 of them, more nodes than cells x digits
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses options that are not a finite number of at least 0 with solver.invalidOption, and floors the others
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > checks the parent budget at entry and so that no more than 256 units pass between two checks
+mutation 30 (the pairs of nodes whose first cells do not meet are charged too): DETECTED - 34 total, 25 passed, 9 failed, 0 skipped - 9 failing - 1.6 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > deduplicates groups on the same cells and sorts them by [digit, ...cells], after the singletons
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > builds a blank classic9 board with more nodes than cells x digits, in the order of the brief
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > charges one unit per tested combination: a group, a pair of candidates of a cell, a node pair of a digit whose first cells meet
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > stops at the work limit: W is complete, W - 1 an empty incomplete graph with capHit "work" and work = the limit
+mutation 31 (the groups are not charged): DETECTED - 34 total, 25 passed, 9 failed, 0 skipped - 9 failing - 1.7 s
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > deduplicates groups on the same cells and sorts them by [digit, ...cells], after the singletons
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > builds a blank classic9 board with more nodes than cells x digits, in the order of the brief
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > charges one unit per tested combination: a group, a pair of candidates of a cell, a node pair of a digit whose first cells meet
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > stops at the work limit: W is complete, W - 1 an empty incomplete graph with capHit "work" and work = the limit
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses the 4097th additional node (limit 4096, default) and builds 4096 of them, more nodes than cells x digits
+mutation 32 (the pairs of candidates of a cell are not charged): DETECTED - 34 total, 27 passed, 7 failed, 0 skipped - 7 failing - 1.8 s
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > deduplicates groups on the same cells and sorts them by [digit, ...cells], after the singletons
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > builds a blank classic9 board with more nodes than cells x digits, in the order of the brief
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > charges one unit per tested combination: a group, a pair of candidates of a cell, a node pair of a digit whose first cells meet
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > stops at the work limit: W is complete, W - 1 an empty incomplete graph with capHit "work" and work = the limit
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > checks the parent budget at entry and so that no more than 256 units pass between two checks
+mutation 33 (the budget is checked one unit early (>=)): DETECTED - 34 total, 32 passed, 2 failed, 0 skipped - 2 failing - 2.4 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > checks the parent budget at entry and so that no more than 256 units pass between two checks
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > turns a spent budget into an empty incomplete graph without a cap, at the check where it ran out
+mutation 34 (the budget is checked 257 units late (> 512)): DETECTED - 34 total, 32 passed, 2 failed, 0 skipped - 2 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > checks the parent budget at entry and so that no more than 256 units pass between two checks
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > turns a spent budget into an empty incomplete graph without a cap, at the check where it ran out
+mutation 35 (the entry check is dropped): DETECTED - 34 total, 32 passed, 2 failed, 0 skipped - 2 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > checks the parent budget at entry and so that no more than 256 units pass between two checks
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > turns a spent budget into an empty incomplete graph without a cap, at the check where it ran out
+mutation 36 (cancellation and every other error are swallowed): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped - 1 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > lets cancellation and every other error through, with no result
+mutation 37 (a spent budget is reported as a work cap): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped - 1 failing - 2.4 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > turns a spent budget into an empty incomplete graph without a cap, at the check where it ran out
+mutation 38 (the group cap is reported as a work cap): DETECTED - 34 total, 32 passed, 2 failed, 0 skipped - 2 failing - 2.4 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses the 4097th additional node (limit 4096, default) and builds 4096 of them, more nodes than cells x digits
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > takes the limit of additional nodes from the option too: N is built, N - 1 is refused, 0 means no group
+mutation 39 (an incomplete graph says it is complete): DETECTED - 34 total, 29 passed, 5 failed, 0 skipped - 5 failing - 2.4 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > stops at the work limit: W is complete, W - 1 an empty incomplete graph with capHit "work" and work = the limit
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses the 4097th additional node (limit 4096, default) and builds 4096 of them, more nodes than cells x digits
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > takes the limit of additional nodes from the option too: N is built, N - 1 is refused, 0 means no group
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses options that are not a finite number of at least 0 with solver.invalidOption, and floors the others
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > turns a spent budget into an empty incomplete graph without a cap, at the check where it ran out
+mutation 40 (an incomplete graph returns a partial node list): DETECTED - 34 total, 28 passed, 6 failed, 0 skipped - 6 failing - 2.3 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > stops at the work limit: W is complete, W - 1 an empty incomplete graph with capHit "work" and work = the limit
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses the 4097th additional node (limit 4096, default) and builds 4096 of them, more nodes than cells x digits
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > takes the limit of additional nodes from the option too: N is built, N - 1 is refused, 0 means no group
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses options that are not a finite number of at least 0 with solver.invalidOption, and floors the others
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > turns a spent budget into an empty incomplete graph without a cap, at the check where it ran out
+    FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > returns arrays of its own: changing a graph changes neither the next one nor the earlier ones
+mutation 41 (the options accept Infinity): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped - 1 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses options that are not a finite number of at least 0 with solver.invalidOption, and floors the others
+mutation 42 (the options refuse 0): DETECTED - 34 total, 29 passed, 5 failed, 0 skipped - 5 failing - 2.4 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > stops at the work limit: W is complete, W - 1 an empty incomplete graph with capHit "work" and work = the limit
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > takes the limit of additional nodes from the option too: N is built, N - 1 is refused, 0 means no group
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > checks the parent budget at entry and so that no more than 256 units pass between two checks
+    FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > returns arrays of its own: changing a graph changes neither the next one nor the earlier ones
+    FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > answers the same after other calls: other positions and models, the finders, capped and refused calls
+mutation 43 (the options are not floored): DETECTED - 34 total, 32 passed, 2 failed, 0 skipped - 2 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > stops at the work limit: W is complete, W - 1 an empty incomplete graph with capHit "work" and work = the limit
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses options that are not a finite number of at least 0 with solver.invalidOption, and floors the others
+mutation 44 (null options are not refused cleanly): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped - 1 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > refuses options that are not a finite number of at least 0 with solver.invalidOption, and floors the others
+mutation 45 (checker: a weak link compares the first cells only): DETECTED - 34 total, 27 passed, 7 failed, 0 skipped - 7 failing - 1.2 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: one missing pair is no link, however convenient the other pairs are
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > builds a blank classic9 board with more nodes than cells x digits, in the order of the brief
+    FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > follows a state that is changed in place (no candidate cache), and equal candidates give one graph, whatever order they were reached in
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags every way a graph can differ from the canonical graph of its position
+mutation 46 (checker: a strong link compares the number of occurrences, not the cells): DETECTED - 34 total, 24 passed, 10 failed, 0 skipped - 10 failing - 1.4 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: disjoint groups and EVERY cross pair in conflict (R1C1 R1C2 against R2C1 R2C2: all four)
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit weak: one missing pair is no link, however convenient the other pairs are
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit strong: disjoint nodes that are exactly the occurrences of a complete unit; one more is no link
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > a partial unit gives weak links (all-different) and never a strong one, whatever it covers
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+mutation 47 (checker: a digit placed in a unit is ignored): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped - 1 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > same-digit strong: disjoint nodes that are exactly the occurrences of a complete unit; one more is no link
+mutation 48 (checker: a target needs to be linked to either end): DETECTED - 34 total, 31 passed, 3 failed, 0 skipped - 3 failing - 2.4 s
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > accepts the proof of the vector and finds its three edges in the builder's graph
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > reads the legacy triples of the real forcingChain Findings like the old checker does, and as version 2
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > accepts every endpoint proof that a search over the grouped graph finds, and none removes a solution candidate
+mutation 49 (checker: a forced or contradiction proof may start from a group): DETECTED - 34 total, 32 passed, 2 failed, 0 skipped - 2 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > lets a forced or a contradiction proof start from a singleton only, and never place a group member
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > reads the legacy triples of the real forcingChain Findings like the old checker does, and as version 2
+mutation 50 (checker: a placement into a member of a group is not reported): DETECTED - 34 total, 32 passed, 2 failed, 0 skipped - 2 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags every way the proof of the vector can be wrong
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > lets a forced or a contradiction proof start from a singleton only, and never place a group member
+mutation 51 (checker: the strong edges of a path are not checked): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped - 1 failing - 2.4 s
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags every way the proof of the vector can be wrong
+mutation 52 (checker: the weak edges of a path are not checked): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped - 1 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags every way the proof of the vector can be wrong
+mutation 53 (checker: extra edges of a graph are not counted): NOT DETECTED (exit 0) - 34 total, 34 passed, 0 failed, 0 skipped - 0 failing - 2.5 s
+mutation 54 (checker: the order of the cells of a node is not checked): DETECTED - 34 total, 32 passed, 2 failed, 0 skipped - 2 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags a node that is not a set of open candidates of one digit, ascending and distinct
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags every way the proof of the vector can be wrong
+mutation 55 (checker: the expected work charges every pair of one digit): DETECTED - 34 total, 31 passed, 3 failed, 0 skipped - 3 failing - 1.9 s
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > is exactly the canonical graph of every position: nodes, weak and strong edges both ways, and the units it charges
+    FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > deduplicates groups on the same cells and sorts them by [digit, ...cells], after the singletons
+    FAIL tech-chain > grouped graph (R16, inactive): limits, budget and the incomplete-graph rule > charges one unit per tested combination: a group, a pair of candidates of a cell, a node pair of a digit whose first cells meet
+mutation 56 (checker: the expected groups come from partial units too): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped - 1 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > groups come from complete box-like units and complete lines only (a partial cage makes none)
+mutation 57 (checker: a weak edge that fails in a solution is not reported): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped - 1 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags an edge that fails in a known solution: a weak link between two true nodes, a strong one between two false node
+mutation 58 (checker: a strong edge that fails in a solution is not reported): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped - 1 failing - 2.4 s
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags an edge that fails in a known solution: a weak link between two true nodes, a strong one between two false node
+mutation 59 (checker: the targets of an endpoints proof are not compared): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped - 1 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags every way the proof of the vector can be wrong
+mutation 60 (checker: the length of a proof is not checked): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped - 1 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags every way the proof of the vector can be wrong
+mutation 61 (EQUIVALENT (argued): the complete-unit guard of the cover test (occ is zero for a unit that is not complete)): NOT DETECTED, EQUIVALENT (argued) - 34 total, 34 passed, 0 failed, 0 skipped - 0 failing - 2.5 s
+detected 59 of 62, survivors 3, 121.8 s

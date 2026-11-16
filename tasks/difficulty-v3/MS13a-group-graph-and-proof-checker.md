@@ -226,14 +226,14 @@ No new slow-cell evidence/tooling class. Return the inherited/new item list and 
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted after SA1 analyst review (S-OD4 review set). Eight points before the final gates: SA2 ruled in `d9143de` (groups only from box/region x row/col; every tested same-digit pair charged; quota during insertion; capHit `'work'`/`'nodes'`/`null`; one checker over-restriction removed; full E recorded and merge-checked with no writes, since IR72 now applies to inactive tasks). SA1 review: one blocking finding (the work census covered only classic9 and wrongly claimed no real position was capped), fixed by an all-model census with no engine change; one minor finding escalated by SA2 to the owner as GC-01 (MS13c's shared allowance against IR54's unbounded forcingChain), S-AV36 added (`e1cec9e`); three text slips fixed; then accepted |
+| Start | 2026-11-16 22:53:07 (+07:00), base `8345e89` |
+| End | 23:32 stop with 8 points; 00:05 SA2 ruling (`d9143de`); 01:20 final report; 01:22-01:50 SA1 review; 02:15 census fix; 02:33 SA1 accept with three text slips; 02:40 slips fixed; orchestrator re-check and commit at about 02:45 |
+| Duration | About 2 h 55 min developer (39 min to the points, 1 h 15 min after the ruling, 25 min census fix, 5 min slips); about 33 min SA2 ruling; SA1 review about 40 min over two rounds (plus 12 min context); locked commands in `docs/difficulty-v3/evidence/MS13a/lock-log.jsonl` |
+| Model | claude-sonnet-5.5 (developer); gpt-6-astra (SA2 rulings, GC-01, pack amendments); claude-opus-5.5 (SA1 review; orchestrator) |
+| Token usage | Developer: 313 model calls; 103,288,162 input tokens (101,173,518 cache reads); 544,266 output tokens. SA1 reviewer: 178 calls; 61,823,645 input (60,354,183 cache reads); 157,798 output |
+| AI credits | about 2,085 (developer); about 2,257 (SA1 review, including its context build for MS13a-MS18c) |
+| Verification | Inactive `SG.chainGraph.build(model, state, ctx[, {groupLimit, workLimit}])` and frozen `LIMITS` (4096 groups / 50,000 units) in `core/js/engine/tech-chain.js` (354 lines inserted, none deleted; referenced nowhere else; hash `501481B4...`), with canonical groups from complete box/region x row/col intersections, 1-based digits, ascending cells, singleton-first and numeric-lexicographic group order, every tested same-digit pair charged, the group quota enforced during insertion, incomplete graphs with empty arrays and capHit `'work'`, `'nodes'` or `null`. Independent checker fixture `core/tests/fixtures/chain-proofs.js` (`SG.chainProofs`), SA2's singleton-in-group reproducer as a positive. Tests: `tech-chain` 176 -> 216. Mutants: 77 detected + 1 equivalent. Inactivity: differential 6,370 calls, 2,306 Findings, 135 ratings, SHA-256 `8c0f69aa...42e3` identical for the tree and `8345e89`; full E (5 wires, 14 analyses, 520 hashes) recorded on the final source and merge-checked "recorded from the current sources" with no writes (re-run by SA1); GH 37/37. Census on all 15 models (blank structural maxima, synthetic and ladder chain-group positions): the default 50,000 is reached at real chain-group positions on Samurai (38 of 48), Sohei (43 of 51), Flower (17 of 44) and mega16 (20 of 321); none on 9x9 boards, mega12 or Butterfly. Quick sets: Generator 4,408/4,408 (410.0 s, `quick-final-2`), Player 2,647/2,647 (73.3 s); no projection changes; fingerprints Generator `a019fda1...`, Player `7a1a84e9...`; CI check passes. Orchestrator: locked `tech-chain,tech-wing,techniques,technique-weights,difficulty-floor,i18n,digger-target` 1,203/1,203 (58.7 s), Player `help,help-example-tools,tech-chain,i18n` 363/363 (22.2 s), CI shard check 4,408 of 4,408 |
+| Acceptance | MS13a-B01, B02, T01-T03 met (developer's evidence in `docs/difficulty-v3/evidence/MS13a/evidence.md` sections 9-10); SA1 analyst review: accept |
+| Issues & resolutions | The first census measured real positions only on classic9 and claimed no real position was capped; SA1's measurements showed the default 50,000 reached at most Samurai and Sohei chain-group positions; corrected with an all-model census and design/evidence text, engine untouched. This makes MS13c's shared 50,000 allowance a policy question against IR54's unbounded forcingChain: escalated to the owner as **GC-01** (A preserve the legacy singleton route, SA2 recommends; B supersede IR54), S-AV36 opened for construction cost and caps (MS13c, MS18d, MS18e). MS07a's no-E closure predates IR72 and is not a precedent. Seven locked runs ended with exit 1 during development (logged). Not run: qualification, soak |
+| Handoff | To MS13b: `SG.chainGraph.build` and `SG.chainProofs` exist, inactive; MS13b's inactive consumer work may proceed; MS13c waits for the owner's GC-01 answer and the pack amendment; base quick totals Generator 4,408 (410.0 s) and Player 2,647 (73.3 s); help catalogue 37; S-AV01-S-AV36 open as recorded; MS13b is in the S-OD4 analyst review set (SA1) |

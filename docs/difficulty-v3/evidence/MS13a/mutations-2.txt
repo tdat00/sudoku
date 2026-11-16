@@ -1,0 +1,3 @@
+mutation 11 (a solved cell counts as an occurrence in an intersection): DETECTED - 35 total, 34 passed, 1 failed, 0 skipped - 1 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > a solved cell is no occurrence: one open 5 beside a solved 5 in an intersection forms no group
+detected 1 of 1, survivors 0, 2.5 s

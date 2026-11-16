@@ -1,0 +1,10 @@
+$ node tests\node-runner.js --suite=tech-chain --filter=grouped graph
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   tech-chain: 34 passed  (2.52 s)
+
+Suites: 1
+Tests:  34 total, 34 passed, 0 failed, 0 skipped
+Time:   2.52 s running tests, 2.63 s total
+exit=0 seconds=2.738

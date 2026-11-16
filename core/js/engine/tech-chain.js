@@ -127,6 +127,53 @@
  * a consumer checks its own budget after the call); cancellation and every other error propagate. An
  * optional `ctx.options.onPatternWork(record)` observes the call and never selects its result: record =
  * { id, work, limit (null = unbounded), capHit (null | 'work'), retained (null) }, a fresh object per call.
+ *
+ * The canonical grouped graph (difficulty v3, R16, MS13a). INACTIVE: no registered finder and no seam call
+ * reads it; the finders above keep the singleton graph and its arithmetic nodes (cell * digits + digit).
+ * It is the internal `SG.chainGraph.build(model, state, ctx[, { groupLimit, workLimit }])`, for tests and
+ * for the later activation of grouped forcing chains (MS13c), and it returns
+ *
+ *   { nodes, weak, strong, complete, work, capHit }
+ *
+ * Node = { cells, digit }: `cells` ascending, distinct, non-empty, each an open cell that still holds the
+ * candidate `digit` (1-based, as in a Finding); a node is true when at least one listed cell holds the digit,
+ * so a true group is no permission to place one arbitrary member. `nodes` lists the singletons, one per open
+ * candidate in ascending (cell, digit) order, then the additional nodes (the groups): for every complete unit
+ * of kind 'box' or 'region' and every complete 'row' or 'col' unit that shares at least two cells with it,
+ * and every digit, the open cells of that intersection that still hold the digit, when there are at least
+ * two. Other complete units (windows, diagonals) generate no group of their own, but they still give strong
+ * links and all their peers give weak links. Groups are deduplicated by their key [digit, ...cells] and
+ * sorted by it numerically, element by element (a shorter prefix first, not decimal-string order), so they
+ * follow the singletons. Nothing about the state is cached between calls: the node order is a function of
+ * the state alone. `weak[i]` and `strong[i]` list the nodes joined to node i, ascending, without duplicates,
+ * symmetric:
+ *   weak (at most one is true)      same digit: the nodes are disjoint and EVERY cross pair of cells sees
+ *                                   each other (`model.peers`, partial units included); never one convenient
+ *                                   pair and never overlapping nodes. Different digits: two singletons of
+ *                                   one cell.
+ *   strong (at least one is true)   same digit: two disjoint nodes whose cells are exactly all the open
+ *                                   occurrences of the digit in one COMPLETE unit (`ctx.completeUnits`)
+ *                                   where the digit is not placed (one more occurrence, or a partial unit,
+ *                                   gives no link). Different digits: the two singletons of a bivalue cell.
+ * Work: one unit is one tested combination, three kinds: a group candidate (a (box or region, row or
+ * column, digit) intersection with at least two open occurrences, charged before deduplication), a pair of
+ * candidates of one open cell, and EVERY pair of nodes of one digit, charged before the test that their
+ * first cells see each other (a sound prefilter: all cross pairs in conflict imply it, and two nodes of a
+ * strong link lie in one unit) and before the disjointness and edge tests. The limits are `GROUP_NODE_LIMIT`
+ * (4096 additional nodes) and `GRAPH_WORK_LIMIT` (50000 units); the option argument replaces either (a
+ * finite number of at least 0, floored, else `solver.invalidOption`; no unbounded mode). The quota counts
+ * distinct groups and is enforced while they are collected: a duplicate attempt spends work and no slot,
+ * exactly the limit is allowed and the next distinct group refuses the build. The parent budget is checked
+ * at entry, after the model-only set-up (the geometry, cached per model, whether or not it was built by this
+ * call), once per 256 steps of the uncharged per-call scans (the cells, the cells of the group
+ * intersections, the cells of the complete units) and so that no more than 256 charged units pass between
+ * two checks of the charged loops. A graph that cannot be completed is `complete: false` with EMPTY
+ * `nodes`, `weak` and `strong`, never a partial graph: `capHit` is 'work' (the unit limit was reached;
+ * `work` equals the limit), 'nodes' (more additional nodes than the quota) or null (a spent budget,
+ * 'budget.exceeded': the caller checks its own budget); cancellation and every other error propagate and
+ * the builder publishes no observer record. Empty arrays mean no usable graph, not no work done and not no
+ * proof possible: a later search must not use an incomplete graph, and `work` counts the units charged
+ * either way.
  */
 (function (root) {
   'use strict';
@@ -867,6 +914,313 @@
       limit: NEW_FINDER_WORK_LIMIT
     });
   }
+
+  // The canonical grouped graph (MS13a, R16; see the header). R10's limits of its construction: the
+  // additional (multi-cell) nodes and the tested combinations of one call. The fourth argument of `build`
+  // replaces either.
+  const GROUP_NODE_LIMIT = 4096;
+  const GRAPH_WORK_LIMIT = 50000;
+
+  // Thrown through the phases of a graph build whose number of additional nodes would pass the quota.
+  const GROUP_CAP = Object.freeze({ capHit: 'nodes' });
+
+  const graphGeometries = new WeakMap();
+
+  function ascending(a, b) {
+    return a - b;
+  }
+
+  // What a model fixes once, whatever the state: the peer matrix (n * n bytes) and every pair of a unit of
+  // kind 'box' or 'region' and a unit of kind 'row' or 'col' that share at least two cells, with the shared
+  // cells, ascending. Whether both units are complete is asked of `ctx` per call.
+  function graphGeometryOf(model) {
+    let geometry = graphGeometries.get(model);
+    if (geometry !== undefined) return geometry;
+    const n = model.cellCount;
+    const peerMatrix = new Uint8Array(n * n);
+    for (let c = 0; c < n; c++) {
+      const ps = model.peers[c];
+      for (let i = 0; i < ps.length; i++) peerMatrix[c * n + ps[i]] = 1;
+    }
+    const unitCount = model.units.length;
+    const role = new Uint8Array(unitCount); // 1: row or col, 2: box or region
+    for (let u = 0; u < unitCount; u++) {
+      const meta = model.unitMeta[u];
+      const kind = meta === undefined || meta === null ? '' : meta.kind;
+      role[u] = kind === 'row' || kind === 'col' ? 1 : kind === 'box' || kind === 'region' ? 2 : 0;
+    }
+    const pairs = [];
+    for (let b = 0; b < unitCount; b++) {
+      if (role[b] !== 2) continue;
+      const sharedBy = new Map();
+      const cells = model.units[b];
+      for (let i = 0; i < cells.length; i++) {
+        const us = model.cellUnits[cells[i]];
+        for (let k = 0; k < us.length; k++) {
+          if (role[us[k]] !== 1) continue;
+          const shared = sharedBy.get(us[k]);
+          if (shared === undefined) sharedBy.set(us[k], [cells[i]]);
+          else shared.push(cells[i]);
+        }
+      }
+      Array.from(sharedBy.keys()).sort(ascending).forEach(function (line) {
+        const shared = sharedBy.get(line);
+        if (shared.length >= 2) pairs.push({ box: b, line: line, cells: shared.sort(ascending) });
+      });
+    }
+    geometry = { peerMatrix: peerMatrix, pairs: pairs };
+    graphGeometries.set(model, geometry);
+    return geometry;
+  }
+
+  // The key order of the nodes: the digit, then the cells element by element, a shorter prefix first.
+  function compareNodes(a, b) {
+    if (a.digit !== b.digit) return a.digit - b.digit;
+    const shorter = Math.min(a.cells.length, b.cells.length);
+    for (let i = 0; i < shorter; i++) {
+      if (a.cells[i] !== b.cells[i]) return a.cells[i] - b.cells[i];
+    }
+    return a.cells.length - b.cells.length;
+  }
+
+  function graphInvalid(key, reason) {
+    const err = new SG.errors.GenerationError('solver.invalidOption', { option: 'chainGraph.build.' + key });
+    err.message = 'solver.invalidOption: chainGraph.build ' + key + ' ' + reason;
+    return err;
+  }
+
+  // The limits of a build call: the defaults, or the finite numbers of at least 0 (floored) of `options`.
+  function graphLimits(options) {
+    const limits = { groups: GROUP_NODE_LIMIT, work: GRAPH_WORK_LIMIT };
+    if (options === undefined) return limits;
+    if (options === null || typeof options !== 'object') throw graphInvalid('options', 'must be an object');
+    [['groupLimit', 'groups'], ['workLimit', 'work']].forEach(function (pair) {
+      const value = options[pair[0]];
+      if (value === undefined) return;
+      if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) {
+        throw graphInvalid(pair[0], 'must be a number of at least 0');
+      }
+      limits[pair[1]] = Math.floor(value);
+    });
+    return limits;
+  }
+
+  // One tested combination: refused once the limit is spent, and the parent budget is checked before the unit
+  // that would carry the gap since the last charged check (the entry included) over 256 units.
+  function chargeGraph(run) {
+    if (run.work >= run.limit) throw WORK_CAP;
+    if (run.work + 1 - run.checkedAt > WORK_CHECK_UNITS) {
+      run.ctx.check();
+      run.checkedAt = run.work;
+    }
+    run.work++;
+  }
+
+  // One step of an uncharged scan of this call (a cell of the state, of an intersection, of a complete unit):
+  // the parent budget is checked at every 256th step, whatever the charged work is, so zero charge is not
+  // zero cost.
+  function tickGraph(run) {
+    if (++run.ticks % WORK_CHECK_UNITS === 0) run.ctx.check();
+  }
+
+  function linkNodes(lists, a, b) {
+    lists[a].push(b);
+    lists[b].push(a);
+  }
+
+  // Whether the sorted cell lists have no cell in common.
+  function disjointCells(a, b) {
+    let i = 0;
+    let j = 0;
+    while (i < a.length && j < b.length) {
+      if (a[i] === b[j]) return false;
+      if (a[i] < b[j]) i++;
+      else j++;
+    }
+    return true;
+  }
+
+  // Whether every cell of `a` sees every cell of `b`: all cross pairs, not one convenient pair.
+  function seeEachOther(peerMatrix, n, a, b) {
+    for (let i = 0; i < a.length; i++) {
+      for (let j = 0; j < b.length; j++) {
+        if (peerMatrix[a[i] * n + b[j]] === 0) return false;
+      }
+    }
+    return true;
+  }
+
+  function allIn(model, unit, cells) {
+    for (let i = 0; i < cells.length; i++) {
+      const us = model.cellUnits[cells[i]];
+      let found = false;
+      for (let k = 0; k < us.length && !found; k++) found = us[k] === unit;
+      if (!found) return false;
+    }
+    return true;
+  }
+
+  // Whether the disjoint nodes x and y (of one digit, all cells open candidates) are exactly all the open
+  // occurrences of that digit in one complete unit where it is not placed: the occurrences are counted per
+  // unit, so equal counts and both nodes inside the unit leave no other occurrence.
+  function coverUnit(model, complete, occ, placed, digits, x, y) {
+    const total = x.cells.length + y.cells.length;
+    const d0 = x.digit - 1;
+    const us = model.cellUnits[x.cells[0]];
+    for (let k = 0; k < us.length; k++) {
+      const u = us[k];
+      if (complete[u] !== 1 || occ[u * digits + d0] !== total || (placed[u] & (1 << d0)) !== 0) continue;
+      if (allIn(model, u, x.cells) && allIn(model, u, y.cells)) return true;
+    }
+    return false;
+  }
+
+  // The graph of `state` or one of the three exceptions of `buildGraph` (the two caps and a spent budget).
+  function constructGraph(model, state, ctx, groupLimit, run) {
+    ctx.check();
+    const n = model.cellCount;
+    const digits = model.digits;
+    const cand = state.candidates;
+    const val = state.value;
+    const complete = ctx.completeUnits;
+    const geometry = graphGeometryOf(model);
+    ctx.check();
+    let i;
+    let c;
+
+    // The singletons: every open candidate, by cell and digit; runs[2k], runs[2k + 1] are the first node and
+    // the number of candidates of the k-th open cell that has at least two.
+    const nodes = [];
+    const runs = [];
+    for (c = 0; c < n; c++) {
+      tickGraph(run);
+      if (val[c] !== 0) continue;
+      const first = nodes.length;
+      let rest = cand[c];
+      while (rest !== 0) {
+        const low = rest & -rest;
+        rest ^= low;
+        nodes.push({ cells: [c], digit: 32 - Math.clz32(low) });
+      }
+      if (nodes.length - first >= 2) runs.push(first, nodes.length - first);
+    }
+
+    // The groups: the open cells of a box-line intersection that hold a digit, when at least two do. The
+    // quota of distinct groups is enforced as they are collected; a duplicate spends its work and no slot.
+    const collected = new Map();
+    for (let p = 0; p < geometry.pairs.length; p++) {
+      const pair = geometry.pairs[p];
+      if (complete[pair.box] !== 1 || complete[pair.line] !== 1) continue;
+      const shared = pair.cells;
+      let once = 0;
+      let twice = 0;
+      for (i = 0; i < shared.length; i++) {
+        tickGraph(run);
+        c = shared[i];
+        if (val[c] !== 0) continue;
+        twice |= once & cand[c];
+        once |= cand[c];
+      }
+      while (twice !== 0) {
+        const bit = twice & -twice;
+        twice ^= bit;
+        chargeGraph(run);
+        const members = [];
+        for (i = 0; i < shared.length; i++) {
+          c = shared[i];
+          if (val[c] === 0 && (cand[c] & bit) !== 0) members.push(c);
+        }
+        const key = bit + ':' + members.join(',');
+        if (collected.has(key)) continue;
+        if (collected.size >= groupLimit) throw GROUP_CAP;
+        collected.set(key, { cells: members, digit: 32 - Math.clz32(bit) });
+      }
+    }
+    Array.from(collected.values()).sort(compareNodes).forEach(function (group) { nodes.push(group); });
+
+    const byDigit = [];
+    for (i = 0; i <= digits; i++) byDigit.push([]);
+    for (i = 0; i < nodes.length; i++) byDigit[nodes[i].digit].push(i);
+
+    // Per complete unit: the digits already placed in it and the number of open occurrences of each digit.
+    const unitCount = model.units.length;
+    const occ = new Uint8Array(unitCount * digits);
+    const placed = new Int32Array(unitCount);
+    for (let u = 0; u < unitCount; u++) {
+      if (complete[u] !== 1) continue;
+      const cells = model.units[u];
+      for (i = 0; i < cells.length; i++) {
+        tickGraph(run);
+        c = cells[i];
+        if (val[c] !== 0) {
+          placed[u] |= 1 << (val[c] - 1);
+          continue;
+        }
+        let rest = cand[c];
+        while (rest !== 0) {
+          const low = rest & -rest;
+          rest ^= low;
+          occ[u * digits + 31 - Math.clz32(low)]++;
+        }
+      }
+    }
+
+    const weak = nodes.map(function () { return []; });
+    const strong = nodes.map(function () { return []; });
+    for (let k = 0; k < runs.length; k += 2) {
+      const first = runs[k];
+      const count = runs[k + 1];
+      for (let a = 0; a < count; a++) {
+        for (let b = a + 1; b < count; b++) {
+          chargeGraph(run);
+          linkNodes(weak, first + a, first + b);
+          if (count === 2) linkNodes(strong, first + a, first + b);
+        }
+      }
+    }
+    const peerMatrix = geometry.peerMatrix;
+    for (let d = 1; d <= digits; d++) {
+      const list = byDigit[d];
+      for (let a = 0; a < list.length; a++) {
+        const x = nodes[list[a]];
+        const rowStart = x.cells[0] * n;
+        for (let b = a + 1; b < list.length; b++) {
+          chargeGraph(run);
+          const y = nodes[list[b]];
+          if (peerMatrix[rowStart + y.cells[0]] === 0) continue;
+          if (!disjointCells(x.cells, y.cells)) continue;
+          if (seeEachOther(peerMatrix, n, x.cells, y.cells)) linkNodes(weak, list[a], list[b]);
+          if (coverUnit(model, complete, occ, placed, digits, x, y)) linkNodes(strong, list[a], list[b]);
+        }
+      }
+    }
+    for (i = 0; i < nodes.length; i++) {
+      weak[i].sort(ascending);
+      strong[i].sort(ascending);
+    }
+    return { nodes: nodes, weak: weak, strong: strong };
+  }
+
+  function buildGraph(model, state, ctx, options) {
+    const limits = graphLimits(options);
+    const run = { ctx: ctx, limit: limits.work, work: 0, checkedAt: 0, ticks: 0 };
+    try {
+      const built = constructGraph(model, state, ctx, limits.groups, run);
+      return { nodes: built.nodes, weak: built.weak, strong: built.strong, complete: true, work: run.work,
+        capHit: null };
+    } catch (err) {
+      let capHit = null;
+      if (err === WORK_CAP) capHit = 'work';
+      else if (err === GROUP_CAP) capHit = 'nodes';
+      else if (!(err && err.code === 'budget.exceeded')) throw err;
+      return { nodes: [], weak: [], strong: [], complete: false, work: run.work, capHit: capHit };
+    }
+  }
+
+  SG.chainGraph = {
+    build: buildGraph,
+    LIMITS: Object.freeze({ groups: GROUP_NODE_LIMIT, work: GRAPH_WORK_LIMIT })
+  };
 
   SG.chainSearch = { forcing: chainForcing, nishio: chainNishio, SHORT_MAX: INITIAL_SHORT_MAX };
 

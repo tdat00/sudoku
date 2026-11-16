@@ -1,0 +1,16 @@
+$ node tests\artifacts\difficulty-v3\MS13a\work-census-all.js ..\docs\difficulty-v3\evidence\MS13a\census-all mega12,mega16
+== mega12 (144 cells, 12 digits, 0.4 s); blank work 321048 (checker 321048), ladder {"puzzles":6,"puzzlesReachingChains":3,"positions":32,"stuckEnds":0,"outcomes":["solved","solved","solved","solved","solved","solved"],"steps":[42,0,40,2,41,0]}
+   constructed: blank: calls 1, default complete 0 (capped work 1, nodes 0), lifted work {"min":321048,"median":321048,"p95":321048,"max":321048}, over 50000: 1
+   synthetic: initial: calls 6, default complete 6 (capped work 0, nodes 0), lifted work {"min":12250,"median":21996,"p95":29833,"max":29833}, over 50000: 0
+   synthetic: propagated: calls 6, default complete 6 (capped work 0, nodes 0), lifted work {"min":0,"median":10981,"p95":17137,"max":17137}, over 50000: 0
+   synthetic: pruned: calls 12, default complete 12 (capped work 0, nodes 0), lifted work {"min":0,"median":7952,"p95":14734,"max":14734}, over 50000: 0
+   synthetic: many wrong candidates: calls 6, default complete 6 (capped work 0, nodes 0), lifted work {"min":3428,"median":7724,"p95":15117,"max":15117}, over 50000: 0
+   ladder: chain-group positions: calls 32, default complete 32 (capped work 0, nodes 0), lifted work {"min":1401,"median":6971,"p95":13216,"max":13644}, over 50000: 0
+== mega16 (256 cells, 16 digits, 8.1 s); blank work 1209344 (checker 1209344), ladder {"puzzles":6,"puzzlesReachingChains":6,"positions":321,"stuckEnds":0,"outcomes":["solved","solved","solved","solved","solved","solved"],"steps":[140,49,56,19,172,130]}
+   constructed: blank: calls 1, default complete 0 (capped work 1, nodes 0), lifted work {"min":1209344,"median":1209344,"p95":1209344,"max":1209344}, over 50000: 1
+   synthetic: initial: calls 6, default complete 1 (capped work 5, nodes 0), lifted work {"min":39833,"median":68021,"p95":72092,"max":72092}, over 50000: 5
+   synthetic: propagated: calls 6, default complete 4 (capped work 2, nodes 0), lifted work {"min":11069,"median":47544,"p95":58700,"max":58700}, over 50000: 2
+   synthetic: pruned: calls 12, default complete 12 (capped work 0, nodes 0), lifted work {"min":7046,"median":26504,"p95":48880,"max":48880}, over 50000: 0
+   synthetic: many wrong candidates: calls 6, default complete 5 (capped work 1, nodes 0), lifted work {"min":13713,"median":27301,"p95":58921,"max":58921}, over 50000: 1
+   ladder: chain-group positions: calls 321, default complete 301 (capped work 20, nodes 0), lifted work {"min":581,"median":23349,"p95":50505,"max":57089}, over 50000: 20
+exit=0 seconds=8.721

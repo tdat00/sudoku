@@ -537,6 +537,11 @@ was acquired); the chunk ledger is `docs/difficulty-v3/evidence/MS12/jellyfish-s
 **37** passes. The tests pin 37 (the catalogue, the user guide's "one of 37 techniques", the translated technique names) and
 the Player's quick set is 2,607 tests. No synthetic snapshot, disabled earlier technique or weakened assertion was used.
 `--check` without options reproduces the whole committed file.
+**Difficulty v3, MS13a (inactive proof graph):** the catalogue still holds the same 37 examples and none changed. The grouped
+chain graph of MS13a (`SG.chainGraph`, `core/js/engine/tech-chain.js`) is **inactive**: no hint, help example or rating
+reads it, so the check of all 37 examples on the final source (`--check --max-puzzles=64 --max-hints=400`, no discovery,
+nothing written) matches the committed file, and the Player's quick set is 2,647 tests (the 40 `grouped graph` tests of the
+shared `tech-chain` suite and the `chain-proofs` fixture are the only addition).
 **Decision:** there is no
 first-visit tour or other popup that stands in front of the welcome screen or the puzzle: a visitor who arrives
 from the generator's link wants to play.
@@ -570,7 +575,7 @@ strings; added: `player.*` (shell, open flow, info card, recent list, welcome), 
 
 ## 10. Testing
 `node tests/node-runner.js` (30 suites: the 14 of `tests/suites/` and the 16 shared ones of `core/tests/suites/`;
-2,607 tests; no install) is the default quick set: developers and coding
+2,647 tests; no install) is the default quick set: developers and coding
 agents run it (or a few suites with `--suite=`) while developing, and `.github/workflows/pages.yml` runs all of it
 before every deployment. When one command cannot hold the whole set, it is covered by disjoint shards as the
 generator's quick set is (`generator/design.md` section 15.1); the cost measured for each app, on a named source and
@@ -589,7 +594,7 @@ they are **manual**, not part of CI, and are run only when a change touches the 
 |-------|----------------|
 | `bits`, `model`, `constraints`, `solver` | foundation, the model (V1–V8, classic builder), propagation, DFS (ported) |
 | `harness` | the test harness itself (`expect`, deep equality, the runner and its isolation) |
-| `techniques`, `tech-*`, `logical-solver` | the 37 techniques: positive / negative fixtures, soundness against known solutions (the sweep of `techniques` runs it for every registered technique, with real supplemental positions for the skyscraper, the two-string kite, the remote pairs, the empty rectangle, the finned X-Wing, the finned Swordfish, the WXYZ-Wing, BUG+1, the restricted XY-chain and the long and the deep chain techniques), the solver loop (ported; a small test kit stands in for generation) |
+| `techniques`, `tech-*`, `logical-solver` | the 37 techniques: positive / negative fixtures, soundness against known solutions (the sweep of `techniques` runs it for every registered technique, with real supplemental positions for the skyscraper, the two-string kite, the remote pairs, the empty rectangle, the finned X-Wing, the finned Swordfish, the WXYZ-Wing, BUG+1, the restricted XY-chain and the long and the deep chain techniques), the solver loop (ported; a small test kit stands in for generation); the shared `tech-chain` suite also tests the **inactive** grouped chain graph `SG.chainGraph` against its independent checker `SG.chainProofs` (MS13a, 40 tests: no hint, no help example and no rating reads the graph, so the player's hints are unchanged) |
 | `exchange` | token round trips (documents and text bundles), the active puzzle of a link, errors (shared, byte-identical) |
 | `importer` | all 18 fixtures rebuild valid models with exactly one solution; tokens, links, bundles (`t.` / `s.`, `active`); text lines (4 / 6 / 9); the nine level names in both languages and rating metadata; wrong version, damaged and hostile input, fuzzed damage |
 | `model-aids` | sign edges, word line, symbol modes |

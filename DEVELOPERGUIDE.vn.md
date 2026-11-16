@@ -740,6 +740,32 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    cần cách biểu diễn nút và bộ giải mã riêng, việc gộp không áp dụng cho XY-chain, và không cấu hình nào của cổng chung
    mở rộng được 12 cạnh và 50.000 đơn vị của bộ tìm đã đăng ký. Phép chứng minh, biến thể tương đương, chi phí, tỷ lệ
    chạm tới và ảnh hưởng nằm trong `generator/design.md`, "The XY-chain".
+   **Đồ thị chuỗi gộp** (`core/js/engine/tech-chain.js`, nhiệm vụ MS13a; **chưa kích hoạt**: không bộ tìm đã đăng ký, không
+   lời gọi cổng chung và không phép chấm điểm nào đọc nó, nên mọi Finding, bản ghi bộ quan sát, mã băm và bản ghi
+   replay đều không đổi). `SG.chainGraph.build(model, state, ctx[, { groupLimit, workLimit }])` trả về
+   `{ nodes, weak, strong, complete, work, capHit }`; `SG.chainGraph.LIMITS` (đã đóng băng) là
+   `{ groups: 4096, work: 50000 }`. Một nút là `{ cells, digit }`: `cells` tăng dần và khác nhau, mỗi ô là một ô trống
+   còn giữ chữ số `digit` (tính từ 1); nút đúng khi có ít nhất một ô trong danh sách chứa chữ số đó, nên một nhóm đúng
+   không bao giờ cho phép điền một thành viên tùy ý (nút nhóm có cách biểu diễn riêng, không dùng cách giải mã số học
+   `cell * digits + digit` của đồ thị nguyên tử). `nodes` liệt kê các nút đơn (mỗi ứng viên còn mở một nút, tăng dần
+   theo ô rồi chữ số), sau đó là các nhóm, sắp theo khóa số `[digit, ...cells]`, tiền tố ngắn hơn đứng trước. Một nhóm
+   là tập các ô trống chứa một chữ số trong giao của một đơn vị `box` hoặc `region` đầy đủ với một đơn vị `row` hoặc
+   `col` đầy đủ, khi có ít nhất hai ô (các nhóm giống hệt nhau chỉ giữ một); cửa sổ, đường chéo và mọi đơn vị khác không
+   tự sinh nhóm nhưng vẫn cho liên kết mạnh và, qua `model.peers`, liên kết yếu. Hai nút cùng chữ số liên kết yếu khi
+   rời nhau và mọi cặp ô chéo của chúng nhìn thấy nhau, và liên kết mạnh khi rời nhau và hợp lại đúng bằng các vị trí còn
+   mở của chữ số đó trong một đơn vị đầy đủ chưa điền chữ số ấy; chữ số khác nhau chỉ liên kết như các nút đơn của cùng
+   một ô (yếu luôn luôn, mạnh khi ô có hai ứng viên). Một đơn vị công việc là một tổ hợp được thử: mỗi nhóm ứng viên
+   (trước khi loại trùng), mỗi cặp ứng viên của một ô và **mọi** cặp nút của một chữ số, kể cả cặp bị bộ lọc ô đầu tiên
+   loại. Giới hạn mặc định là 50.000 đơn vị (bàn 9×9 trống cần 84.807 nên mặc định trả về chưa hoàn tất, và bài kiểm tra
+   dựng nó với `workLimit` hữu hạn) và 4.096 nhóm khác nhau (hạn ngạch được áp dụng ngay khi thu thập nhóm: nhóm trùng
+   tốn công nhưng không tốn chỗ; đúng bằng giới hạn vẫn được phép). Các tùy chọn thay một trong hai giới hạn bằng một
+   số hữu hạn không nhỏ hơn 0 (làm tròn xuống; giá trị khác là `solver.invalidOption`); không có chế độ không giới hạn.
+   Đồ thị không thể hoàn tất có `complete: false` với các mảng **rỗng** và `capHit` là `'work'`, `'nodes'` (hạn ngạch)
+   hoặc `null` (ngân sách của bên gọi đã hết); mảng rỗng không bao giờ nghĩa là không có chứng minh, chỉ là chưa dựng
+   được đồ thị dùng được. Việc hủy và lỗi được truyền đi, và bộ dựng không phát bản ghi nào cho bộ quan sát. Bộ kiểm
+   tra độc lập là `SG.chainProofs` (`core/tests/fixtures/chain-proofs.js`), tính lại các nút, cạnh, công việc và chứng
+   minh từ mô hình và trạng thái. Lần kích hoạt (MS13c) chỉ áp dụng việc gộp cho `forcingChain` và `forcingChainLong`,
+   không bao giờ cho XY-chain, và dùng chung mức 50.000 đơn vị giữa việc dựng đồ thị và việc tìm kiếm thay vì đặt lại.
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
    [Cách hoạt động](#cách-hoạt-động) — và trong các danh sách script của trình chơi (`index.html`, `help.html`,
    `tests.html`, `tests/node-runner.js`), vì kỹ thuật nằm trong bộ máy dùng chung (`core/js/engine/`) và gợi ý
@@ -793,7 +819,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (53 suite, 4.368 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (53 suite, 4.408 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (61 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -804,7 +830,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.368 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.408 bài —
 37 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -860,7 +886,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.368 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.408 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -1259,7 +1285,7 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.607 bài); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.647 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 
