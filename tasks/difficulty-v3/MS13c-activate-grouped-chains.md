@@ -231,6 +231,7 @@ retained Finding ownership. Do not silently drop IR54's old contract test; prese
 seam coverage and explicitly update only the registered policy authorized by the owner.
 Under A test both cap-triggered fallback paths and no fallback for budget/cancellation/error or
 a completed negative; account for both stages, and never label the fallback a grouped minimum.
+Round-trip a real grouped version-2 Finding through step events, replay and wire serialization/deserialization, asserting unchanged `i18nArgs.proofVersion`, nested node/path data, proof cells, placements and eliminations; the error-only depth-4 `toPlain` truncation must not affect this successful path.
 Complete E MS13c:
 
 ```powershell
