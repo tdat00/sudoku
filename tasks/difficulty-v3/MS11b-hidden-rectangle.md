@@ -149,10 +149,51 @@ verify the affected contracts, then freeze for E; do not treat the preliminary r
    Retain the disclosed editing-method deviations in the record and use approved edit tools
    going forward; do not rewrite history to erase them.
 
+### Post-E ruling — stuck-proposal coverage, SA2, 2026-11-16
+
+**Accept option (a), with the bounded procedure below.** This specifically extends MS11b's
+pin-refresh ownership to the seed of `['classic9', 'hell1', 11, true, null]` in the real-pass
+`CASES` of `generator/tests/suites/digger-target.test.js`. It is coverage-fixture maintenance,
+not permission to change a population threshold or production behavior. The saved comparison
+shows that the hidden form finishes the three formerly stuck proposals of that one pass:
+the base has 649 scored/32 stuck keeps, the current tree 652/29; the other 28 passes agree.
+
+- Search positive seeds **1..30 in ascending order**, excluding the retained Hell 1 seeds 13
+  and 30. Seed 11's zero-stuck result is already recorded on this source and may be reused.
+  Run only the candidate `['classic9', 'hell1', seed, true, null]` during discovery; do not
+  rerun the entire 29-case matrix for every seed. Stop at the first seed with **at least three
+  genuine stuck kept proposals**. If none qualifies, report `QUESTION:` with the attempted
+  seeds; do not extend the search or weaken the assertion on your own.
+- Use the exact existing `pass()` construction: same model, level, `grid`/`dig` RNG forks,
+  proposal mode, null target, techniques, options and limits. Retain the script and per-seed
+  counts/trace with source identity. The selected case's ordinary production evaluation must
+  yield the stuck-proposal priority (`STUCK_SCORE + unsolvedCount`, with cells remaining) and
+  the corresponding `keep` entries with `score:null`, as checked by the existing replay.
+  This means the bounded below-chain solve did not finish, not that the puzzle is unsolvable.
+  No disabled technique, artificial budget reduction, error/timeout substitution, scripted
+  solver, fabricated log or duplicated retained case may manufacture the coverage.
+- Replace only that seed, in place; keep the other 28 tuples, 29-pass count, static titles,
+  `stuck > 30`, `scores > 300`, all three refusal reasons, `applied > 100`, and the complete
+  candidate/winner/end replay assertions. Record the before/after tuple and aggregate counts.
+  Final aggregate evidence must use the updated case list, not the scratch script's old copied
+  `CASES`; preserve `stuck-count.txt` and `stuck-count-base.txt` as the original comparison.
+  Verify all those assertions on the selected first qualifier. An additional contract failure
+  is investigated, not hidden by searching past that qualifier.
+- Do not choose (b) or (c). `toBe(29)` is not a like-for-like replacement for a minimum
+  coverage requirement: despite being an equality it accepts fewer stuck observations than
+  the present contract. The assertion is not a golden for the incidental population total.
+- Use the existing locked bounded execution route. Run `digger-target`, then both complete
+  final quick sets, final fingerprints and CI; preserve the failed quick runs. This test-only
+  case change does not require E to be recorded again while the generation source is unchanged;
+  retain/confirm its final merge-checks. Do not change engine bytes or E's requests to obtain a
+  qualifying seed. If a necessary fix does change generation source, its normal E rules apply.
+
 ## Files to create/modify
 
 - Wing engine/suite, B's affected UR fixture/current-reference/locale/help data, E.
 - Applicable Generator/Player designs, both guide languages, v3 notes.
+- The single `digger-target.test.js` real-pass seed entry and its traceability comment, only as
+  authorized by the post-E ruling above; no matcher, threshold or policy change.
 
 ## Implementation steps
 
