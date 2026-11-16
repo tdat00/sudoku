@@ -82,7 +82,11 @@ Generator `node tests\node-runner.js --suite=i18n,format,help`;
 Player `node tests\node-runner.js --suite=play,i18n,help`; then both quick sets.
 Test a two-path contradiction mixing singleton/group nodes, false group conjunction, true
 disjunction, a hex value 1 displayed 0, Wordoku letters and another call not mutating saved args.
-No heavy gate or synthetic canonical help entry.
+No qualification/performance/discovery gate or synthetic canonical help entry. Apply check-list
+section 7's source-aware inactive E closure: retain still-current ledgers, but if an E family's
+required identity changes, record that whole family on final source and merge-check without
+changing canonical outputs. All three E merge-checks and complete GH check must be green;
+the later MS13c activation does not waive this task's own closure.
 
 ## Definition of done & handoff
 

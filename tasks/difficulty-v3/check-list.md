@@ -645,6 +645,7 @@ No implementer chooses an alternative from the original reports.
 | RP-01 / S-OD9 | Owner confirmed at 06:23 (+07:00), 2026-11-16: Remote Pairs 116/350/35, between Two-String Kite and Simple Colouring, Hard tier unchanged. Apply MS10a's exact two-scan gate, curated export-text source format and bounded GH fallback; a zero-hit complete gate stops for the owner. GH, IR72 H1, bundle B and SA2-Q-S11 are unchanged. The pack author owns plan/report/task/decision amendments; the developer owns live guides/design updates with the code before the relevant fingerprint freezes. |
 | JF-01 / S-OD10 | Owner, Discord, 2026-11-16 22:20 (+07:00), "Chọn A.": MS12/Jellyfish only, approve option A exactly (classic9 corpus seed 4242, indices 0-19,999 ascending, <=64 sources/chunk, <=400 hints, eight-minute tool deadline, credible <=450 s admission, 540 s process ceiling, locks/15 s gaps; reuse/materialize once and account for construction). Stop at the first verified-source chunk and complete all 37 GH/quick/CI gates; otherwise report ranges and stop at the bound. No option B, budget reset, changed GH contract or permission for another task. The unchanged question and adjacent owner answer are in `clarifications-resolved.md`; S-AV35 tracks completion/audit. |
 | IR72 I1/G/J / CI projection maintenance, SA2 2026-11-16 | From MS10a, tasks owning quick verification may raise manifest timing projections without adding a suite: `max(old, 10 * ceil(1.5 * measured process seconds / 10))`, with source-qualified before/after evidence and the section 2 guards. A projection miss alone is not a stop. Each shard stays <=450 s; unchanged CI arithmetic must fit actual workflow limits (Generator 1800 s, Player 900 s). No tier/membership, factor, overhead, timeout or test-contract change; no change to IR12/GQ/GP planning rules. MS18e audits final projections and actual remote durations. |
+| IR72 inactive source-identity closure, SA2 at MS13a | "No update" means no changed canonical output, not stale-source E acceptance. Starting MS13a, record each complete E family whose required identity changed and merge-check without fixture writes; retain/check still-current families. MS13a needs all five wires, fourteen analyses and 520 hashes; MS13b is conditional on its actual identities; MS13c owns activation E. This overrides conflicting no-heavy wording for E provenance only, adds no GP/GQ/GS/discovery, and never authorizes hash retagging, partial-corpus substitution or unexplained output updates. See section 7. |
 | FS22 implementation disposition, updated by S-OD3/S-OD4 and B1 | MS05r2 absorbed consumers; b3 follows r5p/r5/r5m under the approved contracts, not passed original mega limits. Lazy per-level I5/CV3 remains; the mega CV3 cells run live under B1 with their own checks. Syntax is not GD evidence. MS14c stays corpus-free; final I5 remains per level. |
 | SA1 IR02 / IR04, implementation review 2026-11-14 | Binding B1 is copied into MS05b3: live mega CV3, no record provider/replay entry point/reuse code or edits to the deep tool/fixture/SOURCE_FILES. r6a/r6b check both currentMatches hashes explicitly; retain only a proved exact-diff non-generation-file mismatch, else execute their named MEGA-REFRESH step. Original hashes/records remain untouched. |
 | FS12-FS16 / FS20 implementation dispositions; CV6-05 sign handoff | `acceptReveal` receives current/next exact flags. A cells guided winner refused by the apply table ends that pass; local acceptance retains `next.score < spec.max`. MS06c1 transports null/inert metadata with no production draw; MS06c2 draws once and activates all candidate-comparing stages. The real `signs` strategy receives but ignores `options.target`; `digger-target` proves its originating target reaches the selected result. No partial intermediate policy, sign comparator, new RNG stream or post-exact polishing. |
@@ -872,14 +873,42 @@ placeholders explicitly. Execute one bounded shard at a time, not an unbounded w
 New flags are available only after the indicated tooling prerequisite is accepted, or its
 S-OD2 **step evidence complete** handoff is reviewed for use inside the retained recovery candidate.
 
+### Source-aware inactive E closure — IR72, SA2 ruling at MS13a
+
+Starting with MS13a, IR72's inactive-task "no update" means no changed canonical output, not
+permission to reuse ledgers under a different required source identity. This reconciles the
+older inactive briefs' "no heavy gate" wording with the later IR72 closure rule; it adds only
+the existing E recording/check route, no qualification, GP, soak, discovery or new evidence class.
+
+- If an E family's required identities are unchanged, retain its accepted ledgers and run its
+  current-source merge-check. Do not regenerate merely for a new task ID.
+- If an identity differs, record that **whole affected family** on final source (all five wires,
+  all fourteen analyses and/or all 520 hashes, as applicable), then merge-check against the
+  unchanged published fixtures. For MS13a all three identities differ, so it owns full E
+  recording/check-only. Verify fresh wires against the unchanged wire before analysis.
+- A source-identity refusal is not a green check. Do not retag records, omit fingerprint inputs,
+  bypass the identity check, substitute a sampled subset for a complete family, or treat a
+  differential/GH check as current-source E. Keep those complementary inactivity proofs too.
+- Inactive tasks may not write changed canonical E fixtures or run `--update-hashes`. Unexpected
+  output differences require investigation under the inactivity contract, not pin refreshes.
+  Final acceptance requires all three merge-checks on current source, complete GH `--check`,
+  both quick sets and CI. GH check-only does not authorize discovery or catalogue writes.
+- Announce/coordinate added recorder work and use the existing E/IR12 recipe, per-item source-
+  qualified projections, <=450 s compound admission, <=540 s process ceiling and >=15 s gaps.
+  MS07a's earlier no-E acceptance remains historical; it predates IR72. MS13b follows this rule
+  for identities actually changed by its consumer edits; MS13c still owns full activation E.
+
+This rule supersedes conflicting later inactive/test-only brief wording solely for E provenance.
+It does not broaden output-change, finder-activation or fixture-update authority.
+
 ### Gate ownership
 
 | Gate | Owner | Required command / result |
 |---|---|---|
 | GS-before | MS02 | `node tests\soak.js --variant=<id> --level=<level> --count=12 --seed=20260101 --no-gate --json=..\docs\difficulty-v3\evidence\MS02\<id>-<level>.json`; all 17 cells below |
-| GG | MS04, MS05r6a, MS06c2, MS07b/c, MS08a/b/c, MS09a/b, MS10a/b, MS11a/b/c, MS12, MS13c, MS14b, MS15b, MS16 | Complete E 520-key recording; inspect intended differences before write/check. Recovery always records final-source E; b1/r3/r4 has no independent GG acceptance. Later selectors refresh if the default changes. Check-only: MS05r6b, MS06c1, MS07e, MS18d. |
-| GR | Same behavior owners, plus MS05a, MS06c1 and MS17b | After r6a: complete E five-wire/fourteen-analysis record/merge/write/check; G09-G13 wires, G01-G14 analyses. Earlier four-wire evidence stays historical. r6b checks current merges. MS06c1 permits only target metadata, not changed puzzles/ratings/old operations. |
-| GH | MS04 if affected; MS07b/c, all introducing/enhanced-proof tasks through MS16 | B bounded real sources, E write/check for every affected ID. No GH for inactive kernels; MS14c changes no finder. |
+| GG | MS04, MS05r6a, MS06c2, MS07b/c, MS08a/b/c, MS09a/b, MS10a/b, MS11a/b/c, MS12, MS13c, MS14b, MS15b, MS16; source-changed inactive tasks under the rule above | Complete E 520-key recording; inspect intended differences before write/check. Inactive closure (MS13a now): fresh ledgers/check-only, no canonical updates. Recovery always records final-source E; b1/r3/r4 has no independent GG acceptance. Later selectors refresh if the default changes. Check-only: MS05r6b, MS06c1, MS07e, MS18d. |
+| GR | Same behavior owners, plus MS05a, MS06c1 and MS17b; source-changed inactive tasks under the rule above | After r6a: complete E five-wire/fourteen-analysis record/merge/write/check; G09-G13 wires, G01-G14 analyses. Inactive closure records/checks affected complete families without canonical updates. Earlier four-wire evidence stays historical. r6b checks current merges. MS06c1 permits only target metadata, not changed puzzles/ratings/old operations. |
+| GH | MS04 if affected; MS07b/c, all introducing/enhanced-proof tasks through MS16; inactive check-only closure under IR72 | B bounded real sources, E write/check for every affected ID. Inactive kernels/tests-only tasks run complete GH --check, with no discovery or write; MS14c changes no finder. |
 | GQ-first | MS07e, merger prepared in MS07d | All Q135 cells, `--jobs=4`, per-cell JSON/markdown, checked complete merge; checkpoint-only report, no support changes. |
 | GD | MS04; MS05r6b; MS07e; MS17b; MS18e | Bounded difficulty coverage below; historical MS04 also ran killer/greater-than. MS05r2/MS07d use only fast fake-worker `--filter="qualification:"`. Post-selection b3 owns early I5/CV3/refusals; r6b closes its named outstanding CV3 list. MS18e owns full final GD; MS14c is corpus-free. MS05e's GD-CV6 experiment is closed/set aside; MS18c's conditional Normal CV6 below supplies the CV6-05 decision before GP. |
 | GD-I5/CV3 early | MS05b3 after r5p/r5/r5m; r6b reconciliation | Per-level I5 with `> <level>: <count> puzzles > I5:` (extra-regions includes variant); `> variants: <id> > CV3 <level>:` plus `> variants: <id> > CV3 unsupported:`. Selected total 1, same seeds/counts, jobs 1, locked <=540 s. B1 requires live mega Nightmare CV3, one locked command per cell, with deep occurrence-id references; >240 s is a named availability item. |
