@@ -785,6 +785,33 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    minh biểu diễn một nhóm ...", và ba lời giải thích bước, nói về đầu chuỗi và về một mệnh đề về ứng viên hoặc nhóm nên
    vẫn đúng khi đầu chuỗi là nhóm; 32 mục, kèm văn bản cũ và mới trong
    `docs/difficulty-v3/evidence/MS13b/locale-delta.md`); khóa, tiền tố và chỗ giữ chỗ không đổi.
+   **Nhân của Law of Leftovers** (`core/js/engine/tech-subset.js`, nhiệm vụ MS14a; **chưa kích hoạt**: chưa đăng ký,
+   chưa có trọng số, văn bản ngôn ngữ hay ví dụ trợ giúp, và không phép giải, chấm điểm, sinh đề hay gợi ý nào gọi nó,
+   nên mọi Finding, bản ghi bộ quan sát, mã băm, bản ghi replay, dữ liệu chuẩn và ví dụ trợ giúp đều không đổi; việc đăng
+   ký và kích hoạt là MS14b và MS14c). `SG.leftoverPatterns.find(model, state, ctx[, { workLimit }])` trả về Finding đầu
+   tiên của `lawOfLeftovers` hoặc null trên bàn Jigsaw 9 (mô hình khác: null với công việc 0), và
+   `SG.leftoverPatterns.LIMITS` (đã đóng băng) là `{ units: 2, cells: 4, work: 50000 }`. *n* hàng (hoặc cột) đầy đủ và
+   *n* vùng đầy đủ không chung ô nào (*n* = 1 hoặc 2) đều chứa mỗi chữ số đúng *n* lần, nên các ô còn lại của mỗi bên
+   sau khi bỏ các ô chung (1 đến 4 ô mỗi bên, hai bên bằng số) chứa **cùng một đa tập** chữ số. Với mỗi lựa chọn, cả hai
+   bên được liệt kê đầy đủ (ô đã điền lấy giá trị của nó, ô trống lấy một ứng viên, các ô nhìn thấy nhau thì khác nhau)
+   và được tóm tắt bằng chữ ký, tức số lần của từng chữ số; chỉ khi **cả hai** phép liệt kê đều hoàn tất mới lấy giao
+   các chữ ký, và một ứng viên của ô trống mà không phép gán nào có chữ ký chung dùng đến thì bị loại (và không gì khác).
+   Các lựa chọn được thử với *n* = 1 rồi 2, hàng rồi cột, đơn vị theo chỉ số; lựa chọn đầu tiên loại được gì thì cho
+   Finding. Tập chữ ký chung **rỗng** (cả hai phép liệt kê hoàn tất) chứng minh *trạng thái ứng viên được cung cấp* mâu
+   thuẫn, chưa chắc là đề gốc: cả lần gọi trả về null tại lựa chọn đầu tiên được xét ấy và không bao giờ coi đó là
+   "không ứng viên nào có hỗ trợ"; một phép liệt kê bị cắt giữa chừng không chứng minh gì. Một đơn vị công việc là một
+   lần thử mở rộng một đơn vị hoặc một lần thử một chữ số; giới hạn 50.000 tính cho cả lần gọi, ngân sách của bên gọi được
+   kiểm tra khi vào và sau mỗi 256 đơn vị, giới hạn đã hết trả về null với `capHit: 'work'` (trạng thái trống của các bố
+   cục kiểm thử `staggered`, 98.530 đơn vị, và `wavy`, 81.664, vượt giới hạn nên mặc định không được nâng), ngân sách đã
+   hết trả về null, còn việc hủy và lỗi được truyền đi; `ctx.options.onPatternWork` nhận
+   `{ id, work, limit, capHit, retained: null }` của mọi lần gọi có trả về. `workLimit` thay giới hạn bằng một số hữu hạn
+   không nhỏ hơn 0 (làm tròn xuống; giá trị khác là `solver.invalidOption`; không có chế độ không giới hạn). Finding có
+   `cells` (các ô còn lại khác nhau của cả hai bên, tăng dần, kể cả ô đã điền, không kể các ô chung đã bỏ), các phép loại
+   theo ô rồi chữ số, không có phép điền, và `i18nArgs` `{ lines, regions, cells, digits }`: nhãn theo chỉ số đơn vị
+   (không bao giờ theo chữ của nhãn) và **các chữ số bị loại khác nhau**, không phải chữ ký và không phải chữ số bị loại
+   khỏi mọi ô trong danh sách. 40 bài kiểm thử (suite `tech-subset`, `law of leftovers kernel`) dùng bộ dữ liệu
+   `SG.fixtures.jigsawModels` (`core/tests/fixtures/jigsaw-models.js`) và một phép liệt kê độc lập; phép chứng minh, biến
+   thể tương đương và bằng chứng nằm trong `generator/design.md` §6.6.
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
    [Cách hoạt động](#cách-hoạt-động) — và trong các danh sách script của trình chơi (`index.html`, `help.html`,
    `tests.html`, `tests/node-runner.js`), vì kỹ thuật nằm trong bộ máy dùng chung (`core/js/engine/`) và gợi ý
@@ -838,7 +865,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (53 suite, 4.416 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (53 suite, 4.456 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (61 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -849,7 +876,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.416 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.456 bài —
 37 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -905,7 +932,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.416 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.456 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -1304,7 +1331,7 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.658 bài); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.698 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

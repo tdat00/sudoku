@@ -554,8 +554,11 @@ languages: the descriptions explain a group conditionally ("If a proof step repr
 (a candidate must conflict with every candidate represented by each end) and that a hint does not promise every chain, and the
 three step explanations speak of ends and of a statement about a candidate or group (32 texts across both apps,
 `docs/difficulty-v3/evidence/MS13b/locale-delta.md`). The check of all 37 help examples on the final source is unchanged (no
-discovery, nothing written), and the Player's quick set is 2,658 tests (the 11 new tests of `play` and `i18n`). GC-01 is still
+discovery, nothing written), and the Player's quick set was 2,658 tests at that task (the 11 new tests of `play` and `i18n`). GC-01 was still
 open and this task adds no cap or fallback.
+
+**Difficulty v3, MS14a (the inactive Law of Leftovers kernel):** the shared engine gained `SG.leftoverPatterns` (`core/js/engine/tech-subset.js`), which no Player code, hint, technique list, locale text or help example reaches: it is unregistered, so the Player's hint ladder, the help dialog and the 37 examples are exactly as before (the check of all 37 on the final source is unchanged, no discovery, nothing written). The Player only runs the new tests of `tech-subset` (40, with the shared fixture `core/tests/fixtures/jigsaw-models.js` that its `tests.html` loads), so its quick set is 2,698 tests. GC-01, still open in the paragraph above, was resolved by the owner after MS13b (S-OD11); its implementation is MS13c, not this task. The kernel, its rulings and its evidence are in `generator/design.md` §6.6 and `docs/difficulty-v3/evidence/MS14a/evidence.md`.
+
 **Decision:** there is no
 first-visit tour or other popup that stands in front of the welcome screen or the puzzle: a visitor who arrives
 from the generator's link wants to play.
@@ -589,7 +592,7 @@ strings; added: `player.*` (shell, open flow, info card, recent list, welcome), 
 
 ## 10. Testing
 `node tests/node-runner.js` (30 suites: the 14 of `tests/suites/` and the 16 shared ones of `core/tests/suites/`;
-2,658 tests; no install) is the default quick set: developers and coding
+2,698 tests; no install) is the default quick set: developers and coding
 agents run it (or a few suites with `--suite=`) while developing, and `.github/workflows/pages.yml` runs all of it
 before every deployment. When one command cannot hold the whole set, it is covered by disjoint shards as the
 generator's quick set is (`generator/design.md` section 15.1); the cost measured for each app, on a named source and

@@ -1,0 +1,296 @@
+mutation 46 (O03 cells unsorted): DETECTED - 38 total, 31 passed, 7 failed, 0 skipped - 7 failing - 2.9 s
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: geometry > finds the choices of the second kind too: the second choice of the crossed board
+    FAIL tech-subset > law of leftovers kernel: geometry > never takes two units that share a cell as one side
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > gives the oracle's Finding and the oracle's work on seeded positions of every layout and its transpose
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > stays sound when its Findings are applied one after another
+    FAIL tech-subset > law of leftovers kernel: inconsistent positions and the order of choices > declines the whole call at an inconsistent choice, though a later choice would remove something
+mutation 47 (O04 digits unsorted): DETECTED - 38 total, 32 passed, 6 failed, 0 skipped - 6 failing - 2.5 s
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: geometry > finds the choices of the second kind too: the second choice of the crossed board
+    FAIL tech-subset > law of leftovers kernel: geometry > takes only complete units of the kinds row, col and region
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > gives the oracle's Finding and the oracle's work on seeded positions of every layout and its transpose
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > stays sound when its Findings are applied one after another
+    FAIL tech-subset > law of leftovers kernel: inconsistent positions and the order of choices > counts a solved cell with its value and never lists one in its eliminations, whatever its mask holds
+mutation 48 (O05 digits repeated): DETECTED - 38 total, 29 passed, 9 failed, 0 skipped - 9 failing - 2.5 s
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+    FAIL tech-subset > law of leftovers kernel: vectors > counts the fixed cells of the region side in its signature too
+    FAIL tech-subset > law of leftovers kernel: geometry > finds the choices of the second kind too: the second choice of the crossed board
+    FAIL tech-subset > law of leftovers kernel: geometry > leaves at most four cells over on a side: four are examined, five are not
+    FAIL tech-subset > law of leftovers kernel: geometry > takes only complete units of the kinds row, col and region
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > gives the oracle's Finding and the oracle's work on seeded positions of every layout and its transpose
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > stays sound when its Findings are applied one after another
+mutation 49 (O06 numbers sorted as text): DETECTED - 38 total, 24 passed, 14 failed, 0 skipped - 14 failing - 2.4 s
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+    FAIL tech-subset > law of leftovers kernel: vectors > counts the fixed cells of the region side in its signature too
+    FAIL tech-subset > law of leftovers kernel: geometry > finds the choices of the second kind too: the second choice of the crossed board
+    FAIL tech-subset > law of leftovers kernel: geometry > leaves at most four cells over on a side: four are examined, five are not
+    FAIL tech-subset > law of leftovers kernel: geometry > takes only complete units of the kinds row, col and region
+    FAIL tech-subset > law of leftovers kernel: geometry > never takes two units that share a cell as one side
+mutation 50 (O07 lines named by the regions): DETECTED - 38 total, 22 passed, 16 failed, 0 skipped - 16 failing - 1.9 s
+    FAIL tech-subset > law of leftovers kernel: vectors > forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}
+    FAIL tech-subset > law of leftovers kernel: vectors > takes a fixed cell for a singleton side, on either side
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+    FAIL tech-subset > law of leftovers kernel: vectors > counts the fixed cells of the region side in its signature too
+    FAIL tech-subset > law of leftovers kernel: geometry > finds the choices of the second kind too: the second choice of the crossed board
+mutation 51 (O08 another step key): DETECTED - 38 total, 24 passed, 14 failed, 0 skipped - 14 failing - 3.1 s
+    FAIL tech-subset > law of leftovers kernel: vectors > forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}
+    FAIL tech-subset > law of leftovers kernel: vectors > takes a fixed cell for a singleton side, on either side
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+    FAIL tech-subset > law of leftovers kernel: vectors > counts the fixed cells of the region side in its signature too
+    FAIL tech-subset > law of leftovers kernel: geometry > finds the choices of the second kind too: the second choice of the crossed board
+mutation 52 (O09 another technique id): DETECTED - 38 total, 23 passed, 15 failed, 0 skipped - 15 failing - 2.5 s
+    FAIL tech-subset > law of leftovers kernel: vectors > forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}
+    FAIL tech-subset > law of leftovers kernel: vectors > takes a fixed cell for a singleton side, on either side
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+    FAIL tech-subset > law of leftovers kernel: vectors > counts the fixed cells of the region side in its signature too
+    FAIL tech-subset > law of leftovers kernel: geometry > finds the choices of the second kind too: the second choice of the crossed board
+mutation 53 (O10 placements not empty): DETECTED - 38 total, 23 passed, 15 failed, 0 skipped - 15 failing - 2.5 s
+    FAIL tech-subset > law of leftovers kernel: vectors > forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}
+    FAIL tech-subset > law of leftovers kernel: vectors > takes a fixed cell for a singleton side, on either side
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+    FAIL tech-subset > law of leftovers kernel: vectors > counts the fixed cells of the region side in its signature too
+    FAIL tech-subset > law of leftovers kernel: geometry > finds the choices of the second kind too: the second choice of the crossed board
+mutation 54 (O11 cells as numbers in the arguments): DETECTED - 38 total, 24 passed, 14 failed, 0 skipped - 14 failing - 3.1 s
+    FAIL tech-subset > law of leftovers kernel: vectors > forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}
+    FAIL tech-subset > law of leftovers kernel: vectors > takes a fixed cell for a singleton side, on either side
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+    FAIL tech-subset > law of leftovers kernel: vectors > counts the fixed cells of the region side in its signature too
+    FAIL tech-subset > law of leftovers kernel: geometry > finds the choices of the second kind too: the second choice of the crossed board
+mutation 55 (B01 limit allows one unit more): DETECTED - 38 total, 32 passed, 6 failed, 0 skipped - 6 failing - 5.3 s
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > finds the same Finding on a flooded position (every candidate open) as the oracle, within its work
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > has R10's limit of 50000 for the whole call: a flood is cut there with nothing found
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > never reads an unfinished enumeration as no support: every earlier cut gives no Finding
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > finishes both sides before it concludes: a cut inside the second enumeration finds nothing
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+mutation 56 (B02 limit stops one unit early): DETECTED - 38 total, 32 passed, 6 failed, 0 skipped - 6 failing - 5.2 s
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > finds the same Finding on a flooded position (every candidate open) as the oracle, within its work
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > has R10's limit of 50000 for the whole call: a flood is cut there with nothing found
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > never reads an unfinished enumeration as no support: every earlier cut gives no Finding
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > finishes both sides before it concludes: a cut inside the second enumeration finds nothing
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+mutation 57 (B03 default limit 49999): DETECTED - 38 total, 33 passed, 5 failed, 0 skipped - 5 failing - 5.2 s
+    FAIL tech-subset > law of leftovers kernel: inactive and scoped > has R10's starting limits: 2 units and 4 cells per side, 50000 work units
+    FAIL tech-subset > law of leftovers kernel: inactive and scoped > does nothing outside jigsaw9, and the call costs no work
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > finds the same Finding on a flooded position (every candidate open) as the oracle, within its work
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > has R10's limit of 50000 for the whole call: a flood is cut there with nothing found
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 58 (B04 budget checked one unit early): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.2 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 59 (B05 budget checked one unit late): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.2 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 60 (B06 check every 255 units): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.2 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 61 (B07 check every 512 units): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.2 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 62 (B08 the check position is not remembered): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.2 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 63 (B09 no check at entry): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.3 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 64 (B10 every error swallowed): DETECTED - 38 total, 37 passed, 1 failed, 0 skipped - 1 failing - 5.3 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 65 (B11 cancellation swallowed): DETECTED - 38 total, 37 passed, 1 failed, 0 skipped - 1 failing - 5.3 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 66 (B12 a spent budget propagates): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.3 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 67 (B13 a spent limit is not reported): DETECTED - 38 total, 33 passed, 5 failed, 0 skipped - 5 failing - 5.2 s
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > finds the same Finding on a flooded position (every candidate open) as the oracle, within its work
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > has R10's limit of 50000 for the whole call: a flood is cut there with nothing found
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > never reads an unfinished enumeration as no support: every earlier cut gives no Finding
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > finishes both sides before it concludes: a cut inside the second enumeration finds nothing
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 68 (B14 capHit inverted): DETECTED - 38 total, 11 passed, 27 failed, 0 skipped - 27 failing - 2.8 s
+    FAIL tech-subset > law of leftovers kernel: inactive and scoped > does nothing outside jigsaw9, and the call costs no work
+    FAIL tech-subset > law of leftovers kernel: vectors > forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}
+    FAIL tech-subset > law of leftovers kernel: vectors > takes a fixed cell for a singleton side, on either side
+    FAIL tech-subset > law of leftovers kernel: vectors > is quiet when the singleton sides can agree on every candidate, and declines when they cannot
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+mutation 69 (B15 capHit always work): DETECTED - 38 total, 13 passed, 25 failed, 0 skipped - 25 failing - 2.9 s
+    FAIL tech-subset > law of leftovers kernel: inactive and scoped > does nothing outside jigsaw9, and the call costs no work
+    FAIL tech-subset > law of leftovers kernel: vectors > forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}
+    FAIL tech-subset > law of leftovers kernel: vectors > takes a fixed cell for a singleton side, on either side
+    FAIL tech-subset > law of leftovers kernel: vectors > is quiet when the singleton sides can agree on every candidate, and declines when they cannot
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+mutation 70 (B16 retained is a list): DETECTED - 38 total, 30 passed, 8 failed, 0 skipped - 8 failing - 5.2 s
+    FAIL tech-subset > law of leftovers kernel: inactive and scoped > does nothing outside jigsaw9, and the call costs no work
+    FAIL tech-subset > law of leftovers kernel: geometry > finds nothing on the ordinary boxes, where no choice leaves at most four cells over
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > finds the same Finding on a flooded position (every candidate open) as the oracle, within its work
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > counts from a fresh counter on every call, with a record of its own
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > has R10's limit of 50000 for the whole call: a flood is cut there with nothing found
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > never reads an unfinished enumeration as no support: every earlier cut gives no Finding
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 71 (B17 work recorded one more): DETECTED - 38 total, 10 passed, 28 failed, 0 skipped - 28 failing - 2.8 s
+    FAIL tech-subset > law of leftovers kernel: inactive and scoped > does nothing outside jigsaw9, and the call costs no work
+    FAIL tech-subset > law of leftovers kernel: vectors > forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}
+    FAIL tech-subset > law of leftovers kernel: vectors > takes a fixed cell for a singleton side, on either side
+    FAIL tech-subset > law of leftovers kernel: vectors > is quiet when the singleton sides can agree on every candidate, and declines when they cannot
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+mutation 72 (B18 default limit recorded): DETECTED - 38 total, 31 passed, 7 failed, 0 skipped - 7 failing - 5.5 s
+    FAIL tech-subset > law of leftovers kernel: inactive and scoped > does nothing outside jigsaw9, and the call costs no work
+    FAIL tech-subset > law of leftovers kernel: geometry > finds nothing on the ordinary boxes, where no choice leaves at most four cells over
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > counts from a fresh counter on every call, with a record of its own
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > has R10's limit of 50000 for the whole call: a flood is cut there with nothing found
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > never reads an unfinished enumeration as no support: every earlier cut gives no Finding
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 73 (B19 fractional limit not floored): DETECTED - 38 total, 37 passed, 1 failed, 0 skipped - 1 failing - 5.4 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 74 (B20 fractional limit rounded up): DETECTED - 38 total, 37 passed, 1 failed, 0 skipped - 1 failing - 5.4 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 75 (B21 infinite or NaN limit accepted): DETECTED - 38 total, 37 passed, 1 failed, 0 skipped - 1 failing - 5.5 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 76 (B22 a limit of 0 rejected): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.4 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > never reads an unfinished enumeration as no support: every earlier cut gives no Finding
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 77 (B23 a limit of 0 ignored): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.3 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > never reads an unfinished enumeration as no support: every earlier cut gives no Finding
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 78 (B24 options required): DETECTED - 38 total, 31 passed, 7 failed, 0 skipped - 7 failing - 5.1 s
+    FAIL tech-subset > law of leftovers kernel: inactive and scoped > does nothing outside jigsaw9, and the call costs no work
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > finds the same Finding on a flooded position (every candidate open) as the oracle, within its work
+    FAIL tech-subset > law of leftovers kernel: the contract of a call > reads the model, the state and the context only, and answers the same twice
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > has R10's limit of 50000 for the whole call: a flood is cut there with nothing found
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 79 (B25 the counter outlives the call): DETECTED - 38 total, 9 passed, 29 failed, 0 skipped - 29 failing - 2.8 s
+    FAIL tech-subset > law of leftovers kernel: inactive and scoped > does nothing outside jigsaw9, and the call costs no work
+    FAIL tech-subset > law of leftovers kernel: vectors > forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}
+    FAIL tech-subset > law of leftovers kernel: vectors > takes a fixed cell for a singleton side, on either side
+    FAIL tech-subset > law of leftovers kernel: vectors > is quiet when the singleton sides can agree on every candidate, and declines when they cannot
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+mutation 80 (B26 unit tries not counted): DETECTED - 38 total, 15 passed, 23 failed, 0 skipped - 23 failing - 3.0 s
+    FAIL tech-subset > law of leftovers kernel: vectors > forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}
+    FAIL tech-subset > law of leftovers kernel: vectors > takes a fixed cell for a singleton side, on either side
+    FAIL tech-subset > law of leftovers kernel: vectors > is quiet when the singleton sides can agree on every candidate, and declines when they cannot
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+    FAIL tech-subset > law of leftovers kernel: vectors > declines when a side repeats a digit that the other cannot repeat
+mutation 81 (B27 digit tries not counted): DETECTED - 38 total, 16 passed, 22 failed, 0 skipped - 22 failing - 2.9 s
+    FAIL tech-subset > law of leftovers kernel: vectors > forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}
+    FAIL tech-subset > law of leftovers kernel: vectors > takes a fixed cell for a singleton side, on either side
+    FAIL tech-subset > law of leftovers kernel: vectors > is quiet when the singleton sides can agree on every candidate, and declines when they cannot
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+    FAIL tech-subset > law of leftovers kernel: vectors > declines when a side repeats a digit that the other cannot repeat
+mutation 82 (B28 rejected digits not counted): DETECTED - 38 total, 21 passed, 17 failed, 0 skipped - 17 failing - 3.1 s
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+    FAIL tech-subset > law of leftovers kernel: vectors > counts the fixed cells of the region side in its signature too
+    FAIL tech-subset > law of leftovers kernel: geometry > finds the choices of the second kind too: the second choice of the crossed board
+    FAIL tech-subset > law of leftovers kernel: geometry > leaves at most four cells over on a side: four are examined, five are not
+    FAIL tech-subset > law of leftovers kernel: geometry > takes only complete units of the kinds row, col and region
+    FAIL tech-subset > law of leftovers kernel: geometry > never takes two units that share a cell as one side
+mutation 83 (B29 no record of a spent limit): DETECTED - 38 total, 33 passed, 5 failed, 0 skipped - 5 failing - 5.3 s
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > finds the same Finding on a flooded position (every candidate open) as the oracle, within its work
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > has R10's limit of 50000 for the whole call: a flood is cut there with nothing found
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > never reads an unfinished enumeration as no support: every earlier cut gives no Finding
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > finishes both sides before it concludes: a cut inside the second enumeration finds nothing
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 84 (B30 another id in the record): DETECTED - 38 total, 30 passed, 8 failed, 0 skipped - 8 failing - 5.3 s
+    FAIL tech-subset > law of leftovers kernel: inactive and scoped > does nothing outside jigsaw9, and the call costs no work
+    FAIL tech-subset > law of leftovers kernel: geometry > finds nothing on the ordinary boxes, where no choice leaves at most four cells over
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > finds the same Finding on a flooded position (every candidate open) as the oracle, within its work
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > counts from a fresh counter on every call, with a record of its own
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > has R10's limit of 50000 for the whole call: a flood is cut there with nothing found
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > never reads an unfinished enumeration as no support: every earlier cut gives no Finding
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 85 (B31 the context options are required): DETECTED - 38 total, 37 passed, 1 failed, 0 skipped - 1 failing - 5.4 s
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > is not fooled by a hostile or absent observer, nor by a hand-made context without options
+mutation 86 (X01 the state is written): DETECTED - 38 total, 17 passed, 21 failed, 0 skipped - 21 failing - 2.5 s
+    FAIL tech-subset > law of leftovers kernel: vectors > forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}
+    FAIL tech-subset > law of leftovers kernel: vectors > takes a fixed cell for a singleton side, on either side
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+    FAIL tech-subset > law of leftovers kernel: vectors > counts the fixed cells of the region side in its signature too
+    FAIL tech-subset > law of leftovers kernel: geometry > finds the choices of the second kind too: the second choice of the crossed board
+mutation 87 (X02 the placements array is shared between calls): DETECTED - 38 total, 35 passed, 3 failed, 0 skipped - 3 failing - 5.4 s
+    FAIL tech-subset > law of leftovers kernel: the contract of a call > returns arrays of its own: writing to a Finding changes nothing in the next call
+    FAIL tech-subset > law of leftovers kernel: inconsistent positions and the order of choices > declines the whole call at an inconsistent choice, though a later choice would remove something
+    FAIL tech-subset > law of leftovers kernel: inconsistent positions and the order of choices > counts a solved cell with its value and never lists one in its eliminations, whatever its mask holds
+mutation 88 (X03 the signature table is shared between calls): DETECTED - 38 total, 14 passed, 24 failed, 0 skipped - 24 failing - 2.1 s
+    FAIL tech-subset > law of leftovers kernel: inactive and scoped > does nothing outside jigsaw9, and the call costs no work
+    FAIL tech-subset > law of leftovers kernel: vectors > forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}
+    FAIL tech-subset > law of leftovers kernel: vectors > takes a fixed cell for a singleton side, on either side
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+    FAIL tech-subset > law of leftovers kernel: vectors > declines when a side repeats a digit that the other cannot repeat
+mutation 89 (X04 an answer is remembered per state object): DETECTED - 38 total, 25 passed, 13 failed, 0 skipped - 13 failing - 4.3 s
+    FAIL tech-subset > law of leftovers kernel: inactive and scoped > does nothing outside jigsaw9, and the call costs no work
+    FAIL tech-subset > law of leftovers kernel: geometry > takes only complete units of the kinds row, col and region
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > stays sound when its Findings are applied one after another
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > finds the same Finding on a flooded position (every candidate open) as the oracle, within its work
+    FAIL tech-subset > law of leftovers kernel: the contract of a call > returns arrays of its own: writing to a Finding changes nothing in the next call
+    FAIL tech-subset > law of leftovers kernel: the contract of a call > shares nothing with the subset scan: calls of both kinds interleaved give the same answers
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > counts from a fresh counter on every call, with a record of its own
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > has R10's limit of 50000 for the whole call: a flood is cut there with nothing found
+mutation 90 (X05 the marks of the sides outlive the call): DETECTED - 38 total, 24 passed, 14 failed, 0 skipped - 14 failing - 3.9 s
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > finds the same Finding on a flooded position (every candidate open) as the oracle, within its work
+    FAIL tech-subset > law of leftovers kernel: agreement with the independent enumeration > knows the work of a flood by hand: the crossed board costs 3436 tries of units and 1557 + 1476 of digits
+    FAIL tech-subset > law of leftovers kernel: the contract of a call > returns arrays of its own: writing to a Finding changes nothing in the next call
+    FAIL tech-subset > law of leftovers kernel: the contract of a call > has plain data only, so that a Finding survives a trip through JSON unchanged
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > counts from a fresh counter on every call, with a record of its own
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > has R10's limit of 50000 for the whole call: a flood is cut there with nothing found
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > never reads an unfinished enumeration as no support: every earlier cut gives no Finding
+    FAIL tech-subset > law of leftovers kernel: work limit, budget and cancellation > finishes both sides before it concludes: a cut inside the second enumeration finds nothing
+mutation 91 (X06 the cells of the Finding are the unit cells): DETECTED - 38 total, 23 passed, 15 failed, 0 skipped - 15 failing - 2.4 s
+    FAIL tech-subset > law of leftovers kernel: vectors > forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}
+    FAIL tech-subset > law of leftovers kernel: vectors > takes a fixed cell for a singleton side, on either side
+    FAIL tech-subset > law of leftovers kernel: vectors > applies the law on a real board: R8C9 holds the digit of R9C1 in every solution
+    FAIL tech-subset > law of leftovers kernel: vectors > finds the same choice with columns as the lines: the transposed board gives the transposed Finding
+    FAIL tech-subset > law of leftovers kernel: vectors > counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}
+    FAIL tech-subset > law of leftovers kernel: vectors > tells {1, 2, 2} from {1, 1, 2} where the digit sets agree
+    FAIL tech-subset > law of leftovers kernel: vectors > counts the fixed cells of the region side in its signature too
+    FAIL tech-subset > law of leftovers kernel: geometry > finds the choices of the second kind too: the second choice of the crossed board
+detected 46 of 46, survivors 0, 191.0 s

@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS14a\subset-diff.js
+engine: git:bc3450c, states 526 (240 jigsaw), subset calls 3156 (with a Finding 983), registry sha256 49dc780e42af2e7a9255366288a0738ec819805a7eb2e4671705fcc3901b5a60, lawOfLeftovers registered false, states unchanged true
+plain sha256 bfce0d4c32d4464aa4fd893a30015c4ce4641c092a398259b1b55bf709994359
+interleaved: none (no kernel in this source)
+exit=0 seconds=1.608

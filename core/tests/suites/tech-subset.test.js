@@ -1399,4 +1399,1263 @@
       });
     });
   });
+
+  // Law of leftovers (MS14a, R17): the inactive complete-support kernel SG.leftoverPatterns.find. It is never
+  // registered, so the helper's registry based checks do not apply. Every expectation comes from `oracle`, a
+  // deliberately naive enumeration built only from model.units, model.unitMeta and the units' cells (no table
+  // of the finder, no bit mask, signatures as sorted digit lists), from hand-checked vectors, or from known
+  // solutions that satisfy every unit of their board.
+  (function () {
+    var J = SG.fixtures.jigsawModels;
+    var LO = SG.leftoverPatterns;
+    var ID = 'lawOfLeftovers';
+    var UNCAPPED = 100000000;
+    // The layouts with choices of units that leave few cells over (the ordinary `boxes` has none).
+    var NAMES = ['staggered', 'wavy', 'mixed', 'crossed'];
+    // Two vectors on the board `crossed`, whose only choices are R1+R2 with J1+J2 (leaving R1C9, R2C1, R2C9 and R3C3,
+    // R3C8, R4C8) and R8+R9 with J8+J9 (R8C3, R8C9, R9C9 and R7C2, R7C5, R7C6). FIRST: the line side holds 1, 1, 2 and
+    // the region side is 1 2 1 or 2 1 2, so the multiset {1, 1, 2} keeps only 1 2 1. SECOND: the line side holds 1, 3, 4
+    // and R7C2 may not be 5 (the digits stay clear of the column 9 of the first vector).
+    var FIRST = { given: { R1C9: 1, R2C1: 1, R2C9: 2 }, open: { R3C3: '12', R3C8: '12', R4C8: '12' } };
+    var SECOND = { given: { R8C3: 1, R8C9: 3, R9C9: 4 }, open: { R7C2: '1345', R7C5: '134', R7C6: '134' } };
+
+    var boards = {};
+    /** The model of a named layout; `transposed` swaps rows and columns, so the columns become the lines. */
+    function board(name, transposed) {
+      var key = name + (transposed ? ' (transposed)' : '');
+      if (!boards[key]) {
+        var layout = J.parse(J.LAYOUTS[name]);
+        boards[key] = J.build(transposed ? J.transpose(layout) : layout);
+      }
+      return boards[key];
+    }
+
+    /**
+     * A hand-made position. `given` cells ({ R9C1: 5 }) are placed the way the solver places a given, so that
+     * the digit leaves their peers; `single` cells ({ R9C1: 5 }) keep the one candidate and the digit leaves their
+     * peers, but nothing is placed (a naked single that is not placed yet); `fixed` cells hold a value with no
+     * peer elimination (a hand-made position, used where the peers matter); `open` cells ({ R8C9: '57' }) keep only
+     * the listed candidates. Every other cell keeps all its digits, nothing is propagated.
+     */
+    function position(model, spec) {
+      var state = SG.model.initState(model);
+      Object.keys(spec.given || {}).forEach(function (ref) {
+        if (!SG.constraints.assign(model, state, H.cell(model, ref), spec.given[ref])) throw new Error('bad given');
+      });
+      Object.keys(spec.single || {}).forEach(function (ref) {
+        var c = H.cell(model, ref);
+        Array.prototype.forEach.call(model.peers[c], function (p) {
+          if (!SG.constraints.eliminate(model, state, p, spec.single[ref])) throw new Error('bad single');
+        });
+        state.candidates[c] = 1 << (spec.single[ref] - 1);
+      });
+      Object.keys(spec.open || {}).forEach(function (ref) {
+        var mask = 0;
+        String(spec.open[ref]).split('').forEach(function (d) { mask |= 1 << (Number(d) - 1); });
+        state.candidates[H.cell(model, ref)] = mask;
+      });
+      Object.keys(spec.fixed || {}).forEach(function (ref) {
+        var c = H.cell(model, ref);
+        state.value[c] = spec.fixed[ref];
+        state.candidates[c] = 1 << (spec.fixed[ref] - 1);
+        state.unsolvedCount--;
+      });
+      return state;
+    }
+
+    /**
+     * A bare model of the variant jigsaw9: `cellCount` cells in one row and only the listed units, each
+     * { kind, label, cells, partial? }, so that no other unit lets two cells see each other.
+     */
+    function bare(cellCount, units) {
+      var cellRow = [];
+      var cellCol = [];
+      for (var c = 0; c < cellCount; c++) {
+        cellRow.push(0);
+        cellCol.push(c);
+      }
+      return SG.model.create({
+        variantId: 'jigsaw9',
+        digits: 9,
+        cellCount: cellCount,
+        units: units.map(function (u) { return u.cells; }),
+        unitMeta: units.map(function (u) { return { kind: u.kind, label: u.label, partial: u.partial === true }; }),
+        layout: { rows: 1, cols: cellCount, cellRow: cellRow, cellCol: cellCol }
+      });
+    }
+
+    /** True when every unit of the board holds every digit exactly once in `solution` (the full units). */
+    function validSolution(model, solution) {
+      return model.units.every(function (cells) {
+        var digits = Array.prototype.map.call(cells, function (c) { return solution[c]; }).sort(numeric);
+        return digits.length === model.digits && digits.every(function (d, i) { return d === i + 1; });
+      });
+    }
+
+    var solutionCache = {};
+    /**
+     * A known solution of the board, with two digits swapped so that cell `ref` holds `digit` (swapping two digits
+     * of a solution gives a solution).
+     */
+    function solutionWith(model, ref, digit) {
+      var key = model.layout.cellRegion.join('');
+      if (!solutionCache[key]) solutionCache[key] = J.solve(model, SG.testkit.rng.create(20261117));
+      var base = solutionCache[key];
+      var had = base[H.cell(model, ref)];
+      return Int32Array.from(base, function (v) { return v === had ? digit : v === digit ? had : v; });
+    }
+
+    /** The position of `solution` with every cell fixed but the `open` ones ({ R9C1: '5' } keeps those candidates). */
+    function solved(model, solution, open) {
+      var state = SG.model.initState(model);
+      for (var c = 0; c < model.cellCount; c++) {
+        state.value[c] = solution[c];
+        state.candidates[c] = 1 << (solution[c] - 1);
+      }
+      state.unsolvedCount = 0;
+      Object.keys(open).forEach(function (ref) {
+        var cell = H.cell(model, ref);
+        var mask = 0;
+        String(open[ref]).split('').forEach(function (d) { mask |= 1 << (Number(d) - 1); });
+        state.value[cell] = 0;
+        state.candidates[cell] = mask;
+        state.unsolvedCount++;
+      });
+      return state;
+    }
+
+    /**
+     * Seeded positions that contain a known solution (the fixture's, found with restarts: see J.solve): a share of
+     * the cells is placed the way a given is, and every other wrong candidate stays with the chance of a draw
+     * from `keepRange`, so that the cells left over by a choice often have few candidates.
+     */
+    function leftoverStates(model, seed, count, keepRange) {
+      var rng = SG.testkit.rng.create(seed);
+      var out = [];
+      for (var i = 0; i < count; i++) {
+        var solution = J.solve(model, rng.fork('grid' + i));
+        var pick = rng.fork('pick' + i);
+        var placedShare = 0.05 + 0.3 * pick.next();
+        var keep = keepRange[0] + (keepRange[1] - keepRange[0]) * pick.next();
+        var state = SG.model.initState(model);
+        var c;
+        for (c = 0; c < model.cellCount; c++) {
+          if (pick.next() < placedShare) SG.constraints.assign(model, state, c, solution[c]);
+        }
+        for (c = 0; c < model.cellCount; c++) {
+          if (state.value[c] !== 0) continue;
+          for (var v = 1; v <= model.digits; v++) {
+            if (v !== solution[c] && (state.candidates[c] & (1 << (v - 1))) !== 0 && pick.next() >= keep) {
+              SG.constraints.eliminate(model, state, c, v);
+            }
+          }
+        }
+        out.push({ state: state, solution: solution, kind: 'seeded' });
+      }
+      return out;
+    }
+
+    /** One call with an observer; `options` is the seam ({ workLimit }), `contextOptions` extends the context. */
+    function call(model, state, options, contextOptions) {
+      var records = [];
+      var ctx = SG.techniques.createContext(model, Object.assign({
+        onPatternWork: function (r) { records.push(r); }
+      }, contextOptions));
+      var finding = LO.find(model, state, ctx, options);
+      return { finding: finding, records: records, record: records[0] };
+    }
+
+    /** The call of the vectors: the work limit is lifted, so that a flood of other choices cannot hide the point. */
+    function lifted(model, state) { return call(model, state, { workLimit: UNCAPPED }); }
+
+    function caught(fn) {
+      try {
+        fn();
+      } catch (err) {
+        return err;
+      }
+      return null;
+    }
+
+    /** The eliminations of a Finding as 'cell:digit' texts. */
+    function removed(finding) {
+      return finding.eliminations.map(function (e) { return e[0] + ':' + e[1]; });
+    }
+
+    /** The cell indices of cell labels. */
+    function at(model, refs) {
+      return refs.map(function (ref) { return H.cell(model, ref); });
+    }
+
+    // ----- the oracle: the same rule, written the slow and obvious way
+
+    var seeingTables = new WeakMap();
+    /** True when some unit holds both cells (computed from the units only). */
+    function sees(model, a, b) {
+      var table = seeingTables.get(model);
+      if (!table) {
+        table = {};
+        model.units.forEach(function (cells) {
+          for (var i = 0; i < cells.length; i++) {
+            for (var j = 0; j < cells.length; j++) if (i !== j) table[cells[i] * model.cellCount + cells[j]] = true;
+          }
+        });
+        seeingTables.set(model, table);
+      }
+      return table[a * model.cellCount + b] === true;
+    }
+
+    /** The complete units of one kind (as many cells as digits, not partial), by unit index. */
+    function completeOfKind(model, kind) {
+      var out = [];
+      for (var u = 0; u < model.units.length; u++) {
+        var meta = model.unitMeta[u];
+        if (meta.kind === kind && model.units[u].length === model.digits && meta.partial !== true) out.push(u);
+      }
+      return out;
+    }
+
+    function overlaps(model, chosen, unit) {
+      return chosen.some(function (other) {
+        return Array.prototype.some.call(model.units[other], function (c) {
+          return Array.prototype.indexOf.call(model.units[unit], c) !== -1;
+        });
+      });
+    }
+
+    function cellsOfUnits(model, units) {
+      var out = [];
+      units.forEach(function (u) { Array.prototype.forEach.call(model.units[u], function (c) { out.push(c); }); });
+      return out;
+    }
+
+    /**
+     * Every assignment of digits to `cells` (a fixed cell holds its value, an open cell one of its candidates,
+     * cells that see each other differ), by plain recursion; `count.tests` is raised once for every digit tried
+     * at a cell, accepted or not.
+     */
+    function assignmentsOf(model, state, cells, count) {
+      var options = cells.map(function (c) {
+        return state.value[c] !== 0 ? [state.value[c]] : digitList(state.candidates[c], model.digits);
+      });
+      var out = [];
+      (function walk(i, chosen) {
+        if (i === cells.length) {
+          out.push(chosen.slice());
+          return;
+        }
+        options[i].forEach(function (digit) {
+          count.tests++;
+          for (var q = 0; q < i; q++) if (chosen[q] === digit && sees(model, cells[q], cells[i])) return;
+          chosen.push(digit);
+          walk(i + 1, chosen);
+          chosen.pop();
+        });
+      })(0, []);
+      return out;
+    }
+
+    /** signature (the sorted digits of an assignment, so repeats count) -> per cell, the digits it takes. */
+    function supportBySignature(assignments, size) {
+      var table = {};
+      assignments.forEach(function (assignment) {
+        var key = assignment.slice().sort(numeric).join(',');
+        if (!table[key]) {
+          table[key] = [];
+          for (var i = 0; i < size; i++) table[key].push({});
+        }
+        assignment.forEach(function (digit, i) { table[key][i][digit] = true; });
+      });
+      return table;
+    }
+
+    /**
+     * The first choice of units, in the documented order, that removes a candidate. Returns { result, work }:
+     * `result` is null (nothing), 'declined' (a choice whose two sides share no signature) or the expected
+     * { lines, regions, cells, eliminations, digits, kind, n }; `work` counts the tested extensions the kernel makes
+     * up to that point: units tried as the next of a side (the ones that can still complete the side) and digits
+     * tried for the next cell of a side. With an array as `collect`, every removing choice is appended to it, in
+     * order, and the scan goes on (the work is then the whole scan's).
+     */
+    function oracle(model, state, collect) {
+      var count = { tests: 0 };
+      var result = null;
+      var done = false;
+
+      function pickUnits(pool, n, depth, from, chosen, then) {
+        for (var i = from; i <= pool.length - (n - depth) && !done; i++) {
+          count.tests++;
+          if (overlaps(model, chosen, pool[i])) continue;
+          chosen.push(pool[i]);
+          if (depth + 1 < n) pickUnits(pool, n, depth + 1, i + 1, chosen, then);
+          else then(chosen.slice());
+          chosen.pop();
+        }
+      }
+
+      function consider(lines, regions) {
+        var L = cellsOfUnits(model, lines);
+        var G = cellsOfUnits(model, regions);
+        var a = L.filter(function (c) { return G.indexOf(c) === -1; }).sort(numeric);
+        var b = G.filter(function (c) { return L.indexOf(c) === -1; }).sort(numeric);
+        if (a.length < 1 || a.length > 4 || a.length !== b.length) return;
+        var anyOpen = a.concat(b).some(function (c) { return state.value[c] === 0; });
+        if (!anyOpen) return;
+        var tableA = supportBySignature(assignmentsOf(model, state, a, count), a.length);
+        var tableB = supportBySignature(assignmentsOf(model, state, b, count), b.length);
+        var shared = Object.keys(tableA).filter(function (key) { return tableB[key] !== undefined; });
+        if (shared.length === 0) {
+          result = 'declined';
+          done = true;
+          return;
+        }
+        var eliminations = [];
+        [[a, tableA], [b, tableB]].forEach(function (side) {
+          side[0].forEach(function (c, i) {
+            if (state.value[c] !== 0) return;
+            digitList(state.candidates[c], model.digits).forEach(function (digit) {
+              var taken = shared.some(function (key) { return side[1][key][i][digit] === true; });
+              if (!taken) eliminations.push([c, digit]);
+            });
+          });
+        });
+        if (eliminations.length === 0) return;
+        eliminations.sort(function (x, y) { return x[0] - y[0] || x[1] - y[1]; });
+        var digits = [];
+        eliminations.forEach(function (e) { if (digits.indexOf(e[1]) === -1) digits.push(e[1]); });
+        var found = {
+          lines: lines.map(function (u) { return model.unitMeta[u].label; }),
+          regions: regions.map(function (u) { return model.unitMeta[u].label; }),
+          cells: a.concat(b).sort(numeric),
+          eliminations: eliminations,
+          digits: digits.sort(numeric),
+          kind: model.unitMeta[lines[0]].kind,
+          n: lines.length
+        };
+        if (collect) {
+          collect.push(found);
+          return;
+        }
+        result = found;
+        done = true;
+      }
+
+      for (var n = 1; n <= 2 && !done; n++) {
+        ['row', 'col'].forEach(function (kind) {
+          if (done) return;
+          pickUnits(completeOfKind(model, kind), n, 0, 0, [], function (lines) {
+            if (done) return;
+            pickUnits(completeOfKind(model, 'region'), n, 0, 0, [], function (regions) {
+              if (!done) consider(lines, regions);
+            });
+          });
+        });
+      }
+      return { result: result, work: count.tests };
+    }
+
+    /**
+     * The kernel and the oracle agree on this state, field by field and in work (the work limit is lifted).
+     * Returns { finding, work, declined }.
+     */
+    function expectSame(model, state, where) {
+      var out = lifted(model, state);
+      var truth = oracle(model, state);
+      var tag = where === undefined ? '' : ' (' + where + ')';
+      expect(out.record.capHit).toBeNull();
+      expect(out.record.work + tag).toBe(truth.work + tag);
+      if (truth.result === null || truth.result === 'declined') {
+        expect(out.finding === null ? 'null' + tag : JSON.stringify(out.finding)).toBe('null' + tag);
+        return { finding: null, work: truth.work, declined: truth.result === 'declined' };
+      }
+      expect(out.finding).not.toBeNull();
+      var expected = truth.result;
+      expect(out.finding.technique).toBe(ID);
+      expect(out.finding.i18nKey).toBe('technique.lawOfLeftovers.step');
+      expect(out.finding.placements).toEqual([]);
+      expect(out.finding.cells).toEqual(expected.cells);
+      expect(out.finding.eliminations).toEqual(expected.eliminations);
+      expect(out.finding.i18nArgs).toEqual({
+        lines: expected.lines,
+        regions: expected.regions,
+        cells: expected.cells.map(function (c) { return SG.model.cellLabel(model, c); }),
+        digits: expected.digits
+      });
+      return { finding: out.finding, work: truth.work, declined: false };
+    }
+
+    describe('law of leftovers kernel: inactive and scoped', function () {
+      it('is not registered, so no solve, rating or hint can reach it', function () {
+        expect(SG.techniques.has(ID)).toBe(false);
+        expect(caught(function () { SG.techniques.get(ID); }).code).toBe('technique.unknown');
+        expect(SG.techniques.list().map(function (t) { return t.id; })).not.toContain(ID);
+      });
+
+      it('has R10\'s starting limits: 2 units and 4 cells per side, 50000 work units', function () {
+        expect(typeof LO.find).toBe('function');
+        expect(LO.LIMITS).toEqual({ units: 2, cells: 4, work: 50000 });
+        expect(Object.isFrozen(LO.LIMITS)).toBe(true);
+      });
+
+      it('does nothing outside jigsaw9, and the call costs no work', function () {
+        var classic = H.model('classic9');
+        var none = call(classic, SG.model.initState(classic));
+        expect(none.finding).toBeNull();
+        expect(none.records).toEqual([{ id: ID, work: 0, limit: 50000, capHit: null, retained: null }]);
+        // The same units and the same position under another variant id: nothing, where jigsaw9 finds a removal.
+        var model = board('staggered');
+        var state = position(model, { open: { R9C1: '5', R8C9: '57' } });
+        expect(lifted(model, state).finding).not.toBeNull();
+        var stray = SG.model.create({
+          variantId: 'jigsaw9-copy',
+          digits: 9,
+          cellCount: model.cellCount,
+          units: model.units,
+          unitMeta: model.unitMeta,
+          layout: model.layout
+        });
+        var out = lifted(stray, state);
+        expect(out.finding).toBeNull();
+        expect(out.record).toEqual({ id: ID, work: 0, limit: UNCAPPED, capHit: null, retained: null });
+      });
+    });
+
+    describe('law of leftovers kernel: vectors', function () {
+      it('forces the removal of 7 where a singleton side {5} meets a cell with the candidates {5, 7}', function () {
+        // One row of nine cells and one region of nine cells that share eight of them: cell 0 is left over on the
+        // line side, cell 9 on the region side, and no other unit lets any cell see another.
+        var model = bare(10, [
+          { kind: 'row', label: 'R1', cells: [0, 1, 2, 3, 4, 5, 6, 7, 8] },
+          { kind: 'region', label: 'J1', cells: [1, 2, 3, 4, 5, 6, 7, 8, 9] }
+        ]);
+        var state = SG.model.initState(model);
+        state.candidates[0] = 1 << 4;
+        state.candidates[9] = (1 << 4) | (1 << 6);
+        var out = expectSame(model, state, 'singleton {5} against {5, 7}');
+        expect(out.finding.eliminations).toEqual([[9, 7]]);
+        expect(out.finding.cells).toEqual([0, 9]);
+        expect(out.finding.i18nArgs).toEqual({
+          lines: ['R1'], regions: ['J1'], cells: [SG.model.cellLabel(model, 0), SG.model.cellLabel(model, 9)], digits: [7]
+        });
+        expect(out.work).toBe(5); // the row, the region, one digit for cell 0 and two for cell 9
+      });
+
+      it('takes a fixed cell for a singleton side, on either side', function () {
+        var model = bare(10, [
+          { kind: 'row', label: 'R1', cells: [0, 1, 2, 3, 4, 5, 6, 7, 8] },
+          { kind: 'region', label: 'J1', cells: [1, 2, 3, 4, 5, 6, 7, 8, 9] }
+        ]);
+        var line = SG.model.initState(model);
+        line.value[0] = 5;
+        line.candidates[0] = 1 << 4;
+        line.unsolvedCount--;
+        line.candidates[9] = (1 << 4) | (1 << 6);
+        expect(expectSame(model, line, 'fixed line cell').finding.eliminations).toEqual([[9, 7]]);
+        var region = SG.model.initState(model);
+        region.value[9] = 5;
+        region.candidates[9] = 1 << 4;
+        region.unsolvedCount--;
+        region.candidates[0] = (1 << 4) | (1 << 6);
+        expect(expectSame(model, region, 'fixed region cell').finding.eliminations).toEqual([[0, 7]]);
+      });
+
+      it('is quiet when the singleton sides can agree on every candidate, and declines when they cannot', function () {
+        var model = bare(10, [
+          { kind: 'row', label: 'R1', cells: [0, 1, 2, 3, 4, 5, 6, 7, 8] },
+          { kind: 'region', label: 'J1', cells: [1, 2, 3, 4, 5, 6, 7, 8, 9] }
+        ]);
+        var agree = SG.model.initState(model);
+        agree.candidates[0] = (1 << 4) | (1 << 6);
+        agree.candidates[9] = (1 << 4) | (1 << 6);
+        var quiet = expectSame(model, agree, 'agreeing singletons');
+        expect(quiet.finding).toBeNull();
+        expect(quiet.declined).toBe(false);
+        var apart = SG.model.initState(model);
+        apart.candidates[0] = 1 << 4;
+        apart.candidates[9] = 1 << 6;
+        var declined = expectSame(model, apart, 'disjoint singletons');
+        expect(declined.finding).toBeNull();
+        expect(declined.declined).toBe(true);
+      });
+
+      it('applies the law on a real board: R8C9 holds the digit of R9C1 in every solution', function () {
+        var model = board('staggered');
+        var solution = solutionWith(model, 'R9C1', 5);
+        expect(validSolution(model, solution)).toBe(true);
+        expect(solution[H.cell(model, 'R8C9')]).toBe(5);
+        // Everything is fixed to the solution but R9C1 {5} and R8C9 {5, 7}. R8 and J7 share all of R8C1-R8C5 and
+        // R9C1 is left over in J7 with R6C2, R6C3, R7C3 against R8C6-R8C9: the first choice that sees R8C9 removes 7.
+        var state = solved(model, solution, { R9C1: '5', R8C9: '57' });
+        var out = expectSame(model, state, 'real board');
+        expect(out.finding.eliminations).toEqual([[H.cell(model, 'R8C9'), 7]]);
+        expect(out.finding.i18nArgs.lines).toEqual(['R8']);
+        expect(out.finding.i18nArgs.regions).toEqual(['J7']);
+        expect(out.finding.i18nArgs.digits).toEqual([7]);
+        // the same cells with nothing in common between the candidates: no digit is removed, the position declines
+        var apart = expectSame(model, solved(model, solution, { R9C1: '5', R8C9: '7' }), 'inconsistent real board');
+        expect(apart.finding).toBeNull();
+        expect(apart.declined).toBe(true);
+      });
+
+      it('finds the same choice with columns as the lines: the transposed board gives the transposed Finding', function () {
+        var model = board('staggered', true);
+        // R9C1 becomes R1C9, R8C9 becomes R9C8, row R8 becomes column C8.
+        var solution = solutionWith(model, 'R1C9', 5);
+        expect(validSolution(model, solution)).toBe(true);
+        expect(solution[H.cell(model, 'R9C8')]).toBe(5);
+        var out = expectSame(model, solved(model, solution, { R1C9: '5', R9C8: '57' }), 'transposed');
+        expect(out.finding.eliminations).toEqual([[H.cell(model, 'R9C8'), 7]]);
+        expect(out.finding.i18nArgs.lines).toEqual(['C8']);
+        expect(out.finding.i18nArgs.regions).toEqual(['J7']);
+        expect(out.finding.cells).toEqual(out.finding.i18nArgs.cells.map(function (label) { return H.cell(model, label); }));
+      });
+
+      it('counts a digit twice where the cells do not see each other: {1, 1, 2} is not {1, 2, 2}', function () {
+        // Rows 1-2 with regions 1-2 leave R1C9, R2C1, R2C9 and R3C3, R3C8, R4C8. R1C9 and R2C1 see no common unit, so
+        // the digit may repeat there, and R3C3 and R4C8 do not see each other either.
+        var model = board('crossed');
+        // The line side holds 1, 1, 2. R3C8 differs from both other cells, so the region side is 1 2 1 or 2 1 2,
+        // and only {1, 1, 2} = 1 2 1 matches: the digit sets {1, 2} are equal, the multisets are not.
+        var state = position(model, {
+          given: { R1C9: 1, R2C1: 1, R2C9: 2 },
+          open: { R3C3: '12', R3C8: '12', R4C8: '12' }
+        });
+        var out = expectSame(model, state, 'multiset 1 1 2');
+        expect(removed(out.finding)).toEqual(at(model, ['R3C3', 'R3C8', 'R4C8']).map(function (c, i) {
+          return c + ':' + [2, 1, 2][i];
+        }));
+        expect(out.finding.i18nArgs).toEqual({
+          lines: ['R1', 'R2'],
+          regions: ['J1', 'J2'],
+          cells: ['R1C9', 'R2C1', 'R2C9', 'R3C3', 'R3C8', 'R4C8'],
+          digits: [1, 2]
+        });
+        // {1, 2, 2}: the other way round
+        var other = expectSame(model, position(model, {
+          given: { R1C9: 2, R2C1: 2, R2C9: 1 },
+          open: { R3C3: '12', R3C8: '12', R4C8: '12' }
+        }), 'multiset 1 2 2');
+        expect(removed(other.finding)).toEqual(at(model, ['R3C3', 'R3C8', 'R4C8']).map(function (c, i) {
+          return c + ':' + [1, 2, 1][i];
+        }));
+      });
+
+      it('tells {1, 2, 2} from {1, 1, 2} where the digit sets agree', function () {
+        var model = board('crossed');
+        // The region side can only be 2 1 2 = {1, 2, 2}. The line side R1C9, R2C1, R2C9 can be 1 1 2 or 2 2 1 (R2C9
+        // sees the other two): the digit sets {1, 2} are the same, but only 2 2 1 has the multiset {1, 2, 2}.
+        var state = position(model, {
+          open: { R1C9: '12', R2C1: '12', R2C9: '12', R3C3: '2', R3C8: '1', R4C8: '2' }
+        });
+        var out = expectSame(model, state, 'multiset tells apart');
+        expect(removed(out.finding)).toEqual(at(model, ['R1C9', 'R2C1', 'R2C9']).map(function (c, i) {
+          return c + ':' + [1, 1, 2][i];
+        }));
+        expect(out.finding.i18nArgs.digits).toEqual([1, 2]);
+      });
+
+      it('declines when a side repeats a digit that the other cannot repeat', function () {
+        var model = board('crossed');
+        // The line side holds 1, 1, 2; the region side is fixed to 2, 1, 2 by its cells: the digit sets agree, the
+        // multisets do not, and the position is inconsistent.
+        var state = position(model, {
+          given: { R1C9: 1, R2C1: 1, R2C9: 2 },
+          open: { R3C3: '2', R3C8: '1', R4C8: '2' }
+        });
+        var out = expectSame(model, state, 'no common signature');
+        expect(out.finding).toBeNull();
+        expect(out.declined).toBe(true);
+      });
+
+      it('counts the fixed cells of the region side in its signature too', function () {
+        var model = board('crossed');
+        // R3C3 = 2 is placed. The open masks are set after it, so R3C8 keeps the candidate 2, but R3C8 sees R3C3 inside
+        // the side: R3C8 = 1, R4C8 = 2 (it sees R3C8), and the region side is {2, 1, 2}. The line side then has to be
+        // 2, 2, 1 in R1C9, R2C1, R2C9 (R2C9 sees both others).
+        var state = position(model, {
+          given: { R3C3: 2 },
+          open: { R1C9: '12', R2C1: '12', R2C9: '12', R3C8: '12', R4C8: '12' }
+        });
+        var out = expectSame(model, state, 'fixed region cell');
+        expect(removed(out.finding)).toEqual(at(model, ['R1C9', 'R2C1', 'R2C9', 'R3C8', 'R4C8']).map(function (c, i) {
+          return c + ':' + [1, 1, 2, 2, 1][i];
+        }));
+      });
+    });
+
+    describe('law of leftovers kernel: geometry', function () {
+      function range(from, to) {
+        var out = [];
+        for (var c = from; c <= to; c++) out.push(c);
+        return out;
+      }
+
+      /** A copy of the board whose units are edited by `edit(units, meta)`; units are plain arrays of cells. */
+      function variant(model, edit) {
+        var units = model.units.map(function (u) { return Array.prototype.slice.call(u); });
+        var meta = model.unitMeta.map(function (m) { return Object.assign({}, m); });
+        edit(units, meta);
+        return SG.model.create({
+          variantId: model.variantId,
+          digits: model.digits,
+          cellCount: model.cellCount,
+          units: units,
+          unitMeta: meta,
+          layout: model.layout
+        });
+      }
+
+      it('finds nothing on the ordinary boxes, where no choice leaves at most four cells over', function () {
+        var model = board('boxes');
+        var out = expectSame(model, SG.model.initState(model), 'blank boxes');
+        expect(out.finding).toBeNull();
+        expect(out.declined).toBe(false);
+        // Only units are tried, no digit: one row or column (9 + 9 tries) with each region (9 each) for n = 1, and
+        // for n = 2 the 8 + 36 tries of a pair of lines with 8 + 36 tries of a pair of regions for each of the 36 pairs.
+        expect(out.work).toBe(2 * (9 + 9 * 9) + 2 * ((8 + 36) + 36 * (8 + 36)));
+        expect(out.work).toBe(3436);
+        expect(lifted(model, SG.model.initState(model)).record).toEqual({
+          id: ID, work: 3436, limit: UNCAPPED, capHit: null, retained: null
+        });
+      });
+
+      it('finds the choices of the second kind too: the second choice of the crossed board', function () {
+        var model = board('crossed');
+        var out = expectSame(model, position(model, SECOND), 'second choice');
+        expect(out.finding.eliminations).toEqual([[H.cell(model, 'R7C2'), 5]]);
+        expect(out.finding.i18nArgs.lines).toEqual(['R8', 'R9']);
+        expect(out.finding.i18nArgs.regions).toEqual(['J8', 'J9']);
+        expect(out.finding.i18nArgs.cells).toEqual(['R7C2', 'R7C5', 'R7C6', 'R8C3', 'R8C9', 'R9C9']);
+        // and with the first choice's vector as well, the first choice comes first
+        var both = position(model, {
+          given: Object.assign({}, FIRST.given, SECOND.given),
+          open: Object.assign({}, FIRST.open, SECOND.open)
+        });
+        var first = expectSame(model, both, 'both choices');
+        expect(first.finding.i18nArgs.lines).toEqual(['R1', 'R2']);
+      });
+
+      it('looks at one or two units on a side, never at three', function () {
+        // Three rows (cells 0-26) and three regions that take three cells of each row, except that the last region
+        // takes cell 27 instead of cell 26: with all three of each, cell 26 is left over on one side and cell 27 on
+        // the other. No choice of one or two units leaves at most four cells over.
+        var model = bare(28, [
+          { kind: 'row', label: 'R1', cells: range(0, 8) },
+          { kind: 'row', label: 'R2', cells: range(9, 17) },
+          { kind: 'row', label: 'R3', cells: range(18, 26) },
+          { kind: 'region', label: 'J1', cells: [0, 1, 2, 9, 10, 11, 18, 19, 20] },
+          { kind: 'region', label: 'J2', cells: [3, 4, 5, 12, 13, 14, 21, 22, 23] },
+          { kind: 'region', label: 'J3', cells: [6, 7, 8, 15, 16, 17, 24, 25, 27] }
+        ]);
+        var state = SG.model.initState(model);
+        state.value[26] = 5;
+        state.candidates[26] = 1 << 4;
+        state.unsolvedCount--;
+        state.candidates[27] = (1 << 4) | (1 << 6);
+        var out = expectSame(model, state, 'three units');
+        expect(out.finding).toBeNull();
+        expect(out.declined).toBe(false);
+      });
+
+      it('leaves at most four cells over on a side: four are examined, five are not', function () {
+        // One row of nine cells and a region shifted by k cells leave k cells over on each side.
+        function shifted(k, extra) {
+          var model = bare(9 + k, [
+            { kind: 'row', label: 'R1', cells: range(0, 8) },
+            { kind: 'region', label: 'J1', cells: range(k, k + 8) }
+          ]);
+          var state = SG.model.initState(model);
+          for (var c = 0; c < k; c++) {
+            state.value[c] = c + 1;
+            state.candidates[c] = 1 << c;
+            state.unsolvedCount--;
+          }
+          for (var d = 0; d < k; d++) state.candidates[9 + d] = (1 << (k + extra)) - 1;
+          return { model: model, state: state };
+        }
+        var four = shifted(4, 2);
+        var found = expectSame(four.model, four.state, 'four cells');
+        // the region side must hold 1, 2, 3, 4 as a set (its cells all see each other): 5 and 6 go from every cell
+        expect(found.finding.eliminations).toEqual([[9, 5], [9, 6], [10, 5], [10, 6], [11, 5], [11, 6], [12, 5], [12, 6]]);
+        expect(found.finding.cells).toEqual([0, 1, 2, 3, 9, 10, 11, 12]);
+        // 1 row + 1 region, 4 fixed cells (1 digit each), then 6 + 6*6 + 30*6 + 120*6 digits tried on the region side
+        expect(found.work).toBe(2 + 4 + (6 + 36 + 180 + 720));
+        var five = shifted(5, 2);
+        var none = expectSame(five.model, five.state, 'five cells');
+        expect(none.finding).toBeNull();
+        expect(none.declined).toBe(false);
+        expect(none.work).toBe(2);
+      });
+
+      it('takes only complete units of the kinds row, col and region', function () {
+        var base = board('crossed');
+        var state = position(base, FIRST);
+        expect(expectSame(base, state, 'the unchanged board').finding).not.toBeNull();
+        var edits = {
+          'a partial region': function (units, meta) { meta[19].partial = true; },
+          'a region of eight cells': function (units) { units[19].pop(); },
+          'a partial row': function (units, meta) { meta[1].partial = true; },
+          'a row of eight cells': function (units) { units[0].pop(); },
+          'a region that is no region': function (units, meta) { meta[19].kind = 'box'; },
+          'a row that is no row': function (units, meta) { meta[0].kind = 'diag'; }
+        };
+        Object.keys(edits).forEach(function (name) {
+          var model = variant(base, edits[name]);
+          var out = expectSame(model, state, name);
+          expect([name, out.finding]).toEqual([name, null]);
+        });
+      });
+
+      it('orders lines and regions by unit index, never by label text, and does not merge equal labels', function () {
+        var base = board('crossed');
+        var state = position(base, FIRST);
+        // R1, R2 are units 0 and 1, J1, J2 are units 18 and 19: labels that sort the other way round stay in unit order
+        var renamed = variant(base, function (units, meta) {
+          meta[0].label = 'Z';
+          meta[1].label = 'A';
+          meta[18].label = 'Y';
+          meta[19].label = 'B';
+        });
+        var out = expectSame(renamed, state, 'labels against unit order');
+        expect(out.finding.i18nArgs.lines).toEqual(['Z', 'A']);
+        expect(out.finding.i18nArgs.regions).toEqual(['Y', 'B']);
+        // two distinct units that show the same label are two entries
+        var equal = variant(base, function (units, meta) {
+          [0, 1, 18, 19].forEach(function (u) { meta[u].label = 'U'; });
+        });
+        var twice = expectSame(equal, state, 'equal labels');
+        expect(twice.finding.i18nArgs.lines).toEqual(['U', 'U']);
+        expect(twice.finding.i18nArgs.regions).toEqual(['U', 'U']);
+      });
+
+      it('never takes two units that share a cell as one side', function () {
+        var base = board('crossed');
+        // An extra region J10 that is J2 with R1C8 replaced by R1C4 shares R1C4 with J1. Rows 1-2 with J1 and J10
+        // would leave 4 cells on the line side and 3 on the region side: no signature in common, a position that
+        // would "decline". Skipped as it must be, the second choice (rows 8-9) is still reached.
+        var overlapped = variant(base, function (units, meta) {
+          var cells = units[19].slice();
+          cells[cells.indexOf(H.cell(base, 'R1C8'))] = H.cell(base, 'R1C4');
+          units.push(cells);
+          meta.push({ kind: 'region', gridIndex: 0, label: 'J10' });
+        });
+        var out = expectSame(overlapped, position(base, SECOND), 'overlapping regions');
+        expect(out.finding.i18nArgs.lines).toEqual(['R8', 'R9']);
+        expect(out.finding.eliminations).toEqual([[H.cell(base, 'R7C2'), 5]]);
+        // the same with an extra row sharing R1C2-R1C9 with R1 and R2C1 with R2
+        var tall = variant(base, function (units, meta) {
+          units.push([H.cell(base, 'R2C1')].concat(range(1, 8)));
+          meta.push({ kind: 'row', gridIndex: 0, label: 'R10' });
+        });
+        var again = expectSame(tall, position(base, SECOND), 'overlapping rows');
+        expect(again.finding.i18nArgs.lines).toEqual(['R8', 'R9']);
+      });
+    });
+
+    describe('law of leftovers kernel: agreement with the independent enumeration', function () {
+      /** Seeded positions with a known solution; every solution satisfies all the units of its board. */
+      function positions(name, transposed, count, keepRange, salt) {
+        var model = board(name, transposed);
+        var seed = 31000 + 7 * NAMES.indexOf(name) + (transposed ? 1 : 0) + 100 * (salt || 0);
+        var items = leftoverStates(model, seed, count, keepRange);
+        items.forEach(function (item) { expect(validSolution(model, item.solution)).toBe(true); });
+        return items;
+      }
+
+      function checkFinding(model, state, finding, solution, where) {
+        expect(H.findingProblems(model, state, finding, { technique: ID, solution: solution })).toEqual([]);
+        var args = finding.i18nArgs;
+        expect(args.lines.length === args.regions.length && args.lines.length >= 1 && args.lines.length <= 2).toBe(true);
+        expect(finding.cells.length).toBeLessThanOrEqual(8);
+        expect(finding.cells).toEqual(finding.cells.slice().sort(numeric));
+        expect(new Set(finding.cells).size).toBe(finding.cells.length);
+        var keys = finding.eliminations.map(function (e) { return e[0] * 100 + e[1]; });
+        expect(keys).toEqual(keys.slice().sort(numeric));
+        expect(new Set(keys).size).toBe(keys.length);
+        var digits = [];
+        finding.eliminations.forEach(function (e) { if (digits.indexOf(e[1]) === -1) digits.push(e[1]); });
+        expect([where, args.digits]).toEqual([where, digits.sort(numeric)]);
+        finding.eliminations.forEach(function (e) {
+          expect(finding.cells).toContain(e[0]);
+          expect(state.value[e[0]]).toBe(0);
+        });
+      }
+
+      it('gives the oracle\'s Finding and the oracle\'s work on seeded positions of every layout and its transpose',
+        function () {
+          var seen = { positions: 0, found: 0, declined: 0, units: { 1: 0, 2: 0 }, kind: { R: 0, C: 0 } };
+          // few candidates left (most cells settle quickly), then more (sides with real choices and repeated digits)
+          [[[0.04, 0.3], 0], [[0.3, 0.7], 1]].forEach(function (setup) {
+            NAMES.forEach(function (name) {
+              [false, true].forEach(function (transposed) {
+                var model = board(name, transposed);
+                positions(name, transposed, 30, setup[0], setup[1]).forEach(function (item, i) {
+                  var where = name + (transposed ? ' (transposed)' : '') + ' #' + i + ' keep ' + setup[0][0];
+                  var out = expectSame(model, item.state, where);
+                  seen.positions++;
+                  if (out.declined) seen.declined++;
+                  if (out.finding === null) return;
+                  seen.found++;
+                  checkFinding(model, item.state, out.finding, item.solution, where);
+                  seen.units[out.finding.i18nArgs.lines.length]++;
+                  seen.kind[out.finding.i18nArgs.lines[0].charAt(0)]++;
+                });
+              });
+            });
+          });
+          expect(seen.positions).toBe(480);
+          expect(seen.declined).toBe(0);
+          expect(seen.found).toBeGreaterThan(400);
+          expect(seen.units[1]).toBeGreaterThan(250);
+          expect(seen.units[2]).toBeGreaterThan(80);
+          expect(seen.kind.R).toBeGreaterThan(200);
+          expect(seen.kind.C).toBeGreaterThan(120);
+        });
+
+      it('stays sound when its Findings are applied one after another', function () {
+        var applied = 0;
+        NAMES.forEach(function (name) {
+          var model = board(name, false);
+          positions(name, false, 24, [0.04, 0.25]).forEach(function (item, i) {
+            var state = SG.model.cloneState(item.state);
+            for (var step = 0; step < 30; step++) {
+              var out = lifted(model, state);
+              if (out.finding === null) break;
+              checkFinding(model, state, out.finding, item.solution, name + ' #' + i + ' step ' + step);
+              applyFinding(model, state, out.finding);
+              applied++;
+            }
+          });
+        });
+        expect(applied).toBeGreaterThan(20);
+      });
+
+      it('finds the same Finding on a flooded position (every candidate open) as the oracle, within its work', function () {
+        var capped = 0;
+        NAMES.forEach(function (name) {
+          var model = board(name, false);
+          var blank = SG.model.initState(model);
+          var truth = oracle(model, blank);
+          var out = call(model, blank);
+          expect(truth.result).toBeNull();
+          if (truth.work > 50000) {
+            capped++;
+            expect(out.record).toEqual({ id: ID, work: 50000, limit: 50000, capHit: 'work', retained: null });
+            expect(out.finding).toBeNull();
+          } else {
+            expect(out.record).toEqual({ id: ID, work: truth.work, limit: 50000, capHit: null, retained: null });
+          }
+          expect(lifted(model, blank).record.work).toBe(truth.work);
+        });
+        expect(capped).toBe(2);
+      });
+
+      it('knows the work of a flood by hand: the crossed board costs 3436 tries of units and 1557 + 1476 of digits',
+        function () {
+          var model = board('crossed');
+          var out = lifted(model, SG.model.initState(model));
+          // Counted by hand. The first choice: its line side R1C9, R2C1, R2C9 (R1C9 and R2C1 do not see each other, R2C9
+          // sees both) costs 9 + 9*9 + 9*9*9 = 819 tries of digits, its region side R3C3, R3C8, R4C8 (R3C8 sees both)
+          // 9 + 9*9 + 72*9 = 738; the second choice's sides cost 9 + 81 + 72*9 = 738 each (all three cells of a side
+          // see each other, or the third sees the first two).
+          expect(out.record.work).toBe(3436 + (819 + 738) + (738 + 738));
+          expect(out.record.work).toBe(6469);
+        });
+    });
+
+    describe('law of leftovers kernel: the contract of a call', function () {
+      var VECTOR = FIRST;
+
+      function snapshotOf(model, state) {
+        return JSON.stringify({
+          state: [Array.from(state.candidates), Array.from(state.value), state.unsolvedCount],
+          model: [model.units.map(function (u) { return Array.from(u); }), model.unitMeta,
+            model.peers.map(function (p) { return Array.from(p); }), model.layout.cellRegion, model.digits,
+            model.variantId, model.cellCount]
+        });
+      }
+
+      it('returns arrays of its own: writing to a Finding changes nothing in the next call', function () {
+        var model = board('crossed');
+        var state = position(model, VECTOR);
+        var first = lifted(model, state).finding;
+        var snapshot = JSON.stringify(first);
+        first.cells.push(999);
+        first.cells.reverse();
+        first.eliminations.forEach(function (e) { e[0] = -1; e[1] = -1; });
+        first.eliminations.length = 0;
+        first.placements.push([0, 1]);
+        first.i18nArgs.lines.push('X');
+        first.i18nArgs.regions.length = 0;
+        first.i18nArgs.cells.push('Y');
+        first.i18nArgs.digits.push(0);
+        var second = lifted(model, state).finding;
+        expect(JSON.stringify(second)).toBe(snapshot);
+        var third = lifted(model, state).finding;
+        expect(third).toEqual(second);
+        expect(third.cells).not.toBe(second.cells);
+        expect(third.eliminations).not.toBe(second.eliminations);
+        expect(third.eliminations[0]).not.toBe(second.eliminations[0]);
+        expect(third.i18nArgs.lines).not.toBe(second.i18nArgs.lines);
+        expect(third.i18nArgs.digits).not.toBe(second.i18nArgs.digits);
+      });
+
+      it('reads the model, the state and the context only, and answers the same twice', function () {
+        var debugBefore = SG.DEBUG;
+        SG.setDebug(true);
+        try {
+          NAMES.forEach(function (name) {
+            var model = board(name);
+            leftoverStates(model, 4400, 6, [0.05, 0.4]).forEach(function (item, i) {
+              var before = snapshotOf(model, item.state);
+              var ctx = SG.techniques.createContext(model, { onPatternWork: function () {} });
+              var first = LO.find(model, item.state, ctx);
+              var second = LO.find(model, item.state, ctx);
+              expect([name, i, second]).toEqual([name, i, first]);
+              expect([name, i, snapshotOf(model, item.state)]).toEqual([name, i, before]);
+            });
+          });
+        } finally {
+          SG.setDebug(debugBefore);
+        }
+      });
+
+      it('has plain data only, so that a Finding survives a trip through JSON unchanged', function () {
+        var model = board('crossed');
+        var finding = lifted(model, position(model, VECTOR)).finding;
+        expect(JSON.parse(JSON.stringify(finding))).toEqual(finding);
+        expect(Object.keys(finding).sort()).toEqual(['cells', 'eliminations', 'i18nArgs', 'i18nKey', 'placements',
+          'technique']);
+        expect(Object.keys(finding.i18nArgs).sort()).toEqual(['cells', 'digits', 'lines', 'regions']);
+      });
+
+      it('shares nothing with the subset scan: calls of both kinds interleaved give the same answers', function () {
+        var items = [];
+        ['staggered', 'wavy', 'crossed', 'mixed'].forEach(function (name, k) {
+          leftoverStates(board(name), 4800 + k, 5, [0.1, 0.4]).forEach(function (item) {
+            items.push({ model: board(name), state: item.state });
+          });
+        });
+        var classic = H.model('classic9');
+        H.randomStatesWithKnownSolution(classic, SG.testkit.rng.create(4900), 8).forEach(function (item) {
+          items.push({ model: classic, state: item.state });
+        });
+        var fired = 0;
+        items.forEach(function (item, n) {
+          function answer(kind) {
+            var budget = { calls: 0, check: function () { budget.calls++; } };
+            var result = kind === ID
+              ? JSON.stringify(call(item.model, item.state, { workLimit: UNCAPPED }, { budget: budget }).finding)
+              : JSON.stringify(find(kind, item.model, item.state, { budget: budget }));
+            return [result, budget.calls];
+          }
+          var base = {};
+          [ID].concat(IDS).forEach(function (kind) { base[kind] = answer(kind); });
+          if (base[ID][0] !== 'null') fired++;
+          var order = [ID, IDS[0], ID, IDS[1], IDS[2], ID, IDS[3], IDS[4], IDS[5], ID, IDS[5], IDS[0], ID];
+          order.forEach(function (kind, k) { expect([n, k, kind, answer(kind)]).toEqual([n, k, kind, base[kind]]); });
+        });
+        expect(fired).toBeGreaterThan(10);
+      });
+    });
+
+    describe('law of leftovers kernel: work limit, budget and cancellation', function () {
+      var VECTOR = FIRST;
+
+      function flood() {
+        var model = board('staggered');
+        return { model: model, state: SG.model.initState(model) };
+      }
+
+      /**
+       * The work done at each check of the parent budget: a context whose k-th check throws a spent budget lets the
+       * record of the (swallowed) call tell how many units had been tried at that check.
+       */
+      function checkWorks(model, state, options) {
+        var base = SG.techniques.createContext(model, {});
+        function attempt(target) {
+          var k = 0;
+          var record = null;
+          var ctx = Object.assign({}, base, {
+            options: { onPatternWork: function (r) { record = r; } },
+            check: function () {
+              k++;
+              if (k === target) throw new SG.errors.GenerationError('budget.exceeded', { reason: 'nodes' });
+            }
+          });
+          var finding = LO.find(model, state, ctx, options);
+          return { checks: k, record: record, finding: finding };
+        }
+        var free = attempt(0);
+        var works = [];
+        for (var target = 1; target <= free.checks; target++) {
+          var spent = attempt(target);
+          expect(spent.finding).toBeNull();
+          expect(spent.record.capHit).toBeNull();
+          works.push(spent.record.work);
+        }
+        return { works: works, free: free };
+      }
+
+      it('counts from a fresh counter on every call, with a record of its own', function () {
+        var f = flood();
+        var first = call(f.model, f.state, { workLimit: UNCAPPED });
+        var second = call(f.model, f.state, { workLimit: UNCAPPED });
+        expect(first.record).toEqual({ id: ID, work: 98530, limit: UNCAPPED, capHit: null, retained: null });
+        expect(second.record).toEqual(first.record);
+        expect(second.record).not.toBe(first.record);
+        expect(first.records).toHaveLength(1);
+      });
+
+      it('has R10\'s limit of 50000 for the whole call: a flood is cut there with nothing found', function () {
+        var f = flood();
+        var out = call(f.model, f.state);
+        expect(out.finding).toBeNull();
+        expect(out.records).toEqual([{ id: ID, work: 50000, limit: 50000, capHit: 'work', retained: null }]);
+        // the other choices of the same call have used the counter by then: it is not reset per choice
+        var exact = call(f.model, f.state, { workLimit: 98530 });
+        expect(exact.record).toEqual({ id: ID, work: 98530, limit: 98530, capHit: null, retained: null });
+        expect(call(f.model, f.state, { workLimit: 98529 }).record).toEqual({
+          id: ID, work: 98529, limit: 98529, capHit: 'work', retained: null
+        });
+      });
+
+      it('never reads an unfinished enumeration as no support: every earlier cut gives no Finding', function () {
+        var model = board('crossed');
+        var state = position(model, VECTOR);
+        var full = lifted(model, state);
+        var total = full.record.work;
+        expect(full.finding).not.toBeNull();
+        // the work is the oracle's: the tries of units up to the first choice, 3 digits for the line side (three
+        // fixed cells) and 2 + 2*2 + 2*2 for the region side
+        expect(total).toBe(oracle(model, state).work);
+        for (var limit = 0; limit < total; limit++) {
+          var cut = call(model, state, { workLimit: limit });
+          expect([limit, cut.finding]).toEqual([limit, null]);
+          expect([limit, cut.record]).toEqual([limit, { id: ID, work: limit, limit: limit, capHit: 'work', retained: null }]);
+        }
+        var exact = call(model, state, { workLimit: total });
+        expect(exact.finding).toEqual(full.finding);
+        expect(exact.record).toEqual({ id: ID, work: total, limit: total, capHit: null, retained: null });
+        expect(call(model, state, { workLimit: total + 1000 }).finding).toEqual(full.finding);
+      });
+
+      it('finishes both sides before it concludes: a cut inside the second enumeration finds nothing', function () {
+        var model = board('crossed');
+        var state = position(model, VECTOR);
+        var total = lifted(model, state).record.work;
+        // The region side costs 10 tries (2 digits for R3C3, 2 x 2 for R3C8, 2 x 2 for R4C8) and comes last.
+        for (var back = 1; back <= 10; back++) {
+          var cut = call(model, state, { workLimit: total - back });
+          expect([back, cut.finding]).toEqual([back, null]);
+          expect(cut.record.capHit).toBe('work');
+        }
+        expect(call(model, state, { workLimit: total }).finding).not.toBeNull();
+      });
+
+      it('floors a fractional limit and rejects an invalid one with solver.invalidOption', function () {
+        var f = flood();
+        expect(call(f.model, f.state, { workLimit: 2.9 }).record).toEqual({
+          id: ID, work: 2, limit: 2, capHit: 'work', retained: null
+        });
+        expect(call(f.model, f.state, { workLimit: 0 }).record).toEqual({
+          id: ID, work: 0, limit: 0, capHit: 'work', retained: null
+        });
+        [-1, NaN, Infinity, -Infinity, '5', null, true, {}].forEach(function (workLimit) {
+          var err = caught(function () { call(f.model, f.state, { workLimit: workLimit }); });
+          expect([String(workLimit), err && err.code]).toEqual([String(workLimit), 'solver.invalidOption']);
+        });
+        // no option at all, or other options, mean the default
+        [undefined, null, {}, { other: 1 }].forEach(function (options) {
+          expect(call(f.model, f.state, options).record.limit).toBe(50000);
+        });
+      });
+
+      it('checks the parent budget at entry and so that at most 256 units pass between two checks', function () {
+        var f = flood();
+        var cut = checkWorks(f.model, f.state, { workLimit: 1000 });
+        expect(cut.works).toEqual([0, 256, 512, 768]);
+        expect(cut.free.checks).toBe(4);
+        // the default limit, 50000 units, ends the call after 195 checks beyond the first
+        var whole = checkWorks(f.model, f.state);
+        var expected = [];
+        for (var k = 0; k < 196; k++) expected.push(256 * k);
+        expect(whole.works).toEqual(expected);
+        // a small call has only the entry check, a larger one as many as 256-unit steps it passes
+        var model = board('crossed');
+        var small = checkWorks(model, position(model, VECTOR));
+        expect(small.works).toEqual(small.works.map(function (w, i) { return 256 * i; }));
+        expect(small.works.length).toBe(1 + Math.floor((lifted(model, position(model, VECTOR)).record.work - 1) / 256));
+        // a call that ends at its limit keeps the same cadence
+        expect(checkWorks(f.model, f.state, { workLimit: 256 }).works).toEqual([0]);
+        expect(checkWorks(f.model, f.state, { workLimit: 257 }).works).toEqual([0, 256]);
+      });
+
+      it('reports a spent budget as nothing found and lets cancellation and other errors through', function () {
+        var f = flood();
+        var parent = SG.budget.create({ nodes: 3 });
+        var spent = call(f.model, f.state, { workLimit: UNCAPPED }, { budget: parent });
+        expect(spent.finding).toBeNull();
+        expect(spent.records).toHaveLength(1);
+        // entry, 256 and 512 are the three checks the budget allows, the fourth is at 768 units
+        expect(spent.record).toEqual({ id: ID, work: 768, limit: UNCAPPED, capHit: null, retained: null });
+        // capHit null is no proof of a complete scan: the caller's budget still fails after the call
+        expect(caught(function () { parent.check(); }).code).toBe('budget.exceeded');
+
+        var budget = SG.budget.create({});
+        budget.cancel();
+        var records = [];
+        var err = caught(function () {
+          LO.find(f.model, f.state, SG.techniques.createContext(f.model, {
+            budget: budget, onPatternWork: function (r) { records.push(r); } }));
+        });
+        expect(err.code).toBe('budget.cancelled');
+        expect(records).toEqual([]);
+
+        // cancellation in the middle of the scan, and an error that is not a budget error
+        [['budget.cancelled', true], ['boom', false]].forEach(function (kind) {
+          var k = 0;
+          var seen = [];
+          var ctx = Object.assign({}, SG.techniques.createContext(f.model, {}), {
+            options: { onPatternWork: function (r) { seen.push(r); } },
+            check: function () {
+              if (++k === 3) {
+                throw kind[1] ? new SG.errors.GenerationError(kind[0], { reason: 'cancelled' }) : new Error(kind[0]);
+              }
+            }
+          });
+          var thrown = caught(function () { LO.find(f.model, f.state, ctx, { workLimit: UNCAPPED }); });
+          expect(thrown).toBeTruthy();
+          expect(kind[1] ? thrown.code : thrown.message).toBe(kind[0]);
+          expect(k).toBe(3);
+          expect(seen).toEqual([]);
+        });
+      });
+
+      it('is not fooled by a hostile or absent observer, nor by a hand-made context without options', function () {
+        var model = board('crossed');
+        var state = position(model, VECTOR);
+        var plain = JSON.stringify(lifted(model, state).finding);
+        ['not a function', null, 7, {}].forEach(function (observer) {
+          var ctx = SG.techniques.createContext(model, { onPatternWork: observer });
+          expect(JSON.stringify(LO.find(model, state, ctx, { workLimit: UNCAPPED }))).toBe(plain);
+        });
+        expect(JSON.stringify(LO.find(model, state, SG.techniques.createContext(model), { workLimit: UNCAPPED })))
+          .toBe(plain);
+        var bareContext = Object.assign({}, SG.techniques.createContext(model), { options: undefined });
+        expect(JSON.stringify(LO.find(model, state, bareContext, { workLimit: UNCAPPED }))).toBe(plain);
+      });
+    });
+
+    describe('law of leftovers kernel: inconsistent positions and the order of choices', function () {
+      it('declines the whole call at an inconsistent choice, though a later choice would remove something', function () {
+        var model = board('crossed');
+        var clash = { given: FIRST.given, open: { R3C3: '2', R3C8: '1', R4C8: '2' } };
+        var alone = expectSame(model, position(model, SECOND), 'the second choice alone');
+        expect(alone.finding).not.toBeNull();
+        var both = position(model, {
+          given: Object.assign({}, clash.given, SECOND.given),
+          open: Object.assign({}, clash.open, SECOND.open)
+        });
+        var out = expectSame(model, both, 'inconsistent first choice');
+        expect(out.finding).toBeNull();
+        expect(out.declined).toBe(true);
+      });
+
+      it('proves no inconsistency from an enumeration that was cut short, and stops at the first decline', function () {
+        var model = board('crossed');
+        var clash = { given: FIRST.given, open: { R3C3: '2', R3C8: '1', R4C8: '2' } };
+        var both = position(model, {
+          given: Object.assign({}, clash.given, SECOND.given),
+          open: Object.assign({}, clash.open, SECOND.open)
+        });
+        var full = lifted(model, both);
+        var total = full.record.work;
+        expect(full.finding).toBeNull();
+        expect(full.record).toEqual({ id: ID, work: total, limit: UNCAPPED, capHit: null, retained: null });
+        // the call ends where the decline is found: the later choice costs nothing, whatever it would hold
+        expect(total).toBe(oracle(model, both).work);
+        expect(lifted(model, position(model, clash)).record.work).toBe(total);
+        // every cut before the end is a spent limit, not a verdict on the position
+        for (var limit = 0; limit < total; limit++) {
+          var cut = call(model, both, { workLimit: limit });
+          expect([limit, cut.finding]).toEqual([limit, null]);
+          expect([limit, cut.record.capHit, cut.record.work]).toEqual([limit, 'work', limit]);
+        }
+        expect(call(model, both, { workLimit: total }).record.capHit).toBeNull();
+      });
+
+      it('counts a solved cell with its value and never lists one in its eliminations, whatever its mask holds', function () {
+        var model = board('crossed');
+        var sound = position(model, FIRST);
+        // a hand-made position that breaks the invariant of a solved cell (its candidates are its value): the masks
+        // of the three fixed cells of the line side are left wide open
+        var stale = SG.model.cloneState(sound);
+        at(model, ['R1C9', 'R2C1', 'R2C9']).forEach(function (c) { stale.candidates[c] = 511; });
+        var out = expectSame(model, stale, 'stale masks');
+        expect(out.finding).toEqual(expectSame(model, sound, 'sound masks').finding);
+        out.finding.eliminations.forEach(function (e) { expect(stale.value[e[0]]).toBe(0); });
+      });
+
+      it('scans rows before columns and lines by index: the first removing choice wins (seeded positions)', function () {
+        var classes = { n1RowBeforeN1Col: 0, ascendingRows: 0, ascendingColumns: 0 };
+        ['mixed', 'wavy', 'staggered'].forEach(function (name, b) {
+          [false, true].forEach(function (transposed) {
+            var model = board(name, transposed);
+            leftoverStates(model, 6100 + 10 * b + (transposed ? 1 : 0), 12, [0.04, 0.5]).forEach(function (item, i) {
+              var all = [];
+              oracle(model, item.state, all);
+              if (all.length < 2) return;
+              var out = lifted(model, item.state).finding;
+              var first = all[0];
+              expect([name, transposed, i, out.i18nArgs.lines, out.i18nArgs.regions])
+                .toEqual([name, transposed, i, first.lines, first.regions]);
+              var has = function (n, kind) { return all.some(function (x) { return x.n === n && x.kind === kind; }); };
+              if (first.n === 1 && first.kind === 'row' && has(1, 'col')) classes.n1RowBeforeN1Col++;
+              var sameKind = all.filter(function (x) { return x.n === first.n && x.kind === first.kind; });
+              if (sameKind.length > 1 && first.kind === 'row') classes.ascendingRows++;
+              if (sameKind.length > 1 && first.kind === 'col') classes.ascendingColumns++;
+              if (sameKind.length > 1) {
+                // lines ascend: the first choice has the lowest line (by unit index) of those of its kind and size
+                var index = function (x) { return model.unitMeta.findIndex(function (m) { return m.label === x.lines[0]; }); };
+                sameKind.forEach(function (x) { expect(index(first)).toBeLessThanOrEqual(index(x)); });
+              }
+            });
+          });
+        });
+        Object.keys(classes).forEach(function (key) { expect([key, classes[key] > 0]).toEqual([key, true]); });
+      });
+
+      it('scans one unit before two and rows before columns on the board `ordered`', function () {
+        var model = board('ordered');
+        var solution = J.solve(model, SG.testkit.rng.create(88));
+        expect(validSolution(model, solution)).toBe(true);
+        // each listed cell keeps its digit and one more, everything else is fixed to the solution, so that every
+        // choice with such a cell as a side cell removes the extra digit
+        function opened(refs) {
+          var open = {};
+          refs.forEach(function (ref) {
+            var digit = solution[H.cell(model, ref)];
+            open[ref] = String(digit) + String(digit % 9 + 1);
+          });
+          return solved(model, solution, open);
+        }
+        function order(refs) {
+          var all = [];
+          var state = opened(refs);
+          oracle(model, state, all);
+          var first = lifted(model, state).finding;
+          expect([first.i18nArgs.lines, first.i18nArgs.regions]).toEqual([all[0].lines, all[0].regions]);
+          return all.map(function (x) { return x.lines.join('+') + ' ' + x.regions.join('+'); });
+        }
+        // R5C7 lies in the choice of C9 with J3 (one column), R3C3 in the choice of R1+R2 with J1+J2, R8C7 in the
+        // choice of C8+C9 with J3+J8 (two columns); R5C7 lies in that last choice too
+        expect(order(['R3C3', 'R5C7'])).toEqual(['C9 J3', 'R1+R2 J1+J2', 'C8+C9 J3+J8']);
+        expect(order(['R3C3', 'R8C7'])).toEqual(['R1+R2 J1+J2', 'C8+C9 J3+J8']);
+        expect(order(['R8C7'])).toEqual(['C8+C9 J3+J8']);
+      });
+    });
+
+    // LEFTOVER-TESTS-END
+  })();
 })();

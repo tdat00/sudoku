@@ -29,7 +29,7 @@ sudoku/
 | `core/js/ui/` | `exchange` (the puzzle link and token format between the two apps), `wordbook`, `symbols`, `board-view` (the SVG board) | both |
 | `core/css/` | `tokens.css` and `tokens-board.css` (the design tokens, three themes), `base.css`, `board.css` | both |
 | `core/assets/wordbook/` | `words.en.js`, `words.vi.js`: spelling and meaning of each Wordoku key word | both |
-| `core/tests/` | `harness.js` (the test harness), `node-evidence.js` (Node only, in no source list: the runners' `--list-tests`, `--exact` and `--results` evidence files), `fixtures/` (puzzles with known answers, the technique helper, `testkit.js`, `chain-proofs.js`: the independent checker `SG.chainProofs` of the inactive grouped chain graph), `suites/` (16 suites: the engine, the technique ladder, the exchange format, the board view, the harness itself) | run by both apps' test runners |
+| `core/tests/` | `harness.js` (the test harness), `node-evidence.js` (Node only, in no source list: the runners' `--list-tests`, `--exact` and `--results` evidence files), `fixtures/` (puzzles with known answers, the technique helper, `testkit.js`, `chain-proofs.js`: the independent checker `SG.chainProofs` of the inactive grouped chain graph, `jigsaw-models.js`: the test-only irregular layouts and builder `SG.fixtures.jigsawModels` of the inactive leftover kernel's tests), `suites/` (16 suites: the engine, the technique ladder, the exchange format, the board view, the harness itself) | run by both apps' test runners |
 
 `core` knows nothing about either app. It has no DOM access in `core/js/engine/` (it runs in a page, a Web Worker and
 Node), no variant names, and no URL or storage access outside functions called at run time.
@@ -110,7 +110,7 @@ Until the merge the apps lived in two repositories, `sudoku-generator` and `sudo
 | `css/tokens.css` `tokens-board.css` `base.css` `board.css` | `core/css/` |
 | the other `css/*.css`, `assets/favicon.svg`, `assets/wordlists/` | `generator/…` or `player/…` |
 | `assets/wordbook/` | `core/assets/wordbook/` |
-| `tests/harness.js`, `tests/fixtures/classic.js` `techniques.js` `techniques-helper.js` `chain-proofs.js`, and the suites `bits constraints solver logical-solver model techniques tech-* exchange symbols board-view wordbook` | `core/tests/` |
+| `tests/harness.js`, `tests/fixtures/classic.js` `techniques.js` `techniques-helper.js` `chain-proofs.js` `jigsaw-models.js`, and the suites `bits constraints solver logical-solver model techniques tech-* exchange symbols board-view wordbook` | `core/tests/` |
 | the other `tests/…` | `generator/tests/…` or `player/tests/…` |
 | `docs/` of either repository | [`docs/`](README.md), by feature |
 | `README.md` of either repository (later `generator/README.md`, `player/README.md`) | the user guide ([`USERGUIDE.md`](../USERGUIDE.md), [`USERGUIDE.vn.md`](../USERGUIDE.vn.md)) and the developer guide ([`DEVELOPERGUIDE.md`](../DEVELOPERGUIDE.md), [`DEVELOPERGUIDE.vn.md`](../DEVELOPERGUIDE.vn.md)) at the root, one part per app |
