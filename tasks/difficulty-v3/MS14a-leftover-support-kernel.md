@@ -2,10 +2,10 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS13b accepted; sole inactive run-ahead during the GC-01 wait |
+| Depends on | MS13b accepted; inactive preparation before MS13c |
 | Size / active time | Medium; 50-60 minutes plus current-source E recording/checks |
 | Owner / milestone | Shared subset engine/tests; M14a |
-| Authority | R10/R17; IR72 inactive E closure; SA2 GC-01 scheduling exception below |
+| Authority | R10/R17; IR72 inactive E closure; SA2 scheduling and execution rulings below |
 | Status | Not started |
 
 ## Goal & business context
@@ -20,12 +20,13 @@ AGENTS/checklist, no Git/pack/log writes, classic core, CRLF, no Generator depen
 
 ### Serial run-ahead during GC-01 — SA2, 2026-11-17
 
-This is the **only** later task permitted before the GC-01 answer. The current accepted
-implementation boundary is MS13b (`55d11ee`); intervening pack-only commits do not change its
+This was the **only** later task permitted before the GC-01 answer. The owner has now selected
+A under S-OD11, recorded in pack-only commit `88fe324`; this changes no MS14a kernel requirement.
+The accepted implementation boundary is MS13b (`55d11ee`); intervening pack-only commits do not change its
 engine, fixtures or quick inventory. Use the actual dispatch HEAD, not an imaginary accepted
-MS13c source. The sequence is **MS13b -> MS14a -> MS13c (GC-01 answered) -> MS14b -> MS14c**.
-Complete this task's evidence, review and commit before any next developer starts, including
-if the owner answers while it is running. If GC-01 remains unanswered afterwards, wait.
+MS13c source. The sequence is **MS13b -> MS14a -> MS13c (S-OD11) -> MS14b -> MS14c**.
+Complete this task's evidence, review and commit before any next developer starts; the owner
+answer does not preempt it or permit another writer.
 
 The kernel needs only existing model/bit/unit APIs, not grouped chains or a GC-01 choice.
 Keep it unregistered and unreachable from normal solves, ratings, generation and hints.
@@ -94,6 +95,87 @@ Tests: singleton side {5} vs candidates {5,7} forces removal 7; multiset {1,1,2}
 fixed values remain in signatures; transpose; mismatched unit counts; overlapping/partial sides.
 Baseline `core/js/engine/tech-subset.js:195-239` (`function findSubset` / registrations).
 
+### SA2 execution rulings — 2026-11-17
+
+These settle the two pre-closure questions. Both implemented defaults are accepted; the kernel
+stays unregistered, its limits stay 2/4/50,000, and all final gates remain to be completed.
+
+1. **Finding fields: accept (a), with these exact semantics.**
+
+   | Field | Binding meaning and order |
+   |---|---|
+   | `Finding.cells` | The distinct union of both difference sides after cancelling shared cells, ascending by numeric cell index. Include fixed leftover cells and leftover cells with no elimination; do not include the cancelled intersection merely because it belonged to a chosen unit. |
+   | `i18nArgs.cells` | Labels of those same cells in that same order, using the model's cell-label API. |
+   | `i18nArgs.digits` | Distinct **removed** digits from `Finding.eliminations`, ascending, as numeric 1-based values. Not a matching signature, its digit set, or a multiset common to all surviving assignments. |
+   | `i18nArgs.lines`, `i18nArgs.regions` | `unitMeta.label` for each chosen unit, ordered within each list by its numeric unit index. Do not sort the label strings lexically or collapse distinct units merely because their displayed labels match. |
+   | `Finding.eliminations` | Actual unsupported open-cell candidates, unique and sorted by cell index, then digit. `placements` stays empty. |
+
+   Every published array is owned by the Finding, not borrowed mutable selection/support
+   scratch. Keep the existing `{lines, regions, cells, digits}` shape; no per-side field or
+   fabricated single matching multiset is needed. MS14b receives this semantic contract
+   with the unchanged kernel. Its explanation must not call `digits` the digits shared by
+   the sides, nor imply that every listed digit is removed from every listed proof cell.
+   The exact per-cell action remains `eliminations`.
+   Keep the existing singleton vector (`digits:[7]` when matching support is `{5}`),
+   fixed-cell, multiset, field-by-field agreement, ordering and ownership assertions.
+
+2. **Empty signature intersection: accept (a), whole-call decline.** At the first evaluated
+   eligible choice for which **both required enumerations completed** and their signature
+   intersection is empty, terminate the call with null. Do not skip that inconsistency to
+   find a later elimination, remove every candidate, or emit a contradiction/placement.
+   Keep `LEFTOVER_DECLINED` (or its explicit whole-call equivalent) distinct from an
+   ordinary no-elimination choice.
+
+   The reason is structural: each selection consists of the same number of disjoint
+   complete units, so its two leftover sides must have equal digit multisets. The two
+   within-side enumerations over-approximate the restrictions of every full solution.
+   If their complete signature sets cannot meet, the **supplied candidate state** has no
+   completion satisfying that choice's required constraints. Additional cross-side rules
+   cannot repair an already-empty intersection. This is not a claim that the original
+   givens alone are unsatisfiable; incorrect candidate masks can be the source of the conflict.
+
+   This is an encountered-inconsistency rule, not a new whole-position validation pass.
+   Do not scan otherwise ineligible/no-op choices, or continue beyond an earlier first
+   valid Finding, merely to certify global consistency. Conversely, an incomplete/capped
+   enumeration supplies **no** empty-intersection proof: return null under the existing
+   exhaustion/budget contract without declaring inconsistency. Retain the existing `crossed`
+   regression whose first choice is inconsistent while its later choice would remove
+   something, and the separate complete-negative, truncation and budget cases.
+
+### Interrupted development run — evidence correction, not a new gate
+
+The manually entered `MS14a dev tech-subset leftovers 5` row in `lock-log.jsonl` already identifies
+itself as hand-entered and keeps exit/node/wait values null. Keep that honest incident record;
+it is not a fabricated automated pass. Add a short incident account in the task's existing
+evidence report with the following:
+
+- The interrupted command/filter, available source/test revision and transcript/tool-session
+  reference; observed stop around 85 seconds, separately from any inferred cause.
+- The tool/session or process IDs and termination evidence for the owned process tree, and
+  the basis for identifying `dv3-sudoku.lock` as this task's stale lock before removing it.
+  Preserve available partial output. If an identity, exact time or cleanup check was not
+  recorded, mark it unknown/unverified; do not invent it or infer absence of overlap from
+  the missing lock file alone.
+- Classify the run as **manually aborted/incomplete**, not passed, not a 540-second timeout,
+  and not a solver verdict. Confirm that no partial result entered published evidence.
+  Keep the manual incident separate when aggregating automatic completed-run/node-time
+  totals: null is unknown, not zero, and approximately 85 seconds is not a measured Node duration.
+- Record the fixture-construction change to the restarting test solver, not a claimed finder
+  speedup. Re-run the affected coverage and full mutation set on final source under the
+  normal helper as already required; do not rerun the abandoned slow source solely to recreate
+  an automatic log. No lock-helper redesign or blanket stale-lock deletion is authorized.
+
+No owner stop is needed merely because an interrupted development run needs a labelled manual
+record. Any actual evidence contamination, foreign/live-lock removal or unresolved overlap
+affecting claimed final measurements must instead be reported to the orchestrator and resolved
+before acceptance; it is not waived by this ruling.
+
+**Bookkeeping:** `88fe324` is committed, not an uncommitted MS14a change. Retain `bc3450c` as
+the developer's start base, name intervening pack-only commits accurately, and use fresh Git
+status and final source identities in the report. S-OD11 resolves GC-01 without changing this
+task's scope; S-AV36 remains open for later measurements/audit. This ruling is not acceptance
+of the implementation: the orchestrator still reviews the completed task and its final gates.
+
 ## Files to create/modify
 
 - `core/js/engine/tech-subset.js`, `core/tests/suites/tech-subset.test.js`.
@@ -142,7 +224,8 @@ MS14b receives a complete-support, inactive scoped kernel and model-building hel
 best-effort absence heuristic, and cannot register it before MS13c acceptance. MS13c receives
 this task's accepted source, unchanged canonical-output proof, full E/GH ledger/check paths,
 current quick counts/fingerprints/costs/CI projections and inherited/new item list (including
-the still-open GC-01/S-AV36 handoff). No further run-ahead is inferred if the owner is still absent.
+resolved GC-01/S-OD11 and the still-open S-AV36 measurement/audit handoff). No further run-ahead
+is authorized; MS13c follows this task's accepted/committed boundary.
 
 ## Resume rules — S-OD4
 
