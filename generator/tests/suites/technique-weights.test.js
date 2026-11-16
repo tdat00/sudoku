@@ -162,6 +162,34 @@
         expect(D.spec('hard', model).floorTechniques).not.toContain('finnedXWing');
       });
 
+    it('places remotePairs between twoStringKite and simpleColouring: order 116, weight 350, a Hard-tier ' +
+      'technique (R13 with RP-01 / S-OD9)', function () {
+        var model = SG.techHelper.model('classic9');
+        expect([SG.techniques.get('remotePairs').order, D.WEIGHTS.remotePairs]).toEqual([116, 350]);
+        expect(SG.techniques.get('remotePairs').baseCost).toBe(35);
+        expect(SG.techniques.get('remotePairs').group).toBe('wing');
+        expect(position('twoStringKite')).toBeLessThan(position('remotePairs'));
+        expect(position('remotePairs')).toBeLessThan(position('simpleColouring'));
+        expect(position('remotePairs')).toBeLessThan(position('xyWing'));
+        // the order follows the weight: the neighbours are 114 / 340 and 120 / 360
+        expect([SG.techniques.get('twoStringKite').order, D.WEIGHTS.twoStringKite]).toEqual([114, 340]);
+        expect([SG.techniques.get('simpleColouring').order, D.WEIGHTS.simpleColouring]).toEqual([120, 360]);
+        expect(D.WEIGHTS.twoStringKite).toBeLessThan(D.WEIGHTS.remotePairs);
+        expect(D.WEIGHTS.remotePairs).toBeLessThan(D.WEIGHTS.simpleColouring);
+        // its own weight decides the hardest technique, no tie is needed
+        expect(D.breakdown({ twoStringKite: 1, remotePairs: 1 }, 10).hardest).toBe('remotePairs');
+        expect(D.breakdown({ remotePairs: 1, simpleColouring: 1 }, 10).hardest).toBe('simpleColouring');
+        // 1.25 x 350 = 437.5 is above Normal's maximum (400) and below Hard's (700)
+        expect(D.spec('normal', model).allowedTechniques).not.toContain('remotePairs');
+        expect(D.spec('hard', model).allowedTechniques).toContain('remotePairs');
+        expect(D.spec('hard', model).tierTechniques).toContain('remotePairs');
+        expect(D.spec('expert', model).floorTechniques).toContain('remotePairs');
+        expect(D.spec('hard', model).floorTechniques).not.toContain('remotePairs');
+        // the wing group enters the Hard tier with it; xyWing (812.5) and the rest stay above Hard's maximum
+        expect(D.spec('hard', model).allowedGroups).toContain('wing');
+        expect(D.spec('hard', model).allowedTechniques).not.toContain('xyWing');
+      });
+
     it('places finnedSwordfish between swordfish and jellyfish: order 134, weight 480, a Hard-tier technique ' +
       '(R12)', function () {
         var model = SG.techHelper.model('classic9');

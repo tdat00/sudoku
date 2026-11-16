@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS10a\check-format.cjs
+checked 82 files, 0 with problems
+exit=0 seconds=0.289

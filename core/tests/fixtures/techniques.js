@@ -29,7 +29,7 @@
  * an ID's fixtures from now on without touching a v2 position. A later technique adds its entry to CURRENT,
  * built from explicit `after` lists or an initial real puzzle state. MS07b replaces the four chain IDs
  * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way; MS08a adds skyscraper,
- * MS08b twoStringKite, MS08c emptyRectangle, MS09a finnedXWing and MS09b finnedSwordfish.
+ * MS08b twoStringKite, MS08c emptyRectangle, MS09a finnedXWing, MS09b finnedSwordfish and MS10a remotePairs.
  */
 (function () {
   'use strict';
@@ -46,14 +46,15 @@
   ];
 
   /**
-   * The 28 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
-   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the seven
+   * The 29 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
+   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the eight
    * techniques added since: skyscraper (MS08a), twoStringKite (MS08b), emptyRectangle (MS08c), finnedXWing
-   * (MS09a), finnedSwordfish (MS09b) and the two chain windows forcingChainLong and nishioDeep (MS07b).
+   * (MS09a), remotePairs (MS10a), finnedSwordfish (MS09b) and the two chain windows forcingChainLong and
+   * nishioDeep (MS07b).
    */
   var REGISTRY_ORDER = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
-    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite',
+    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite', 'remotePairs',
     'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'finnedSwordfish', 'jellyfish', 'xyWing',
     'xyzWing', 'wWing', 'uniqueRectangle', 'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep'
   ];
@@ -756,7 +757,7 @@
    */
   var BELOW_CHAINS = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
-    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite',
+    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite', 'remotePairs',
     'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'finnedSwordfish', 'jellyfish', 'xyWing',
     'xyzWing', 'wWing', 'uniqueRectangle'
   ];
@@ -779,9 +780,14 @@
   var BELOW_KITE = THROUGH_SKYSCRAPER.slice();
   var THROUGH_KITE = BELOW_KITE.concat(['twoStringKite']);
 
-  // Where emptyRectangle is reached (MS08c): the techniques before it in the registry (through simpleColouring),
-  // and the same plus itself.
-  var BELOW_ER = THROUGH_KITE.concat(['simpleColouring']);
+  // Where remotePairs is reached (MS10a, order 116 under RP-01): the techniques before it in the registry (through
+  // twoStringKite), and the same plus itself.
+  var BELOW_RP = THROUGH_KITE.slice();
+  var THROUGH_RP = BELOW_RP.concat(['remotePairs']);
+
+  // Where emptyRectangle is reached (MS08c): the techniques before it in the registry (through simpleColouring,
+  // which follows remotePairs since MS10a), and the same plus itself.
+  var BELOW_ER = THROUGH_RP.concat(['simpleColouring']);
   var THROUGH_ER = BELOW_ER.concat(['emptyRectangle']);
 
   // Where finnedXWing is reached (MS09a): the techniques before it in the registry (through emptyRectangle), and
@@ -878,9 +884,30 @@
   var FSF_SPARE = '.6.8..2....36...8.9....3.4.5.278........6.59.7.......2.3.5......57.1.6.....3.7...';
   var FSF_ORDINARY = '32.7.......6219..5..9.8..........1.6......87.8...5..3..7.8.5...5.896.....3.......';
 
+  // Real unique puzzles of the remotePairs fixtures (MS10a), the puzzles of the seeded corpus of
+  // H.randomStatesWithKnownSolution(classic9, seed 777) (dug by SG.testkit.dig, unique by construction), named by
+  // their index in it. The positives are first positions (after: null, singles used up), like the rare quads and the
+  // jellyfish of the v2 fixtures: they are direct-finder evidence. At the registered order 116 (RP-01 / S-OD9) the
+  // registry does reach a remote pair, but rarely: 51 of 30,000 dug puzzles of seed 4242 hold one at the position below
+  // it and 45 of 20,000 complete solves use it (the normal-hint example of the help catalogue is the first of them,
+  // MS10a evidence). RP_FIRST is puzzle 12 (digit pair 4 and 6, the chain R5C2, R5C3, R9C3, R9C6 of three edges, R5C6
+  // has no 6 and loses the 4); RP_LONG is puzzle 512 (digit pair 6 and 7, six cells and five edges R3C7 ... R7C4,
+  // R7C7 loses both). RP_SECOND, RP_THIRD and RP_FOURTH (puzzles 774, 22 and 100) are three more
+  // real positions for the soundness supplements (a chain of five edges and two of three). V2_PUZZLE_1 (above) is the
+  // negative whose position before nakedPair has a naked pair and no remote pair; COLOURING (above) the negative whose
+  // position through remotePairs has nothing left for it.
+  var RP_FIRST = '..5..9..2.8.....4.4..8..76.327..8.9....9..81.......6......1....1.25.....95.3.....';
+  var RP_LONG = '..5.6..2.24...1....134.9......5..3....127..6.....1.5..4....8..1......8..9....5...';
+  var RP_SECOND = '....149....6.2.75....8......4.7.....3............8..6.2....3.18.9.2..4...7.....3.';
+  var RP_THIRD = '......4.9.76.9.......84.7....2......3...69..4....1568..8.5..1..6.9......1....8...';
+  var RP_FOURTH = '..8....1.3...12..5..5...874...48...3.9.1..5..4.6.7.....8...7.2.1........7.3......';
+  // The position before nakedPair: the singles and the locked candidates.
+  var BEFORE_NAKED_PAIR = BELOW_SKYSCRAPER.slice(0, BELOW_SKYSCRAPER.indexOf('nakedPair'));
+
   /**
    * Current fixtures that replace a historical entry or belong to an ID registered since (skyscraper, MS08a;
-   * twoStringKite, MS08b; emptyRectangle, MS08c; finnedXWing, MS09a; finnedSwordfish, MS09b), in the shape of the
+   * twoStringKite, MS08b; emptyRectangle, MS08c; finnedXWing, MS09a; finnedSwordfish, MS09b; remotePairs, MS10a), in
+   * the shape of the
    * entries of the map. The short chain fixtures have at most 4 links, so that they are forcingChain's under C = 4
    * and C = 6 alike. The long ones are the 5- and 6-link shortest proofs of two dug puzzles: forcingChainLong's
    * under the selected C = 4 (MS07c; under C = 6 they would be forcingChain's). The negatives include positions
@@ -888,6 +915,46 @@
    * forcingChain's.
    */
   var CURRENT = {
+    remotePairs: {
+      positive: [
+        {
+          name: 'remotePairs on 4 and 6, a chain of three edges R5C2 ... R9C6, R5C6 loses the 4 (a seeded dug puzzle, ' +
+            'first position)',
+          puzzle: RP_FIRST,
+          after: null,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[41, 4]]
+          }
+        },
+        {
+          name: 'remotePairs on 6 and 7, a chain of five edges R3C7 ... R7C4, R7C7 loses both (a seeded dug puzzle, ' +
+            'first position)',
+          puzzle: RP_LONG,
+          after: null,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[60, 6], [60, 7]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'remotePairs has nothing left to do once the techniques through it are exhausted',
+          puzzle: COLOURING,
+          after: THROUGH_RP,
+          propagate: true
+        },
+        {
+          name: 'remotePairs leaves a naked pair (two cells of a pair in one unit) to nakedPair',
+          puzzle: V2_PUZZLE_1,
+          after: BEFORE_NAKED_PAIR,
+          propagate: true
+        }
+      ]
+    },
     skyscraper: {
       positive: [
         {
@@ -1276,9 +1343,19 @@
    * (144 firings in the 300 of the sweep), so its three real positions are added on top in the same way. MS09a:
    * finnedXWing fires in more than half of them, so its three real positions (two positives and a spare) are added
    * on top in the same way. MS09b: finnedSwordfish fires in nearly all of them (281 of the 300), and its three real
-   * positions are added on top in the same way.
+   * positions are added on top in the same way. MS10a: remotePairs is rare (6 firings in the 300 random states,
+   * against the minimum of 3), so its three real positions, all first positions, are added on top, and its fixtures
+   * are explicit first positions too.
    */
   var SUPPLEMENTS = {
+    remotePairs: [
+      { name: 'remotePairs on 5 and 6, a chain of five edges (a seeded dug puzzle, first position)',
+        puzzle: RP_SECOND, after: null, propagate: true },
+      { name: 'remotePairs on 2 and 5, a chain of three edges (a second seeded dug puzzle, first position)',
+        puzzle: RP_THIRD, after: null, propagate: true },
+      { name: 'remotePairs on 6 and 9, a chain of three edges (a third seeded dug puzzle, first position)',
+        puzzle: RP_FOURTH, after: null, propagate: true }
+    ],
     skyscraper: [
       { name: 'skyscraper on rows (constructed-hard-1)', puzzle: SKY_ROWS, after: BELOW_SKYSCRAPER,
         propagate: true },

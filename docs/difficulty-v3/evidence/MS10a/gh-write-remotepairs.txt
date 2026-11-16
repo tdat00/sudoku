@@ -1,0 +1,13 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=remotePairs --sources=tests\artifacts\difficulty-v3\MS10a\sources.json --max-puzzles=8 --max-hints=400 --write
+selected 1 technique ID(s); mode write
+replaying 8 puzzle(s) for 1 ID(s) (--max-puzzles=8, --max-hints=400)
+puzzle 1/8 classic9 - testkit-4242-254 -> 66 hint(s), solved; wanted found: remotePairs
+puzzle 2/8 classic9 - testkit-4242-1758 -> 66 hint(s), solved; wanted found: remotePairs
+puzzle 3/8 classic9 - testkit-4242-1810 -> 69 hint(s), solved; wanted found: remotePairs
+puzzle 4/8 classic9 - testkit-4242-2202 -> 67 hint(s), solved; wanted found: remotePairs
+puzzle 5/8 classic9 - testkit-4242-2250 -> 68 hint(s), solved; wanted found: remotePairs
+puzzle 6/8 classic9 - testkit-4242-3916 -> 64 hint(s), solved; wanted found: remotePairs
+puzzle 7/8 classic9 - testkit-4242-3928 -> 75 hint(s), solved; wanted found: remotePairs
+puzzle 8/8 classic9 - testkit-4242-4533 -> 48 hint(s), solved; wanted found: remotePairs
+wrote player/js/ui/help-examples.js (34 examples; 1 selected: remotePairs; the others kept)
+exit=0 seconds=0.542

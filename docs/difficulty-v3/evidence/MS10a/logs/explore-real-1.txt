@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS10a\explore-real.js
+puzzle strings: 108; techniques before remotePairs: nakedSingle hiddenSingleBox hiddenSingleLine pointing boxLine nakedPair hiddenPair nakedTriple hiddenTriple nakedQuad hiddenQuad xWing skyscraper twoStringKite simpleColouring emptyRectangle finnedXWing swordfish
+unique puzzles 106, positions with a remote pair 0
+exit=0 seconds=0.259

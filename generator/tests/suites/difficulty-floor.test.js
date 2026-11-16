@@ -280,7 +280,8 @@
       expect(hard.minClues).toBe(25);
       expect(hard.maxClues).toBe(30);
       expect(hard.minCluesPerUnit).toBe(1);
-      expect(hard.allowedGroups).toEqual(['basic', 'locked', 'subset', 'fish']);
+      // the wing group joined the Hard tier with remotePairs (weight 350, MS10a); xyWing and the rest start at Expert
+      expect(hard.allowedGroups).toEqual(['basic', 'locked', 'subset', 'fish', 'wing']);
       expect(hard.allowedTechniques).toEqual(allowed(3, 'classic9'));
       expect(hard.symmetryDefault).toBe('rotational180');
       expect(hard.extraPasses).toBe(1);

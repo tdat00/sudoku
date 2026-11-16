@@ -1,0 +1,29 @@
+$ node tests\artifacts\difficulty-v3\MS10a\explore-dug.js 4242 30000 0 below
+explore-dug: seed 4242, puzzles 30000 from 0, mode below, model classic9, cutoff = order of remotePairs = 116, prefix of 14 techniques (nakedSingle hiddenSingleBox hiddenSingleLine pointing boxLine nakedPair hiddenPair nakedTriple hiddenTriple nakedQuad hiddenQuad xWing skyscraper twoStringKite), print limit 25
+#1758 6....29...5....1....27.1..3...34..5.1.76.....3....7........5..7.......2...1.3.... length 5 ends R5C9,R8C3 digits 89 cells R4C1 R4C6 R5C6 R5C9 R7C1 R8C3 elim R8C9-8 R8C9-9 work 51
+#1810 1....59.7.3.8..5............9.3..6...8......1..6.1.2.8.....9.1.....2......265.83. length 3 ends R6C6,R8C2 digits 47 cells R6C6 R8C2 R9C1 R9C6 elim R6C2-4 R6C2-7 work 31
+#2202 ...9...3..3...52.9..1.2..7.4..3............839..57...461.2....5.5.........2...4.. length 3 ends R2C4,R9C2 digits 78 cells R2C1 R2C4 R8C1 R9C2 elim R9C4-7 work 21
+#2250 ..32...4......49.....3....29....3.7.....2..1.38....52.6..1........68.7..5.1.92... length 3 ends R1C7,R5C6 digits 68 cells R1C7 R3C6 R3C8 R5C6 elim R5C7-6 R5C7-8 work 15
+#3916 ......2.3....87...368...9...32.9....7....265..............25...4......71.8.7.35.. length 5 ends R2C7,R7C4 digits 14 cells R1C2 R1C5 R2C3 R2C7 R7C4 R9C5 elim R7C7-4 work 61
+#4533 ...3.698.3....5.46........5.6..9..3..42..3.5857.8..6944..1..5.3.1.4..8..8362.74.9 length 5 ends R1C1,R2C7 digits 27 cells R1C1 R2C7 R4C7 R4C9 R8C1 R8C9 elim R2C2-2 work 29
+#5648 9..4......723......8....51.............7.3.......2687.45...7......64...9..3.8...2 length 5 ends R2C1,R8C6 digits 15 cells R1C3 R2C1 R6C3 R6C4 R8C6 R9C4 elim R2C6-1 R2C6-5 R8C1-1 work 22
+#6250 .25...4..3.....5.....6...7.73..2.....4...9.26...471...4....2.3..7.....8..6..1.... length 3 ends R4C7,R9C1 digits 89 cells R4C3 R4C7 R7C3 R9C1 elim R9C7-9 work 26
+#6420 9..8...4.1..7....6.....4.2..........68...2..3..31...74.3.....18.7.4......6....9.. length 3 ends R4C3,R7C4 digits 25 cells R4C3 R6C1 R7C1 R7C4 elim R4C4-5 work 12
+#7050 ..8.....776.5....3.....2.........1...3.95.27.5..46.3.........6.4.1..3..8..57..... length 3 ends R1C5,R9C7 digits 49 cells R1C5 R2C6 R9C6 R9C7 elim R1C7-9 work 16
+#7538 ...869.3.........18.6......4...3.1...18.2...63..6..5..14.39.7......849..........4 length 5 ends R3C8,R4C3 digits 57 cells R1C2 R1C9 R2C1 R3C8 R4C3 R5C1 elim R4C8-7 work 72
+#7973 49.8..35......4.6.5......18.4.95.78.....6.149.........8..........1...23.75..4.... length 3 ends R3C2,R5C4 digits 23 cells R2C1 R3C2 R5C1 R5C4 elim R3C4-2 work 28
+#8010 .9.6.......29..4....4...13...3.....5....7.38.9...2....2....4.....9..7..17.....528 length 3 ends R2C6,R8C1 digits 58 cells R2C6 R3C5 R8C1 R8C5 elim R2C1-5 R2C1-8 work 16
+#8546 .3...98..9...5...3.....2.71..5........8.1...9.6.....8.5.......21....7.3...24...5. length 3 ends R2C7,R5C6 digits 46 cells R1C8 R2C7 R5C6 R5C8 elim R2C6-4 R2C6-6 work 20
+#8670 9...2...721.9............9...57..48..8.....69....39......3......7...28.6..8..6.1. length 5 ends R2C5,R3C9 digits 45 cells R2C5 R3C9 R5C5 R5C6 R7C6 R7C9 elim R2C8-4 R2C8-5 R3C4-4 R3C4-5 work 32
+#8888 .1....8....2..63.4....71.6...4...6.9.754....3.8...............119...4.76.....7... length 7 ends R1C6,R6C5 digits 25 cells R1C4 R1C6 R3C7 R3C9 R6C5 R6C9 R8C4 R8C7 elim R4C6-5 R5C6-2 work 36
+#8974 ......5...2..8......8....93...5..1....3..7..29.......87...68...8.9..4.7.....1...4 length 5 ends R3C1,R8C2 digits 16 cells R1C4 R1C9 R3C1 R3C4 R8C2 R8C9 elim R9C1-6 work 22
+#9068 .3.8...171.9...58.....9...2..3.............58..6..2.43...1.5...2..78.......9..7.. length 3 ends R1C1,R7C9 digits 46 cells R1C1 R2C2 R2C9 R7C9 elim R7C1-4 R7C1-6 work 24
+#11112 5........3..6.758..8...2.3..1...6..86...35.....3..4.....4..37.....2...4....9...5. length 5 ends R4C8,R7C2 digits 29 cells R4C5 R4C8 R5C2 R6C1 R6C5 R7C2 elim R7C8-2 R7C8-9 work 24
+#12892 .....9..8.63.7.2....2...5.678...4.....6......1...3...2....1.9.7.9........1..456.. length 5 ends R6C2,R7C8 digits 45 cells R1C1 R1C2 R6C2 R7C3 R7C8 R8C1 elim R6C8-5 work 28
+#13670 ..5..6..2...8....1.68.2.........381.....1..7.45..........6..93..36.78.2..2....... length 3 ends R4C4,R9C8 digits 45 cells R4C4 R4C9 R8C9 R9C8 elim R9C4-5 work 24
+#14819 43.56..2..1.3....85....1....4.6....23.6.29..59...1..43..1..6..4.....2....64.53.9. length 5 ends R1C6,R4C8 digits 78 cells R1C3 R1C6 R3C2 R4C8 R5C2 R5C7 elim R4C6-7 R4C6-8 work 34
+#15488 7.3....582...6.......1.........5..3..6.81..2...29..5......91.4242......96..4..3.. length 5 ends R2C6,R7C3 digits 78 cells R2C6 R3C5 R7C3 R7C7 R8C5 R8C7 elim R2C3-8 work 38
+#16108 8.53.......61.27...73.6.....3......44......16......5......7....5.....43.....95.68 length 3 ends R3C1,R9C7 digits 12 cells R1C2 R3C1 R9C2 R9C7 elim R3C7-2 work 12
+#16314 7.5...4.1.......7.94....6..38..49.....1.2.......61.59.....9.7.2..7..5....6.....1. length 3 ends R1C8,R6C6 digits 38 cells R1C8 R3C9 R6C6 R6C9 elim R1C6-3 R1C6-8 work 18
+seed 4242 puzzles 30000 (from 0): attempted 30000, fully solved by the prefix 20581, 51 positions with a remote pair (0.170 % of the attempted), 24.3 s
+exit=0 seconds=24.634

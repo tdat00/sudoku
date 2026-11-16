@@ -1,0 +1,104 @@
+$ node tests\node-runner.js --suite=i18n,ui-contract,help,help-example-tools,play
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+FAIL help-example-tools: 41 passed, 10 failed  (3.07 s)
+FAIL help: 21 passed, 6 failed  (1.51 s)
+ok   i18n: 66 passed  (117 ms)
+ok   play: 68 passed  (185 ms)
+ok   ui-contract: 62 passed  (146 ms)
+
+Failures:
+  FAIL help-example-tools > help example tools: the snapshot of a Jigsaw puzzle > adds no cellRegion to any other variant, and its examples are the same data as the saved ones
+       TypeError: Cannot use 'in' operator to search for 'cellRegion' in undefined
+       at Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:436:62
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:436:18)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL help-example-tools > help example tools: the snapshot of a Jigsaw puzzle > replays the real source into a Jigsaw example that the writer accepts and the header documents
+       AssertionError: expected false to be true
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:458:25)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL help-example-tools > help example tools: the catalogue > is exactly the saved js/ui/help-examples.js, so a rewrite of unchanged data changes nothing
+       AssertionError: expected "/**\n * A concrete example for every technique of the guide (help.html): `SG.helpExamples[id]`. The data is a\n * snaps..." to be "/**\n * A concrete example for every technique of the guide (help.html): `SG.helpExamples[id]`. The data is a\n * snaps..."
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:508:69)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL help-example-tools > help example tools: the catalogue > merges the selected examples into the saved catalogue and keeps every other ID as it was
+       AssertionError: expected false to be true
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:521:25)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL help-example-tools > help example tools: the catalogue > writes nothing while an ID has no example: a selected one not found, or a new one nobody supplied
+       AssertionError: expected Array(2)["boxLine: not selected and not in the saved catalogue", "remotePairs: not selected and not in the saved catalogue"] to equal Array(1)["boxLine: not selected and not in the saved catalogue"]
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:539:32)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL help-example-tools > help example tools: the catalogue > rejects an example that is not valid for its ID, and drops an ID the registry no longer has
+       AssertionError: expected Array(2)["pointing: its hint is not a hint of pointing", "remotePairs: not selected and not in the saved catalogue"] to equal Array(1)["pointing: its hint is not a hint of pointing"]
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:554:10)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL help-example-tools > help example tools: the tool (Node only) > checks against an alternate catalogue, names the field that differs, and writes nothing
+       SyntaxError: "undefined" is not valid JSON
+       at JSON.parse (<anonymous>)
+       at clone (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:17:17)
+       at Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:843:20
+       at Array.forEach (<anonymous>)
+  FAIL help-example-tools > help example tools: the tool (Node only) > writes only the selected ID into an alternate catalogue, equal to the saved one, and cleans up
+       SyntaxError: "undefined" is not valid JSON
+       at JSON.parse (<anonymous>)
+       at clone (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:17:17)
+       at Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:843:20
+       at Array.forEach (<anonymous>)
+  FAIL help-example-tools > help example tools: the tool (Node only) > writes a real Jigsaw source as the example of an ID with its region map, and checks it again
+       AssertionError: expected 1 to be 0
+       at Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:944:26
+       at inSandbox (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:821:16)
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:935:7)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL help-example-tools > help example tools: the tool (Node only) > records the sources of two new IDs separately, and writes the catalogue only when both are given
+       SyntaxError: "undefined" is not valid JSON
+       at JSON.parse (<anonymous>)
+       at clone (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:17:17)
+       at Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:843:20
+       at Array.forEach (<anonymous>)
+  FAIL help > help: the sections of the guide > every technique has a translated name and description, and so has its group
+       AssertionError: expected 34 to be 33
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:95:27)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL help > help: an example for every technique > has an example for exactly the techniques of the registry, as a fixed snapshot
+       AssertionError: expected Array(33)["boxLine", "cageCombo", "cageSplit", "emptyRectangle", "finnedSwordfish", "finnedXWing", "forcingChain", "forcingChainLong", "hiddenPair", "hiddenQuad", "hiddenSingleBox", "hiddenSingleLine", ...] to equal Array(34)["boxLine", "cageCombo", "cageSplit", "emptyRectangle", "finnedSwordfish", "finnedXWing", "forcingChain", "forcingChainLong", "hiddenPair", "hiddenQuad", "hiddenSingleBox", "hiddenSingleLine", ...]
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:129:51)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL help > help: an example for every technique > builds every example without playing: the board, the notes of the cells shown and the hint
+       AssertionError: expected "no example for remotePairs" to be ""
+       at Q:\git\sudoku\player\tests\suites\help.test.js:144:64
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:142:28)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL help > help: an example for every technique > replaying the puzzle of an example with the hint code of the player gives the same hint
+       TypeError: Cannot read properties of undefined (reading 'source')
+       at Q:\git\sudoku\player\tests\suites\help.test.js:165:49
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:163:28)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL help > help: an example for every technique > the hint of each example reads in both languages, with the cells and the move named
+       TypeError: Cannot read properties of null (reading 'model')
+       at Q:\git\sudoku\player\tests\suites\help.test.js:203:48
+       at inLocale (Q:\git\sudoku\player\tests\suites\help.test.js:47:14)
+       at Q:\git\sudoku\player\tests\suites\help.test.js:202:11
+       at Array.forEach (<anonymous>)
+  FAIL help > help: what the user guide claims > its numbers are the numbers of the code: 33 techniques, 100 + 100 puzzles, 8 MB files
+       AssertionError: expected 34 to be 33
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:533:43)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+
+Suites: 5
+Tests:  274 total, 258 passed, 16 failed, 0 skipped
+Time:   5.03 s running tests, 5.09 s total
+exit=1 seconds=5.193

@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS10a\check-format.cjs
+FAIL core/js/engine/tech-wing.js: line 2 is 112, line 30 is 111, line 40 is 111, line 48 is 111, line 49 is 113, line 86 is 113, line 576 is 113, line 593 is 113, line 642 is 112, line 717 is 111, line 816 is 114
+FAIL generator/tests/artifacts/difficulty-v3/MS10a/explore-dug.js: lone LF
+checked 71 files, 2 with problems
+exit=1 seconds=0.291

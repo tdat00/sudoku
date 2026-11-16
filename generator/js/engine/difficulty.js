@@ -93,6 +93,7 @@
     xWing: 320,
     skyscraper: 330,
     twoStringKite: 340,
+    remotePairs: 350,
     simpleColouring: 360,
     emptyRectangle: 380,
     finnedXWing: 400,

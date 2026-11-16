@@ -1,0 +1,9 @@
+MS10a: E announcement (check-list section 7, "Announce to the orchestrator before starting")
+
+2026-11-16T07:11+07:00. The engine bytes are frozen (engine-frozen.txt, 07:10:59): core/js/engine/tech-wing.js, generator/js/engine/difficulty.js
+and the four locale packs, with the tree hashes of core/js and generator/js. E starts now on that source: the five G09-G13 wires, then,
+after they are published and checked, the fourteen G01-G14 analyses, then the 520 hashes (104 five-seed shards). Every shard goes through
+Invoke-Dv3Node (one command per lock, compounds of at most 450 s, 540 s ceiling, at least 15 s between locks); the lock waits are in
+lock-log.jsonl. The brief says the pentomino repository has finished, so the machine is not shared with it; no other task's lock was
+present at the time of this note. The announcement is made in this record and in the final report, because a sub-agent has no channel to the
+orchestrator before it replies.

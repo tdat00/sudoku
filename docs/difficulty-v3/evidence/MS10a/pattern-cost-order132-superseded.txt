@@ -1,0 +1,8 @@
+$ node tests\pattern-cost.js --ids=remotePairs --runs=20 --json=..\docs\difficulty-v3\evidence\MS10a\pattern-cost.json
+pattern-cost: 4 of 4 cases x 20 runs (80 finds), complete true, found 2, none 2, outcome not the fixture's 0, capped 0, wall 0.016 s
+  remotePairs:positive:1 found, work 12 of 50000, ms p50 0.023 p95 0.055 max 0.757
+  remotePairs:positive:2 found, work 26 of 50000, ms p50 0.020 p95 0.087 max 0.247
+  remotePairs:negative:1 none, work 4 of 50000, ms p50 0.007 p95 0.010 max 0.011
+  remotePairs:negative:2 none, work 0 of 50000, ms p50 0.002 p95 0.005 max 0.013
+record: docs/difficulty-v3/evidence/MS10a/pattern-cost.json
+exit=0 seconds=0.543

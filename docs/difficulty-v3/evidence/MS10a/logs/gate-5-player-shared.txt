@@ -1,0 +1,12 @@
+$ node tests\node-runner.js --suite=tech-wing,techniques,logical-solver
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+ok   logical-solver: 100 passed  (291 ms)
+ok   tech-wing: 249 passed  (5.52 s)
+ok   techniques: 239 passed  (3.10 s)
+
+Suites: 3
+Tests:  588 total, 588 passed, 0 failed, 0 skipped
+Time:   8.91 s running tests, 8.98 s total
+exit=0 seconds=9.082

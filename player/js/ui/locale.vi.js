@@ -224,6 +224,11 @@
       'vây đó. Dù thế nào, chữ số cũng bị loại khỏi mọi ô của đường phủ, nằm ngoài các đường gốc, nhìn thấy ' +
       'tất cả các vây. Một đường gốc có thể có ít hơn ba ô trên các đường phủ, miễn là có ít nhất một ô. ' +
       'Tương tự khi đổi vai trò hàng và cột.',
+    'technique.remotePairs': 'Remote Pairs (cặp từ xa)',
+    'technique.remotePairs.desc': 'Một chuỗi các ô cùng chỉ có hai ứng viên giống nhau, mỗi ô nhìn thấy ô kế ' +
+      'tiếp. Hai ô liền nhau trong chuỗi nhận hai chữ số khác nhau, nên hai chữ số xen kẽ dọc theo chuỗi. ' +
+      'Khi chuỗi có số liên kết lẻ, từ ba trở lên, hai đầu chuỗi chứa hai chữ số khác nhau, tức là cùng dùng ' +
+      'hết cả hai chữ số, nên cả hai chữ số bị loại khỏi mọi ô khác nhìn thấy cả hai đầu.',
     'technique.xyWing': 'XY-Wing',
     'technique.xyWing.desc': 'Ô trục có hai ứng viên nhìn thấy hai ô càng, mỗi ô càng chung một ứng viên ' +
       'với ô trục. Dù ô trục nhận giá trị nào thì một ô càng cũng chứa chữ số chung, nên chữ số đó bị ' +
@@ -324,6 +329,10 @@
     'technique.simpleColouring.step.trap': 'Tô màu đơn giản cho {digit} (bẫy màu): màu 1 là {colour1}, ' +
       'màu 2 là {colour2}. Một trong hai màu chứa chữ số này, mà một ô ngoài chuỗi lại nhìn thấy cả hai ' +
       'màu, nên ô đó không thể là {digit}. {digit} bị loại khỏi những ô như vậy.',
+    'technique.remotePairs.step': 'Remote Pairs {digits}: một chuỗi {length} liên kết nối {ends}, và mọi ô trong ' +
+      'chuỗi chỉ chứa {digits}. Hai ô liền nhau trong chuỗi nhận hai chữ số khác nhau nên các chữ số xen kẽ ' +
+      'dọc theo chuỗi; vì số liên kết là số lẻ, hai đầu nhận hai chữ số khác nhau, tức là cùng dùng hết cả hai ' +
+      'chữ số {digits}. Cả hai chữ số bị loại khỏi mọi ô khác nhìn thấy cả hai đầu ({ends}).',
     'technique.xyWing.step': 'XY-Wing: ô trục {pivot} chứa {digitX} hoặc {digitY}; ô càng {pincer1} chứa ' +
       '{digitX} hoặc {digit}; ô càng {pincer2} chứa {digitY} hoặc {digit}. Dù ô trục nhận chữ số nào thì ' +
       'một trong hai ô càng cũng phải là {digit}, nên {digit} bị loại khỏi mọi ô nhìn thấy cả hai ô càng.',

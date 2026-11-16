@@ -1,0 +1,20 @@
+$ node tests\node-runner.js --suite=tech-wing,techniques,technique-weights,difficulty-floor
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL difficulty-floor: 47 passed, 1 failed  (28.95 s)
+ok   tech-wing: 235 passed  (5.74 s)
+ok   technique-weights: 12 passed  (3 ms)
+ok   techniques: 239 passed  (2.62 s)
+
+Failures:
+  FAIL difficulty-floor > difficulty floor: spec > adds floorTechniques and tierTechniques and keeps every other field
+       AssertionError: expected Array(5)["basic", "locked", "subset", "fish", "wing"] to equal Array(4)["basic", "locked", "subset", "fish"]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\difficulty-floor.test.js:283:34)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 4
+Tests:  534 total, 533 passed, 1 failed, 0 skipped
+Time:   37.31 s running tests, 37.42 s total
+exit=1 seconds=37.545

@@ -1,0 +1,4 @@
+$ node tests\node-runner.js --list-tests=tests\artifacts\difficulty-v3\MS10a\inventory-generator.json
+Inventory: 4018 tests in 53 suites (0 skipped, 29 benchmarks), registration 0.5 s
+Written: generator/tests/artifacts/difficulty-v3/MS10a/inventory-generator.json
+exit=0 seconds=0.634

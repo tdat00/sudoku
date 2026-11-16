@@ -1,0 +1,10 @@
+$ node tests\artifacts\difficulty-v3\MS10a\killer-bound.js --json=..\docs\difficulty-v3\evidence\MS10a\killer-bound.json
+{"layout":"A: the Killer puzzle of the help catalogue (25 cages)","cells":81,"units":52,"cageUnits":25,"peerSum":1638,"mostPeersOfACell":22,"cageOnlyPeerEdges":9,"fewestUnitsOfACell":4,"kmax":26,"pairs":526,"walk":104,"maximum":2268,"limit":50000}
+{"layout":"B: 27 three-cell box cages (the generator help)","cells":81,"units":54,"cageUnits":27,"peerSum":1620,"mostPeersOfACell":20,"cageOnlyPeerEdges":0,"fewestUnitsOfACell":4,"kmax":27,"pairs":546,"walk":108,"maximum":2274,"limit":50000}
+{"layout":"uncaged killer build() (the earlier 27-unit population)","cells":81,"units":27,"cageUnits":0,"peerSum":1620,"mostPeersOfACell":20,"cageOnlyPeerEdges":0,"fewestUnitsOfACell":3,"kmax":18,"pairs":364,"walk":54,"maximum":2038,"limit":50000}
+{"generatedLayouts":{"rule":"cages of 2 to 7 cells: a cell has at most 20 box/row/column peers and 6 cage-mates, at most 40 cages","units":67,"peerSum":2106,"kmax":44,"pairs":891,"walk":134,"maximum":3131},"absolute":{"rule":"imported cages of any shape: every cell a peer of every other","units":67,"peerSum":6480,"kmax":44,"pairs":891,"walk":134,"maximum":7505}}
+{"population":"layout A: states of the solve trajectory of its puzzle","calls":46,"found":0,"capped":0,"largestWork":0,"latencyMsMax":0.35}
+{"population":"layout A: 400 pruned random states of the solution (seed 4242), every Finding sound against the solution","calls":400,"found":0,"capped":0,"largestWork":0,"latencyMsMax":0.18}
+{"population":"layout A: flood, every cell {1, 2}","calls":1,"found":0,"capped":0,"largestWork":1638,"latencyMsMax":0.434,"workEqualsPeerSum":true,"peerSum":1638}
+{"population":"layout B: flood, every cell {1, 2}","calls":1,"found":0,"capped":0,"largestWork":1620,"latencyMsMax":0.226,"workEqualsPeerSum":true,"peerSum":1620}
+exit=0 seconds=0.237

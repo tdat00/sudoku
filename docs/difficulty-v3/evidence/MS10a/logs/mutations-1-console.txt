@@ -1,0 +1,31 @@
+$ node tests\artifacts\difficulty-v3\MS10a\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS10a\mutations-1.txt 0 27
+mutation 0 (an adjacent pair is accepted as the ends (the nontrivial minimum of three edges dropped)): DETECTED - 249 total, 202 passed, 47 failed, 0 skipped - 47 failing, 47 of remotePairs - 6.0 s
+mutation 1 (two cells of the same colour (an even path) are accepted as the ends): DETECTED - 249 total, 196 passed, 53 failed, 0 skipped - 53 failing, 53 of remotePairs - 6.1 s
+mutation 2 (an inconsistent component (an odd cycle) is accepted): DETECTED - 249 total, 241 passed, 8 failed, 0 skipped - 8 failing, 8 of remotePairs - 6.1 s
+mutation 3 (a component of exactly four cells is rejected (the size bound off by one)): DETECTED - 249 total, 200 passed, 49 failed, 0 skipped - 49 failing, 49 of remotePairs - 6.0 s
+mutation 4 (a pair of digits held by exactly four cells is not walked (the group bound off by one)): DETECTED - 249 total, 200 passed, 49 failed, 0 skipped - 49 failing, 49 of remotePairs - 6.0 s
+mutation 5 (a pair of digits held by two or three cells is walked (the group bound dropped)): DETECTED - 249 total, 248 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+mutation 6 (fewer than five open two-candidate cells end the call): DETECTED - 249 total, 212 passed, 37 failed, 0 skipped - 37 failing, 37 of remotePairs - 6.0 s
+mutation 7 (the slot of a pair of digits is the sum of the digits (two pairs share a group)): DETECTED - 249 total, 248 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+mutation 8 (the slot of a pair of digits is its lower digit (every pair with that digit shares a group)): DETECTED - 249 total, 248 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+mutation 9 (only the lower digit is removed from a target): DETECTED - 249 total, 208 passed, 41 failed, 0 skipped - 41 failing, 41 of remotePairs - 6.0 s
+mutation 10 (only the higher digit is removed from a target): DETECTED - 249 total, 201 passed, 48 failed, 0 skipped - 48 failing, 48 of remotePairs - 6.1 s
+mutation 11 (a digit a target no longer has is listed as an elimination): DETECTED - 249 total, 242 passed, 7 failed, 0 skipped - 7 failing, 7 of remotePairs - 6.0 s
+mutation 12 (a target that sees only the lower end): DETECTED - 249 total, 195 passed, 54 failed, 0 skipped - 54 failing, 54 of remotePairs - 6.0 s
+mutation 13 (a target that sees only the higher end): DETECTED - 249 total, 195 passed, 54 failed, 0 skipped - 54 failing, 54 of remotePairs - 6.1 s
+mutation 14 (a target need not hold either digit (any open cell that sees both ends)): DETECTED - 249 total, 234 passed, 15 failed, 0 skipped - 15 failing, 15 of remotePairs - 6.0 s
+mutation 15 (the Finding is made for the pair of ends the other way round (the wrong anchor of the witness)): DETECTED - 249 total, 202 passed, 47 failed, 0 skipped - 47 failing, 47 of remotePairs - 6.0 s
+mutation 16 (the path cells are not sorted): DETECTED - 249 total, 203 passed, 46 failed, 0 skipped - 46 failing, 46 of remotePairs - 6.0 s
+mutation 17 (the length counts cells, not edges): DETECTED - 249 total, 202 passed, 47 failed, 0 skipped - 47 failing, 47 of remotePairs - 6.0 s
+mutation 18 (the ends are given higher first): DETECTED - 249 total, 202 passed, 47 failed, 0 skipped - 47 failing, 47 of remotePairs - 6.0 s
+mutation 19 (the digits are given higher first): DETECTED - 249 total, 202 passed, 47 failed, 0 skipped - 47 failing, 47 of remotePairs - 6.0 s
+mutation 20 (the higher end is searched from the highest cell first (pairs in descending order)): DETECTED - 249 total, 231 passed, 18 failed, 0 skipped - 18 failing, 18 of remotePairs - 6.0 s
+mutation 21 (the lower end is searched from the highest cell first): DETECTED - 249 total, 230 passed, 19 failed, 0 skipped - 19 failing, 19 of remotePairs - 6.0 s
+mutation 22 (the components are walked from the highest cell first): DETECTED - 249 total, 248 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.0 s
+mutation 23 (the colouring stops at the first conflict, leaving the rest of the component to be walked on its own): DETECTED - 249 total, 244 passed, 5 failed, 0 skipped - 5 failing, 5 of remotePairs - 6.1 s
+mutation 24 (the budget is checked one unit early): DETECTED - 249 total, 248 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.0 s
+mutation 25 (the budget is checked one unit late): DETECTED - 249 total, 248 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.0 s
+mutation 26 (the position of the last check is not updated): DETECTED - 249 total, 248 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.8 s
+mutation 27 (the entry check of the parent budget is gone): DETECTED - 249 total, 248 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+detected 28 of 28, 169.8 s
+exit=0 seconds=169.847

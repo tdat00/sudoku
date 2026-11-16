@@ -1,0 +1,31 @@
+$ node tests\artifacts\difficulty-v3\MS10a\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS10a\mutations-2.txt 28 55
+mutation 28 (cancellation and every other error are swallowed): DETECTED - 249 total, 248 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.2 s
+mutation 29 (a spent parent budget is propagated instead of "nothing found"): DETECTED - 249 total, 246 passed, 3 failed, 0 skipped - 3 failing, 3 of remotePairs - 6.1 s
+mutation 30 (a spent work limit is propagated instead of "nothing found"): DETECTED - 249 total, 244 passed, 5 failed, 0 skipped - 5 failing, 5 of remotePairs - 6.0 s
+mutation 31 (the limit is off by one (one unit too many)): DETECTED - 249 total, 246 passed, 3 failed, 0 skipped - 3 failing, 3 of remotePairs - 6.1 s
+mutation 32 (the limit constant is 50001): DETECTED - 249 total, 244 passed, 5 failed, 0 skipped - 5 failing, 5 of remotePairs - 6.1 s
+mutation 33 (the registered finder ignores the constant): DETECTED - 249 total, 245 passed, 4 failed, 0 skipped - 4 failing, 4 of remotePairs - 6.1 s
+mutation 34 (the exported constant is another number): DETECTED - 249 total, 248 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+mutation 35 (the colouring walk counts no edge extension): DETECTED - 249 total, 238 passed, 11 failed, 0 skipped - 11 failing, 11 of remotePairs - 6.0 s
+mutation 36 (a tested pair of ends counts no unit): DETECTED - 249 total, 244 passed, 5 failed, 0 skipped - 5 failing, 5 of remotePairs - 6.1 s
+mutation 37 (the walk of the witness counts no edge extension): DETECTED - 249 total, 244 passed, 5 failed, 0 skipped - 5 failing, 5 of remotePairs - 6.1 s
+mutation 38 (the walk of the witness goes on after reaching the higher end): DETECTED - 249 total, 244 passed, 5 failed, 0 skipped - 5 failing, 5 of remotePairs - 6.1 s
+mutation 39 (the observer record reports one unit too many): DETECTED - 249 total, 236 passed, 13 failed, 0 skipped - 13 failing, 13 of remotePairs - 6.0 s
+mutation 40 (the observer record reports the default limit whatever the call used): DETECTED - 249 total, 247 passed, 2 failed, 0 skipped - 2 failing, 2 of remotePairs - 6.1 s
+mutation 41 (the observer record never reports a capped call): DETECTED - 249 total, 247 passed, 2 failed, 0 skipped - 2 failing, 2 of remotePairs - 6.1 s
+mutation 42 (the observer record retains something): DETECTED - 249 total, 243 passed, 6 failed, 0 skipped - 6 failing, 6 of remotePairs - 6.1 s
+mutation 43 (the seam ignores its limit): DETECTED - 249 total, 245 passed, 4 failed, 0 skipped - 4 failing, 4 of remotePairs - 6.1 s
+mutation 44 (the seam accepts NaN and an infinite limit): DETECTED - 249 total, 248 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+mutation 45 (the seam rounds a fractional limit instead of flooring it): DETECTED - 249 total, 248 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+mutation 46 (the call stamp is not advanced (the marks of the previous call stay)): DETECTED - 249 total, 184 passed, 65 failed, 0 skipped - 65 failing, 65 of remotePairs - 6.0 s
+mutation 47 (the counts of the pairs of digits are not cleared between calls): DETECTED - 249 total, 248 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.2 s
+mutation 48 (the distances of the witness walk are not cleared between calls): DETECTED - 249 total, 195 passed, 54 failed, 0 skipped - 54 failing, 54 of remotePairs - 63.9 s
+mutation 49 (the root of a component is not marked as reached): DETECTED - 249 total, 239 passed, 10 failed, 0 skipped - 10 failing, 10 of remotePairs - 6.1 s
+mutation 50 (another base cost): DETECTED - 249 total, 248 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+mutation 51 (another order, still before Simple Colouring but ahead of Two-String Kite (113)): DETECTED - 249 total, 247 passed, 2 failed, 0 skipped - 2 failing, 2 of remotePairs - 6.0 s
+mutation 52 (another order, after Simple Colouring (121)): DETECTED - 249 total, 247 passed, 2 failed, 0 skipped - 2 failing, 2 of remotePairs - 6.0 s
+mutation 53 (the technique is flagged as assuming uniqueness): DETECTED - 249 total, 247 passed, 2 failed, 0 skipped - 2 failing, 1 of remotePairs - 6.0 s
+mutation 54 (the weight is the one of Simple Colouring or more (361)): DETECTED - 12 total, 9 passed, 3 failed, 0 skipped - 3 failing, 1 of remotePairs - 0.2 s
+mutation 55 (the weight is below the one of Two-String Kite (339)): DETECTED - 12 total, 9 passed, 3 failed, 0 skipped - 3 failing, 1 of remotePairs - 0.2 s
+detected 28 of 28, 216.1 s
+exit=0 seconds=216.155

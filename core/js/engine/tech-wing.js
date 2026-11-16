@@ -1,7 +1,8 @@
 /**
- * Wing techniques (group `wing`): XY-Wing, XYZ-Wing, W-Wing and Unique Rectangle (types 1 and 2).
+ * Wing techniques (group `wing`): Remote Pairs, XY-Wing, XYZ-Wing, W-Wing and Unique Rectangle (types 1, 2).
  *
  *   id               baseCost  order  assumesUniqueness
+ *   remotePairs          35     116   false
  *   xyWing               48     140   false
  *   xyzWing              54     150   false
  *   wWing                60     170   false
@@ -12,6 +13,7 @@
  * returns at most one deduction (the first in a fixed scan order: cells and peers ascending).
  *
  * Translation keys (i18nKey -> i18nArgs; values are numbers or strings, cells are 'R4C7' labels):
+ *   technique.remotePairs.step          { digits, ends, length }
  *   technique.xyWing.step               { pivot, pincer1, pincer2, digitX, digitY, digit }
  *   technique.xyzWing.step              { pivot, pincer1, pincer2, digitX, digitY, digit }
  *   technique.wWing.step                { cell1, cell2, link1, link2, unit, digitX, digit }
@@ -24,6 +26,39 @@
  * other). If wing cell 1 is X then P is not X, so Q is X, so wing cell 2 is Y; otherwise wing cell 1 is Y.
  * Either way one of the wing cells is Y, so Y goes from every cell that sees both. A partial unit is no
  * strong link: X does not have to occur in it.
+ *
+ * Remote Pairs (rating v3, R13): the open cells with exactly the same two candidates {X, Y} form a graph
+ * whose edges are real peers (`model.peers`: any unit, so rows, columns, boxes, regions, diagonals and
+ * windows all count, and a unit that is not complete still holds different digits). Peers take different
+ * digits of the pair, so along a path the two digits alternate. The cells are two-coloured from the lowest
+ * cell of their component by a breadth-first walk, and a component with an odd cycle (a peer edge between
+ * two cells of one colour, a triple of the same pair in a unit among them) is inconsistent: no deduction is
+ * taken from it. Two cells of opposite colours are joined by a path with an odd number of EDGES (cells do
+ * not count), 1 when they are peers and at least 3 otherwise. The shortest path between the selected
+ * visible opposite-colour ends must have at least three edges: adjacent ends alone do not qualify, and
+ * another adjacent-pair justification of the same target does not invalidate a genuine remote witness (the
+ * two cells of an adjacent pair use both digits too, so the removal is sound either way). The ends of such a
+ * path hold X and Y in one order or the other, so together they use both digits and X and Y go from every
+ * open cell that sees both ends. A target is never a cell of its component (it would see both ends only by
+ * being adjacent to both, which parity forbids), so the proving cells never lose a digit. Two cells of the
+ * same colour, or of different components, prove nothing. The pattern is looked for in the order component
+ * (by its lowest cell), lower end, higher end (cell order); the first pair of ends with a target is
+ * returned, with the cells of one shortest path between those ends (a breadth-first search from the lower
+ * end, peers ascending; shortest for the chosen ends, not claimed shortest among all justifications of the
+ * target) in `cells` (cell order), the pair in `digits`, the ends in `ends` (cell order) and the number of
+ * edges of that path in `length` (3, 5, 7, ...). A pair of digits held by fewer than four open cells has no
+ * nontrivial pair of ends and its cells are never walked.
+ *
+ * Work (R10) of Remote Pairs: a unit is one edge extension, a same-pair peer found while a cell of a
+ * component is expanded (in the colouring walk and in the walk for the witness path), or one tested pair of
+ * ends (opposite colours, not peers). The limit is 50000 per call (`SG.wingSearch.REMOTE_PAIRS_WORK_LIMIT`);
+ * a spent limit ends the call with null (a lost deduction, never an invented one: a component is used only
+ * after its colouring is complete, so null with `capHit: 'work'` proves no absence, while a finding made
+ * before the limit is spent is complete). The parent budget is checked at entry and before the unit that
+ * would carry the work done since the last check over 256 units; the counter is local to the call. A spent
+ * budget ('budget.exceeded') is "nothing found" as for the other bounded finders, cancellation and every
+ * other error propagate. `ctx.options.onPatternWork(record)` observes each call and never selects its
+ * result: { id, work, limit, capHit (null | 'work'), retained (null) }, a fresh object per call.
  *
  * Unique Rectangle (assumesUniqueness: true) is valid only because a puzzle has ONE solution, so the logical
  * solver skips it with `assumeUniqueness: false` (how uniqueness is verified without circular reasoning);
@@ -52,6 +87,14 @@
   const KIND_COL = 2;
   const KIND_BOX = 3;
 
+  // R10 work policy of Remote Pairs: the units one call may spend (edge extensions and tested pairs of ends)
+  // and how many may pass between two checks of the parent budget.
+  const REMOTE_PAIRS_WORK_LIMIT = 50000;
+  const WORK_CHECK_UNITS = 256;
+
+  // Thrown through the walks of a Remote Pairs call whose work limit is spent.
+  const WORK_CAP = Object.freeze({ capHit: 'work' });
+
   const infoCache = new WeakMap();
 
   function infoFor(model) {
@@ -73,7 +116,17 @@
         link: new Int32Array(3),
         quad: new Int32Array(4),
         masks: new Int32Array(4),
-        rects: null
+        rects: null,
+        // Remote Pairs: the call that reached a cell, its colour (1 / 2), the walk queue, the component in
+        // cell order, the walk's distance and predecessor, and the number of open cells per pair of digits.
+        rpStamp: 0,
+        rpMark: new Int32Array(n),
+        rpColour: new Uint8Array(n),
+        rpQueue: new Int32Array(n),
+        rpComp: new Int32Array(n),
+        rpDist: new Int32Array(n),
+        rpFrom: new Int32Array(n),
+        rpGroup: new Int32Array(model.digits * model.digits)
       };
       infoCache.set(model, info);
     }
@@ -82,6 +135,10 @@
 
   function digitOf(bit) {
     return 32 - Math.clz32(bit);
+  }
+
+  function byNumber(a, b) {
+    return a - b;
   }
 
   function label(model, cell) {
@@ -520,7 +577,191 @@
     return null;
   }
 
+  // One work unit is one edge extension or one tested pair of ends. The parent budget is checked before the
+  // unit that would carry the work done since the last check over WORK_CHECK_UNITS; a spent limit throws
+  // WORK_CAP.
+  function spend(run) {
+    if (run.work >= run.limit) throw WORK_CAP;
+    if (run.work + 1 - run.checkedAt > WORK_CHECK_UNITS) {
+      run.ctx.check();
+      run.checkedAt = run.work;
+    }
+    run.work++;
+  }
+
+  // The slot of the pair of digits of a two-candidate mask in `info.rpGroup`.
+  function pairSlot(model, mask) {
+    return (digitOf(mask & -mask) - 1) * model.digits + digitOf(mask) - 1;
+  }
+
+  // The Finding of the ends x < y (opposite colours, not peers) of a component with `size` cells in
+  // `info.rpComp`: `found` targets are in `info.elim`. One shortest path from x to y gives `cells` and
+  // `length`.
+  function remotePairsFinding(model, state, info, run, size, x, y, mask, found) {
+    const cand = state.candidates;
+    const value = state.value;
+    const comp = info.rpComp;
+    const dist = info.rpDist;
+    const from = info.rpFrom;
+    const queue = info.rpQueue;
+    for (let i = 0; i < size; i++) dist[comp[i]] = -1;
+    dist[x] = 0;
+    queue[0] = x;
+    let tail = 1;
+    for (let head = 0; head < tail && dist[y] < 0; head++) {
+      const u = queue[head];
+      const ps = model.peers[u];
+      for (let i = 0; i < ps.length; i++) {
+        const p = ps[i];
+        if (value[p] !== 0 || cand[p] !== mask) continue;
+        spend(run);
+        if (dist[p] < 0) {
+          dist[p] = dist[u] + 1;
+          from[p] = u;
+          queue[tail++] = p;
+        }
+      }
+    }
+    const path = [];
+    for (let c = y; c !== x; c = from[c]) path.push(c);
+    path.push(x);
+    path.sort(byNumber);
+    const lowBit = mask & -mask;
+    const eliminations = [];
+    for (let i = 0; i < found; i++) {
+      const c = info.elim[i];
+      if ((cand[c] & lowBit) !== 0) eliminations.push([c, digitOf(lowBit)]);
+      if ((cand[c] & (mask ^ lowBit)) !== 0) eliminations.push([c, digitOf(mask)]);
+    }
+    return {
+      technique: 'remotePairs',
+      cells: path,
+      placements: [],
+      eliminations: eliminations,
+      i18nKey: 'technique.remotePairs.step',
+      i18nArgs: { digits: [digitOf(lowBit), digitOf(mask)], ends: [label(model, x), label(model, y)],
+        length: dist[y] }
+    };
+  }
+
+  // Colours the component of `root` (open cells with the same two candidates, joined by real peers) by a
+  // breadth-first walk and returns the Finding of its first pair of ends that has a target, or null. Every
+  // cell of the component is marked with `stamp` whatever the outcome, so a component is looked at once.
+  function remotePairsComponent(model, state, info, run, root, stamp) {
+    const cand = state.candidates;
+    const value = state.value;
+    const mark = info.rpMark;
+    const colour = info.rpColour;
+    const queue = info.rpQueue;
+    const mask = cand[root];
+    let size = 0;
+    let consistent = true;
+    queue[size++] = root;
+    mark[root] = stamp;
+    colour[root] = 1;
+    for (let head = 0; head < size; head++) {
+      const x = queue[head];
+      const ps = model.peers[x];
+      for (let i = 0; i < ps.length; i++) {
+        const p = ps[i];
+        if (value[p] !== 0 || cand[p] !== mask) continue;
+        spend(run);
+        if (mark[p] !== stamp) {
+          mark[p] = stamp;
+          colour[p] = 3 - colour[x];
+          queue[size++] = p;
+        } else if (colour[p] === colour[x]) {
+          consistent = false;
+        }
+      }
+    }
+    if (!consistent || size < 4) return null;
+
+    const comp = info.rpComp;
+    for (let i = 0; i < size; i++) comp[i] = queue[i];
+    comp.subarray(0, size).sort();
+    const n = info.n;
+    const adj = info.adj;
+    for (let i = 0; i < size - 1; i++) {
+      const x = comp[i];
+      for (let j = i + 1; j < size; j++) {
+        const y = comp[j];
+        if (colour[y] === colour[x] || adj[x * n + y] === 1) continue;
+        spend(run);
+        const found = collectCommon(model, state, info, x, y, -1, mask);
+        if (found > 0) return remotePairsFinding(model, state, info, run, size, x, y, mask, found);
+      }
+    }
+    return null;
+  }
+
+  // Components in the order of their lowest cell. A pair of digits held by fewer than four open cells has no
+  // path of three edges, so its cells are never walked.
+  function scanRemotePairs(model, state, info, run) {
+    const cand = state.candidates;
+    const bi = info.bi;
+    const count = collectBivalue(info, state);
+    if (count < 4) return null;
+    const group = info.rpGroup;
+    group.fill(0);
+    for (let i = 0; i < count; i++) group[pairSlot(model, cand[bi[i]])]++;
+    if (info.rpStamp >= 0x7ffffff0) {
+      info.rpMark.fill(0);
+      info.rpStamp = 0;
+    }
+    const stamp = ++info.rpStamp;
+    for (let i = 0; i < count; i++) {
+      const a = bi[i];
+      if (info.rpMark[a] === stamp || group[pairSlot(model, cand[a])] < 4) continue;
+      const found = remotePairsComponent(model, state, info, run, a, stamp);
+      if (found !== null) return found;
+    }
+    return null;
+  }
+
+  // A Remote Pairs call with its own work counter (`workLimit` is the default except in the tests' seam). A
+  // spent work limit and a spent budget are "nothing found" (the logical solver notices the budget at its
+  // next check); cancellation and every other error propagate. The work goes to the optional observer, which
+  // never selects the result.
+  function findRemotePairsBounded(model, state, ctx, workLimit) {
+    const info = infoFor(model);
+    const run = { ctx: ctx, limit: workLimit, work: 0, checkedAt: 0, capped: false };
+    let found = null;
+    try {
+      ctx.check();
+      found = scanRemotePairs(model, state, info, run);
+    } catch (err) {
+      if (err === WORK_CAP) run.capped = true;
+      else if (!(err && err.code === 'budget.exceeded')) throw err;
+    }
+    const observer = ctx.options ? ctx.options.onPatternWork : undefined;
+    if (typeof observer === 'function') {
+      observer({
+        id: 'remotePairs',
+        work: run.work,
+        limit: workLimit,
+        capHit: run.capped ? 'work' : null,
+        retained: null
+      });
+    }
+    return found;
+  }
+
+  function findRemotePairs(model, state, ctx) {
+    return findRemotePairsBounded(model, state, ctx, REMOTE_PAIRS_WORK_LIMIT);
+  }
+
   const DEFINITIONS = [
+    {
+      id: 'remotePairs',
+      group: 'wing',
+      baseCost: 35,
+      order: 116,
+      i18nKey: 'technique.remotePairs',
+      variantScope: null,
+      assumesUniqueness: false,
+      find: findRemotePairs
+    },
     {
       id: 'xyWing',
       group: 'wing',
@@ -566,4 +807,26 @@
   DEFINITIONS.forEach(function (def) {
     if (!SG.techniques.has(def.id)) SG.techniques.register(def);
   });
+
+  // The parameterised search behind remotePairs, for tests (explicit work limit); not a registered technique.
+  if (!SG.wingSearch) {
+    SG.wingSearch = Object.freeze({
+      REMOTE_PAIRS_WORK_LIMIT: REMOTE_PAIRS_WORK_LIMIT,
+      remotePairs: function (model, state, ctx, opts) {
+        let limit = REMOTE_PAIRS_WORK_LIMIT;
+        const given = opts === undefined || opts === null ? undefined : opts.workLimit;
+        if (given !== undefined) {
+          if (typeof given !== 'number' || !Number.isFinite(given) || given < 0) {
+            const err = new SG.errors.GenerationError('solver.invalidOption',
+              { option: 'wingSearch.remotePairs.workLimit' });
+            err.message = 'solver.invalidOption: wingSearch.remotePairs workLimit must be a number of ' +
+              'at least 0';
+            throw err;
+          }
+          limit = Math.floor(given);
+        }
+        return findRemotePairsBounded(model, state, ctx, limit);
+      }
+    });
+  }
 })(typeof self !== 'undefined' ? self : globalThis);

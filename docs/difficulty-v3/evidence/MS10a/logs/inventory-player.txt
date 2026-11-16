@@ -1,0 +1,4 @@
+$ node tests\node-runner.js --list-tests=tests\artifacts\difficulty-v3\MS10a\inventory-player.json
+Inventory: 2260 tests in 30 suites (0 skipped, 20 benchmarks), registration 0.3 s
+Written: player/tests/artifacts/difficulty-v3/MS10a/inventory-player.json
+exit=0 seconds=0.392

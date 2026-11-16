@@ -1,0 +1,11 @@
+$ node tests\artifacts\difficulty-v3\MS10a\sweep-firings.js
+classic9 remotePairs firings 6 of 300 states
+classic9 xyWing firings 56 of 300 states
+classic9 wWing firings 66 of 300 states
+classic6 remotePairs firings 19 of 200 states
+classic6 xyWing firings 50 of 200 states
+classic6 wWing firings 57 of 200 states
+classic4 remotePairs firings 1 of 200 states
+classic4 xyWing firings 4 of 200 states
+classic4 wWing firings 15 of 200 states
+exit=0 seconds=0.338

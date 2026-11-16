@@ -177,17 +177,17 @@
         [8, 31, 'F/Final', 57, 2331, 0, 'forcingChainLong', '—', '—', '—']
       ],
       details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
-        48, 49, 138, 2072, 3002, 2331, 2331],
+        48, 49, 138, 2072, 3017, 2331, 2331],
       alive: null,
       folds: [
-        { step: 7, peak: 3002, end: 2331, removed: 2, restored: 2, signs: 0, opening: false }
+        { step: 7, peak: 3017, end: 2331, removed: 2, restored: 2, signs: 0, opening: false }
       ],
       jumps: [
         {
           step: 6, from: 138, to: 2072,
           before: { P: 50, W: 449.5, R: 41.506058, V: 46.315789, E: 55, level: 'easy' },
           after: { P: 1400, W: 3431.5, R: 625.465517, V: 47.010309, E: 57, level: 'nightmare' },
-          choice: { chosen: null, others: 4, nulls: 0, max: 630, at: 122, rated: 6, refused: 1 },
+          choice: { chosen: null, others: 4, nulls: 0, max: 616, at: 122, rated: 6, refused: 1 },
           singles: [{ op: 'remove', cell: 'R4C6', score: 2072 }, { op: 'remove', cell: 'R6C4', score: 138 }],
           cause: 'single-culprit', frame: 'R4C6',
           firstUse: { k: 26, n: 74, technique: 'forcingChainLong' },

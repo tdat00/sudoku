@@ -223,6 +223,11 @@
       'it. Either way the digit is removed from every cell of a cover line, outside the base lines, that sees ' +
       'all the fins. A base line may have fewer than three cells on the cover lines, as long as it has at ' +
       'least one. The same holds with rows and columns swapped.',
+    'technique.remotePairs': 'Remote Pairs',
+    'technique.remotePairs.desc': 'A chain of cells that all hold the same two candidates, each cell seeing the ' +
+      'next. Neighbours in the chain take different digits, so the two digits alternate along it. When the ' +
+      'chain has an odd number of links, at least three, its two ends hold different digits, so between them ' +
+      'they use both digits, and both are removed from every other cell that sees both ends.',
     'technique.xyWing': 'XY-Wing',
     'technique.xyWing.desc': 'A pivot cell with two candidates sees two pincer cells that each share one ' +
       'of them. Whichever way the pivot goes, one pincer holds the common digit, so it leaves every cell ' +
@@ -331,6 +336,10 @@
     'technique.simpleColouring.step.trap': 'Simple Colouring on {digit} (colour trap): colour 1 is ' +
       '{colour1}, colour 2 is {colour2}. One of the two colours holds the digit, and a cell outside the ' +
       'chain sees both colours, so it cannot be {digit}. {digit} is removed from such cells.',
+    'technique.remotePairs.step': 'Remote pair {digits}: a chain of {length} links joins {ends}, and every cell of ' +
+      'the chain holds only {digits}. Cells next to each other in the chain take different digits, so the digits ' +
+      'alternate along it; with an odd number of links the two ends take different digits, so between them ' +
+      'they use both digits ({digits}). Both digits are removed from every other cell that sees both ends ({ends}).',
     'technique.xyWing.step': 'XY-Wing: the pivot {pivot} holds {digitX} or {digitY}; the pincer {pincer1} ' +
       'holds {digitX} or {digit}; the pincer {pincer2} holds {digitY} or {digit}. Whichever digit the ' +
       'pivot takes, one of the pincers must be {digit}, so {digit} is removed from every cell that sees ' +

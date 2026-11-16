@@ -1,0 +1,18 @@
+$ node tests\node-runner.js --suite=tech-wing
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-wing: 234 passed, 1 failed  (5.83 s)
+
+Failures:
+  FAIL tech-wing > wing techniques: soundness (invariant I7) > remotePairs stays sound on 12 digits
+       AssertionError: technique "remotePairs" fired only 1 times on 200 states (minFirings is 3): the soundness check is too weak; raise count or pass harder states
+       at fail (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:107:11)
+       at Object.assertSound (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:624:7)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:2221:11)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  235 total, 234 passed, 1 failed, 0 skipped
+Time:   5.83 s running tests, 5.93 s total
+exit=1 seconds=6.035

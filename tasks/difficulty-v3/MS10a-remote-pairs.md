@@ -291,14 +291,14 @@ Return the inherited/new item list, actual gates and CI membership.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (orchestrator check against IR72 A-J; outside the analyst review set). The developer stopped before E with eight questions; SA2 accepted Q1-Q6 and Q8 and escalated Q7 (reachability at order 132) to the plan author as RP-01. Fable answered (A) with a corrected prior, the owner confirmed it (S-OD9, `1456f50`), SA2 amended the pack (`f193545`), and the task finished at 116/350/35 after the reachability gate passed |
+| Start | 2026-11-16 03:30:39 (+07:00), base `9156024` (pack commits `c160bb4`, `1456f50` and `f193545` landed during the task) |
+| End | 04:14 stop before E (8 questions); 04:25 SA2 ruling; 04:39 accepted parts applied, waiting for RP-01; about 06:40 resumed under `f193545`; 07:58:37 final report; orchestrator re-check and commit at about 08:12 |
+| Duration | About 2 h 27 min developer (44 min to the questions, 14 min applying the ruling, 1 h 18 min after the resume); about 2 h waiting for RP-01 (Fable's answer, both analysts' check, the owner's confirmation and the pack amendment); 87 locked commands, every lock wait 0-0.1 s (6.9 s in all) |
+| Model | claude-sonnet-5.5 (developer); gpt-6-astra (SA2 rulings, RP-01 question and pack amendment); claude-opus-5.5 (SA1 check of the answer; orchestrator); claude-fable-5-2 (RP-01 answer) |
+| Token usage | 386 model calls; 137,272,762 input tokens (134,832,620 cache reads); 497,811 output tokens (developer) |
+| AI credits | about 2,456 (developer) |
+| Verification | `remotePairs` in `core/js/engine/tech-wing.js` (group `wing`, order 116, base cost 35, weight 350, between `twoStringKite` and `simpleColouring`; Hard, unscoped, `assumesUniqueness: false`): identical bivalue cells joined by `model.peers`, two-coloured, odd-cycle components skipped whole, ends at least three edges apart, `cells` the sorted witness path, 50,000 work units per call through `SG.wingSearch.remotePairs`. Caged Killer test with a cage-only peer edge (caged structural bounds 2,268 / 2,274 / 3,131 / 7,505). **Reachability gate (seed 4242, order 116):** 51 of 30,000 positions after the prefix (0.170 %); **45 of 20,000 complete solves contain the step** (0.2250 %; hardest technique in 20), logs `explore-*-order116.txt`. GH: `remotePairs` from curated source `testkit-4242-254` step 30 through `game.hint()` (8 sources replay); `xWing` refreshed from its own source; catalogue 34/34. **E** on frozen bytes: wire G10 only (3 local-search counters), analysis G06 only (score 3,002 -> 3,017, a Remote Pairs step replaces a Simple Colouring step), **520 of 520 hashes unchanged**; merge-checks recorded from the current sources. 26 reference ratings unchanged (no level or requiredness change). Focused gates Generator 548/548, Player 161/161, shared tech suites 588/588; 56/56 mutants. Quick sets: Generator 4,018/4,018 (379.9 s), Player 2,260/2,260 (61.1 s); seven projections raised under `c160bb4` (Player 60 -> 100 s: 180 + 3 x 100 = 480 of 900); fingerprints match; CI check passes. Orchestrator: locked `tech-wing,tech-fish,techniques,technique-weights,difficulty-floor` 1,031/1,031 (58.3 s), Player `help,play,i18n` 161/161 (3.3 s), CI shard check 4,018 of 4,018 in one shard each, every job inside its limit |
+| Acceptance | MS10a-B01, B02, T01-T05 met; IR72 A-J pass (developer's table with evidence pointers in `docs/difficulty-v3/evidence/MS10a/evidence.md`) |
+| Issues & resolutions | **RP-01 / S-AV32:** at the recorded 132/440/44 Remote Pairs sat behind Simple Colouring and was unreachable on complete-unit boards (0 of 20,000 solves), so the mandatory normal-hint example was impossible; resolved by S-OD9 (116/350/35) and a pre-E gate, which passed. Killer cages are the known exception to the subsumption argument (finder evidence only). The earlier order-132 evidence (four logs, 53 mutants, the first census) is kept as history. The Player's quick shard exceeded its old 60 s projection (61.1 s) and was raised to 100 s under the projection rule. Two text errors in fingerprinted documents (a stale total in `player/design.md`, a population list in `generator/design.md`) cost a second run of both quick sets; the first results are kept as superseded. Not run: the manual `difficulty` suite (pure pins updated and evaluated by script), qualification, soak |
+| Handoff | To MS10b: the wing group now holds `remotePairs` at order 116 (before `simpleColouring`); IR72 A-J is the checklist; base quick totals Generator 4,018 (379.9 s) and Player 2,260 (61.1 s, projection 100 s); help catalogue 34; S-AV01-S-AV32 open as recorded (S-AV32 with the order-116 rates and the Killer qualification, for MS18e); ask before E |
