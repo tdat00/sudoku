@@ -10,6 +10,8 @@ CV6-05 followed unchanged with Fable's answer under S-OD6: MS05e is measured and
 the sign target is transported rather than consumed, and the Normal contracts stay unchanged.
 RP-01 followed unchanged with Fable's 2026-11-16 answer and the owner's confirmation next to it (S-OD9):
 Remote Pairs moves to order 116, weight 350, base cost 35, behind a reachability gate before MS10a's E.
+JF-01 is archived with the owner's direct Discord answer on 2026-11-16 at 22:20 (+07:00), S-OD10:
+option A, a one-off bounded Jellyfish GH-source acquisition exception for MS12; GH acceptance stays unchanged.
 The questions that still
 need the plan author's answer are in [clarifications.md](clarifications.md); when one is answered, it moves here.
 
@@ -2260,6 +2262,80 @@ ownership) in the pack. Moved here unchanged with this confirmation; the tempora
 
 ---
 
+## JF-01 — MS12: Jellyfish GH source unavailable within the approved acquisition bound
+
+**Raised by SA2, 2026-11-16. Decision requested from the owner.**
+
+### Decision needed
+
+May MS12 exceed its recorded source-acquisition bound **for Jellyfish only**, while preserving the requirement for a real puzzle reproduced by normal Player hints?
+
+### Context and evidence
+
+MS12’s E is complete: 18/520 hashes changed, none below Master. **GH passes 36/37 IDs**. Jellyfish’s saved Nightmare-828 example no longer reproduces; the Player replay gate remains red.
+
+The following source sets yielded no Jellyfish through the Player replay tool:
+
+- 27 catalogue sources;
+- two unique Jellyfish-positive fixtures;
+- 17 sources from earlier tasks;
+- 123 distinct fixture strings, including 14 that produced no hints and were unplayable. These are not 123 certified unique puzzles, and the sets may overlap.
+
+All **48 Generator discovery requests** were consumed: classic9 Nightmare, Master, Hell 1 and Hard, seeds 1–12 for each. Each produced a puzzle; none yielded the required hint. The Hell 2 invocation made zero requests.
+
+Evidence: `docs\difficulty-v3\evidence\MS12\logs\gh-check-all-37.txt` and `gh-jellyfish-*`.
+
+Jellyfish remains at **137/520/Hard**; XY-chain is later at 186. This is not RP-01’s demonstrated priority-subsumption contradiction. Direct logical-solver scans are not substitutes for Player replay.
+
+### Authority
+
+Bundle B fixes four discovery batches of twelve. SA2-Q-S11 requires stopping when bounded acquisition fails; IR72 H1 does not authorize unlimited replacement searches. S-OD9 expressly retained these contracts, and S-OD4 routes expansion of a bounded search to the owner.
+
+The tool’s 1,500-seed PLAN entry describes available search space, **not additional authorization**.
+
+### Options
+
+**A — Approve a one-off test-kit corpus search, with these proposed bounds.**
+
+- Classic9, corpus seed **4242**, indices **0–19,999**, at most 20,000 candidate indices, in ascending order.
+- Use unchanged original givens and `level:null`, `testkit-4242-<index>` provenance.
+- Reuse retained givens or materialize the prefix once; account for construction work. Do not regenerate the prefix for every chunk.
+- Replay through the existing Player tool in chunks of **at most 64**, with ≤400 hints per puzzle. Preserve the eight-minute tool deadline, credible ≤450-second admission, 540-second process ceiling, locking and 15-second gaps.
+- Stop acquisition after the first chunk supplies a verified Jellyfish source. Publish/check it, then require all 37 GH checks and final quick/CI gates.
+- If the prefix is exhausted, or execution cannot remain within those bounds, report completed/incomplete ranges and stop. **No automatic further corpus or Generator expansion.**
+
+This is an exception to acquisition limits only—not permission to change finders, priors, availability, snapshots or tests.
+
+**B — Approve additional Generator discovery instead.**
+
+Specify the additional request ceiling, supported levels and seed-selection route. The current tool starts at seed 1; repeating the same twelve-request command does not reach fresh seeds. Neither “500 per run” nor the PLAN’s 1,500 entry is implicitly approved.
+
+**C — Supply an already-existing real source, or keep MS12 blocked.**
+
+A supplied source still needs normal Player replay verification. Keeping the stale example and weakening its test is not an authorized completion.
+
+### Recommendation and current block
+
+Prefer a supplied source if available; otherwise approve **A as a one-off exception**. GH acceptance remains unchanged.
+
+Until confirmation, no further broad acquisition runs. MS12 acceptance and its serial successors remain blocked.
+
+**Owner answer:** Approve A / approve B with explicit bounds / supply a source / keep blocked.
+
+**Owner confirmation (2026-11-16 22:20 +07:00, Discord): "Chọn A." (choose A), recorded as
+S-OD10.** The owner approves option A exactly as bounded above, for MS12's Jellyfish source only.
+This releases that acquisition step, not MS12 acceptance: the real normal-hint example, all 37 GH
+checks and final quick/CI gates still have to pass. The ordinary discovery ceiling is not reset;
+option B is not approved, and no other ID/task inherits this exception. No finder, prior, offered
+level, fabricated snapshot or test change is authorized. At exhaustion or inability to stay inside
+the bounds, report the completed/incomplete ranges and stop for another owner decision; do not
+silently expand the corpus or start additional Generator discovery.
+
+S-AV35 tracks this source-availability item through MS12's handoff and MS18e's audit. Its origin
+is the red 36/37 GH result above; the decision itself makes no claim that a source has been found.
+
+---
+
 ## Owner decisions — current resume register
 
 This register is a navigation aid, not a rewrite of the questions or answers above. The later decision governs
@@ -2281,6 +2357,7 @@ where an earlier recovery/process rule conflicts. The pause commit is a historic
 | S-OD7 | Owner, 2026-11-15 14:42, through `ask_user` and email; Q-MS07e-1 in `docs/difficulty-v3/qualification-checkpoint-2026-11-15.md` section 7. **"Hidden until later":** Killer Hard (0/14 exact, p95 6.6 s) and Expert (1/14 exact, p95 17.8 s) stay hidden until a later calibration; no Killer weight recalibration inside v3. S-AV05/S-AV06 route to that later calibration and MS18e's audit. MS18c owns publication; both cells remain in the full 135-cell final qualification with raw verdicts preserved. If either later qualifies, show the owner-directed withholding separately instead of rewriting that verdict or re-offering it. This is the narrow later restriction on offers, not an exception allowing an unqualified cell; all six S3 groups and the qualification protocol remain. No interim live-list edit is assigned by this record. |
 | S-OD8 | Owner, same time/channel; approve the S-AV08 quick-tier proposal in `docs/difficulty-v3/qualification-checkpoint-2026-11-15.md` section 9. Move the three `pipeline` generation event-cost ratio tests to `generator/tests/manual/perf.test.js`; split the Generator `player` replay case so classic9 Hell 1 seed 3 stays quick and mega16 Nightmare seed 478576959 plus Hell 1 seed 2422420669 move to `generator/tests/manual/variants.test.js`. Preserve requests, seeds, limits, attempts, timeouts and assertions byte for byte. The loss of these ratios and two mega16 replays from PR CI is accepted; structural event checks, short digging/full-grid cost tests and G01-G14 goldens stay quick. MS07f is scheduled after the already-running MS08a and before MS08b; it owns the r6c manifest/group metadata, both developer guides/design and actual before/after per-app quick costs. No other tier move is approved. MS18e audits the disposition and checks the four relocated manual cases on the final source; "about 300 s" is a projection, not a promised result. |
 | S-OD9 | Owner, 2026-11-16 06:23 (+07:00), on the command line ("Sudoku - xác nhận đổi remote pairs"); RP-01. Confirms Fable's answer (A) with a corrected prior: `remotePairs` at order 116, weight 350, base cost 35 (R13's 132/440/44 superseded, kept as history); group wing, Hard tier, unscoped, no uniqueness assumption. R13 and the R10 cost row are amended; GH, IR72 H1, bundle B, the discovery ceiling and SA2-Q-S11 are unchanged. MS10a runs the seed-4242 reachability gate (30,000 positions after the prefix below 116, 20,000 complete solves) before E; a failed gate stops before E and goes to the owner ((B) or removing the ID), not to Fable. S-AV32 stays open for MS18e. MS10b-MS18e stay behind MS10a. |
+| S-OD10 | Owner, 2026-11-16 22:20 (+07:00), Discord: "Chọn A."; JF-01. One-off MS12/Jellyfish acquisition exception: classic9 test-kit seed 4242, indices 0-19,999 (at most 20,000), ascending; unchanged original givens, level null and non-numeric `testkit-4242-<index>` provenance. Reuse givens or materialize the prefix once, accounting for construction; never regenerate it per chunk. Existing Player replay tool, chunks <=64, <=400 hints/puzzle, eight-minute tool deadline, credible <=450 s admission, 540 s process ceiling, locking/15 s gaps. Stop acquisition after the first chunk supplies a verified source, publish/check it, then require all 37 GH checks and final quick/CI gates. At exhaustion or inability to remain within bounds, report completed/incomplete ranges and stop. No automatic corpus/Generator expansion, no option B, no discovery-budget reset or permission for another ID/task. GH's real normal-hint contract, finders, priors, availability and tests remain unchanged. S-AV35: MS12 completion and MS18e audit. |
 
 **Q-MS07e-2 — pack-author ruling (SA2, 2026-11-15), not another owner decision:** no change to
 the projection rule and no speculative one-off launch of the six unexecuted cells. Route

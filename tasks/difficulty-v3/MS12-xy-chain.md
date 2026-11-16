@@ -5,7 +5,7 @@
 | Depends on | MS11c accepted |
 | Size / active time | Medium; 50-60 minutes plus gates |
 | Owner / milestone | Shared chains / both apps; M12 |
-| Authority | R10/R15/R20/R21 |
+| Authority | R10/R15/R20/R21; JF-01 / S-OD10 (owner, Discord, 2026-11-16 22:20 +07:00) |
 | Status | Not started |
 
 ## Goal & business context
@@ -144,6 +144,8 @@ These implement R10/R15/R20 and B/IR72; no owner or Fable decision is needed. Ke
    partial collection is not yet publishable; do not fabricate snapshots or suppress earlier
    techniques. If the finite route cannot supply a required real example, send `QUESTION:`
    with the missing ID and exact attempts. Finish the complete **37-ID** GH check.
+   **Later owner exception:** JF-01 / S-OD10 below authorizes only the specified Jellyfish corpus
+   route. This earlier ordinary-budget rule stays in force for every other acquisition.
 8. **E and reclassification: proceed after the rulings, with no extra reachability gate.**
    `1.25 * 1000 = 1250`, so xyChain's earliest admitting tier is **Master**. In the fixed GG
    manifest the admitting cells are classic9 master/nightmare, diagonalX nightmare and jigsaw9
@@ -173,9 +175,43 @@ These implement R10/R15/R20 and B/IR72; no owner or Fable decision is needed. Ke
    The final-source mutation run must retain its full outcomes/failing-test evidence. If any
    evidence required to substantiate an accepted gate cannot be verified, send `QUESTION:`.
 
+### JF-01 / S-OD10 — owner-approved Jellyfish acquisition exception
+
+**Owner, Discord, 2026-11-16 22:20 (+07:00): "Chọn A." (choose A).** The unchanged question
+and adjacent confirmation are in `docs/difficulty-v3/clarifications-resolved.md`; S-AV35 tracks
+the result and MS18e audit. This is a one-off acquisition exception for **MS12's Jellyfish only**,
+not a change to the normal Player hint-replay contract. It releases this source search, not
+MS12 acceptance or the serial tasks after it.
+
+The approved option A bounds are:
+
+- Classic9, corpus seed **4242**, indices **0–19,999**, at most 20,000 candidate indices, in ascending order.
+- Use unchanged original givens and `level:null`, `testkit-4242-<index>` provenance.
+- Reuse retained givens or materialize the prefix once; account for construction work. Do not regenerate the prefix for every chunk.
+- Replay through the existing Player tool in chunks of **at most 64**, with ≤400 hints per puzzle. Preserve the eight-minute tool deadline, credible ≤450-second admission, 540-second process ceiling, locking and 15-second gaps.
+- Stop acquisition after the first chunk supplies a verified Jellyfish source. Publish/check it, then require all 37 GH checks and final quick/CI gates.
+- If the prefix is exhausted, or execution cannot remain within those bounds, report completed/incomplete ranges and stop. **No automatic further corpus or Generator expansion.**
+
+Use the established test-kit export format with an empty header level; reconstructing a corpus
+is construction work, not a generation-free loophole. Keep source identities, construction/replay
+cost and completed/incomplete ranges in this task's evidence. The failed ordinary acquisition
+records remain history. The decision makes no claim that a source has already been found.
+
+Only the verified tool-generated Jellyfish replacement is published by this route: no fabricated,
+hand-edited or stale snapshot, suppressed technique, weakened test, changed prior/order/finder,
+availability change or additional Generator discovery is authorized. Option B was not chosen.
+The ordinary discovery allowance is not reset, and no other ID/task inherits this exception.
+After a source is verified, complete the all-37 GH check and both final quick sets/CI with their
+normal fingerprint requirements; retain/confirm E's source checks rather than changing frozen
+generation bytes to obtain an example. If the approved route cannot finish, return `QUESTION:`
+with the exact completed/incomplete range and outcome for another owner decision; do not silently
+expand or defer the missing example.
+
 ## Files to create/modify
 
 - Chain engine/suite; full B/E, both designs' chain coverage and both guide languages.
+- Task-owned MS12 corpus/source artifacts and acquisition logs under JF-01/S-OD10's bounds;
+  no production/tool default or additional discovery-route change.
 
 ## Implementation steps
 
