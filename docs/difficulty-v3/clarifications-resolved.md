@@ -12,6 +12,9 @@ RP-01 followed unchanged with Fable's 2026-11-16 answer and the owner's confirma
 Remote Pairs moves to order 116, weight 350, base cost 35, behind a reachability gate before MS10a's E.
 JF-01 is archived with the owner's direct Discord answer on 2026-11-16 at 22:20 (+07:00), S-OD10:
 option A, a one-off bounded Jellyfish GH-source acquisition exception for MS12; GH acceptance stays unchanged.
+GC-01 is archived with the owner's direct Discord answer on 2026-11-17 at 04:30 (+07:00), S-OD11:
+option A, bounded grouped reasoning first and a short-only, uncapped singleton fallback on a local cap,
+under the same parent budget/window; IR54 is preserved and the long ID remains bounded.
 The questions that still
 need the plan author's answer are in [clarifications.md](clarifications.md); when one is answered, it moves here.
 
@@ -2336,6 +2339,102 @@ is the red 36/37 GH result above; the decision itself makes no claim that a sour
 
 ---
 
+## GC-01 / S-OD11 — MS13c grouped attempt and legacy singleton fallback
+
+The original pack question below is preserved unchanged from
+`bc3450c:tasks/difficulty-v3/MS13c-activate-grouped-chains.md`. The orchestrator posted GC-01
+to the owner in Discord. The later scheduling exception let only inactive MS14a run ahead;
+it did not decide either option. The owner's answer follows the question.
+
+### GC-01 — owner question: retain legacy work coverage or bound the whole short ID?
+
+**Decision requested from the owner before MS13c dispatch. No answer is assumed.**
+
+IR54 deliberately leaves `forcingChain` unbounded in local work, subject to its length window
+and parent budget/cancellation. The proposed grouped attempt is bounded at 50,000 construction
+plus search units. S-AV36 shows that construction alone exhausts that starting allowance at
+38/48 Samurai and 43/51 Sohei sampled chain-group positions; the current short ID demonstrably
+can find deductions beyond 50,000. A cap on the whole ID can therefore remove existing
+deductions. A fallback preserves a legacy route but needs an explicit proof-domain policy.
+Please choose **A or B**, or specify an alternative with both rules resolved.
+
+**A — preserve the unbounded legacy route; authorize a bounded grouped enhancement with an
+explicit complete-singleton fallback for `forcingChain` only (SA2's recommendation).**
+
+- Try the canonical grouped graph and minimum search under their one shared new allowance.
+  A completed grouped result follows R9's windows and complete-graph minimum as usual.
+- Only a **local work/node cap** in that attempt permits the short ID to discard all grouped
+  scratch and run the accepted complete singleton search, with the same caller-clamped
+  short window and `workLimit:null`. Check and retain the same parent budget; no reset.
+  A spent parent budget, cancellation or another error never triggers recovery. Neither
+  a completed negative nor a below-window result is a reason to run another search.
+- The fallback Finding certifies the minimum in the **complete singleton graph**, not in the
+  discarded grouped graph. This explicitly changes the planned all-or-null grouped policy
+  and defines which represented graph R9's minimum refers to. Never emit a partial grouped
+  proof or claim that no shorter grouped proof exists. Legacy triples remain truthful.
+- `forcingChainLong` keeps the bounded grouped attempt with no fallback or second allowance;
+  an incomplete graph/minimum gives null. An ID called alone still cannot relabel a short
+  represented proof as long. No other finder inherits a fallback.
+- The whole short call is **not** capped at 50,000: grouped work plus legacy work/time must
+  both be recorded. Added work still spends the parent budget, so this is not a promise of
+  unchanged puzzles, latency, or wall-budget-limited availability.
+
+**B — supersede IR54 for `forcingChain` and bound both whole forcing IDs.**
+
+- Both IDs use only the complete canonical grouped graph and one shared finite
+  construction-plus-search allowance, initially 50,000; no fallback or reset.
+  Incomplete construction/minimum search returns null even when the legacy singleton
+  finder would have found a deduction. Accept that deliberate loss of legacy coverage.
+- Amend the short-ID policy/tests/docs explicitly under the owner's answer, preserving the
+  earlier IR54 evidence as history. This does not bound `nishio`, alter XY/deep limits or
+  select another C. A larger finite new allowance would still be a cap on the old short ID;
+  the once-only numerical adjustment cannot substitute for this policy decision.
+
+**Common to both choices:** full S3 scope, IDs/weights/orders/windows, parent-budget/cancellation,
+independent proof checking, B/E/GH, quick/CI, the once-only R10 rule and final qualification (c1)
+stay. The graph minimum must complete before a grouped Finding is published. MS13c must explain
+rating/wire/hash changes, measure costs/caps on its final source and carry S-AV36 to MS18d/MS18e.
+No new offer, guard increase, fabricated example, deferred technique or weakened correctness
+assertion is approved. A is recommended to preserve the accepted legacy route, **not** because
+its cost or availability is already measured; its fallback/minimum-domain exception needs the
+owner's explicit approval just as B's replacement of IR54 does.
+
+**Owner answer requested:** choose A, B or an exact alternative; confirm the whole-ID work policy
+and the minimum-proof domain. The pack author records the answer and amends this brief before
+dispatch. Until then MS13a's inactive closure and MS13b's consumer work may finish, but MS13c
+and later serial tasks are not dispatched. No new S-OD number is assigned before an answer.
+
+**Owner confirmation (2026-11-17 04:30 +07:00, Discord): "GC-01: chọn A.", recorded as
+S-OD11.** The owner approves **option A exactly**. IR54's unbounded local-work legacy route
+is preserved for `forcingChain`; option B is not approved.
+
+Both forcing IDs first use the bounded grouped attempt, initially 4,096 additional nodes and
+one 50,000-unit construction-plus-search allowance. Only a local work/node cap permits the
+short ID to discard grouped scratch and run the complete singleton search with
+`workLimit:null`, the same caller-clamped short window and the same parent budget. No reset,
+new deadline, fallback after parent-budget exhaustion/cancellation/error, or retry after a
+completed negative/window rejection is authorized. The long ID has no fallback or second
+allowance and returns null for incomplete construction/minimum search.
+
+A grouped Finding certifies its minimum in the complete canonical grouped graph. A fallback
+Finding certifies its minimum only in the complete singleton graph; it makes no minimum claim
+about the discarded grouped graph. No partial grouped proof is published. This is a proof-search
+fallback, not a change to the Generator's exactness/warning or qualification rules.
+
+MS13c records construction, grouped search, local caps, fallback work/latency, total call cost,
+parent-budget outcomes and the selected proof domain. R10's one evidenced adjustment of the
+new limits remains available; this answer selects no new numeric limit, changes no earlier
+XY/Nishio limit or C, and promises no unchanged wall-budget-limited availability. All normal
+proof/integration/E/GH/quick/CI gates and final qualification remain.
+
+The GC-01 policy hold is lifted, **not** the serial prerequisite: finish, review, accept and
+commit the already-running inactive MS14a, then dispatch **MS13c -> MS14b -> MS14c**.
+No MS14a scope or implementation change follows. The running brief is left untouched.
+S-AV36 is resolved as to policy but remains open for MS13c's measurements, MS18d's final cost
+disposition, MS18e's audit and MS18c's measured availability consequences.
+
+---
+
 ## Owner decisions — current resume register
 
 This register is a navigation aid, not a rewrite of the questions or answers above. The later decision governs
@@ -2358,6 +2457,7 @@ where an earlier recovery/process rule conflicts. The pause commit is a historic
 | S-OD8 | Owner, same time/channel; approve the S-AV08 quick-tier proposal in `docs/difficulty-v3/qualification-checkpoint-2026-11-15.md` section 9. Move the three `pipeline` generation event-cost ratio tests to `generator/tests/manual/perf.test.js`; split the Generator `player` replay case so classic9 Hell 1 seed 3 stays quick and mega16 Nightmare seed 478576959 plus Hell 1 seed 2422420669 move to `generator/tests/manual/variants.test.js`. Preserve requests, seeds, limits, attempts, timeouts and assertions byte for byte. The loss of these ratios and two mega16 replays from PR CI is accepted; structural event checks, short digging/full-grid cost tests and G01-G14 goldens stay quick. MS07f is scheduled after the already-running MS08a and before MS08b; it owns the r6c manifest/group metadata, both developer guides/design and actual before/after per-app quick costs. No other tier move is approved. MS18e audits the disposition and checks the four relocated manual cases on the final source; "about 300 s" is a projection, not a promised result. |
 | S-OD9 | Owner, 2026-11-16 06:23 (+07:00), on the command line ("Sudoku - xác nhận đổi remote pairs"); RP-01. Confirms Fable's answer (A) with a corrected prior: `remotePairs` at order 116, weight 350, base cost 35 (R13's 132/440/44 superseded, kept as history); group wing, Hard tier, unscoped, no uniqueness assumption. R13 and the R10 cost row are amended; GH, IR72 H1, bundle B, the discovery ceiling and SA2-Q-S11 are unchanged. MS10a runs the seed-4242 reachability gate (30,000 positions after the prefix below 116, 20,000 complete solves) before E; a failed gate stops before E and goes to the owner ((B) or removing the ID), not to Fable. S-AV32 stays open for MS18e. MS10b-MS18e stay behind MS10a. |
 | S-OD10 | Owner, 2026-11-16 22:20 (+07:00), Discord: "Chọn A."; JF-01. One-off MS12/Jellyfish acquisition exception: classic9 test-kit seed 4242, indices 0-19,999 (at most 20,000), ascending; unchanged original givens, level null and non-numeric `testkit-4242-<index>` provenance. Reuse givens or materialize the prefix once, accounting for construction; never regenerate it per chunk. Existing Player replay tool, chunks <=64, <=400 hints/puzzle, eight-minute tool deadline, credible <=450 s admission, 540 s process ceiling, locking/15 s gaps. Stop acquisition after the first chunk supplies a verified source, publish/check it, then require all 37 GH checks and final quick/CI gates. At exhaustion or inability to remain within bounds, report completed/incomplete ranges and stop. No automatic corpus/Generator expansion, no option B, no discovery-budget reset or permission for another ID/task. GH's real normal-hint contract, finders, priors, availability and tests remain unchanged. S-AV35: MS12 completion and MS18e audit. |
+| S-OD11 | Owner, 2026-11-17 04:30 (+07:00), Discord: "GC-01: chọn A."; GC-01. Option A is binding: bounded grouped attempt first, initially 4,096 additional nodes and 50,000 shared construction/search units. Only a local work/node cap permits `forcingChain` to discard grouped scratch and run the complete singleton search with no local work cap, under the same caller-clamped short window and parent budget; no budget reset or fallback for parent exhaustion, cancellation/errors, completed negatives or window rejection. Its minimum is certified in the complete singleton graph, not the abandoned grouped graph. `forcingChainLong` stays on the bounded grouped route, with no fallback/second allowance; incomplete construction/minimum returns null. IR54 is preserved. Record both phases and total cost; R10's once-only own-new-limit adjustment and all proof/E/GH/quick/CI/qualification gates remain. No numeric adjustment or availability guarantee is made by this answer. Finish accepted/committed MS14a before MS13c, then MS14b/MS14c; no change to MS14a. S-AV36: policy resolved, measurements/cost/audit still open. |
 
 **Q-MS07e-2 — pack-author ruling (SA2, 2026-11-15), not another owner decision:** no change to
 the projection rule and no speculative one-off launch of the six unexecuted cells. Route
