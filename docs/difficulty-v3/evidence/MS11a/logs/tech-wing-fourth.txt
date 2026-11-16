@@ -1,0 +1,18 @@
+$ node tests\node-runner.js --suite=tech-wing
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-wing: 383 passed, 1 failed  (9.89 s)
+
+Failures:
+  FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one
+       GenerationError: budget.exceeded
+       at error (Q:\git\sudoku\core\js\engine\budget.js:38:14)
+       at Object.check (Q:\git\sudoku\core\js\engine\budget.js:63:15)
+       at Object.check (Q:\git\sudoku\core\js\engine\techniques.js:220:65)
+       at findRectangleTypes12 (Q:\git\sudoku\core\js\engine\tech-wing.js:637:32)
+
+Suites: 1
+Tests:  384 total, 383 passed, 1 failed, 0 skipped
+Time:   9.89 s running tests, 9.99 s total
+exit=1 seconds=10.112

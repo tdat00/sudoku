@@ -1,0 +1,1250 @@
+[
+  {
+    "label": "g-hash-classic4-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic4-veryEasy-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic4-veryEasy-00 0.539 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic4-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic4-veryEasy-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic4-veryEasy-05 0.564 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic4-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic4-veryEasy-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic4-veryEasy-10 0.551 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic4-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic4-veryEasy-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic4-veryEasy-15 0.55 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic6-veryEasy-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic6-veryEasy-00 0.548 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic6-veryEasy-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic6-veryEasy-05 0.586 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic6-veryEasy-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic6-veryEasy-10 0.558 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic6-veryEasy-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic6-veryEasy-15 0.535 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic6-hard-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic6-hard-00 0.999 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic6-hard-05.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-classic6-hard-05 1.05 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic6-hard-10.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-classic6-hard-10 1.165 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic6-hard-15.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-classic6-hard-15 1.358 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-veryEasy-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic9-veryEasy-00 0.555 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-veryEasy-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic9-veryEasy-05 0.56 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-veryEasy-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic9-veryEasy-10 0.554 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-veryEasy-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic9-veryEasy-15 0.549 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-easy-00.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS10b final E g-hash-classic9-easy-00 1.918 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-easy-05.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS10b final E g-hash-classic9-easy-05 1.936 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-easy-10.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS10b final E g-hash-classic9-easy-10 2.01 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-easy-15.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS10b final E g-hash-classic9-easy-15 3.196 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-normal-00.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS10b final E g-hash-classic9-normal-00 2.488 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-normal-05.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS10b final E g-hash-classic9-normal-05 3.832 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-normal-10.json"
+    ],
+    "projectionSeconds": 11,
+    "projectionBasis": "MS10b final E g-hash-classic9-normal-10 2.709 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-normal-15.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS10b final E g-hash-classic9-normal-15 2.339 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-hard-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic9-hard-00 0.788 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-hard-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic9-hard-05 0.729 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-hard-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic9-hard-10 0.657 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-hard-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic9-hard-15 0.737 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-expert-00.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-classic9-expert-00 1.238 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-expert-05.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS10b final E g-hash-classic9-expert-05 1.539 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-expert-10.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-classic9-expert-10 1.081 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-expert-15.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-classic9-expert-15 1.416 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-master-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-master-00.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-classic9-master-00 1.258 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-master-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-master-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic9-master-05 0.748 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-master-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-master-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-classic9-master-10 0.828 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-master-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-master-15.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-classic9-master-15 1.316 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-nightmare-00.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS10b final E g-hash-classic9-nightmare-00 1.72 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-nightmare-05.json"
+    ],
+    "projectionSeconds": 11,
+    "projectionBasis": "MS10b final E g-hash-classic9-nightmare-05 2.894 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-nightmare-10.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS10b final E g-hash-classic9-nightmare-10 1.977 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\classic9-nightmare-15.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS10b final E g-hash-classic9-nightmare-15 1.8 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\mega12-normal-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-mega12-normal-00 0.618 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\mega12-normal-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-mega12-normal-05 0.635 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\mega12-normal-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-mega12-normal-10 0.609 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\mega12-normal-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-mega12-normal-15 0.595 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\mega16-easy-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-mega16-easy-00 0.6 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\mega16-easy-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-mega16-easy-05 0.618 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\mega16-easy-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-mega16-easy-10 0.641 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\mega16-easy-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-mega16-easy-15 0.679 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\diagonalX-easy-00.json"
+    ],
+    "projectionSeconds": 16,
+    "projectionBasis": "MS10b final E g-hash-diagonalX-easy-00 5.028 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\diagonalX-easy-05.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS10b final E g-hash-diagonalX-easy-05 4.448 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\diagonalX-easy-10.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS10b final E g-hash-diagonalX-easy-10 1.934 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\diagonalX-easy-15.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS10b final E g-hash-diagonalX-easy-15 3.96 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\diagonalX-nightmare-00.json"
+    ],
+    "projectionSeconds": 16,
+    "projectionBasis": "MS10b final E g-hash-diagonalX-nightmare-00 5.212 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\diagonalX-nightmare-05.json"
+    ],
+    "projectionSeconds": 22,
+    "projectionBasis": "MS10b final E g-hash-diagonalX-nightmare-05 8.133 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\diagonalX-nightmare-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MS10b final E g-hash-diagonalX-nightmare-10 7.093 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\diagonalX-nightmare-15.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MS10b final E g-hash-diagonalX-nightmare-15 7.12 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\hyper-hard-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-hyper-hard-00 0.672 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\hyper-hard-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-hyper-hard-05 0.65 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\hyper-hard-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-hyper-hard-10 0.706 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\hyper-hard-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-hyper-hard-15 0.73 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\jigsaw9-normal-00.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS10b final E g-hash-jigsaw9-normal-00 1.594 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\jigsaw9-normal-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-jigsaw9-normal-05 0.738 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\jigsaw9-normal-10.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-jigsaw9-normal-10 1.025 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\jigsaw9-normal-15.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-jigsaw9-normal-15 1.352 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\jigsaw9-master-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-jigsaw9-master-00 0.981 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\jigsaw9-master-05.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-jigsaw9-master-05 1.248 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\jigsaw9-master-10.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS10b final E g-hash-jigsaw9-master-10 3.812 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\jigsaw9-master-15.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-jigsaw9-master-15 1.029 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\killer-easy-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-killer-easy-00 0.613 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\killer-easy-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-killer-easy-05 0.613 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\killer-easy-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-killer-easy-10 0.618 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\killer-easy-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-killer-easy-15 0.642 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\killer-hard-00.json"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "MS10b final E g-hash-killer-hard-00 27.478 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\killer-hard-05.json"
+    ],
+    "projectionSeconds": 64,
+    "projectionBasis": "MS10b final E g-hash-killer-hard-05 29.256 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\killer-hard-10.json"
+    ],
+    "projectionSeconds": 62,
+    "projectionBasis": "MS10b final E g-hash-killer-hard-10 28.4 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-killer-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\killer-hard-15.json"
+    ],
+    "projectionSeconds": 62,
+    "projectionBasis": "MS10b final E g-hash-killer-hard-15 28.139 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\greaterThan-normal-00.json"
+    ],
+    "projectionSeconds": 33,
+    "projectionBasis": "MS10b final E g-hash-greaterThan-normal-00 13.555 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\greaterThan-normal-05.json"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "MS10b final E g-hash-greaterThan-normal-05 12.104 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\greaterThan-normal-10.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-greaterThan-normal-10 1.308 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\greaterThan-normal-15.json"
+    ],
+    "projectionSeconds": 33,
+    "projectionBasis": "MS10b final E g-hash-greaterThan-normal-15 13.653 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\greaterThan-hard-00.json"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "MS10b final E g-hash-greaterThan-hard-00 12.129 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\greaterThan-hard-05.json"
+    ],
+    "projectionSeconds": 28,
+    "projectionBasis": "MS10b final E g-hash-greaterThan-hard-05 11.148 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\greaterThan-hard-10.json"
+    ],
+    "projectionSeconds": 18,
+    "projectionBasis": "MS10b final E g-hash-greaterThan-hard-10 6.056 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\greaterThan-hard-15.json"
+    ],
+    "projectionSeconds": 23,
+    "projectionBasis": "MS10b final E g-hash-greaterThan-hard-15 8.736 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\samurai-easy-00.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS10b final E g-hash-samurai-easy-00 3.109 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\samurai-easy-05.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS10b final E g-hash-samurai-easy-05 3.896 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\samurai-easy-10.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS10b final E g-hash-samurai-easy-10 3.32 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\samurai-easy-15.json"
+    ],
+    "projectionSeconds": 11,
+    "projectionBasis": "MS10b final E g-hash-samurai-easy-15 2.655 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\sohei-veryEasy-00.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-sohei-veryEasy-00 0.636 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\sohei-veryEasy-05.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-sohei-veryEasy-05 0.649 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\sohei-veryEasy-10.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-sohei-veryEasy-10 0.621 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\sohei-veryEasy-15.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10b final E g-hash-sohei-veryEasy-15 0.646 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\butterfly-normal-00.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS10b final E g-hash-butterfly-normal-00 1.504 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\butterfly-normal-05.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-butterfly-normal-05 1.119 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\butterfly-normal-10.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS10b final E g-hash-butterfly-normal-10 1.745 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\butterfly-normal-15.json"
+    ],
+    "projectionSeconds": 11,
+    "projectionBasis": "MS10b final E g-hash-butterfly-normal-15 2.874 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-flower-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\flower-normal-00.json"
+    ],
+    "projectionSeconds": 11,
+    "projectionBasis": "MS10b final E g-hash-flower-normal-00 2.652 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-flower-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\flower-normal-05.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-flower-normal-05 1.137 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-flower-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\flower-normal-10.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-flower-normal-10 1.432 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-flower-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\flower-normal-15.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS10b final E g-hash-flower-normal-15 2.291 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\wordoku-normal-00.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS10b final E g-hash-wordoku-normal-00 2.32 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\wordoku-normal-05.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-hash-wordoku-normal-05 1.344 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\wordoku-normal-10.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS10b final E g-hash-wordoku-normal-10 2.338 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS11a\\hashes\\wordoku-normal-15.json"
+    ],
+    "projectionSeconds": 11,
+    "projectionBasis": "MS10b final E g-hash-wordoku-normal-15 2.866 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  }
+]

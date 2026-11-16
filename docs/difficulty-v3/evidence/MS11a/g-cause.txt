@@ -1,0 +1,31 @@
+$ node tests\artifacts\difficulty-v3\MS11a\g-cause.js
+G01 classic9 expert seed 3275974478: same puzzle with and without: true; positions 28 / 28 (0.7 s)
+  positions that differ: 0
+G02 classic9 veryEasy seed 1: same puzzle with and without: true; positions 22 / 22 (0.0 s)
+  positions that differ: 0
+G03 classic9 nightmare seed 42: same puzzle with and without: true; positions 28 / 28 (0.4 s)
+  positions that differ: 0
+G04 classic9 hell1 seed 2400651925: same puzzle with and without: true; positions 31 / 31 (15.8 s)
+  positions that differ: 0
+G05 classic9 hell1 seed 2299986211: same puzzle with and without: true; positions 30 / 30 (17.0 s)
+  positions that differ: 0
+G06 jigsaw9 nightmare seed 42: same puzzle with and without: true; positions 32 / 32 (0.1 s)
+  positions that differ: 0
+G07 jigsaw9 nightmare seed 3962167687: same puzzle with and without: true; positions 32 / 32 (0.4 s)
+  positions that differ: 0
+G08 killer veryEasy seed 1: same puzzle with and without: true; positions 22 / 22 (0.0 s)
+  positions that differ: 0
+G10 killer nightmare seed 42: same puzzle with and without: true; positions 50 / 50 (51.1 s)
+  positions that differ: 0
+G12 greaterThan hard seed 3115968914: same puzzle with and without: true; positions 109 / 109 (1.2 s)
+  positions that differ: 0
+G13 samurai nightmare seed 42: same puzzle with and without: true; positions 123 / 123 (24.4 s)
+  positions that differ: 0
+G14 mega16 hell2 seed 12: same puzzle with and without: true; positions 78 / 78 (10.4 s)
+  position 70: score without 1766, with 1887; hardest without forcingChain, with forcingChain; counts with minus without {"uniqueRectangle":2}
+  position 71: score without 2635, with 2666; hardest without forcingChainLong, with forcingChainLong; counts with minus without {"uniqueRectangle":1}
+  position 72: score without 3675, with 3688; hardest without nishio, with nishio; counts with minus without {"boxLine":-1,"uniqueRectangle":1}
+  position 73: score without 3894, with 3904; hardest without nishio, with nishio; counts with minus without {"uniqueRectangle":1}
+  position 77: score without 6473, with 6479; hardest without nishioDeep, with nishioDeep; counts with minus without {"uniqueRectangle":1}
+  positions that differ: 5
+exit=0 seconds=121.883

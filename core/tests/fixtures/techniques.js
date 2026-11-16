@@ -806,6 +806,11 @@
   var BELOW_WXYZ = THROUGH_FSF.concat(['jellyfish', 'xyWing', 'xyzWing']);
   var THROUGH_WXYZ = BELOW_WXYZ.concat(['wxyzWing']);
 
+  // Where uniqueRectangle is reached (MS11a): the techniques before it in the registry (through wWing), and the same
+  // plus itself. Explicit lists, so that a technique registered later cannot move a position.
+  var BELOW_UR = THROUGH_WXYZ.concat(['wWing']);
+  var THROUGH_UR = BELOW_UR.concat(['uniqueRectangle']);
+
   // Real unique puzzles. The first two are the puzzles of the v2 chain fixtures; the next three are famous
   // puzzles of tests/fixtures/classic.js; the last three are minimal puzzles dug by SG.testkit.dig from the
   // seeded stream 161 (fork 'minimal.<i>'): #24, #379 and #155, whose first long chains have 7, 8 and 7 links once
@@ -932,17 +937,101 @@
   // The position before nakedQuad: the singles, the locked candidates, the naked and hidden pairs and triples.
   var BEFORE_NAKED_QUAD = BELOW_SKYSCRAPER.slice(0, BELOW_SKYSCRAPER.indexOf('nakedQuad'));
 
+  // Real unique puzzles of the uniqueRectangle fixtures (MS11a), the puzzles of the seeded corpus of
+  // H.randomStatesWithKnownSolution(classic9, seed 4242) (dug by SG.testkit.dig, unique by construction; the puzzle
+  // of index i is the state #4i), named by their index. The positions are where the registry reaches uniqueRectangle
+  // (after: BELOW_UR, every technique before it exhausted) and its first Finding there is the subtype named: of 30,000
+  // dug puzzles of seed 4242 the position has a Unique Rectangle in 1,025 (types 1, 2, 3 and 4: 452, 95, 146 and 332) and
+  // 152 and 321 of 20,000 complete solves use a type 3 and a type 4 step (MS11a evidence). UR_TYPE3 is puzzle 637 (the
+  // floors R9C8 and R9C9 {2,3}, the roofs R4C8 {2,3,5,9} and R4C9 {2,3,6}, whose extras 5, 6 and 9 fill the real cells
+  // R4C5 {6,9} and R4C6 {5,9} of row 4: R4C1 loses 5 and 6); UR_TYPE4 is puzzle 596 (the floors R3C7 and R3C9 {1,9}, the
+  // roofs R6C7 and R6C9, the 1 held only by them in row 6: both lose it). UR_TYPE1 and UR_TYPE2 (puzzles 0 and 152) are
+  // the older subtypes at the same position, where they keep their priority. UR_TRIPLE, UR_BOX and UR_COLUMN (puzzles
+  // 310, 2140 and 156) are three more real positions for the soundness supplements: a type 3 of three real cells in
+  // column 9, a type 3 of three real cells in box 9 and a type 4 in column 4. UR_WWING (puzzle 42) is the neighbour's
+  // negative: its position through wxyzWing has a genuine W-Wing and no rectangle.
+  var UR_TYPE1 = '2.....7...31...5..7.6..82..3......9....41.......7.2.....8.6..1..4...5........382.';
+  var UR_TYPE2 = '.1.......4...2........5.86...5.4.61...75.8...1..2..3..7...8...3..9..62.1...4.....';
+  var UR_TYPE3 = '...6.........2.7.8..8.57..9.17...4...........4....38...4.9..17..25.3....8..5.69..';
+  var UR_TYPE4 = '9...1.....1..9..4......4.7..49.6.....51..9.683..2.............3..7...59...61.5...';
+  var UR_TRIPLE = '....9..1......4.3..12...8..6...27.....3...12.5.....4.......8....9.5.....34....6.8';
+  var UR_BOX = '....812....7.........9.734.3...7.4.2..5.6........5..761.9......8....37...2....8..';
+  var UR_COLUMN = '...6.9....73....6.29............6.928....5.......1.53.6.27...8991...8.5..8.1....7';
+  var UR_WWING = '...9....8.6.....3..7.8..4.......12.3.43.7..5.1...2.6....6.45......2..16.3.8......';
+
   /**
    * Current fixtures that replace a historical entry or belong to an ID registered since (skyscraper, MS08a;
    * twoStringKite, MS08b; emptyRectangle, MS08c; finnedXWing, MS09a; finnedSwordfish, MS09b; remotePairs, MS10a;
-   * wxyzWing, MS10b), in the shape of the
+   * wxyzWing, MS10b; uniqueRectangle, MS11a), in the shape of the
    * entries of the map. The short chain fixtures have at most 4 links, so that they are forcingChain's under C = 4
    * and C = 6 alike. The long ones are the 5- and 6-link shortest proofs of two dug puzzles: forcingChainLong's
    * under the selected C = 4 (MS07c; under C = 6 they would be forcingChain's). The negatives include positions
    * where a shorter ID owns the proof, one of them at the window boundary: a chain of 5 links is not
-   * forcingChain's.
+   * forcingChain's. The uniqueRectangle entry replaces the v2 one (kept in `historyV2`, positions untouched) with one
+   * real positive per subtype at the position where the registry reaches it.
    */
   var CURRENT = {
+    uniqueRectangle: {
+      positive: [
+        {
+          name: 'uniqueRectangle type 3 on 2 and 3, the extras 5, 6 and 9 of the roofs R4C8 and R4C9 with R4C5 and R4C6 ' +
+            'in row 4, R4C1 loses 5 and 6 (a seeded dug puzzle)',
+          puzzle: UR_TYPE3,
+          after: BELOW_UR,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[27, 5], [27, 6]]
+          }
+        },
+        {
+          name: 'uniqueRectangle type 4 on 1 and 9, the 1 only in the roofs R6C7 and R6C9 of row 6, both lose it ' +
+            '(a seeded dug puzzle)',
+          puzzle: UR_TYPE4,
+          after: BELOW_UR,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[51, 1], [53, 1]]
+          }
+        },
+        {
+          name: 'uniqueRectangle type 1 on 5 and 9, R1C2 loses both (a seeded dug puzzle)',
+          puzzle: UR_TYPE1,
+          after: BELOW_UR,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[1, 5], [1, 9]]
+          }
+        },
+        {
+          name: 'uniqueRectangle type 2 on 6 and 8 with the extra 3 in the roofs R1C3 and R2C3, R3C3 loses it ' +
+            '(a seeded dug puzzle)',
+          puzzle: UR_TYPE2,
+          after: BELOW_UR,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[20, 3]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'uniqueRectangle has nothing left to do once the techniques through it are exhausted',
+          puzzle: UR_TYPE3,
+          after: THROUGH_UR,
+          propagate: true
+        },
+        {
+          name: 'uniqueRectangle leaves a genuine W-Wing (no rectangle) to wWing',
+          puzzle: UR_WWING,
+          after: THROUGH_WXYZ,
+          propagate: true
+        }
+      ]
+    },
     wxyzWing: {
       positive: [
         {
@@ -1414,9 +1503,20 @@
    * positions are added on top in the same way. MS10a: remotePairs is rare (6 firings in the 300 random states,
    * against the minimum of 3), so its three real positions, all first positions, are added on top, and its fixtures
    * are explicit first positions too. MS10b: wxyzWing is not rare (375 firings in the 300 random states), so its three
-   * real positions, at the position where the registry reaches it, are added on top in the same way.
+   * real positions, at the position where the registry reaches it, are added on top in the same way. MS11a:
+   * uniqueRectangle fires in the random states (24 firings in the 300 of the sweep, 8 of them type 3 and 7 type 4), so
+   * its three real positions, a type 3 of three real cells in a column, one in a box and a type 4 in a column, are added
+   * on top in the same way.
    */
   var SUPPLEMENTS = {
+    uniqueRectangle: [
+      { name: 'uniqueRectangle type 3 of three real cells in column 9 (a seeded dug puzzle)',
+        puzzle: UR_TRIPLE, after: BELOW_UR, propagate: true },
+      { name: 'uniqueRectangle type 3 of three real cells in box 9 (a second seeded dug puzzle)',
+        puzzle: UR_BOX, after: BELOW_UR, propagate: true },
+      { name: 'uniqueRectangle type 4 in column 4 (a third seeded dug puzzle)',
+        puzzle: UR_COLUMN, after: BELOW_UR, propagate: true }
+    ],
     wxyzWing: [
       { name: 'wxyzWing on 1, 4, 5 and 7 in R1C2, R1C6, R1C8 and R7C8 (a seeded dug puzzle)',
         puzzle: WX_SECOND, after: BELOW_WXYZ, propagate: true },

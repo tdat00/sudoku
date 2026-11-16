@@ -906,6 +906,25 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    units, and a spent limit gives `null` with `capHit: 'work'`, which proves no absence. It is registered at order 155
    and weight 800 (Master: 1.25 × 800 is not below Expert's maximum 1000); its cap and cost evidence is the named item
    S-AV33 in `generator/design.md`, "WXYZ-Wing".
+   The Unique Rectangle (same file, task MS11a) keeps its id, order 180, weight 900 and `assumesUniqueness: true` and
+   now names four subtypes (`technique.uniqueRectangle.type1.step` to `.type4.step`). After the first pass (types 1 and
+   2) has found nothing on any rectangle, a bounded second pass looks, rectangle by rectangle, for **type 3** (two floor
+   corners that hold exactly the pair {X, Y} and two roof corners that hold more: one roof must hold one of their extra
+   digits, or a swap would give a second solution, so the extras are one virtual member of a naked subset of a unit that
+   holds both roofs; with *k* other cells of that unit (no cap on *k*: from max(1, |extras| − 1) to the eligible cells,
+   at most digits − 1) whose candidates together with the extras are exactly *k* + 1
+   digits, those digits leave the remaining cells of the unit but both roofs and the *k* cells; `i18nArgs { roof1,
+   roof2, digits, partDigits, cells,
+   unit }`) and then for **type 4** (a complete unit that holds both roofs and in which one digit of the pair is a
+   candidate of those two cells only: the other digit leaves both roofs; `i18nArgs { roof1, roof2, digits, digit, unit
+   }`). The geometry and the uniqueness precondition are the old ones, a partial unit is no conjugate link, and an old
+   type keeps its priority over every new subtype. One work unit is one tested extension of a subset or one tested digit
+   of a link, 50,000 per call (`SG.wingSearch.UNIQUE_RECTANGLE_WORK_LIMIT`; `SG.wingSearch.uniqueRectangle(model, state,
+   ctx, { workLimit })` is its unregistered seam), the parent budget is checked at the entry of the second pass and at
+   most every 256 units, the observer reports every call that runs it, and a spent limit gives `null` with
+   `capHit: 'work'`, which proves no absence; a spent parent budget gives `null` with `capHit: null`. The proof, the
+   order, the absence of a cap on the real cells, the cost and the
+   reach are in `generator/design.md`, "Unique Rectangle types 3 and 4".
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
    `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
@@ -944,7 +963,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    that belongs to the true solution — needs no code of yours: `techniques.test.js` runs it for every registered
    technique. A rare pattern that the seeded random states seldom reach gets deterministic real positions in the
    `SUPPLEMENTS` of that fixture file (`{ name, puzzle, after, propagate }` with an explicit `after` array, a puzzle
-   with one solution; `forcingChainLong`, `nishioDeep`, `skyscraper`, `twoStringKite`, `remotePairs`, `emptyRectangle`, `finnedXWing`, `finnedSwordfish` and `wxyzWing` have three real positions each): the sweep runs the
+   with one solution; `forcingChainLong`, `nishioDeep`, `skyscraper`, `twoStringKite`, `remotePairs`, `emptyRectangle`, `finnedXWing`, `finnedSwordfish`, `wxyzWing` and `uniqueRectangle` have three real positions each): the sweep runs the
    complete random population of its call site first, never fewer states
    and never a lower firing minimum, and the supplements after it. What a finder costs on its fixtures is measured
    with `tests/pattern-cost.js` (see "Pattern cost" below); a finder reports its work through
@@ -959,7 +978,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (53 suites, 4,097 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (53 suites, 4,171 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (61 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -971,7 +990,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 53 suites,
-4,097 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+4,171 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -1028,7 +1047,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 61 suites, 53 of them quick (4,097 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 61 suites, 53 of them quick (4,171 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1436,7 +1455,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (30, 2,338 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (30, 2,412 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

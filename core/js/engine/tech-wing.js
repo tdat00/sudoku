@@ -1,6 +1,6 @@
 /**
  * Wing techniques (group `wing`): Remote Pairs, XY-Wing, XYZ-Wing, WXYZ-Wing, W-Wing and Unique Rectangle
- * (types 1, 2).
+ * (types 1, 2, 3, 4).
  *
  *   id               baseCost  order  assumesUniqueness
  *   remotePairs          35     116   false
@@ -22,6 +22,8 @@
  *   technique.wWing.step                { cell1, cell2, link1, link2, unit, digitX, digit }
  *   technique.uniqueRectangle.type1.step  { cell, digitX, digitY }
  *   technique.uniqueRectangle.type2.step  { roof1, roof2, digitX, digitY, digit }
+ *   technique.uniqueRectangle.type3.step  { roof1, roof2, digits, partDigits, cells, unit }
+ *   technique.uniqueRectangle.type4.step  { roof1, roof2, digits, digit, unit }
  * `digit` is always the digit that gets eliminated, `digitX` / `digitY` the other digits of the pattern.
  *
  * W-Wing: two bi-value cells with the same pair {X, Y} that do not see each other, joined by a strong link
@@ -105,6 +107,44 @@
  *   never fires. Type 1: three cells hold exactly {X, Y}, the fourth holds more: X and Y leave the fourth
  *   cell. Type 2: two cells hold exactly {X, Y}, the other two (sharing a side) hold {X, Y, Z}: Z is in one
  *   of them, so Z leaves every cell that sees both.
+ *
+ * Types 3 and 4 (rating v3, R14): the same rectangles, with two FLOOR corners that hold exactly {X, Y} and
+ * two ROOF corners whose candidates are proper supersets of {X, Y} (the roofs need not be equal and need not
+ * share a side, only a unit). The deadly pattern needs both roofs inside {X, Y}, so at least one roof holds
+ * one of the EXTRA digits E (the candidates of the two roofs outside {X, Y}; never a fixed extra digit in
+ * both roofs).
+ *   Type 3: take a unit that holds both roofs (any unit: the proof needs only that its cells differ), and k
+ *   other open cells of it, the REAL cells, whose candidates together with E are exactly k + 1 digits D. The
+ *   roof that holds an extra digit and the k real cells are k + 1 different cells of the unit with their
+ *   digits in D, so they hold all of D, and D leaves every other cell of the unit (the two roofs and the real
+ *   cells keep theirs). There is no fixed cap on k: it runs from max(1, |E| - 1) to the number of eligible
+ *   cells of the unit, at most digits - 1 (|D| = k + 1 <= digits), in ascending cell order within a size;
+ *   units in ascending index. A cell can be a real cell only when its candidates with E are at most
+ *   min(eligible cells, digits - 1) + 1 digits.
+ *   Type 4: a unit that holds both roofs and is COMPLETE (a digit occurs once in it) where the digit L of the
+ *   pair has exactly the two roofs as holders (a conjugate link; a partial unit proves nothing): one roof is
+ *   L, and the other roof cannot be the other digit of the pair, or all four corners would hold only {X, Y}.
+ *   So that other digit leaves both roofs. The digit L is tried in ascending order, units in ascending index.
+ *   Order: the pass of types 1 and 2 (rectangle by rectangle, type 1 before type 2) runs over EVERY rectangle
+ *   first; only when it finds nothing does the second pass run, rectangle by rectangle in the same order,
+ *   type 3 (all its units) before type 4 on each. The first Finding of the second pass is returned.
+ *   Finding of type 3: cells = the four rectangle cells in rectangle order, then the real cells ascending;
+ *   eliminations by cell ascending then digit ascending; arguments roof1 < roof2 (labels), digits = [X, Y],
+ *   partDigits = D (ascending), cells = the labels of the real cells (cell order) and the label of the unit.
+ *   Finding of type 4: cells = the four rectangle cells in rectangle order; eliminations the two roofs, cell
+ *   ascending, the removed digit; arguments roof1 < roof2, digits = [X, Y], digit (the removed one), unit.
+ *   Work (R10) of the second pass: a unit is one tested extension of a type 3 subset (a unit cell tried as
+ *   the next real cell, the first included, a rejected one too) or one tested conjugacy of a digit in a unit
+ *   (type 4); the scan that collects the candidate cells of a unit and the elimination list are part of their
+ *   unit. The limit is 50000 per call (`SG.wingSearch.UNIQUE_RECTANGLE_WORK_LIMIT`), the counter is local to
+ *   the call and the parent budget is checked at the entry of the second pass and before the unit that would
+ *   carry the work since the last check over 256 units. A spent limit ends the call with null (a lost
+ *   deduction, never an invented one: null with `capHit: 'work'` proves no absence; a Finding made before the
+ *   limit is spent is complete). A spent parent budget in the second pass also ends the call with null, but
+ *   with `capHit: null` and the caller's budget stays spent (as for the other bounded finders);
+ *   cancellation and every other error propagate. The pass of types 1 and 2 is unbounded as before and keeps
+ *   its own budget checks. `ctx.options.onPatternWork(record)` observes every call that runs the second pass:
+ *   { id: 'uniqueRectangle', work, limit, capHit (null | 'work'), retained (null) }.
  */
 (function (root) {
   'use strict';
@@ -125,6 +165,11 @@
   // R10 work policy of WXYZ-Wing: the combination extensions one call may spend (the parent budget is checked
   // as for Remote Pairs, every WORK_CHECK_UNITS).
   const WXYZ_WORK_LIMIT = 50000;
+
+  // R10 work policy of the Unique Rectangle types 3 and 4 (the second pass of findUniqueRectangle): the
+  // tested extensions one call may spend. The size of a type 3 subset has no cap of its own: it ends at the
+  // eligible cells of the unit and at digits - 1.
+  const UNIQUE_RECTANGLE_WORK_LIMIT = 50000;
 
   // Thrown through the walks of a Remote Pairs call whose work limit is spent.
   const WORK_CAP = Object.freeze({ capHit: 'work' });
@@ -167,7 +212,16 @@
         wxQuad: new Int32Array(4),
         wxUnion: new Int32Array(4),
         wxNon: new Int32Array(4),
-        wxHolders: new Int32Array(4)
+        wxHolders: new Int32Array(4),
+        // Unique Rectangle types 3 and 4: the units that hold both roofs, the candidate real cells of the
+        // unit under test, the subset being built, the digits of the extras and of its first 0..k cells
+        // (index = number of cells) and the integers of the pattern (lower roof, higher roof, unit, the pair
+        // of digits, the subset size).
+        urUnits: new Int32Array(model.units.length),
+        urPool: new Int32Array(n),
+        urPick: new Int32Array(Math.max(1, model.digits - 1)),
+        urUnion: new Int32Array(model.digits),
+        urFix: new Int32Array(5)
       };
       infoCache.set(model, info);
     }
@@ -571,8 +625,9 @@
     };
   }
 
-  // Unique Rectangle types 1 and 2; skipped when the caller does not assume a unique solution.
-  function findUniqueRectangle(model, state, ctx) {
+  // Unique Rectangle types 1 and 2 over every rectangle (the first pass); skipped when the caller does not
+  // assume a unique solution.
+  function findRectangleTypes12(model, state, ctx) {
     if (ctx.assumeUniqueness === false) return null;
     const info = infoFor(model);
     const rects = rectanglesOf(model, info);
@@ -916,6 +971,276 @@
     return findWxyzBounded(model, state, ctx, WXYZ_WORK_LIMIT);
   }
 
+  function byCellThenDigit(a, b) {
+    return a[0] - b[0] || a[1] - b[1];
+  }
+
+  function digitList(mask) {
+    const out = [];
+    for (let bits = mask; bits !== 0; bits &= bits - 1) out.push(digitOf(bits & -bits));
+    return out;
+  }
+
+  // Writes the units that hold both roofs, ascending, to `info.urUnits` and returns how many.
+  function roofUnits(model, info, roofA, roofB) {
+    const ua = model.cellUnits[roofA];
+    const ub = model.cellUnits[roofB];
+    const out = info.urUnits;
+    let count = 0;
+    for (let i = 0; i < ua.length; i++) {
+      for (let j = 0; j < ub.length; j++) {
+        if (ua[i] === ub[j]) {
+          out[count++] = ua[i];
+          break;
+        }
+      }
+    }
+    return count;
+  }
+
+  // The Finding of type 3 for the subset `info.urPick[0..k-1]` (`info.urFix`: lower roof, higher roof, unit,
+  // pair of digits, k) whose digits together with the extras of the roofs are `union` (k + 1 bits): every
+  // other open cell of the unit, the two roofs and the real cells aside, loses the digits of `union` it
+  // still has. Null without a target.
+  function urSubsetFinding(model, state, info, quad, union) {
+    const fix = info.urFix;
+    const k = fix[4];
+    const cand = state.candidates;
+    const value = state.value;
+    const pick = info.urPick;
+    const members = model.units[fix[2]];
+    const eliminations = [];
+    for (let i = 0; i < members.length; i++) {
+      const t = members[i];
+      if (value[t] !== 0 || t === fix[0] || t === fix[1]) continue;
+      let real = false;
+      for (let j = 0; j < k; j++) {
+        if (pick[j] === t) real = true;
+      }
+      if (real) continue;
+      for (let bits = cand[t] & union; bits !== 0; bits &= bits - 1) {
+        eliminations.push([t, digitOf(bits & -bits)]);
+      }
+    }
+    if (eliminations.length === 0) return null;
+    eliminations.sort(byCellThenDigit);
+    const cells = [quad[0], quad[1], quad[2], quad[3]];
+    const labels = [];
+    for (let j = 0; j < k; j++) {
+      cells.push(pick[j]);
+      labels.push(label(model, pick[j]));
+    }
+    return {
+      technique: 'uniqueRectangle',
+      cells: cells,
+      placements: [],
+      eliminations: eliminations,
+      i18nKey: 'technique.uniqueRectangle.type3.step',
+      i18nArgs: {
+        roof1: label(model, fix[0]),
+        roof2: label(model, fix[1]),
+        digits: digitList(fix[3]),
+        partDigits: digitList(union),
+        cells: labels,
+        unit: model.unitMeta[fix[2]].label
+      }
+    };
+  }
+
+  // Extends the partial subset of `depth` real cells (`info.urPick`, the digits of the extras and of its
+  // cells in `info.urUnion`) by one pool cell above position `from`, in ascending order, and returns the
+  // Finding of the first complete subset of `info.urFix[4]` cells with k + 1 digits and a target, or null.
+  // Every tested cell is one unit.
+  function urExtend(model, state, info, run, quad, depth, from, size) {
+    const k = info.urFix[4];
+    const cand = state.candidates;
+    const pool = info.urPool;
+    const pick = info.urPick;
+    for (let i = from; i <= size - (k - depth); i++) {
+      spend(run);
+      const c = pool[i];
+      const union = info.urUnion[depth] | cand[c];
+      if (popcount(union) > k + 1) continue;
+      pick[depth] = c;
+      if (depth === k - 1) {
+        if (popcount(union) === k + 1) {
+          const found = urSubsetFinding(model, state, info, quad, union);
+          if (found !== null) return found;
+        }
+        continue;
+      }
+      info.urUnion[depth + 1] = union;
+      const found = urExtend(model, state, info, run, quad, depth + 1, i + 1, size);
+      if (found !== null) return found;
+    }
+    return null;
+  }
+
+  // Type 3 in the unit `info.urFix[2]`: the open cells of the unit outside the rectangle are the eligible
+  // cells; a real cell needs its candidates with the extras to be at most min(eligible, digits - 1) + 1
+  // digits (|D| = k + 1 for a subset of k <= min(eligible, digits - 1) cells), so the pool is those cells
+  // ascending, then the subsets of max(1, |extras| - 1) .. min(pool, digits - 1) of them by size.
+  function urTypeThree(model, state, info, run, quad, extras) {
+    const cand = state.candidates;
+    const value = state.value;
+    const pool = info.urPool;
+    const members = model.units[info.urFix[2]];
+    let eligible = 0;
+    for (let i = 0; i < members.length; i++) {
+      const c = members[i];
+      if (value[c] !== 0 || cand[c] === 0) continue;
+      if (c === quad[0] || c === quad[1] || c === quad[2] || c === quad[3]) continue;
+      eligible++;
+    }
+    const first = Math.max(1, popcount(extras) - 1);
+    const widest = Math.min(eligible, model.digits - 1);
+    if (first > widest) return null;
+    let size = 0;
+    for (let i = 0; i < members.length; i++) {
+      const c = members[i];
+      if (value[c] !== 0 || cand[c] === 0) continue;
+      if (c === quad[0] || c === quad[1] || c === quad[2] || c === quad[3]) continue;
+      if (popcount(cand[c] | extras) > widest + 1) continue;
+      let p = size++;
+      while (p > 0 && pool[p - 1] > c) {
+        pool[p] = pool[p - 1];
+        p--;
+      }
+      pool[p] = c;
+    }
+    for (let k = first; k <= widest && k <= size; k++) {
+      info.urFix[4] = k;
+      info.urUnion[0] = extras;
+      const found = urExtend(model, state, info, run, quad, 0, 0, size);
+      if (found !== null) return found;
+    }
+    return null;
+  }
+
+  // Type 4 in the complete unit `unit` that holds both roofs: the digit of the pair that only the two roofs
+  // can still take (tried low to high) is the conjugate link, and the other digit leaves both roofs. One
+  // tested digit is one unit.
+  function urConjugate(model, state, info, run, quad, unit) {
+    const fix = info.urFix;
+    const common = fix[3];
+    const cand = state.candidates;
+    const members = model.units[unit];
+    for (let bits = common; bits !== 0; bits &= bits - 1) {
+      const linkBit = bits & -bits;
+      spend(run);
+      let holders = 0;
+      for (let i = 0; i < members.length && holders <= 2; i++) {
+        if ((cand[members[i]] & linkBit) !== 0) holders++;
+      }
+      if (holders !== 2) continue;
+      const digit = digitOf(common ^ linkBit);
+      return {
+        technique: 'uniqueRectangle',
+        cells: [quad[0], quad[1], quad[2], quad[3]],
+        placements: [],
+        eliminations: [[fix[0], digit], [fix[1], digit]],
+        i18nKey: 'technique.uniqueRectangle.type4.step',
+        i18nArgs: {
+          roof1: label(model, fix[0]),
+          roof2: label(model, fix[1]),
+          digits: digitList(common),
+          digit: digit,
+          unit: model.unitMeta[unit].label
+        }
+      };
+    }
+    return null;
+  }
+
+  // The second pass of Unique Rectangle: rectangle by rectangle in the order of the first pass, the types 3
+  // and 4 of a rectangle with two floor corners (exactly the pair) and two roof corners (proper supersets of
+  // it).
+  function scanRectangleSubtypes(model, state, ctx, info, run) {
+    const rects = rectanglesOf(model, info);
+    const cand = state.candidates;
+    const value = state.value;
+    const quad = info.quad;
+    const masks = info.masks;
+    const fix = info.urFix;
+    const complete = ctx.completeUnits;
+
+    for (let r = 0; r < rects.length; r += 4) {
+      let open = true;
+      for (let k = 0; k < 4; k++) {
+        quad[k] = rects[r + k];
+        masks[k] = cand[quad[k]];
+        if (value[quad[k]] !== 0) open = false;
+      }
+      if (!open) continue;
+      const common = masks[0] & masks[1] & masks[2] & masks[3];
+      if (popcount(common) !== 2) continue;
+      let exact = 0;
+      let first = -1;
+      let second = -1;
+      for (let k = 0; k < 4; k++) {
+        if (masks[k] === common) exact++;
+        else if (first < 0) first = k;
+        else second = k;
+      }
+      if (exact !== 2) continue;
+      const roofLow = Math.min(quad[first], quad[second]);
+      const roofHigh = Math.max(quad[first], quad[second]);
+      const extras = (masks[first] | masks[second]) & ~common;
+      const count = roofUnits(model, info, roofLow, roofHigh);
+      fix[0] = roofLow;
+      fix[1] = roofHigh;
+      fix[3] = common;
+      for (let i = 0; i < count; i++) {
+        fix[2] = info.urUnits[i];
+        const found = urTypeThree(model, state, info, run, quad, extras);
+        if (found !== null) return found;
+      }
+      for (let i = 0; i < count; i++) {
+        const u = info.urUnits[i];
+        if (complete[u] !== 1) continue;
+        const found = urConjugate(model, state, info, run, quad, u);
+        if (found !== null) return found;
+      }
+    }
+    return null;
+  }
+
+  // A Unique Rectangle call: the first pass (types 1 and 2, unbounded as before) over every rectangle, then,
+  // when it found nothing, the bounded second pass (types 3 and 4) with its own work counter (`workLimit` is
+  // the default except in the tests' seam). A spent work limit and a spent budget are "nothing found";
+  // cancellation and every other error propagate. The work of the second pass goes to the optional observer,
+  // which never selects the result.
+  function findUniqueRectangleBounded(model, state, ctx, workLimit) {
+    if (ctx.assumeUniqueness === false) return null;
+    const first = findRectangleTypes12(model, state, ctx);
+    if (first !== null) return first;
+    const info = infoFor(model);
+    const run = { ctx: ctx, limit: workLimit, work: 0, checkedAt: 0, capped: false };
+    let found = null;
+    try {
+      ctx.check();
+      found = scanRectangleSubtypes(model, state, ctx, info, run);
+    } catch (err) {
+      if (err === WORK_CAP) run.capped = true;
+      else if (!(err && err.code === 'budget.exceeded')) throw err;
+    }
+    const observer = ctx.options ? ctx.options.onPatternWork : undefined;
+    if (typeof observer === 'function') {
+      observer({
+        id: 'uniqueRectangle',
+        work: run.work,
+        limit: workLimit,
+        capHit: run.capped ? 'work' : null,
+        retained: null
+      });
+    }
+    return found;
+  }
+
+  function findUniqueRectangle(model, state, ctx) {
+    return findUniqueRectangleBounded(model, state, ctx, UNIQUE_RECTANGLE_WORK_LIMIT);
+  }
+
   const DEFINITIONS = [
     {
       id: 'remotePairs',
@@ -1001,6 +1326,7 @@
     SG.wingSearch = Object.freeze({
       REMOTE_PAIRS_WORK_LIMIT: REMOTE_PAIRS_WORK_LIMIT,
       WXYZ_WORK_LIMIT: WXYZ_WORK_LIMIT,
+      UNIQUE_RECTANGLE_WORK_LIMIT: UNIQUE_RECTANGLE_WORK_LIMIT,
       remotePairs: function (model, state, ctx, opts) {
         let limit = REMOTE_PAIRS_WORK_LIMIT;
         const given = opts === undefined || opts === null ? undefined : opts.workLimit;
@@ -1018,6 +1344,10 @@
       },
       wxyzWing: function (model, state, ctx, opts) {
         return findWxyzBounded(model, state, ctx, seamLimit(opts, WXYZ_WORK_LIMIT, 'wxyzWing'));
+      },
+      uniqueRectangle: function (model, state, ctx, opts) {
+        return findUniqueRectangleBounded(model, state, ctx,
+          seamLimit(opts, UNIQUE_RECTANGLE_WORK_LIMIT, 'uniqueRectangle'));
       }
     });
   }

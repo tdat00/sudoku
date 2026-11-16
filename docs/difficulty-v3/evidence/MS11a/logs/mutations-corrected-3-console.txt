@@ -1,0 +1,31 @@
+$ node tests\artifacts\difficulty-v3\MS11a\run-mutations.cjs Q:\git\sudoku\docs\difficulty-v3\evidence\MS11a\mutations-corrected-3.txt 56 83
+mutation 56 (a target loses the digits that it has outside the subset too): DETECTED - 389 total, 347 passed, 42 failed, 0 skipped - 42 failing, 42 of uniqueRectangle - 9.7 s
+mutation 57 (the eliminations are not sorted): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.6 s
+mutation 58 (the eliminations are sorted by cell, the digits highest first): DETECTED - 389 total, 354 passed, 35 failed, 0 skipped - 35 failing, 35 of uniqueRectangle - 10.1 s
+mutation 59 (the real cells are not in the cells of the Finding): DETECTED - 389 total, 353 passed, 36 failed, 0 skipped - 36 failing, 36 of uniqueRectangle - 9.9 s
+mutation 60 (the labels are not those of the real cells (the first roof repeated)): DETECTED - 389 total, 351 passed, 38 failed, 0 skipped - 38 failing, 38 of uniqueRectangle - 9.9 s
+mutation 61 (the digits of the pair and of the subset are swapped): DETECTED - 389 total, 353 passed, 36 failed, 0 skipped - 36 failing, 36 of uniqueRectangle - 9.8 s
+mutation 62 (the subset digits leave out the extras (the real cells only)): DETECTED - 389 total, 382 passed, 7 failed, 0 skipped - 7 failing, 7 of uniqueRectangle - 10.0 s
+mutation 63 (the roofs are swapped in the arguments): DETECTED - 389 total, 353 passed, 36 failed, 0 skipped - 36 failing, 36 of uniqueRectangle - 9.8 s
+mutation 64 (the unit is not the unit of the subset): DETECTED - 389 total, 359 passed, 30 failed, 0 skipped - 30 failing, 30 of uniqueRectangle - 9.9 s
+mutation 65 (a digit with three holders is a link (a third occurrence is not seen)): DETECTED - 389 total, 333 passed, 56 failed, 0 skipped - 56 failing, 55 of uniqueRectangle - 9.2 s
+mutation 66 (the holders are counted up to two only (a third occurrence is not seen)): DETECTED - 389 total, 333 passed, 56 failed, 0 skipped - 56 failing, 55 of uniqueRectangle - 9.2 s
+mutation 67 (the link digit is removed instead of the other digit): DETECTED - 389 total, 361 passed, 28 failed, 0 skipped - 28 failing, 28 of uniqueRectangle - 9.9 s
+mutation 68 (only the first roof loses the digit): DETECTED - 389 total, 364 passed, 25 failed, 0 skipped - 25 failing, 25 of uniqueRectangle - 10.0 s
+mutation 69 (the roofs lose the digit in the order of the second roof first): DETECTED - 389 total, 364 passed, 25 failed, 0 skipped - 25 failing, 25 of uniqueRectangle - 10.0 s
+mutation 70 (the digits are tried highest first): DETECTED - 389 total, 386 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.4 s
+mutation 71 (a tested digit counts no unit): DETECTED - 389 total, 384 passed, 5 failed, 0 skipped - 5 failing, 5 of uniqueRectangle - 10.5 s
+mutation 72 (a tested digit counts two units): DETECTED - 389 total, 384 passed, 5 failed, 0 skipped - 5 failing, 5 of uniqueRectangle - 10.4 s
+mutation 73 (the pair is replaced by the removed digit alone in the arguments): DETECTED - 389 total, 364 passed, 25 failed, 0 skipped - 25 failing, 25 of uniqueRectangle - 9.9 s
+mutation 74 (the cells of a type 4 Finding leave out the floors): DETECTED - 389 total, 364 passed, 25 failed, 0 skipped - 25 failing, 25 of uniqueRectangle - 10.0 s
+mutation 75 (a tested cell counts no unit): DETECTED - 389 total, 376 passed, 13 failed, 0 skipped - 13 failing, 13 of uniqueRectangle - 10.5 s
+mutation 76 (a tested cell counts two units): DETECTED - 389 total, 378 passed, 11 failed, 0 skipped - 11 failing, 11 of uniqueRectangle - 10.6 s
+mutation 77 (the entry check of the parent budget of the second pass is gone): DETECTED - 389 total, 386 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.4 s
+mutation 78 (cancellation and every other error are swallowed): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.5 s
+mutation 79 (a spent parent budget is propagated instead of "nothing found"): DETECTED - 389 total, 386 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.5 s
+mutation 80 (a spent work limit is propagated instead of "nothing found"): DETECTED - 389 total, 382 passed, 7 failed, 0 skipped - 7 failing, 7 of uniqueRectangle - 10.5 s
+mutation 81 (the limit constant is 50001): DETECTED - 389 total, 384 passed, 5 failed, 0 skipped - 5 failing, 5 of uniqueRectangle - 10.4 s
+mutation 82 (the registered finder ignores the constant): DETECTED - 389 total, 385 passed, 4 failed, 0 skipped - 4 failing, 4 of uniqueRectangle - 10.4 s
+mutation 83 (the exported constant is another number): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.4 s
+detected 28 of 28, 283.6 s
+exit=0 seconds=283.646

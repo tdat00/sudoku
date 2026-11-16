@@ -1,0 +1,7 @@
+$ node tests\artifacts\difficulty-v3\MS11a\run-mutations.cjs Q:\git\sudoku\docs\difficulty-v3\evidence\MS11a\mutations-corrected-5.txt 17 20
+mutation 17 (the widest subset is not bounded by the digits (equivalent: no unit has more than digits - 2 other cells)): NOT DETECTED (exit 0) - 389 total, 389 passed, 0 failed, 0 skipped - 0 failing, 0 of uniqueRectangle - 10.6 s
+mutation 18 (a type 3 whose first size is over the widest one is still built (equivalent: the size loop does not run)): NOT DETECTED (exit 0) - 389 total, 389 passed, 0 failed, 0 skipped - 0 failing, 0 of uniqueRectangle - 10.5 s
+mutation 19 (the eligible cells count the solved cells too): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.4 s
+mutation 20 (the eligible cells count the cells without a candidate too): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.5 s
+detected 2 of 4, 41.9 s
+exit=1 seconds=41.987

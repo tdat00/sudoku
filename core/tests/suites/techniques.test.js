@@ -127,10 +127,11 @@
     });
 
     it('puts the positive positions of a replaced or added entry where its id is reached in the registry ' +
-      '(MS07b, MS08a, MS08b, MS08c, MS09a, MS09b, MS10a, MS10b)', function () {
+      '(MS07b, MS08a, MS08b, MS08c, MS09a, MS09b, MS10a, MS10b, MS11a)', function () {
         var replaced = F.ids.filter(function (id) { return F.byId[id] !== F.historyV2.byId[id]; });
         expect(replaced.sort()).toEqual(['emptyRectangle', 'finnedSwordfish', 'finnedXWing', 'forcingChain',
-          'forcingChainLong', 'nishio', 'nishioDeep', 'remotePairs', 'skyscraper', 'twoStringKite', 'wxyzWing']);
+          'forcingChainLong', 'nishio', 'nishioDeep', 'remotePairs', 'skyscraper', 'twoStringKite', 'uniqueRectangle',
+          'wxyzWing']);
         replaced.forEach(function (id) {
           var below = F.registryOrder.slice(0, F.registryOrder.indexOf(id));
           F.byId[id].positive.forEach(function (fixture) {

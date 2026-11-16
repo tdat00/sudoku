@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS11a\ur-flood-b.js
+one flooded row: finding null record {"id":"uniqueRectangle","work":613,"limit":50000,"capHit":null,"retained":null}
+two flooded rows: finding null record {"id":"uniqueRectangle","work":1042,"limit":50000,"capHit":null,"retained":null}
+three flooded rows: finding null record {"id":"uniqueRectangle","work":1619,"limit":50000,"capHit":null,"retained":null}
+exit=0 seconds=0.237

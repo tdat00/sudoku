@@ -1,0 +1,31 @@
+$ node tests\artifacts\difficulty-v3\MS11a\run-mutations.cjs Q:\git\sudoku\docs\difficulty-v3\evidence\MS11a\mutations-corrected-1.txt 0 27
+mutation 0 (types 1 and 2 are not returned first (the second pass runs although the first found something)): DETECTED - 389 total, 340 passed, 49 failed, 0 skipped - 49 failing, 48 of uniqueRectangle - 9.8 s
+mutation 1 (a Finding of the first pass is replaced by nothing): DETECTED - 389 total, 339 passed, 50 failed, 0 skipped - 50 failing, 49 of uniqueRectangle - 10.0 s
+mutation 2 (the uniqueness assumption is not honoured before the second pass): DETECTED - 389 total, 387 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 10.4 s
+mutation 3 (type 4 is tried before type 3 on a rectangle): DETECTED - 389 total, 370 passed, 19 failed, 0 skipped - 19 failing, 19 of uniqueRectangle - 10.2 s
+mutation 4 (type 3 is never tried): DETECTED - 389 total, 339 passed, 50 failed, 0 skipped - 50 failing, 50 of uniqueRectangle - 9.8 s
+mutation 5 (a rectangle with one floor only is taken (exact 1 accepted)): DETECTED - 389 total, 361 passed, 28 failed, 0 skipped - 28 failing, 27 of uniqueRectangle - 9.7 s
+mutation 6 (a rectangle with no floor is taken (exact 0 accepted)): DETECTED - 389 total, 361 passed, 28 failed, 0 skipped - 28 failing, 27 of uniqueRectangle - 9.6 s
+mutation 7 (the extras are the digits that both roofs hold (an intersection, a fixed extra in both)): DETECTED - 389 total, 359 passed, 30 failed, 0 skipped - 30 failing, 29 of uniqueRectangle - 9.7 s
+mutation 8 (the extras still hold the pair of digits): DETECTED - 389 total, 340 passed, 49 failed, 0 skipped - 49 failing, 49 of uniqueRectangle - 10.0 s
+mutation 9 (the extras are those of the first roof only): DETECTED - 389 total, 365 passed, 24 failed, 0 skipped - 24 failing, 23 of uniqueRectangle - 9.8 s
+mutation 10 (the roofs are listed highest first): DETECTED - 389 total, 347 passed, 42 failed, 0 skipped - 42 failing, 42 of uniqueRectangle - 10.6 s
+mutation 11 (every unit of the first roof counts, not only those that hold both roofs): DETECTED - 389 total, 364 passed, 25 failed, 0 skipped - 25 failing, 24 of uniqueRectangle - 10.2 s
+mutation 12 (the units of the roofs are found from the second roof first (the order of the units reversed)): DETECTED - 389 total, 372 passed, 17 failed, 0 skipped - 17 failing, 17 of uniqueRectangle - 10.0 s
+mutation 13 (a cap of three real cells is restored (the widest subset)): DETECTED - 389 total, 374 passed, 15 failed, 0 skipped - 15 failing, 15 of uniqueRectangle - 10.4 s
+mutation 14 (a cap of four real cells is restored (the widest subset)): DETECTED - 389 total, 382 passed, 7 failed, 0 skipped - 7 failing, 7 of uniqueRectangle - 10.8 s
+mutation 15 (a cap of five real cells is restored (the widest subset)): DETECTED - 389 total, 382 passed, 7 failed, 0 skipped - 7 failing, 7 of uniqueRectangle - 10.4 s
+mutation 16 (the widest subset is one cell less than the eligible cells (the work of the full size is not spent)): DETECTED - 389 total, 385 passed, 4 failed, 0 skipped - 4 failing, 4 of uniqueRectangle - 10.4 s
+mutation 17 (the widest subset is not bounded by the digits (equivalent: no unit has more than digits - 2 other cells)): NOT DETECTED (exit 0) - 389 total, 389 passed, 0 failed, 0 skipped - 0 failing, 0 of uniqueRectangle - 10.5 s
+mutation 18 (a type 3 whose first size is over the widest one is still built (equivalent: the size loop does not run)): NOT DETECTED (exit 0) - 389 total, 389 passed, 0 failed, 0 skipped - 0 failing, 0 of uniqueRectangle - 10.4 s
+mutation 19 (the eligible cells count the solved cells too): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.4 s
+mutation 20 (the eligible cells count the cells without a candidate too): NOT DETECTED (exit 0) - 389 total, 389 passed, 0 failed, 0 skipped - 0 failing, 0 of uniqueRectangle - 10.5 s
+mutation 21 (the eligible cells count the first corner too): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.4 s
+mutation 22 (type 3 needs a complete unit): DETECTED - 389 total, 387 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 10.4 s
+mutation 23 (type 4 is looked for in a partial unit too (the completeness test is dropped)): DETECTED - 389 total, 387 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 10.6 s
+mutation 24 (type 4 is looked for only in partial units): DETECTED - 389 total, 357 passed, 32 failed, 0 skipped - 32 failing, 32 of uniqueRectangle - 9.9 s
+mutation 25 (a solved cell may be a real cell): DETECTED - 389 total, 387 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 10.6 s
+mutation 26 (an open cell without a candidate may be a real cell): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.7 s
+mutation 27 (the corners of the rectangle may be real cells): DETECTED - 389 total, 361 passed, 28 failed, 0 skipped - 28 failing, 27 of uniqueRectangle - 9.6 s
+detected 25 of 28, 286.1 s
+exit=1 seconds=286.199

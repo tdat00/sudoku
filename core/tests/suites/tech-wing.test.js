@@ -397,6 +397,220 @@
     return kind.type === 1 ? [] : victims(model, state, kind.roofs, kind.digit);
   }
 
+  // Unique Rectangle types 3 and 4 (R14). The enumeration below is independent of the finder: it uses the layout
+  // positions and `model.units` only (never `peers`, `cellUnits` or the finder's rectangle table), tries every subset
+  // of every unit by brute force (no pool, no pruning) and keeps the documented order of the finder: rectangles by
+  // their lowest cell, then the next cells of the four (a rectangle is [(r1,c1), (r1,c2), (r2,c1), (r2,c2)]), type 3
+  // before type 4, units ascending, sizes ascending, subsets in ascending cell order, digits ascending.
+  var urRectCache = new WeakMap();
+
+  /** The rectangles of the layout whose swap of two digits keeps every unit valid (two corners in a unit or none). */
+  function urRectangles(model) {
+    var list = urRectCache.get(model);
+    if (!list) {
+      list = rectangles(model).filter(function (cells) {
+        return inTwoBoxes(model, cells) && model.units.every(function (unitCells) {
+          var n = cells.filter(function (c) { return Array.prototype.indexOf.call(unitCells, c) !== -1; }).length;
+          return n === 0 || n === 2;
+        });
+      });
+      list.sort(function (x, y) { return x[0] - y[0] || x[1] - y[1] || x[2] - y[2]; });
+      urRectCache.set(model, list);
+    }
+    return list;
+  }
+
+  /** { common, roofs (ascending), extras } of four open cells with two floors (exactly the pair) and two roofs. */
+  function urShape(state, cells) {
+    if (!cells.every(function (c) { return open(state, c); })) return null;
+    var masks = cells.map(function (c) { return state.candidates[c]; });
+    var common = masks[0] & masks[1] & masks[2] & masks[3];
+    if (SG.bits.popcount(common) !== 2) return null;
+    var roofs = cells.filter(function (c, i) { return masks[i] !== common; });
+    if (roofs.length !== 2) return null;
+    return {
+      common: common,
+      roofs: roofs.sort(byNumber),
+      extras: (state.candidates[roofs[0]] | state.candidates[roofs[1]]) & ~common
+    };
+  }
+
+  /** The units (indices, ascending) that hold both cells. */
+  function unitsHolding(model, a, b) {
+    var out = [];
+    model.units.forEach(function (cells, u) {
+      if (Array.prototype.indexOf.call(cells, a) !== -1 && Array.prototype.indexOf.call(cells, b) !== -1) out.push(u);
+    });
+    return out;
+  }
+
+  function subsetsOf(list, k) {
+    var out = [];
+    (function go(start, chosen) {
+      if (chosen.length === k) {
+        out.push(chosen.slice());
+        return;
+      }
+      for (var i = start; i < list.length; i++) {
+        chosen.push(list[i]);
+        go(i + 1, chosen);
+        chosen.pop();
+      }
+    })(0, []);
+    return out;
+  }
+
+  /**
+   * Every type 3 and type 4 pattern of a state with at least one elimination, in the order of the finder; with
+   * `firstOnly` only the first one. { type: 3, cells (the rectangle), roofs, unit, real, union (mask), common,
+   * eliminations } or { type: 4, cells, roofs, unit, link (digit), digit (removed), common, eliminations }.
+   * A type 3 subset has any size from 1 to the number of eligible cells of the unit (no cap of its own: the union
+   * check |D| = k + 1 <= digits ends it).
+   */
+  function urSubtypesOf(model, state, firstOnly) {
+    var out = [];
+    var rects = urRectangles(model);
+    for (var r = 0; r < rects.length; r++) {
+      var cells = rects[r];
+      var shape = urShape(state, cells);
+      if (shape === null) continue;
+      var units = unitsHolding(model, shape.roofs[0], shape.roofs[1]);
+      var u;
+      var i;
+      for (i = 0; i < units.length; i++) {
+        u = units[i];
+        var members = Array.from(model.units[u]).sort(byNumber).filter(function (c) {
+          return open(state, c) && state.candidates[c] !== 0 && cells.indexOf(c) === -1;
+        });
+        for (var k = 1; k <= members.length; k++) {
+          var sets = subsetsOf(members, k);
+          for (var s = 0; s < sets.length; s++) {
+            var union = shape.extras;
+            sets[s].forEach(function (c) { union |= state.candidates[c]; });
+            if (SG.bits.popcount(union) !== k + 1) continue;
+            var eliminations = [];
+            members.forEach(function (c) {
+              if (sets[s].indexOf(c) !== -1) return;
+              SG.bits.toArray(state.candidates[c] & union).forEach(function (d) { eliminations.push([c, d]); });
+            });
+            if (eliminations.length === 0) continue;
+            out.push({ type: 3, cells: cells, roofs: shape.roofs, unit: u, real: sets[s], union: union,
+              common: shape.common, eliminations: eliminations });
+            if (firstOnly) return out;
+          }
+        }
+      }
+      for (i = 0; i < units.length; i++) {
+        u = units[i];
+        if (model.units[u].length !== model.digits || model.unitMeta[u].partial) continue;
+        var digits = SG.bits.toArray(shape.common);
+        for (var j = 0; j < digits.length; j++) {
+          var holders = Array.from(model.units[u]).filter(function (c) { return has(state, c, digits[j]); });
+          if (holders.length !== 2) continue;
+          var removed = digits[1 - j];
+          out.push({ type: 4, cells: cells, roofs: shape.roofs, unit: u, link: digits[j], digit: removed,
+            common: shape.common, eliminations: [[shape.roofs[0], removed], [shape.roofs[1], removed]] });
+          if (firstOnly) return out;
+        }
+      }
+    }
+    return out;
+  }
+
+  /** The Finding that the pattern of `urSubtypesOf` is documented to give. */
+  function urExpectedFinding(model, pattern) {
+    var label = function (c) { return H.label(model, c); };
+    var base = {
+      technique: 'uniqueRectangle',
+      placements: [],
+      eliminations: pattern.eliminations.slice().sort(function (x, y) { return x[0] - y[0] || x[1] - y[1]; })
+    };
+    var roofs = { roof1: label(pattern.roofs[0]), roof2: label(pattern.roofs[1]) };
+    if (pattern.type === 3) {
+      return Object.assign(base, {
+        cells: pattern.cells.concat(pattern.real),
+        i18nKey: 'technique.uniqueRectangle.type3.step',
+        i18nArgs: Object.assign(roofs, {
+          digits: SG.bits.toArray(pattern.common), partDigits: SG.bits.toArray(pattern.union),
+          cells: pattern.real.map(label), unit: model.unitMeta[pattern.unit].label
+        })
+      });
+    }
+    return Object.assign(base, {
+      cells: pattern.cells,
+      i18nKey: 'technique.uniqueRectangle.type4.step',
+      i18nArgs: Object.assign(roofs, {
+        digits: SG.bits.toArray(pattern.common), digit: pattern.digit, unit: model.unitMeta[pattern.unit].label
+      })
+    });
+  }
+
+  /** Whether some rectangle of the state is a type 1 or a type 2 with a target (the first pass of the finder). */
+  function urHasTypesOneTwo(model, state) {
+    return rectangles(model).some(function (cells) {
+      if (!inTwoBoxes(model, cells)) return false;
+      var kind = urKind(model, state, cells);
+      return kind !== null && (kind.type === 1 || urTargets(model, state, kind).length > 0);
+    });
+  }
+
+  /**
+   * The work units one call of the second pass spends, counted again from the rule of the header (units and layout
+   * only, no table of the finder), for a state in which the first pass finds nothing: for every unit that holds both
+   * roofs, with e the open cells of it outside the rectangle (the eligible cells) and the widest subset
+   * min(e, digits - 1), every eligible cell whose candidates with the extras are at most widest + 1 digits is tried
+   * as the next real cell of a subset of the sizes max(1, |extras| - 1) .. min(widest, pool), a cell that brings the
+   * union above k + 1 digits is not extended, and the count stops at the first complete subset with a target; then,
+   * in a complete unit, one unit per digit of the pair until a conjugate link.
+   */
+  function urUnitsOf(model, state) {
+    var cand = state.candidates;
+    var units = 0;
+    var stop = false;
+    urRectangles(model).forEach(function (cells) {
+      if (stop) return;
+      var shape = urShape(state, cells);
+      if (shape === null) return;
+      var holding = unitsHolding(model, shape.roofs[0], shape.roofs[1]);
+      holding.forEach(function (u) {
+        if (stop) return;
+        var members = Array.from(model.units[u]).sort(byNumber).filter(function (c) {
+          return open(state, c) && cand[c] !== 0 && cells.indexOf(c) === -1;
+        });
+        var first = Math.max(1, SG.bits.popcount(shape.extras) - 1);
+        var widest = Math.min(members.length, model.digits - 1);
+        var pool = members.filter(function (c) { return SG.bits.popcount(cand[c] | shape.extras) <= widest + 1; });
+        for (var k = first; k <= widest && k <= pool.length && !stop; k++) {
+          (function extend(chosen, union, from) {
+            for (var i = from; i <= pool.length - (k - chosen.length) && !stop; i++) {
+              units++;
+              var all = union | cand[pool[i]];
+              if (SG.bits.popcount(all) > k + 1) continue;
+              var next = chosen.concat([pool[i]]);
+              if (next.length === k) {
+                if (SG.bits.popcount(all) === k + 1 && members.some(function (c) {
+                  return next.indexOf(c) === -1 && (cand[c] & all) !== 0;
+                })) stop = true;
+                continue;
+              }
+              extend(next, all, i + 1);
+            }
+          })([], shape.extras, 0);
+        }
+      });
+      if (stop) return;
+      holding.forEach(function (u) {
+        if (stop || model.units[u].length !== model.digits || model.unitMeta[u].partial) return;
+        SG.bits.toArray(shape.common).forEach(function (d) {
+          if (stop) return;
+          units++;
+          if (Array.from(model.units[u]).filter(function (c) { return has(state, c, d); }).length === 2) stop = true;
+        });
+      });
+    });
+    return units;
+  }
+
   function byNumber(a, b) {
     return a - b;
   }
@@ -727,15 +941,20 @@
     },
     uniqueRectangle: {
       exists: function (model, state) {
-        return rectangles(model).some(function (cells) {
-          if (!inTwoBoxes(model, cells)) return false;
-          var kind = urKind(model, state, cells);
-          return kind !== null && (kind.type === 1 || urTargets(model, state, kind).length > 0);
-        });
+        return urHasTypesOneTwo(model, state) || urSubtypesOf(model, state, true).length > 0;
       },
       verify: function (model, state, f) {
+        expect(f.cells.length).toBeGreaterThanOrEqual(4);
+        expect(inTwoBoxes(model, f.cells.slice(0, 4))).toBe(true);
+        if (f.i18nKey === 'technique.uniqueRectangle.type3.step' || f.i18nKey === 'technique.uniqueRectangle.type4.step') {
+          // types 1 and 2 keep their priority: none exists anywhere, and the Finding is the first of the second pass
+          expect(urHasTypesOneTwo(model, state)).toBe(false);
+          var first = urSubtypesOf(model, state, true);
+          expect(first.length).toBe(1);
+          expect(f).toEqual(urExpectedFinding(model, first[0]));
+          return;
+        }
         expect(f.cells.length).toBe(4);
-        expect(inTwoBoxes(model, f.cells)).toBe(true);
         var kind = urKind(model, state, f.cells);
         expect(kind).not.toBeNull();
         if (kind.type === 1) {
@@ -3455,6 +3674,1071 @@
       expect(SG.dfs.searchFrom(model9, state, { limit: 5 }).found).toBe(2);
       f.eliminations.forEach(function (e) { SG.constraints.eliminate(model9, state, e[0], e[1]); });
       expect(SG.dfs.searchFrom(model9, state, { limit: 5 }).found).toBe(0);
+    });
+  });
+
+  // Unique Rectangle types 3 and 4 (R14, MS11a). The vector of the brief: the floors R1C1 (0) and R1C4 (3) hold {1, 2};
+  // the roofs R2C1 (9) {1, 2, 3} and R2C4 (12) {1, 2, 4} share row 2 only (box 1 and box 2). Cells of row 2 are
+  // R2C1 = 9 ... R2C9 = 17. Types 1 and 2 keep their priority; the second pass looks at types 3 and 4.
+  var UR_BASE = [[0, '12'], [3, '12'], [9, '123'], [12, '124']];
+  var ROW2_OTHERS = [10, 11, 13, 14, 16, 17];
+
+  /** The vector's blank board with the cells of `extra` = [[cell, '34'], ...] set as well. */
+  function urState(model, extra) {
+    return board(model, UR_BASE.concat(extra || []));
+  }
+
+  function urFind(model, state, ctxOptions) {
+    return SG.techniques.get('uniqueRectangle').find(model, state, SG.techniques.createContext(model, ctxOptions || {}));
+  }
+
+  /** One call of the registered finder or of the seam (`seam`, and a `limit` given or not) with its observer. */
+  function urObserved(model, state, opts) {
+    var records = [];
+    var options = opts || {};
+    var ctx = SG.techniques.createContext(model, Object.assign({
+      onPatternWork: function (r) { records.push(r); }
+    }, options.ctx));
+    var finding = options.seam
+      ? SG.wingSearch.uniqueRectangle(model, state, ctx, options.limit === undefined ? undefined : { workLimit: options.limit })
+      : SG.techniques.get('uniqueRectangle').find(model, state, ctx);
+    return { finding: finding, records: records, record: records[0] };
+  }
+
+  /** [[cell, digit], ...] for every cell and every digit, cell by cell. */
+  function both(cells, digits) {
+    var out = [];
+    cells.forEach(function (c) { digits.forEach(function (d) { out.push([c, d]); }); });
+    return out;
+  }
+
+  describe('uniqueRectangle (R14): type 3, the roofs\' extras as one virtual subset member', function () {
+    it('the vector: R2C7 {3,4} with the roofs\' extras 3 and 4 removes 3 and 4 from the rest of row 2', function () {
+      var state = urState(model9, [[15, '34']]);
+      var f = check('uniqueRectangle', model9, state, {
+        cells: ['R1C1', 'R1C4', 'R2C1', 'R2C4', 'R2C7'],
+        eliminations: both(ROW2_OTHERS, [3, 4]),
+        args: { roof1: 'R2C1', roof2: 'R2C4', digits: [1, 2], partDigits: [3, 4], cells: ['R2C7'], unit: 'R2' }
+      });
+      expect(f.cells).toEqual([0, 3, 9, 12, 15]);
+      expect(f.placements).toEqual([]);
+      expect(f.i18nKey).toBe('technique.uniqueRectangle.type3.step');
+      expect(Object.keys(f.i18nArgs)).toEqual(['roof1', 'roof2', 'digits', 'partDigits', 'cells', 'unit']);
+      expect(JSON.parse(JSON.stringify(f.i18nArgs))).toEqual(f.i18nArgs);
+      // cell by cell, then digit by digit; the two roofs and the real cell are never targets
+      expect(f.eliminations).toEqual(both(ROW2_OTHERS, [3, 4]));
+      [9, 12, 15].forEach(function (c) {
+        f.eliminations.forEach(function (e) { expect(e[0]).not.toBe(c); });
+      });
+      expect(state.candidates[9]).toBe(maskOf('123'));
+      expect(state.candidates[12]).toBe(maskOf('124'));
+    });
+
+    it('a target loses only the digits of the subset that it still has', function () {
+      var state = urState(model9, [[15, '34'], [10, '356'], [11, '4789']]);
+      var f = check('uniqueRectangle', model9, state, {
+        eliminations: [[10, 3], [11, 4]].concat(both([13, 14, 16, 17], [3, 4]))
+      });
+      expect(elimKeys(f.eliminations)).not.toContain('10:5');
+      expect(elimKeys(f.eliminations)).not.toContain('11:7');
+    });
+
+    it('the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2', function () {
+      var state = board(model9, [[0, '12'], [27, '12'], [1, '123'], [28, '124'], [55, '34']]);
+      var f = check('uniqueRectangle', model9, state, {
+        eliminations: both([10, 19, 37, 46, 64, 73], [3, 4]),
+        args: { roof1: 'R1C2', roof2: 'R4C2', digits: [1, 2], partDigits: [3, 4], cells: ['R7C2'], unit: 'C2' }
+      });
+      expect(f.cells).toEqual([0, 1, 27, 28, 55]);
+    });
+
+    it('the roofs may be in a box and a row at once: the row comes first and the box is the next unit', function () {
+      // roofs R2C1 (9) {1,2,3} and R2C2 (10) {1,2,4}, floors R5C1 (36) and R5C2 (37): rows 2 and 5, columns 1 and 2
+      var base = [[36, '12'], [37, '12'], [9, '123'], [10, '124']];
+      var inBox = board(model9, base.concat([[20, '34']]));
+      var f = check('uniqueRectangle', model9, inBox, {
+        args: { roof1: 'R2C1', roof2: 'R2C2', digits: [1, 2], partDigits: [3, 4], cells: ['R3C3'], unit: 'B1' },
+        eliminations: both([0, 1, 2, 11, 18, 19], [3, 4])
+      });
+      expect(f.cells).toEqual([9, 10, 36, 37, 20]);
+      var inRow = board(model9, base.concat([[16, '34'], [20, '34']]));
+      var g = check('uniqueRectangle', model9, inRow, {
+        args: { cells: ['R2C8'], unit: 'R2' },
+        eliminations: both([11, 12, 13, 14, 15, 17], [3, 4])
+      });
+      expect(g.cells).toEqual([9, 10, 36, 37, 16]);
+    });
+
+    it('a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits',
+      function () {
+        // k = 2: extras {3,4,5}; {3,4} and {4,5} together with them are three digits
+        var triple = board(model9, [[0, '12'], [3, '12'], [9, '1234'], [12, '125'], [15, '34'], [16, '45']]);
+        var f = check('uniqueRectangle', model9, triple, {
+          eliminations: both([10, 11, 13, 14, 17], [3, 4, 5]),
+          args: { partDigits: [3, 4, 5], cells: ['R2C7', 'R2C8'], unit: 'R2' }
+        });
+        expect(f.cells).toEqual([0, 3, 9, 12, 15, 16]);
+        expect(urObserved(model9, triple).record.work).toBe(urUnitsOf(model9, triple));
+        // k = 1 with three extras is no subset: {3,4,5} is three digits
+        var single = board(model9, [[0, '12'], [3, '12'], [9, '1234'], [12, '125'], [15, '345']]);
+        checkNone('uniqueRectangle', model9, single);
+        // k = 3: extras {3,4}; {3,5}, {5,6} and {6,4} together with them are {3,4,5,6}
+        var quad = urState(model9, [[15, '35'], [16, '56'], [17, '46']]);
+        var g = check('uniqueRectangle', model9, quad, {
+          eliminations: both([10, 11, 13, 14], [3, 4, 5, 6]),
+          args: { partDigits: [3, 4, 5, 6], cells: ['R2C7', 'R2C8', 'R2C9'] }
+        });
+        expect(g.cells).toEqual([0, 3, 9, 12, 15, 16, 17]);
+        // four extras ({3,4,5,6}) need three real cells inside them
+        var fourExtras = board(model9, [[0, '12'], [3, '12'], [9, '12345'], [12, '126'], [15, '34'], [16, '45'],
+          [17, '56']]);
+        var h = check('uniqueRectangle', model9, fourExtras, {
+          eliminations: both([10, 11, 13, 14], [3, 4, 5, 6]),
+          args: { partDigits: [3, 4, 5, 6], cells: ['R2C7', 'R2C8', 'R2C9'] }
+        });
+        expect(h.cells).toEqual([0, 3, 9, 12, 15, 16, 17]);
+        expect(urObserved(model9, fourExtras).record.work).toBe(urUnitsOf(model9, fourExtras));
+        // k = 4: five extras ({3,4,5,6,7}) need four real cells inside them; the earlier bound of three real cells
+        // would have missed this proof (the unit holds five cells for five digits: the roof and four real cells)
+        var fiveExtras = board(model9, [[0, '12'], [3, '12'], [9, '12345'], [12, '1267'], [15, '34'], [16, '45'],
+          [17, '56'], [11, '67']]);
+        var five = check('uniqueRectangle', model9, fiveExtras, {
+          eliminations: both([10, 13, 14], [3, 4, 5, 6, 7]),
+          args: { partDigits: [3, 4, 5, 6, 7], cells: ['R2C3', 'R2C7', 'R2C8', 'R2C9'], unit: 'R2' }
+        });
+        expect(five.cells).toEqual([0, 3, 9, 12, 11, 15, 16, 17]);
+        expect(urObserved(model9, fiveExtras).record.work).toBe(urUnitsOf(model9, fiveExtras));
+      });
+
+    it('a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits', function () {
+      // the brief's vector with R2C3 {4,7}, R2C7 {3,5}, R2C8 {5,6} and R2C9 {6,7}: k = 4, D = {3,4,5,6,7}
+      var state = urState(model9, [[11, '74'], [15, '35'], [16, '56'], [17, '67']]);
+      var f = check('uniqueRectangle', model9, state, {
+        eliminations: both([10, 13, 14], [3, 4, 5, 6, 7]),
+        args: { roof1: 'R2C1', roof2: 'R2C4', digits: [1, 2], partDigits: [3, 4, 5, 6, 7],
+          cells: ['R2C3', 'R2C7', 'R2C8', 'R2C9'], unit: 'R2' }
+      });
+      expect(f.cells).toEqual([0, 3, 9, 12, 11, 15, 16, 17]);
+      expect(f.eliminations).toEqual(both([10, 13, 14], [3, 4, 5, 6, 7]));
+      expect(urSubtypesOf(model9, state, true)).toHaveLength(1);
+      var seen = urObserved(model9, state);
+      expect(seen.record).toEqual({ id: 'uniqueRectangle', work: 24, limit: 50000, capHit: null, retained: null });
+      expect(urUnitsOf(model9, state)).toBe(24);
+    });
+
+    it('subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit',
+      function () {
+        // floors R1C1 (0) and R1C5 (4) {1,2}, roofs R2C1 (12) {1,2,3} and R2C5 (16) {1,2,4} (rows 1 and 2, boxes 1 and
+        // 2 of the 3 x 4 boxes); the real cells R2C3 {3,5}, R2C7 {5,6}, R2C8 {6,7}, R2C9 {7,8} and R2C10 {8,4} give
+        // k = 5 and D = {3,4,5,6,7,8}; the other cells of row 2 (R2C2, R2C4, R2C6, R2C11, R2C12) are the targets
+        var state = board(model12, [[0, '12'], [4, '12'], [12, '123'], [16, '124'], [14, '35'], [18, '56'], [19, '67'],
+          [20, '78'], [21, '84']]);
+        var targets = [13, 15, 17, 22, 23];
+        var before = Array.from(state.candidates);
+        var f = check('uniqueRectangle', model12, state, {
+          eliminations: both(targets, [3, 4, 5, 6, 7, 8]),
+          args: { roof1: 'R2C1', roof2: 'R2C5', digits: [1, 2], partDigits: [3, 4, 5, 6, 7, 8],
+            cells: ['R2C3', 'R2C7', 'R2C8', 'R2C9', 'R2C10'], unit: 'R2' }
+        });
+        expect(f.cells).toEqual([0, 4, 12, 16, 14, 18, 19, 20, 21]);
+        expect(urUnitsOf(model12, state)).toBe(41);
+        expect(urObserved(model12, state).record).toEqual(
+          { id: 'uniqueRectangle', work: 41, limit: 50000, capHit: null, retained: null });
+        // deterministic truncation: every smaller limit ends in null with capHit 'work' at exactly its limit
+        [0, 1, 20, 40].forEach(function (limit) {
+          var cut = urObserved(model12, state, { seam: true, limit: limit });
+          expect(cut.finding).toBeNull();
+          expect(cut.record).toEqual({ id: 'uniqueRectangle', work: limit, limit: limit, capHit: 'work', retained: null });
+        });
+        var exact = urObserved(model12, state, { seam: true, limit: 41 });
+        expect(exact.finding).toEqual(f);
+        expect(exact.record).toEqual({ id: 'uniqueRectangle', work: 41, limit: 41, capHit: null, retained: null });
+        // the state is not changed by any of the calls
+        expect(Array.from(state.candidates)).toEqual(before);
+        // six real cells: R2C11 {4,9} joins and R2C10 becomes {8,9}; k = 6 and D = {3,..,9}, 77 units
+        var six = board(model12, [[0, '12'], [4, '12'], [12, '123'], [16, '124'], [14, '35'], [18, '56'], [19, '67'],
+          [20, '78'], [21, '89'], [22, '94']]);
+        var g = check('uniqueRectangle', model12, six, {
+          eliminations: both([13, 15, 17, 23], [3, 4, 5, 6, 7, 8, 9]),
+          args: { partDigits: [3, 4, 5, 6, 7, 8, 9], cells: ['R2C3', 'R2C7', 'R2C8', 'R2C9', 'R2C10', 'R2C11'], unit: 'R2' }
+        });
+        expect(g.cells).toEqual([0, 4, 12, 16, 14, 18, 19, 20, 21, 22]);
+        expect(urUnitsOf(model12, six)).toBe(77);
+        expect(urObserved(model12, six, { seam: true, limit: 76 }).record.capHit).toBe('work');
+        expect(urObserved(model12, six, { seam: true, limit: 77 }).finding).toEqual(g);
+      });
+
+    it('wrong union sizes find nothing: a third digit, a digit outside the extras, a real cell of three digits',
+      function () {
+        [[15, '35'], [15, '345'], [15, '56'], [15, '5']].forEach(function (cell) {
+          checkNone('uniqueRectangle', model9, urState(model9, [cell]));
+        });
+      });
+
+    it('a real cell outside every unit that holds both roofs is no real cell', function () {
+      // R3C7 and R4C7 are not in row 2 (the roofs are in boxes 1 and 2)
+      checkNone('uniqueRectangle', model9, urState(model9, [[24, '34']]));
+      checkNone('uniqueRectangle', model9, urState(model9, [[33, '34']]));
+    });
+
+    it('an open cell without any candidate is no real cell (a contradictory position proves nothing)', function () {
+      var state = urState(model9, [[15, '']]);
+      expect(state.candidates[15]).toBe(0);
+      checkNone('uniqueRectangle', model9, state);
+      // nor an eligible cell: with R2C2 at eight digits (the union with the extras is eight) the widest subset is the six
+      // other cells, whose filter of seven digits leaves R2C2 out; the work is that of the rule
+      var eight = urState(model9, [[15, ''], [10, '23456789']]);
+      checkNone('uniqueRectangle', model9, eight);
+      expect(urObserved(model9, eight).record.work).toBe(urUnitsOf(model9, eight));
+    });
+
+    it('the roofs are never real cells: with them R2C7 {1,2} would make a false quad of the digits 1 to 4', function () {
+      var state = urState(model9, [[15, '12']]);
+      checkNone('uniqueRectangle', model9, state);
+      expect(urSubtypesOf(model9, state)).toEqual([]);
+    });
+
+    it('the cells of a unit are tried in ascending order, whatever the order of the list of the unit', function () {
+      // the unit D9 lists its cells from the highest to the lowest; it holds the roofs R1C1 (0) and R2C4 (12) only
+      var descending = rebuild(model9, 'test-desc', { units: [{ cells: [77, 66, 58, 49, 41, 29, 20, 12, 0],
+        meta: { kind: 'diag', gridIndex: 0, label: 'D9' } }] });
+      var base = [[3, '12'], [9, '12'], [0, '123'], [12, '124']];
+      var state = board(descending, base.concat([[20, '34'], [29, '34']]));
+      var f = check('uniqueRectangle', descending, state, {
+        args: { cells: ['R3C3'], unit: 'D9' }, eliminations: both([29, 41, 49, 58, 66, 77], [3, 4])
+      });
+      expect(f.cells).toEqual([0, 3, 9, 12, 20]);
+      expect(f.eliminations).toEqual(both([29, 41, 49, 58, 66, 77], [3, 4]));
+    });
+
+    it('empty extras are no virtual member: four cells that hold only {1,2} are the deadly pattern itself', function () {
+      var state = board(model9, [[0, '12'], [3, '12'], [9, '12'], [12, '12'], [15, '34']]);
+      checkNone('uniqueRectangle', model9, state);
+    });
+
+    it('two bivalue floors are needed: one floor of three digits makes no type 3', function () {
+      var state = board(model9, [[0, '12'], [3, '125'], [9, '123'], [12, '124'], [15, '34']]);
+      checkNone('uniqueRectangle', model9, state);
+    });
+
+    it('roofs on opposite corners share no unit: a real cell in either row finds nothing', function () {
+      // floors R1C4 (3) and R2C1 (9), roofs R1C1 (0) and R2C4 (12)
+      var state = board(model9, [[3, '12'], [9, '12'], [0, '123'], [12, '124'], [6, '34'], [15, '34']]);
+      checkNone('uniqueRectangle', model9, state);
+    });
+
+    it('the roofs are never targets and the virtual member is one roof, not both: the extras stay in both roofs',
+      function () {
+        var state = urState(model9, [[15, '34']]);
+        var f = check('uniqueRectangle', model9, state, {});
+        f.eliminations.forEach(function (e) { expect([9, 12]).not.toContain(e[0]); });
+        // were both roofs counted as members with a fixed extra each, the real cell and the other cells would be
+        // removed; here the other cells lose exactly the two digits of the subset
+        var kept = new Set(f.eliminations.map(function (e) { return e[0]; }));
+        ROW2_OTHERS.forEach(function (c) { expect(kept.has(c)).toBe(true); });
+        expect(f.eliminations.length).toBe(ROW2_OTHERS.length * 2);
+      });
+
+    it('a solved cell of the unit is left out, and a solved cell is no real cell', function () {
+      var state = urState(model9, [[15, '34']]);
+      solveCell(state, 10, 3);
+      var f = check('uniqueRectangle', model9, state, {});
+      expect(elimKeys(f.eliminations)).not.toContain('10:3');
+      var onlySolved = urState(model9, [[15, '34']]);
+      solveCell(onlySolved, 15, 3);
+      checkNone('uniqueRectangle', model9, onlySolved);
+    });
+
+    it('is deterministic, leaves the state alone and owns its arrays', function () {
+      var state = urState(model9, [[15, '34']]);
+      var snapshot = SG.model.cloneState(state);
+      var a = urFind(model9, state);
+      var b = urFind(model9, state);
+      expect(b).toEqual(a);
+      a.cells.push(99);
+      a.eliminations.push([99, 9]);
+      a.i18nArgs.cells.push('R9C9');
+      a.i18nArgs.partDigits.push(9);
+      expect(urFind(model9, state)).toEqual(b);
+      expect(state.candidates).toEqual(snapshot.candidates);
+      expect(state.value).toEqual(snapshot.value);
+    });
+  });
+
+  describe('uniqueRectangle (R14): type 4, a conjugate link between the roofs', function () {
+    it('the vector: 1 only in the two roofs of row 2 removes 2 from both roofs', function () {
+      var state = urState(model9, []);
+      dropDigit(state, 1, [10, 11, 13, 14, 15, 16, 17]);
+      var f = check('uniqueRectangle', model9, state, {
+        cells: ['R1C1', 'R1C4', 'R2C1', 'R2C4'],
+        eliminations: [['R2C1', 2], ['R2C4', 2]],
+        args: { roof1: 'R2C1', roof2: 'R2C4', digits: [1, 2], digit: 2, unit: 'R2' }
+      });
+      expect(f.cells).toEqual([0, 3, 9, 12]);
+      expect(f.eliminations).toEqual([[9, 2], [12, 2]]);
+      expect(f.i18nKey).toBe('technique.uniqueRectangle.type4.step');
+      expect(Object.keys(f.i18nArgs)).toEqual(['roof1', 'roof2', 'digits', 'digit', 'unit']);
+      expect(JSON.parse(JSON.stringify(f.i18nArgs))).toEqual(f.i18nArgs);
+    });
+
+    it('the link may be either digit of the pair: 2 only in the roofs removes 1', function () {
+      var state = urState(model9, []);
+      dropDigit(state, 2, [10, 11, 13, 14, 15, 16, 17]);
+      check('uniqueRectangle', model9, state, {
+        eliminations: [['R2C1', 1], ['R2C4', 1]],
+        args: { digits: [1, 2], digit: 1 }
+      });
+    });
+
+    it('the transposed vector: 1 only in the two roofs of column 2', function () {
+      var state = board(model9, [[0, '12'], [27, '12'], [1, '123'], [28, '124']]);
+      dropDigit(state, 1, [10, 19, 37, 46, 55, 64, 73]);
+      var f = check('uniqueRectangle', model9, state, {
+        eliminations: [['R1C2', 2], ['R4C2', 2]],
+        args: { roof1: 'R1C2', roof2: 'R4C2', digits: [1, 2], digit: 2, unit: 'C2' }
+      });
+      expect(f.cells).toEqual([0, 1, 27, 28]);
+    });
+
+    it('roofs in a box and a row: the link may be in the box (the row has other 1s)', function () {
+      // roofs R2C1 (9) and R2C2 (10), floors R5C1 and R5C2; the 1 is confined to the roofs inside box 1 only
+      var state = board(model9, [[36, '12'], [37, '12'], [9, '123'], [10, '124']]);
+      dropDigit(state, 1, [0, 1, 2, 11, 18, 19, 20]);
+      var f = check('uniqueRectangle', model9, state, {
+        eliminations: [['R2C1', 2], ['R2C2', 2]],
+        args: { digit: 2, unit: 'B1' }
+      });
+      expect(f.cells).toEqual([9, 10, 36, 37]);
+    });
+
+    it('a third occurrence of the digit breaks the conjugacy', function () {
+      var state = urState(model9, []);
+      dropDigit(state, 1, [10, 11, 13, 14, 16, 17]);
+      checkNone('uniqueRectangle', model9, state);
+      expect(has(state, 15, 1)).toBe(true);
+    });
+
+    it('a solved 1 in the row is a third occurrence of the digit: the link is gone', function () {
+      var state = urState(model9, []);
+      dropDigit(state, 1, [10, 11, 13, 14, 15, 16, 17]);
+      solveCell(state, 17, 1);
+      checkNone('uniqueRectangle', model9, state);
+    });
+
+    it('the digit must be in both roofs: a roof without it leaves no rectangle of one pair', function () {
+      var state = urState(model9, []);
+      dropDigit(state, 1, [10, 11, 13, 14, 15, 16, 17]);
+      state.candidates[12] &= ~bit(1);
+      checkNone('uniqueRectangle', model9, state);
+    });
+
+    it('roofs on opposite corners share no unit', function () {
+      var state = board(model9, [[3, '12'], [9, '12'], [0, '123'], [12, '124']]);
+      dropDigit(state, 1, [1, 2, 4, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17]);
+      checkNone('uniqueRectangle', model9, state);
+    });
+
+    it('a link needs two bivalue floors and roofs with extras: one floor of three digits finds nothing', function () {
+      var state = board(model9, [[0, '12'], [3, '125'], [9, '123'], [12, '124']]);
+      dropDigit(state, 1, [10, 11, 13, 14, 15, 16, 17]);
+      checkNone('uniqueRectangle', model9, state);
+    });
+  });
+
+  describe('uniqueRectangle (R14): order, priority and the first Finding', function () {
+    it('types 1 and 2 keep their priority: a type 1 on a later rectangle beats a type 3 on an earlier one', function () {
+      // rectangle A (cells 0, 3, 9, 12) holds the vector with the real cell R2C7; rectangle B (R8C2, R8C5, R9C2, R9C5)
+      // is a type 1, found by the first pass over every rectangle although it comes later
+      var state = urState(model9, [[15, '34'], [64, '12'], [67, '12'], [73, '12'], [76, '125']]);
+      expect(urSubtypesOf(model9, state, true)).toHaveLength(1);
+      var f = check('uniqueRectangle', model9, state, {
+        cells: ['R8C2', 'R8C5', 'R9C2', 'R9C5'],
+        eliminations: [['R9C5', 1], ['R9C5', 2]],
+        args: { cell: 'R9C5', digitX: 1, digitY: 2 }
+      });
+      expect(f.i18nKey).toBe('technique.uniqueRectangle.type1.step');
+      // and a type 2 with a target likewise
+      var second = urState(model9, [[15, '34'], [64, '12'], [67, '12'], [73, '125'], [76, '125']]);
+      expect(urFind(model9, second).i18nKey).toBe('technique.uniqueRectangle.type2.step');
+    });
+
+    it('type 3 comes before type 4 on the same rectangle, whatever their units', function () {
+      // roofs R2C1 and R2C2 share row 2 and box 1: the 1 is confined to the roofs in the row (type 4) and a real cell
+      // {3,4} sits in box 1 (type 3): the type 3 of the box is returned
+      var base = [[36, '12'], [37, '12'], [9, '123'], [10, '124']];
+      var state = board(model9, base.concat([[20, '34']]));
+      dropDigit(state, 1, [11, 12, 13, 14, 15, 16, 17]);
+      var patterns = urSubtypesOf(model9, state);
+      expect(patterns.map(function (p) { return p.type; })).toEqual([3, 4]);
+      var f = check('uniqueRectangle', model9, state, {});
+      expect(f.i18nKey).toBe('technique.uniqueRectangle.type3.step');
+      expect(f.i18nArgs.unit).toBe('B1');
+      // without the real cell the type 4 of the row is the first Finding
+      var only = board(model9, base);
+      dropDigit(only, 1, [11, 12, 13, 14, 15, 16, 17]);
+      var g = check('uniqueRectangle', model9, only, {});
+      expect(g.i18nKey).toBe('technique.uniqueRectangle.type4.step');
+      expect(g.i18nArgs.unit).toBe('R2');
+    });
+
+    it('the units of the roofs are tried in index order: the row R2 before the box B1', function () {
+      var base = [[36, '12'], [37, '12'], [9, '123'], [10, '124']];
+      var state = board(model9, base.concat([[16, '34'], [20, '34']]));
+      var f = check('uniqueRectangle', model9, state, {});
+      expect(f.i18nArgs.unit).toBe('R2');
+      expect(f.i18nArgs.cells).toEqual(['R2C8']);
+    });
+
+    it('smaller subsets come first, then the lowest cells: a pair before a triple, the lower of two pairs', function () {
+      var state = urState(model9, [[15, '34'], [16, '34'], [17, '35'], [11, '45']]);
+      var f = check('uniqueRectangle', model9, state, {});
+      expect(f.i18nArgs.cells).toEqual(['R2C7']);
+      expect(f.cells).toEqual([0, 3, 9, 12, 15]);
+      // the other pair is a target of the first
+      expect(elimKeys(f.eliminations)).toContain('16:3');
+      expect(elimKeys(f.eliminations)).toContain('16:4');
+    });
+
+    it('the first rectangle in the order of the first pass wins, and the second is found once the first is spent', function () {
+      // rectangle B: floors R4C1 (27) and R4C4 (30), roofs R5C1 (36) and R5C4 (39), the real cell R5C7 (42)
+      var rectB = [[27, '12'], [30, '12'], [36, '123'], [39, '124'], [42, '34']];
+      var both2 = urState(model9, [[15, '34']].concat(rectB));
+      var f = check('uniqueRectangle', model9, both2, {});
+      expect(f.cells.slice(0, 4)).toEqual([0, 3, 9, 12]);
+      var onlyB = board(model9, rectB);
+      var g = check('uniqueRectangle', model9, onlyB, {});
+      expect(g.cells).toEqual([27, 30, 36, 39, 42]);
+    });
+
+    it('rectangle by rectangle: a type 4 on an earlier rectangle comes before a type 3 on a later one', function () {
+      var rectB = [[27, '12'], [30, '12'], [36, '123'], [39, '124'], [42, '34']];
+      var state = board(model9, UR_BASE.concat(rectB));
+      dropDigit(state, 1, [10, 11, 13, 14, 15, 16, 17]);
+      expect(urSubtypesOf(model9, state).map(function (p) { return p.type; })).toEqual([4, 3]);
+      var f = check('uniqueRectangle', model9, state, {});
+      expect(f.i18nKey).toBe('technique.uniqueRectangle.type4.step');
+      expect(f.cells).toEqual([0, 3, 9, 12]);
+    });
+  });
+
+  describe('uniqueRectangle (R14): other unit shapes, the uniqueness assumption and structures', function () {
+    it('a 4x4 jigsaw rectangle: type 3 and type 4 inside a region, after the column in unit order', function () {
+      var jigsaw = jigsawModel();
+      // rectangle [1, 3, 5, 7]: regions Z1 (cells 0, 1, 2, 5) and Z2; the roofs 1 and 5 share column C2 and region Z1
+      var base = [[3, '12'], [7, '12'], [1, '123'], [5, '124']];
+      var inRegion = board(jigsaw, base.concat([[0, '34']]));
+      var f = check('uniqueRectangle', jigsaw, inRegion, {
+        eliminations: [[2, 3], [2, 4]],
+        args: { roof1: 'R1C2', roof2: 'R2C2', digits: [1, 2], partDigits: [3, 4], cells: ['R1C1'], unit: 'Z1' }
+      });
+      expect(f.cells).toEqual([1, 3, 5, 7, 0]);
+      // type 4: the 1 only at the roofs inside Z1 (the column C2 has other 1s)
+      var link = board(jigsaw, base);
+      dropDigit(link, 1, [0, 2]);
+      var g = check('uniqueRectangle', jigsaw, link, {
+        eliminations: [[1, 2], [5, 2]],
+        args: { digits: [1, 2], digit: 2, unit: 'Z1' }
+      });
+      expect(g.cells).toEqual([1, 3, 5, 7]);
+      // the same cells on the regular 4x4 board: box 1 is {0, 1, 4, 5}, so the box has the target 4, not the cell 2
+      var regular = check('uniqueRectangle', model4, board(model4, base.concat([[0, '34']])), {
+        eliminations: [[4, 3], [4, 4]],
+        args: { cells: ['R1C1'], unit: 'B1' }
+      });
+      expect(regular.cells).toEqual([1, 3, 5, 7, 0]);
+    });
+
+    it('a diagonal that holds only one corner breaks the deadly pattern for both subtypes (Sudoku X)', function () {
+      var diagonal = [];
+      for (var i = 0; i < 9; i++) diagonal.push(at(model9, i, i));
+      var sudokuX = rebuild(model9, 'test-x', { units: [{ cells: diagonal, meta: { kind: 'diag', label: 'D1' } }] });
+      // R1C1 is the only corner on the diagonal
+      var type3 = urState(model9, [[15, '34']]);
+      none('uniqueRectangle', sudokuX, type3);
+      check('uniqueRectangle', model9, type3, {});
+      var type4 = urState(model9, []);
+      dropDigit(type4, 1, [10, 11, 13, 14, 15, 16, 17]);
+      none('uniqueRectangle', sudokuX, type4);
+      check('uniqueRectangle', model9, type4, {});
+    });
+
+    it('a unit of the rectangle that holds exactly two corners keeps the pattern: an extra unit of two corners',
+      function () {
+        // a diagonal-like unit through the two roofs R2C1 and R2C4 only, plus other cells: the swap keeps it valid
+        var extra = rebuild(model9, 'test-two', { units: [{ cells: [9, 12, 28, 42, 50, 60, 70, 80, 2],
+          meta: { kind: 'diag', gridIndex: 0, label: 'D2' } }] });
+        var state = urState(extra, [[15, '34']]);
+        var f = check('uniqueRectangle', extra, state, {});
+        expect(f.i18nArgs.unit).toBe('R2');
+      });
+
+    it('a partial unit: type 3 works in it (its cells differ), a type 4 link in it proves nothing', function () {
+      // the roofs R1C1 (0) {1,2,3} and R2C4 (12) {1,2,4} are opposite corners of [0, 3, 9, 12]: they share no row, column
+      // or box, only the unit P1, which holds both and two more cells (it holds exactly two corners)
+      var partial = rebuild(model9, 'test-partial', { units: [{ cells: [0, 12, 20, 41],
+        meta: { kind: 'diag', gridIndex: 0, label: 'P1', partial: true } }] });
+      var base = [[3, '12'], [9, '12'], [0, '123'], [12, '124']];
+      var f = check('uniqueRectangle', partial, board(partial, base.concat([[20, '34']])), {
+        eliminations: [[41, 3], [41, 4]],
+        args: { roof1: 'R1C1', roof2: 'R2C4', digits: [1, 2], partDigits: [3, 4], cells: ['R3C3'], unit: 'P1' }
+      });
+      expect(f.cells).toEqual([0, 3, 9, 12, 20]);
+      var link = board(partial, base);
+      dropDigit(link, 1, [20, 41]);
+      checkNone('uniqueRectangle', partial, link);
+      // the same unit as a complete one (nine cells) is a real conjugate link
+      var complete = rebuild(model9, 'test-complete', { units: [{ cells: [0, 12, 20, 29, 41, 49, 58, 66, 77],
+        meta: { kind: 'diag', gridIndex: 0, label: 'D9' } }] });
+      var done = board(complete, base);
+      dropDigit(done, 1, [20, 29, 41, 49, 58, 66, 77]);
+      check('uniqueRectangle', complete, done, {
+        eliminations: [[0, 2], [12, 2]], args: { digits: [1, 2], digit: 2, unit: 'D9' }
+      });
+    });
+
+    it('the exact union is required: a real cell inside the extras holds one digit for two cells, no type 3', function () {
+      // the partial unit P1 {R1C1, R2C4, R3C3, R5C6} holds the opposite roofs R1C1 and R2C4 {1,2,3} (the extras are {3})
+      // and the real cell R3C3 {3}: the union with the extras is {3}, one digit, not the two that k = 1 needs; the
+      // contradictory state proves nothing and a claim of D = {3} that removes 3 from R5C6 would be wrong
+      var partial = rebuild(model9, 'test-partial-union', { units: [{ cells: [0, 12, 20, 41],
+        meta: { kind: 'diag', gridIndex: 0, label: 'P1', partial: true } }] });
+      var state = board(partial, [[3, '12'], [9, '12'], [0, '123'], [12, '123'], [20, '3']]);
+      checkNone('uniqueRectangle', partial, state);
+      expect(urObserved(partial, state).record.capHit).toBeNull();
+      expect(urUnitsOf(partial, state)).toBe(urObserved(partial, state).record.work);
+      // with a second digit in the real cell the same cells are a type 3 (D = {3,4}): the guard, not the geometry
+      var good = board(partial, [[3, '12'], [9, '12'], [0, '123'], [12, '123'], [20, '34']]);
+      check('uniqueRectangle', partial, good, {
+        eliminations: [[41, 3], [41, 4]],
+        args: { roof1: 'R1C1', roof2: 'R2C4', digits: [1, 2], partDigits: [3, 4], cells: ['R3C3'], unit: 'P1' }
+      });
+    });
+
+    it('a model with cages or inequalities never gets a type 3 or a type 4', function () {
+      var type3 = urState(model9, [[15, '34']]);
+      var type4 = urState(model9, []);
+      dropDigit(type4, 1, [10, 11, 13, 14, 15, 16, 17]);
+      var caged = rebuild(model9, 'test-cages', { cages: [{ cells: [20, 21], sum: 3 }] });
+      var signs = rebuild(model9, 'test-signs', { inequalities: [{ a: 40, b: 41 }] });
+      [type3, type4].forEach(function (state) {
+        none('uniqueRectangle', caged, state);
+        none('uniqueRectangle', signs, state);
+        check('uniqueRectangle', model9, state, {});
+      });
+    });
+
+    it('the layout rows of a multi-grid board are no units: a real cell of another grid on the same row finds nothing',
+      function () {
+        var samurai = SG.testkit.hasVariant('samurai') ? H.model('samurai') : null;
+        if (samurai === null) SG.test.skip('no samurai board can be built here');
+        var at1 = function (r, c) { return byLayout(samurai, r, c); };
+        // the vector inside the first grid: floors (0,0) and (0,3), roofs (1,0) and (1,3), the real cell (1,6)
+        var state = board(samurai, [[at1(0, 0), '12'], [at1(0, 3), '12'], [at1(1, 0), '123'], [at1(1, 3), '124'],
+          [at1(1, 6), '34']]);
+        var f = H.expectFinding(SG.test, 'uniqueRectangle', state, {}, { model: samurai });
+        expect(f.i18nKey).toBe('technique.uniqueRectangle.type3.step');
+        expect(f.i18nArgs.cells).toEqual([H.label(samurai, at1(1, 6))]);
+        // the same layout row in the second grid (layout column 12) is not in the unit of the roofs
+        var twin = board(samurai, [[at1(0, 0), '12'], [at1(0, 3), '12'], [at1(1, 0), '123'], [at1(1, 3), '124'],
+          [at1(1, 12), '34']]);
+        expect(sees(samurai, at1(1, 0), at1(1, 12))).toBe(false);
+        none('uniqueRectangle', samurai, twin);
+      });
+
+    it('assumeUniqueness: false skips both subtypes (and the seam), and leaves no work record', function () {
+      var type3 = urState(model9, [[15, '34']]);
+      var type4 = urState(model9, []);
+      dropDigit(type4, 1, [10, 11, 13, 14, 15, 16, 17]);
+      [type3, type4].forEach(function (state) {
+        none('uniqueRectangle', model9, state, { assumeUniqueness: false });
+        var out = urObserved(model9, state, { ctx: { assumeUniqueness: false } });
+        expect(out.finding).toBeNull();
+        expect(out.records).toEqual([]);
+        var seam = urObserved(model9, state, { seam: true, ctx: { assumeUniqueness: false } });
+        expect(seam.finding).toBeNull();
+        expect(seam.records).toEqual([]);
+        expect(urObserved(model9, state).finding).not.toBeNull();
+      });
+    });
+  });
+
+  describe('uniqueRectangle (R14): real positions', function () {
+    var entry = SG.fixtures.techniques.byId.uniqueRectangle;
+    var registry = SG.fixtures.techniques.registryOrder;
+
+    // The exact Findings of the four real positive fixtures (core/tests/fixtures/techniques.js), type 3 and type 4 first.
+    var REAL = [
+      { cells: ['R4C8', 'R4C9', 'R9C8', 'R9C9', 'R4C5', 'R4C6'], eliminations: [['R4C1', 5], ['R4C1', 6]],
+        args: { roof1: 'R4C8', roof2: 'R4C9', digits: [2, 3], partDigits: [5, 6, 9], cells: ['R4C5', 'R4C6'], unit: 'R4' } },
+      { cells: ['R3C7', 'R3C9', 'R6C7', 'R6C9'], eliminations: [['R6C7', 1], ['R6C9', 1]],
+        args: { roof1: 'R6C7', roof2: 'R6C9', digits: [1, 9], digit: 1, unit: 'R6' } },
+      { cells: ['R1C2', 'R1C5', 'R3C2', 'R3C5'], eliminations: [['R1C2', 5], ['R1C2', 9]],
+        args: { cell: 'R1C2', digitX: 5, digitY: 9 } },
+      { cells: ['R1C3', 'R1C4', 'R2C3', 'R2C4'], eliminations: [['R3C3', 3]],
+        args: { roof1: 'R1C3', roof2: 'R2C3', digitX: 6, digitY: 8, digit: 3 } }
+    ];
+    var KEYS = ['technique.uniqueRectangle.type3.step', 'technique.uniqueRectangle.type4.step',
+      'technique.uniqueRectangle.type1.step', 'technique.uniqueRectangle.type2.step'];
+
+    function positionOf(fixture) {
+      return fixture.after !== null ? H.stateAfter(model9, fixture.puzzle, fixture.after)
+        : H.makeState(model9, fixture.puzzle, { propagate: fixture.propagate });
+    }
+
+    it('has one positive per subtype and two negatives; the positives are where the registry reaches it', function () {
+      expect(entry.positive).toHaveLength(4);
+      expect(entry.negative).toHaveLength(2);
+      var below = registry.slice(0, registry.indexOf('uniqueRectangle'));
+      entry.positive.forEach(function (fixture) { expect(fixture.after.slice().sort()).toEqual(below.slice().sort()); });
+      expect(entry.negative[0].after).toContain('uniqueRectangle');
+      expect(entry.negative[1].after).toContain('wxyzWing');
+      expect(entry.negative[1].after).not.toContain('wWing');
+      // the v2 entry is untouched history: its first positive is still the old type 1 position
+      var old = SG.fixtures.techniques.historyV2.byId.uniqueRectangle;
+      expect(old.positive[0].expect.eliminations).toEqual([[33, 4], [33, 6]]);
+      expect(SG.fixtures.techniques.byId.uniqueRectangle).not.toBe(old);
+    });
+
+    REAL.forEach(function (want, i) {
+      it('finds the exact Finding of real position ' + (i + 1) + ' (' + KEYS[i].split('.')[2] + '), sound against an ' +
+        'independent completion and with the premise of the pattern shown absurd', function () {
+        var fixture = entry.positive[i];
+        var givens = H.parsePuzzle(model9, fixture.puzzle);
+        // the puzzle has exactly one solution (plain depth first search, no technique): the uniqueness the pattern uses
+        expect(SG.dfs.countSolutions(model9, givens, 2)).toBe(1);
+        var solution = SG.dfs.solve(model9, givens);
+        var state = positionOf(fixture);
+        var finding = check('uniqueRectangle', model9, state, want);
+        expect(finding.i18nKey).toBe(KEYS[i]);
+        expect(finding.eliminations.length).toBe(want.eliminations.length);
+        finding.eliminations.forEach(function (e) { expect(solution[e[0]]).not.toBe(e[1]); });
+        var quad = finding.cells.slice(0, 4);
+        var shape = urShape(state, quad);
+        if (i < 2) {
+          // the premise "both roofs hold one of the pair" has no completion: the unique solution is not one of them
+          var deadly = SG.model.cloneState(state);
+          shape.roofs.forEach(function (c) { deadly.candidates[c] = shape.common; });
+          expect(SG.dfs.searchFrom(model9, deadly, { limit: 2 }).found).toBe(0);
+          expect(shape.roofs.some(function (c) { return (shape.common & bit(solution[c])) === 0; })).toBe(true);
+        }
+        if (i === 0) {
+          // type 3: the roof with an extra and the real cells hold exactly the k + 1 digits of the subset
+          var real = finding.cells.slice(4);
+          var holder = shape.roofs.filter(function (c) { return (shape.common & bit(solution[c])) === 0; });
+          expect(holder).toHaveLength(1);
+          var values = real.map(function (c) { return solution[c]; }).concat([solution[holder[0]]]).sort(byNumber);
+          expect(values).toEqual(finding.i18nArgs.partDigits);
+        }
+        if (i === 1) {
+          // type 4: exactly one of the roofs holds the digit of the link
+          var link = finding.i18nArgs.digits.filter(function (d) { return d !== finding.i18nArgs.digit; })[0];
+          expect(shape.roofs.filter(function (c) { return solution[c] === link; })).toHaveLength(1);
+        }
+        // the position without the eliminated candidates still completes, and only to that solution
+        var reduced = SG.model.cloneState(state);
+        finding.eliminations.forEach(function (e) {
+          expect(SG.constraints.eliminate(model9, reduced, e[0], e[1])).toBe(true);
+        });
+        var done = SG.dfs.searchFrom(model9, reduced, { limit: 2 });
+        expect(done.found).toBe(1);
+        expect(Array.from(done.solution)).toEqual(Array.from(solution));
+        // no cheaper technique of the registry finds anything here: uniqueRectangle is the first one reached
+        SG.techniques.list().filter(function (t) { return t.variantScope === null && t.order < 180; })
+          .forEach(function (t) {
+            expect([t.id, t.find(model9, state, SG.techniques.createContext(model9, { assumeUniqueness: true })) === null])
+              .toEqual([t.id, true]);
+          });
+      });
+    });
+
+    it('is a step of the logical solver from the real positions, and never without the uniqueness assumption',
+      function () {
+        [0, 1].forEach(function (i) {
+          var fixture = entry.positive[i];
+          var givens = H.parsePuzzle(model9, fixture.puzzle);
+          var allowed = fixture.after.concat(['uniqueRectangle']);
+          var report = SG.logicalSolver.solve(model9, givens, { allowedTechniques: allowed });
+          var ur = report.steps.filter(function (s) { return s.technique === 'uniqueRectangle'; });
+          expect(ur.length).toBeGreaterThan(0);
+          expect(ur[0].i18nKey).toBe(KEYS[i]);
+          expect(report.techniqueCounts.uniqueRectangle).toBe(ur.length);
+          var without = SG.logicalSolver.solve(model9, givens, { allowedTechniques: allowed, assumeUniqueness: false });
+          without.steps.forEach(function (s) { expect(s.technique).not.toBe('uniqueRectangle'); });
+        });
+      });
+
+    it('finds nothing at the negative positions: nothing left after it, and a W-Wing', function () {
+      entry.negative.forEach(function (fixture) {
+        var state = positionOf(fixture);
+        H.expectNoFinding(SG.test, 'uniqueRectangle', state);
+        expect(urHasTypesOneTwo(model9, state)).toBe(false);
+        expect(urSubtypesOf(model9, state)).toEqual([]);
+      });
+      // the second position holds a genuine W-Wing, which belongs to wWing
+      var wing = SG.techniques.get('wWing').find(model9, positionOf(entry.negative[1]),
+        SG.techniques.createContext(model9, {}));
+      expect(wing).not.toBeNull();
+      expect(positionOf(entry.negative[0]).unsolvedCount).toBeGreaterThan(0);
+    });
+
+    it('the three supplements of the soundness sweep are real unique positions that hold a type 3 or a type 4', function () {
+      var supplements = SG.fixtures.techniques.supplements.uniqueRectangle;
+      expect(supplements).toHaveLength(3);
+      var keys = [];
+      supplements.forEach(function (fixture) {
+        expect(SG.dfs.countSolutions(model9, H.parsePuzzle(model9, fixture.puzzle), 2)).toBe(1);
+        var state = positionOf(fixture);
+        var f = check('uniqueRectangle', model9, state, {});
+        keys.push(f.i18nKey);
+      });
+      expect(keys).toEqual(['technique.uniqueRectangle.type3.step', 'technique.uniqueRectangle.type3.step',
+        'technique.uniqueRectangle.type4.step']);
+    });
+  });
+
+  describe('uniqueRectangle (R14): work limit, budget and cancellation', function () {
+    var model16w = model16;
+
+    var FLOOD_UNITS = 5832;
+
+    function maskOfDigits(digits) {
+      var m = 0;
+      digits.forEach(function (d) { m |= bit(d); });
+      return m;
+    }
+
+    // On the 16-digit board: roofs R1C1 {1,2,3} and R1C9 {1,2,4} share row 1 only (columns 1 and 9 are in different
+    // stacks), the floors R2C1 and R2C9 hold {1,2}. The other fourteen cells of row 1 hold the pairs of a cycle over the
+    // fourteen digits {1,2,5..16} ({1,2}, {2,5}, {5,6}, ..., {16,1}): k cells of it touch at least k digits, so with the
+    // extras 3 and 4 no subset has k + 1 digits and nothing is found, while every partial subset of the uncapped search is
+    // tried: 5832 units of work. `rows` floods more rows of the same kind (rectangles in rows 5, 9, ... with the cycle
+    // shifted by one cell each).
+    function flood16(rows) {
+      var D = 16;
+      var cycle = [1, 2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+      var state = SG.model.initState(model16w);
+      for (var n = 0; n < (rows || 1); n++) {
+        var rowR = 4 * n;
+        var roofA = rowR * D;
+        var roofB = rowR * D + 8;
+        state.candidates[(rowR + 1) * D] = maskOf('12');
+        state.candidates[(rowR + 1) * D + 8] = maskOf('12');
+        state.candidates[roofA] = maskOf('123');
+        state.candidates[roofB] = maskOf('124');
+        var i = n;
+        for (var c = 0; c < D; c++) {
+          var cell = rowR * D + c;
+          if (cell === roofA || cell === roofB) continue;
+          state.candidates[cell] = maskOfDigits([cycle[i % 14], cycle[(i + 1) % 14]]);
+          i++;
+        }
+      }
+      return state;
+    }
+
+    it('has R10\'s limit of 50000, and the registered finder reports every call that runs the second pass', function () {
+      expect(SG.wingSearch.UNIQUE_RECTANGLE_WORK_LIMIT).toBe(50000);
+      var out = urObserved(model9, urState(model9, [[15, '34']]));
+      expect(out.finding).not.toBeNull();
+      expect(out.records).toEqual([{ id: 'uniqueRectangle', work: 1, limit: 50000, capHit: null, retained: null }]);
+      // a type 1 or 2 is found by the first pass: the second pass does not run and reports nothing
+      var first = urObserved(model9, board(model9, [[0, '12'], [8, '12'], [9, '12'], [17, '123']]));
+      expect(first.finding.i18nKey).toBe('technique.uniqueRectangle.type1.step');
+      expect(first.records).toEqual([]);
+    });
+
+    it('counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter',
+      function () {
+        // type 3 vector: one pool cell; an empty board: nothing to test
+        expect(urObserved(model9, urState(model9, [[15, '34']])).record.work).toBe(1);
+        // type 4 vector: the seven other cells of row 2 hold eight digits each, so every size k = 1 .. 7 of the type 3
+        // search tests them (7 + 6 + 5 + 4 + 3 + 2 + 1 = 28 first cells, and the six deeper cells of the one chain
+        // of k = 7 that the union allows: 34 units), then one digit is tested as a link: 35 units
+        var link = urState(model9, []);
+        dropDigit(link, 1, [10, 11, 13, 14, 15, 16, 17]);
+        expect(urObserved(model9, link).record.work).toBe(35);
+        expect(urUnitsOf(model9, link)).toBe(35);
+        var none0 = urObserved(model9, board(model9, []));
+        expect(none0.finding).toBeNull();
+        expect(none0.record).toEqual({ id: 'uniqueRectangle', work: 0, limit: 50000, capHit: null, retained: null });
+        // a witness three cells deep: R2C2 {5,6} and R2C3 {5,7} are tried and rejected before R2C7 {3,4}
+        var deep = urState(model9, [[10, '56'], [11, '57'], [15, '34']]);
+        var out = urObserved(model9, deep);
+        expect(out.finding.i18nArgs.cells).toEqual(['R2C7']);
+        expect(out.record.work).toBe(3);
+        expect(urUnitsOf(model9, deep)).toBe(3);
+        // the flood: the exact count, pinned and recounted from the rule of the header; a second call counts afresh
+        var flood = flood16(1);
+        var first = urObserved(model16w, flood);
+        expect(first.finding).toBeNull();
+        expect(first.record).toEqual({ id: 'uniqueRectangle', work: FLOOD_UNITS, limit: 50000, capHit: null, retained: null });
+        expect(urUnitsOf(model16w, flood)).toBe(FLOOD_UNITS);
+        var second = urObserved(model16w, flood);
+        expect(second.record).toEqual(first.record);
+        expect(second.record).not.toBe(first.record);
+        expect(urSubtypesOf(model16w, flood)).toEqual([]);
+      });
+
+    it('is counted as the rule says on real states: every call of 120 states agrees with the recount', function () {
+      var items = H.randomStatesWithKnownSolution(model9, SG.testkit.rng.create(777), 120);
+      var most = 0;
+      var ran = 0;
+      items.forEach(function (item, index) {
+        var out = urObserved(model9, item.state);
+        if (out.records.length === 0) {
+          expect(out.finding.i18nKey).toMatch(/type[12]\.step$/);
+          return;
+        }
+        ran++;
+        expect(out.record.capHit).toBeNull();
+        var recount = urUnitsOf(model9, item.state);
+        if (out.record.work !== recount) fail('state #' + index + ': ' + out.record.work + ' units counted, ' + recount + ' by the rule');
+        most = Math.max(most, out.record.work);
+      });
+      expect(ran).toBeGreaterThan(60);
+      expect(most).toBeGreaterThan(5);
+    });
+
+    it('ends a call whose limit is spent with nothing found (never a finding), and says so', function () {
+      var flood = flood16(1);
+      [0, 1, 100, FLOOD_UNITS - 1].forEach(function (limit) {
+        var out = urObserved(model16w, flood, { seam: true, limit: limit });
+        expect(out.finding).toBeNull();
+        expect(out.record).toEqual({ id: 'uniqueRectangle', work: limit, limit: limit, capHit: 'work', retained: null });
+      });
+      var exact = urObserved(model16w, flood, { seam: true, limit: FLOOD_UNITS });
+      expect(exact.record).toEqual({ id: 'uniqueRectangle', work: FLOOD_UNITS, limit: FLOOD_UNITS, capHit: null, retained: null });
+      // the default limit of the seam is the registered one
+      expect(urObserved(model16w, flood, { seam: true }).record.limit).toBe(50000);
+      // more rows, more work, still far below the limit: the call is never capped by this construction
+      expect(urObserved(model16w, flood16(3)).record.work).toBe(urUnitsOf(model16w, flood16(3)));
+    });
+
+    it('is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0', function () {
+      var deep = urState(model9, [[10, '56'], [11, '57'], [15, '34']]);
+      var plain = urObserved(model9, deep).finding;
+      var kept = urObserved(model9, deep, { seam: true, limit: 3 });
+      expect(kept.finding).toEqual(plain);
+      expect(kept.record).toEqual({ id: 'uniqueRectangle', work: 3, limit: 3, capHit: null, retained: null });
+      [2, 1, 0].forEach(function (limit) {
+        var lost = urObserved(model9, deep, { seam: true, limit: limit });
+        expect(lost.finding).toBeNull();
+        expect(lost.record).toEqual({ id: 'uniqueRectangle', work: limit, limit: limit, capHit: 'work', retained: null });
+      });
+      // the first pass is not bounded: a type 1 is found even with a limit of 0, and then nothing is reported
+      var first = urObserved(model9, board(model9, [[0, '12'], [8, '12'], [9, '12'], [17, '123']]),
+        { seam: true, limit: 0 });
+      expect(first.finding).not.toBeNull();
+      expect(first.records).toEqual([]);
+      // the same for the type 4 vector: 34 units of type 3 search, then one unit for the digit tested as a link
+      var link = urState(model9, []);
+      dropDigit(link, 1, [10, 11, 13, 14, 15, 16, 17]);
+      expect(urObserved(model9, link, { seam: true, limit: 35 }).finding).not.toBeNull();
+      expect(urObserved(model9, link, { seam: true, limit: 34 }).record)
+        .toEqual({ id: 'uniqueRectangle', work: 34, limit: 34, capHit: 'work', retained: null });
+      expect(urObserved(model9, link, { seam: true, limit: 34 }).finding).toBeNull();
+    });
+
+    it('floors a fractional limit and rejects an invalid one with solver.invalidOption', function () {
+      var deep = urState(model9, [[10, '56'], [11, '57'], [15, '34']]);
+      expect(urObserved(model9, deep, { seam: true, limit: 2.9 }).record.work).toBe(2);
+      [-1, NaN, Infinity, '5', null].forEach(function (workLimit) {
+        var err = thrownBy(function () { urObserved(model9, deep, { seam: true, limit: workLimit }); });
+        expect([String(workLimit), err && err.code]).toEqual([String(workLimit), 'solver.invalidOption']);
+        expect(err.message).toContain('wingSearch.uniqueRectangle workLimit');
+      });
+      var ctx = SG.techniques.createContext(model9, {});
+      expect(SG.wingSearch.uniqueRectangle(model9, deep, ctx)).not.toBeNull();
+      expect(SG.wingSearch.uniqueRectangle(model9, deep, ctx, null)).not.toBeNull();
+      expect(SG.wingSearch.uniqueRectangle(model9, deep, ctx, {})).not.toBeNull();
+    });
+
+    /**
+     * The work done at each check of the parent budget of the second pass: a context whose k-th check throws a spent
+     * budget lets the record of the (swallowed) call tell how many units were spent at that check. The first pass has
+     * checks of its own (one per 64 rectangles, and it lets a budget error through), which are skipped: they are the
+     * checks of a call with a limit of 0 less its entry check.
+     */
+    function checkWorks(model, state, limit) {
+      var base = SG.techniques.createContext(model, {});
+      function attempt(target, workLimit) {
+        var k = 0;
+        var record = null;
+        var ctx = Object.assign({}, base, {
+          options: { onPatternWork: function (r) { record = r; } },
+          check: function () {
+            k++;
+            if (k === target) throw new SG.errors.GenerationError('budget.exceeded', { reason: 'nodes' });
+          }
+        });
+        var finding = SG.wingSearch.uniqueRectangle(model, state, ctx, workLimit === undefined ? undefined : { workLimit: workLimit });
+        return { checks: k, record: record, finding: finding };
+      }
+      var firstPass = attempt(0, 0).checks - 1;
+      var free = attempt(0, limit);
+      var works = [];
+      for (var target = firstPass + 1; target <= free.checks; target++) {
+        var spent = attempt(target, limit);
+        expect(spent.finding).toBeNull();
+        expect(spent.record.capHit).toBeNull();
+        works.push(spent.record.work);
+      }
+      var gaps = works.map(function (w, i) { return w - (i === 0 ? 0 : works[i - 1]); });
+      gaps.push(free.record.work - works[works.length - 1]);
+      return { works: works, max: Math.max.apply(null, gaps), free: free, firstPass: firstPass };
+    }
+
+    it('checks the parent budget at the entry of the second pass and so that at most 256 units pass between two checks',
+      function () {
+        var out = checkWorks(model16w, flood16(1));
+        var cadence = [];
+        for (var w = 0; w < FLOOD_UNITS; w += 256) cadence.push(w);
+        expect(out.works).toEqual(cadence);
+        expect(out.works).toHaveLength(23);
+        expect(out.max).toBeLessThanOrEqual(256);
+        // the first pass checks once per 64 rectangles of the board, as before
+        expect(out.firstPass).toBe(Math.ceil(urRectangles(model16w).length / 64));
+        // a call that ends at its limit keeps the same cadence
+        expect(checkWorks(model16w, flood16(1), 300).works).toEqual([0, 256]);
+        // a small call has only the entry check
+        expect(checkWorks(model9, urState(model9, [[15, '34']])).works).toEqual([0]);
+      });
+
+    it('reports a spent budget of the second pass as nothing found and lets cancellation and other errors through',
+      function () {
+        var flood = flood16(1);
+        var firstPass = checkWorks(model16w, flood).firstPass;
+        var parent = SG.budget.create({ nodes: firstPass + 1 });
+        var spent = urObserved(model16w, flood, { ctx: { budget: parent } });
+        expect(spent.finding).toBeNull();
+        expect(spent.records).toHaveLength(1);
+        expect(spent.record.capHit).toBeNull();
+        expect(spent.record.work).toBeLessThan(FLOOD_UNITS);
+        // capHit null is no proof of a complete scan: the caller's budget still fails after the call
+        expect(thrownBy(function () { parent.check(); }).code).toBe('budget.exceeded');
+
+        var cancelled = SG.budget.create({});
+        cancelled.cancel();
+        var records = [];
+        var err = thrownBy(function () {
+          SG.techniques.get('uniqueRectangle').find(model16w, flood, SG.techniques.createContext(model16w, {
+            budget: cancelled, onPatternWork: function (r) { records.push(r); } }));
+        });
+        expect(err.code).toBe('budget.cancelled');
+        expect(records).toEqual([]);
+
+        // cancellation in the middle of the second pass, and an error that is not a budget error
+        [['budget.cancelled', true], ['boom', false]].forEach(function (kind) {
+          var k = 0;
+          var ctx = Object.assign({}, SG.techniques.createContext(model16w, {}), {
+            check: function () {
+              if (++k === firstPass + 2) {
+                throw kind[1] ? new SG.errors.GenerationError(kind[0], { reason: 'cancelled' }) : new Error(kind[0]);
+              }
+            }
+          });
+          var thrown = thrownBy(function () { SG.techniques.get('uniqueRectangle').find(model16w, flood, ctx); });
+          expect(thrown).toBeTruthy();
+          expect(kind[1] ? thrown.code : thrown.message).toBe(kind[0]);
+          expect(k).toBe(firstPass + 2);
+        });
+      });
+
+    it('is not fooled by a hostile or absent observer', function () {
+      var state = urState(model9, [[15, '34']]);
+      var plain = JSON.stringify(urFind(model9, state));
+      ['not a function', null, 7].forEach(function (observer) {
+        expect(JSON.stringify(urFind(model9, state, { onPatternWork: observer }))).toBe(plain);
+      });
+    });
+
+    it('leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one', function () {
+      var state = urState(model9, [[10, '56'], [11, '57'], [15, '34']]);
+      var fresh = JSON.stringify(urFind(model9, state));
+      var flood = flood16(1);
+      urObserved(model16w, flood, { seam: true, limit: 500 });
+      urObserved(model9, state, { seam: true, limit: 2 });
+      urObserved(model9, state, { ctx: { budget: SG.budget.create({ nodes: checkWorks(model9, state).firstPass }) } });
+      expect(JSON.stringify(urFind(model9, state))).toBe(fresh);
+      expect(urObserved(model9, state).record.work).toBe(3);
+    });
+  });
+
+  describe('uniqueRectangle (R14): agreement with an independent enumeration', function () {
+    var cache = {};
+
+    function itemsOf(model, count, seed) {
+      var key = model.variantId + '/' + model.digits + '/' + seed;
+      if (!cache[key]) cache[key] = H.randomStatesWithKnownSolution(model, SG.testkit.rng.create(seed), count);
+      return cache[key].slice(0, count);
+    }
+
+    /**
+     * Walks the states: the finder finds something exactly when the enumeration does, its Finding is the first one field
+     * by field, a call never spends its limit, and the Finding is applied (with the singles it unlocks) before the next
+     * call. Returns the number of Findings by subtype.
+     */
+    function walk(model, count, seed, maxSteps) {
+      var found = { 3: 0, 4: 0, other: 0 };
+      itemsOf(model, count, seed).forEach(function (item, index) {
+        var state = SG.model.cloneState(item.state);
+        for (var step = 0; step < maxSteps && state.unsolvedCount > 0; step++) {
+          var out = urObserved(model, state, { seam: true, limit: 100000000 });
+          if (out.record && out.record.capHit !== null) fail('uniqueRectangle spent its limit on state #' + index);
+          var wanted = ORACLE.uniqueRectangle.exists(model, state);
+          if ((out.finding !== null) !== wanted) {
+            fail('uniqueRectangle ' + (out.finding !== null ? 'found' : 'missed') + ' a pattern the enumeration ' +
+              (wanted ? 'sees' : 'does not see') + ' on state #' + index + ' step ' + step + '\n  puzzle: ' +
+              H.puzzleString(model, item.givens) + '\n  finding: ' + JSON.stringify(out.finding));
+          }
+          if (out.finding === null) break;
+          ORACLE.uniqueRectangle.verify(model, state, out.finding);
+          var key = /type([34])\.step$/.exec(out.finding.i18nKey);
+          found[key ? key[1] : 'other']++;
+          if (!apply(model, state, out.finding)) fail('uniqueRectangle led to a contradiction on state #' + index);
+        }
+      });
+      return found;
+    }
+
+    [['classic9', 300, 20260101, 40, 6, 5], ['classic9', 300, 777, 12, 10, 12], ['classic9', 300, 99, 12, 8, 6],
+      ['classic6', 200, 20260101, 40, 3, 2], ['classic4', 300, 20260101, 40, 1, 5]].forEach(function (setup) {
+      it('agrees on ' + setup[0] + ' (' + setup[1] + ' states of seed ' + setup[2] + ') and fires both subtypes', function () {
+        var found = walk(H.model(setup[0]), setup[1], setup[2], setup[3]);
+        expect(found[3]).toBeGreaterThanOrEqual(setup[4]);
+        expect(found[4]).toBeGreaterThanOrEqual(setup[5]);
+      });
+    });
+
+    it('agrees on 12 digits (boxes of 3 x 4) and 16 digits (4 x 4), no 9 x 9 arithmetic', function () {
+      var twelve = walk(model12, 200, 20260101, 40);
+      expect(twelve[4]).toBeGreaterThanOrEqual(1);
+      walk(model16, 8, 2026, 40);
+    });
+
+    // A constructed vector on every board of rows, columns and boxes: the first rectangle of the enumeration, roofs a and
+    // b on its first row, the floors c and d on its second; type 3 with a real cell of the roofs' row, then type 4 with
+    // the first digit of the pair confined to the roofs in that row.
+    [['4 digits', model4], ['6 digits', model6], ['9 digits', model9], ['12 digits', model12],
+      ['16 digits', model16]].forEach(function (setup) {
+      it('finds the constructed vectors of both subtypes on ' + setup[0] + ', as the enumeration does', function () {
+        var model = setup[1];
+        var rect = urRectangles(model)[0];
+        var roofs = [rect[0], rect[1]];
+        var floors = [rect[2], rect[3]];
+        var rowCells = Array.from(model.units[unitsHolding(model, roofs[0], roofs[1])[0]]).sort(byNumber)
+          .filter(function (c) { return rect.indexOf(c) === -1; });
+        var base = [[floors[0], '12'], [floors[1], '12'], [roofs[0], '123'], [roofs[1], '124']];
+        var type3 = board(model, base.concat([[rowCells[0], '34']]));
+        var f3 = check('uniqueRectangle', model, type3, {});
+        expect(f3.i18nKey).toBe('technique.uniqueRectangle.type3.step');
+        expect(f3.cells).toEqual(rect.concat([rowCells[0]]));
+        var type4 = board(model, base);
+        dropDigit(type4, 1, rowCells);
+        var f4 = check('uniqueRectangle', model, type4, {});
+        expect(f4.i18nKey).toBe('technique.uniqueRectangle.type4.step');
+        expect(f4.i18nArgs.digit).toBe(2);
+      });
     });
   });
 

@@ -1,0 +1,24 @@
+$ node tests\node-runner.js --suite=help,help-example-tools,play,i18n,tech-chain,tech-wing,techniques
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+ok   tech-chain: 107 passed  (7.18 s)
+ok   tech-wing: 389 passed  (9.79 s)
+ok   techniques: 250 passed  (3.24 s)
+ok   help-example-tools: 51 passed  (5.34 s)
+FAIL help: 26 passed, 1 failed  (988 ms)
+ok   i18n: 67 passed  (111 ms)
+ok   play: 68 passed  (156 ms)
+
+Failures:
+  FAIL help > help: an example for every technique > replaying the puzzle of an example with the hint code of the player gives the same hint
+       AssertionError: expected "hiddenSingleBox" to be "remotePairs"
+       at Q:\git\sudoku\player\tests\suites\help.test.js:178:32
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:163:28)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 7
+Tests:  959 total, 958 passed, 1 failed, 0 skipped
+Time:   26.81 s running tests, 26.90 s total
+exit=1 seconds=27.038

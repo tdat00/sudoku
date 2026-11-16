@@ -1,0 +1,31 @@
+$ node tests\artifacts\difficulty-v3\MS11a\run-mutations.cjs Q:\git\sudoku\docs\difficulty-v3\evidence\MS11a\mutations-corrected-2.txt 28 55
+mutation 28 (the roofs may be real cells (only the first two corners are left out)): DETECTED - 389 total, 367 passed, 22 failed, 0 skipped - 22 failing, 21 of uniqueRectangle - 9.7 s
+mutation 29 (a cell with one digit too many may be a real cell (the filter loosened)): DETECTED - 389 total, 379 passed, 10 failed, 0 skipped - 10 failing, 10 of uniqueRectangle - 10.4 s
+mutation 30 (a cell with the union at widest + 1 digits is no real cell (the filter tightened)): DETECTED - 389 total, 386 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.4 s
+mutation 31 (the pool is not sorted): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.4 s
+mutation 32 (the pool is sorted highest first): DETECTED - 389 total, 369 passed, 20 failed, 0 skipped - 20 failing, 20 of uniqueRectangle - 10.0 s
+mutation 33 (the sizes start at two real cells): DETECTED - 389 total, 350 passed, 39 failed, 0 skipped - 39 failing, 39 of uniqueRectangle - 10.2 s
+mutation 34 (the sizes always start at one real cell (the work of the impossible sizes is spent)): DETECTED - 389 total, 386 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.5 s
+mutation 35 (the sizes start at the number of extras (one too many)): DETECTED - 389 total, 344 passed, 45 failed, 0 skipped - 45 failing, 45 of uniqueRectangle - 10.2 s
+mutation 36 (the sizes stop at two real cells): DETECTED - 389 total, 373 passed, 16 failed, 0 skipped - 16 failing, 16 of uniqueRectangle - 13.1 s
+mutation 37 (the sizes stop one short of the widest): DETECTED - 389 total, 385 passed, 4 failed, 0 skipped - 4 failing, 4 of uniqueRectangle - 11.4 s
+mutation 38 (the sizes are tried largest first): DETECTED - 389 total, 377 passed, 12 failed, 0 skipped - 12 failing, 12 of uniqueRectangle - 11.2 s
+mutation 39 (the union may pass k + 1 digits by one while the subset is built (the bound loosened)): DETECTED - 389 total, 382 passed, 7 failed, 0 skipped - 7 failing, 7 of uniqueRectangle - 10.8 s
+mutation 40 (a subset of k cells may hold k digits at most (the bound tightened)): DETECTED - 389 total, 340 passed, 49 failed, 0 skipped - 49 failing, 49 of uniqueRectangle - 9.9 s
+mutation 41 (the union is not bounded while the subset is built): DETECTED - 389 total, 382 passed, 7 failed, 0 skipped - 7 failing, 7 of uniqueRectangle - 10.7 s
+mutation 42 (a complete subset with fewer than k + 1 digits is accepted): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.6 s
+mutation 43 (a complete subset with more than k + 1 digits is accepted): NOT DETECTED (exit 0) - 389 total, 389 passed, 0 failed, 0 skipped - 0 failing, 0 of uniqueRectangle - 10.6 s
+mutation 44 (the subset is complete one cell too early): DETECTED - 389 total, 349 passed, 40 failed, 0 skipped - 40 failing, 39 of uniqueRectangle - 9.6 s
+mutation 45 (the last candidate cell of every level is missed (the bound off by one)): DETECTED - 389 total, 342 passed, 47 failed, 0 skipped - 47 failing, 47 of uniqueRectangle - 9.8 s
+mutation 46 (cells that cannot complete the subset are still tested (the bound off by one the other way)): DETECTED - 389 total, 363 passed, 26 failed, 0 skipped - 26 failing, 26 of uniqueRectangle - 9.7 s
+mutation 47 (a cell may be chosen twice (the next cell is not above the last)): DETECTED - 389 total, 345 passed, 44 failed, 0 skipped - 44 failing, 43 of uniqueRectangle - 9.7 s
+mutation 48 (the union of the partial subset is not carried to the next level): DETECTED - 389 total, 368 passed, 21 failed, 0 skipped - 21 failing, 21 of uniqueRectangle - 10.0 s
+mutation 49 (the chosen cell is not recorded): DETECTED - 389 total, 338 passed, 51 failed, 0 skipped - 51 failing, 51 of uniqueRectangle - 9.9 s
+mutation 50 (the second roof is a target): DETECTED - 389 total, 340 passed, 49 failed, 0 skipped - 49 failing, 49 of uniqueRectangle - 9.8 s
+mutation 51 (a roof is a target when it is the first one): DETECTED - 389 total, 339 passed, 50 failed, 0 skipped - 50 failing, 50 of uniqueRectangle - 9.8 s
+mutation 52 (a solved cell may be a target): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.7 s
+mutation 53 (the real cells are targets too): DETECTED - 389 total, 339 passed, 50 failed, 0 skipped - 50 failing, 50 of uniqueRectangle - 9.8 s
+mutation 54 (only the first real cell is spared as a target): DETECTED - 389 total, 351 passed, 38 failed, 0 skipped - 38 failing, 38 of uniqueRectangle - 9.9 s
+mutation 55 (a target loses every digit of the subset, also those it does not have): DETECTED - 389 total, 370 passed, 19 failed, 0 skipped - 19 failing, 19 of uniqueRectangle - 9.9 s
+detected 27 of 28, 288.5 s
+exit=1 seconds=288.633

@@ -1,0 +1,52 @@
+[
+  {
+    "label": "g-wire-G09",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS11a\\wire\\G09.json"
+    ],
+    "projectionSeconds": 48,
+    "projectionBasis": "MS10b final E g-wire-G09 21.145 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G10",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS11a\\wire\\G10.json"
+    ],
+    "projectionSeconds": 58,
+    "projectionBasis": "MS10b final E g-wire-G10 26.177 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G11",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS11a\\wire\\G11.json"
+    ],
+    "projectionSeconds": 41,
+    "projectionBasis": "MS10b final E g-wire-G11 17.638 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G12",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS11a\\wire\\G12.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10b final E g-wire-G12 1.11 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G13",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS11a\\wire\\G13.json"
+    ],
+    "projectionSeconds": 32,
+    "projectionBasis": "MS10b final E g-wire-G13 13.153 s (same shard, the previous task's source, without the types 3 and 4); 2 x + 5 s"
+  }
+]

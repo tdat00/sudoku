@@ -358,6 +358,16 @@
     'technique.uniqueRectangle.type2.step': 'Hình chữ nhật duy nhất: hai góc chỉ chứa {digitX} và ' +
       '{digitY}; hai góc còn lại, {roof1} và {roof2}, còn chứa thêm {digit}. Để tránh hai lời giải, một ' +
       'trong hai ô đó phải là {digit}, nên {digit} bị loại khỏi mọi ô nhìn thấy cả hai.',
+    'technique.uniqueRectangle.type3.step': 'Hình chữ nhật duy nhất: hai góc không phải {roof1} và {roof2} ' +
+      'chỉ chứa {digits}. Để tránh hai lời giải, {roof1} hoặc {roof2} phải chứa một chữ số không thuộc ' +
+      '{digits}, và mọi chữ số như vậy đều là một trong {partDigits}. Trong {unit}, ô đó cùng các ô {cells}, vốn ' +
+      'chỉ chứa các chữ số của {partDigits}, có số ô bằng số chữ số của {partDigits}, nên chúng dùng hết các ' +
+      'chữ số đó. Loại {partDigits} khỏi các ô của {unit}, trừ cả {roof1}, {roof2} và các ô {cells}.',
+    'technique.uniqueRectangle.type4.step': 'Hình chữ nhật duy nhất: hai góc không phải {roof1} và {roof2} ' +
+      'chỉ chứa {digits}. Trong {unit}, {roof1} và {roof2} là hai ô duy nhất còn có thể là chữ số của ' +
+      '{digits} khác {digit}, nên một trong hai ô đó là chữ số ấy. Ô còn lại cũng không thể là {digit}, vì ' +
+      'khi đó cả bốn góc chỉ chứa {digits} và đề sẽ có hai lời giải. Vậy {digit} bị loại khỏi cả {roof1} và ' +
+      '{roof2}.',
     'technique.forcingChain.step.endpoints': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu ứng ' +
       'viên đầu tiên sai thì ứng viên cuối đúng, nên ít nhất một đầu của chuỗi là đúng. Các ứng viên nhìn ' +
       'thấy cả hai đầu bị loại.',

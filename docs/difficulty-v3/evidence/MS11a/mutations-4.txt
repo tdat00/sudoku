@@ -1,0 +1,79 @@
+mutation 69 (the entry check of the parent budget of the second pass is gone): DETECTED - 387 total, 384 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.1 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > checks the parent budget at the entry of the second pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > reports a spent budget of the second pass as nothing found and lets cancellation and other errors through
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one
+mutation 70 (cancellation and every other error are swallowed): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.2 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > reports a spent budget of the second pass as nothing found and lets cancellation and other errors through
+mutation 71 (a spent parent budget is propagated instead of "nothing found"): DETECTED - 387 total, 384 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.2 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > checks the parent budget at the entry of the second pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > reports a spent budget of the second pass as nothing found and lets cancellation and other errors through
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one
+mutation 72 (a spent work limit is propagated instead of "nothing found"): DETECTED - 387 total, 381 passed, 6 failed, 0 skipped - 6 failing, 6 of uniqueRectangle - 10.1 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > checks the parent budget at the entry of the second pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > reports a spent budget of the second pass as nothing found and lets cancellation and other errors through
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one
+mutation 73 (the limit constant is 50001): DETECTED - 387 total, 384 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.1 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports every call that runs the second pass
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+mutation 74 (the registered finder ignores the constant): DETECTED - 387 total, 385 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 10.1 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports every call that runs the second pass
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+mutation 75 (the exported constant is another number): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.2 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports every call that runs the second pass
+mutation 76 (the seam ignores its limit): DETECTED - 387 total, 382 passed, 5 failed, 0 skipped - 5 failing, 5 of uniqueRectangle - 10.1 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > checks the parent budget at the entry of the second pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > reports a spent budget of the second pass as nothing found and lets cancellation and other errors through
+mutation 77 (the seam names another technique in its error): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.1 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 78 (the observer record reports one unit too many): DETECTED - 387 total, 378 passed, 9 failed, 0 skipped - 9 failing, 9 of uniqueRectangle - 10.2 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports every call that runs the second pass
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+mutation 79 (the observer record carries the id of wxyzWing): DETECTED - 387 total, 383 passed, 4 failed, 0 skipped - 4 failing, 4 of uniqueRectangle - 10.5 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports every call that runs the second pass
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+mutation 80 (the observer record reports the default limit whatever the call used): DETECTED - 387 total, 385 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 10.1 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+mutation 81 (the observer record never reports a capped call): DETECTED - 387 total, 385 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 10.0 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+mutation 82 (the observer record retains something): DETECTED - 387 total, 383 passed, 4 failed, 0 skipped - 4 failing, 4 of uniqueRectangle - 10.1 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports every call that runs the second pass
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+mutation 83 (another base cost): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.1 s
+    FAIL tech-wing > wing techniques: registration > uniqueRectangle is registered with the agreed group, cost and order
+mutation 84 (another order, ahead of W-Wing (169)): DETECTED - 387 total, 380 passed, 7 failed, 0 skipped - 7 failing, 6 of uniqueRectangle - 10.1 s
+    FAIL tech-wing > wing techniques: registration > uniqueRectangle is registered with the agreed group, cost and order
+    FAIL tech-wing > wing techniques: registration > the six techniques run in the order remotePairs, xyWing, xyzWing, wxyzWing, wWing, uniqueRectangle
+    FAIL tech-wing > wing techniques: registration > wxyzWing sits between xyzWing and wWing (R13: order 155 after the unscoped techniques of lower order)
+    FAIL tech-wing > uniqueRectangle (R14): real positions > finds the exact Finding of real position 1 (type3), sound against an independent completion and with the premise of the pattern shown absurd
+    FAIL tech-wing > uniqueRectangle (R14): real positions > finds the exact Finding of real position 2 (type4), sound against an independent completion and with the premise of the pattern shown absurd
+    FAIL tech-wing > uniqueRectangle (R14): real positions > finds the exact Finding of real position 3 (type1), sound against an independent completion and with the premise of the pattern shown absurd
+mutation 85 (another order, after the forcing chain (191)): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.2 s
+    FAIL tech-wing > wing techniques: registration > uniqueRectangle is registered with the agreed group, cost and order
+mutation 86 (the technique is not flagged as assuming uniqueness): DETECTED - 387 total, 385 passed, 2 failed, 0 skipped - 2 failing, 1 of uniqueRectangle - 10.3 s
+    FAIL tech-wing > wing techniques: registration > uniqueRectangle is registered with the agreed group, cost and order
+    FAIL tech-wing > wing techniques: registration > only Unique Rectangle is flagged as relying on a unique solution
+mutation 87 (the weight is below the one of W-Wing (849)): DETECTED - 13 total, 10 passed, 3 failed, 0 skipped - 3 failing, 0 of uniqueRectangle - 0.2 s
+    FAIL technique-weights > techniques: the weight table of SG.difficulty > puts the techniques of a group in the ladder in the order of their weights
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > has no heavier technique directly before a lighter one in the actual sorted registry
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > lets a tie of weight and of order fall to the smaller id and still sorts the sequence
+mutation 88 (the weight is above the one of the forcing chain (1101)): DETECTED - 13 total, 11 passed, 2 failed, 0 skipped - 2 failing, 0 of uniqueRectangle - 0.2 s
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > has no heavier technique directly before a lighter one in the actual sorted registry
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > lets a tie of weight and of order fall to the smaller id and still sorts the sequence
+detected 20 of 20, 183.2 s

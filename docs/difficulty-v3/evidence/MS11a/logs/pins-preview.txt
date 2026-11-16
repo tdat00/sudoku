@@ -1,0 +1,29 @@
+$ node tests\node-runner.js --suite=replay,steps,player,cache,worker,pipeline
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   cache: 106 passed  (10.68 s)
+ok   pipeline: 151 passed  (38.09 s)
+(node:1108) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   player: 69 passed  (33.92 s)
+FAIL replay: 152 passed, 2 failed  (22.19 s)
+ok   steps: 57 passed  (22.61 s)
+ok   worker: 144 passed  (45.77 s)
+
+Failures:
+  FAIL replay > replay: golden details > golden G14 details
+       AssertionError: expected Array(79)[0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, ...] to equal Array(79)[0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, ...]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:666:36)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > golden G14 compact rows, counts and invariants
+       AssertionError: expected 3688 to be 3675
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1103:32
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1096:16)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 6
+Tests:  681 total, 679 passed, 2 failed, 0 skipped
+Time:   173.27 s running tests, 173.41 s total
+exit=1 seconds=173.548

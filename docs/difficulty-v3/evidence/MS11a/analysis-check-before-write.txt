@@ -1,0 +1,30 @@
+$ node tests\replay-goldens.js --merge=..\docs\difficulty-v3\evidence\MS11a\analysis --check
+merged 14 ledgers: all 14 keys exactly once, recorded from the current sources
+G01: matches replay-goldens.js
+G02: matches replay-goldens.js
+G03: matches replay-goldens.js
+G04: matches replay-goldens.js
+G05: matches replay-goldens.js
+G06: matches replay-goldens.js
+G07: matches replay-goldens.js
+G08: matches replay-goldens.js
+G09: matches replay-goldens.js
+G10: matches replay-goldens.js
+G11: matches replay-goldens.js
+G12: matches replay-goldens.js
+G13: matches replay-goldens.js
+G14: 12 fields differ from replay-goldens.js
+  rows[4][4]: saved 3675, fresh 3688
+  rows[4][5]: saved 1990, fresh 2003
+  rows[5][5]: saved 2738, fresh 2725
+  rows[6][4]: saved 6473, fresh 6479
+  rows[6][5]: saved 60, fresh 66
+  rows[7][4]: saved 6473, fresh 6479
+  details[70]: saved 1766, fresh 1887
+  details[71]: saved 2635, fresh 2666
+  details[72]: saved 3675, fresh 3688
+  details[73]: saved 3894, fresh 3904
+  details[77]: saved 6473, fresh 6479
+  details[78]: saved 6473, fresh 6479
+replay-goldens.js differs; regenerate it with node tests/replay-goldens.js --write only if the generator changed on purpose
+exit=1 seconds=0.464

@@ -1,0 +1,17 @@
+$ node tests\artifacts\difficulty-v3\MS11a\explore-solves.js 4242 20000
+explore-solves: seed 4242, puzzles 20000 from 0, model classic9, uniqueRectangle order 180, solver options {"allowedTechniques":null,"assumeUniqueness":true}, qualifying = report.solved && a step of the subtype, print limit 6 per subtype
+#156 ...6.9....73....6.29............6.928....5.......1.53.6.27...8991...8.5..8.1....7 type4 steps 1 of 67; hardest forcingChainLong
+#164 ....712.......83....16.3..76..2..9...14........21.6.4.7.3.....4.8...4.96........3 type4 steps 1 of 86; hardest forcingChainLong
+#208 2....3.71.3..6.2..1....2..83.4......8...1..9.....9...5.....6...9..5...63.1....8.7 type4 steps 1 of 80; hardest nishio
+#254 ..27..8.5.1..5....5.8...9....4.7..3....835..78...6.1....5.9..43.31...........6... type4 steps 1 of 66; hardest uniqueRectangle
+#286 3..6..7..2.15.8.6......4...6.........9....4....4.....3......1....6..587.72.8..34. type4 steps 1 of 76; hardest forcingChain
+#310 ....9..1......4.3..12...8..6...27.....3...12.5.....4.......8....9.5.....34....6.8 type3 steps 1 of 83; hardest forcingChainLong
+#310 ....9..1......4.3..12...8..6...27.....3...12.5.....4.......8....9.5.....34....6.8 type4 steps 1 of 83; hardest forcingChainLong
+#418 516..2..4.....3.6....5....8.9.8.....7...2...1......2.....1...7.18...9..5..3.65... type3 steps 1 of 74; hardest nishio
+#637 ...6.........2.7.8..8.57..9.17...4...........4....38...4.9..17..25.3....8..5.69.. type3 steps 1 of 70; hardest forcingChainLong
+#734 ...1.38.4.89.2...........1..3..7.......4..7....5....29...7..3..96....4....23.1... type3 steps 1 of 70; hardest forcingChainLong
+#944 981..........5...1....2...77.64...38.1...6...8...7...........6....2.9...627...5.4 type3 steps 1 of 79; hardest uniqueRectangle
+#1040 2.95........6.9...4....32.5..8.6.4.93..9.5.17...3......67....8..2....7..........4 type3 steps 1 of 75; hardest forcingChainLong
+seed 4242 puzzles 20000 (from 0): attempted 20000, solved 20000 (100.00 % of the attempted); qualifying solves per subtype {"type1":377,"type2":81,"type3":152,"type4":321} (type1 1.8850 %, type2 0.4050 %, type3 0.7600 %, type4 1.6050 % of the attempted); steps in those solves {"type1":393,"type2":81,"type3":156,"type4":348}; unsolved traces with the step {"type1":0,"type2":0,"type3":0,"type4":0}; solves whose hardest technique is uniqueRectangle 231
+qualifying indices, lowest first: type3 310,418,637,734,944,1040,1230,1276,1776,1850,2140,2354,2360,2418,2780,2954,3018,3026,3088,3221,3266,3376,3397,3400,3496,3604,3766,3828,3954,4200,...(152 in all); type4 156,164,208,254,286,310,380,512,518,596,598,690,790,792,828,846,860,868,946,1222,1238,1554,1674,1698,1926,1990,2068,2102,2126,2194,...(321 in all), 32.0 s
+exit=0 seconds=46.975

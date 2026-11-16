@@ -510,6 +510,17 @@
     'technique.uniqueRectangle.type2.step': 'Unique Rectangle: two corners hold only {digitX} and ' +
       '{digitY}; the other two, {roof1} and {roof2}, also hold {digit}. To avoid two solutions, one of ' +
       'those two must be {digit}, so {digit} is removed from every cell that sees both.',
+    'technique.uniqueRectangle.type3.step': 'Unique Rectangle: the two corners other than {roof1} and {roof2} ' +
+      'hold only {digits}. To avoid two solutions, {roof1} or {roof2} must hold a digit that is not in ' +
+      '{digits}, and every such digit is one of {partDigits}. In {unit}, that cell and the cells {cells}, which ' +
+      'can only hold digits of {partDigits}, are as many cells as there are digits in {partDigits}, so they use ' +
+      'up all of them. {partDigits} are removed from the cells of {unit} outside both {roof1} and {roof2} ' +
+      'and the cells {cells}.',
+    'technique.uniqueRectangle.type4.step': 'Unique Rectangle: the two corners other than {roof1} and {roof2} ' +
+      'hold only {digits}. In {unit}, {roof1} and {roof2} are the only cells that can still be the digit of ' +
+      '{digits} that is not {digit}, so one of them is that digit. The other one cannot be {digit} either: all ' +
+      'four corners would then hold only {digits} and the puzzle would have two solutions. So {digit} is ' +
+      'removed from both {roof1} and {roof2}.',
     'technique.forcingChain.step.endpoints': 'Forcing chain of {length} links: {chains}. If the first ' +
       'candidate is false, the last one is true, so at least one end of the chain is true. Candidates that ' +
       'see both ends are removed.',

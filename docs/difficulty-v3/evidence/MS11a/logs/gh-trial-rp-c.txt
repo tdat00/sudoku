@@ -1,0 +1,11 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=remotePairs --sources=tests\artifacts\difficulty-v3\MS11a\sources-slice-c.json --max-puzzles=8 --max-hints=400 --write --out=tests\artifacts\difficulty-v3\MS11a\trial-c.js
+selected 1 technique ID(s); mode write
+replaying 5 puzzle(s) for 1 ID(s) (--max-puzzles=8, --max-hints=400)
+puzzle 1/5 classic9 Nightmare 13 -> 73 hint(s), solved; wanted found: -
+puzzle 2/5 classic9 Nightmare 70 -> 72 hint(s), solved; wanted found: -
+puzzle 3/5 classic9 Nightmare 11 -> 67 hint(s), solved; wanted found: -
+puzzle 4/5 classic9 Hell 1 8 -> 70 hint(s), solved; wanted found: -
+puzzle 5/5 classic9 Hell 2 escargot -> 111 hint(s), solved; wanted found: -
+remotePairs: no example found in 5 puzzle(s) within 400 hint(s)
+no example for 1 selected ID(s); nothing was written
+exit=1 seconds=1.252

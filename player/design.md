@@ -474,6 +474,21 @@ and `forcingChainLong` (Nightmare 75, step 27); the failed own-source checks, th
 the final check of all 35 are kept in `docs/difficulty-v3/evidence/MS10b/logs/`. The tests pin 35 (the catalogue, the
 user guide's "one of 35 techniques", the translated technique names) and the Player's quick set is 2,338 tests.
 `--check` without options reproduces the whole committed file.
+**Difficulty v3, MS11a:** the catalogue still holds 35 examples. The Unique Rectangle now has types 3 and 4 (the
+`technique.uniqueRectangle.type3.step` and `.type4.step` texts, which the real unique positions of the shared tests
+and the render tests of both apps cover); its own example is the normal hint of the catalogue source Nightmare 70, step
+29, a type 1 deduction that keeps priority over the new subtypes, and it is reproduced as it was (one example per
+ID, not per subtype; `sources.json` of `player/tests/artifacts/difficulty-v3/MS11a/` names that one source and the
+tool's `--write` then `--check` leave the file unchanged). The new deductions take the place of later ones on some
+trajectories, so all 35 examples were checked first and two differed: `forcingChainLong` is made again from its own
+source (Nightmare 75: step 27 to 29, the notes of two cells differ), and `remotePairs` no longer has a hint of its own
+technique on its own source (`testkit-4242-254`), so it moved to another real source of the catalogue after the three
+slices of the 21 distinct classic9 sources had been tried (the first and the last have no Remote Pairs hint; the
+second, the sources of Nightmare 989, Hell 1 644 and 214, `testkit-4242-254`, Nightmare 648, 561, 3 and 828, has one,
+Hell 1 644): its example is a normal hint of Hell 1 seed 644, step 52. No synthetic snapshot, disabled earlier
+technique or weakened assertion was used; the failed own-source attempts, the three trials and the final check of
+all 35 are kept in `docs/difficulty-v3/evidence/MS11a/logs/`. The Player's quick set is 2,412 tests. `--check`
+without options reproduces the whole committed file.
 **Decision:** there is no
 first-visit tour or other popup that stands in front of the welcome screen or the puzzle: a visitor who arrives
 from the generator's link wants to play.
@@ -507,7 +522,7 @@ strings; added: `player.*` (shell, open flow, info card, recent list, welcome), 
 
 ## 10. Testing
 `node tests/node-runner.js` (30 suites: the 14 of `tests/suites/` and the 16 shared ones of `core/tests/suites/`;
-2,338 tests; no install) is the default quick set: developers and coding
+2,412 tests; no install) is the default quick set: developers and coding
 agents run it (or a few suites with `--suite=`) while developing, and `.github/workflows/pages.yml` runs all of it
 before every deployment. When one command cannot hold the whole set, it is covered by disjoint shards as the
 generator's quick set is (`generator/design.md` section 15.1); the cost measured for each app, on a named source and

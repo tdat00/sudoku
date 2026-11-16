@@ -1,0 +1,10 @@
+$ node tests\pattern-cost.js --ids=uniqueRectangle --runs=20 --json=..\docs\difficulty-v3\evidence\MS11a\pattern-cost.json
+pattern-cost: 6 of 6 cases x 20 runs (120 finds), complete true, found 4, none 2, outcome not the fixture's 0, capped 0, wall 0.060 s
+  uniqueRectangle:positive:1 found, work 2 of 50000, ms p50 0.077 p95 0.362 max 4.398
+  uniqueRectangle:positive:2 found, work 9 of 50000, ms p50 0.079 p95 0.214 max 0.214
+  uniqueRectangle:positive:3 found, no work report, ms p50 0.012 p95 0.019 max 0.087
+  uniqueRectangle:positive:4 found, no work report, ms p50 0.014 p95 0.058 max 0.107
+  uniqueRectangle:negative:1 none, work 19 of 50000, ms p50 0.156 p95 0.600 max 0.632
+  uniqueRectangle:negative:2 none, work 0 of 50000, ms p50 0.038 p95 0.066 max 0.071
+record: docs/difficulty-v3/evidence/MS11a/pattern-cost.json
+exit=0 seconds=0.634

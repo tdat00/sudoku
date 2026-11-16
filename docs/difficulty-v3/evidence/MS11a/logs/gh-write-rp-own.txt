@@ -1,0 +1,7 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=remotePairs --max-puzzles=16 --max-hints=400 --write
+selected 1 technique ID(s); mode write
+replaying 1 puzzle(s) for 1 ID(s) (--max-puzzles=16, --max-hints=400)
+puzzle 1/1 classic9 - - -> 66 hint(s), solved; wanted found: -
+remotePairs: no example found in 1 puzzle(s) within 400 hint(s)
+no example for 1 selected ID(s); nothing was written
+exit=1 seconds=0.270

@@ -226,14 +226,14 @@ Return the inherited/new item list, actual gates and CI membership.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (orchestrator check against IR72 A-J; outside the analyst review set). The developer stopped before E with eight points; SA2 accepted seven and changed one (`332bb16`): the Type 3 real-cell cap of 3 omitted R14 deductions, so k runs to min(eligible cells, digits - 1) under the unchanged 50,000-unit limit; mutant #34 was not equivalent and gained a detecting negative; the Type 3 text excludes both roofs |
+| Start | 2026-11-16 11:37:55 (+07:00), base `dadd747` |
+| End | 12:47 stop before E (8 points); 13:08 SA2 ruling (`332bb16`); 14:28 final report; orchestrator re-check and commit at about 14:33 |
+| Duration | About 2 h 29 min developer (1 h 9 min to the questions, 1 h 20 min after the ruling); about 21 min for the ruling; 84 locked commands, lock waits 0.1 s apart from the 15 s fairness gaps |
+| Model | claude-sonnet-5.5 (developer); gpt-6-astra (SA2 ruling and pack amendment); claude-opus-5.5 (orchestrator) |
+| Token usage | 384 model calls; 137,846,711 input tokens (136,525,318 cache reads); 494,840 output tokens (developer) |
+| AI credits | about 2,190 (developer) |
+| Verification | `uniqueRectangle` in `core/js/engine/tech-wing.js` keeps its ID, order, cost and weight: pass 1 (old Types 1/2) over every rectangle, then a bounded pass 2 rectangle by rectangle, Type 3 across every unit holding both roofs (k = max(1, |E|-1) to min(eligible cells, digits - 1)) before Type 4 (complete units, genuine conjugacy); 50,000 units per call, `capHit: 'work'` only on the work limit. Type 3 text in all four locales excludes both roofs. Tests: `tech-wing` 319 -> 389 (the 24-, 41- and 77-unit witnesses with capped prefixes, the #34 wrong-union negative), `techniques` 247 -> 250, one render test per app; fixtures `CURRENT.uniqueRectangle` 4 positives and 2 negatives, `SUPPLEMENTS` 3; `historyV2` untouched. Mutants on the corrected source: 94 of 97 detected, 3 equivalent by argument. Reach (cap-3 source, kept as preliminary): new Types 3/4 first in 478 of 5,118 open positions (9.34 %). **E** on frozen bytes: wires all match; analysis G14 only (5 of 78 positions); **3 of 520 hashes changed** (`classic9/nightmare` seeds 3, 13, 233), the same 3 with and without the new types, none below Master. R20: 0 of 26 change. GH: 35/35; `forcingChainLong` refreshed from its own source, `remotePairs` moved to Hell 1 seed 644 step 52 (IR72 H1), `uniqueRectangle` unchanged. Quick sets: Generator 4,171/4,171 (397.0 s), Player 2,412/2,412 (65.4 s); no projection changed; fingerprints match; CI check passes. Orchestrator: locked `tech-wing,tech-fish,tech-chain,techniques,technique-weights,difficulty-floor,i18n` 1,374/1,374 (71.1 s), Player `help,help-example-tools,play,i18n` 213/213 (8.9 s), CI shard check 4,171 of 4,171 |
+| Acceptance | MS11a-B01, B02, T01-T03 met; IR72 A-J pass (developer's table with evidence pointers in `docs/difficulty-v3/evidence/MS11a/evidence.md` section 10) |
+| Issues & resolutions | The developer's unstated Type 3 cap of 3 omitted R14 deductions (SA2: a cap-5 check finds a 12-digit witness in 41 units); corrected before E. The pass-2 search has no bounded-prefix coverage evidence of its own (structural bound above 50,000 on boards of nine or more digits; 0 of 6,842 sampled second passes capped; a constructed 16-digit row costs 5,832 units), routed to the pack author for an S-AV decision. The Type 4 vector now costs 35 units (the uncapped Type 3 search runs first), pinned. `remotePairs` now has a single catalogue source (Hell 1 seed 644). Not run: the manual `difficulty` suite, qualification, soak |
+| Handoff | To MS11b: Unique Rectangle Types 1-4 in `tech-wing.js` (pass 2 uncapped Type 3 under 50,000 units); IR72 A-J is the checklist; base quick totals Generator 4,171 (397.0 s) and Player 2,412 (65.4 s); help catalogue 35; S-AV01-S-AV33 open as recorded plus the pass-2 coverage item pending the pack author; ask before E |

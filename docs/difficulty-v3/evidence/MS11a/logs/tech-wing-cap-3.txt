@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=tech-wing,techniques
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   tech-wing: 389 passed  (10.30 s)
+ok   techniques: 250 passed  (2.79 s)
+
+Suites: 2
+Tests:  639 total, 639 passed, 0 failed, 0 skipped
+Time:   13.09 s running tests, 13.21 s total
+exit=0 seconds=13.347

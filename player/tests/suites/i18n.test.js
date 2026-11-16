@@ -980,6 +980,37 @@
       expect(Object.keys(kinds).length).toBeGreaterThanOrEqual(F.ids.length);
     }, 30000);
 
+    it('renders every subtype of the Unique Rectangle in both languages from its real fixtures (types 1 to 4)',
+      function () {
+        packsReady();
+        if (!F || !H) SG.test.skip('the technique fixtures are not loaded');
+        var model = H.model('classic9');
+        var ctx = SG.techniques.createContext(model);
+        I.setCellLabeler(function (i) { return SG.model.cellLabel(model, i); });
+        var keys = {};
+        try {
+          F.byId.uniqueRectangle.positive.forEach(function (fixture) {
+            var finding = SG.techniques.get('uniqueRectangle').find(model, stateOf(model, fixture), ctx);
+            if (finding === null) throw new Error('fixture "' + fixture.name + '" found nothing');
+            keys[finding.i18nKey] = true;
+            LOCALES.forEach(function (code) {
+              var text = inLocale(code, function () { return I.t(finding.i18nKey, finding.i18nArgs); });
+              if (/[{}]|undefined|NaN|\[object/.test(text) || text === finding.i18nKey) {
+                throw new Error(finding.i18nKey + ' renders as "' + text + '" in ' + code);
+              }
+              placeholders(SG.locales[code][finding.i18nKey]).forEach(function (name) {
+                expect(hasOwn(finding.i18nArgs, name)).toBe(true);
+              });
+            });
+          });
+        } finally {
+          I.setCellLabeler(null);
+        }
+        expect(Object.keys(keys).sort()).toEqual(['technique.uniqueRectangle.type1.step',
+          'technique.uniqueRectangle.type2.step', 'technique.uniqueRectangle.type3.step',
+          'technique.uniqueRectangle.type4.step']);
+      });
+
     it('picks the colouring text that matches args.rule', function () {
       packsReady();
       var args = { digit: 4, colour1: ['R1C1'], colour2: ['R2C2'], falseColour: 1,
