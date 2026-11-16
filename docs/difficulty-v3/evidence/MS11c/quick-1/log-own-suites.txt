@@ -1,0 +1,56 @@
+$ node ..\.github\scripts\generator-quick.js run own-suites --results-dir=..\docs\difficulty-v3\evidence\MS11c\quick-final
+==== shard own-fast (1688 tests): node tests/node-runner.js --suite=a11y,cache,controls,difficulty-diagnostics,difficulty-floor,digger,events,export,format,full-grid,help,history,i18n,manual-corpus,mega-contract,multigrid,pattern-cost-tools,perf-tooling,purity,qualification-records,recovery-profile,replay-recorders,result-view,rng,smoke,store,technique-weights,theme,ui-contract,variants-registry,worker --results=..\docs\difficulty-v3\evidence\MS11c\quick-final\generator-own-fast.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   a11y: 31 passed  (77 ms)
+ok   cache: 106 passed  (10.26 s)
+(node:6484) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   controls: 46 passed  (87 ms)
+ok   difficulty-diagnostics: 94 passed  (14.05 s)
+ok   difficulty-floor: 48 passed  (29.18 s)
+ok   digger: 64 passed  (1.00 s)
+ok   events: 68 passed  (604 ms)
+ok   export: 78 passed  (6.45 s)
+ok   format: 18 passed  (183 ms)
+ok   full-grid: 42 passed  (2.49 s)
+ok   help: 30 passed  (5.58 s)
+ok   history: 15 passed  (1.63 s)
+ok   i18n: 85 passed  (1.22 s)
+ok   manual-corpus: 46 passed  (2.70 s)
+ok   mega-contract: 44 passed  (2.04 s)
+ok   multigrid: 184 passed  (28.33 s)
+ok   pattern-cost-tools: 32 passed  (2.77 s)
+ok   perf-tooling: 31 passed  (12.06 s)
+ok   purity: 41 passed  (25 ms)
+ok   qualification-records: 46 passed  (2.22 s)
+ok   recovery-profile: 27 passed  (642 ms)
+ok   replay-recorders: 39 passed  (8.46 s)
+ok   result-view: 22 passed  (2.28 s)
+ok   rng: 28 passed  (49 ms)
+ok   smoke: 44 passed  (5.16 s)
+ok   store: 85 passed  (110 ms)
+ok   technique-weights: 14 passed  (3 ms)
+ok   theme: 57 passed  (33 ms)
+ok   ui-contract: 67 passed  (330 ms)
+ok   variants-registry: 12 passed  (18 ms)
+ok   worker: 144 passed  (49.14 s)
+
+Suites: 31
+Tests:  1688 total, 1688 passed, 0 failed, 0 skipped
+Time:   189.18 s running tests, 189.57 s total
+Results: docs/difficulty-v3/evidence/MS11c/quick-final/generator-own-fast.json
+==== shard digger-target (75 tests): node tests/node-runner.js --suite=digger-target --results=..\docs\difficulty-v3\evidence\MS11c\quick-final\generator-digger-target.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   digger-target: 75 passed  (2.00 s)
+
+Suites: 1
+Tests:  75 total, 75 passed, 0 failed, 0 skipped
+Time:   2.00 s running tests, 2.21 s total
+Results: docs/difficulty-v3/evidence/MS11c/quick-final/generator-digger-target.json
+shard own-fast: exit 0, 189.8 s
+shard digger-target: exit 0, 2.4 s
+exit=0 seconds=193.146

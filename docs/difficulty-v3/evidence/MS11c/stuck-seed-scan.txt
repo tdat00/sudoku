@@ -1,0 +1,48 @@
+$ node tests\artifacts\difficulty-v3\MS11c\stuck-seed-scan.js
+tech-wing.js C80AFCD878BE532F5D4CCAC8450F95C8C0E6E5EE32D6547459402FD8809AAA80
+seed 1: keeps 37, scored 37, stuck 0 (genuine 0), accepted removals 27 (79 ms)
+seed 2: keeps 36, scored 36, stuck 0 (genuine 0), accepted removals 27 (6 ms)
+seed 3: keeps 34, scored 34, stuck 0 (genuine 0), accepted removals 29 (50 ms)
+seed 4: keeps 27, scored 27, stuck 0 (genuine 0), accepted removals 26 (6 ms)
+seed 5: keeps 32, scored 32, stuck 0 (genuine 0), accepted removals 27 (9 ms)
+seed 6: keeps 38, scored 38, stuck 0 (genuine 0), accepted removals 27 (4 ms)
+seed 8: keeps 31, scored 31, stuck 0 (genuine 0), accepted removals 26 (4 ms)
+seed 9: keeps 21, scored 21, stuck 0 (genuine 0), accepted removals 26 (4 ms)
+seed 10: keeps 35, scored 35, stuck 0 (genuine 0), accepted removals 27 (4 ms)
+seed 11: keeps 32, scored 32, stuck 0 (genuine 0), accepted removals 26 (22 ms)
+seed 12: keeps 43, scored 43, stuck 0 (genuine 0), accepted removals 27 (4 ms)
+seed 13: keeps 24, scored 21, stuck 3 (genuine 3), accepted removals 27 (31 ms)
+seed 14: keeps 36, scored 31, stuck 5 (genuine 5), accepted removals 28 (17 ms)
+seed 15: keeps 26, scored 22, stuck 4 (genuine 4), accepted removals 26 (29 ms)
+seed 17: keeps 28, scored 28, stuck 0 (genuine 0), accepted removals 27 (2 ms)
+seed 18: keeps 50, scored 44, stuck 6 (genuine 6), accepted removals 28 (22 ms)
+seed 19: keeps 25, scored 25, stuck 0 (genuine 0), accepted removals 25 (3 ms)
+seed 20: keeps 24, scored 24, stuck 0 (genuine 0), accepted removals 28 (3 ms)
+seed 21: keeps 18, scored 18, stuck 0 (genuine 0), accepted removals 25 (2 ms)
+seed 22: keeps 38, scored 38, stuck 0 (genuine 0), accepted removals 26 (3 ms)
+seed 23: keeps 28, scored 28, stuck 0 (genuine 0), accepted removals 26 (3 ms)
+seed 24: keeps 30, scored 30, stuck 0 (genuine 0), accepted removals 28 (3 ms)
+seed 25: keeps 34, scored 33, stuck 1 (genuine 1), accepted removals 27 (8 ms)
+seed 26: keeps 33, scored 33, stuck 0 (genuine 0), accepted removals 28 (3 ms)
+seed 27: keeps 22, scored 22, stuck 0 (genuine 0), accepted removals 28 (2 ms)
+seed 28: keeps 31, scored 31, stuck 0 (genuine 0), accepted removals 27 (3 ms)
+seed 29: keeps 42, scored 42, stuck 0 (genuine 0), accepted removals 28 (4 ms)
+seed 30: keeps 41, scored 26, stuck 15 (genuine 15), accepted removals 27 (106 ms)
+selected seed 30; its stuck keeps (log index, cells, priority = STUCK + unsolved, unsolved):
+  #54 cells [20,60] priority 1000000031 unsolved 31
+  #60 cells [39,41] priority 1000000033 unsolved 33
+  #62 cells [23,57] priority 1000000031 unsolved 31
+  #64 cells [3,77] priority 1000000031 unsolved 31
+  #65 cells [4,76] priority 1000000033 unsolved 33
+  #67 cells [26,54] priority 1000000031 unsolved 31
+  #68 cells [14,66] priority 1000000031 unsolved 31
+  #69 cells [5,75] priority 1000000031 unsolved 31
+  #71 cells [3,77] priority 1000000033 unsolved 33
+  #72 cells [14,66] priority 1000000033 unsolved 33
+  #73 cells [4,76] priority 1000000035 unsolved 35
+  #75 cells [26,54] priority 1000000033 unsolved 33
+  #76 cells [5,75] priority 1000000033 unsolved 33
+  #78 cells [3,77] priority 1000000035 unsolved 35
+  #81 cells [5,75] priority 1000000035 unsolved 35
+first qualifying seed: 30
+exit=0 seconds=0.632

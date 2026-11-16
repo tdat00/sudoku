@@ -1,0 +1,22 @@
+$ node tests\node-runner.js --suite=techniques,i18n,technique-weights,difficulty-floor,tech-chain
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-floor: 48 passed  (28.95 s)
+ok   i18n: 85 passed  (187 ms)
+ok   tech-chain: 107 passed  (7.15 s)
+ok   technique-weights: 13 passed  (3 ms)
+FAIL techniques: 258 passed, 1 failed  (2.90 s)
+
+Failures:
+  FAIL techniques > techniques: fixtures (fixtures/techniques.js) > puts the positive positions of a replaced or added entry where its id is reached in the registry (MS07b, MS08a, MS08b, MS08c, MS09a, MS09b, MS10a, MS10b, MS11a, MS11c)
+       AssertionError: expected Array(26)["boxLine", "emptyRectangle", "finnedSwordfish", "finnedXWing", "hiddenPair", "hiddenQuad", "hiddenSingleBox", "hiddenSingleLine", "hiddenTriple", "jellyfish", "nakedPair", "nakedQuad", ...] to equal Array(27)["boxLine", "bugPlusOne", "emptyRectangle", "finnedSwordfish", "finnedXWing", "hiddenPair", "hiddenQuad", "hiddenSingleBox", "hiddenSingleLine", "hiddenTriple", "jellyfish", "nakedPair", ...]
+       at Q:\git\sudoku\core\tests\suites\techniques.test.js:139:78
+       at Array.forEach (<anonymous>)
+       at Q:\git\sudoku\core\tests\suites\techniques.test.js:137:31
+       at Array.forEach (<anonymous>)
+
+Suites: 5
+Tests:  512 total, 511 passed, 1 failed, 0 skipped
+Time:   39.19 s running tests, 39.31 s total
+exit=1 seconds=39.435

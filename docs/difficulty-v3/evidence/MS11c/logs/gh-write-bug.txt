@@ -1,0 +1,6 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=bugPlusOne --sources=tests\artifacts\difficulty-v3\MS11c\sources.json --max-puzzles=8 --max-hints=400 --write
+selected 1 technique ID(s); mode write
+replaying 1 puzzle(s) for 1 ID(s) (--max-puzzles=8, --max-hints=400)
+puzzle 1/1 classic9 - testkit-4242-14 -> 57 hint(s), solved; wanted found: bugPlusOne
+wrote player/js/ui/help-examples.js (36 examples; 1 selected: bugPlusOne; the others kept)
+exit=0 seconds=0.192

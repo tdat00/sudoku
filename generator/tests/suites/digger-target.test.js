@@ -532,7 +532,10 @@
       ['classic9', 'expert', 9, true, 0.5],
       ['classic9', 'nightmare', 4, true, null],
       ['classic9', 'master', 7, true, 0.5],
-      ['classic9', 'master', 16, true, null],
+      // Master seed 30 where it was 16: BUG+1 (MS11c) finishes seven of the nine stuck proposals of seed 16 (the pass keeps
+      // 32 proposals instead of 31, 30 of them scored instead of 22); seed 30 is the first of seeds 1 to 30 (apart from 7
+      // and 16) with at least nine stuck ones (15)
+      ['classic9', 'master', 30, true, null],
       // Hell 1 seed 14 where it was 11: the hidden Unique Rectangle (MS11b) finishes the three stuck proposals of seed 11
       ['classic9', 'hell1', 14, true, null],
       ['classic9', 'hell1', 13, true, null],

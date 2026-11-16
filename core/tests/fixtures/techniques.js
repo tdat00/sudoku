@@ -29,8 +29,8 @@
  * an ID's fixtures from now on without touching a v2 position. A later technique adds its entry to CURRENT,
  * built from explicit `after` lists or an initial real puzzle state. MS07b replaces the four chain IDs
  * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way; MS08a adds skyscraper,
- * MS08b twoStringKite, MS08c emptyRectangle, MS09a finnedXWing, MS09b finnedSwordfish, MS10a remotePairs and MS10b
- * wxyzWing.
+ * MS08b twoStringKite, MS08c emptyRectangle, MS09a finnedXWing, MS09b finnedSwordfish, MS10a remotePairs, MS10b
+ * wxyzWing and MS11c bugPlusOne (MS11a and MS11b replace the uniqueRectangle entry).
  */
 (function () {
   'use strict';
@@ -47,17 +47,18 @@
   ];
 
   /**
-   * The 30 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
-   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the nine
+   * The 31 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
+   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the ten
    * techniques added since: skyscraper (MS08a), twoStringKite (MS08b), emptyRectangle (MS08c), finnedXWing
-   * (MS09a), remotePairs (MS10a), finnedSwordfish (MS09b), wxyzWing (MS10b) and the two chain windows
-   * forcingChainLong and nishioDeep (MS07b).
+   * (MS09a), remotePairs (MS10a), finnedSwordfish (MS09b), wxyzWing (MS10b), bugPlusOne (MS11c) and the two chain
+   * windows forcingChainLong and nishioDeep (MS07b).
    */
   var REGISTRY_ORDER = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite', 'remotePairs',
     'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'finnedSwordfish', 'jellyfish', 'xyWing',
-    'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle', 'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep'
+    'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle', 'bugPlusOne', 'forcingChain', 'forcingChainLong', 'nishio',
+    'nishioDeep'
   ];
 
   /** The techniques the ladder tries before `id`: the position after them is where `id` is reached. */
@@ -760,7 +761,7 @@
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite', 'remotePairs',
     'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'finnedSwordfish', 'jellyfish', 'xyWing',
-    'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle'
+    'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle', 'bugPlusOne'
   ];
   var THROUGH_SHORT_CHAIN = BELOW_CHAINS.concat(['forcingChain']);
   var THROUGH_LONG_CHAIN = THROUGH_SHORT_CHAIN.concat(['forcingChainLong']);
@@ -810,6 +811,12 @@
   // plus itself. Explicit lists, so that a technique registered later cannot move a position.
   var BELOW_UR = THROUGH_WXYZ.concat(['wWing']);
   var THROUGH_UR = BELOW_UR.concat(['uniqueRectangle']);
+
+  // Where bugPlusOne is reached (MS11c, order 182): the techniques before it in the registry (through
+  // uniqueRectangle, whose four subtypes keep their priority), and the same plus itself. Explicit lists, so that a
+  // technique registered later cannot move a position.
+  var BELOW_BUG = THROUGH_UR.slice();
+  var THROUGH_BUG = BELOW_BUG.concat(['bugPlusOne']);
 
   // Real unique puzzles. The first two are the puzzles of the v2 chain fixtures; the next three are famous
   // puzzles of tests/fixtures/classic.js; the last three are minimal puzzles dug by SG.testkit.dig from the
@@ -969,6 +976,23 @@
   var UR_HIDDEN_BOX = '..6138....9...58....2.9.7.......4.21...2.1.........3..2.5....489........38.......';
   var UR_HIDDEN_ROW = '5...42.....4.......7..9...84...7.6.5.9......16..13.7....28.4.............1.75.4..';
 
+  // Real unique puzzles of the bugPlusOne fixtures (MS11c), puzzles 14, 1814, 720, 903 and 3456 of the same seeded corpus
+  // (seed 4242; the puzzle of index i is the state #4i). They are positions where the registry reaches bugPlusOne
+  // (after: BELOW_BUG, every technique before it exhausted): exactly one open cell has three candidates and every other
+  // open cell two, and every unit then has each unplaced digit twice once the digit of the answer is left out. Of 30,000
+  // dug puzzles of seed 4242 the position has a BUG+1 in 62 (MS11c evidence). BUG_LOW is puzzle 14 (17 open cells; R9C8
+  // {2,7,8} is the 2, the lowest of its candidates) and BUG_HIGH puzzle 1814 (21 open cells; R6C7 {3,4,9} is the 9, the
+  // highest); BUG_MID, BUG_MID2 and BUG_WIDE (puzzles 720, 903 and 3456) are three more real positions for the soundness
+  // supplements: R4C2 {2,4,7} is the 7 (a middle candidate), R8C2 {1,3,5} the 3 and R5C6 {2,6,7} the 2 of a position with
+  // 42 open cells. The negatives use real positions of other entries: WX_OPEN, whose position through bugPlusOne has
+  // 47 open cells and nothing for it, and UR_TYPE1, whose position below uniqueRectangle holds a Unique Rectangle that
+  // keeps its priority.
+  var BUG_LOW = '.12843...3.......2...2....7.24.7.........9..8.7...2.3.....1..6...9..64........1.9';
+  var BUG_HIGH = '..32.4.6.....5.8..6...93....2......74.........6.1.........4..9....31.2...12..97.3';
+  var BUG_MID = '...8.3164.9..26......1..9..........3..8..1.2....289..781.6...5.3.....6.8..4......';
+  var BUG_MID2 = '...3..4.8..9.4.1.38...9.7..1..2.....68...5.2....4....1..685.........9..4.7.6...1.';
+  var BUG_WIDE = '.51.....7.9.3...6.28....3......5.6.........4....9.1.5..3..2.9.19.86........7...3.';
+
   /**
    * Current fixtures that replace a historical entry or belong to an ID registered since (skyscraper, MS08a;
    * twoStringKite, MS08b; emptyRectangle, MS08c; finnedXWing, MS09a; finnedSwordfish, MS09b; remotePairs, MS10a;
@@ -978,9 +1002,51 @@
    * under the selected C = 4 (MS07c; under C = 6 they would be forcingChain's). The negatives include positions
    * where a shorter ID owns the proof, one of them at the window boundary: a chain of 5 links is not
    * forcingChain's. The uniqueRectangle entry replaces the v2 one (kept in `historyV2`, positions untouched) with one
-   * real positive per subtype (types 1 to 4, and the hidden form) at the position where the registry reaches it.
+   * real positive per subtype (types 1 to 4, and the hidden form) at the position where the registry reaches it. The
+   * bugPlusOne entry (MS11c) has two real positives, a BUG+1 whose answer is the lowest and one whose answer is the
+   * highest candidate of the trivalue cell, and two negatives.
    */
   var CURRENT = {
+    bugPlusOne: {
+      positive: [
+        {
+          name: 'bugPlusOne at R9C8 {2,7,8}: every other open cell has two candidates and every unit has each digit ' +
+            'twice without the 2, so R9C8 is 2 (a seeded dug puzzle, 17 open cells)',
+          puzzle: BUG_LOW,
+          after: BELOW_BUG,
+          propagate: true,
+          expect: {
+            placements: [[79, 2]],
+            eliminations: []
+          }
+        },
+        {
+          name: 'bugPlusOne at R6C7 {3,4,9}, the answer is the highest candidate: R6C7 is 9 (a second seeded dug ' +
+            'puzzle, 21 open cells)',
+          puzzle: BUG_HIGH,
+          after: BELOW_BUG,
+          propagate: true,
+          expect: {
+            placements: [[51, 9]],
+            eliminations: []
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'bugPlusOne has nothing left to do once the techniques through it are exhausted',
+          puzzle: WX_OPEN,
+          after: THROUGH_BUG,
+          propagate: true
+        },
+        {
+          name: 'bugPlusOne leaves a Unique Rectangle (a position with many trivalue cells) to uniqueRectangle',
+          puzzle: UR_TYPE1,
+          after: BELOW_UR,
+          propagate: true
+        }
+      ]
+    },
     uniqueRectangle: {
       positive: [
         {
@@ -1528,9 +1594,22 @@
    * uniqueRectangle fires in the random states (24 firings in the 300 of the sweep, 8 of them type 3 and 7 type 4), so
    * its three real positions, a type 3 of three real cells in a column, one in a box and a type 4 in a column, are added
    * on top in the same way. MS11b: the hidden form fires often in the random states, so two more real positions of it
-   * (a rectangle whose upper corners share a box, and the target R6C8) are added on top in the same way.
+   * (a rectangle whose upper corners share a box, and the target R6C8) are added on top in the same way. MS11c:
+   * bugPlusOne is rare (62 of 30,000 dug puzzles have it at the position where the registry reaches it, and the 300
+   * random states of the sweep give it no firing at all), so its three real positions, all at that position, give the
+   * sweep its minimum of 3 firings on top of the unchanged random population (an exact fit: one supplement fewer would
+   * fail the minimum, which stays as it is): the answer is a middle candidate in two of them and the lowest in a
+   * position with 42 open cells.
    */
   var SUPPLEMENTS = {
+    bugPlusOne: [
+      { name: 'bugPlusOne at R4C2 {2,4,7}, a middle candidate (a third seeded dug puzzle)',
+        puzzle: BUG_MID, after: BELOW_BUG, propagate: true },
+      { name: 'bugPlusOne at R8C2 {1,3,5}, a middle candidate (a fourth seeded dug puzzle)',
+        puzzle: BUG_MID2, after: BELOW_BUG, propagate: true },
+      { name: 'bugPlusOne at R5C6 {2,6,7} with 42 open cells (a fifth seeded dug puzzle)',
+        puzzle: BUG_WIDE, after: BELOW_BUG, propagate: true }
+    ],
     uniqueRectangle: [
       { name: 'uniqueRectangle type 3 of three real cells in column 9 (a seeded dug puzzle)',
         puzzle: UR_TRIPLE, after: BELOW_UR, propagate: true },

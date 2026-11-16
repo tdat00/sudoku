@@ -1,6 +1,6 @@
 /**
- * Wing techniques (group `wing`): Remote Pairs, XY-Wing, XYZ-Wing, WXYZ-Wing, W-Wing and Unique Rectangle
- * (types 1, 2, 3, 4 and the hidden form).
+ * Wing techniques (group `wing`): Remote Pairs, XY-Wing, XYZ-Wing, WXYZ-Wing, W-Wing, Unique Rectangle
+ * (types 1, 2, 3, 4 and the hidden form) and BUG+1.
  *
  *   id               baseCost  order  assumesUniqueness
  *   remotePairs          35     116   false
@@ -9,6 +9,7 @@
  *   wxyzWing             57     155   false
  *   wWing                60     170   false
  *   uniqueRectangle      66     180   true
+ *   bugPlusOne           72     182   true
  *
  * Everything here is generic: "sees" means "shares at least one unit" (`model.peers`), so any digit count and
  * unit shape works. Eliminations are only taken from unsolved cells. `state` is read, never written; one call
@@ -25,6 +26,7 @@
  *   technique.uniqueRectangle.type3.step  { roof1, roof2, digits, partDigits, cells, unit }
  *   technique.uniqueRectangle.type4.step  { roof1, roof2, digits, digit, unit }
  *   technique.uniqueRectangle.hidden.step { digit, digits, cells }
+ *   technique.bugPlusOne.step             { cell, label, digit }
  * `digit` is the digit that gets eliminated, `digitX` / `digitY` the other digits of the pattern (the hidden
  * form is the exception: its `digit` is the digit of the links, the eliminated one is the other of `digits`).
  *
@@ -177,6 +179,34 @@
  *   work since the last check over 256 units. A spent limit and a spent budget end the pass with null (the
  *   limit with `capHit: 'work'`, the budget with `capHit: null`, as for the second pass); cancellation and
  *   every other error propagate. The pass reports its own record to the observer, after the second pass's.
+ *
+ * BUG+1 (rating v3, R14; assumesUniqueness: true, so never used with `assumeUniqueness: false`): a Bivalue
+ * Universal Grave plus one cell. Exactly one open cell T has three candidates and every other open cell has
+ * exactly two. For a candidate X of T, take the position without X in T and read EVERY unit of the model,
+ * not only the units of T: a digit that is placed in a unit is held there by its own cell only, and every
+ * other digit has exactly two holders (open cells with that candidate). Every unit has to be complete (as
+ * many cells as digits, not partial), and the model has no cages and no inequalities: a sum or a sign does
+ * not survive the flip below, and a partial unit does not have to hold a digit at all. Then every open cell
+ * of the position without X is bivalue, and in a solution a digit that is not placed in a unit sits in
+ * exactly one of its two holders, while the other holder holds its other digit. Giving every open cell its
+ * other candidate is again a solution: in a unit the digit that leaves one holder enters the other holder
+ * and no other cell, so every digit is still held once. The two solutions differ in every open cell, so the
+ * position without X has no solution or at least two, and a puzzle with one solution has its solution
+ * outside it: T is X. At most one X qualifies: when X does, every other digit of T has exactly two holders
+ * in each unit of T (T included), one fewer than its own removal would need (T lies in a unit of every
+ * valid model). The placement is the whole Finding: cells = [T], placements = [[T, X]], no eliminations,
+ * arguments { cell (the index of T), label (its 'R4C7' label), digit (X) }. A merely local "three holders
+ * of X in the units of T" is not the test. A digit X that is placed in a unit of T is a stale candidate of T
+ * and never qualifies (a propagated position has none).
+ *   Work (R10): a unit is one cell of one unit tallied under one proposed digit X (the guard that finds the
+ * single trivalue cell and the model guard cost nothing); the proposals are tried in ascending digit order
+ * and a proposal ends at its first unit that breaks the count. The limit is 50000 per call
+ * (`SG.wingSearch.BUG_PLUS_ONE_WORK_LIMIT`), the counter is local to the call, and the parent budget is
+ * checked at entry and before the unit that would carry the work since the last check over 256 units. A
+ * spent limit and a spent budget end the call with null (the limit with `capHit: 'work'`, the budget with
+ * `capHit: null`); cancellation and every other error propagate. `ctx.options.onPatternWork(record)`
+ * observes one record per call that the uniqueness context does not refuse, once the call returns normally:
+ * { id: 'bugPlusOne', work, limit, capHit (null | 'work'), retained (null) }.
  */
 (function (root) {
   'use strict';
@@ -206,6 +236,9 @@
   // R10 work policy of the Unique Rectangle hidden form (the third pass): the tested (target, digit) pairs
   // one call may spend, counted apart from the second pass.
   const UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT = 50000;
+
+  // R10 work policy of BUG+1: the cells of units tallied under a proposed digit that one call may spend.
+  const BUG_PLUS_ONE_WORK_LIMIT = 50000;
 
   // Thrown through the walks of a Remote Pairs call whose work limit is spent.
   const WORK_CAP = Object.freeze({ capHit: 'work' });
@@ -258,7 +291,9 @@
         urPool: new Int32Array(n),
         urPick: new Int32Array(Math.max(1, model.digits - 1)),
         urUnion: new Int32Array(model.digits),
-        urFix: new Int32Array(5)
+        urFix: new Int32Array(5),
+        // BUG+1: the holders of each digit in the unit being tallied.
+        bugTally: new Int32Array(model.digits)
       };
       infoCache.set(model, info);
     }
@@ -1322,11 +1357,11 @@
     return null;
   }
 
-  // One bounded pass of a Unique Rectangle call with a work counter of its own: a spent work limit and a
+  // One bounded pass of a call to the finder `id` with a work counter of its own: a spent work limit and a
   // spent budget are "nothing found" (`run.capped`, `run.spent`); cancellation and every other error
   // propagate. It returns its Finding, whether the budget was spent and the record of its work, which the
   // caller publishes only when the whole call returns normally.
-  function boundedPass(model, state, ctx, info, limit, scan) {
+  function boundedPass(id, model, state, ctx, info, limit, scan) {
     const run = { ctx: ctx, limit: limit, work: 0, checkedAt: 0, capped: false, spent: false };
     let found = null;
     try {
@@ -1341,7 +1376,7 @@
       found: found,
       spent: run.spent,
       record: {
-        id: 'uniqueRectangle',
+        id: id,
         work: run.work,
         limit: limit,
         capHit: run.capped ? 'work' : null,
@@ -1369,12 +1404,12 @@
     const first = findRectangleTypes12(model, state, ctx);
     if (first !== null) return first;
     const info = infoFor(model);
-    const second = boundedPass(model, state, ctx, info, workLimit, scanRectangleSubtypes);
+    const second = boundedPass('uniqueRectangle', model, state, ctx, info, workLimit, scanRectangleSubtypes);
     if (second.found !== null || second.spent) {
       publishRecords(ctx, [second.record]);
       return second.found;
     }
-    const third = boundedPass(model, state, ctx, info, hiddenLimit, scanHiddenRectangle);
+    const third = boundedPass('uniqueRectangle', model, state, ctx, info, hiddenLimit, scanHiddenRectangle);
     publishRecords(ctx, [second.record, third.record]);
     return third.found;
   }
@@ -1382,6 +1417,96 @@
   function findUniqueRectangle(model, state, ctx) {
     return findUniqueRectangleBounded(model, state, ctx, UNIQUE_RECTANGLE_WORK_LIMIT,
       UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT);
+  }
+
+  // The one open cell with three candidates of a position in which every other open cell has two, else -1.
+  function trivalueCell(info, state) {
+    const cand = state.candidates;
+    const value = state.value;
+    let found = -1;
+    for (let c = 0; c < info.n; c++) {
+      if (value[c] !== 0) continue;
+      const count = popcount(cand[c]);
+      if (count === 2) continue;
+      if (count !== 3 || found >= 0) return -1;
+      found = c;
+    }
+    return found;
+  }
+
+  // Whether the position without the candidate `extraBit` in `target` has, in EVERY unit, no holder besides
+  // the cell of a placed digit and exactly two holders of every digit that is not placed there. A digit that
+  // is placed in a unit of the cell is a stale candidate of it and never qualifies. One work unit is one cell
+  // of one unit tallied; a proposal ends at the first unit that breaks the count.
+  function bugRemainderHolds(model, state, info, run, target, extraBit) {
+    const units = model.units;
+    const cand = state.candidates;
+    const value = state.value;
+    const tally = info.bugTally;
+    const digits = model.digits;
+    for (let u = 0; u < units.length; u++) {
+      const cells = units[u];
+      tally.fill(0);
+      let placed = 0;
+      let holdsTarget = false;
+      for (let i = 0; i < cells.length; i++) {
+        spend(run);
+        const c = cells[i];
+        if (c === target) holdsTarget = true;
+        if (value[c] !== 0) {
+          placed |= 1 << (value[c] - 1);
+          tally[value[c] - 1]++;
+          continue;
+        }
+        for (let mask = c === target ? cand[c] & ~extraBit : cand[c]; mask !== 0; mask &= mask - 1) {
+          tally[digitOf(mask & -mask) - 1]++;
+        }
+      }
+      if (holdsTarget && (placed & extraBit) !== 0) return false;
+      for (let d = 0; d < digits; d++) {
+        if (tally[d] !== (((placed >> d) & 1) === 1 ? 1 : 2)) return false;
+      }
+    }
+    return true;
+  }
+
+  // The BUG+1 pass: the single trivalue cell, a model whose every constraint is a complete unit, then the
+  // candidates of the cell in ascending order; the first one whose removal leaves the Boolean remainder is
+  // placed.
+  function scanBugPlusOne(model, state, ctx, info, run) {
+    const target = trivalueCell(info, state);
+    if (target < 0 || model.cages.length > 0 || model.inequalities.length > 0) return null;
+    for (let u = 0; u < model.units.length; u++) {
+      if (ctx.completeUnits[u] !== 1) return null;
+    }
+    const cand = state.candidates;
+    for (let bits = cand[target]; bits !== 0; bits &= bits - 1) {
+      const extraBit = bits & -bits;
+      if (!bugRemainderHolds(model, state, info, run, target, extraBit)) continue;
+      return {
+        technique: 'bugPlusOne',
+        cells: [target],
+        placements: [[target, digitOf(extraBit)]],
+        eliminations: [],
+        i18nKey: 'technique.bugPlusOne.step',
+        i18nArgs: { cell: target, label: label(model, target), digit: digitOf(extraBit) }
+      };
+    }
+    return null;
+  }
+
+  // A BUG+1 call with its own work counter (`workLimit` is the default except in the tests' seam). The record
+  // of the call goes to the optional observer once the call returns normally: cancellation or an unexpected
+  // error leaves none.
+  function findBugPlusOneBounded(model, state, ctx, workLimit) {
+    if (ctx.assumeUniqueness === false) return null;
+    const pass = boundedPass('bugPlusOne', model, state, ctx, infoFor(model), workLimit, scanBugPlusOne);
+    publishRecords(ctx, [pass.record]);
+    return pass.found;
+  }
+
+  function findBugPlusOne(model, state, ctx) {
+    return findBugPlusOneBounded(model, state, ctx, BUG_PLUS_ONE_WORK_LIMIT);
   }
 
   const DEFINITIONS = [
@@ -1444,6 +1569,16 @@
       variantScope: null,
       assumesUniqueness: true,
       find: findUniqueRectangle
+    },
+    {
+      id: 'bugPlusOne',
+      group: 'wing',
+      baseCost: 72,
+      order: 182,
+      i18nKey: 'technique.bugPlusOne',
+      variantScope: null,
+      assumesUniqueness: true,
+      find: findBugPlusOne
     }
   ];
 
@@ -1451,8 +1586,8 @@
     if (!SG.techniques.has(def.id)) SG.techniques.register(def);
   });
 
-  // The parameterised searches behind remotePairs, wxyzWing and uniqueRectangle, for tests (explicit work
-  // limits, `workLimit` or the named option); not registered techniques.
+  // The parameterised searches behind remotePairs, wxyzWing, uniqueRectangle and bugPlusOne, for tests
+  // (explicit work limits, `workLimit` or the named option); not registered techniques.
   function seamLimit(opts, fallback, name, field) {
     const option = field === undefined ? 'workLimit' : field;
     const given = opts === undefined || opts === null ? undefined : opts[option];
@@ -1473,6 +1608,7 @@
       WXYZ_WORK_LIMIT: WXYZ_WORK_LIMIT,
       UNIQUE_RECTANGLE_WORK_LIMIT: UNIQUE_RECTANGLE_WORK_LIMIT,
       UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT: UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT,
+      BUG_PLUS_ONE_WORK_LIMIT: BUG_PLUS_ONE_WORK_LIMIT,
       remotePairs: function (model, state, ctx, opts) {
         let limit = REMOTE_PAIRS_WORK_LIMIT;
         const given = opts === undefined || opts === null ? undefined : opts.workLimit;
@@ -1495,6 +1631,10 @@
         return findUniqueRectangleBounded(model, state, ctx,
           seamLimit(opts, UNIQUE_RECTANGLE_WORK_LIMIT, 'uniqueRectangle'),
           seamLimit(opts, UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT, 'uniqueRectangle', 'hiddenWorkLimit'));
+      },
+      bugPlusOne: function (model, state, ctx, opts) {
+        const limit = seamLimit(opts, BUG_PLUS_ONE_WORK_LIMIT, 'bugPlusOne');
+        return findBugPlusOneBounded(model, state, ctx, limit);
       }
     });
   }

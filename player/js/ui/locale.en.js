@@ -251,6 +251,12 @@
     'technique.uniqueRectangle.desc': 'A puzzle has exactly one solution, so four cells in two rows, two ' +
       'columns and two boxes can never be left with only the same two candidates. This forces a candidate ' +
       'out.',
+    'technique.bugPlusOne': 'BUG+1',
+    'technique.bugPlusOne.desc': 'Every empty cell has two candidates except one, which has three, and every ' +
+      'digit that is still to be placed in a row, a column, a box or any other unit has exactly two cells ' +
+      'for it, once the extra candidate of the cell with three is left out. Such a position has no solution ' +
+      'or at least two solutions. A puzzle has exactly one solution, so the cell with three candidates must ' +
+      'be that extra digit.',
     'technique.forcingChain': 'Forcing Chain',
     'technique.forcingChain.desc': 'A chain of "if this, then that" deductions that proves a candidate ' +
       'false (or a digit true).',
@@ -384,6 +390,10 @@
       '{digit}, and the corner that holds only {digits} would be that other digit too. The four corners would ' +
       'then hold {digits} in two interchangeable ways and the puzzle would have two solutions. So the digit of ' +
       '{digits} other than {digit} is removed from the opposite corner.',
+    'technique.bugPlusOne.step': 'BUG+1: every empty cell has two candidates except {label}, which has three. ' +
+      'Without {digit} in {label}, every digit that is still to be placed in a row, a column, a box or any ' +
+      'other unit would have exactly two cells for it. Such a position has no solution or at least two ' +
+      'solutions. The puzzle has just one solution, so {label} is {digit}.',
     'technique.forcingChain.step.endpoints': 'Forcing chain of {length} links: {chains}. If the first ' +
       'candidate is false, the last one is true, so at least one end of the chain is true. Candidates ' +
       'that see both ends are removed.',

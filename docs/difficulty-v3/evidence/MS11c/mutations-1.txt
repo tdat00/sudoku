@@ -1,0 +1,321 @@
+mutation 0 (the open test of the guard is dropped (a solved cell counts as a cell)): DETECTED - 61 total, 47 passed, 14 failed, 0 skipped - 14 failing, 14 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 1, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 2, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > is a step of the logical solver from the real positions, and never without the uniqueness assumption
+    FAIL tech-wing > bugPlusOne (R14): real positions > the three supplements of the soundness sweep are real unique positions where the registry reaches it
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > is counted as the rule says on the real positions and on 120 random states
+mutation 1 (an open cell with one candidate is taken for a bivalue one): DETECTED - 61 total, 54 passed, 7 failed, 0 skipped - 7 failing, 7 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 120 mutated graves of 4 digits: the same Finding or none, and the same work
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 120 mutated graves of 6 digits: the same Finding or none, and the same work
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 120 mutated graves of 9 digits: the same Finding or none, and the same work
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 60 mutated graves of 12 digits: the same Finding or none, and the same work
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 120 mutated graves of a 4x4 jigsaw: the same Finding or none, and the same work
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 40 mutated graves of diagonalX: the same Finding or none, and the same work
+mutation 2 (a cell with four or more candidates is taken for the trivalue cell): DETECTED - 61 total, 58 passed, 3 failed, 0 skipped - 3 failing, 3 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 120 mutated graves of 4 digits: the same Finding or none, and the same work
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 60 mutated graves of 12 digits: the same Finding or none, and the same work
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 120 mutated graves of a 4x4 jigsaw: the same Finding or none, and the same work
+mutation 3 (a second trivalue cell is accepted (the last one wins)): DETECTED - 61 total, 54 passed, 7 failed, 0 skipped - 7 failing, 7 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 120 mutated graves of 4 digits: the same Finding or none, and the same work
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 120 mutated graves of 6 digits: the same Finding or none, and the same work
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 120 mutated graves of 9 digits: the same Finding or none, and the same work
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 60 mutated graves of 12 digits: the same Finding or none, and the same work
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 120 mutated graves of a 4x4 jigsaw: the same Finding or none, and the same work
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 40 mutated graves of diagonalX: the same Finding or none, and the same work
+mutation 4 (no trivalue cell is no refusal (a plain grave is read with the cell -1)): DETECTED - 61 total, 36 passed, 25 failed, 0 skipped - 25 failing, 25 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a second trivalue cell, a cell with four candidates, a naked single and an empty cell: nothing is found
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 4 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 6 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 9 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 12 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 16 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+mutation 5 (a model with cages is accepted): DETECTED - 61 total, 60 passed, 1 failed, 0 skipped - 1 failing, 1 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > refuses cages, inequalities and a partial unit: the same candidates on the plain model give the Finding
+mutation 6 (a model with inequalities is accepted): DETECTED - 61 total, 60 passed, 1 failed, 0 skipped - 1 failing, 1 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > refuses cages, inequalities and a partial unit: the same candidates on the plain model give the Finding
+mutation 7 (a partial unit is accepted (the completeness rule dropped)): DETECTED - 61 total, 59 passed, 2 failed, 0 skipped - 2 failing, 2 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > refuses cages, inequalities and a partial unit: the same candidates on the plain model give the Finding
+mutation 8 (only the first unit is checked for completeness): DETECTED - 61 total, 59 passed, 2 failed, 0 skipped - 2 failing, 2 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > refuses cages, inequalities and a partial unit: the same candidates on the plain model give the Finding
+mutation 9 (a partial unit is skipped instead of refusing the model): DETECTED - 61 total, 59 passed, 2 failed, 0 skipped - 2 failing, 2 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > refuses cages, inequalities and a partial unit: the same candidates on the plain model give the Finding
+mutation 10 (the candidates of the cell are tried in descending order): DETECTED - 61 total, 32 passed, 29 failed, 0 skipped - 29 failing, 29 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 4 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 6 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 9 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 12 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 16 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on a 4x4 jigsaw for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+mutation 11 (a refused proposal ends the call (only the lowest candidate is proposed)): DETECTED - 61 total, 17 passed, 44 failed, 0 skipped - 44 failing, 44 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the vector: every open cell holds two candidates but R5C5, whose third candidate is the answer in every unit
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > takes the answer whichever candidate of the cell it is: the lowest, a middle one and the highest
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a distant unit with a wrong digit count: the units of the cell look valid and nothing is found
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the third candidate in another cell is another answer: moving it makes the finder follow it
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+mutation 12 (the proposed digit is not left out of the cell): DETECTED - 61 total, 16 passed, 45 failed, 0 skipped - 45 failing, 45 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the vector: every open cell holds two candidates but R5C5, whose third candidate is the answer in every unit
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > takes the answer whichever candidate of the cell it is: the lowest, a middle one and the highest
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a distant unit with a wrong digit count: the units of the cell look valid and nothing is found
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the third candidate in another cell is another answer: moving it makes the finder follow it
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+mutation 13 (the digit is left out of every cell but the target): DETECTED - 61 total, 16 passed, 45 failed, 0 skipped - 45 failing, 45 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the vector: every open cell holds two candidates but R5C5, whose third candidate is the answer in every unit
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > takes the answer whichever candidate of the cell it is: the lowest, a middle one and the highest
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a distant unit with a wrong digit count: the units of the cell look valid and nothing is found
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the third candidate in another cell is another answer: moving it makes the finder follow it
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+mutation 14 (a placed digit is expected twice (placed digits are not accounted for)): DETECTED - 61 total, 47 passed, 14 failed, 0 skipped - 14 failing, 14 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 1, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 2, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > is a step of the logical solver from the real positions, and never without the uniqueness assumption
+    FAIL tech-wing > bugPlusOne (R14): real positions > the three supplements of the soundness sweep are real unique positions where the registry reaches it
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > is counted as the rule says on the real positions and on 120 random states
+mutation 15 (a placed digit is expected nowhere): DETECTED - 61 total, 47 passed, 14 failed, 0 skipped - 14 failing, 14 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 1, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 2, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > is a step of the logical solver from the real positions, and never without the uniqueness assumption
+    FAIL tech-wing > bugPlusOne (R14): real positions > the three supplements of the soundness sweep are real unique positions where the registry reaches it
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > is counted as the rule says on the real positions and on 120 random states
+mutation 16 (a digit with more than two holders is accepted (only fewer is refused)): NOT DETECTED (exit 0) - 61 total, 61 passed, 0 failed, 0 skipped - 0 failing, 0 of bugPlusOne - 1.4 s
+mutation 17 (a digit with fewer than two holders is accepted (only more is refused)): NOT DETECTED (exit 0) - 61 total, 61 passed, 0 failed, 0 skipped - 0 failing, 0 of bugPlusOne - 1.4 s
+mutation 18 (a digit with exactly three holders is accepted (the local test)): NOT DETECTED (exit 0) - 61 total, 61 passed, 0 failed, 0 skipped - 0 failing, 0 of bugPlusOne - 1.4 s
+mutation 19 (the last digit is not checked): NOT DETECTED (exit 0) - 61 total, 61 passed, 0 failed, 0 skipped - 0 failing, 0 of bugPlusOne - 1.4 s
+mutation 20 (the first digit is not checked): NOT DETECTED (exit 0) - 61 total, 61 passed, 0 failed, 0 skipped - 0 failing, 0 of bugPlusOne - 1.5 s
+mutation 21 (the tally is not cleared between units): DETECTED - 61 total, 16 passed, 45 failed, 0 skipped - 45 failing, 45 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the vector: every open cell holds two candidates but R5C5, whose third candidate is the answer in every unit
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > takes the answer whichever candidate of the cell it is: the lowest, a middle one and the highest
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a distant unit with a wrong digit count: the units of the cell look valid and nothing is found
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the third candidate in another cell is another answer: moving it makes the finder follow it
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+mutation 22 (only the units that hold the cell are read (the merely local test)): DETECTED - 61 total, 28 passed, 33 failed, 0 skipped - 33 failing, 33 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a distant unit with a wrong digit count: the units of the cell look valid and nothing is found
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a placed digit is not an unplaced one: a stale candidate, a second placement and a digit left open are refused
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 4 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 6 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 9 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 12 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+mutation 23 (the units after the 27th are not read (an added diagonal or window is ignored)): DETECTED - 61 total, 47 passed, 14 failed, 0 skipped - 14 failing, 14 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 12 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 16 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on diagonalX for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on hyper for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on samurai for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+mutation 24 (the first unit is not read): DETECTED - 61 total, 33 passed, 28 failed, 0 skipped - 28 failing, 28 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 4 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 6 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 9 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 12 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 16 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on a 4x4 jigsaw for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+mutation 25 (a solved cell does not count for its digit): DETECTED - 61 total, 47 passed, 14 failed, 0 skipped - 14 failing, 14 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 1, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 2, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > is a step of the logical solver from the real positions, and never without the uniqueness assumption
+    FAIL tech-wing > bugPlusOne (R14): real positions > the three supplements of the soundness sweep are real unique positions where the registry reaches it
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > is counted as the rule says on the real positions and on 120 random states
+mutation 26 (a solved cell is not recorded as placed): DETECTED - 61 total, 47 passed, 14 failed, 0 skipped - 14 failing, 14 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 1, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 2, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > is a step of the logical solver from the real positions, and never without the uniqueness assumption
+    FAIL tech-wing > bugPlusOne (R14): real positions > the three supplements of the soundness sweep are real unique positions where the registry reaches it
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > is counted as the rule says on the real positions and on 120 random states
+mutation 27 (a solved cell is read as an open one): DETECTED - 61 total, 47 passed, 14 failed, 0 skipped - 14 failing, 14 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 1, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 2, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > is a step of the logical solver from the real positions, and never without the uniqueness assumption
+    FAIL tech-wing > bugPlusOne (R14): real positions > the three supplements of the soundness sweep are real unique positions where the registry reaches it
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > is counted as the rule says on the real positions and on 120 random states
+mutation 28 (the stale candidate guard (the digit placed in a unit of the cell) is dropped): DETECTED - 61 total, 58 passed, 3 failed, 0 skipped - 3 failing, 3 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a placed digit is not an unplaced one: a stale candidate, a second placement and a digit left open are refused
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 120 mutated graves of 4 digits: the same Finding or none, and the same work
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 120 mutated graves of a 4x4 jigsaw: the same Finding or none, and the same work
+mutation 29 (the stale candidate guard is applied to every unit, not to the units of the cell): DETECTED - 61 total, 55 passed, 6 failed, 0 skipped - 6 failing, 6 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 1, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 2, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > is a step of the logical solver from the real positions, and never without the uniqueness assumption
+    FAIL tech-wing > bugPlusOne (R14): real positions > the three supplements of the soundness sweep are real unique positions where the registry reaches it
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > is counted as the rule says on the real positions and on 120 random states
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on every position of the random corpus of 6 digits and only places the solution
+mutation 30 (the stale candidate guard is never true (the cell is not recognised in its unit)): DETECTED - 61 total, 58 passed, 3 failed, 0 skipped - 3 failing, 3 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a placed digit is not an unplaced one: a stale candidate, a second placement and a digit left open are refused
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 120 mutated graves of 4 digits: the same Finding or none, and the same work
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > agrees with the enumeration on 120 mutated graves of a 4x4 jigsaw: the same Finding or none, and the same work
+mutation 31 (no work is counted): DETECTED - 61 total, 32 passed, 29 failed, 0 skipped - 29 failing, 29 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 4 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 6 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 9 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 12 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 16 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on a 4x4 jigsaw for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+mutation 32 (two units are counted per cell): DETECTED - 61 total, 34 passed, 27 failed, 0 skipped - 27 failing, 27 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 4 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 6 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 9 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 12 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 16 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on a 4x4 jigsaw for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+mutation 33 (one unit is counted per unit, not per cell): DETECTED - 61 total, 32 passed, 29 failed, 0 skipped - 29 failing, 29 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 4 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 6 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 9 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 12 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 16 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on a 4x4 jigsaw for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+mutation 34 (the parent budget is never checked after the entry (the cadence dropped)): DETECTED - 61 total, 57 passed, 4 failed, 0 skipped - 4 failing, 4 of bugPlusOne - 1.5 s
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found, never a wrong finding, and says so
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > checks the parent budget at its entry and so that at most 256 units pass between two checks
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > reports a spent budget as nothing found (capHit null) and lets cancellation and other errors through with no record
+mutation 35 (the parent budget is checked at every unit): DETECTED - 61 total, 59 passed, 2 failed, 0 skipped - 2 failing, 2 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > checks the parent budget at its entry and so that at most 256 units pass between two checks
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > reports a spent budget as nothing found (capHit null) and lets cancellation and other errors through with no record
+mutation 36 (the Finding lists no cell): DETECTED - 61 total, 26 passed, 35 failed, 0 skipped - 35 failing, 35 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the vector: every open cell holds two candidates but R5C5, whose third candidate is the answer in every unit
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > takes the answer whichever candidate of the cell it is: the lowest, a middle one and the highest
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a distant unit with a wrong digit count: the units of the cell look valid and nothing is found
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the third candidate in another cell is another answer: moving it makes the finder follow it
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+mutation 37 (the Finding places the lowest candidate of the cell): DETECTED - 61 total, 26 passed, 35 failed, 0 skipped - 35 failing, 35 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the vector: every open cell holds two candidates but R5C5, whose third candidate is the answer in every unit
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > takes the answer whichever candidate of the cell it is: the lowest, a middle one and the highest
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a distant unit with a wrong digit count: the units of the cell look valid and nothing is found
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the third candidate in another cell is another answer: moving it makes the finder follow it
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+mutation 38 (the Finding lists an elimination): DETECTED - 61 total, 25 passed, 36 failed, 0 skipped - 36 failing, 36 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the vector: every open cell holds two candidates but R5C5, whose third candidate is the answer in every unit
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > takes the answer whichever candidate of the cell it is: the lowest, a middle one and the highest
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a distant unit with a wrong digit count: the units of the cell look valid and nothing is found
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the third candidate in another cell is another answer: moving it makes the finder follow it
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+mutation 39 (the Finding carries the key of the technique, not of its step): DETECTED - 61 total, 26 passed, 35 failed, 0 skipped - 35 failing, 35 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the vector: every open cell holds two candidates but R5C5, whose third candidate is the answer in every unit
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > takes the answer whichever candidate of the cell it is: the lowest, a middle one and the highest
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a distant unit with a wrong digit count: the units of the cell look valid and nothing is found
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the third candidate in another cell is another answer: moving it makes the finder follow it
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+mutation 40 (the cell argument is the label): DETECTED - 61 total, 27 passed, 34 failed, 0 skipped - 34 failing, 34 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the vector: every open cell holds two candidates but R5C5, whose third candidate is the answer in every unit
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > takes the answer whichever candidate of the cell it is: the lowest, a middle one and the highest
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a distant unit with a wrong digit count: the units of the cell look valid and nothing is found
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the third candidate in another cell is another answer: moving it makes the finder follow it
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+mutation 41 (the label argument is the index): DETECTED - 61 total, 27 passed, 34 failed, 0 skipped - 34 failing, 34 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the vector: every open cell holds two candidates but R5C5, whose third candidate is the answer in every unit
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > takes the answer whichever candidate of the cell it is: the lowest, a middle one and the highest
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a distant unit with a wrong digit count: the units of the cell look valid and nothing is found
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the third candidate in another cell is another answer: moving it makes the finder follow it
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+mutation 42 (the arguments come in another order): DETECTED - 61 total, 60 passed, 1 failed, 0 skipped - 1 failing, 1 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the vector: every open cell holds two candidates but R5C5, whose third candidate is the answer in every unit
+mutation 43 (the Finding carries the id of the Unique Rectangle): DETECTED - 61 total, 25 passed, 36 failed, 0 skipped - 36 failing, 36 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the vector: every open cell holds two candidates but R5C5, whose third candidate is the answer in every unit
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > takes the answer whichever candidate of the cell it is: the lowest, a middle one and the highest
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a distant unit with a wrong digit count: the units of the cell look valid and nothing is found
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the third candidate in another cell is another answer: moving it makes the finder follow it
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+mutation 44 (the uniqueness assumption is not honoured): DETECTED - 61 total, 60 passed, 1 failed, 0 skipped - 1 failing, 1 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > assumeUniqueness: false skips the finder and the seam and leaves no work record
+mutation 45 (the record of the call is not published): DETECTED - 61 total, 31 passed, 30 failed, 0 skipped - 30 failing, 30 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > refuses cages, inequalities and a partial unit: the same candidates on the plain model give the Finding
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 4 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 6 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 9 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 12 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+    FAIL tech-wing > bugPlusOne (R14): unit shapes and sizes > finds the constructed grave on 16 digits for the first, a middle and the last cell, as the enumeration does, and nothing in its near misses
+mutation 46 (the record carries the id of the Unique Rectangle): DETECTED - 61 total, 56 passed, 5 failed, 0 skipped - 5 failing, 5 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > refuses cages, inequalities and a partial unit: the same candidates on the plain model give the Finding
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > has R10's limit of 50000 and reports one record of its own per call that ran
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found, never a wrong finding, and says so
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > reports a spent budget as nothing found (capHit null) and lets cancellation and other errors through with no record
+mutation 47 (the limit of the call is one more than it says): DETECTED - 61 total, 56 passed, 5 failed, 0 skipped - 5 failing, 5 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > refuses cages, inequalities and a partial unit: the same candidates on the plain model give the Finding
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > has R10's limit of 50000 and reports one record of its own per call that ran
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found, never a wrong finding, and says so
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > reports a spent budget as nothing found (capHit null) and lets cancellation and other errors through with no record
+mutation 48 (the default limit is 50001): DETECTED - 61 total, 57 passed, 4 failed, 0 skipped - 4 failing, 4 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > refuses cages, inequalities and a partial unit: the same candidates on the plain model give the Finding
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > has R10's limit of 50000 and reports one record of its own per call that ran
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found, never a wrong finding, and says so
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > reports a spent budget as nothing found (capHit null) and lets cancellation and other errors through with no record
+mutation 49 (the default limit is 49999): DETECTED - 61 total, 57 passed, 4 failed, 0 skipped - 4 failing, 4 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > refuses cages, inequalities and a partial unit: the same candidates on the plain model give the Finding
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > has R10's limit of 50000 and reports one record of its own per call that ran
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found, never a wrong finding, and says so
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > reports a spent budget as nothing found (capHit null) and lets cancellation and other errors through with no record
+mutation 50 (the seam ignores its limit): DETECTED - 61 total, 59 passed, 2 failed, 0 skipped - 2 failing, 2 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found, never a wrong finding, and says so
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 51 (the seam names another finder in its error): DETECTED - 61 total, 60 passed, 1 failed, 0 skipped - 1 failing, 1 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 52 (the call swallows cancellation and every other error of the pass): DETECTED - 61 total, 60 passed, 1 failed, 0 skipped - 1 failing, 1 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > reports a spent budget as nothing found (capHit null) and lets cancellation and other errors through with no record
+mutation 53 (the pass does not check the parent budget at its entry): DETECTED - 61 total, 59 passed, 2 failed, 0 skipped - 2 failing, 2 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > checks the parent budget at its entry and so that at most 256 units pass between two checks
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > reports a spent budget as nothing found (capHit null) and lets cancellation and other errors through with no record
+mutation 54 (cancellation and every other error are swallowed by the pass): DETECTED - 61 total, 60 passed, 1 failed, 0 skipped - 1 failing, 1 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > reports a spent budget as nothing found (capHit null) and lets cancellation and other errors through with no record
+mutation 55 (a spent budget is reported as a spent work limit): DETECTED - 61 total, 59 passed, 2 failed, 0 skipped - 2 failing, 2 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > checks the parent budget at its entry and so that at most 256 units pass between two checks
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > reports a spent budget as nothing found (capHit null) and lets cancellation and other errors through with no record
+mutation 56 (a spent work limit is not reported): DETECTED - 61 total, 59 passed, 2 failed, 0 skipped - 2 failing, 2 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found, never a wrong finding, and says so
+    FAIL tech-wing > bugPlusOne (R14): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 57 (the base cost is 71): DETECTED - 61 total, 60 passed, 1 failed, 0 skipped - 1 failing, 1 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > is registered with the agreed group, cost, order, scope and uniqueness flag
+mutation 58 (the order is 181): DETECTED - 61 total, 58 passed, 3 failed, 0 skipped - 3 failing, 3 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > is registered with the agreed group, cost, order, scope and uniqueness flag
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 1, sound against an independent completion, with the premise of the pattern shown absurd
+    FAIL tech-wing > bugPlusOne (R14): real positions > finds the exact Finding of real position 2, sound against an independent completion, with the premise of the pattern shown absurd
+mutation 59 (the order is 183): DETECTED - 61 total, 60 passed, 1 failed, 0 skipped - 1 failing, 1 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > is registered with the agreed group, cost, order, scope and uniqueness flag
+mutation 60 (the uniqueness flag is off): DETECTED - 61 total, 59 passed, 2 failed, 0 skipped - 2 failing, 2 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > is registered with the agreed group, cost, order, scope and uniqueness flag
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > is the second technique of the group that relies on a unique solution, right after uniqueRectangle and before forcingChain
+mutation 61 (the group is chain): DETECTED - 61 total, 59 passed, 2 failed, 0 skipped - 2 failing, 2 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > is registered with the agreed group, cost, order, scope and uniqueness flag
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > is the second technique of the group that relies on a unique solution, right after uniqueRectangle and before forcingChain
+mutation 62 (the name key is another one): DETECTED - 61 total, 60 passed, 1 failed, 0 skipped - 1 failing, 1 of bugPlusOne - 1.4 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > is registered with the agreed group, cost, order, scope and uniqueness flag
+mutation 63 (the technique is scoped to Killer): DETECTED - 61 total, 53 passed, 8 failed, 0 skipped - 8 failing, 8 of bugPlusOne - 0.6 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > is registered with the agreed group, cost, order, scope and uniqueness flag
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > is the second technique of the group that relies on a unique solution, right after uniqueRectangle and before forcingChain
+    FAIL tech-wing > bugPlusOne (R14): real positions > is a step of the logical solver from the real positions, and never without the uniqueness assumption
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > stays sound on 4 digits: a placement is always a digit of the solution
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > stays sound on 6 digits: a placement is always a digit of the solution
+    FAIL tech-wing > bugPlusOne (R14): agreement with an independent enumeration > stays sound on 9 digits: a placement is always a digit of the solution
+mutation 64 (the scratch tally has one cell too few): DETECTED - 61 total, 16 passed, 45 failed, 0 skipped - 45 failing, 45 of bugPlusOne - 1.3 s
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the vector: every open cell holds two candidates but R5C5, whose third candidate is the answer in every unit
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > takes the answer whichever candidate of the cell it is: the lowest, a middle one and the highest
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > a distant unit with a wrong digit count: the units of the cell look valid and nothing is found
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > the third candidate in another cell is another answer: moving it makes the finder follow it
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > accounts for placed digits: with every 9 solved the grave still gives the answer
+    FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > reads every unit of the model: an added complete diagonal takes part
+mutation 65 (the weight is 900 (the tie with uniqueRectangle)): DETECTED - 14 total, 12 passed, 2 failed, 0 skipped - 2 failing, 2 of bugPlusOne - 0.2 s
+    FAIL technique-weights > techniques: the weight table of SG.difficulty > puts the techniques of a group in the ladder in the order of their weights
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > places bugPlusOne between uniqueRectangle and forcingChain: order 182, weight 920, a Master-tier technique that assumes uniqueness (R
+mutation 66 (the weight is 930): DETECTED - 14 total, 13 passed, 1 failed, 0 skipped - 1 failing, 1 of bugPlusOne - 0.2 s
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > places bugPlusOne between uniqueRectangle and forcingChain: order 182, weight 920, a Master-tier technique that assumes uniqueness (R
+detected 62 of 67, 88.6 s

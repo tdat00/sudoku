@@ -1,0 +1,10 @@
+MS11c E announcement (check-list section 7: announce to the orchestrator before a heavy gate; a sub-agent has no channel to the orchestrator before its reply, so this record and the reply carry it).
+
+Task / gate: MS11c guarded BUG+1, complete E (GR wires G09-G13, GR analyses G01-G14, GG 520 hashes), then pins, the final census and pattern cost, GH, both complete quick sets, CI.
+Cases: the E route of check-list section 7, one child process per shard, IR12 compounds (admission elapsed + max(projection, 60 s) <= 450 s, 540 s process ceiling), at least 15 s between locks.
+Planned node time (projections, 2 x the MS11b final measurement of the same shard + 5 s): wires 185 s, analyses 293 s, hashes 1,262 s (104 shards).
+Output paths: docs/difficulty-v3/evidence/MS11c/{wire,analysis,hashes,logs}/, shard-runs.jsonl, lock-log.jsonl.
+Slot: every command through Invoke-Dv3Node (shared lock with the pentomino repository); the wait of every compound is recorded in lock-log.jsonl.
+Authority: SA2's pre-E rulings (brief of f7a2967): the work unit and limit, the Finding, the guards including the stale-candidate guard, the observer records, mutations 16 to 20 as equivalents (62 detected + 5 equivalent), the corrected EN/VI text (no solution or at least two solutions), the GH test-kit provenance header, the sweep fit with three supplements, and the replacement of the Master proposal seed 16 by seed 30 in digger-target. The corrections are applied and verified (Generator focused gate 1,116 of 1,116; mutations on the final source 62 of 67 detected, the five survivors equivalent).
+Frozen source: engine-frozen.txt (tech-wing.js, difficulty.js, four locale packs, core/js and generator/js tree hashes).
+Order: freeze the bytes (engine-frozen.txt), wires G09-G13 (merge-check, then write), analyses G01-G14 against the published wire (merge-check, then write), then the 520 hashes (merge-check, cause by regeneration with and without BUG+1, then --update-hashes only for the explained keys). Any GG hash that changes below Master, an unexplained change or a wrong exact/warning result is a stop with QUESTION.

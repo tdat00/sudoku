@@ -237,14 +237,14 @@ Return the inherited/new item list, actual gates and CI membership.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (orchestrator check against IR72 A-J; outside the analyst review set). Eight points before E: SA2 accepted six and changed two (`f7a2967`): the step text says "no solution or at least two solutions" (a global flip proves at least two), and the GH source uses the test-kit provenance `testkit-4242-14` with `level: null`; the stale-candidate check is a soundness guard; mutants #16-#20 are equivalent by SA2's non-circular proof |
+| Start | 2026-11-16 17:20 (+07:00), base `1d702a5` |
+| End | About 18:10 stop before E (8 points); 18:27 SA2 ruling (`f7a2967`); 19:23 final report; orchestrator re-check and commit at about 19:27 |
+| Duration | About 1 h 46 min developer (50 min to the questions, 56 min after the ruling); about 17 min for the ruling; locked commands in `docs/difficulty-v3/evidence/MS11c/lock-log.jsonl` |
+| Model | claude-sonnet-5.5 (developer); gpt-6-astra (SA2 ruling and pack amendment); claude-opus-5.5 (orchestrator) |
+| Token usage | 371 model calls; 122,229,639 input tokens (120,534,736 cache reads); 394,462 output tokens (developer) |
+| AI credits | about 2,023 (developer) |
+| Verification | `bugPlusOne` in `core/js/engine/tech-wing.js` (wing group, order 182, base cost 72, weight 920, Master, unscoped, `assumesUniqueness: true`), between Unique Rectangle and Forcing Chain: exactly one open cell with three candidates and every other open cell with two, the whole model without cages, inequalities or partial units, and every unit tally showing exactly two holders per unplaced digit without X; the stale-candidate guard refuses an X already placed in a unit of T; Finding `cells: [T]`, `placements: [[T, X]]`; 50,000 tally units per call; one observer record on a normal return. EN/VI text with SA2's solution-count clause. Tests: `tech-wing` 435 -> 496, `techniques` 251 -> 259, `technique-weights` +1, i18n +1 per app; three real supplements (puzzles 720, 903, 3456) meet the sweep minimum. Mutants: 62 detected + 5 equivalent. Reach (seed 4242): 62 of 30,000 positions, 98 of 20,000 complete solves. **E** on frozen bytes: wires and analyses all unchanged; **3 of 520 hashes changed** (`classic9/nightmare` seeds 377 and 987, `diagonalX/nightmare` seed 2), the same 3 with and without the technique, none below Master. R20: 0 of 26 change. GH: 35 checked first (none differs), `bugPlusOne` from `testkit-4242-14` step 40 (R9C8 = 2); 36/36. Pins: `digger-target` Master seed 16 -> 30 (15 stuck keeps; aggregate 655 scored, 40 stuck), help counts 35 -> 36. Quick sets: Generator 4,289/4,289 (395.0 s), Player 2,529/2,529 (65.8 s); no projection rises; fingerprints match; CI check passes. Orchestrator: locked `tech-wing,tech-fish,tech-chain,techniques,technique-weights,difficulty-floor,i18n,digger-target` 1,567/1,567 (73.4 s), Player `help,help-example-tools,play,i18n` 214/214 (9.4 s), CI shard check 4,289 of 4,289 |
+| Acceptance | MS11c-B01, B02, T01-T03 met; IR72 A-J pass (developer's table in `docs/difficulty-v3/evidence/MS11c/evidence.md` section 9, acceptance in section 10) |
+| Issues & resolutions | The `digger-target` coverage pin fell to 27 stuck proposals (BUG+1 finishes Master seed 16); replaced by seed 30 under SA2's ruling, threshold unchanged. The first equivalence argument for #16-#20 was circular; SA2 supplied the tally-sum proof (2N-S against 2N-P). Random sweeps give zero BUG+1 firings; the sweep minimum is met exactly by the three supplements. Process: the edit tool sometimes replaced the nearest lines on a partial match; every such edit was re-read and fixed (listed in the evidence header); no PowerShell file writes. Not run: the manual `difficulty` suite (pure assertions evaluated by script), qualification, soak |
+| Handoff | To MS12: the uniqueness group is complete (Unique Rectangle passes 1-3, BUG+1 at order 182); IR72 A-J is the checklist; base quick totals Generator 4,289 (395.0 s) and Player 2,529 (65.8 s); help catalogue 36; S-AV01-S-AV34 open as recorded; ask before E |

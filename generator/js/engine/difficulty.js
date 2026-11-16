@@ -105,6 +105,7 @@
     wxyzWing: 800,
     wWing: 850,
     uniqueRectangle: 900,
+    bugPlusOne: 920,
     forcingChain: 1100,
     forcingChainLong: 1400,
     nishio: 1700,
@@ -446,11 +447,11 @@
   // declares `clueFloor`; may be 0), maxClues (informative), minCluesPerUnit (every unit keeps at least this
   // many givens while digging), allowedGroups, allowedTechniques (registered ids that apply to the variant
   // and can occur in the band: 1.25 * w_t < max, all for hell2, in loop order; the oracle runs them with
-  // assumeUniqueness: false, so uniqueRectangle is listed but never used there), floorTechniques and
-  // tierTechniques (the floor and the tier of the level, see "Floor and tier" in the file header),
-  // symmetryDefault, extraPasses (unused), oracle ('techniques': a complete proof at every level), proposal
-  // (top tier: the digger may also start from the fast uniqueness-based proposal dig), scale (cellCount / 81,
-  // the scale of the clue floors) }
+  // assumeUniqueness: false, so uniqueRectangle and bugPlusOne are listed but never used there),
+  // floorTechniques and tierTechniques (the floor and the tier of the level, see "Floor and tier" in the file
+  // header), symmetryDefault, extraPasses (unused), oracle ('techniques': a complete proof at every level),
+  // proposal (top tier: the digger may also start from the fast uniqueness-based proposal dig), scale
+  // (cellCount / 81, the scale of the clue floors) }
 
   // The specification the hole digger works to for one level on one board: score band, clue range and
   // technique set. Throws 'difficulty.unknownLevel', or 'difficulty.unsupportedLevel' when the variant's
@@ -548,8 +549,8 @@
 
   // Does a rating prove by itself that the puzzle has exactly one solution? A complete proof whose techniques
   // never assume uniqueness does: sound deductions never remove a candidate of any solution, so a
-  // two-solution puzzle can never be finished. With an `assumesUniqueness` technique (Unique Rectangle) it
-  // proves nothing; count solutions.
+  // two-solution puzzle can never be finished. With an `assumesUniqueness` technique (Unique Rectangle,
+  // BUG+1) it proves nothing; count solutions.
   function provesUniqueness(rating) {
     if (!rating || rating.solved !== true) return false;
     const counts = rating.techniqueCounts || {};

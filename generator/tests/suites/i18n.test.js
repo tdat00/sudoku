@@ -1235,6 +1235,37 @@
           'technique.uniqueRectangle.type3.step', 'technique.uniqueRectangle.type4.step']);
       });
 
+    it('renders the BUG+1 step in both languages from its real fixtures, with the label of the cell and the digit',
+      function () {
+        packsReady();
+        if (!F || !H) SG.test.skip('the technique fixtures are not loaded');
+        var model = H.model('classic9');
+        var ctx = SG.techniques.createContext(model);
+        I.setCellLabeler(function (i) { return SG.model.cellLabel(model, i); });
+        try {
+          expect(F.byId.bugPlusOne.positive).toHaveLength(2);
+          F.byId.bugPlusOne.positive.forEach(function (fixture) {
+            var finding = SG.techniques.get('bugPlusOne').find(model, stateOf(model, fixture), ctx);
+            if (finding === null) throw new Error('fixture "' + fixture.name + '" found nothing');
+            expect(finding.i18nKey).toBe('technique.bugPlusOne.step');
+            expect(Object.keys(finding.i18nArgs)).toEqual(['cell', 'label', 'digit']);
+            LOCALES.forEach(function (code) {
+              var text = inLocale(code, function () { return I.t(finding.i18nKey, finding.i18nArgs); });
+              if (/[{}]|undefined|NaN|\[object/.test(text) || text === finding.i18nKey) {
+                throw new Error(finding.i18nKey + ' renders as "' + text + '" in ' + code);
+              }
+              expect(text).toContain(finding.i18nArgs.label);
+              expect(text).toContain(String(finding.i18nArgs.digit));
+              placeholders(SG.locales[code][finding.i18nKey]).forEach(function (name) {
+                expect(hasOwn(finding.i18nArgs, name)).toBe(true);
+              });
+            });
+          });
+        } finally {
+          I.setCellLabeler(null);
+        }
+      });
+
     it('picks the colouring text that matches args.rule', function () {
       packsReady();
       var args = { digit: 4, colour1: ['R1C1'], colour2: ['R2C2'], falseColour: 1,

@@ -218,6 +218,38 @@
         expect(D.spec('nightmare', model).floorTechniques).toContain('wxyzWing');
       });
 
+    it('places bugPlusOne between uniqueRectangle and forcingChain: order 182, weight 920, a Master-tier technique ' +
+      'that assumes uniqueness (R14)', function () {
+        var model = SG.techHelper.model('classic9');
+        expect([SG.techniques.get('bugPlusOne').order, D.WEIGHTS.bugPlusOne]).toEqual([182, 920]);
+        expect(SG.techniques.get('bugPlusOne').baseCost).toBe(72);
+        expect(SG.techniques.get('bugPlusOne').group).toBe('wing');
+        expect(SG.techniques.get('bugPlusOne').assumesUniqueness).toBe(true);
+        expect(SG.techniques.get('bugPlusOne').variantScope).toBeNull();
+        expect(position('bugPlusOne')).toBe(position('uniqueRectangle') + 1);
+        expect(position('bugPlusOne')).toBe(position('forcingChain') - 1);
+        // the order follows the weight: the neighbours are 180 / 900 and 190 / 1100
+        expect([SG.techniques.get('uniqueRectangle').order, D.WEIGHTS.uniqueRectangle]).toEqual([180, 900]);
+        expect([SG.techniques.get('forcingChain').order, D.WEIGHTS.forcingChain]).toEqual([190, 1100]);
+        expect(D.WEIGHTS.uniqueRectangle).toBeLessThan(D.WEIGHTS.bugPlusOne);
+        expect(D.WEIGHTS.bugPlusOne).toBeLessThan(D.WEIGHTS.forcingChain);
+        // its own weight decides the hardest technique, no tie is needed
+        expect(D.breakdown({ uniqueRectangle: 1, bugPlusOne: 1 }, 10).hardest).toBe('bugPlusOne');
+        expect(D.breakdown({ bugPlusOne: 1, forcingChain: 1 }, 10).hardest).toBe('forcingChain');
+        // 1.25 x 920 = 1150 is not below Expert's maximum (1000) and is below Master's (1500): Master's tier
+        expect(1.25 * D.WEIGHTS.bugPlusOne).toBeGreaterThan(D.spec('expert', model).max);
+        expect(1.25 * D.WEIGHTS.bugPlusOne).toBeLessThan(D.spec('master', model).max);
+        expect(D.spec('expert', model).allowedTechniques).not.toContain('bugPlusOne');
+        expect(D.spec('master', model).allowedTechniques).toContain('bugPlusOne');
+        expect(D.spec('master', model).tierTechniques).toContain('bugPlusOne');
+        expect(D.spec('master', model).floorTechniques).not.toContain('bugPlusOne');
+        expect(D.spec('nightmare', model).floorTechniques).toContain('bugPlusOne');
+        // allowed right after uniqueRectangle (the oracle's solver, which runs without the uniqueness assumption,
+        // lists both and uses neither)
+        expect(D.spec('master', model).allowedTechniques.indexOf('bugPlusOne'))
+          .toBe(D.spec('master', model).allowedTechniques.indexOf('uniqueRectangle') + 1);
+      });
+
     it('places finnedSwordfish between swordfish and jellyfish: order 134, weight 480, a Hard-tier technique ' +
       '(R12)', function () {
         var model = SG.techHelper.model('classic9');

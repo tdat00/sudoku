@@ -1,0 +1,33 @@
+$ node tests\node-runner.js --suite=techniques
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL techniques: 255 passed, 4 failed  (3.10 s)
+
+Failures:
+  FAIL techniques > techniques: registry > has the 30 techniques of the classic ladder registered, in the current registry order
+       AssertionError: expected 31 to be 30
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:64:38)
+       at main (Q:\git\sudoku\generator\tests\node-runner.js:356:33)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\node-runner.js:409:1)
+       at Module._compile (node:internal/modules/cjs/loader:1968:14)
+  FAIL techniques > techniques: registry > keeps the v2 ladder as history: the old ids keep their relative order in the expanded registry, jellyfish apart
+       AssertionError: expected Array(10)["skyscraper", "twoStringKite", "remotePairs", "emptyRectangle", "finnedXWing", "finnedSwordfish", "wxyzWing", "bugPlusOne", "forcingChainLong", "nishioDeep"] to equal Array(9)["skyscraper", "twoStringKite", "remotePairs", "emptyRectangle", "finnedXWing", "finnedSwordfish", "wxyzWing", "forcingChainLong", "nishioDeep"]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:78:95)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL techniques > techniques: registry > marks only the uniqueness-assuming technique, which hints must not rely on blindly
+       AssertionError: expected Array(2)["uniqueRectangle", "bugPlusOne"] to equal Array(1)["uniqueRectangle"]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:108:24)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL techniques > techniques: fixtures (fixtures/techniques.js) > puts the positive positions of a replaced or added entry where its id is reached in the registry (MS07b, MS08a, MS08b, MS08c, MS09a, MS09b, MS10a, MS10b, MS11a)
+       AssertionError: expected Array(13)["bugPlusOne", "emptyRectangle", "finnedSwordfish", "finnedXWing", "forcingChain", "forcingChainLong", "nishio", "nishioDeep", "remotePairs", "skyscraper", "twoStringKite", "uniqueRectangle", ...] to equal Array(12)["emptyRectangle", "finnedSwordfish", "finnedXWing", "forcingChain", "forcingChainLong", "nishio", "nishioDeep", "remotePairs", "skyscraper", "twoStringKite", "uniqueRectangle", "wxyzWing"]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:132:33)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  259 total, 255 passed, 4 failed, 0 skipped
+Time:   3.10 s running tests, 3.21 s total
+exit=1 seconds=3.307

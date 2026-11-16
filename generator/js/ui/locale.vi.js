@@ -382,6 +382,11 @@
     'technique.uniqueRectangle': 'Hình chữ nhật duy nhất (Unique Rectangle)',
     'technique.uniqueRectangle.desc': 'Một đề chỉ có đúng một lời giải, nên bốn ô trong hai hàng, hai cột ' +
       'và hai khối không thể chỉ còn cùng hai ứng viên. Điều này buộc phải loại thêm một ứng viên.',
+    'technique.bugPlusOne': 'BUG+1 (ô thừa một ứng viên)',
+    'technique.bugPlusOne.desc': 'Mọi ô trống đều có hai ứng viên, trừ một ô có ba ứng viên, và mỗi chữ số ' +
+      'còn phải điền trong một hàng, một cột, một khối hay bất kỳ vùng nào khác đều có đúng hai ô để điền, ' +
+      'khi bỏ ứng viên thừa của ô có ba ứng viên. Một vị trí như vậy không có lời giải hoặc có ít nhất hai ' +
+      'lời giải. Đề có đúng một lời giải, nên ô có ba ứng viên phải là chữ số thừa đó.',
     'technique.forcingChain': 'Chuỗi suy luận (Forcing Chain)',
     'technique.forcingChain.desc': 'Chuỗi các suy luận kiểu “nếu thế này thì thế kia”, chứng minh một ứng ' +
       'viên là sai (hoặc một chữ số là đúng).',
@@ -511,6 +516,10 @@
       'kia. ' +
       'Khi đó bốn góc chứa {digits} theo hai cách hoán đổi được cho nhau và đề sẽ có hai lời giải. Vậy chữ số của ' +
       '{digits} khác {digit} bị loại khỏi góc đối diện.',
+    'technique.bugPlusOne.step': 'BUG+1: mọi ô trống đều có hai ứng viên, trừ {label} có ba ứng viên. Nếu ' +
+      'bỏ {digit} khỏi {label}, mọi chữ số còn phải điền trong một hàng, một cột, một khối hay bất kỳ vùng ' +
+      'nào khác đều có đúng hai ô để điền. Một vị trí như vậy không có lời giải hoặc có ít nhất hai lời ' +
+      'giải. Đề chỉ có một lời giải, nên {label} là {digit}.',
     'technique.forcingChain.step.endpoints': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu ứng viên ' +
       'đầu tiên sai thì ứng viên cuối đúng, nên ít nhất một đầu của chuỗi là đúng. Các ứng viên nhìn thấy ' +
       'cả hai đầu bị loại.',

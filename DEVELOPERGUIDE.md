@@ -943,6 +943,23 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    normally**: cancellation or an unexpected error in any pass leaves no record, and a Finding of an older type gives one
    record or none. The proof, the order, the cost, the reach and the effect on the references, hashes and goldens are in
    `generator/design.md`, "Unique Rectangle, the hidden form".
+   **BUG+1** (same file, task MS11c; id `bugPlusOne`, group `wing`, order 182, base cost 72, weight 920, unscoped,
+   `assumesUniqueness: true`, between the Unique Rectangle and the Forcing Chain) places the one cell T that is left with
+   three candidates when every other open cell has exactly two. It needs a model with no cages and no inequalities and
+   only complete units (`ctx.completeUnits`; one partial unit refuses the whole model), and `ctx.assumeUniqueness: false`
+   gives `null`. For each candidate X of T, the lower first, with X left out of T **every unit of the model** (not only the
+   units of T) must hold each placed digit in its own solved cell only and every other digit in exactly two cells; the
+   first X that passes is placed (at most one can), and an X that is already placed in a unit of T is a stale candidate
+   and never qualifies (a soundness guard, not a restriction). The position without X in T has a solution flip, so it has
+   no solution or at least two, and a unique puzzle therefore has T = X. The Finding has `cells [T]`, `placements [[T, X]]`,
+   no eliminations and the key `technique.bugPlusOne.step` with `i18nArgs { cell, label, digit }`. One work unit is one
+   cell tallied under one proposed digit (fixed cells included), 50,000 per call (`SG.wingSearch.BUG_PLUS_ONE_WORK_LIMIT`;
+   the seam `SG.wingSearch.bugPlusOne(model, state, ctx, { workLimit })`); a structural maximum of three times the sum of
+   the unit sizes (729 on classic9, 3,645 on the Samurai and the Flower) shows that the tally limit cannot bind on a
+   registered geometry, not that the whole call is bounded in time. The observer gets one record when the call returns
+   normally (also when the guard refuses at no cost) and none on cancellation, an error or `assumeUniqueness: false`.
+   The proof, the cost, the reach and the effect on the references, hashes and goldens are in `generator/design.md`,
+   "BUG+1".
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
    `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
@@ -996,7 +1013,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (53 suites, 4,218 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (53 suites, 4,289 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (61 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -1008,7 +1025,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 53 suites,
-4,218 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+4,289 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -1065,7 +1082,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 61 suites, 53 of them quick (4,218 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 61 suites, 53 of them quick (4,289 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1473,7 +1490,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (30, 2,459 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (30, 2,529 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

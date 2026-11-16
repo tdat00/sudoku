@@ -1,0 +1,4 @@
+merged 104 ledgers: all 520 keys exactly once, recorded from the current sources
+CHANGED classic9/nightmare: seeds 377, 987
+CHANGED diagonalX/nightmare: seeds 2
+regression hashes: 3 of 520 puzzles changed (merged ledgers, nothing generated)

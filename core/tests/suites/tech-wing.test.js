@@ -1,5 +1,5 @@
-// Wing techniques (../core/js/engine/tech-wing.js): Remote Pairs, XY-Wing, XYZ-Wing, WXYZ-Wing, W-Wing and Unique
-// Rectangle.
+// Wing techniques (../core/js/engine/tech-wing.js): Remote Pairs, XY-Wing, XYZ-Wing, WXYZ-Wing, W-Wing, Unique
+// Rectangle and BUG+1.
 //
 // Where the fixtures come from:
 //   - published: puzzles of the SudokuWiki.org strategy pages (Y-Wing, XYZ-Wing, W-Wing, Unique Rectangles).
@@ -5544,6 +5544,991 @@
         var f4 = check('uniqueRectangle', model, type4, {});
         expect(f4.i18nKey).toBe('technique.uniqueRectangle.type4.step');
         expect(f4.i18nArgs.digit).toBe(2);
+      });
+    });
+  });
+
+  // BUG+1 (R14). The position: exactly one open cell T with three candidates and every other open cell with two, and,
+  // with one candidate X of T left out, every unit of the model holds each placed digit in its own cell only and every
+  // other digit in exactly two cells. The enumeration below is independent of the finder: it reads `model.units`,
+  // `model.unitMeta`, the cages, the inequalities and the candidates only, and filters the cells of each unit for the
+  // holders of each digit (the finder tallies them). The constructed positions are mechanics positions: a solution S of
+  // the blank board and a cyclic relabelling p of its free digits give every open cell {S, p(S)} (two solutions that
+  // differ in every cell, so every unit holds every free digit twice) and one cell gets a third candidate. They exercise
+  // the guards of the finder; they are not uniqueness fixtures (the remainder has two solutions, which is the
+  // contradiction of the premise), and the real positions further down are the unique ones.
+  var bugSolutionCache = new WeakMap();
+
+  /** A complete solution of the blank board of a model (plain depth first search, deterministic). */
+  function bugSolution(model) {
+    var solution = bugSolutionCache.get(model);
+    if (!solution) {
+      solution = Array.from(SG.dfs.solve(model, new Int32Array(model.cellCount)));
+      bugSolutionCache.set(model, solution);
+    }
+    return solution;
+  }
+
+  /** The first cell (in index order, within `cells` when given) whose solution digit is `digit`. */
+  function bugCellWith(model, digit, cells) {
+    var solution = bugSolution(model);
+    var list = cells || solution.map(function (s, c) { return c; });
+    for (var i = 0; i < list.length; i++) if (solution[list[i]] === digit) return list[i];
+    throw new Error('no cell with the solution digit ' + digit);
+  }
+
+  /** The cells of row `r` (0-based) of a square board. */
+  function bugRow(model, r) {
+    var out = [];
+    for (var c = 0; c < model.digits; c++) out.push(at(model, r, c));
+    return out;
+  }
+
+  /**
+   * A BUG+1 on the blank board of a model: every open cell holds {S, p(S)}, where S is the solution of `bugSolution` and
+   * p the cycle `opts.cycle` (default: the free digits ascending) through the free digits, every digit but the
+   * `opts.placed` ones, whose cells are solved; `cell` gets the third candidate `opts.extra` (default: the lowest free
+   * digit outside its pair), or none with `opts.plain`.
+   */
+  function bugState(model, cell, opts) {
+    var options = opts || {};
+    var solution = bugSolution(model);
+    var placed = options.placed || [];
+    var free = [];
+    for (var d = 1; d <= model.digits; d++) if (placed.indexOf(d) === -1) free.push(d);
+    var cycle = options.cycle || free;
+    var next = {};
+    cycle.forEach(function (digit, i) { next[digit] = cycle[(i + 1) % cycle.length]; });
+    var state = SG.model.initState(model);
+    for (var c = 0; c < model.cellCount; c++) {
+      var s = solution[c];
+      if (placed.indexOf(s) !== -1) {
+        state.value[c] = s;
+        state.candidates[c] = bit(s);
+        state.unsolvedCount--;
+      } else {
+        state.candidates[c] = bit(s) | bit(next[s]);
+      }
+    }
+    var pair = state.candidates[cell];
+    var extra = options.extra;
+    if (extra === undefined) {
+      extra = free.filter(function (digit) { return (pair & bit(digit)) === 0; })[0];
+    }
+    if (!options.plain) state.candidates[cell] |= bit(extra);
+    return { state: state, extra: extra, cell: cell, pair: pair };
+  }
+
+  /** Whether the model has neither cages nor inequalities and only complete units. */
+  function bugSupported(model) {
+    return model.cages.length === 0 && model.inequalities.length === 0 &&
+      model.units.every(function (cells, u) { return cells.length === model.digits && !model.unitMeta[u].partial; });
+  }
+
+  /** The cells of a unit that hold `digit` (a solved cell holds its value only), without `x` in the cell `skip`. */
+  function bugHolders(state, cells, digit, skip, x) {
+    return cells.filter(function (c) {
+      if (!open(state, c)) return state.value[c] === digit;
+      return has(state, c, digit) && !(c === skip && digit === x);
+    });
+  }
+
+  /**
+   * The BUG+1 of a state from the definition: { found: { cell, digit } | null, units }. `units` counts the cells of the
+   * units read (the work rule): the candidates X of the trivalue cell in ascending order, the units in index order, a
+   * candidate ending at its first unit whose counts break; 0 where the guard (one trivalue cell, every other open cell
+   * with two candidates, a supported model) refuses the position. A candidate X that is a digit placed in a unit of the
+   * cell is a stale candidate and never qualifies.
+   */
+  function bugOf(model, state) {
+    var refused = { found: null, units: 0 };
+    if (!bugSupported(model)) return refused;
+    var trivalue = [];
+    for (var c = 0; c < model.cellCount; c++) {
+      if (!open(state, c)) continue;
+      var k = size(state, c);
+      if (k === 3) trivalue.push(c);
+      else if (k !== 2) return refused;
+    }
+    if (trivalue.length !== 1) return refused;
+    var cell = trivalue[0];
+    var units = 0;
+    var candidates = SG.bits.toArray(state.candidates[cell]);
+    for (var i = 0; i < candidates.length; i++) {
+      var x = candidates[i];
+      var good = true;
+      for (var u = 0; u < model.units.length && good; u++) {
+        var cells = Array.from(model.units[u]);
+        units += cells.length;
+        for (var d = 1; d <= model.digits && good; d++) {
+          var placedHere = cells.some(function (m) { return state.value[m] === d; });
+          var holders = bugHolders(state, cells, d, cell, x);
+          if (holders.length !== (placedHere ? 1 : 2)) good = false;
+          if (placedHere && d === x && cells.indexOf(cell) !== -1) good = false;
+        }
+      }
+      if (good) return { found: { cell: cell, digit: x }, units: units };
+    }
+    return { found: null, units: units };
+  }
+
+  ORACLE.bugPlusOne = {
+    exists: function (model, state) { return bugOf(model, state).found !== null; },
+    verify: function (model, state, f) {
+      var want = bugOf(model, state).found;
+      expect(want).not.toBeNull();
+      expect(f.technique).toBe('bugPlusOne');
+      expect(f.cells).toEqual([want.cell]);
+      expect(f.placements).toEqual([[want.cell, want.digit]]);
+      expect(f.eliminations).toEqual([]);
+      expect(f.i18nKey).toBe('technique.bugPlusOne.step');
+      expect(f.i18nArgs).toEqual({ cell: want.cell, label: H.label(model, want.cell), digit: want.digit });
+      expect(open(state, want.cell) && size(state, want.cell) === 3).toBe(true);
+      expect(has(state, want.cell, want.digit)).toBe(true);
+    }
+  };
+
+  function bugFind(model, state, ctxOptions) {
+    return SG.techniques.get('bugPlusOne').find(model, state, SG.techniques.createContext(model, ctxOptions || {}));
+  }
+
+  /** One call of the registered finder or of the seam (`seam`, with `limit` when given) with its observer. */
+  function bugObserved(model, state, opts) {
+    var records = [];
+    var options = opts || {};
+    var ctx = SG.techniques.createContext(model, Object.assign({
+      onPatternWork: function (r) { records.push(r); }
+    }, options.ctx));
+    var finding = options.seam
+      ? SG.wingSearch.bugPlusOne(model, state, ctx, options.limit === undefined ? undefined : { workLimit: options.limit })
+      : SG.techniques.get('bugPlusOne').find(model, state, ctx);
+    return { finding: finding, records: records, record: records[0] };
+  }
+
+  /** The cells of the three units of the cell holding the digit more often than twice, as a quick local look. */
+  function bugLocalCounts(model, state, cell, digit) {
+    var counts = [];
+    model.units.forEach(function (cells) {
+      if (Array.prototype.indexOf.call(cells, cell) === -1) return;
+      counts.push(bugHolders(state, Array.from(cells), digit, -1, 0).length);
+    });
+    return counts;
+  }
+
+  /** Two cells that share no unit (the second is the first cell of the model that does not see the first). */
+  function bugDistantCell(model, from) {
+    for (var c = 0; c < model.cellCount; c++) {
+      if (c !== from && !sees(model, from, c)) return c;
+    }
+    throw new Error('every cell sees the cell ' + from);
+  }
+
+  describe('bugPlusOne (R14): registration, the Finding and the guards', function () {
+    var T = at(model9, 4, 4);
+
+    it('is registered with the agreed group, cost, order, scope and uniqueness flag', function () {
+      var tech = SG.techniques.get('bugPlusOne');
+      expect(tech.group).toBe('wing');
+      expect(tech.baseCost).toBe(72);
+      expect(tech.order).toBe(182);
+      expect(tech.assumesUniqueness).toBe(true);
+      expect(tech.variantScope).toBeNull();
+      expect(tech.i18nKey).toBe('technique.bugPlusOne');
+    });
+
+    it('is the second technique of the group that relies on a unique solution, right after uniqueRectangle and before ' +
+      'forcingChain', function () {
+        var wing = SG.techniques.list().filter(function (t) { return t.group === 'wing'; });
+        expect(wing.map(function (t) { return t.id; }))
+          .toEqual(['remotePairs', 'xyWing', 'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle', 'bugPlusOne']);
+        expect(wing.filter(function (t) { return t.assumesUniqueness; }).map(function (t) { return t.id; }))
+          .toEqual(['uniqueRectangle', 'bugPlusOne']);
+        var ids = SG.techniques.list().filter(function (t) { return t.variantScope === null; })
+          .map(function (t) { return t.id; });
+        expect(ids.indexOf('uniqueRectangle') + 1).toBe(ids.indexOf('bugPlusOne'));
+        expect(ids.indexOf('bugPlusOne') + 1).toBe(ids.indexOf('forcingChain'));
+        expect(SG.techniques.get('uniqueRectangle').order).toBeLessThan(182);
+        expect(SG.techniques.get('forcingChain').order).toBeGreaterThan(182);
+      });
+
+    it('the vector: every open cell holds two candidates but R5C5, whose third candidate is the answer in every unit',
+      function () {
+        var built = bugState(model9, T);
+        var f = check('bugPlusOne', model9, built.state, {
+          cells: ['R5C5'], placements: [['R5C5', built.extra]], eliminations: [],
+          args: { cell: T, label: 'R5C5', digit: built.extra }
+        });
+        expect(f.cells).toEqual([T]);
+        expect(f.placements).toEqual([[T, built.extra]]);
+        expect(f.eliminations).toEqual([]);
+        expect(f.i18nKey).toBe('technique.bugPlusOne.step');
+        expect(Object.keys(f.i18nArgs)).toEqual(['cell', 'label', 'digit']);
+        expect(JSON.parse(JSON.stringify(f.i18nArgs))).toEqual(f.i18nArgs);
+        // the answer is held three times in each of the three units of the cell, every other digit twice
+        expect(bugLocalCounts(model9, built.state, T, built.extra)).toEqual([3, 3, 3]);
+        // the premise of the proof: without the answer the position has the solution flip, so two solutions
+        var without = SG.model.cloneState(built.state);
+        without.candidates[T] &= ~bit(built.extra);
+        expect(SG.dfs.searchFrom(model9, without, { limit: 2 }).found).toBe(2);
+      });
+
+    it('takes the answer whichever candidate of the cell it is: the lowest, a middle one and the highest', function () {
+      // the cycle 1 3 5 7 9 2 4 6 8 gives the cell of the solution digit 1 the pair {1,3}, that of 3 the pair {3,5}
+      var cycle = [1, 3, 5, 7, 9, 2, 4, 6, 8];
+      var row = bugRow(model9, 4);
+      [[3, 1, 'lowest'], [1, 2, 'middle'], [1, 9, 'highest']].forEach(function (c) {
+        var cell = bugCellWith(model9, c[0], row);
+        var built = bugState(model9, cell, { cycle: cycle, extra: c[1] });
+        var digits = SG.bits.toArray(built.state.candidates[cell]);
+        expect([c[2], digits.indexOf(c[1])]).toEqual([c[2], c[2] === 'lowest' ? 0 : c[2] === 'middle' ? 1 : 2]);
+        check('bugPlusOne', model9, built.state, { placements: [[cell, c[1]]] });
+      });
+    });
+
+    it('a distant unit with a wrong digit count: the units of the cell look valid and nothing is found', function () {
+      var built = bugState(model9, T);
+      expect(bugLocalCounts(model9, built.state, T, built.extra)).toEqual([3, 3, 3]);
+      var far = bugDistantCell(model9, T);
+      var state = SG.model.cloneState(built.state);
+      // the cell far gives one of its two candidates up for a digit outside its pair: one holder fewer for the first,
+      // one more for the second, in the three units of the far cell only
+      var pair = SG.bits.toArray(state.candidates[far]);
+      var other = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(function (d) { return pair.indexOf(d) === -1; })[0];
+      state.candidates[far] = (state.candidates[far] & ~bit(pair[1])) | bit(other);
+      expect(size(state, far)).toBe(2);
+      expect(bugLocalCounts(model9, state, T, built.extra)).toEqual([3, 3, 3]);
+      checkNone('bugPlusOne', model9, state);
+      expect(bugOf(model9, state).units).toBeGreaterThan(0);
+      // and the same position with the far cell as it was is the Finding
+      check('bugPlusOne', model9, built.state, { placements: [[T, built.extra]] });
+    });
+
+    it('a second trivalue cell, a cell with four candidates, a naked single and an empty cell: nothing is found',
+      function () {
+        var built = bugState(model9, T);
+        var far = bugDistantCell(model9, T);
+        var second = SG.model.cloneState(built.state);
+        second.candidates[far] |= bit(1 + (SG.bits.toArray(second.candidates[far]).slice(-1)[0] % 9));
+        expect(size(second, far)).toBe(3);
+        checkNone('bugPlusOne', model9, second);
+        var four = SG.model.cloneState(built.state);
+        four.candidates[T] = maskOf('1234');
+        expect(size(four, T)).toBe(4);
+        checkNone('bugPlusOne', model9, four);
+        var single = SG.model.cloneState(built.state);
+        single.candidates[far] = bit(SG.bits.toArray(single.candidates[far])[0]);
+        checkNone('bugPlusOne', model9, single);
+        var empty = SG.model.cloneState(built.state);
+        empty.candidates[far] = 0;
+        checkNone('bugPlusOne', model9, empty);
+        // a grave without any third candidate (a plain BUG) has nothing to place
+        checkNone('bugPlusOne', model9, bugState(model9, T, { plain: true }).state);
+      });
+
+    it('the third candidate in another cell is another answer: moving it makes the finder follow it', function () {
+      var a = bugState(model9, T);
+      var other = at(model9, 1, 7);
+      var b = bugState(model9, other);
+      var fa = check('bugPlusOne', model9, a.state, { placements: [[T, a.extra]] });
+      var fb = check('bugPlusOne', model9, b.state, { placements: [[other, b.extra]] });
+      expect(fa.cells).not.toEqual(fb.cells);
+      // a position that has both third candidates has two trivalue cells and gives nothing
+      var both = SG.model.cloneState(a.state);
+      both.candidates[other] = b.state.candidates[other];
+      checkNone('bugPlusOne', model9, both);
+    });
+
+    it('accounts for placed digits: with every 9 solved the grave still gives the answer', function () {
+      var cell = bugCellWith(model9, 3, bugRow(model9, 4));
+      var built = bugState(model9, cell, { placed: [9] });
+      expect(built.state.unsolvedCount).toBe(72);
+      expect(bugLocalCounts(model9, built.state, cell, 9)).toEqual([1, 1, 1]);
+      check('bugPlusOne', model9, built.state, { placements: [[cell, built.extra]] });
+      // the same with the digits 1 and 2 placed, on 6 digits and on 4 digits
+      var cell6 = bugCellWith(model6, 3, bugRow(model6, 2));
+      check('bugPlusOne', model6, bugState(model6, cell6, { placed: [1, 2] }).state, {});
+      var cell4 = bugCellWith(model4, 1, bugRow(model4, 1));
+      check('bugPlusOne', model4, bugState(model4, cell4, { placed: [4] }).state, {});
+    });
+
+    it('a placed digit is not an unplaced one: a stale candidate, a second placement and a digit left open are ' +
+      'refused', function () {
+        var cell = bugCellWith(model9, 3, bugRow(model9, 4));
+        var built = bugState(model9, cell, { placed: [9] });
+        // the stale candidate of a placed digit as the third candidate of the cell: without it the position is a grave,
+        // but the digit cannot be placed in a cell whose unit holds it
+        var stale = bugState(model9, cell, { placed: [9], extra: 9 });
+        expect(bugLocalCounts(model9, stale.state, cell, 9)).toEqual([2, 2, 2]);
+        checkNone('bugPlusOne', model9, stale.state);
+        // a second 9 placed in a unit that has one
+        var nine = built.state.value.indexOf(9);
+        var twin = SG.model.cloneState(built.state);
+        var mate = Array.from(unitCells(model9, 'R' + (model9.layout.cellRow[nine] + 1))).filter(function (c) {
+          return open(twin, c) && c !== cell;
+        })[0];
+        twin.value[mate] = 9;
+        twin.candidates[mate] = bit(9);
+        twin.unsolvedCount--;
+        checkNone('bugPlusOne', model9, twin);
+        // a 9 that is left open (a cell {9, x}) has one holder in its units: the counts break
+        var loose = SG.model.cloneState(built.state);
+        loose.value[nine] = 0;
+        loose.candidates[nine] = maskOf('19');
+        loose.unsolvedCount++;
+        checkNone('bugPlusOne', model9, loose);
+        // the unplaced digits of the unit are counted without the placed one: placing nothing breaks the counts
+        // when a solved cell is simply dropped from the candidates of its unit
+        var dropped = SG.model.cloneState(built.state);
+        dropped.value[nine] = 0;
+        dropped.candidates[nine] = 0;
+        dropped.unsolvedCount++;
+        checkNone('bugPlusOne', model9, dropped);
+      });
+
+    it('reads every unit of the model: an added complete diagonal takes part', function () {
+      var diagonal = [];
+      for (var i = 0; i < 9; i++) diagonal.push(at(model9, i, i));
+      var sudokuX = rebuild(model9, 'test-x-bug', { units: [{ cells: diagonal, meta: { kind: 'diag', label: 'D1' } }] });
+      var cell = bugCellWith(sudokuX, 5, bugRow(sudokuX, 3));
+      // a grave built on the diagonal model: its solution has the diagonal complete, every count is right
+      var good = bugState(sudokuX, cell);
+      check('bugPlusOne', sudokuX, good.state, { placements: [[cell, good.extra]] });
+      // the same candidates on the model without the diagonal: fewer units, the same Finding
+      check('bugPlusOne', model9, good.state, { placements: [[cell, good.extra]] });
+      // a grave built on the plain model: its rows, columns and boxes are right and its diagonal is not a complete
+      // unit of digits twice, so the model with the diagonal refuses it
+      var plain = bugState(model9, T);
+      check('bugPlusOne', model9, plain.state, { placements: [[T, plain.extra]] });
+      checkNone('bugPlusOne', sudokuX, plain.state);
+      expect(bugOf(sudokuX, plain.state).units).toBeGreaterThan(0);
+      // the diagonal as a partial unit refuses the form for every position
+      var partial = rebuild(model9, 'test-x-partial-bug', { units: [{ cells: diagonal,
+        meta: { kind: 'diag', label: 'D1', partial: true } }] });
+      checkNone('bugPlusOne', partial, good.state);
+    });
+
+    it('refuses cages, inequalities and a partial unit: the same candidates on the plain model give the Finding',
+      function () {
+        var built = bugState(model9, T);
+        var caged = rebuild(model9, 'test-cages-bug', { cages: [{ cells: [20, 21], sum: 3 }] });
+        var signs = rebuild(model9, 'test-signs-bug', { inequalities: [{ a: 40, b: 41 }] });
+        var partial = withPartial(model9, 'test-partial-bug', ['R9']);
+        [caged, signs, partial].forEach(function (model) {
+          none('bugPlusOne', model, built.state);
+          var out = bugObserved(model, built.state);
+          expect(out.finding).toBeNull();
+          // the call ran: one record, nothing was tallied
+          expect(out.records).toEqual([{ id: 'bugPlusOne', work: 0, limit: 50000, capHit: null, retained: null }]);
+        });
+        check('bugPlusOne', model9, built.state, { placements: [[T, built.extra]] });
+      });
+
+    it('assumeUniqueness: false skips the finder and the seam and leaves no work record', function () {
+      var built = bugState(model9, T);
+      none('bugPlusOne', model9, built.state, { assumeUniqueness: false });
+      var out = bugObserved(model9, built.state, { ctx: { assumeUniqueness: false } });
+      expect(out.finding).toBeNull();
+      expect(out.records).toEqual([]);
+      var seam = bugObserved(model9, built.state, { seam: true, ctx: { assumeUniqueness: false } });
+      expect(seam.finding).toBeNull();
+      expect(seam.records).toEqual([]);
+      expect(bugObserved(model9, built.state).finding).not.toBeNull();
+    });
+
+    it('leaves the state alone, answers the same twice and returns fresh owned data', function () {
+      var built = bugState(model9, T);
+      var snapshot = SG.model.cloneState(built.state);
+      var a = bugFind(model9, built.state);
+      var b = bugFind(model9, built.state);
+      expect(b).toEqual(a);
+      expect(b).not.toBe(a);
+      expect(b.cells).not.toBe(a.cells);
+      expect(b.placements).not.toBe(a.placements);
+      expect(b.placements[0]).not.toBe(a.placements[0]);
+      expect(built.state.candidates).toEqual(snapshot.candidates);
+      expect(built.state.value).toEqual(snapshot.value);
+      expect(built.state.unsolvedCount).toBe(snapshot.unsolvedCount);
+      // changing what a call returned changes nothing for the next call
+      a.cells.push(99);
+      a.placements[0][1] = 99;
+      a.i18nArgs.digit = 99;
+      expect(bugFind(model9, built.state)).toEqual(b);
+      // another call on another position in between changes nothing
+      bugFind(model9, bugState(model9, at(model9, 1, 7)).state);
+      expect(bugFind(model9, built.state)).toEqual(b);
+    });
+  });
+
+  describe('bugPlusOne (R14): unit shapes and sizes', function () {
+    var jigsaw4 = jigsawModel();
+    var SHAPES = [['4 digits', model4], ['6 digits', model6], ['9 digits', model9], ['12 digits', model12],
+      ['16 digits', model16], ['a 4x4 jigsaw', jigsaw4]];
+    // every unit-shape class that a board of the registry can have: extra complete units (diagonals, windows), irregular
+    // regions and several grids that share cells (all built by the helper; the Killer and Greater-Than helper boards have
+    // neither cages nor signs here, so they are plain nine-digit boards)
+    ['diagonalX', 'hyper', 'jigsaw9', 'samurai', 'sohei', 'butterfly', 'flower', 'wordoku'].forEach(function (id) {
+      if (SG.testkit.hasVariant(id)) SHAPES.push([id, H.model(id)]);
+    });
+
+    SHAPES.forEach(function (setup) {
+      it('finds the constructed grave on ' + setup[0] + ' for the first, a middle and the last cell, as the ' +
+        'enumeration does, and nothing in its near misses', function () {
+          var model = setup[1];
+          [0, Math.floor(model.cellCount / 2), model.cellCount - 1].forEach(function (cell) {
+            var built = bugState(model, cell);
+            var f = check('bugPlusOne', model, built.state, { placements: [[cell, built.extra]] });
+            expect(f.i18nArgs).toEqual({ cell: cell, label: H.label(model, cell), digit: built.extra });
+            expect(bugObserved(model, built.state).record.work).toBe(bugOf(model, built.state).units);
+            if (model.digits <= 9 && model.cellCount <= 144) {
+              // the flip of the proof, by exhaustion: without the answer the position has two solutions (at least)
+              var without = SG.model.cloneState(built.state);
+              without.candidates[cell] &= ~bit(built.extra);
+              expect(SG.dfs.searchFrom(model, without, { limit: 2 }).found).toBe(2);
+            }
+            // near misses: a plain grave (no third candidate), and a distant cell that moves a candidate
+            checkNone('bugPlusOne', model, bugState(model, cell, { plain: true }).state);
+            var far = bugDistantCell(model, cell);
+            var broken = SG.model.cloneState(built.state);
+            var pair = SG.bits.toArray(broken.candidates[far]);
+            var other = [];
+            for (var d = 1; d <= model.digits; d++) if (pair.indexOf(d) === -1) other.push(d);
+            broken.candidates[far] = (broken.candidates[far] & ~bit(pair[1])) | bit(other[0]);
+            checkNone('bugPlusOne', model, broken);
+            expect(bugOf(model, broken).units).toBeGreaterThan(0);
+          });
+        });
+    });
+
+    it('a model with an extra complete unit (a window or a diagonal) reads it too: a grave built without it is refused',
+      function () {
+        ['diagonalX', 'hyper'].forEach(function (id) {
+          if (!SG.testkit.hasVariant(id)) return;
+          var model = H.model(id);
+          var plain = bugState(model9, at(model9, 4, 4));
+          // the plain classic grave on the board with the extra units: its rows, columns and boxes hold every digit
+          // twice, the diagonals and windows do not
+          checkNone('bugPlusOne', model, plain.state);
+          expect(bugOf(model, plain.state).units).toBeGreaterThan(0);
+          check('bugPlusOne', model9, plain.state, { placements: [[at(model9, 4, 4), plain.extra]] });
+        });
+      });
+
+    it('on a multi-grid board a cell of two grids is in the units of both: moving a candidate in it breaks the counts',
+      function () {
+        if (!SG.testkit.hasVariant('samurai')) SG.test.skip('no samurai board can be built here');
+        var samurai = H.model('samurai');
+        var built = bugState(samurai, byLayout(samurai, 4, 4));
+        check('bugPlusOne', samurai, built.state, { placements: [[byLayout(samurai, 4, 4), built.extra]] });
+        // the cells that belong to two grids are in the units of both: a candidate moved in one of them breaks both
+        var shared = byLayout(samurai, 6, 6);
+        var broken = SG.model.cloneState(built.state);
+        var pair = SG.bits.toArray(broken.candidates[shared]);
+        broken.candidates[shared] = (broken.candidates[shared] & ~bit(pair[1])) |
+          bit([1, 2, 3, 4, 5, 6, 7, 8, 9].filter(function (d) { return pair.indexOf(d) === -1; })[0]);
+        checkNone('bugPlusOne', samurai, broken);
+        var shape = samurai.cellUnits[shared].length;
+        expect(shape).toBeGreaterThan(3);
+      });
+  });
+
+  describe('bugPlusOne (R14): real positions', function () {
+    var entry = SG.fixtures.techniques.byId.bugPlusOne;
+    var registry = SG.fixtures.techniques.registryOrder;
+
+    // The exact Findings of the two real positive fixtures (core/tests/fixtures/techniques.js): the answer is the lowest
+    // and the highest candidate of the trivalue cell.
+    var REAL = [
+      { cell: 79, label: 'R9C8', digit: 2, candidates: [2, 7, 8], open: 17 },
+      { cell: 51, label: 'R6C7', digit: 9, candidates: [3, 4, 9], open: 21 }
+    ];
+
+    function positionOf(fixture) {
+      return fixture.after !== null ? H.stateAfter(model9, fixture.puzzle, fixture.after)
+        : H.makeState(model9, fixture.puzzle, { propagate: fixture.propagate });
+    }
+
+    it('has two positives and two negatives; the positives are where the registry reaches it', function () {
+      expect(entry.positive).toHaveLength(2);
+      expect(entry.negative).toHaveLength(2);
+      var below = registry.slice(0, registry.indexOf('bugPlusOne'));
+      expect(below[below.length - 1]).toBe('uniqueRectangle');
+      entry.positive.forEach(function (fixture) { expect(fixture.after.slice().sort()).toEqual(below.slice().sort()); });
+      expect(entry.negative[0].after).toContain('bugPlusOne');
+      expect(entry.negative[1].after).not.toContain('uniqueRectangle');
+    });
+
+    REAL.forEach(function (want, i) {
+      it('finds the exact Finding of real position ' + (i + 1) + ', sound against an independent completion, with the ' +
+        'premise of the pattern shown absurd', function () {
+          var fixture = entry.positive[i];
+          var givens = H.parsePuzzle(model9, fixture.puzzle);
+          // the puzzle has exactly one solution (plain depth first search, no technique): the uniqueness the pattern uses
+          expect(SG.dfs.countSolutions(model9, givens, 2)).toBe(1);
+          var solution = SG.dfs.solve(model9, givens);
+          var state = positionOf(fixture);
+          expect(state.unsolvedCount).toBe(want.open);
+          var finding = check('bugPlusOne', model9, state, {
+            cells: [want.label], placements: [[want.label, want.digit]], eliminations: [],
+            args: { cell: want.cell, label: want.label, digit: want.digit }
+          });
+          expect(finding.placements).toEqual([[want.cell, want.digit]]);
+          expect(solution[want.cell]).toBe(want.digit);
+          // the answer is fixed in other cells too, none of them in a unit of the cell: that is no obstacle to the placement
+          var fixedElsewhere = 0;
+          for (var f = 0; f < model9.cellCount; f++) {
+            if (state.value[f] !== want.digit) continue;
+            fixedElsewhere++;
+            expect(sees(model9, want.cell, f)).toBe(false);
+          }
+          expect(fixedElsewhere).toBeGreaterThan(0);
+          expect(SG.bits.toArray(state.candidates[want.cell])).toEqual(want.candidates);
+          // exactly one open cell has three candidates and every other has two
+          var sizes = {};
+          for (var c = 0; c < model9.cellCount; c++) {
+            if (open(state, c)) sizes[size(state, c)] = (sizes[size(state, c)] || 0) + 1;
+          }
+          expect(sizes).toEqual({ 2: want.open - 1, 3: 1 });
+          // the premise: with the answer left out the position has no completion; with any other candidate of the cell
+          // fixed, none either; with the answer, exactly the unique solution
+          want.candidates.forEach(function (digit) {
+            var fixed = SG.model.cloneState(state);
+            fixed.candidates[want.cell] = bit(digit);
+            var found = SG.dfs.searchFrom(model9, fixed, { limit: 2 });
+            expect([digit, found.found]).toEqual([digit, digit === want.digit ? 1 : 0]);
+          });
+          var without = SG.model.cloneState(state);
+          without.candidates[want.cell] &= ~bit(want.digit);
+          expect(SG.dfs.searchFrom(model9, without, { limit: 2 }).found).toBe(0);
+          // the position after the placement still completes, and only to that solution
+          var reduced = SG.model.cloneState(state);
+          expect(SG.constraints.assign(model9, reduced, want.cell, want.digit)).toBe(true);
+          var done = SG.dfs.searchFrom(model9, reduced, { limit: 2 });
+          expect(done.found).toBe(1);
+          expect(Array.from(done.solution)).toEqual(Array.from(solution));
+          // no cheaper technique of the registry finds anything here: bugPlusOne is the first one reached
+          SG.techniques.list().filter(function (t) { return t.variantScope === null && t.order < 182; })
+            .forEach(function (t) {
+              expect([t.id, t.find(model9, state, SG.techniques.createContext(model9, { assumeUniqueness: true })) === null])
+                .toEqual([t.id, true]);
+            });
+        });
+    });
+
+    it('is a step of the logical solver from the real positions, and never without the uniqueness assumption',
+      function () {
+        entry.positive.forEach(function (fixture) {
+          var givens = H.parsePuzzle(model9, fixture.puzzle);
+          var allowed = fixture.after.concat(['bugPlusOne']);
+          var report = SG.logicalSolver.solve(model9, givens, { allowedTechniques: allowed });
+          var steps = report.steps.filter(function (s) { return s.technique === 'bugPlusOne'; });
+          expect(steps.length).toBeGreaterThan(0);
+          expect(steps[0].i18nKey).toBe('technique.bugPlusOne.step');
+          expect(steps[0].eliminations).toEqual([]);
+          expect(report.techniqueCounts.bugPlusOne).toBe(steps.length);
+          var without = SG.logicalSolver.solve(model9, givens, { allowedTechniques: allowed, assumeUniqueness: false });
+          without.steps.forEach(function (s) { expect(s.technique).not.toBe('bugPlusOne'); });
+        });
+      });
+
+    it('finds nothing at the negative positions: nothing left after it, and a Unique Rectangle that keeps its priority',
+      function () {
+        entry.negative.forEach(function (fixture) {
+          var state = positionOf(fixture);
+          H.expectNoFinding(SG.test, 'bugPlusOne', state);
+          expect(bugOf(model9, state).found).toBeNull();
+          expect(state.unsolvedCount).toBeGreaterThan(0);
+        });
+        // the second position holds a rectangle: uniqueRectangle finds it, and it is first in the registry
+        var ur = SG.techniques.get('uniqueRectangle').find(model9, positionOf(entry.negative[1]),
+          SG.techniques.createContext(model9, {}));
+        expect(ur).not.toBeNull();
+        expect(SG.techniques.get('uniqueRectangle').order).toBeLessThan(SG.techniques.get('bugPlusOne').order);
+        // and a trivalue cell is not enough: the first negative has several
+        var many = 0;
+        var negative = positionOf(entry.negative[0]);
+        for (var c = 0; c < model9.cellCount; c++) if (open(negative, c) && size(negative, c) === 3) many++;
+        expect(many).toBeGreaterThan(1);
+      });
+
+    it('the three supplements of the soundness sweep are real unique positions where the registry reaches it',
+      function () {
+        var supplements = SG.fixtures.techniques.supplements.bugPlusOne;
+        expect(supplements).toHaveLength(3);
+        var cells = [];
+        supplements.forEach(function (fixture) {
+          expect(SG.dfs.countSolutions(model9, H.parsePuzzle(model9, fixture.puzzle), 2)).toBe(1);
+          var state = positionOf(fixture);
+          var f = check('bugPlusOne', model9, state, {});
+          cells.push(H.label(model9, f.cells[0]) + '=' + f.placements[0][1]);
+          expect(fixture.after.slice().sort()).toEqual(registry.slice(0, registry.indexOf('bugPlusOne')).sort());
+        });
+        expect(cells).toEqual(['R4C2=7', 'R8C2=3', 'R5C6=2']);
+      });
+  });
+
+  /**
+   * The work done at each check of the parent budget of one call of the seam (a context whose k-th check throws a spent
+   * budget): the swallowed call's record tells how many units were spent at that check.
+   */
+  function bugCheckWorks(model, state) {
+    var base = SG.techniques.createContext(model, {});
+    function attempt(target) {
+      var k = 0;
+      var records = [];
+      var ctx = Object.assign({}, base, {
+        options: { onPatternWork: function (r) { records.push(r); } },
+        check: function () {
+          k++;
+          if (k === target) throw new SG.errors.GenerationError('budget.exceeded', { reason: 'nodes' });
+        }
+      });
+      var finding = SG.wingSearch.bugPlusOne(model, state, ctx, undefined);
+      return { checks: k, records: records, finding: finding };
+    }
+    var free = attempt(0);
+    var works = [];
+    for (var target = 1; target <= free.checks; target++) {
+      var spent = attempt(target);
+      expect(spent.finding).toBeNull();
+      expect(spent.records).toHaveLength(1);
+      expect(spent.records[0].capHit).toBeNull();
+      works.push(spent.records[0].work);
+    }
+    return { works: works, free: free };
+  }
+
+  describe('bugPlusOne (R14): work limit, budget and cancellation', function () {
+    // the cycle 1 3 5 7 9 2 4 6 8 gives the cell of the solution digit 1 the pair {1,3} and that of 3 the pair {3,5}, so
+    // that the extra 1, 2 or 9 is the lowest, a middle or the highest candidate of the cell
+    var CYCLE = [1, 3, 5, 7, 9, 2, 4, 6, 8];
+    var row5 = bugRow(model9, 4);
+    var row9 = bugRow(model9, 8);
+
+    function grave(row, solutionDigit, extra) {
+      return bugState(model9, bugCellWith(model9, solutionDigit, row), { cycle: CYCLE, extra: extra });
+    }
+
+    // [row, solution digit of the cell, extra, work]: the proposal that qualifies reads the 27 units of 9 cells (243); a
+    // refused proposal ends at the first unit that holds the cell (row 5: unit 4, 5 units of 9 cells, 45; row 9: unit 8,
+    // 9 units, 81), and the proposals come in ascending order, so that the lowest extra costs nothing more
+    var WORKS = [[row5, 3, 1, 243], [row5, 1, 2, 45 + 243], [row5, 1, 9, 45 + 45 + 243],
+      [row9, 3, 1, 243], [row9, 1, 2, 81 + 243], [row9, 1, 9, 81 + 81 + 243]];
+
+    it('has R10\'s limit of 50000 and reports one record of its own per call that ran', function () {
+      expect(SG.wingSearch.BUG_PLUS_ONE_WORK_LIMIT).toBe(50000);
+      var built = grave(row5, 3, 1);
+      var out = bugObserved(model9, built.state);
+      expect(out.finding).not.toBeNull();
+      expect(out.records).toEqual([{ id: 'bugPlusOne', work: 243, limit: 50000, capHit: null, retained: null }]);
+      expect(bugObserved(model9, built.state).record).not.toBe(out.record);
+      // a position that the guard refuses: one record, nothing tallied; the same for a call that tallies and finds
+      // nothing (a distant unit with a wrong count)
+      expect(bugObserved(model9, board(model9, [])).records)
+        .toEqual([{ id: 'bugPlusOne', work: 0, limit: 50000, capHit: null, retained: null }]);
+      var far = bugDistantCell(model9, bugCellWith(model9, 3, row5));
+      var broken = SG.model.cloneState(built.state);
+      var pair = SG.bits.toArray(broken.candidates[far]);
+      broken.candidates[far] = (broken.candidates[far] & ~bit(pair[1])) |
+        bit([1, 2, 3, 4, 5, 6, 7, 8, 9].filter(function (d) { return pair.indexOf(d) === -1; })[0]);
+      var lost = bugObserved(model9, broken);
+      expect(lost.finding).toBeNull();
+      expect(lost.record.capHit).toBeNull();
+      expect(lost.record.work).toBeGreaterThan(0);
+      expect(lost.record.work).toBe(bugOf(model9, broken).units);
+    });
+
+    it('counts one unit per cell tallied under a proposed digit, the proposals in ascending order, a proposal ending ' +
+      'at its first broken unit', function () {
+        WORKS.forEach(function (w) {
+          var built = grave(w[0], w[1], w[2]);
+          var out = bugObserved(model9, built.state);
+          expect([w[2], out.record.work]).toEqual([w[2], w[3]]);
+          expect(bugOf(model9, built.state).units).toBe(w[3]);
+          expect(out.finding.placements).toEqual([[bugCellWith(model9, w[1], w[0]), w[2]]]);
+        });
+        // the largest call of 9 digits on a grave: a refused first and second proposal in the last row, then 243
+        expect(WORKS[5][3]).toBe(405);
+        // the counter starts afresh with every call
+        var built = grave(row9, 1, 9);
+        expect(bugObserved(model9, built.state).record.work).toBe(405);
+        expect(bugObserved(model9, built.state).record.work).toBe(405);
+        // 16 digits: a unit holds 16 cells, 48 units: 768 for the proposal that qualifies, 15 units and the refused
+        // one (256) for each refused proposal before it
+        var last = model16.cellCount - 1;
+        var big = bugState(model16, last, { extra: 16 });
+        var bigWork = bugObserved(model16, big.state).record.work;
+        expect(bigWork).toBe(256 + 256 + 768);
+        expect(bugOf(model16, big.state).units).toBe(bigWork);
+      });
+
+    it('is counted as the rule says on the real positions and on 120 random states', function () {
+      var positions = entryPositions();
+      positions.forEach(function (state) {
+        var out = bugObserved(model9, state);
+        expect(out.finding).not.toBeNull();
+        expect(out.record.work).toBe(bugOf(model9, state).units);
+        expect(out.record.work).toBeGreaterThanOrEqual(243);
+      });
+      var items = H.randomStatesWithKnownSolution(model9, SG.testkit.rng.create(777), 120);
+      var tallied = 0;
+      items.forEach(function (item, index) {
+        var out = bugObserved(model9, item.state);
+        var recount = bugOf(model9, item.state).units;
+        if (out.record.work !== recount) fail('state #' + index + ': ' + out.record.work + ' units counted, ' + recount + ' by the rule');
+        if (recount > 0) tallied++;
+        expect(out.record.capHit).toBeNull();
+      });
+      expect(tallied).toBeLessThan(items.length);
+    });
+
+    function entryPositions() {
+      var fixtures = SG.fixtures.techniques;
+      return fixtures.byId.bugPlusOne.positive.concat(fixtures.supplements.bugPlusOne).map(function (fixture) {
+        return H.stateAfter(model9, fixture.puzzle, fixture.after);
+      });
+    }
+
+    it('ends a call whose limit is spent with nothing found, never a wrong finding, and says so', function () {
+      var built = grave(row5, 1, 9);
+      var plain = bugFind(model9, built.state);
+      expect(plain).not.toBeNull();
+      var exact = bugObserved(model9, built.state, { seam: true, limit: 333 });
+      expect(exact.finding).toEqual(plain);
+      expect(exact.record).toEqual({ id: 'bugPlusOne', work: 333, limit: 333, capHit: null, retained: null });
+      [332, 288, 100, 45, 1, 0].forEach(function (limit) {
+        var out = bugObserved(model9, built.state, { seam: true, limit: limit });
+        expect(out.finding).toBeNull();
+        expect(out.record).toEqual({ id: 'bugPlusOne', work: limit, limit: limit, capHit: 'work', retained: null });
+      });
+      expect(bugObserved(model9, built.state, { seam: true }).record.limit).toBe(50000);
+      // the limit is the call's: a position that the guard refuses never reaches it, even with the limit 0
+      var refused = bugObserved(model9, board(model9, []), { seam: true, limit: 0 });
+      expect(refused.record).toEqual({ id: 'bugPlusOne', work: 0, limit: 0, capHit: null, retained: null });
+    });
+
+    it('floors a fractional limit and rejects an invalid one with solver.invalidOption', function () {
+      var built = grave(row5, 1, 9);
+      expect(bugObserved(model9, built.state, { seam: true, limit: 332.9 }).record)
+        .toEqual({ id: 'bugPlusOne', work: 332, limit: 332, capHit: 'work', retained: null });
+      [-1, NaN, Infinity, '5', null].forEach(function (workLimit) {
+        var ctx = SG.techniques.createContext(model9, {});
+        var err = thrownBy(function () { SG.wingSearch.bugPlusOne(model9, built.state, ctx, { workLimit: workLimit }); });
+        expect([String(workLimit), err && err.code]).toEqual([String(workLimit), 'solver.invalidOption']);
+        expect(err.message).toContain('wingSearch.bugPlusOne workLimit');
+      });
+      var ok = SG.techniques.createContext(model9, {});
+      expect(SG.wingSearch.bugPlusOne(model9, built.state, ok, {})).not.toBeNull();
+      expect(SG.wingSearch.bugPlusOne(model9, built.state, ok, { workLimit: undefined })).not.toBeNull();
+    });
+
+    it('checks the parent budget at its entry and so that at most 256 units pass between two checks', function () {
+      var vector = bugCheckWorks(model9, grave(row5, 3, 1).state);
+      // 243 units: the entry check only
+      expect(vector.works).toEqual([0]);
+      // 405 units: the entry check and the check before the 257th unit
+      var big = bugCheckWorks(model9, grave(row9, 1, 9).state);
+      expect(big.free.records[0].work).toBe(405);
+      expect(big.works).toEqual([0, 256]);
+      // 1,280 units on 16 digits: checks at 0, 256, 512, 768 and 1,024
+      var wide = bugCheckWorks(model16, bugState(model16, model16.cellCount - 1, { extra: 16 }).state);
+      expect(wide.works).toEqual([0, 256, 512, 768, 1024]);
+      var gaps = wide.works.map(function (w, i) { return (i + 1 < wide.works.length ? wide.works[i + 1] : 1280) - w; });
+      expect(Math.max.apply(null, gaps)).toBeLessThanOrEqual(256);
+      // a position that the guard refuses has the entry check only
+      expect(bugCheckWorks(model9, board(model9, [])).works).toEqual([0]);
+    });
+
+    it('reports a spent budget as nothing found (capHit null) and lets cancellation and other errors through with no ' +
+      'record', function () {
+        var built = grave(row9, 1, 9);
+        // the entry check and the check before the 257th unit
+        [[0, 0], [1, 256]].forEach(function (entry) {
+          var parent = SG.budget.create({ nodes: entry[0] });
+          var spent = bugObserved(model9, built.state, { ctx: { budget: parent } });
+          expect(spent.finding).toBeNull();
+          expect(spent.records).toEqual([{ id: 'bugPlusOne', work: entry[1], limit: 50000, capHit: null, retained: null }]);
+          // capHit null is no proof of a complete scan: the caller's budget still fails after the call
+          expect(thrownBy(function () { parent.check(); }).code).toBe('budget.exceeded');
+        });
+        // a budget with room for the whole call changes nothing
+        var roomy = bugObserved(model9, built.state, { ctx: { budget: SG.budget.create({ nodes: 10 }) } });
+        expect(roomy.finding).toEqual(bugFind(model9, built.state));
+        // cancellation or another error at the entry check and at the second check: thrown as it is, no record at all
+        [['budget.cancelled', true], ['boom', false]].forEach(function (kind) {
+          [1, 2].forEach(function (at) {
+            var k = 0;
+            var records = [];
+            var ctx = Object.assign({}, SG.techniques.createContext(model9, {}), {
+              options: { onPatternWork: function (r) { records.push(r); } },
+              check: function () {
+                if (++k === at) {
+                  throw kind[1] ? new SG.errors.GenerationError(kind[0], { reason: 'cancelled' }) : new Error(kind[0]);
+                }
+              }
+            });
+            var thrown = thrownBy(function () { SG.techniques.get('bugPlusOne').find(model9, built.state, ctx); });
+            expect(thrown).toBeTruthy();
+            expect(kind[1] ? thrown.code : thrown.message).toBe(kind[0]);
+            expect(k).toBe(at);
+            expect(records).toEqual([]);
+          });
+        });
+        // an error thrown by the observer propagates, for a found, a capped and a refused call
+        [[built.state, undefined], [built.state, 10], [board(model9, []), undefined]].forEach(function (c) {
+          var ctx = SG.techniques.createContext(model9, { onPatternWork: function () { throw new Error('observer'); } });
+          var thrown = thrownBy(function () {
+            SG.wingSearch.bugPlusOne(model9, c[0], ctx, c[1] === undefined ? undefined : { workLimit: c[1] });
+          });
+          expect(thrown && thrown.message).toBe('observer');
+        });
+      });
+
+    it('is not fooled by a hostile or absent observer', function () {
+      var built = grave(row5, 3, 1);
+      var plain = JSON.stringify(bugFind(model9, built.state));
+      ['not a function', null, 7].forEach(function (observer) {
+        expect(JSON.stringify(bugFind(model9, built.state, { onPatternWork: observer }))).toBe(plain);
+      });
+    });
+
+    it('leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one', function () {
+      var built = grave(row9, 1, 9);
+      var fresh = JSON.stringify(bugFind(model9, built.state));
+      bugObserved(model9, built.state, { seam: true, limit: 10 });
+      bugObserved(model9, built.state, { ctx: { budget: SG.budget.create({ nodes: 1 }) } });
+      expect(JSON.stringify(bugFind(model9, built.state))).toBe(fresh);
+      expect(bugObserved(model9, built.state).record.work).toBe(405);
+    });
+  });
+
+  describe('bugPlusOne (R14): agreement with an independent enumeration', function () {
+    /** One seeded mutation of a grave: nothing, a candidate added, removed or moved, or a cell solved without propagation. */
+    function mutate(model, state, rng) {
+      var kind = rng.int(8);
+      if (kind < 2) return 'none';
+      var openCells = [];
+      for (var c = 0; c < model.cellCount; c++) if (open(state, c)) openCells.push(c);
+      var cell = openCells[rng.int(openCells.length)];
+      var digits = SG.bits.toArray(state.candidates[cell]);
+      var missing = [];
+      for (var d = 1; d <= model.digits; d++) if (digits.indexOf(d) === -1) missing.push(d);
+      if (kind === 2 && missing.length > 0) {
+        state.candidates[cell] |= bit(missing[rng.int(missing.length)]);
+        return 'add';
+      }
+      if (kind === 3 && digits.length > 1) {
+        state.candidates[cell] &= ~bit(digits[rng.int(digits.length)]);
+        return 'remove';
+      }
+      if (kind === 4 && missing.length > 0 && digits.length > 0) {
+        state.candidates[cell] = (state.candidates[cell] & ~bit(digits[rng.int(digits.length)])) |
+          bit(missing[rng.int(missing.length)]);
+        return 'move';
+      }
+      if (kind === 5) {
+        state.value[cell] = digits[rng.int(digits.length)];
+        state.candidates[cell] = bit(state.value[cell]);
+        state.unsolvedCount--;
+        return 'solve';
+      }
+      if (kind === 6 && missing.length > 0) {
+        // the third candidate somewhere else as well (a second trivalue cell, or a fourth candidate)
+        state.candidates[cell] |= bit(missing[rng.int(missing.length)]);
+        state.candidates[openCells[rng.int(openCells.length)]] |= bit(1 + rng.int(model.digits));
+        return 'two';
+      }
+      return 'none';
+    }
+
+    var SETUPS = [['4 digits', model4, 120], ['6 digits', model6, 120], ['9 digits', model9, 120],
+      ['12 digits', model12, 60], ['a 4x4 jigsaw', jigsawModel(), 120]];
+    ['diagonalX', 'jigsaw9'].forEach(function (id) {
+      if (SG.testkit.hasVariant(id)) SETUPS.push([id, H.model(id), 40]);
+    });
+
+    SETUPS.forEach(function (setup) {
+      it('agrees with the enumeration on ' + setup[2] + ' mutated graves of ' + setup[0] + ': the same Finding or none, ' +
+        'and the same work', function () {
+          var model = setup[1];
+          var rng = SG.testkit.rng.create(SEED + model.digits + model.cellCount);
+          var yes = 0;
+          var no = 0;
+          var kinds = {};
+          for (var i = 0; i < setup[2]; i++) {
+            var placed = rng.int(3) === 0 ? [model.digits] : [];
+            var solution = bugSolution(model);
+            var cell;
+            do { cell = rng.int(model.cellCount); } while (placed.indexOf(solution[cell]) !== -1);
+            var state = bugState(model, cell, { placed: placed }).state;
+            var kind = mutate(model, state, rng);
+            kinds[kind] = (kinds[kind] || 0) + 1;
+            var want = bugOf(model, state);
+            var got = bugFind(model, state);
+            if ((got !== null) !== (want.found !== null)) {
+              fail((got !== null ? 'found' : 'missed') + ' a grave on mutation #' + i + ' (' + kind + ') of ' + setup[0] +
+                '\n  finding: ' + JSON.stringify(got) + '\n  enumeration: ' + JSON.stringify(want.found));
+            }
+            if (got !== null) {
+              ORACLE.bugPlusOne.verify(model, state, got);
+              yes++;
+            } else {
+              no++;
+            }
+            expect(bugObserved(model, state).record.work).toBe(want.units);
+          }
+          expect(yes).toBeGreaterThanOrEqual(Math.floor(setup[2] / 8));
+          expect(no).toBeGreaterThanOrEqual(Math.floor(setup[2] / 8));
+          expect(Object.keys(kinds).length).toBeGreaterThanOrEqual(4);
+        });
+    });
+
+    /** Walks the states of the corpus and asks the finder and the enumeration on every position; places what it finds. */
+    function walk(model, count, maxSteps) {
+      var items = H.randomStatesWithKnownSolution(model, SG.testkit.rng.create(SEED), count);
+      var fired = 0;
+      items.forEach(function (item, index) {
+        var state = SG.model.cloneState(item.state);
+        for (var step = 0; step < maxSteps && state.unsolvedCount > 0; step++) {
+          var finding = bugFind(model, state);
+          var wanted = ORACLE.bugPlusOne.exists(model, state);
+          if ((finding !== null) !== wanted) {
+            fail('bugPlusOne ' + (finding !== null ? 'found' : 'missed') + ' a pattern the enumeration ' +
+              (wanted ? 'sees' : 'does not see') + ' on state #' + index + ' step ' + step + '\n  puzzle: ' +
+              H.puzzleString(model, item.givens) + '\n  finding: ' + JSON.stringify(finding));
+          }
+          if (finding === null) break;
+          ORACLE.bugPlusOne.verify(model, state, finding);
+          expect(finding.placements[0][1]).toBe(item.solution[finding.placements[0][0]]);
+          fired++;
+          if (!SG.constraints.assign(model, state, finding.placements[0][0], finding.placements[0][1]) ||
+              !SG.constraints.propagate(model, state)) {
+            fail('bugPlusOne led to a contradiction on state #' + index);
+          }
+        }
+      });
+      return fired;
+    }
+
+    [['4 digits', model4, 300, 12], ['6 digits', model6, 200, 12], ['9 digits', model9, 300, 12],
+      ['12 digits', model12, 60, 8]].forEach(function (setup) {
+      it('agrees with the enumeration on every position of the random corpus of ' + setup[0] + ' and only places the ' +
+        'solution', function () {
+          expect(walk(setup[1], setup[2], setup[3])).toBeGreaterThanOrEqual(0);
+        });
+    });
+
+    it('agrees with the enumeration on every published position', function () {
+      Object.keys(PUBLISHED).forEach(function (name) {
+        var state = H.makeState(model9, PUBLISHED[name]);
+        var found = bugFind(model9, state);
+        expect(found !== null).toBe(ORACLE.bugPlusOne.exists(model9, state));
+      });
+    });
+
+    [['4 digits', model4, 300], ['6 digits', model6, 200], ['9 digits', model9, 300], ['12 digits', model12, 200],
+      ['16 digits (a few states: generating them is slow)', model16, 8]].forEach(function (setup) {
+      it('stays sound on ' + setup[0] + ': a placement is always a digit of the solution', function () {
+        H.assertSound(SG.test, 'bugPlusOne', { model: setup[1], count: setup[2], minFirings: 0 });
       });
     });
   });
