@@ -1,6 +1,6 @@
 /**
  * Wing techniques (group `wing`): Remote Pairs, XY-Wing, XYZ-Wing, WXYZ-Wing, W-Wing and Unique Rectangle
- * (types 1, 2, 3, 4).
+ * (types 1, 2, 3, 4 and the hidden form).
  *
  *   id               baseCost  order  assumesUniqueness
  *   remotePairs          35     116   false
@@ -24,7 +24,9 @@
  *   technique.uniqueRectangle.type2.step  { roof1, roof2, digitX, digitY, digit }
  *   technique.uniqueRectangle.type3.step  { roof1, roof2, digits, partDigits, cells, unit }
  *   technique.uniqueRectangle.type4.step  { roof1, roof2, digits, digit, unit }
- * `digit` is always the digit that gets eliminated, `digitX` / `digitY` the other digits of the pattern.
+ *   technique.uniqueRectangle.hidden.step { digit, digits, cells }
+ * `digit` is the digit that gets eliminated, `digitX` / `digitY` the other digits of the pattern (the hidden
+ * form is the exception: its `digit` is the digit of the links, the eliminated one is the other of `digits`).
  *
  * W-Wing: two bi-value cells with the same pair {X, Y} that do not see each other, joined by a strong link
  * on X (a COMPLETE unit where X has exactly two candidate cells P and Q, P seeing one wing cell and Q the
@@ -143,8 +145,38 @@
  *   limit is spent is complete). A spent parent budget in the second pass also ends the call with null, but
  *   with `capHit: null` and the caller's budget stays spent (as for the other bounded finders);
  *   cancellation and every other error propagate. The pass of types 1 and 2 is unbounded as before and keeps
- *   its own budget checks. `ctx.options.onPatternWork(record)` observes every call that runs the second pass:
+ *   its own budget checks. `ctx.options.onPatternWork(record)` observes every bounded pass that runs, the
+ *   second one first, once the call returns normally (cancellation or an unexpected error leaves no record):
  *   { id: 'uniqueRectangle', work, limit, capHit (null | 'work'), retained (null) }.
+ *
+ * Hidden form (rating v3, R14): the same rectangles (four open corners that have exactly the pair {X, Y} in
+ * common, not all four holding nothing else), a FLOOR corner F that holds exactly {X, Y}, and its opposite
+ * corner O, the TARGET (any candidates with X and Y). Of the two other corners P shares a row unit with O and
+ * Q a column unit; the links are in the row and in the column, never in a box or an extra unit, and both
+ * units must be COMPLETE. In the row of O and P the digit X is held by exactly these two cells, and in the
+ * column of O and Q by exactly O and Q (conjugate links; a solved holder counts as one, a partial unit
+ * proves nothing). If O were Y, then P and Q would be X by the links, F sees both of them and would be Y,
+ * and the four corners would hold Y, X, X, Y in a rectangle whose every unit holds two of them: swapping X
+ * and Y would give a second solution. So Y leaves O (a cell that holds Y by construction, so every pattern
+ * removes a candidate). A transposed rectangle needs no search of its own: the row link and the column link
+ * of O are symmetric; the digits are tried in both roles.
+ *   Order: a third pass runs only when the first pass found nothing and the second pass did not end with a
+ *   spent budget (a second pass that spent its own work limit does not stop it, and it proves no absence of
+ *   types 3 and 4). It goes over the rectangles in the order of the first pass; in a rectangle over the
+ *   corners as target in the order of the rectangle (the corner opposite to the target must hold exactly
+ *   the pair, both its units must be complete), then over the digit of the links, the lower one of the pair
+ *   first. The first (target, digit) with both links is returned.
+ *   Finding: cells = the four rectangle cells in rectangle order; the elimination is the target with the
+ *   other digit of the pair; arguments digit = the digit of the links X, digits = [X, Y] ascending, cells =
+ *   the labels of the four rectangle cells in rectangle order.
+ *   Work (R10) of the third pass: a unit is one tested (target, digit of the links); the scans of the two
+ *   units belong to it, a target whose opposite corner does not hold exactly the pair or whose row or column
+ *   unit is partial costs nothing. The limit is 50000 per call
+ *   (`SG.wingSearch.UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT`), with a counter of its own apart from the second
+ *   pass's; the parent budget is checked at the entry of the pass and before the unit that would carry the
+ *   work since the last check over 256 units. A spent limit and a spent budget end the pass with null (the
+ *   limit with `capHit: 'work'`, the budget with `capHit: null`, as for the second pass); cancellation and
+ *   every other error propagate. The pass reports its own record to the observer, after the second pass's.
  */
 (function (root) {
   'use strict';
@@ -171,6 +203,10 @@
   // eligible cells of the unit and at digits - 1.
   const UNIQUE_RECTANGLE_WORK_LIMIT = 50000;
 
+  // R10 work policy of the Unique Rectangle hidden form (the third pass): the tested (target, digit) pairs
+  // one call may spend, counted apart from the second pass.
+  const UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT = 50000;
+
   // Thrown through the walks of a Remote Pairs call whose work limit is spent.
   const WORK_CAP = Object.freeze({ capHit: 'work' });
 
@@ -196,6 +232,7 @@
         quad: new Int32Array(4),
         masks: new Int32Array(4),
         rects: null,
+        kinds: null,
         // Remote Pairs: the call that reached a cell, its colour (1 / 2), the walk queue, the component in
         // cell order, the walk's distance and predecessor, and the number of open cells per pair of digits.
         rpStamp: 0,
@@ -1205,40 +1242,146 @@
     return null;
   }
 
+  // The unit of kind `kind` that holds both cells (the rectangle table leaves exactly one), or -1.
+  function lineOf(model, kinds, a, b, kind) {
+    const ua = model.cellUnits[a];
+    const ub = model.cellUnits[b];
+    for (let i = 0; i < ua.length; i++) {
+      if (kinds[ua[i]] !== kind) continue;
+      for (let j = 0; j < ub.length; j++) {
+        if (ub[j] === ua[i]) return ua[i];
+      }
+    }
+    return -1;
+  }
+
+  // Whether `bit` is held by exactly two cells of the unit (a solved holder counts). Both corners of the
+  // pattern in the unit hold it, so there are never fewer than two holders: the two are these corners.
+  function holdsTwice(model, state, unit, bit) {
+    const members = model.units[unit];
+    const cand = state.candidates;
+    let holders = 0;
+    for (let i = 0; i < members.length && holders <= 2; i++) {
+      if ((cand[members[i]] & bit) !== 0) holders++;
+    }
+    return holders === 2;
+  }
+
+  // The third pass of Unique Rectangle: the hidden form. Rectangle by rectangle in the order of the first
+  // pass, over the corners as target in the order of the rectangle (the corner opposite to it holds
+  // exactly the pair, and its row and column units are complete), then over the digit of the links, the
+  // lower one first. One tested (target, digit) is one unit.
+  function scanHiddenRectangle(model, state, ctx, info, run) {
+    const rects = rectanglesOf(model, info);
+    if (info.kinds === null) info.kinds = unitKinds(model);
+    const kinds = info.kinds;
+    const cand = state.candidates;
+    const value = state.value;
+    const quad = info.quad;
+    const complete = ctx.completeUnits;
+
+    for (let r = 0; r < rects.length; r += 4) {
+      let open = true;
+      for (let k = 0; k < 4; k++) {
+        quad[k] = rects[r + k];
+        if (value[quad[k]] !== 0) open = false;
+      }
+      if (!open) continue;
+      const common = cand[quad[0]] & cand[quad[1]] & cand[quad[2]] & cand[quad[3]];
+      if (popcount(common) !== 2) continue;
+      // four corners that all hold exactly the pair are the deadly pattern itself: no deduction (as for every
+      // other subtype, a corner with an extra digit is needed)
+      if (cand[quad[0]] === common && cand[quad[1]] === common && cand[quad[2]] === common &&
+          cand[quad[3]] === common) continue;
+      for (let o = 0; o < 4; o++) {
+        // the corners are 0 1 / 2 3: 1 shares the row of 0, 2 its column, 3 is the opposite one
+        if (cand[quad[o ^ 3]] !== common) continue;
+        const row = lineOf(model, kinds, quad[o], quad[o ^ 1], KIND_ROW);
+        const col = lineOf(model, kinds, quad[o], quad[o ^ 2], KIND_COL);
+        if (row < 0 || col < 0 || complete[row] !== 1 || complete[col] !== 1) continue;
+        for (let bits = common; bits !== 0; bits &= bits - 1) {
+          const linkBit = bits & -bits;
+          spend(run);
+          if (!holdsTwice(model, state, row, linkBit) || !holdsTwice(model, state, col, linkBit)) continue;
+          return {
+            technique: 'uniqueRectangle',
+            cells: [quad[0], quad[1], quad[2], quad[3]],
+            placements: [],
+            eliminations: [[quad[o], digitOf(common ^ linkBit)]],
+            i18nKey: 'technique.uniqueRectangle.hidden.step',
+            i18nArgs: {
+              digit: digitOf(linkBit),
+              digits: digitList(common),
+              cells: [label(model, quad[0]), label(model, quad[1]), label(model, quad[2]),
+                label(model, quad[3])]
+            }
+          };
+        }
+      }
+    }
+    return null;
+  }
+
+  // One bounded pass of a Unique Rectangle call with a work counter of its own: a spent work limit and a
+  // spent budget are "nothing found" (`run.capped`, `run.spent`); cancellation and every other error
+  // propagate. It returns its Finding, whether the budget was spent and the record of its work, which the
+  // caller publishes only when the whole call returns normally.
+  function boundedPass(model, state, ctx, info, limit, scan) {
+    const run = { ctx: ctx, limit: limit, work: 0, checkedAt: 0, capped: false, spent: false };
+    let found = null;
+    try {
+      ctx.check();
+      found = scan(model, state, ctx, info, run);
+    } catch (err) {
+      if (err === WORK_CAP) run.capped = true;
+      else if (err && err.code === 'budget.exceeded') run.spent = true;
+      else throw err;
+    }
+    return {
+      found: found,
+      spent: run.spent,
+      record: {
+        id: 'uniqueRectangle',
+        work: run.work,
+        limit: limit,
+        capHit: run.capped ? 'work' : null,
+        retained: null
+      }
+    };
+  }
+
+  // The records of the passes of one call to the optional observer, in the order of the passes; it never
+  // selects the result, and an error that it throws propagates.
+  function publishRecords(ctx, records) {
+    const observer = ctx.options ? ctx.options.onPatternWork : undefined;
+    if (typeof observer !== 'function') return;
+    for (let i = 0; i < records.length; i++) observer(records[i]);
+  }
+
   // A Unique Rectangle call: the first pass (types 1 and 2, unbounded as before) over every rectangle, then,
-  // when it found nothing, the bounded second pass (types 3 and 4) with its own work counter (`workLimit` is
-  // the default except in the tests' seam). A spent work limit and a spent budget are "nothing found";
-  // cancellation and every other error propagate. The work of the second pass goes to the optional observer,
-  // which never selects the result.
-  function findUniqueRectangleBounded(model, state, ctx, workLimit) {
+  // when it found nothing, the bounded second pass (types 3 and 4) and, when that found nothing either and
+  // did not end with a spent budget, the bounded third pass (the hidden form), each with its own work
+  // counter (`workLimit` and `hiddenLimit` are the defaults except in the tests' seam). The records of the
+  // passes that ran are published after the last of them returned: cancellation or an unexpected error in
+  // any pass leaves no record of the call.
+  function findUniqueRectangleBounded(model, state, ctx, workLimit, hiddenLimit) {
     if (ctx.assumeUniqueness === false) return null;
     const first = findRectangleTypes12(model, state, ctx);
     if (first !== null) return first;
     const info = infoFor(model);
-    const run = { ctx: ctx, limit: workLimit, work: 0, checkedAt: 0, capped: false };
-    let found = null;
-    try {
-      ctx.check();
-      found = scanRectangleSubtypes(model, state, ctx, info, run);
-    } catch (err) {
-      if (err === WORK_CAP) run.capped = true;
-      else if (!(err && err.code === 'budget.exceeded')) throw err;
+    const second = boundedPass(model, state, ctx, info, workLimit, scanRectangleSubtypes);
+    if (second.found !== null || second.spent) {
+      publishRecords(ctx, [second.record]);
+      return second.found;
     }
-    const observer = ctx.options ? ctx.options.onPatternWork : undefined;
-    if (typeof observer === 'function') {
-      observer({
-        id: 'uniqueRectangle',
-        work: run.work,
-        limit: workLimit,
-        capHit: run.capped ? 'work' : null,
-        retained: null
-      });
-    }
-    return found;
+    const third = boundedPass(model, state, ctx, info, hiddenLimit, scanHiddenRectangle);
+    publishRecords(ctx, [second.record, third.record]);
+    return third.found;
   }
 
   function findUniqueRectangle(model, state, ctx) {
-    return findUniqueRectangleBounded(model, state, ctx, UNIQUE_RECTANGLE_WORK_LIMIT);
+    return findUniqueRectangleBounded(model, state, ctx, UNIQUE_RECTANGLE_WORK_LIMIT,
+      UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT);
   }
 
   const DEFINITIONS = [
@@ -1308,15 +1451,17 @@
     if (!SG.techniques.has(def.id)) SG.techniques.register(def);
   });
 
-  // The parameterised searches behind remotePairs and wxyzWing, for tests (explicit work limit); not
-  // registered techniques.
-  function seamLimit(opts, fallback, name) {
-    const given = opts === undefined || opts === null ? undefined : opts.workLimit;
+  // The parameterised searches behind remotePairs, wxyzWing and uniqueRectangle, for tests (explicit work
+  // limits, `workLimit` or the named option); not registered techniques.
+  function seamLimit(opts, fallback, name, field) {
+    const option = field === undefined ? 'workLimit' : field;
+    const given = opts === undefined || opts === null ? undefined : opts[option];
     if (given === undefined) return fallback;
     if (typeof given !== 'number' || !Number.isFinite(given) || given < 0) {
       const err = new SG.errors.GenerationError('solver.invalidOption',
-        { option: 'wingSearch.' + name + '.workLimit' });
-      err.message = 'solver.invalidOption: wingSearch.' + name + ' workLimit must be a number of at least 0';
+        { option: 'wingSearch.' + name + '.' + option });
+      err.message = 'solver.invalidOption: wingSearch.' + name + ' ' + option +
+        ' must be a number of at least 0';
       throw err;
     }
     return Math.floor(given);
@@ -1327,6 +1472,7 @@
       REMOTE_PAIRS_WORK_LIMIT: REMOTE_PAIRS_WORK_LIMIT,
       WXYZ_WORK_LIMIT: WXYZ_WORK_LIMIT,
       UNIQUE_RECTANGLE_WORK_LIMIT: UNIQUE_RECTANGLE_WORK_LIMIT,
+      UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT: UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT,
       remotePairs: function (model, state, ctx, opts) {
         let limit = REMOTE_PAIRS_WORK_LIMIT;
         const given = opts === undefined || opts === null ? undefined : opts.workLimit;
@@ -1347,7 +1493,8 @@
       },
       uniqueRectangle: function (model, state, ctx, opts) {
         return findUniqueRectangleBounded(model, state, ctx,
-          seamLimit(opts, UNIQUE_RECTANGLE_WORK_LIMIT, 'uniqueRectangle'));
+          seamLimit(opts, UNIQUE_RECTANGLE_WORK_LIMIT, 'uniqueRectangle'),
+          seamLimit(opts, UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT, 'uniqueRectangle', 'hiddenWorkLimit'));
       }
     });
   }

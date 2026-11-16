@@ -980,7 +980,8 @@
       expect(Object.keys(kinds).length).toBeGreaterThanOrEqual(F.ids.length);
     }, 30000);
 
-    it('renders every subtype of the Unique Rectangle in both languages from its real fixtures (types 1 to 4)',
+    it('renders every subtype of the Unique Rectangle in both languages from its real fixtures (types 1 to 4 and the ' +
+      'hidden form)',
       function () {
         packsReady();
         if (!F || !H) SG.test.skip('the technique fixtures are not loaded');
@@ -1006,9 +1007,9 @@
         } finally {
           I.setCellLabeler(null);
         }
-        expect(Object.keys(keys).sort()).toEqual(['technique.uniqueRectangle.type1.step',
-          'technique.uniqueRectangle.type2.step', 'technique.uniqueRectangle.type3.step',
-          'technique.uniqueRectangle.type4.step']);
+        expect(Object.keys(keys).sort()).toEqual(['technique.uniqueRectangle.hidden.step',
+          'technique.uniqueRectangle.type1.step', 'technique.uniqueRectangle.type2.step',
+          'technique.uniqueRectangle.type3.step', 'technique.uniqueRectangle.type4.step']);
       });
 
     it('picks the colouring text that matches args.rule', function () {

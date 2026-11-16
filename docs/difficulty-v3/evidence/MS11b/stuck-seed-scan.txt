@@ -1,0 +1,23 @@
+$ node tests\artifacts\difficulty-v3\MS11b\stuck-seed-scan.js
+tech-wing.js F4C8796D8FFCB7CF5914CF9097640B37D22190A241F33766319CA0694DF7F378
+seed 1: keeps 37, scored 37, stuck 0 (genuine 0), accepted removals 27 (78 ms)
+seed 2: keeps 36, scored 36, stuck 0 (genuine 0), accepted removals 27 (6 ms)
+seed 3: keeps 34, scored 34, stuck 0 (genuine 0), accepted removals 29 (47 ms)
+seed 4: keeps 27, scored 27, stuck 0 (genuine 0), accepted removals 26 (6 ms)
+seed 5: keeps 32, scored 32, stuck 0 (genuine 0), accepted removals 27 (8 ms)
+seed 6: keeps 38, scored 38, stuck 0 (genuine 0), accepted removals 27 (4 ms)
+seed 7: keeps 26, scored 24, stuck 2 (genuine 2), accepted removals 27 (25 ms)
+seed 8: keeps 31, scored 31, stuck 0 (genuine 0), accepted removals 26 (3 ms)
+seed 9: keeps 21, scored 21, stuck 0 (genuine 0), accepted removals 26 (3 ms)
+seed 10: keeps 35, scored 35, stuck 0 (genuine 0), accepted removals 27 (3 ms)
+seed 11: keeps 32, scored 32, stuck 0 (genuine 0), accepted removals 26 (18 ms)
+seed 12: keeps 43, scored 43, stuck 0 (genuine 0), accepted removals 27 (3 ms)
+seed 14: keeps 36, scored 31, stuck 5 (genuine 5), accepted removals 28 (17 ms)
+selected seed 14; its stuck keeps (log index, cells, priority = STUCK + unsolved, unsolved):
+  #70 cells [22,58] priority 1000000043 unsolved 43
+  #71 cells [30,50] priority 1000000043 unsolved 43
+  #74 cells [34,46] priority 1000000043 unsolved 43
+  #75 cells [30,50] priority 1000000046 unsolved 46
+  #77 cells [34,46] priority 1000000046 unsolved 46
+first qualifying seed: 14
+exit=0 seconds=0.412

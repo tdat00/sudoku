@@ -258,14 +258,14 @@ Return the inherited/new item list, actual gates and CI membership.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (orchestrator check against IR72 A-J; outside the analyst review set). Eight points before E: SA2 accepted all (`c7aa064`), with one correction (observer records buffered until the finder returns normally, none on cancellation or error) and clarified EN/VI text; the 128 two-bivalue-corner cases are within R14. One post-E question on the `digger-target` stuck pin: SA2 authorized one seed replacement (`f4604da`) |
+| Start | 2026-11-16 14:31 (+07:00), base `ef95fc5` (pack commits `695f02e`, `c7aa064` and `f4604da` landed during the task) |
+| End | About 15:30 stop before E (8 points); 15:45 SA2 ruling; 16:52 post-E question; 17:05 ruling; 17:18 final report; orchestrator re-check and commit at about 17:22 |
+| Duration | About 2 h 15 min developer; about 25 min of rulings; locked commands in `docs/difficulty-v3/evidence/MS11b/lock-log.jsonl` |
+| Model | claude-sonnet-5.5 (developer); gpt-6-astra (SA2 rulings and pack amendments); claude-opus-5.5 (orchestrator) |
+| Token usage | 416 model calls; 146,100,934 input tokens (144,097,458 cache reads); 427,373 output tokens (developer) |
+| AI credits | about 2,369 (developer) |
+| Verification | `uniqueRectangle` gains a third bounded pass for the hidden form (same ID, order and weight): after passes 1 and 2 find nothing, rectangles whose four corners hold the pair, a floor corner holding exactly the pair (not all four bare), and both complete row and column of the target with its neighbours forming conjugate links on X; Y leaves the target. Independent 50,000-unit limit `SG.wingSearch.UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT`; observer records per pass, published only on a normal return. Text key `technique.uniqueRectangle.hidden.step` with SA2's EN/VI wording. Tests: `tech-wing` 389 -> 435, `techniques` 250 -> 251, i18n key lists; fixtures 5 positives and 5 supplements. Mutants: 60 of 61 new (survivor `holders <= 2`, equivalent behind the guards), 94 of 97 MS11a (same three equivalents). Reach (seed 4242): hidden form first in 992 of 5,118 open positions (19.4 %). **E** on frozen bytes: wires unchanged; analysis G14 only (the puzzle changes; without the hidden form it equals the saved golden); **5 of 520 hashes changed** (`classic9/nightmare` seeds 8, 13, 21, 610; `diagonalX/nightmare` seed 21), the same 5 with and without the form, none below Master. R20: three scores change (escargot 5,143 -> 5,506; platinum-blonde 5,675 -> 5,688; constructed-nightmare-3 2,565 -> 2,586), no level, requiredness, hardest or `v3Expected` change. GH: all 35 checked first; `emptyRectangle` refreshed from its own source; 35/35. Pins refreshed from recorded outputs: replay stuck counts, G14 witness move 76 -> 70, shallow-fallback specimen seed 21 -> 6, `digger-target` Hell 1 seed 11 -> 14 (34 stuck proposals, threshold > 30 unchanged). Quick sets: Generator 4,218/4,218 (395.0 s), Player 2,459/2,459 (65.8 s); no projection rises; fingerprints match; CI check passes. Orchestrator: locked `tech-wing,tech-fish,tech-chain,techniques,technique-weights,difficulty-floor,i18n,digger-target` 1,496/1,496 (73.2 s), Player `help,help-example-tools,play,i18n` 213/213 (9.5 s), CI shard check 4,218 of 4,218 |
+| Acceptance | MS11b-B01, B02, T01-T03 met; IR72 A-J pass (developer's table in `docs/difficulty-v3/evidence/MS11b/evidence.md` section 9) |
+| Issues & resolutions | Pass 2's observer record escaped on a pass-3 cancellation or error (found by SA2); corrected by buffering, with none-on-cancel/error tests. The `digger-target` coverage pin fell to 29 stuck proposals because the hidden form solves Hell 1 seed 11; SA2 authorized the replacement by the first qualifying seed (14). Process deviation disclosed: three edits made through PowerShell instead of the edit tools (a dispatcher block, scratch-script copies, one stray-CR repair); the result is covered by the gates. S-AV34 carried (6,446 hidden-pass runs, none capped). Not run: the manual `difficulty` suite (pure assertions evaluated by script), qualification, soak |
+| Handoff | To MS11c: Unique Rectangle passes 1-3 (Types 1-4 and the hidden form) in `tech-wing.js`; IR72 A-J is the checklist; base quick totals Generator 4,218 (395.0 s) and Player 2,459 (65.8 s); help catalogue 35; S-AV01-S-AV34 open as recorded; use the edit/create tools for file changes; ask before E |

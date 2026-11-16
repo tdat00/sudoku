@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sources": {
+    "uniqueRectangle": [
+      {"variantId":"classic9","level":"Nightmare","seed":"70","text":"#1,Classic Sudoku 9x9,Nightmare,70\n......23.\n....6..41\n1.7..2..6\n9...24...\n..39.61..\n...51...3\n8..1..6.5\n75..4....\n.21......"}
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+$ node tests\node-runner.js --suite=help,help-example-tools,play,i18n,tech-chain,tech-wing,techniques
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+ok   tech-chain: 107 passed  (7.27 s)
+ok   tech-wing: 433 passed  (10.71 s)
+ok   techniques: 251 passed  (3.38 s)
+ok   help-example-tools: 51 passed  (5.79 s)
+FAIL help: 26 passed, 1 failed  (1.31 s)
+ok   i18n: 67 passed  (119 ms)
+ok   play: 68 passed  (156 ms)
+
+Failures:
+  FAIL help > help: an example for every technique > replaying the puzzle of an example with the hint code of the player gives the same hint
+       AssertionError: expected "forcingChainLong" to be "emptyRectangle"
+       at Q:\git\sudoku\player\tests\suites\help.test.js:178:32
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:163:28)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 7
+Tests:  1004 total, 1003 passed, 1 failed, 0 skipped
+Time:   28.74 s running tests, 28.82 s total
+exit=1 seconds=28.955

@@ -958,17 +958,27 @@
   var UR_BOX = '....812....7.........9.734.3...7.4.2..5.6........5..761.9......8....37...2....8..';
   var UR_COLUMN = '...6.9....73....6.29............6.928....5.......1.53.6.27...8991...8.5..8.1....7';
   var UR_WWING = '...9....8.6.....3..7.8..4.......12.3.43.7..5.1...2.6....6.45......2..16.3.8......';
+  // MS11b: the hidden form, puzzles 138, 272 and 244 of the same corpus. Of the 5,118 positions that 30,000 dug puzzles
+  // leave open below uniqueRectangle, 992 have a hidden form as the first Unique Rectangle deduction (MS11b evidence).
+  // UR_HIDDEN is puzzle 138 (the floor R6C9 {4,9}, the target R5C1 {2,4,6,9}: the 9 is held only by R5C1 and R5C9 in row 5
+  // and by R5C1 and R6C1 in column 1, so R5C1 loses the 4); UR_HIDDEN_BOX and UR_HIDDEN_ROW (puzzles 272 and 244) are two
+  // more real positions for the soundness supplements: the rectangle R1C1, R1C2, R4C1, R4C2 whose upper corners share box 1
+  // (the 7 only at R1C1 and R1C2 in row 1 and at R1C1 and R4C1 in column 1: R1C1 loses the 5), and the rectangle R4C6,
+  // R4C8, R6C6, R6C8 (the 9 only at R6C8 and R6C6 in row 6 and at R4C8 and R6C8 in column 8: R6C8 loses the 8).
+  var UR_HIDDEN = '.1...7.327...9...5.....1..65......7..3...51....87.3.5.8....93.....8.....19.2...6.';
+  var UR_HIDDEN_BOX = '..6138....9...58....2.9.7.......4.21...2.1.........3..2.5....489........38.......';
+  var UR_HIDDEN_ROW = '5...42.....4.......7..9...84...7.6.5.9......16..13.7....28.4.............1.75.4..';
 
   /**
    * Current fixtures that replace a historical entry or belong to an ID registered since (skyscraper, MS08a;
    * twoStringKite, MS08b; emptyRectangle, MS08c; finnedXWing, MS09a; finnedSwordfish, MS09b; remotePairs, MS10a;
-   * wxyzWing, MS10b; uniqueRectangle, MS11a), in the shape of the
+   * wxyzWing, MS10b; uniqueRectangle, MS11a and MS11b), in the shape of the
    * entries of the map. The short chain fixtures have at most 4 links, so that they are forcingChain's under C = 4
    * and C = 6 alike. The long ones are the 5- and 6-link shortest proofs of two dug puzzles: forcingChainLong's
    * under the selected C = 4 (MS07c; under C = 6 they would be forcingChain's). The negatives include positions
    * where a shorter ID owns the proof, one of them at the window boundary: a chain of 5 links is not
    * forcingChain's. The uniqueRectangle entry replaces the v2 one (kept in `historyV2`, positions untouched) with one
-   * real positive per subtype at the position where the registry reaches it.
+   * real positive per subtype (types 1 to 4, and the hidden form) at the position where the registry reaches it.
    */
   var CURRENT = {
     uniqueRectangle: {
@@ -1014,6 +1024,17 @@
           expect: {
             placements: [],
             eliminations: [[20, 3]]
+          }
+        },
+        {
+          name: 'uniqueRectangle hidden form on 4 and 9, the 9 only at R5C1 and R5C9 in row 5 and at R5C1 and R6C1 in ' +
+            'column 1 with the floor R6C9, R5C1 loses the 4 (a seeded dug puzzle)',
+          puzzle: UR_HIDDEN,
+          after: BELOW_UR,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[36, 4]]
           }
         }
       ],
@@ -1506,7 +1527,8 @@
    * real positions, at the position where the registry reaches it, are added on top in the same way. MS11a:
    * uniqueRectangle fires in the random states (24 firings in the 300 of the sweep, 8 of them type 3 and 7 type 4), so
    * its three real positions, a type 3 of three real cells in a column, one in a box and a type 4 in a column, are added
-   * on top in the same way.
+   * on top in the same way. MS11b: the hidden form fires often in the random states, so two more real positions of it
+   * (a rectangle whose upper corners share a box, and the target R6C8) are added on top in the same way.
    */
   var SUPPLEMENTS = {
     uniqueRectangle: [
@@ -1515,7 +1537,11 @@
       { name: 'uniqueRectangle type 3 of three real cells in box 9 (a second seeded dug puzzle)',
         puzzle: UR_BOX, after: BELOW_UR, propagate: true },
       { name: 'uniqueRectangle type 4 in column 4 (a third seeded dug puzzle)',
-        puzzle: UR_COLUMN, after: BELOW_UR, propagate: true }
+        puzzle: UR_COLUMN, after: BELOW_UR, propagate: true },
+      { name: 'uniqueRectangle hidden form in a rectangle whose upper corners share box 1 (a fourth seeded dug puzzle)',
+        puzzle: UR_HIDDEN_BOX, after: BELOW_UR, propagate: true },
+      { name: 'uniqueRectangle hidden form with the target R6C8 (a fifth seeded dug puzzle)',
+        puzzle: UR_HIDDEN_ROW, after: BELOW_UR, propagate: true }
     ],
     wxyzWing: [
       { name: 'wxyzWing on 1, 4, 5 and 7 in R1C2, R1C6, R1C8 and R7C8 (a seeded dug puzzle)',

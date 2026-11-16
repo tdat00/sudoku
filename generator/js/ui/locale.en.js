@@ -521,6 +521,13 @@
       '{digits} that is not {digit}, so one of them is that digit. The other one cannot be {digit} either: all ' +
       'four corners would then hold only {digits} and the puzzle would have two solutions. So {digit} is ' +
       'removed from both {roof1} and {roof2}.',
+    'technique.uniqueRectangle.hidden.step': 'Unique Rectangle, hidden form: the corners {cells} all hold {digits}, ' +
+      'and at least one of them holds only {digits}. In the row and in the column of the corner opposite to that one, ' +
+      '{digit} has just two places: the opposite corner itself and one of the other two corners. If the ' +
+      'opposite corner were the digit of {digits} that is not {digit}, both other corners would have to be ' +
+      '{digit}, and the corner that holds only {digits} would be that other digit too. The four corners would ' +
+      'then hold {digits} in two interchangeable ways and the puzzle would have two solutions. So the digit of ' +
+      '{digits} other than {digit} is removed from the opposite corner.',
     'technique.forcingChain.step.endpoints': 'Forcing chain of {length} links: {chains}. If the first ' +
       'candidate is false, the last one is true, so at least one end of the chain is true. Candidates that ' +
       'see both ends are removed.',

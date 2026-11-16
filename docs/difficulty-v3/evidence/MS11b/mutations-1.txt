@@ -1,0 +1,145 @@
+mutation 0 (the hidden pass runs before the second pass): DETECTED - 435 total, 400 passed, 35 failed, 0 skipped - 35 failing, 35 of uniqueRectangle - 10.7 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > an open cell without any candidate is no real cell (a contradictory position proves nothing)
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, order and the passes before it > types 3 and 4 come first too, whatever the order of the rectangles: the pass is complete before the hidden one
+    FAIL tech-wing > uniqueRectangle (R14): other unit shapes, the uniqueness assumption and structures > the exact union is required: a real cell inside the extras holds one digit for two cells, no type 3
+mutation 1 (the hidden pass never runs): DETECTED - 435 total, 389 passed, 46 failed, 0 skipped - 46 failing, 46 of uniqueRectangle - 9.8 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the vector: the 1 only at R2C1 and R2C4 in row 2 and at R1C4 and R2C4 in column 4 removes 2 from R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > both digits are links: the lower digit of the pair is the digit of the links, the higher one is removed
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the transposed vector: the links in row 4 and column 2, the rectangle with its upper corners in one box
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > every corner can be the target, the floor is always the corner opposite to it
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the target already holds only the pair when the floor opposite to it does: the 2 leaves it
+mutation 2 (the hidden pass runs after a second pass with a spent budget): DETECTED - 435 total, 430 passed, 5 failed, 0 skipped - 5 failing, 5 of uniqueRectangle - 11.8 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > checks the parent budget at the entry of the pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > reports a spent budget of the third pass as nothing found and lets cancellation and other errors through
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent third pass answers like a fresh one
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > checks the parent budget at the entry of the second pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > reports a spent budget of the second pass as nothing found and lets cancellation and other errors through
+mutation 3 (the hidden pass runs although the second pass found something): DETECTED - 435 total, 382 passed, 53 failed, 0 skipped - 53 failing, 53 of uniqueRectangle - 10.6 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 4 (a second pass that spent its work limit stops the hidden pass): DETECTED - 435 total, 434 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 11.6 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has a counter of its own: a second pass that spends its limit does not stop the third, and the limits are apart
+mutation 5 (the hidden pass shares the limit of the second pass (no limit of its own)): DETECTED - 435 total, 431 passed, 4 failed, 0 skipped - 4 failing, 4 of uniqueRectangle - 11.6 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > ends the pass whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is complete or empty: the vector (25 units) is found at 25 and lost (capped prefix) at 24, 1 and 0
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has a counter of its own: a second pass that spends its limit does not stop the third, and the limits are apart
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 6 (the hidden pass limit is one more than it says): DETECTED - 435 total, 429 passed, 6 failed, 0 skipped - 6 failing, 6 of uniqueRectangle - 11.6 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has R10's limit of 50000 of its own, and every bounded pass that runs reports a record, the second one first
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > ends the pass whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is complete or empty: the vector (25 units) is found at 25 and lost (capped prefix) at 24, 1 and 0
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has a counter of its own: a second pass that spends its limit does not stop the third, and the limits are apart
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 7 (a spent budget is not remembered (the hidden pass runs after it)): DETECTED - 435 total, 430 passed, 5 failed, 0 skipped - 5 failing, 5 of uniqueRectangle - 11.7 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > checks the parent budget at the entry of the pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > reports a spent budget of the third pass as nothing found and lets cancellation and other errors through
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent third pass answers like a fresh one
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > checks the parent budget at the entry of the second pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > reports a spent budget of the second pass as nothing found and lets cancellation and other errors through
+mutation 8 (cancellation and every other error are swallowed): DETECTED - 435 total, 433 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 11.7 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > reports a spent budget of the third pass as nothing found and lets cancellation and other errors through
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > reports a spent budget of the second pass as nothing found and lets cancellation and other errors through
+mutation 9 (only cancellation is swallowed): DETECTED - 435 total, 433 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 11.5 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > reports a spent budget of the third pass as nothing found and lets cancellation and other errors through
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > reports a spent budget of the second pass as nothing found and lets cancellation and other errors through
+mutation 10 (the entry check of a pass is dropped): DETECTED - 435 total, 429 passed, 6 failed, 0 skipped - 6 failing, 6 of uniqueRectangle - 11.5 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > checks the parent budget at the entry of the pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > reports a spent budget of the third pass as nothing found and lets cancellation and other errors through
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent third pass answers like a fresh one
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > checks the parent budget at the entry of the second pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > reports a spent budget of the second pass as nothing found and lets cancellation and other errors through
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one
+mutation 11 (the work limit is never reported as a cap): DETECTED - 435 total, 429 passed, 6 failed, 0 skipped - 6 failing, 6 of uniqueRectangle - 11.7 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > ends the pass whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is complete or empty: the vector (25 units) is found at 25 and lost (capped prefix) at 24, 1 and 0
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has a counter of its own: a second pass that spends its limit does not stop the third, and the limits are apart
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+mutation 12 (the budget is checked one unit early (the shared spend)): DETECTED - 435 total, 430 passed, 5 failed, 0 skipped - 5 failing, 3 of uniqueRectangle - 11.6 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > checks the parent budget at the entry of the pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > reports a spent budget of the third pass as nothing found and lets cancellation and other errors through
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > checks the parent budget at the entry of the second pass and so that at most 256 units pass between two checks
+mutation 13 (the seam ignores the hidden limit): DETECTED - 435 total, 428 passed, 7 failed, 0 skipped - 7 failing, 7 of uniqueRectangle - 11.5 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > ends the pass whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is complete or empty: the vector (25 units) is found at 25 and lost (capped prefix) at 24, 1 and 0
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has a counter of its own: a second pass that spends its limit does not stop the third, and the limits are apart
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > checks the parent budget at the entry of the pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > reports a spent budget of the third pass as nothing found and lets cancellation and other errors through
+mutation 14 (the seam reads the limit of the second pass for the hidden one): DETECTED - 435 total, 431 passed, 4 failed, 0 skipped - 4 failing, 4 of uniqueRectangle - 11.6 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > ends the pass whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is complete or empty: the vector (25 units) is found at 25 and lost (capped prefix) at 24, 1 and 0
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has a counter of its own: a second pass that spends its limit does not stop the third, and the limits are apart
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 15 (the hidden limit is 40000): DETECTED - 435 total, 431 passed, 4 failed, 0 skipped - 4 failing, 4 of uniqueRectangle - 11.6 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has R10's limit of 50000 of its own, and every bounded pass that runs reports a record, the second one first
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > ends the pass whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has a counter of its own: a second pass that spends its limit does not stop the third, and the limits are apart
+mutation 16 (the seam always reads workLimit): DETECTED - 435 total, 431 passed, 4 failed, 0 skipped - 4 failing, 4 of uniqueRectangle - 11.6 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > ends the pass whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is complete or empty: the vector (25 units) is found at 25 and lost (capped prefix) at 24, 1 and 0
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has a counter of its own: a second pass that spends its limit does not stop the third, and the limits are apart
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 17 (a solved corner is accepted (the open test dropped)): NOT DETECTED (exit 0) - 435 total, 435 passed, 0 failed, 0 skipped - 0 failing, 0 of uniqueRectangle - 12.2 s
+mutation 18 (the common digits are the union of the corners): DETECTED - 435 total, 389 passed, 46 failed, 0 skipped - 46 failing, 46 of uniqueRectangle - 9.8 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the vector: the 1 only at R2C1 and R2C4 in row 2 and at R1C4 and R2C4 in column 4 removes 2 from R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > both digits are links: the lower digit of the pair is the digit of the links, the higher one is removed
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the transposed vector: the links in row 4 and column 2, the rectangle with its upper corners in one box
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > every corner can be the target, the floor is always the corner opposite to it
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the target already holds only the pair when the floor opposite to it does: the 2 leaves it
+mutation 19 (the common digits are those of three corners only): DETECTED - 435 total, 422 passed, 13 failed, 0 skipped - 13 failing, 13 of uniqueRectangle - 10.6 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > every corner holds both digits of the pair: a corner without one of them is no rectangle of one pair
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic9 (300 states of seed 20260101) and fires every subtype
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic9 (300 states of seed 777) and fires every subtype
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic9 (300 states of seed 99) and fires every subtype
+mutation 20 (a rectangle with more than two common digits is taken): DETECTED - 435 total, 419 passed, 16 failed, 0 skipped - 16 failing, 15 of uniqueRectangle - 10.6 s
+    FAIL tech-wing > uniqueRectangle: published examples > finds nothing on published positions that have no rectangle yet
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > the corners hold exactly two digits in common: one common digit, or three, is no pair
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic9 (300 states of seed 20260101) and fires every subtype
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic9 (300 states of seed 777) and fires every subtype
+mutation 21 (a rectangle with fewer than two common digits is taken): DETECTED - 435 total, 422 passed, 13 failed, 0 skipped - 13 failing, 13 of uniqueRectangle - 11.0 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > the corners hold exactly two digits in common: one common digit, or three, is no pair
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic9 (300 states of seed 20260101) and fires every subtype
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic9 (300 states of seed 777) and fires every subtype
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic9 (300 states of seed 99) and fires every subtype
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic6 (200 states of seed 20260101) and fires every subtype
+mutation 22 (four corners that hold exactly the pair are a hidden form (the deadly pattern itself)): DETECTED - 435 total, 430 passed, 5 failed, 0 skipped - 5 failing, 5 of uniqueRectangle - 11.7 s
+    FAIL tech-wing > uniqueRectangle: published examples > finds nothing in the bare deadly pattern of a puzzle with two solutions
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > all four corners hold exactly the pair: the deadly pattern itself, no deduction
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > ends the pass whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > checks the parent budget at the entry of the pass and so that at most 256 units pass between two checks
+mutation 23 (the corner opposite to the target need not hold exactly the pair): DETECTED - 435 total, 412 passed, 23 failed, 0 skipped - 23 failing, 22 of uniqueRectangle - 10.4 s
+    FAIL tech-wing > uniqueRectangle: published examples > finds nothing on published positions that have no rectangle yet
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > the links must be around the target whose opposite corner holds the pair: links around R1C4 find nothing
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > the corner opposite to the target must hold exactly the pair: three digits in it find nothing
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has R10's limit of 50000 of its own, and every bounded pass that runs reports a record, the second one first
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+mutation 24 (the corner opposite to the target may hold more than the pair): DETECTED - 435 total, 412 passed, 23 failed, 0 skipped - 23 failing, 22 of uniqueRectangle - 10.5 s
+    FAIL tech-wing > uniqueRectangle: published examples > finds nothing on published positions that have no rectangle yet
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > the links must be around the target whose opposite corner holds the pair: links around R1C4 find nothing
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > the corner opposite to the target must hold exactly the pair: three digits in it find nothing
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has R10's limit of 50000 of its own, and every bounded pass that runs reports a record, the second one first
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+detected 24 of 25, 280.4 s

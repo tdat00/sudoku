@@ -1,0 +1,3 @@
+mutation 17 (a solved corner is accepted (the open test dropped)): DETECTED - 435 total, 434 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 11.6 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > a solved corner is no rectangle (whatever its mask: a corner is open when its value is not set)
+detected 1 of 1, 11.6 s

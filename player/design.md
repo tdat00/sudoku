@@ -489,6 +489,18 @@ Hell 1 644): its example is a normal hint of Hell 1 seed 644, step 52. No synthe
 technique or weakened assertion was used; the failed own-source attempts, the three trials and the final check of
 all 35 are kept in `docs/difficulty-v3/evidence/MS11a/logs/`. The Player's quick set is 2,412 tests. `--check`
 without options reproduces the whole committed file.
+**Difficulty v3, MS11b:** the catalogue still holds 35 examples. The Unique Rectangle now has a hidden form (the
+`technique.uniqueRectangle.hidden.step` text in both languages, which the real unique positions of the shared tests and
+the render tests of both apps cover); its own example is unchanged, the normal hint of the catalogue source Nightmare
+70, step 29, a type 1 deduction that keeps priority over the later subtypes (one example per ID, not per subtype;
+`sources.json` of `player/tests/artifacts/difficulty-v3/MS11b/` names that one source, and the task's `--write` then
+`--check` leave the file as it was). The new deductions take the place of later ones on some trajectories, so all 35
+examples were checked first and one differed: `emptyRectangle` on its own source (Hell 1 seed 214) has the same
+snapshot and the same hint but is now step 24 instead of 23, so it was made again from its own source (`--ids=emptyRectangle
+--write`, one field, `source.step`); no catalogue discovery or other source was needed, and no synthetic snapshot,
+disabled earlier technique or weakened assertion was used. The first check, the own-source write, the task's command and
+the final check of all 35 are kept in `docs/difficulty-v3/evidence/MS11b/logs/`. The Player's quick set is 2,459 tests.
+`--check` without options reproduces the whole committed file.
 **Decision:** there is no
 first-visit tour or other popup that stands in front of the welcome screen or the puzzle: a visitor who arrives
 from the generator's link wants to play.
@@ -522,7 +534,7 @@ strings; added: `player.*` (shell, open flow, info card, recent list, welcome), 
 
 ## 10. Testing
 `node tests/node-runner.js` (30 suites: the 14 of `tests/suites/` and the 16 shared ones of `core/tests/suites/`;
-2,412 tests; no install) is the default quick set: developers and coding
+2,459 tests; no install) is the default quick set: developers and coding
 agents run it (or a few suites with `--suite=`) while developing, and `.github/workflows/pages.yml` runs all of it
 before every deployment. When one command cannot hold the whole set, it is covered by disjoint shards as the
 generator's quick set is (`generator/design.md` section 15.1); the cost measured for each app, on a named source and

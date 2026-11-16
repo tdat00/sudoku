@@ -1,0 +1,14 @@
+$ node tests\artifacts\difficulty-v3\MS11b\g-cause-saved.js
+G01 classic9 expert seed 3275974478: fields differing from the saved golden: as registered 0, without the hidden form 0 (0.6 s)
+G02 classic9 veryEasy seed 1: fields differing from the saved golden: as registered 0, without the hidden form 0 (0.0 s)
+G03 classic9 nightmare seed 42: fields differing from the saved golden: as registered 0, without the hidden form 0 (0.4 s)
+G04 classic9 hell1 seed 2400651925: fields differing from the saved golden: as registered 0, without the hidden form 0 (15.7 s)
+G05 classic9 hell1 seed 2299986211: fields differing from the saved golden: as registered 0, without the hidden form 0 (16.9 s)
+G06 jigsaw9 nightmare seed 42: fields differing from the saved golden: as registered 0, without the hidden form 0 (0.1 s)
+G07 jigsaw9 nightmare seed 3962167687: fields differing from the saved golden: as registered 0, without the hidden form 0 (0.4 s)
+G08 killer veryEasy seed 1: fields differing from the saved golden: as registered 0, without the hidden form 0 (0.0 s)
+G10 killer nightmare seed 42: fields differing from the saved golden: as registered 0, without the hidden form 0 (50.2 s)
+G12 greaterThan hard seed 3115968914: fields differing from the saved golden: as registered 0, without the hidden form 0 (1.1 s)
+G13 samurai nightmare seed 42: fields differing from the saved golden: as registered 0, without the hidden form 0 (24.1 s)
+G14 mega16 hell2 seed 12: fields differing from the saved golden: as registered 35, without the hidden form 0 (10.8 s)
+exit=0 seconds=120.601

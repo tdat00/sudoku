@@ -1,0 +1,26 @@
+$ node tests\artifacts\difficulty-v3\MS11b\census-totals.js ..\docs\difficulty-v3\evidence\MS11b\work-census.json
+calls 7168, second pass 6842, capped 0, first Findings {"type1":218,"type2":108,"type3":191,"type4":205,"hidden":438}
+hidden pass: 6446 runs, capped 0, largest work 86
+  classic9 seed 99: 163 (mean 7, latency mean 0.0328 ms, p95 0.0505); hidden pass 1410 runs, largest 62, mean 7.2
+  classic9 seed 777: 186 (mean 8.1, latency mean 0.024 ms, p95 0.0383); hidden pass 1388 runs, largest 48, mean 6.9
+  classic9 seed 20260101: 142 (mean 7.4, latency mean 0.0242 ms, p95 0.0386); hidden pass 274 runs, largest 54, mean 7.2
+  classic6 seed 777: 50 (mean 1.2, latency mean 0.011 ms, p95 0.0335); hidden pass 534 runs, largest 32, mean 2
+  classic4 seed 777: 10 (mean 0.3, latency mean 0.0011 ms, p95 0.0018); hidden pass 381 runs, largest 8, mean 0.1
+  12 digits seed 2026: 232 (mean 16.2, latency mean 0.1082 ms, p95 0.1147); hidden pass 137 runs, largest 42, mean 13.8
+  16 digits seed 2026: 53 (mean 9.5, latency mean 1.7629 ms, p95 18.3888); hidden pass 10 runs, largest 44, mean 22.4
+  diagonalX seed 4242: 52 (mean 1.2, latency mean 0.0112 ms, p95 0.0127); hidden pass 395 runs, largest 16, mean 2.1
+  hyper seed 4242: 140 (mean 2.3, latency mean 0.0132 ms, p95 0.016); hidden pass 389 runs, largest 20, mean 2.9
+  jigsaw9 seed 4242: 85 (mean 1.8, latency mean 0.0163 ms, p95 0.0208); hidden pass 390 runs, largest 18, mean 2.7
+  killer seed 4242: 93 (mean 6.9, latency mean 0.0248 ms, p95 0.0373); hidden pass 347 runs, largest 42, mean 7.3
+  greaterThan seed 4242: 93 (mean 6.9, latency mean 0.0253 ms, p95 0.0376); hidden pass 347 runs, largest 42, mean 7.3
+  wordoku seed 4242: 120 (mean 8.3, latency mean 0.0271 ms, p95 0.0383); hidden pass 358 runs, largest 44, mean 7.6
+  samurai seed 4242: 69 (mean 18.9, latency mean 0.7651 ms, p95 7.1927); hidden pass 9 runs, largest 86, mean 45.1
+  samurai seed 777: 39 (mean 18.9, latency mean 0.0846 ms, p95 0.1326); hidden pass 7 runs, largest 44, mean 18
+  sohei seed 4242: 33 (mean 4.4, latency mean 0.5635 ms, p95 6.0346); hidden pass 11 runs, largest 26, mean 14.7
+  sohei seed 777: 122 (mean 21.7, latency mean 0.0991 ms, p95 0.3416); hidden pass 11 runs, largest 40, mean 17.7
+  butterfly seed 4242: 0 (mean 0, latency mean 4.3407 ms, p95 52.0818); hidden pass 12 runs, largest 0, mean 0
+  butterfly seed 777: 0 (mean 0, latency mean 0.0005 ms, p95 0.0036); hidden pass 12 runs, largest 0, mean 0
+  flower seed 4242: 0 (mean 0, latency mean 7.3288 ms, p95 87.704); hidden pass 12 runs, largest 8, mean 3.3
+  flower seed 777: 28 (mean 2.3, latency mean 0.0272 ms, p95 0.1004); hidden pass 12 runs, largest 24, mean 6.3
+unit of 7 other cells on 9 digits: 247; 10 other cells on 12 digits: 2036; 14 on 16: 32752; 4 on 6: 26; 2 on 4: 4
+exit=0 seconds=0.088

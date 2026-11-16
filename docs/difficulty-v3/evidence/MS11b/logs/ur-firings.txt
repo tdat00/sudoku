@@ -1,0 +1,9 @@
+$ node tests\artifacts\difficulty-v3\MS11b\ur-firings.js
+classic9 seed 20260101 maxSteps 40: 300 states {"technique.uniqueRectangle.type4.step":5,"technique.uniqueRectangle.hidden.step":33,"technique.uniqueRectangle.type3.step":10,"technique.uniqueRectangle.type1.step":9,"technique.uniqueRectangle.type2.step":2} capped 0
+classic9 seed 20260101 maxSteps 12: 300 states {"technique.uniqueRectangle.type4.step":5,"technique.uniqueRectangle.hidden.step":33,"technique.uniqueRectangle.type3.step":10,"technique.uniqueRectangle.type1.step":9,"technique.uniqueRectangle.type2.step":2} capped 0
+classic6 seed 20260101 maxSteps 40: 200 states {"technique.uniqueRectangle.type4.step":3,"technique.uniqueRectangle.hidden.step":19,"technique.uniqueRectangle.type3.step":5,"technique.uniqueRectangle.type2.step":1,"technique.uniqueRectangle.type1.step":5} capped 0
+classic4 seed 20260101 maxSteps 40: 300 states {"technique.uniqueRectangle.hidden.step":7,"technique.uniqueRectangle.type4.step":10,"technique.uniqueRectangle.type1.step":3,"technique.uniqueRectangle.type3.step":1} capped 0
+12 digits seed 20260101 maxSteps 40: 200 states {"technique.uniqueRectangle.hidden.step":15,"technique.uniqueRectangle.type1.step":3,"technique.uniqueRectangle.type2.step":2,"technique.uniqueRectangle.type3.step":2,"technique.uniqueRectangle.type4.step":2} capped 0
+classic9 seed 777 seed 777 maxSteps 12: 300 states {"technique.uniqueRectangle.type4.step":14,"technique.uniqueRectangle.hidden.step":26,"technique.uniqueRectangle.type3.step":16,"technique.uniqueRectangle.type1.step":13} capped 0
+classic9 seed 99 seed 99 maxSteps 12: 300 states {"technique.uniqueRectangle.hidden.step":29,"technique.uniqueRectangle.type1.step":13,"technique.uniqueRectangle.type2.step":5,"technique.uniqueRectangle.type4.step":9,"technique.uniqueRectangle.type3.step":11} capped 0
+exit=0 seconds=0.722

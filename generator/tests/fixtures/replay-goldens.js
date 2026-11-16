@@ -428,34 +428,33 @@
     },
     {
       id: 'G14', request: { variantId: 'mega16', difficulty: 'hell2', seed: '12' },
-      today: { steps: 11, missing: 1 }, counts: { compact: 8, details: 79 },
+      today: { steps: 11, missing: 1 }, counts: { compact: 7, details: 81 },
       board: { cells: 256, cages: 0, signsFrom: 0, signsTo: 0, log: 'normal' },
       // [#, m, phase, E, score, delta, hardest, J, culprit, line]
       rows: [
         [1, 0, 'S/Sol', 0, 0, 0, '—', '—', '—', '—'],
         [2, 11, 'D/Dig', 22, 31, 31, 'nakedSingle', '—', '—', 'F'],
         [3, 68, 'D/Dig', 136, 65, 34, 'hiddenSingleBox', '—', '—', 'N'],
-        [4, 69, 'G/Choose', 138, 1685, 1620, 'forcingChain', 'Y', 'R8C4', '—'],
-        [5, 72, 'G/Choose', 144, 3688, 2003, 'nishio', '—', '—', 'N'],
-        [6, 76, 'G/Choose', 152, 6413, 2725, 'nishioDeep', '—', '—', 'N'],
-        [7, 77, 'G/Choose', 154, 6479, 66, 'nishioDeep', '—', '—', '—'],
-        [8, 77, 'F/Final', 154, 6479, 0, 'nishioDeep', '—', '—', '—']
+        [4, 69, 'G/Choose', 138, 1824, 1759, 'forcingChain', 'Y', 'R8C4', '—'],
+        [5, 73, 'G/Choose', 146, 3466, 1642, 'nishio', '—', '—', 'N'],
+        [6, 79, 'G/Choose', 158, 6548, 3082, 'nishioDeep', '—', '—', 'N'],
+        [7, 79, 'F/Final', 158, 6548, 0, 'nishioDeep', '—', '—', '—']
       ],
       details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
         48, 48, 49, 50, 50, 51, 52, 52, 53, 53, 54, 54, 55, 55, 56, 56, 57, 57, 58, 58, 58, 59, 59, 59, 60, 60, 60,
-        61, 61, 61, 62, 62, 62, 62, 63, 64, 64, 64, 64, 65, 65, 65, 65, 1685, 1887, 2666, 3688, 3904, 4263, 4422,
-        6413, 6479, 6479],
+        61, 61, 61, 62, 62, 62, 62, 63, 64, 64, 64, 64, 65, 65, 65, 65, 1824, 1825, 2013, 3237, 3466, 4143, 4206,
+        4220, 6547, 6547, 6548, 6548],
       alive: null,
       folds: [],
       jumps: [
         {
-          step: 4, from: 65, to: 1685,
+          step: 4, from: 65, to: 1824,
           before: { P: 1.25, W: 143, R: 2.140781, V: 61.818182, E: 136, level: 'easy' },
-          after: { P: 1100, W: 3008.75, R: 522.828908, V: 62.022472, E: 138, level: 'nightmare' },
+          after: { P: 1100, W: 4739, R: 662.259892, V: 62.022472, E: 138, level: 'nightmare' },
           choice: { chosen: null, others: 6, nulls: 0, max: 66, at: 84, rated: 10, refused: 3 },
           singles: [{ op: 'remove', cell: 'R8C4', score: 1623 }, { op: 'remove', cell: 'R9C13', score: 65 }],
           cause: 'single-culprit', frame: 'R8C4',
-          firstUse: { k: 85, n: 147, technique: 'forcingChain' }, key: 'technique.forcingChain.step.contradiction',
+          firstUse: { k: 93, n: 152, technique: 'forcingChain' }, key: 'technique.forcingChain.step.contradiction',
           effects: 'remove candidate 12@R13C14'
         }
       ]

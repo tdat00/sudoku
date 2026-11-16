@@ -523,8 +523,8 @@
       expect(rating.P).toBeNull();
       expect(rating.empties).toBe(53);
       expect(rating.counts).toEqual({
-        nakedSingle: 2, hiddenSingleBox: 15, pointing: 6, boxLine: 1, nakedPair: 2, hiddenPair: 2, finnedXWing: 1,
-        wxyzWing: 1, wWing: 2, uniqueRectangle: 1, forcingChain: 2
+        nakedSingle: 3, hiddenSingleBox: 16, pointing: 6, boxLine: 1, nakedPair: 2, hiddenPair: 2, finnedXWing: 1,
+        wxyzWing: 1, wWing: 2, uniqueRectangle: 2, forcingChain: 2
       });
       expect(rating.checks).toBeGreaterThan(0);
       expect(rating.memo).toBe(false);
@@ -1416,11 +1416,13 @@
         ['newPeak', null, null, 593, 925]);
     });
 
-    slow('keeps the witness of the unfinished checks: move 76 of G14 has 16 candidates, 13 rejected, 2 unscored', function () {
-      var m = analysisOf('G14').moves[76];
-      expect(m.at).toBe(167);
-      expect([m.span.rated, m.span.refused, m.span.others, m.span.nulls]).toEqual([16, 13, 0, 2]);
-      // G13 had the second witness until the WXYZ-Wing (MS10b) changed its dig path; G10 has one (its move 36)
+    slow('keeps the witness of the unfinished checks: move 70 of G14 has 10 candidates, 5 rejected, 4 unscored', function () {
+      var m = analysisOf('G14').moves[70];
+      expect(m.at).toBe(95);
+      expect([m.span.rated, m.span.refused, m.span.others, m.span.nulls]).toEqual([10, 5, 0, 4]);
+      // G13 had the second witness until the WXYZ-Wing (MS10b) changed its dig path; G10 has one (its move 36); G14 had
+      // its witness at move 76 (16 candidates, 13 rejected, 2 unscored) until the hidden Unique Rectangle (MS11b)
+      // changed its dig path, and has the eight moves 70 to 75, 77 and 78 now
       var chosen = analysisOf('G10');
       expect(chosen.moves[36].span.chosen).toBeNull();
       expect([chosen.moves[36].span.rated, chosen.moves[36].span.refused]).toEqual([5, 0]);

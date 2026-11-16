@@ -1,0 +1,17 @@
+$ node tests\node-runner.js --suite=tech-wing
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-wing: 388 passed, 1 failed  (10.49 s)
+
+Failures:
+  FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > checks the parent budget at the entry of the second pass and so that at most 256 units pass between two checks
+       AssertionError: expected Array(23)[512, 768, 1024, 1280, 1536, 1792, 2048, 2304, 2560, 2816, 3072, 3328, ...] to equal Array(23)[0, 256, 512, 768, 1024, 1280, 1536, 1792, 2048, 2304, 2560, 2816, ...]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:4693:27)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  389 total, 388 passed, 1 failed, 0 skipped
+Time:   10.49 s running tests, 10.61 s total
+exit=1 seconds=10.728

@@ -85,9 +85,9 @@
       ],
       'classic9/nightmare': [
         'af8cc1903dae114c', '02187d257efbeee9', '9edeccd6ee48778a', 'f67df36b1786e6ef',
-        'fe091a72bfcef38e', '6cacbe03b65751a7', '928fc14996261565', '7a18532b7b9079ef',
+        '8e0f21eaea10c086', 'cf4094aa622bddb6', 'e5c2d9702635a7ac', '7a18532b7b9079ef',
         '8aa01a0cb3b129c0', 'dfe595d66baa4e2a', '154e87243faf1918', 'd98d375ef7a8a642',
-        '242c89293cd67ee5', '5808eca53f2e9399', '668d170e087a5ac2', '03e1963a6a104586',
+        '242c89293cd67ee5', '8834a59ff0a0b5cb', '668d170e087a5ac2', '03e1963a6a104586',
         '2d5076ab2613714f', '0263074cb4df27c0', 'ea50bd67245c3443', 'e51b3c3e8f97df82'
       ],
       'mega12/normal': [
@@ -113,7 +113,7 @@
       ],
       'diagonalX/nightmare': [
         '232ee2dcc36f8170', 'ec3bc191c961f6cd', '2d77441492d6ebe8', 'dbe0e2053d5c2549',
-        '19d1b39fd130564b', '717a3db05357b59c', '93a46e12ea6f79ae', '428e5ba3fe5a73e7',
+        '19d1b39fd130564b', '717a3db05357b59c', '170d9824eb1eecf8', '428e5ba3fe5a73e7',
         'd90040d7b5a4c793', '51ff0ce01d01701c', 'd5838c86676636fa', 'e784425b02f0a5ff',
         '25c3288490a539a8', 'c596bab4ee22f918', 'fa6087ddc6112f81', '217450ec2407a0f0',
         'c4cd68b9fe3cc035', '89adb1febef76b92', '748a83be7d90fdc2', '375261a5640363a9'

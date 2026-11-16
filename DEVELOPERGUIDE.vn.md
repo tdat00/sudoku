@@ -683,6 +683,25 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    được rằng không có mẫu); khi ngân sách của nơi gọi cạn thì trả `null` kèm `capHit: null`. Phép chứng minh, thứ tự,
    việc không có cận trên cho số ô thật, chi phí và tỷ lệ chạm tới nằm trong
    `generator/design.md`, "Unique Rectangle types 3 and 4".
+   **Dạng ẩn** của Unique Rectangle (cùng tệp, nhiệm vụ MS11b; cùng id, order và trọng số, khóa câu giải thích
+   `technique.uniqueRectangle.hidden.step`) là lượt thứ ba có giới hạn: khi lượt thứ nhất và lượt thứ hai không tìm được
+   gì (lượt thứ hai chạm giới hạn công việc thì không chứng minh được rằng không có mẫu và không chặn lượt này; ngân sách
+   của nơi gọi cạn thì có chặn), nó xét, theo từng hình chữ nhật theo cùng thứ tự, từng góc T làm *đích* (theo thứ tự của
+   hình chữ nhật) mà góc đối diện chứa đúng cặp {X, Y} (bốn góc có đúng cặp đó làm phần chung và không phải cả bốn góc
+   đều chỉ là cặp trần), và từng chữ số X của cặp, chữ số nhỏ trước. Nếu X là ứng viên của đúng hai ô trong đơn vị hàng
+   và của đúng hai ô trong đơn vị cột nối T với hai góc kề của nó (hàng và cột thật sự, đầy đủ; một ô đã điền cũng tính
+   là một chỗ chứa), thì T không thể là chữ số kia Y: hai góc kề sẽ cùng là X, góc đối diện sẽ là Y và bốn góc sẽ tạo
+   thành hình chữ nhật hoán đổi được mà một đề có lời giải duy nhất không thể có (bản thân T có thể chỉ chứa {X, Y}). Y
+   bị loại khỏi T. `i18nArgs { digit, digits, cells }`: `digit` là chữ số X của các liên kết (chỉ với khóa này; phần
+   đầu của `tech-wing.js` nói rõ), `digits` là cặp theo thứ tự tăng, `cells` là nhãn của bốn góc theo thứ tự của hình
+   chữ nhật. Một đơn vị công việc là một lần thử (đích, chữ số), 50.000 mỗi lần gọi với bộ đếm, phép kiểm tra khi vào
+   và nhịp kiểm tra riêng (`SG.wingSearch.UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT`; cổng
+   `SG.wingSearch.uniqueRectangle(model, state, ctx, { workLimit, hiddenWorkLimit })`); mỗi hình chữ nhật có tối đa tám
+   đơn vị, nên giới hạn này không thể bị chạm trên các hình học đã đăng ký. Bộ quan sát nhận một bản ghi cho mỗi lượt có
+   giới hạn đã chạy, lượt thứ hai trước, **chỉ khi lần gọi trả về bình thường**: hủy hoặc một lỗi bất ngờ ở bất kỳ lượt
+   nào thì không để lại bản ghi nào, và một kết quả của loại cũ cho một bản ghi hoặc không có. Phép chứng minh, thứ tự,
+   chi phí, tỷ lệ chạm tới và ảnh hưởng đến các đề tham chiếu, mã băm và bản ghi vàng nằm trong `generator/design.md`,
+   "Unique Rectangle, the hidden form".
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
    [Cách hoạt động](#cách-hoạt-động) — và trong các danh sách script của trình chơi (`index.html`, `help.html`,
    `tests.html`, `tests/node-runner.js`), vì kỹ thuật nằm trong bộ máy dùng chung (`core/js/engine/`) và gợi ý
@@ -736,7 +755,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (53 suite, 4.171 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (53 suite, 4.218 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (61 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -747,7 +766,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.171 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.218 bài —
 37 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -803,7 +822,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.171 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.218 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -1202,7 +1221,7 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.412 bài); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.459 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

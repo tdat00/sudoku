@@ -504,6 +504,13 @@
       '{digits} khác {digit}, nên một trong hai ô đó là chữ số ấy. Ô còn lại cũng không thể là {digit}, vì ' +
       'khi đó cả bốn góc chỉ chứa {digits} và đề sẽ có hai lời giải. Vậy {digit} bị loại khỏi cả {roof1} và ' +
       '{roof2}.',
+    'technique.uniqueRectangle.hidden.step': 'Hình chữ nhật duy nhất, dạng ẩn: các góc {cells} đều chứa {digits}, ' +
+      'và ít nhất một góc trong số đó chỉ chứa {digits}. Trong hàng và trong cột của góc đối diện với góc ấy, ' +
+      '{digit} chỉ có hai vị trí: chính góc đối diện và một trong hai góc còn lại. Nếu góc đối diện là chữ số của ' +
+      '{digits} khác {digit}, cả hai góc còn lại đều phải là {digit}, và góc chỉ chứa {digits} cũng phải là chữ số ' +
+      'kia. ' +
+      'Khi đó bốn góc chứa {digits} theo hai cách hoán đổi được cho nhau và đề sẽ có hai lời giải. Vậy chữ số của ' +
+      '{digits} khác {digit} bị loại khỏi góc đối diện.',
     'technique.forcingChain.step.endpoints': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu ứng viên ' +
       'đầu tiên sai thì ứng viên cuối đúng, nên ít nhất một đầu của chuỗi là đúng. Các ứng viên nhìn thấy ' +
       'cả hai đầu bị loại.',

@@ -1,0 +1,75 @@
+$ node ..\.github\scripts\generator-quick.js run own-suites --results-dir=..\docs\difficulty-v3\evidence\MS11b\quick-1
+==== shard own-fast (1686 tests): node tests/node-runner.js --suite=a11y,cache,controls,difficulty-diagnostics,difficulty-floor,digger,events,export,format,full-grid,help,history,i18n,manual-corpus,mega-contract,multigrid,pattern-cost-tools,perf-tooling,purity,qualification-records,recovery-profile,replay-recorders,result-view,rng,smoke,store,technique-weights,theme,ui-contract,variants-registry,worker --results=..\docs\difficulty-v3\evidence\MS11b\quick-1\generator-own-fast.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   a11y: 31 passed  (81 ms)
+FAIL cache: 105 passed, 1 failed  (10.09 s)
+(node:17148) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   controls: 46 passed  (101 ms)
+ok   difficulty-diagnostics: 94 passed  (13.80 s)
+ok   difficulty-floor: 48 passed  (28.48 s)
+ok   digger: 64 passed  (947 ms)
+ok   events: 68 passed  (566 ms)
+ok   export: 78 passed  (6.31 s)
+ok   format: 18 passed  (192 ms)
+ok   full-grid: 42 passed  (2.45 s)
+ok   help: 30 passed  (5.10 s)
+ok   history: 15 passed  (1.63 s)
+ok   i18n: 84 passed  (1.10 s)
+ok   manual-corpus: 46 passed  (2.51 s)
+ok   mega-contract: 44 passed  (2.02 s)
+ok   multigrid: 184 passed  (28.26 s)
+ok   pattern-cost-tools: 32 passed  (2.80 s)
+ok   perf-tooling: 31 passed  (12.49 s)
+ok   purity: 41 passed  (26 ms)
+ok   qualification-records: 46 passed  (2.22 s)
+ok   recovery-profile: 27 passed  (672 ms)
+ok   replay-recorders: 39 passed  (8.57 s)
+ok   result-view: 22 passed  (2.32 s)
+ok   rng: 28 passed  (28 ms)
+ok   smoke: 44 passed  (5.27 s)
+ok   store: 85 passed  (107 ms)
+ok   technique-weights: 13 passed  (2 ms)
+ok   theme: 57 passed  (32 ms)
+ok   ui-contract: 67 passed  (342 ms)
+ok   variants-registry: 12 passed  (10 ms)
+FAIL worker: 143 passed, 1 failed  (49.36 s)
+
+Failures:
+  FAIL cache > cache: serialisation > MS05b1-T05: a shallow fallback keeps exact false and both warnings; a required result keeps its flag
+       AssertionError: expected true to be false
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\cache.test.js:578:31)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL worker > SG.pipeline.toWire / fromWire: a result across postMessage > MS05b1-T05: a shallow fallback crosses the wire with exact false and its two warnings
+       AssertionError: expected true to be false
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\worker.test.js:747:26)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 31
+Tests:  1686 total, 1684 passed, 2 failed, 0 skipped
+Time:   187.91 s running tests, 188.31 s total
+Results: docs/difficulty-v3/evidence/MS11b/quick-1/generator-own-fast.json
+==== shard digger-target (75 tests): node tests/node-runner.js --suite=digger-target --results=..\docs\difficulty-v3\evidence\MS11b\quick-1\generator-digger-target.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL digger-target: 74 passed, 1 failed  (1.96 s)
+
+Failures:
+  FAIL digger-target > digGuidedSteps: a real pass follows the policy, replayed from its dig log (MS06c2) > those passes meet every kind of objective: each refusal reason, scores, and stuck proposals
+       AssertionError: expected 29 to be > 30
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\digger-target.test.js:687:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  75 total, 74 passed, 1 failed, 0 skipped
+Time:   1.96 s running tests, 2.17 s total
+Results: docs/difficulty-v3/evidence/MS11b/quick-1/generator-digger-target.json
+shard own-fast: exit 1, 188.6 s
+shard digger-target: exit 1, 2.4 s
+FAILED: own-fast, digger-target
+exit=1 seconds=191.890

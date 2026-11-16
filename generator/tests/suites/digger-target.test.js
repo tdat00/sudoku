@@ -533,7 +533,8 @@
       ['classic9', 'nightmare', 4, true, null],
       ['classic9', 'master', 7, true, 0.5],
       ['classic9', 'master', 16, true, null],
-      ['classic9', 'hell1', 11, true, null],
+      // Hell 1 seed 14 where it was 11: the hidden Unique Rectangle (MS11b) finishes the three stuck proposals of seed 11
+      ['classic9', 'hell1', 14, true, null],
       ['classic9', 'hell1', 13, true, null],
       ['classic9', 'hell1', 30, true, null]
     ];
