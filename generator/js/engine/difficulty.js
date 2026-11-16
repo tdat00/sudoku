@@ -102,6 +102,7 @@
     jellyfish: 520,
     xyWing: 650,
     xyzWing: 750,
+    wxyzWing: 800,
     wWing: 850,
     uniqueRectangle: 900,
     forcingChain: 1100,

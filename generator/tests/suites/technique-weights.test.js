@@ -190,6 +190,34 @@
         expect(D.spec('hard', model).allowedTechniques).not.toContain('xyWing');
       });
 
+    it('places wxyzWing between xyzWing and wWing: order 155, weight 800, a Master-tier technique (R13)',
+      function () {
+        var model = SG.techHelper.model('classic9');
+        expect([SG.techniques.get('wxyzWing').order, D.WEIGHTS.wxyzWing]).toEqual([155, 800]);
+        expect(SG.techniques.get('wxyzWing').baseCost).toBe(57);
+        expect(SG.techniques.get('wxyzWing').group).toBe('wing');
+        expect(position('wxyzWing')).toBe(position('xyzWing') + 1);
+        expect(position('wxyzWing')).toBe(position('wWing') - 1);
+        // the order follows the weight: the neighbours are 150 / 750 and 170 / 850
+        expect([SG.techniques.get('xyzWing').order, D.WEIGHTS.xyzWing]).toEqual([150, 750]);
+        expect([SG.techniques.get('wWing').order, D.WEIGHTS.wWing]).toEqual([170, 850]);
+        expect(D.WEIGHTS.xyzWing).toBeLessThan(D.WEIGHTS.wxyzWing);
+        expect(D.WEIGHTS.wxyzWing).toBeLessThan(D.WEIGHTS.wWing);
+        // its own weight decides the hardest technique, no tie is needed
+        expect(D.breakdown({ xyzWing: 1, wxyzWing: 1 }, 10).hardest).toBe('wxyzWing');
+        expect(D.breakdown({ wxyzWing: 1, wWing: 1 }, 10).hardest).toBe('wWing');
+        // 1.25 x 800 = 1000 is not below Expert's maximum (1000): Master's tier, never Expert's, while 1.25 x 750 is
+        expect(1.25 * D.WEIGHTS.wxyzWing).toBe(D.spec('expert', model).max);
+        expect(1.25 * D.WEIGHTS.xyzWing).toBeLessThan(D.spec('expert', model).max);
+        expect(D.spec('expert', model).allowedTechniques).toContain('xyzWing');
+        expect(D.spec('expert', model).allowedTechniques).not.toContain('wxyzWing');
+        expect(D.spec('master', model).allowedTechniques).toContain('wxyzWing');
+        expect(D.spec('master', model).tierTechniques.slice(0, 2)).toEqual(['wxyzWing', 'wWing']);
+        expect(D.spec('master', model).floorTechniques).toContain('xyzWing');
+        expect(D.spec('master', model).floorTechniques).not.toContain('wxyzWing');
+        expect(D.spec('nightmare', model).floorTechniques).toContain('wxyzWing');
+      });
+
     it('places finnedSwordfish between swordfish and jellyfish: order 134, weight 480, a Hard-tier technique ' +
       '(R12)', function () {
         var model = SG.techHelper.model('classic9');

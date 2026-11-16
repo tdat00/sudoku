@@ -896,11 +896,20 @@
         });
       }, 60000);
 
+    // G13 (Samurai) has no flat position with a new hardest technique since the WXYZ-Wing (MS10b changed its dig
+    // path: its position 101 is 70 to 70 with Naked Single on both sides). The flat case is therefore read from that
+    // real step with the transition of a new hardest technique (Hidden Single); the falling case (G12) is real.
     it('also tells a new hardest technique when the score is flat or falls (details view)', function () {
       var flat = viewsOf(golden('G13')).details.steps;
       var fall = viewsOf(golden('G12')).details.steps;
       inLocale('en', function () {
-        var a = stepAt(flat, 101);
+        var real = stepAt(flat, 101);
+        expect(real.table.transition.tier).toBeNull();
+        expect(real.table.transition.newHardest).toBe(false);
+        expect(textOfStep(real).line).toBeNull();
+        var transition = Object.assign({}, real.table.transition, { tier: 'newPeak', newHardest: true,
+          after: Object.assign({}, real.table.transition.after, { hardest: 'hiddenSingleBox' }) });
+        var a = Object.assign({}, real, { table: Object.assign({}, real.table, { transition: transition }) });
         var text = textOfStep(a);
         expect(a.table.transition.before.total).toBe(70);
         expect(a.table.transition.after.total).toBe(70);
@@ -911,11 +920,11 @@
         expect(text.rowLabel.technique).toBe(a.table.transition.after.hardest);
         var b = stepAt(fall, 103);
         var drop = textOfStep(b);
-        expect(b.table.transition.before.total).toBe(3042);
-        expect(b.table.transition.after.total).toBe(2701);
+        expect(b.table.transition.before.total).toBe(2977);
+        expect(b.table.transition.after.total).toBe(2724);
         expect(drop.badge).toBeNull();
-        expect(drop.total).toBe(SG.i18n.formatNumber(2701) + ' (\u2212' + SG.i18n.formatNumber(341) + ')');
-        expect(drop.total).toBe('2,701 (\u2212341)');
+        expect(drop.total).toBe(SG.i18n.formatNumber(2724) + ' (\u2212' + SG.i18n.formatNumber(253) + ')');
+        expect(drop.total).toBe('2,724 (\u2212253)');
         expect(drop.line).toContain('now uses Long Forcing Chain (weight 1,400)');
         expect(drop.rowLabel.technique).toBe('forcingChainLong');
         expect(drop.totalHighlight).toBe(false);
@@ -1063,7 +1072,7 @@
       expect(third('G03', 23).sentences[2])
         .toBe('Removing each clue alone gives 45 and 44; removing the whole group gives 870.');
       expect(third('G05', 29).sentences[2])
-        .toBe('Removing each clue alone gives 50 and 50; removing the whole group gives 2,501.');
+        .toBe('Removing each clue alone gives 50 and 50; removing the whole group gives 2,536.');
       // G09's jump was the "mixed" class (one clue against its whole symmetric group); its jump is now a single
       // culprit like G13's, and the "mixed" wording is pinned by the synthetic test of every class below
       expect(third('G09', 35).sentences[2]).toBe('Removing the clue at R8C5 alone gives 510; removing the clue at ' +
@@ -1071,8 +1080,8 @@
       var sign = third('G11', 70, 'details');
       expect(sign.sentences[0]).toContain('After the sign between R8C7 and R9C7 is removed, ');
       expect(sign.sentences[2]).toBe('This step removes one sign; there is no smaller sign-removal move to show.');
-      expect(third('G13', 114).sentences[2])
-        .toBe('Removing the clue at G2-R8C9 alone gives 1,858; removing the clue at G3-R2C1 alone gives 72.');
+      expect(third('G13', 111).sentences[2])
+        .toBe('Removing the clue at G2-R6C2 alone gives 1,014; removing the clue at G3-R4C8 alone gives 72.');
     }, 120000);
 
     function fragmentEn(move) {
@@ -1090,7 +1099,7 @@
     }
 
     it('a jump over several moves says in which complete change the new technique first appears', function () {
-      [['G07', 31, 'compact'], ['G10', 48, 'compact'], ['G12', 107, 'compact']].forEach(function (c) {
+      [['G07', 31, 'compact'], ['G10', 49, 'compact'], ['G12', 107, 'compact']].forEach(function (c) {
         var res = golden(c[0]);
         var analysis = analysisOf(res);
         var step = stepAt(viewsOf(res)[c[2]].steps, c[1]);
@@ -1269,11 +1278,13 @@
       });
     });
 
-    it('the goldens whose chosen removal the limited check could not finish say so (Samurai, Mega 16x16)',
+    // G13 (Samurai) had the second witness until the WXYZ-Wing (MS10b) changed its dig path; G10 (Killer) has one
+    // in its details step 36
+    it('the goldens whose chosen removal the limited check could not finish say so (Killer, Mega 16x16)',
       function () {
-        [['G13', 114], ['G14', 69]].forEach(function (c) {
+        [['G10', 36, 'details'], ['G14', 69, 'compact']].forEach(function (c) {
           var res = golden(c[0]);
-          var step = stepAt(viewsOf(res).compact.steps, c[1]);
+          var step = stepAt(viewsOf(res)[c[2]].steps, c[1]);
           expect(step.table.transition.choice.chosen).toBeNull();
           withLabels(res, function () {
             inLocale('en', function () {
@@ -1341,7 +1352,7 @@
       }
     });
 
-    it('the first deductions of the goldens: Killer candidate 7 in a cell, a placement, candidate 1 in a cell',
+    it('the first deductions of the goldens: Killer candidate 7 in a cell, a placement, candidate 2 in a cell',
       function () {
         var nine = golden('G09');
         var ten = golden('G10');
@@ -1355,14 +1366,14 @@
         // the forced chain that is the first use of the G10 jump places a digit and removes no candidate
         withLabels(ten, function () {
           inLocale('en', function () {
-            var why = textOfStep(stepAt(viewsOf(ten).compact.steps, 48)).callout.why;
+            var why = textOfStep(stepAt(viewsOf(ten).compact.steps, 49)).callout.why;
             expect(why).toContain('In that deduction, 2 is placed in R2C9.');
           });
         });
         withLabels(thirteen, function () {
           inLocale('en', function () {
-            var why = textOfStep(stepAt(viewsOf(thirteen).compact.steps, 114)).callout.why;
-            expect(why).toContain('In that deduction, candidate 1 is removed from G2-R1C2.');
+            var why = textOfStep(stepAt(viewsOf(thirteen).compact.steps, 111)).callout.why;
+            expect(why).toContain('In that deduction, candidate 2 is removed from G2-R5C5.');
           });
         });
       }, 120000);

@@ -235,6 +235,12 @@
     'technique.xyzWing': 'XYZ-Wing',
     'technique.xyzWing.desc': 'Like XY-Wing, but the pivot has three candidates: the common digit is ' +
       'removed from every cell that sees the pivot and both pincers.',
+    'technique.wxyzWing': 'WXYZ-Wing',
+    'technique.wxyzWing.desc': 'Four cells that hold only four digits between them. Three of the digits are ' +
+      'restricted: the cells that hold one of them all see each other, so it can go in only one of the four ' +
+      'cells. The fourth digit is the only one that two of the cells hold without seeing each other. The three ' +
+      'restricted digits fill at most three of the four cells, so the fourth digit must be in one of them, and ' +
+      'it is removed from every other cell that sees all the cells that hold it.',
     'technique.jellyfish': 'Jellyfish',
     'technique.jellyfish.desc': 'The four-line version of X-Wing: a digit confined to the same four ' +
       'columns in four rows can be removed from the rest of those columns.',
@@ -347,6 +353,10 @@
     'technique.xyzWing.step': 'XYZ-Wing: the pivot {pivot} holds {digitX}, {digitY} or {digit}; the ' +
       'pincer {pincer1} holds {digitX} or {digit}; the pincer {pincer2} holds {digitY} or {digit}. One of ' +
       'these three cells must be {digit}, so {digit} is removed from every cell that sees all three.',
+    'technique.wxyzWing.step': 'WXYZ-Wing on {digits}: the cells {cells} hold no other digit. Every digit ' +
+      'except {digit} appears only in cells that see each other, so it can be placed in at most one of the ' +
+      'four cells. Three digits fill at most three cells, so one of the cells that hold {digit} must be ' +
+      '{digit}. {digit} is removed from every other cell that sees all the cells of the pattern that hold it.',
     'technique.wWing.step': 'W-Wing: {cell1} and {cell2} both hold only {digitX} or {digit} and do not ' +
       'see each other. A strong link on {digitX} in {unit} ({link1} and {link2}) joins them, so one of ' +
       'the two cells must be {digit}. {digit} is removed from every cell that sees both.',

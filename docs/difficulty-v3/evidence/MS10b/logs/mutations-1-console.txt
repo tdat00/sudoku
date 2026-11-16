@@ -1,0 +1,31 @@
+$ node tests\artifacts\difficulty-v3\MS10b\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS10b\mutations-1.txt 0 27
+mutation 0 (the union may reach five digits during the enumeration (the bound off by one)): DETECTED - 319 total, 317 passed, 2 failed, 0 skipped - 2 failing, 2 of wxyzWing - 8.9 s
+mutation 1 (a union of four digits is already too many (the bound off by one the other way)): DETECTED - 319 total, 261 passed, 58 failed, 0 skipped - 58 failing, 57 of wxyzWing - 6.5 s
+mutation 2 (the union is not bounded during the enumeration (only the complete quartet is checked)): DETECTED - 319 total, 313 passed, 6 failed, 0 skipped - 6 failing, 6 of wxyzWing - 8.8 s
+mutation 3 (a complete quartet with a union of three digits is accepted): DETECTED - 319 total, 307 passed, 12 failed, 0 skipped - 12 failing, 12 of wxyzWing - 7.4 s
+mutation 4 (a second non-restricted digit is accepted (the bound off by one)): DETECTED - 319 total, 290 passed, 29 failed, 0 skipped - 29 failing, 28 of wxyzWing - 6.5 s
+mutation 5 (no non-restricted digit is accepted (the bound off by one the other way)): DETECTED - 319 total, 267 passed, 52 failed, 0 skipped - 52 failing, 51 of wxyzWing - 6.6 s
+mutation 6 (a digit is non-restricted only against the first cell of the quartet (a pivot-only test)): DETECTED - 319 total, 274 passed, 45 failed, 0 skipped - 45 failing, 44 of wxyzWing - 6.6 s
+mutation 7 (the visibility of a pair is inverted (cells that see each other split a digit)): DETECTED - 319 total, 261 passed, 58 failed, 0 skipped - 58 failing, 57 of wxyzWing - 6.5 s
+mutation 8 (cells that do not see each other make every digit of the new cell non-restricted): DETECTED - 319 total, 271 passed, 48 failed, 0 skipped - 48 failing, 47 of wxyzWing - 6.5 s
+mutation 9 (every shared digit is non-restricted, whether the cells see each other or not): DETECTED - 319 total, 265 passed, 54 failed, 0 skipped - 54 failing, 53 of wxyzWing - 6.5 s
+mutation 10 (a target must see only the first two cells that hold z (an overlooked occurrence)): DETECTED - 319 total, 290 passed, 29 failed, 0 skipped - 29 failing, 28 of wxyzWing - 6.5 s
+mutation 11 (a target must see only the first cell that holds z (a pivot-only test)): DETECTED - 319 total, 265 passed, 54 failed, 0 skipped - 54 failing, 53 of wxyzWing - 6.5 s
+mutation 12 (a target need not hold z): DETECTED - 319 total, 281 passed, 38 failed, 0 skipped - 38 failing, 37 of wxyzWing - 6.6 s
+mutation 13 (a solved cell may be a target): DETECTED - 319 total, 318 passed, 1 failed, 0 skipped - 1 failing, 1 of wxyzWing - 9.0 s
+mutation 14 (the cells that do not hold z are the cells the target must see): DETECTED - 319 total, 265 passed, 54 failed, 0 skipped - 54 failing, 53 of wxyzWing - 6.5 s
+mutation 15 (only the first three cells of the quartet are looked at for z): DETECTED - 319 total, 269 passed, 50 failed, 0 skipped - 50 failing, 49 of wxyzWing - 6.5 s
+mutation 16 (z is the highest digit of the union): DETECTED - 319 total, 294 passed, 25 failed, 0 skipped - 25 failing, 24 of wxyzWing - 6.5 s
+mutation 17 (the digits are listed highest first): DETECTED - 319 total, 276 passed, 43 failed, 0 skipped - 43 failing, 42 of wxyzWing - 6.7 s
+mutation 18 (the digits list holds the three restricted digits only): DETECTED - 319 total, 276 passed, 43 failed, 0 skipped - 43 failing, 42 of wxyzWing - 6.6 s
+mutation 19 (the cells of the Finding are not in ascending order): DETECTED - 319 total, 276 passed, 43 failed, 0 skipped - 43 failing, 42 of wxyzWing - 6.6 s
+mutation 20 (the labels are not those of the cells (the first cell repeated)): DETECTED - 319 total, 276 passed, 43 failed, 0 skipped - 43 failing, 42 of wxyzWing - 6.5 s
+mutation 21 (a cell may be chosen twice (the next cell is not above the last)): DETECTED - 319 total, 299 passed, 20 failed, 0 skipped - 20 failing, 20 of wxyzWing - 6.8 s
+mutation 22 (the last candidate cell of every level is missed (the bound off by one)): DETECTED - 319 total, 277 passed, 42 failed, 0 skipped - 42 failing, 42 of wxyzWing - 7.3 s
+mutation 23 (cells that cannot complete the quartet are still tested (the bound off by one the other way)): DETECTED - 319 total, 306 passed, 13 failed, 0 skipped - 13 failing, 12 of wxyzWing - 7.3 s
+mutation 24 (a cell with a single candidate is never part of a quartet): DETECTED - 319 total, 302 passed, 17 failed, 0 skipped - 17 failing, 17 of wxyzWing - 6.9 s
+mutation 25 (a cell of five candidates may be part of a quartet): DETECTED - 319 total, 318 passed, 1 failed, 0 skipped - 1 failing, 1 of wxyzWing - 9.0 s
+mutation 26 (a cell of three candidates or more is not part of a quartet): DETECTED - 319 total, 300 passed, 19 failed, 0 skipped - 19 failing, 18 of wxyzWing - 7.0 s
+mutation 27 (a solved cell may be part of a quartet): DETECTED - 319 total, 296 passed, 23 failed, 0 skipped - 23 failing, 22 of wxyzWing - 11.1 s
+detected 28 of 28, 200.7 s
+exit=0 seconds=200.829

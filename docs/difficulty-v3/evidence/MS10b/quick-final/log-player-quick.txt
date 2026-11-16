@@ -1,0 +1,58 @@
+$ node tests\node-runner.js --results=..\docs\difficulty-v3\evidence\MS10b\quick-final\player-quick.json
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+ok   bits: 32 passed  (71 ms)
+ok   board-view: 37 passed  (77 ms)
+ok   constraints: 43 passed  (80 ms)
+ok   exchange: 20 passed  (241 ms)
+ok   harness: 25 passed  (1.98 s)
+ok   logical-solver: 100 passed  (302 ms)
+ok   model: 49 passed  (38 ms)
+ok   solver: 50 passed  (2.68 s)
+ok   symbols: 12 passed  (3 ms)
+ok   tech-basic: 167 passed  (1.84 s)
+FAIL tech-chain: 105 passed, 2 failed  (8.69 s)
+ok   tech-fish: 483 passed  (23.91 s)
+ok   tech-subset: 100 passed  (893 ms)
+ok   tech-wing: 319 passed  (8.71 s)
+ok   techniques: 247 passed  (3.82 s)
+ok   wordbook: 7 passed  (8 ms)
+ok   a11y: 24 passed  (20 ms)
+ok   app: 15 passed  (13 ms)
+ok   fixtures: 21 passed  (16 ms)
+FAIL help-example-tools: 50 passed, 1 failed  (5.18 s)
+ok   help: 27 passed  (2.96 s)
+ok   i18n: 66 passed  (104 ms)
+ok   importer: 88 passed  (350 ms)
+ok   model-aids: 7 passed  (3 ms)
+ok   play: 68 passed  (178 ms)
+ok   progress: 26 passed  (49 ms)
+ok   store: 17 passed  (3 ms)
+ok   text-boards: 14 passed  (14 ms)
+ok   theme: 54 passed  (39 ms)
+ok   ui-contract: 62 passed  (158 ms)
+
+Failures:
+  FAIL tech-chain > chain windows: the four registered ids on their own > owns every shortest proof exactly once, for C = 4 and C = 6: the windows partition the scan
+       AssertionError: expected 20 to be > 20
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2225:41)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL tech-chain > chain group: nightmare puzzles > honours maxChainLength given to the solver for the long window too: 7 and 8 links need that much
+       AssertionError: expected Array(3)[8, 6, true] to equal Array(3)[8, 6, false]
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2412:51
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2408:66)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL help-example-tools > help example tools: replaying a source > finds the saved example further into the puzzle and gives the same data again
+       AssertionError: expected 50 to be 52
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:294:59)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+
+Suites: 30
+Tests:  2338 total, 2335 passed, 3 failed, 0 skipped
+Time:   62.42 s running tests, 62.70 s total
+Results: docs/difficulty-v3/evidence/MS10b/quick-final/player-quick.json
+(node:6480) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+exit=1 seconds=62.929

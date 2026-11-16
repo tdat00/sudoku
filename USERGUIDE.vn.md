@@ -335,7 +335,7 @@ chú, hoàn tác / làm lại chính xác, kiểm tra lỗi, gợi ý nêu tên 
 - Chọn ô bằng chuột, cảm ứng hay bàn phím (mũi tên, Home / End, Page Up / Down); gõ ký hiệu hoặc dùng bàn phím
   số trên màn hình; ghi chú (`N`); xóa; hoàn tác / làm lại (`Ctrl+Z`, `Ctrl+Y`).
 - Kiểm tra lỗi: tắt, vi phạm luật (trùng số, tổng lồng, dấu so sánh) hoặc mọi ô sai ngay khi gõ.
-- **Gợi ý** ba bước (kỹ thuật và nơi cần nhìn, các ô, nước đi), luôn đúng và nêu tên một trong 34 kỹ thuật, kèm
+- **Gợi ý** ba bước (kỹ thuật và nơi cần nhìn, các ô, nước đi), luôn đúng và nêu tên một trong 35 kỹ thuật, kèm
   tên và mô tả đã dịch.
 - Kiểu ký hiệu: chữ số, chữ cái, màu (luôn kèm hình), hình dạng và chữ của từ khóa; đề Sudoku Chữ giải xong sẽ hiện từ
   khóa và, nếu sách từ có sẵn trong trình chơi biết từ đó, cả nghĩa của từ.
@@ -351,7 +351,7 @@ chú, hoàn tác / làm lại chính xác, kiểm tra lỗi, gợi ý nêu tên 
   màn hình nhỏ, bộ công cụ và bàn phím số được ghim ở đáy màn hình và các nút chỉ còn biểu tượng.
 - Cài đặt (ngôn ngữ, giao diện, cỡ chữ, giảm chuyển động, ký hiệu trên màu, cách kiểm tra lỗi, ghi chú, tọa
   độ), và **trang hướng dẫn** (`help.html`, nút Trợ giúp mở ở tab mới): những điều cơ bản, cách hoạt động của
-  gợi ý, các kỹ thuật giải đề khó kèm một ví dụ thật cho từng kỹ thuật trong 34 kỹ thuật, và các phím tắt.
+  gợi ý, các kỹ thuật giải đề khó kèm một ví dụ thật cho từng kỹ thuật trong 35 kỹ thuật, và các phím tắt.
 - Dễ tiếp cận: liên kết bỏ qua, lưới ARIA với nhãn ô đọc được, thông báo trực tiếp, tiêu điểm được giữ trong
   hộp thoại, độ tương phản được kiểm tra từ các token thiết kế, hỗ trợ chế độ màu bắt buộc và giảm chuyển động.
 

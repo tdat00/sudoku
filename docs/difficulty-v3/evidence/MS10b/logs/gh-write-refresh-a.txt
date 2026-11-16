@@ -1,0 +1,16 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=nakedPair,xyzWing,uniqueRectangle,forcingChainLong --sources=tests\artifacts\difficulty-v3\MS10b\sources-refresh-a.json --max-puzzles=16 --max-hints=400 --write
+selected 4 technique ID(s); mode write
+replaying 11 puzzle(s) for 4 ID(s) (--max-puzzles=16, --max-hints=400)
+puzzle 1/11 classic9 Easy 1 -> 47 hint(s), solved; wanted found: -
+puzzle 2/11 classic9 Nightmare 1156 -> 76 hint(s), solved; wanted found: -
+puzzle 3/11 classic9 Nightmare 75 -> 76 hint(s), solved; wanted found: nakedPair, uniqueRectangle, forcingChainLong
+puzzle 4/11 classic9 Nightmare 44 -> 59 hint(s), solved; wanted found: -
+puzzle 5/11 classic9 Hard 18 -> 62 hint(s), solved; wanted found: -
+puzzle 6/11 classic9 Nightmare 70 -> 72 hint(s), solved; wanted found: xyzWing, uniqueRectangle, forcingChainLong
+puzzle 7/11 classic9 Hard 55 -> 58 hint(s), solved; wanted found: nakedPair
+puzzle 8/11 classic9 Nightmare 176 -> 67 hint(s), solved; wanted found: nakedPair, uniqueRectangle
+puzzle 9/11 classic9 Nightmare 692 -> 61 hint(s), solved; wanted found: nakedPair
+puzzle 10/11 classic9 Nightmare 989 -> 60 hint(s), solved; wanted found: nakedPair
+puzzle 11/11 classic9 Hell 1 644 -> 81 hint(s), solved; wanted found: nakedPair, forcingChainLong
+wrote player/js/ui/help-examples.js (35 examples; 4 selected: nakedPair, xyzWing, uniqueRectangle, forcingChainLong; the others kept)
+exit=0 seconds=1.075

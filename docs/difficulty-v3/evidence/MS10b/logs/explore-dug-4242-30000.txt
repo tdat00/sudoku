@@ -1,0 +1,29 @@
+$ node tests\artifacts\difficulty-v3\MS10b\explore-dug.js 4242 30000 0 below
+explore-dug: seed 4242, puzzles 30000 from 0, mode below, model classic9, cutoff = order of wxyzWing = 155, prefix of 23 techniques (nakedSingle hiddenSingleBox hiddenSingleLine pointing boxLine nakedPair hiddenPair nakedTriple hiddenTriple nakedQuad hiddenQuad xWing skyscraper twoStringKite remotePairs simpleColouring emptyRectangle finnedXWing swordfish finnedSwordfish jellyfish xyWing xyzWing), print limit 25
+#2 ...14.....4...2..7.8.3592..2......5...8...1....92.5...4..7....8....9.73...5.3..1. digits 4689 z 9 cells R2C4 R4C4 R9C4 R9C7 elim R4C7-9 work 462
+#30 .4..76...8........2..9......8......1...3....4..5.2..69......6326.1..5....9...4.8. digits 1367 z 6 cells R2C2 R2C9 R3C2 R3C3 elim R2C3-6 work 4538
+#38 ..62....7....13.4......6..3.7...5..16..........862.9.....48..........4.28..9..1.. digits 1245 z 1 cells R3C2 R7C1 R7C3 R9C2 elim R3C3-1 R8C2-1 work 932
+#48 .......95..........415..7..7..4..62.3..91..7..6.2.7..3..23...84.3..8............. digits 1246 z 4 cells R1C5 R2C5 R2C8 R2C9 elim R2C6-4 work 2014
+#54 ......5.8.4..3...7.7.....167..6.3.5..........623..59..81..7....9....1...46.8..... digits 2479 z 4 cells R5C3 R5C4 R5C6 R6C4 elim R5C5-4 work 6353
+#70 3.78....28.1...4.5......6....4.67..15....4.2.....3.....28..5.....97..........9..6 digits 1379 z 1 cells R2C4 R2C8 R5C4 R9C8 elim R9C4-1 work 229
+#84 ...768..1....3.....51........8..273.......6..13......99....6...6...5.82....821.9. digits 3479 z 4 cells R6C6 R7C4 R8C4 R8C6 elim R6C4-4 work 10544
+#96 .4...9.......1..5.8.13.2.....58..1..1......39....6..2.....2..142....659.9......6. digits 4567 z 6 cells R1C4 R3C5 R3C8 R3C9 elim R1C7-6 work 2080
+#105 ..6.87...79.5.1......4..2..54.6.938.....4..9..13..54...75..28.........2...9.6..3. digits 1257 z 7 cells R5C4 R5C7 R5C9 R6C5 elim R6C8-7 R6C9-7 work 9970
+#106 ....43..........97...98...1..2...81.7....56...6.4..7.962.....4.1......264...5.... digits 1279 z 1 cells R2C6 R3C6 R4C6 R5C5 elim R2C5-1 R6C6-1 work 2382
+#114 7.39...4....4..8....9.87...5...2......4.79..1.6.....5.62....7.......512..9....... digits 2346 z 3 cells R3C1 R3C4 R4C4 R8C1 elim R8C4-3 work 7054
+#120 ...2.186..9.4....21...................5..794.8...695....2.3...66...4.1.7.4...6... digits 3579 z 3 cells R1C2 R2C1 R8C3 R9C1 elim R8C2-3 work 879
+#128 .3.....2..7.4....8..853.7....715......5...2......9..17...62...5...8.1..416....... digits 3679 z 3 cells R1C4 R1C9 R4C9 R5C4 elim R4C6-3 R5C9-3 work 1710
+#138 .1...7.327...9...5.....1..65......7..3...51....87.3.5.8....93.....8.....19.2...6. digits 2468 z 4 cells R1C1 R1C5 R2C6 R3C5 elim R1C4-4 work 317
+#140 6..5.2.1...5..69.2.7........6...4.58......2......3...4..2.8..3..1.....8...4.5.7.9 digits 3479 z 4 cells R1C2 R1C3 R1C9 R2C8 elim R2C1-4 R2C2-4 work 46
+#146 .3......9246........1..746.5..78........9......2..1.5.......6....4.1.53..18....4. digits 3579 z 9 cells R1C3 R3C2 R4C3 R5C3 elim R6C2-9 work 2416
+#154 .....1.......2...9..17......8...4.9..2...543..4..1...6..29.....3.......2.74..38.. digits 3567 z 6 cells R1C3 R1C7 R3C2 R3C7 elim R3C8-6 work 410
+#161 9..28.3.6...5.........962..6...7....2...1459..95...7..5...2...3...3..9...83...... digits 1457 z 1 cells R1C2 R1C6 R1C8 R7C8 elim R7C6-1 work 75
+#180 ..2....1.84.......9.345.........249.7...4...3.2.3....8.3.58..........8274.......1 digits 3569 z 5 cells R1C7 R2C3 R2C8 R2C9 elim R2C7-5 work 3678
+#187 46.1..59....6.5.2.....7....6..8......397...58..5..9..62.4.6.8...8.21.....96.8.... digits 1479 z 4 cells R2C7 R6C7 R8C7 R8C9 elim R9C7-4 work 600
+#188 ...............75..34..28.9.4...7....2.9..53..53.4..1...2..8.....817.2....7...4.. digits 1369 z 3 cells R7C2 R7C5 R7C7 R9C4 elim R7C4-3 R9C9-3 work 2782
+#214 28........15.8.6....3..4.....415..3.1..4.......2.....59....78.....568.1.........2 digits 3679 z 7 cells R1C8 R2C9 R7C9 R9C8 elim R2C8-7 work 2583
+#216 ..54......4..3......27....82...9..17.96.8..3.4....6.......72.83.6...........4.79. digits 1358 z 3 cells R3C2 R4C2 R4C3 R7C2 elim R6C2-3 work 6168
+#229 4.78...6..2...18...8...9.4274.3.....6.87.4.1...9......3.....17...4........1.6.4.. digits 3569 z 3 cells R1C7 R4C7 R8C5 R8C7 elim R1C5-3 work 5272
+#232 ..23.6....5.1..4..8........1.5.....79...2.1.....8...4...3..5.9..8..9..15.7....6.. digits 3568 z 5 cells R1C7 R4C7 R5C8 R5C9 elim R1C8-5 R3C8-5 R6C7-5 work 1167
+seed 4242 puzzles 30000 (from 0): attempted 30000, fully solved by the prefix 22680, 3522 positions with a WXYZ-Wing (11.740 % of the attempted), capped calls 0, 32.6 s
+exit=0 seconds=32.932

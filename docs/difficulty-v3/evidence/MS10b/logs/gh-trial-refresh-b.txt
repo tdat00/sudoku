@@ -1,0 +1,16 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=finnedXWing --sources=tests\artifacts\difficulty-v3\MS10b\sources-refresh-b.json --max-puzzles=16 --max-hints=400 --write --out=tests\artifacts\difficulty-v3\MS10b\trial-b.js
+selected 1 technique ID(s); mode write
+replaying 11 puzzle(s) for 1 ID(s) (--max-puzzles=16, --max-hints=400)
+puzzle 1/11 classic9 Hell 1 214 -> 69 hint(s), solved; wanted found: -
+puzzle 2/11 classic9 - testkit-4242-254 -> 67 hint(s), solved; wanted found: -
+puzzle 3/11 classic9 Nightmare 648 -> 81 hint(s), solved; wanted found: finnedXWing
+puzzle 4/11 classic9 Nightmare 561 -> 58 hint(s), solved; wanted found: -
+puzzle 5/11 classic9 Nightmare 3 -> 60 hint(s), solved; wanted found: -
+puzzle 6/11 classic9 Nightmare 828 -> 78 hint(s), solved; wanted found: finnedXWing
+puzzle 7/11 classic9 Nightmare 13 -> 73 hint(s), solved; wanted found: -
+puzzle 8/11 classic9 Nightmare 11 -> 67 hint(s), solved; wanted found: finnedXWing
+puzzle 9/11 classic9 Nightmare 1427 -> 58 hint(s), solved; wanted found: finnedXWing
+puzzle 10/11 classic9 Hell 1 8 -> 70 hint(s), solved; wanted found: finnedXWing
+puzzle 11/11 classic9 Hell 2 escargot -> 111 hint(s), solved; wanted found: -
+wrote player/tests/artifacts/difficulty-v3/MS10b/trial-b.js (35 examples; 1 selected: finnedXWing; the others kept)
+exit=0 seconds=1.594

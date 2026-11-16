@@ -1,0 +1,8 @@
+MS10b E announcement (check-list section 7: announce to the orchestrator before a heavy gate; a sub-agent has no channel to the orchestrator before its reply, so this record and the reply carry it).
+
+Task / gate: MS10b WXYZ-Wing, complete E (GR wires G09-G13, GR analyses G01-G14, GG 520 hashes), then pins, the final census and pattern cost, both complete quick sets, CI.
+Cases: the E route of check-list section 7, one child process per shard, IR12 compounds (admission elapsed + max(projection, 60 s) <= 450 s, 540 s process ceiling), at least 15 s between locks.
+Planned node time (projections, 2 x the MS10a measurement + 5 s per shard): wires 156 s, analyses 261 s, hashes 1,233 s (104 shards).
+Output paths: docs/difficulty-v3/evidence/MS10b/{wire,analysis,hashes,logs}/, shard-runs.jsonl, lock-log.jsonl.
+Slot: every command through Invoke-Dv3Node (shared lock with the pentomino repository); nobody else held the lock so far.
+Authority: SA2's pre-E rulings (brief of c8f0006): proceed with full E, no extra gate.

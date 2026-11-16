@@ -1,10 +1,12 @@
 /**
- * Wing techniques (group `wing`): Remote Pairs, XY-Wing, XYZ-Wing, W-Wing and Unique Rectangle (types 1, 2).
+ * Wing techniques (group `wing`): Remote Pairs, XY-Wing, XYZ-Wing, WXYZ-Wing, W-Wing and Unique Rectangle
+ * (types 1, 2).
  *
  *   id               baseCost  order  assumesUniqueness
  *   remotePairs          35     116   false
  *   xyWing               48     140   false
  *   xyzWing              54     150   false
+ *   wxyzWing             57     155   false
  *   wWing                60     170   false
  *   uniqueRectangle      66     180   true
  *
@@ -16,6 +18,7 @@
  *   technique.remotePairs.step          { digits, ends, length }
  *   technique.xyWing.step               { pivot, pincer1, pincer2, digitX, digitY, digit }
  *   technique.xyzWing.step              { pivot, pincer1, pincer2, digitX, digitY, digit }
+ *   technique.wxyzWing.step             { digits, digit, cells }
  *   technique.wWing.step                { cell1, cell2, link1, link2, unit, digitX, digit }
  *   technique.uniqueRectangle.type1.step  { cell, digitX, digitY }
  *   technique.uniqueRectangle.type2.step  { roof1, roof2, digitX, digitY, digit }
@@ -60,6 +63,33 @@
  * other error propagate. `ctx.options.onPatternWork(record)` observes each call and never selects its
  * result: { id, work, limit, capHit (null | 'work'), retained (null) }, a fresh object per call.
  *
+ * WXYZ-Wing (rating v3, R13): four open cells whose candidates together are exactly four digits. A digit of
+ * the four is RESTRICTED when every pair of its occurrences in the four cells sees each other (`model.peers`:
+ * two cells that see each other cannot both hold it, so the digit is held at most once; a digit that occurs
+ * in one cell only is restricted too), and non-restricted when two of its occurrences do not see each other.
+ * Exactly one digit z must be non-restricted. The other three digits are restricted, so together they fill at
+ * most three of the four cells; every cell holds one of the four digits, so at least one cell holds z, and z
+ * goes from every open cell that sees ALL the cells of the quartet that have z: a z cell that is overlooked
+ * could be the one that holds it. A cell of the quartet never is a target (a cell does not see itself, and a
+ * quartet cell without z has nothing to lose). Nothing else is asked of the quartet: no pivot cell, no
+ * connected shape, no unit shape and no number of candidates per cell (one to four; XY-Wing, XYZ-Wing and a
+ * naked quad are other patterns or leave no non-restricted digit). Fewer or more than four digits, no
+ * non-restricted digit, or two of them, prove nothing. The quartets are looked for in ascending cell order
+ * (the lowest cell, then the next one above it, and so on); the first quartet with a target is returned with
+ * all its targets: `cells` (the four cells, ascending), the eliminations (cell ascending, the digit z) and
+ * the arguments `digits` (the four digits, ascending), `digit` (z) and `cells` (their four labels, cell
+ * order).
+ *
+ * Work (R10) of WXYZ-Wing: a unit is one tested combination extension, an open cell of at most four
+ * candidates tried as the next member of a partial quartet (the empty one included, so the first cell of a
+ * quartet is a unit as well). A cell that would bring the union above four digits, or a second non-restricted
+ * digit, costs its unit and is not extended further; a cell that completes a quartet also covers the target
+ * scan of that quartet (one pass over the peers of one cell). The limit is 50000 per call
+ * (`SG.wingSearch.WXYZ_WORK_LIMIT`); a spent limit ends the call with null (a lost deduction, never an
+ * invented one: a quartet is used as soon as it is complete, so a finding made before the limit is spent is
+ * complete, and null with `capHit: 'work'` proves no absence). The parent budget, cancellation and the
+ * observer are those of Remote Pairs, the observer's id is 'wxyzWing'.
+ *
  * Unique Rectangle (assumesUniqueness: true) is valid only because a puzzle has ONE solution, so the logical
  * solver skips it with `assumeUniqueness: false` (how uniqueness is verified without circular reasoning);
  * find() also returns null on its own then.
@@ -91,6 +121,10 @@
   // and how many may pass between two checks of the parent budget.
   const REMOTE_PAIRS_WORK_LIMIT = 50000;
   const WORK_CHECK_UNITS = 256;
+
+  // R10 work policy of WXYZ-Wing: the combination extensions one call may spend (the parent budget is checked
+  // as for Remote Pairs, every WORK_CHECK_UNITS).
+  const WXYZ_WORK_LIMIT = 50000;
 
   // Thrown through the walks of a Remote Pairs call whose work limit is spent.
   const WORK_CAP = Object.freeze({ capHit: 'work' });
@@ -126,7 +160,14 @@
         rpComp: new Int32Array(n),
         rpDist: new Int32Array(n),
         rpFrom: new Int32Array(n),
-        rpGroup: new Int32Array(model.digits * model.digits)
+        rpGroup: new Int32Array(model.digits * model.digits),
+        // WXYZ-Wing: the open cells of at most four candidates, the quartet being built, and the union and
+        // the non-restricted digits of its first 0..3 cells (index = number of cells).
+        wxPool: new Int32Array(n),
+        wxQuad: new Int32Array(4),
+        wxUnion: new Int32Array(4),
+        wxNon: new Int32Array(4),
+        wxHolders: new Int32Array(4)
       };
       infoCache.set(model, info);
     }
@@ -751,6 +792,130 @@
     return findRemotePairsBounded(model, state, ctx, REMOTE_PAIRS_WORK_LIMIT);
   }
 
+  // The Finding of a complete quartet `info.wxQuad` with the digits `union` (four bits) and the one
+  // non-restricted digit `zBit`: every open cell that sees all the quartet cells with z loses z (the peers of
+  // a cell ascend, so the targets do too). Null without a target.
+  function wxyzFinding(model, state, info, union, zBit) {
+    const n = info.n;
+    const adj = info.adj;
+    const cand = state.candidates;
+    const value = state.value;
+    const quad = info.wxQuad;
+    const holders = info.wxHolders;
+    let held = 0;
+    for (let k = 0; k < 4; k++) {
+      if ((cand[quad[k]] & zBit) !== 0) holders[held++] = quad[k];
+    }
+    const digit = digitOf(zBit);
+    const eliminations = [];
+    const ps = model.peers[holders[0]];
+    for (let i = 0; i < ps.length; i++) {
+      const t = ps[i];
+      if (value[t] !== 0 || (cand[t] & zBit) === 0) continue;
+      let seesAll = true;
+      for (let k = 1; k < held && seesAll; k++) seesAll = adj[holders[k] * n + t] === 1;
+      if (seesAll) eliminations.push([t, digit]);
+    }
+    if (eliminations.length === 0) return null;
+    const digits = [];
+    for (let bits = union; bits !== 0; bits &= bits - 1) digits.push(digitOf(bits & -bits));
+    const cells = [quad[0], quad[1], quad[2], quad[3]];
+    return {
+      technique: 'wxyzWing',
+      cells: cells,
+      placements: [],
+      eliminations: eliminations,
+      i18nKey: 'technique.wxyzWing.step',
+      i18nArgs: {
+        digits: digits,
+        digit: digit,
+        cells: cells.map(function (c) { return label(model, c); })
+      }
+    };
+  }
+
+  // Extends the partial quartet of `depth` cells (`info.wxQuad`, the union and the non-restricted digits of
+  // its cells in `info.wxUnion` / `info.wxNon`) by one pool cell above position `from`, in ascending order,
+  // and returns the Finding of the first complete quartet with a target, or null. Every tested cell is one
+  // unit.
+  function wxyzExtend(model, state, info, run, depth, from, size) {
+    const n = info.n;
+    const adj = info.adj;
+    const cand = state.candidates;
+    const pool = info.wxPool;
+    const quad = info.wxQuad;
+    for (let i = from; i <= size - (4 - depth); i++) {
+      spend(run);
+      const c = pool[i];
+      const union = info.wxUnion[depth] | cand[c];
+      if (popcount(union) > 4) continue;
+      let non = info.wxNon[depth];
+      for (let k = 0; k < depth; k++) {
+        if (adj[quad[k] * n + c] === 0) non |= cand[quad[k]] & cand[c];
+      }
+      if (popcount(non) > 1) continue;
+      quad[depth] = c;
+      if (depth === 3) {
+        if (non !== 0 && popcount(union) === 4) {
+          const found = wxyzFinding(model, state, info, union, non);
+          if (found !== null) return found;
+        }
+        continue;
+      }
+      info.wxUnion[depth + 1] = union;
+      info.wxNon[depth + 1] = non;
+      const found = wxyzExtend(model, state, info, run, depth + 1, i + 1, size);
+      if (found !== null) return found;
+    }
+    return null;
+  }
+
+  function scanWxyz(model, state, info, run) {
+    const cand = state.candidates;
+    const value = state.value;
+    const pool = info.wxPool;
+    let size = 0;
+    for (let c = 0; c < info.n; c++) {
+      if (value[c] !== 0) continue;
+      const count = popcount(cand[c]);
+      if (count >= 1 && count <= 4) pool[size++] = c;
+    }
+    if (size < 4) return null;
+    info.wxUnion[0] = 0;
+    info.wxNon[0] = 0;
+    return wxyzExtend(model, state, info, run, 0, 0, size);
+  }
+
+  // A WXYZ-Wing call with its own work counter (`workLimit` is the default except in the tests' seam); the
+  // limit, budget, cancellation and observer rules are those of findRemotePairsBounded.
+  function findWxyzBounded(model, state, ctx, workLimit) {
+    const info = infoFor(model);
+    const run = { ctx: ctx, limit: workLimit, work: 0, checkedAt: 0, capped: false };
+    let found = null;
+    try {
+      ctx.check();
+      found = scanWxyz(model, state, info, run);
+    } catch (err) {
+      if (err === WORK_CAP) run.capped = true;
+      else if (!(err && err.code === 'budget.exceeded')) throw err;
+    }
+    const observer = ctx.options ? ctx.options.onPatternWork : undefined;
+    if (typeof observer === 'function') {
+      observer({
+        id: 'wxyzWing',
+        work: run.work,
+        limit: workLimit,
+        capHit: run.capped ? 'work' : null,
+        retained: null
+      });
+    }
+    return found;
+  }
+
+  function findWxyzWing(model, state, ctx) {
+    return findWxyzBounded(model, state, ctx, WXYZ_WORK_LIMIT);
+  }
+
   const DEFINITIONS = [
     {
       id: 'remotePairs',
@@ -783,6 +948,16 @@
       find: findXyzWing
     },
     {
+      id: 'wxyzWing',
+      group: 'wing',
+      baseCost: 57,
+      order: 155,
+      i18nKey: 'technique.wxyzWing',
+      variantScope: null,
+      assumesUniqueness: false,
+      find: findWxyzWing
+    },
+    {
       id: 'wWing',
       group: 'wing',
       baseCost: 60,
@@ -808,10 +983,24 @@
     if (!SG.techniques.has(def.id)) SG.techniques.register(def);
   });
 
-  // The parameterised search behind remotePairs, for tests (explicit work limit); not a registered technique.
+  // The parameterised searches behind remotePairs and wxyzWing, for tests (explicit work limit); not
+  // registered techniques.
+  function seamLimit(opts, fallback, name) {
+    const given = opts === undefined || opts === null ? undefined : opts.workLimit;
+    if (given === undefined) return fallback;
+    if (typeof given !== 'number' || !Number.isFinite(given) || given < 0) {
+      const err = new SG.errors.GenerationError('solver.invalidOption',
+        { option: 'wingSearch.' + name + '.workLimit' });
+      err.message = 'solver.invalidOption: wingSearch.' + name + ' workLimit must be a number of at least 0';
+      throw err;
+    }
+    return Math.floor(given);
+  }
+
   if (!SG.wingSearch) {
     SG.wingSearch = Object.freeze({
       REMOTE_PAIRS_WORK_LIMIT: REMOTE_PAIRS_WORK_LIMIT,
+      WXYZ_WORK_LIMIT: WXYZ_WORK_LIMIT,
       remotePairs: function (model, state, ctx, opts) {
         let limit = REMOTE_PAIRS_WORK_LIMIT;
         const given = opts === undefined || opts === null ? undefined : opts.workLimit;
@@ -826,6 +1015,9 @@
           limit = Math.floor(given);
         }
         return findRemotePairsBounded(model, state, ctx, limit);
+      },
+      wxyzWing: function (model, state, ctx, opts) {
+        return findWxyzBounded(model, state, ctx, seamLimit(opts, WXYZ_WORK_LIMIT, 'wxyzWing'));
       }
     });
   }

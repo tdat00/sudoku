@@ -34,7 +34,7 @@ sudoku-generator and plays it:
   contrast, keyboard operable, `role="grid"` board, `aria-live` announcements, responsive (three columns on a wide
   desktop, two on a desktop, one on a phone with the keys fixed to the bottom).
 - A **guide** (`help.html`, a page of its own that the Help button opens in a new tab): the basics, how the hints
-  work, the 34 techniques each with a ready-made example, the keyboard.
+  work, the 35 techniques each with a ready-made example, the keyboard.
 - Everything runs **locally**: no server, no account, no network request after the page is loaded.
 
 ### 1.2 Non-goals (and a test that proves it)
@@ -344,7 +344,7 @@ of the player (language and theme switches that change the same stored preferenc
 agree) and a back link. It has four sections — the basics of playing, how the hints work (the hints are part of
 the guide), the techniques that solve harder puzzles, the keyboard — and a **table of contents** (a floating
 card on a wide screen, folded on a phone) that lists the sections, the eight technique groups and the name of
-each of the 34 techniques; the header floats with the scroll as well. In the techniques section every group is a
+each of the 35 techniques; the header floats with the scroll as well. In the techniques section every group is a
 card with a **tab for each technique** (`role=tablist`, arrow keys, Home / End); the panel of a tab says what the
 technique means and shows **one hardcoded example**: a board drawn like the hint card draws it (the area, the
 cells that make it work, the cells that change, the note to remove or the digit to place) with the words of
@@ -457,8 +457,23 @@ qualifying corpus puzzles and the tool took the first that reaches the hint thro
 deduction takes the place of a later deduction on some trajectories, so one earlier example is made again from its own
 source: `xWing` (Hell 1 seed 644: step 56 to 53, one more elimination, R9C1 and R9C8 lose the 8); every other example
 is reproduced as it was. The tests pin 34 (the catalogue, the user guide's "one of 34 techniques", the translated
-technique names) and the Player's quick set is 2,260 tests. `--check` without options reproduces the whole committed
+technique names) and the Player's quick set is 2,338 tests. `--check` without options reproduces the whole committed
 file.
+**Difficulty v3, MS10b:** the catalogue holds 35 examples. `wxyzWing` is new (registered at order 155, between XYZ-Wing
+and W-Wing). Its example is a normal hint of the catalogue's existing source Nightmare 13 (a seeded Classic 9×9 puzzle of
+the Generator's export), step 37: digits 1, 4, 7 and 9, the 9 is the digit that is not restricted, cells R2C7, R3C8,
+R4C7 and R6C7, R6C8 loses the 9; `player/tests/artifacts/difficulty-v3/MS10b/sources.json` lists the eight wing and
+chain sources that were replayed (six of them reach the technique; the tool keeps the first hint that is the easiest to
+read). A WXYZ-Wing deduction takes the place of a later deduction on some trajectories, so the 34 earlier examples were
+checked first and twelve differed: seven are made again from their own sources (`hiddenSingleBox`, `hiddenSingleLine`,
+`twoStringKite`, `remotePairs` (step 30 to 31), `jellyfish` (33 to 30), `wWing` and `forcingChain` (49 to 54)) and five
+no longer have a hint of their own technique on their own source, so each moved to another real source of the
+catalogue (the guide's own rule: the own source is a preference, not a lock): `nakedPair` (Nightmare 176, step 38),
+`finnedXWing` (Nightmare 648, step 26), `xyzWing` (Nightmare 70, step 21), `uniqueRectangle` (Nightmare 70, step 29)
+and `forcingChainLong` (Nightmare 75, step 27); the failed own-source checks, the candidate puzzles of every trial and
+the final check of all 35 are kept in `docs/difficulty-v3/evidence/MS10b/logs/`. The tests pin 35 (the catalogue, the
+user guide's "one of 35 techniques", the translated technique names) and the Player's quick set is 2,338 tests.
+`--check` without options reproduces the whole committed file.
 **Decision:** there is no
 first-visit tour or other popup that stands in front of the welcome screen or the puzzle: a visitor who arrives
 from the generator's link wants to play.
@@ -492,7 +507,7 @@ strings; added: `player.*` (shell, open flow, info card, recent list, welcome), 
 
 ## 10. Testing
 `node tests/node-runner.js` (30 suites: the 14 of `tests/suites/` and the 16 shared ones of `core/tests/suites/`;
-2,260 tests; no install) is the default quick set: developers and coding
+2,338 tests; no install) is the default quick set: developers and coding
 agents run it (or a few suites with `--suite=`) while developing, and `.github/workflows/pages.yml` runs all of it
 before every deployment. When one command cannot hold the whole set, it is covered by disjoint shards as the
 generator's quick set is (`generator/design.md` section 15.1); the cost measured for each app, on a named source and
@@ -511,7 +526,7 @@ they are **manual**, not part of CI, and are run only when a change touches the 
 |-------|----------------|
 | `bits`, `model`, `constraints`, `solver` | foundation, the model (V1–V8, classic builder), propagation, DFS (ported) |
 | `harness` | the test harness itself (`expect`, deep equality, the runner and its isolation) |
-| `techniques`, `tech-*`, `logical-solver` | the 34 techniques: positive / negative fixtures, soundness against known solutions (the sweep of `techniques` runs it for every registered technique, with real supplemental positions for the skyscraper, the two-string kite, the remote pairs, the empty rectangle, the finned X-Wing, the finned Swordfish and the long and the deep chain techniques), the solver loop (ported; a small test kit stands in for generation) |
+| `techniques`, `tech-*`, `logical-solver` | the 35 techniques: positive / negative fixtures, soundness against known solutions (the sweep of `techniques` runs it for every registered technique, with real supplemental positions for the skyscraper, the two-string kite, the remote pairs, the empty rectangle, the finned X-Wing, the finned Swordfish, the WXYZ-Wing and the long and the deep chain techniques), the solver loop (ported; a small test kit stands in for generation) |
 | `exchange` | token round trips (documents and text bundles), the active puzzle of a link, errors (shared, byte-identical) |
 | `importer` | all 18 fixtures rebuild valid models with exactly one solution; tokens, links, bundles (`t.` / `s.`, `active`); text lines (4 / 6 / 9); the nine level names in both languages and rating metadata; wrong version, damaged and hostile input, fuzzed damage |
 | `model-aids` | sign edges, word line, symbol modes |
@@ -524,7 +539,7 @@ they are **manual**, not part of CI, and are run only when a change touches the 
 | `symbols`, `board-view` | glyphs per mode, the legend, the 16 shapes; geometry and markup of all 15 fixtures (cells, layers, cages, signs, no colour literal) |
 | `a11y`, `theme` | cell labels, keyboard moves, the Settings data; token parity and contrast |
 | `app` | the surface and events of `SG.app`, the elements it needs from `index.html`, no HTML built from data, storage only through `store` / `progress` |
-| `help` | the sections, texts in both languages, an example for each of the 34 techniques (rebuilt from the snapshot, replayed with the hint code, readable in EN and VI), a real Jigsaw puzzle whose hint is snapshotted by the helper, rebuilt with its own regions, notes and move, and refused when its `cellRegion` is missing or malformed, shortcuts against the keys `play.js` handles, the claims of the Player part of the user and developer guides |
+| `help` | the sections, texts in both languages, an example for each of the 35 techniques (rebuilt from the snapshot, replayed with the hint code, readable in EN and VI), a real Jigsaw puzzle whose hint is snapshotted by the helper, rebuilt with its own regions, notes and move, and refused when its `cellRegion` is missing or malformed, shortcuts against the keys `play.js` handles, the claims of the Player part of the user and developer guides |
 | `help-example-tools` | the help-example tool (§8.3): options and their conflicts, the source schema, the cap on puzzles and hints, replaying a saved source with the hint code of the player, the choice and tie rule, the owned `cellRegion` copy of a Jigsaw snapshot (and none in any other), the merge and the CRLF text of the catalogue, bounded discovery and the child process with fakes; in Node real runs of the tool on saved sources and sandbox catalogues (never generating, never writing the committed file) |
 | `ui-contract` | module surface, no colour literals outside the token files, script order of `index.html` = runner = `tests.html` (and `help.html` = runner minus its exceptions), no hard-coded text in either page, forbidden globals absent, no DOM in `js/core` |
 | browser run (manual) | `tests/browser/*.js`: headless Edge over CDP (fragment, paste, file, drop, play with real key events, hints, reload, keyboard-only walk, Settings, the guide page with its tabs and floating contents, themes, 1440 / 900 / 375 px with touch, blocked storage); recorded in `docs/qa/browser-run.md` |

@@ -170,22 +170,26 @@
       expect(cells).toBe(43);
     });
 
-    // The exchange tests read the Classic 9x9 Hell 1 golden G04, whose log has one (G07 had two until the cutoff
-    // C = 4 of MS07c made its Nightmare puzzle exact without a local search); the example's own local search ended
-    // in no exchange after the target policy (MS06c2) and ends in one again since the skyscraper joined Hard (MS08a).
-    slow('has an exchange in G04: 29 positions with 6 guided moves and 1 exchange, removing 2 and restoring 2',
+    // The exchange tests read the Classic 9x9 Hell 1 golden G04, whose log has two since the WXYZ-Wing (MS10b; it
+    // had one before: G07 had two until the cutoff C = 4 of MS07c made its Nightmare puzzle exact without a local
+    // search, and the example's own local search ended in no exchange after the target policy (MS06c2) and ends in
+    // one again since the skyscraper joined Hard (MS08a)).
+    slow('has two exchanges in G04: 31 positions, 6 guided moves, 2 exchanges (2 removed, 2 restored), a removal',
       function () {
         var moves = R.moves(entry('G04').result).moves;
-        expect(moves).toHaveLength(29);
+        expect(moves).toHaveLength(31);
         var kinds = moves.map(function (m) { return m.kind; });
         expect(kinds.slice(22, 28)).toEqual(new Array(6).fill('guided'));
-        expect(kinds.slice(28)).toEqual(['exchange']);
-        moves.slice(28).forEach(function (m) {
+        expect(kinds.slice(28)).toEqual(['exchange', 'exchange', 'searchRemove']);
+        moves.slice(28, 30).forEach(function (m) {
           expect(m.removed).toHaveLength(2);
           expect(m.restored).toHaveLength(2);
           expect(m.phase).toBe('search');
           expect(m.to).toBe(m.at + 1);
         });
+        expect(moves[30].removed).toHaveLength(2);
+        expect(moves[30].restored).toHaveLength(0);
+        expect(moves[30].phase).toBe('search');
       });
 
     slow('records how the first guided move was chosen (rated 16, refused 5, chosen 45)', function () {
@@ -228,7 +232,7 @@
         m.removed.forEach(function (c) { half[c] = 0; });
         expect(boards).not.toContain(Array.from(half).join(','));
       });
-      expect(exchanges).toBe(1);
+      expect(exchanges).toBe(2);
     });
 
     slow('keeps the example as it is: its givens, its score 925 (expert) and its 72-entry log', function () {
@@ -520,7 +524,7 @@
       expect(rating.empties).toBe(53);
       expect(rating.counts).toEqual({
         nakedSingle: 2, hiddenSingleBox: 15, pointing: 6, boxLine: 1, nakedPair: 2, hiddenPair: 2, finnedXWing: 1,
-        wWing: 2, uniqueRectangle: 1, forcingChain: 3
+        wxyzWing: 1, wWing: 2, uniqueRectangle: 1, forcingChain: 2
       });
       expect(rating.checks).toBeGreaterThan(0);
       expect(rating.memo).toBe(false);
@@ -529,7 +533,7 @@
     slow('has no position of Classic 9x9 Hell 1 (seed 2400651925) with the unsafe board of section 2.2', function () {
       var unsafe = '070301000405060130100000008052008000000604000000200890600000004043070609000406080';
       var boards = R.moves(entry('G04').result).moves.map(function (m) { return Array.from(m.values).join(''); });
-      expect(boards).toHaveLength(29);
+      expect(boards).toHaveLength(31);
       expect(boards).not.toContain(unsafe);
     });
 
@@ -1079,15 +1083,16 @@
         expect(steps).toHaveLength(g.counts.compact);
         expect(analysis.views.details.steps).toHaveLength(g.counts.details);
         expect(g.rows).toHaveLength(steps.length);
-        // every audit is complete; a jump stays unless a bridge of recorded positions avoids it, which only G14 has
-        // (the depth-2 step is nishioDeep after a nishio step of 3674, since the chain windows of MS07b; G04 had one
-        // too until the cutoff C = 4 of MS07c changed its puzzle)
+        // every audit is complete; a jump stays unless a bridge of recorded positions avoids it, which only G04 and
+        // G14 have (the depth-2 step of G14 is nishioDeep after a nishio step of 3674, since the chain windows of
+        // MS07b; G04 had one until the cutoff C = 4 of MS07c changed its puzzle, and has one again since the
+        // WXYZ-Wing of MS10b changed it: the edge 27 to 30 is bridged by the position 28)
         var audit = analysis.views.compact.audit;
         var avoided = audit.filter(function (edge) { return edge.inserted.length > 0; });
         expect(audit.every(function (edge) { return edge.scope === 'complete'; })).toBe(true);
         expect(avoided.every(function (edge) { return !edge.remaining; })).toBe(true);
         expect(audit.every(function (edge) { return edge.inserted.length > 0 || edge.remaining; })).toBe(true);
-        expect(avoided).toHaveLength(g.id === 'G14' ? 1 : 0);
+        expect(avoided).toHaveLength(g.id === 'G14' || g.id === 'G04' ? 1 : 0);
         g.rows.forEach(function (row, i) {
           var step = steps[i];
           var rating = analysis.ratings[step.position];
@@ -1190,7 +1195,7 @@
     });
 
     slow('has the same end position as a jump in one view and not in the other (G07, G12, G01)', function () {
-      [['G07', 31, [141, 2268], [3215, 2268]], ['G12', 107, [133, 513], [2488, 513]]].forEach(function (c) {
+      [['G07', 31, [141, 2268], [3245, 2268]], ['G12', 107, [133, 513], [2488, 513]]].forEach(function (c) {
         var analysis = analysisOf(c[0]);
         var compact = toPosition(analysis, 'compact', c[1]);
         var details = toPosition(analysis, 'details', c[1]);
@@ -1199,7 +1204,7 @@
         expect(details.tier).not.toBe('jump');
         expect(details.ratio).toBeNull();
       });
-      expect(toPosition(analysisOf('G07'), 'details', 31).change).toBe(-947);
+      expect(toPosition(analysisOf('G07'), 'details', 31).change).toBe(-977);
       expect(toPosition(analysisOf('G12'), 'details', 107).change).toBe(-1975);
       var g01 = analysisOf('G01');
       expect(toPosition(g01, 'compact', 27).before.W).toBeCloseTo(1518.75, 6);
@@ -1220,11 +1225,23 @@
       expect(Object.keys(distinctJumps)).toHaveLength(15);
     });
 
-    slow('labels a new hardest technique also at a flat or lower score (details: G13, G12)', function () {
-      [['G13', 101, 70, 70, 'hiddenSingleBox', 'nakedSingle'],
-        ['G12', 103, 3042, 2701, 'forcingChainLong', 'nishio']
+    // Since the WXYZ-Wing (MS10b) no golden has a flat position with a new hardest technique: G13 (Samurai) took
+    // another dig path and its position 101 is 70 to 70 with Naked Single on both sides. The flat case is therefore
+    // read from that real position with its hardest technique set to Hidden Single (which the position before has
+    // not used) and the transitions rebuilt; the falling case (G12) is a real position.
+    slow('labels a new hardest technique also at a flat or lower score (details: G13 with a set rating, G12)', function () {
+      var g13 = analysisOf('G13');
+      var ratings = g13.ratings.slice();
+      ratings[100] = Object.assign({}, ratings[100], { counts: Object.assign({}, ratings[100].counts, { hiddenSingleBox: 0 }) });
+      ratings[101] = Object.assign({}, ratings[101], { hardest: 'hiddenSingleBox' });
+      var plain = toPosition(g13, 'details', 101);
+      expect([plain.before.total, plain.after.total, plain.after.hardest, plain.before.hardest, plain.tier, plain.newHardest])
+        .toEqual([70, 70, 'nakedSingle', 'nakedSingle', null, false]);
+      var set = Object.assign({}, g13, { transitions: R.buildViews(Object.assign({}, g13, { ratings: ratings })).transitions });
+      [[set, 101, 70, 70, 'hiddenSingleBox', 'nakedSingle'],
+        [analysisOf('G12'), 103, 2977, 2724, 'forcingChainLong', 'nishio']
       ].forEach(function (c) {
-        var t = toPosition(analysisOf(c[0]), 'details', c[1]);
+        var t = toPosition(c[0], 'details', c[1]);
         expect([t.before.total, t.after.total, t.change]).toEqual([c[2], c[3], c[3] - c[2]]);
         expect([t.after.hardest, t.before.hardest]).toEqual([c[4], c[5]]);
         expect([t.tier, t.newHardest, t.ratio]).toEqual(['newPeak', true, null]);
@@ -1403,8 +1420,10 @@
       var m = analysisOf('G14').moves[76];
       expect(m.at).toBe(167);
       expect([m.span.rated, m.span.refused, m.span.others, m.span.nulls]).toEqual([16, 13, 0, 2]);
-      var chosen = analysisOf('G13');
-      expect(chosen.moves[into(chosen, 'compact', 5).to].span.chosen).toBeNull();
+      // G13 had the second witness until the WXYZ-Wing (MS10b) changed its dig path; G10 has one (its move 36)
+      var chosen = analysisOf('G10');
+      expect(chosen.moves[36].span.chosen).toBeNull();
+      expect([chosen.moves[36].span.rated, chosen.moves[36].span.refused]).toEqual([5, 0]);
     });
 
     it('classifies the shares of a move: one culprit, together, or mixed (two shares of 0.9 or more)', function () {
@@ -1564,7 +1583,7 @@
     slow('frames the details jumps too: G06 R4C6 and the sign jumps of G11 and G12', function () {
       var g06 = analysisOf('G06');
       var t = toPosition(g06, 'details', 29);
-      expect([t.before.total, t.after.total, t.cause.class]).toEqual([138, 2072, 'single-culprit']);
+      expect([t.before.total, t.after.total, t.cause.class]).toEqual([138, 1293, 'single-culprit']);
       expect(frameLabel('G06', t.cause.frame)).toBe('R4C6');
       expect(t.cause.culprit.otherScore).toBe(138);
       var signs = jumpsOf(analysisOf('G11'), 'details').concat(jumpsOf(analysisOf('G12'), 'details'));

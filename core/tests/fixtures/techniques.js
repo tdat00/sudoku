@@ -29,7 +29,8 @@
  * an ID's fixtures from now on without touching a v2 position. A later technique adds its entry to CURRENT,
  * built from explicit `after` lists or an initial real puzzle state. MS07b replaces the four chain IDs
  * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way; MS08a adds skyscraper,
- * MS08b twoStringKite, MS08c emptyRectangle, MS09a finnedXWing, MS09b finnedSwordfish and MS10a remotePairs.
+ * MS08b twoStringKite, MS08c emptyRectangle, MS09a finnedXWing, MS09b finnedSwordfish, MS10a remotePairs and MS10b
+ * wxyzWing.
  */
 (function () {
   'use strict';
@@ -46,17 +47,17 @@
   ];
 
   /**
-   * The 29 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
-   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the eight
+   * The 30 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
+   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the nine
    * techniques added since: skyscraper (MS08a), twoStringKite (MS08b), emptyRectangle (MS08c), finnedXWing
-   * (MS09a), remotePairs (MS10a), finnedSwordfish (MS09b) and the two chain windows forcingChainLong and
-   * nishioDeep (MS07b).
+   * (MS09a), remotePairs (MS10a), finnedSwordfish (MS09b), wxyzWing (MS10b) and the two chain windows
+   * forcingChainLong and nishioDeep (MS07b).
    */
   var REGISTRY_ORDER = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite', 'remotePairs',
     'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'finnedSwordfish', 'jellyfish', 'xyWing',
-    'xyzWing', 'wWing', 'uniqueRectangle', 'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep'
+    'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle', 'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep'
   ];
 
   /** The techniques the ladder tries before `id`: the position after them is where `id` is reached. */
@@ -759,7 +760,7 @@
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite', 'remotePairs',
     'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'finnedSwordfish', 'jellyfish', 'xyWing',
-    'xyzWing', 'wWing', 'uniqueRectangle'
+    'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle'
   ];
   var THROUGH_SHORT_CHAIN = BELOW_CHAINS.concat(['forcingChain']);
   var THROUGH_LONG_CHAIN = THROUGH_SHORT_CHAIN.concat(['forcingChainLong']);
@@ -799,6 +800,11 @@
   // same plus itself. The position through finnedXWing is where swordfish is reached.
   var BELOW_FSF = THROUGH_FIN.concat(['swordfish']);
   var THROUGH_FSF = BELOW_FSF.concat(['finnedSwordfish']);
+
+  // Where wxyzWing is reached (MS10b, order 155): the techniques before it in the registry (through xyzWing), and
+  // the same plus itself. Explicit lists, so that a technique registered later cannot move a position.
+  var BELOW_WXYZ = THROUGH_FSF.concat(['jellyfish', 'xyWing', 'xyzWing']);
+  var THROUGH_WXYZ = BELOW_WXYZ.concat(['wxyzWing']);
 
   // Real unique puzzles. The first two are the puzzles of the v2 chain fixtures; the next three are famous
   // puzzles of tests/fixtures/classic.js; the last three are minimal puzzles dug by SG.testkit.dig from the
@@ -904,10 +910,32 @@
   // The position before nakedPair: the singles and the locked candidates.
   var BEFORE_NAKED_PAIR = BELOW_SKYSCRAPER.slice(0, BELOW_SKYSCRAPER.indexOf('nakedPair'));
 
+  // Real unique puzzles of the wxyzWing fixtures (MS10b), the puzzles of the seeded corpus of
+  // H.randomStatesWithKnownSolution(classic9, seed 4242) (dug by SG.testkit.dig, unique by construction; the puzzle
+  // of index i is the state #4i), named by their index. The positives are the positions where the registry reaches
+  // wxyzWing (after: BELOW_WXYZ, every technique before it exhausted): it is reached often, 3,522 of 30,000 dug
+  // puzzles of seed 4242 hold one there and 3,323 of 20,000 complete solves use it (MS10b evidence). WX_FIRST is
+  // puzzle 140 (the digits 3, 4, 7 and 9 in R1C2, R1C3, R1C9 and R2C8, only the 4 is not restricted, held by R1C2 and
+  // R2C8; R2C1 and R2C2 lose it); WX_THREE is puzzle 187 (the digits 1, 4, 7 and 9 in R2C7, R6C7, R8C7 and R8C9, the
+  // 4 held by three cells, R9C7 sees all three). WX_SECOND, WX_THIRD and WX_FOURTH (puzzles 161, 105 and 232) are three
+  // more real positions for the soundness supplements. WX_OPEN (puzzle 30) is the negative whose position through
+  // wxyzWing still has 47 open cells and nothing left for it. WX_QUAD (puzzle 116) is the neighbour's negative: its
+  // position before nakedQuad has a genuine naked quad (four digits that are all restricted, so no digit is left to
+  // remove) and no WXYZ-Wing.
+  var WX_FIRST = '6..5.2.1...5..69.2.7........6...4.58......2......3...4..2.8..3..1.....8...4.5.7.9';
+  var WX_THREE = '46.1..59....6.5.2.....7....6..8......397...58..5..9..62.4.6.8...8.21.....96.8....';
+  var WX_SECOND = '9..28.3.6...5.........962..6...7....2...1459..95...7..5...2...3...3..9...83......';
+  var WX_THIRD = '..6.87...79.5.1......4..2..54.6.938.....4..9..13..54...75..28.........2...9.6..3.';
+  var WX_FOURTH = '..23.6....5.1..4..8........1.5.....79...2.1.....8...4...3..5.9..8..9..15.7....6..';
+  var WX_OPEN = '.4..76...8........2..9......8......1...3....4..5.2..69......6326.1..5....9...4.8.';
+  var WX_QUAD = '2..5..6.94..6.........2...4..78.3.2.1........62...9...5...8.4....8.1...7.6......8';
+  // The position before nakedQuad: the singles, the locked candidates, the naked and hidden pairs and triples.
+  var BEFORE_NAKED_QUAD = BELOW_SKYSCRAPER.slice(0, BELOW_SKYSCRAPER.indexOf('nakedQuad'));
+
   /**
    * Current fixtures that replace a historical entry or belong to an ID registered since (skyscraper, MS08a;
-   * twoStringKite, MS08b; emptyRectangle, MS08c; finnedXWing, MS09a; finnedSwordfish, MS09b; remotePairs, MS10a), in
-   * the shape of the
+   * twoStringKite, MS08b; emptyRectangle, MS08c; finnedXWing, MS09a; finnedSwordfish, MS09b; remotePairs, MS10a;
+   * wxyzWing, MS10b), in the shape of the
    * entries of the map. The short chain fixtures have at most 4 links, so that they are forcingChain's under C = 4
    * and C = 6 alike. The long ones are the 5- and 6-link shortest proofs of two dug puzzles: forcingChainLong's
    * under the selected C = 4 (MS07c; under C = 6 they would be forcingChain's). The negatives include positions
@@ -915,6 +943,46 @@
    * forcingChain's.
    */
   var CURRENT = {
+    wxyzWing: {
+      positive: [
+        {
+          name: 'wxyzWing on 3, 4, 7 and 9 in R1C2, R1C3, R1C9 and R2C8, only the 4 is not restricted, R2C1 and R2C2 ' +
+            'lose it (a seeded dug puzzle)',
+          puzzle: WX_FIRST,
+          after: BELOW_WXYZ,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[9, 4], [10, 4]]
+          }
+        },
+        {
+          name: 'wxyzWing on 1, 4, 7 and 9 in R2C7, R6C7, R8C7 and R8C9, the 4 is held by three cells, R9C7 sees all ' +
+            'of them and loses it (a seeded dug puzzle)',
+          puzzle: WX_THREE,
+          after: BELOW_WXYZ,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[78, 4]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'wxyzWing has nothing left to do once the techniques through it are exhausted',
+          puzzle: WX_OPEN,
+          after: THROUGH_WXYZ,
+          propagate: true
+        },
+        {
+          name: 'wxyzWing leaves a naked quad (four digits that are all restricted) to nakedQuad',
+          puzzle: WX_QUAD,
+          after: BEFORE_NAKED_QUAD,
+          propagate: true
+        }
+      ]
+    },
     remotePairs: {
       positive: [
         {
@@ -1345,9 +1413,18 @@
    * on top in the same way. MS09b: finnedSwordfish fires in nearly all of them (281 of the 300), and its three real
    * positions are added on top in the same way. MS10a: remotePairs is rare (6 firings in the 300 random states,
    * against the minimum of 3), so its three real positions, all first positions, are added on top, and its fixtures
-   * are explicit first positions too.
+   * are explicit first positions too. MS10b: wxyzWing is not rare (375 firings in the 300 random states), so its three
+   * real positions, at the position where the registry reaches it, are added on top in the same way.
    */
   var SUPPLEMENTS = {
+    wxyzWing: [
+      { name: 'wxyzWing on 1, 4, 5 and 7 in R1C2, R1C6, R1C8 and R7C8 (a seeded dug puzzle)',
+        puzzle: WX_SECOND, after: BELOW_WXYZ, propagate: true },
+      { name: 'wxyzWing on 1, 2, 5 and 7, the 7 held by three cells (a second seeded dug puzzle)',
+        puzzle: WX_THIRD, after: BELOW_WXYZ, propagate: true },
+      { name: 'wxyzWing on 3, 5, 6 and 8 in R1C7, R4C7, R5C8 and R5C9, three eliminations (a third seeded dug puzzle)',
+        puzzle: WX_FOURTH, after: BELOW_WXYZ, propagate: true }
+    ],
     remotePairs: [
       { name: 'remotePairs on 5 and 6, a chain of five edges (a seeded dug puzzle, first position)',
         puzzle: RP_SECOND, after: null, propagate: true },

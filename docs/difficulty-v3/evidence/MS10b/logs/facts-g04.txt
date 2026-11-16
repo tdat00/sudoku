@@ -1,0 +1,10 @@
+$ node tests\artifacts\difficulty-v3\MS10b\facts-g04.js
+move 26 kind guided phase guided pass guided from 79 to 83 at 83 removed 2 restored 0 sign null
+move 27 kind guided phase guided pass guided from 84 to 86 at 86 removed 2 restored 0 sign null
+move 28 kind exchange phase search pass guided from 89 to 90 at 89 removed 2 restored 2 sign null
+move 29 kind exchange phase search pass guided from 91 to 92 at 91 removed 2 restored 2 sign null
+move 30 kind searchRemove phase search pass guided from 93 to 93 at 93 removed 2 restored 0 sign null
+exchanges 28:half-not-a-position 29:half-not-a-position
+digLog 94
+unsafe board among positions: false
+exit=0 seconds=8.331

@@ -1,4 +1,5 @@
-// Wing techniques (../core/js/engine/tech-wing.js): Remote Pairs, XY-Wing, XYZ-Wing, W-Wing and Unique Rectangle.
+// Wing techniques (../core/js/engine/tech-wing.js): Remote Pairs, XY-Wing, XYZ-Wing, WXYZ-Wing, W-Wing and Unique
+// Rectangle.
 //
 // Where the fixtures come from:
 //   - published: puzzles of the SudokuWiki.org strategy pages (Y-Wing, XYZ-Wing, W-Wing, Unique Rectangles).
@@ -19,7 +20,7 @@
   var H = SG.techHelper;
   var F = SG.fixtures.classic;
 
-  var IDS = ['remotePairs', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle'];
+  var IDS = ['remotePairs', 'xyWing', 'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle'];
   var SEED = 20260101;
   var model4 = H.model('classic4');
   var model6 = H.model('classic6');
@@ -517,6 +518,149 @@
     expect(distancesFrom(model, cells, pattern.ends[0])[pattern.ends[1]]).toBe(pattern.length);
   }
 
+  /**
+   * Independent enumeration of the WXYZ-Wings of a state, from the units alone (`sees`) and digit set first: for every
+   * set of four digits, the open cells whose candidates are a non-empty part of it, every four of them (in ascending
+   * cell order) whose candidates together are the set, the digits that two of the four hold without seeing each
+   * other (the non-restricted ones; exactly one makes a pattern), and the open cells outside the four that still
+   * hold that digit z and see every cell of the four that holds it. With `firstOnly` the first pattern of each set
+   * is enough (a quartet has one set, so the first of all is the first of those). Patterns come in the order of the
+   * finder: the four cells, compared one by one.
+   */
+  function wxyzOf(model, state, firstOnly) {
+    var n = model.cellCount;
+    var cand = state.candidates;
+    var pool = [];
+    for (var c = 0; c < n; c++) {
+      if (open(state, c) && cand[c] !== 0 && size(state, c) <= 4) pool.push(c);
+    }
+    var out = [];
+
+    function pattern(quad, digits) {
+      var holders = {};
+      var apart = [];
+      digits.forEach(function (d) {
+        holders[d] = quad.filter(function (cell) { return has(state, cell, d); });
+        var split = holders[d].some(function (p, i) {
+          return holders[d].some(function (q, j) { return j > i && !sees(model, p, q); });
+        });
+        if (split) apart.push(d);
+      });
+      if (apart.length !== 1) return null;
+      var z = apart[0];
+      var targets = [];
+      for (var t = 0; t < n; t++) {
+        if (open(state, t) && has(state, t, z) && quad.indexOf(t) === -1 &&
+            holders[z].every(function (h) { return sees(model, t, h); })) targets.push(t);
+      }
+      if (targets.length === 0) return null;
+      return { cells: quad, digits: digits, digit: z, targets: targets, holders: holders[z] };
+    }
+
+    function forSet(digits) {
+      var mask = 0;
+      digits.forEach(function (d) { mask |= bit(d); });
+      var inside = pool.filter(function (cell) { return (cand[cell] & ~mask) === 0; });
+      for (var i = 0; i < inside.length; i++) {
+        for (var j = i + 1; j < inside.length; j++) {
+          for (var k = j + 1; k < inside.length; k++) {
+            for (var l = k + 1; l < inside.length; l++) {
+              var quad = [inside[i], inside[j], inside[k], inside[l]];
+              if ((cand[quad[0]] | cand[quad[1]] | cand[quad[2]] | cand[quad[3]]) !== mask) continue;
+              var found = pattern(quad, digits);
+              if (found === null) continue;
+              out.push(found);
+              if (firstOnly) return;
+            }
+          }
+        }
+      }
+    }
+
+    for (var a = 1; a <= model.digits; a++) {
+      for (var b = a + 1; b <= model.digits; b++) {
+        for (var cc = b + 1; cc <= model.digits; cc++) {
+          for (var d = cc + 1; d <= model.digits; d++) forSet([a, b, cc, d]);
+        }
+      }
+    }
+    out.sort(function (x, y) {
+      for (var i = 0; i < 4; i++) if (x.cells[i] !== y.cells[i]) return x.cells[i] - y.cells[i];
+      return 0;
+    });
+    return out;
+  }
+
+  /**
+   * The capacity argument by exhaustion: every way to give each cell of the quartet one of its candidates so that
+   * cells that see each other differ (a consistent filling) uses `digit` in at least one cell. Returns the number
+   * of consistent fillings and of those without `digit`.
+   */
+  function fillings(model, state, quad, digit) {
+    var total = 0;
+    var without = 0;
+    var picked = [];
+    function go(i) {
+      if (i === quad.length) {
+        total++;
+        if (picked.indexOf(digit) === -1) without++;
+        return;
+      }
+      SG.bits.toArray(state.candidates[quad[i]]).forEach(function (d) {
+        for (var k = 0; k < i; k++) {
+          if (picked[k] === d && sees(model, quad[k], quad[i])) return;
+        }
+        picked[i] = d;
+        go(i + 1);
+      });
+    }
+    go(0);
+    return { total: total, without: without };
+  }
+
+  /**
+   * The work units one call of wxyzWing spends, counted again from the rule of the file header (units only, no table
+   * of the finder): every open cell of one to four candidates is tried as the next member of a partial quartet, in
+   * ascending order and only while enough cells are left to complete it; a cell that brings the union above four
+   * digits or a second non-restricted digit is not extended; the count stops at the first complete quartet with a
+   * target.
+   */
+  function wxyzUnits(model, state) {
+    var cand = state.candidates;
+    var pool = [];
+    for (var c = 0; c < model.cellCount; c++) {
+      if (open(state, c) && cand[c] !== 0 && size(state, c) <= 4) pool.push(c);
+    }
+    var units = 0;
+    var stop = false;
+    function extend(chosen, union, non, from) {
+      for (var i = from; i <= pool.length - (4 - chosen.length) && !stop; i++) {
+        units++;
+        var cell = pool[i];
+        var all = union | cand[cell];
+        if (SG.bits.popcount(all) > 4) continue;
+        var apart = non;
+        chosen.forEach(function (p) {
+          if (!sees(model, p, cell)) apart |= cand[p] & cand[cell];
+        });
+        if (SG.bits.popcount(apart) > 1) continue;
+        var quad = chosen.concat([cell]);
+        if (quad.length === 4) {
+          if (apart === 0 || SG.bits.popcount(all) !== 4) continue;
+          var holders = quad.filter(function (q) { return (cand[q] & apart) !== 0; });
+          for (var t = 0; t < model.cellCount && !stop; t++) {
+            if (open(state, t) && (cand[t] & apart) !== 0 && quad.indexOf(t) === -1 &&
+                holders.every(function (h) { return sees(model, t, h); })) stop = true;
+          }
+          continue;
+        }
+        extend(quad, all, apart, i + 1);
+      }
+    }
+    extend([], 0, 0, 0);
+    return units;
+  }
+
   var ORACLE = {
     xyWing: {
       exists: function (model, state) { return xyWings(model, state).length > 0; },
@@ -606,6 +750,32 @@
         }
       }
     },
+    wxyzWing: {
+      exists: function (model, state) { return wxyzOf(model, state, true).length > 0; },
+      verify: function (model, state, f) {
+        var patterns = wxyzOf(model, state, true);
+        expect(patterns.length).toBeGreaterThan(0);
+        var first = patterns[0];
+        expect(f.technique).toBe('wxyzWing');
+        expect(f.placements).toEqual([]);
+        expect(f.i18nKey).toBe('technique.wxyzWing.step');
+        expect(f.cells).toEqual(first.cells);
+        expect(f.i18nArgs).toEqual({ digits: first.digits, digit: first.digit,
+          cells: first.cells.map(function (c) { return H.label(model, c); }) });
+        expect(f.eliminations).toEqual(first.targets.map(function (t) { return [t, first.digit]; }));
+        // the four cells are open, different and hold four digits together; no cell of the quartet is a target
+        f.cells.forEach(function (c) { expect(open(state, c)).toBe(true); });
+        expect(new Set(f.cells).size).toBe(4);
+        expect(SG.bits.popcount(f.cells.reduce(function (m, c) { return m | state.candidates[c]; }, 0))).toBe(4);
+        f.eliminations.forEach(function (e) {
+          expect(f.cells).not.toContain(e[0]);
+          expect(has(state, e[0], first.digit)).toBe(true);
+          first.holders.forEach(function (h) { expect(sees(model, e[0], h)).toBe(true); });
+        });
+        // the proof by exhaustion: no consistent filling of the four cells is without the digit
+        expect(fillings(model, state, f.cells, first.digit).without).toBe(0);
+      }
+    },
     remotePairs: {
       exists: function (model, state) { return remotePairsOf(model, state).length > 0; },
       verify: function (model, state, f) {
@@ -687,6 +857,7 @@
       remotePairs: { baseCost: 35, order: 116, assumesUniqueness: false },
       xyWing: { baseCost: 48, order: 140, assumesUniqueness: false },
       xyzWing: { baseCost: 54, order: 150, assumesUniqueness: false },
+      wxyzWing: { baseCost: 57, order: 155, assumesUniqueness: false },
       wWing: { baseCost: 60, order: 170, assumesUniqueness: false },
       uniqueRectangle: { baseCost: 66, order: 180, assumesUniqueness: true }
     };
@@ -708,11 +879,22 @@
       expect(flagged).toEqual(['uniqueRectangle']);
     });
 
-    it('the five techniques run in the order remotePairs, xyWing, xyzWing, wWing, uniqueRectangle', function () {
-      var ladder = SG.techniques.list().map(function (t) { return t.id; })
-        .filter(function (id) { return IDS.indexOf(id) !== -1; });
-      expect(ladder).toEqual(['remotePairs', 'xyWing', 'xyzWing', 'wWing', 'uniqueRectangle']);
-    });
+    it('the six techniques run in the order remotePairs, xyWing, xyzWing, wxyzWing, wWing, uniqueRectangle',
+      function () {
+        var ladder = SG.techniques.list().map(function (t) { return t.id; })
+          .filter(function (id) { return IDS.indexOf(id) !== -1; });
+        expect(ladder).toEqual(['remotePairs', 'xyWing', 'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle']);
+      });
+
+    it('wxyzWing sits between xyzWing and wWing (R13: order 155 after the unscoped techniques of lower order)',
+      function () {
+        var ids = SG.techniques.list().filter(function (t) { return t.variantScope === null; })
+          .map(function (t) { return t.id; });
+        expect(ids.indexOf('xyzWing') + 1).toBe(ids.indexOf('wxyzWing'));
+        expect(ids.indexOf('wxyzWing') + 1).toBe(ids.indexOf('wWing'));
+        expect(SG.techniques.get('xyzWing').order).toBeLessThan(155);
+        expect(SG.techniques.get('wWing').order).toBeGreaterThan(155);
+      });
 
     it('remotePairs sits between twoStringKite and simpleColouring (RP-01: order 116, after the unscoped ' +
       'techniques of lower order)', function () {
@@ -746,8 +928,8 @@
       return board(model, [[0, '12'], [8, '12'], [9, '12'], [17, '12']]);
     }
 
-    // remotePairs is a bounded finder: a spent budget is "nothing found" there (its own describe below).
-    IDS.filter(function (id) { return id !== 'remotePairs'; }).forEach(function (id) {
+    // remotePairs and wxyzWing are bounded finders: a spent budget is "nothing found" there (their own describes below).
+    IDS.filter(function (id) { return id !== 'remotePairs' && id !== 'wxyzWing'; }).forEach(function (id) {
       it(id + ' calls ctx.check() and lets a budget error through', function () {
         var model = model9;
         var state = patternBoard(id);
@@ -1855,6 +2037,732 @@
       var chain = inducedChain(model4, 4, 0);
       if (chain === null) SG.test.skip('no induced chain of four cells with a common peer on the 4 x 4 board');
       expect(agree(model4, pairState(model4, chain, '12'), 'the 4 x 4 chain')).toBe(true);
+    });
+
+    it('agrees with the oracle on every published position', function () {
+      Object.keys(PUBLISHED).forEach(function (name) {
+        agree(model9, H.makeState(model9, PUBLISHED[name]), 'published ' + name);
+      });
+    });
+  });
+
+  // WXYZ-Wing (R13). The vector: A = R1C1 {1,4}, B = R1C5 {1,2}, C = R1C9 {2,3} and D = R5C9 {3,4}. The digit 1 is held by
+  // A and B (row 1), the 2 by B and C (row 1), the 3 by C and D (column 9): each pair sees itself, so they are
+  // restricted. The 4 is held by A and D, which do not see each other: z = 4. R5C1 sees A (column 1) and D (row 5) and
+  // loses the 4; R1C9 also sees both but is C, which holds no 4.
+  var WX_VECTOR = [0, 4, 8, 44];
+  var WX_MASKS = ['14', '12', '23', '34'];
+
+  /** A blank board where the cells hold the masks (the vector's by default); every other cell has all digits. */
+  function wxState(model, cells, masks) {
+    return board(model, cells.map(function (c, i) { return [c, (masks || WX_MASKS)[i]]; }));
+  }
+
+  function wxFind(model, state, ctxOptions) {
+    return SG.techniques.get('wxyzWing').find(model, state, SG.techniques.createContext(model, ctxOptions || {}));
+  }
+
+  /** One call of the registered finder or of the seam (`seam`, and a `limit` given or not) with its observer. */
+  function wxObserved(model, state, opts) {
+    var records = [];
+    var options = opts || {};
+    var ctx = SG.techniques.createContext(model, Object.assign({
+      onPatternWork: function (r) { records.push(r); }
+    }, options.ctx));
+    var finding = options.seam
+      ? SG.wingSearch.wxyzWing(model, state, ctx, options.limit === undefined ? undefined : { workLimit: options.limit })
+      : SG.techniques.get('wxyzWing').find(model, state, ctx);
+    return { finding: finding, records: records, record: records[0] };
+  }
+
+  /** Every cell holds {1, 2, 3, 4}: no quartet is a WXYZ-Wing (a unit's four cells have no non-restricted digit). */
+  function wxFlood(model) {
+    var state = SG.model.initState(model);
+    for (var c = 0; c < model.cellCount; c++) state.candidates[c] = 15;
+    return state;
+  }
+
+  /** The cell at a layout row and column of a multi-grid board. */
+  function byLayout(model, row, col) {
+    for (var c = 0; c < model.cellCount; c++) {
+      if (model.layout.cellRow[c] === row && model.layout.cellCol[c] === col) return c;
+    }
+    throw new Error('no cell at layout row ' + row + ' column ' + col);
+  }
+
+  /** Marks a cell as solved (the state is no longer peer consistent, which find() must tolerate). */
+  function solveCell(state, cell, digit) {
+    state.value[cell] = digit;
+    state.candidates[cell] = bit(digit);
+    state.unsolvedCount--;
+  }
+
+  describe('wxyzWing (R13): geometry', function () {
+    it('the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed',
+      function () {
+        var state = wxState(model9, WX_VECTOR);
+        var f = check('wxyzWing', model9, state, {
+          cells: ['R1C1', 'R1C5', 'R1C9', 'R5C9'],
+          eliminations: [['R5C1', 4]],
+          args: { digits: [1, 2, 3, 4], digit: 4, cells: ['R1C1', 'R1C5', 'R1C9', 'R5C9'] }
+        });
+        expect(f.cells).toEqual([0, 4, 8, 44]);
+        expect(f.eliminations).toEqual([[36, 4]]);
+        expect(f.placements).toEqual([]);
+        expect(f.i18nKey).toBe('technique.wxyzWing.step');
+        expect(Object.keys(f.i18nArgs)).toEqual(['digits', 'digit', 'cells']);
+        expect(JSON.parse(JSON.stringify(f.i18nArgs))).toEqual(f.i18nArgs);
+        // the other cell that sees A and D is C, which has no 4 to lose; no cell of the quartet is touched
+        expect(victims(model9, state, [0, 44], 4)).toEqual([36]);
+        f.eliminations.forEach(function (e) { expect(f.cells).not.toContain(e[0]); });
+      });
+
+    it('a target loses only z, and only if it still has it', function () {
+      var state = wxState(model9, WX_VECTOR);
+      dropDigit(state, 4, [36]);
+      checkNone('wxyzWing', model9, state);
+      expect(state.candidates[36] & bit(5)).not.toBe(0);
+    });
+
+    it('the transposed vector: the quartet in ascending cell order, the target R1C5', function () {
+      var cells = [at(model9, 0, 0), at(model9, 4, 0), at(model9, 8, 0), at(model9, 8, 4)];
+      var f = check('wxyzWing', model9, wxState(model9, cells), {
+        eliminations: [['R1C5', 4]],
+        args: { digits: [1, 2, 3, 4], digit: 4, cells: ['R1C1', 'R5C1', 'R9C1', 'R9C5'] }
+      });
+      expect(f.cells).toEqual([0, 36, 72, 76]);
+    });
+
+    it('works with any four digits: the digits are listed ascending, z is the one that is not restricted', function () {
+      var f = check('wxyzWing', model9, wxState(model9, WX_VECTOR, ['29', '25', '57', '79']), {
+        eliminations: [['R5C1', 9]],
+        args: { digits: [2, 5, 7, 9], digit: 9, cells: ['R1C1', 'R1C5', 'R1C9', 'R5C9'] }
+      });
+      expect(f.eliminations).toEqual([[36, 9]]);
+      // z need not be the highest: here the 2 is the only digit held by cells that do not see each other
+      var g = check('wxyzWing', model9, wxState(model9, WX_VECTOR, ['12', '13', '34', '24']), {
+        eliminations: [['R5C1', 2]],
+        args: { digits: [1, 2, 3, 4], digit: 2 }
+      });
+      expect(g.eliminations).toEqual([[36, 2]]);
+    });
+
+    it('two non-restricted digits prove nothing: with a 1 added to D, the 1 (A and D) joins the 4', function () {
+      var state = wxState(model9, WX_VECTOR, ['14', '12', '23', '134']);
+      expect(sees(model9, 0, 44)).toBe(false);
+      checkNone('wxyzWing', model9, state);
+    });
+
+    it('no non-restricted digit proves nothing: four cells of one row are a naked quad, not a WXYZ-Wing', function () {
+      var state = wxState(model9, [0, 1, 2, 3], ['12', '23', '34', '14']);
+      checkNone('wxyzWing', model9, state);
+      // the neighbour owns it: nakedQuad removes the four digits from the rest of the row
+      expect(SG.techniques.get('nakedQuad').find(model9, state, SG.techniques.createContext(model9, {}))).not.toBeNull();
+    });
+
+    it('the union must be four digits: five digits, and three digits (an XY-Wing, which is its own technique)',
+      function () {
+        checkNone('wxyzWing', model9, wxState(model9, WX_VECTOR, ['14', '125', '23', '34']));
+        // R1C1 {1,2} sees R1C5 {1,3} and R5C1 {2,3}, which do not see each other: an XY-Wing that removes the 3 from R5C5;
+        // a fourth cell of the same digits leaves the union at three
+        var state = wxState(model9, [0, 4, 36, 80], ['12', '13', '23', '12']);
+        H.expectFinding(SG.test, 'xyWing', state, { eliminations: [['R5C5', 3]] }, { model: model9 });
+        checkNone('wxyzWing', model9, state);
+        // and an XYZ-Wing alone has three cells: nothing to enumerate
+        var xyz = wxState(model9, [0, 1, 9], ['123', '13', '23']);
+        checkNone('wxyzWing', model9, xyz);
+      });
+
+    it('a z occurrence that the target misses proves nothing: with a 4 added to B, R5C1 no longer sees all of them',
+      function () {
+        var state = wxState(model9, WX_VECTOR, ['14', '124', '23', '34']);
+        // the 4 is held by A, B and D; R5C1 sees A and D but not B
+        expect(sees(model9, 36, 0) && sees(model9, 36, 44) && !sees(model9, 36, 4)).toBe(true);
+        expect(wxyzOf(model9, state, true)).toEqual([]);
+        checkNone('wxyzWing', model9, state);
+      });
+
+    // A = R1C1 {1,4}, B = R2C2 {2,4}, C = R1C9 {3,4} hold the 4 (A sees B and C, B and C do not see each other); Y = R3C3
+    // {1,2} links A (the 1) and B (the 2) and the 3 is held once. R1C2 sees all three and R1C3 too (box 1 holds R2C2);
+    // R1C5 sees A and C only and keeps the 4. Only z is not restricted: the 3, held by one cell, is restricted too.
+    var THREE = { cells: [0, 10, 8, 20], masks: ['14', '24', '34', '12'] };
+
+    it('every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is ' +
+      'restricted', function () {
+        var state = wxState(model9, THREE.cells, THREE.masks);
+        var f = check('wxyzWing', model9, state, {
+          cells: ['R1C1', 'R1C9', 'R2C2', 'R3C3'],
+          eliminations: [['R1C2', 4], ['R1C3', 4]],
+          args: { digits: [1, 2, 3, 4], digit: 4, cells: ['R1C1', 'R1C9', 'R2C2', 'R3C3'] }
+        });
+        expect(f.cells).toEqual([0, 8, 10, 20]);
+        expect(f.eliminations).toEqual([[1, 4], [2, 4]]);
+        expect(f.i18nArgs.cells).toEqual(['R1C1', 'R1C9', 'R2C2', 'R3C3']);
+        expect(sees(model9, 4, 0) && sees(model9, 4, 8) && !sees(model9, 4, 10)).toBe(true);
+        expect(f.eliminations.map(function (e) { return e[0]; })).not.toContain(4);
+        // the digit held once (the 3 of C) is no restriction, and the 4 is the only digit of two cells that do not
+        // see each other
+        expect(sees(model9, 10, 8)).toBe(false);
+      });
+
+    it('a quartet cell that sees every z cell has no z to lose, and is no target', function () {
+      var state = wxState(model9, [0, 10, 8, 2], ['14', '24', '34', '12']);
+      var f = check('wxyzWing', model9, state, {
+        eliminations: [['R1C2', 4]],
+        args: { digits: [1, 2, 3, 4], digit: 4 }
+      });
+      expect(f.cells).toEqual([0, 2, 8, 10]);
+      expect(sees(model9, 2, 0) && sees(model9, 2, 8) && sees(model9, 2, 10)).toBe(true);
+      expect(has(state, 2, 4)).toBe(false);
+    });
+
+    it('a quartet cell never is a target even when it holds z and sees every other z cell: it does not see itself',
+      function () {
+        // R1C1 holds the 4 and sees the other two z cells R2C2 (box 1) and R1C9 (row 1)
+        var state = wxState(model9, THREE.cells, THREE.masks);
+        expect(sees(model9, 0, 10) && sees(model9, 0, 8)).toBe(true);
+        var f = wxFind(model9, state);
+        expect(f.eliminations.map(function (e) { return e[0]; })).not.toContain(0);
+        expect(f.eliminations.map(function (e) { return e[0]; })).not.toContain(8);
+        expect(f.eliminations.map(function (e) { return e[0]; })).not.toContain(10);
+      });
+
+    it('solved cells take no part: a solved target, and a solved cell of the quartet', function () {
+      [4, 5].forEach(function (digit) {
+        // the solved cell holds the digit z itself (a placed 4) or another one: either way it loses nothing
+        var targetSolved = wxState(model9, WX_VECTOR);
+        solveCell(targetSolved, 36, digit);
+        none('wxyzWing', model9, targetSolved);
+      });
+      var cellSolved = wxState(model9, WX_VECTOR);
+      solveCell(cellSolved, 44, 4);
+      none('wxyzWing', model9, cellSolved);
+      // a state of three open cells and a solved one has no quartet
+      expect(wxObserved(model9, cellSolved).record.work).toBe(0);
+    });
+
+    it('a naked single is an open cell like any other: here D holds only the 4, the quartet is still valid (R13 ' +
+      'says four open cells)', function () {
+        var state = wxState(model9, WX_VECTOR, ['14', '12', '23', '4']);
+        var f = check('wxyzWing', model9, state, {
+          eliminations: [['R5C1', 4]],
+          args: { digits: [1, 2, 3, 4], digit: 4, cells: ['R1C1', 'R1C5', 'R1C9', 'R5C9'] }
+        });
+        expect(f.cells).toEqual([0, 4, 8, 44]);
+      });
+
+    it('the first quartet in ascending cell order wins, with all its targets; the other is found when it is alone',
+      function () {
+        // a second WXYZ-Wing on the digits 5 to 8: R7C1 {5,8}, R7C5 {5,6}, R7C9 {6,7}, R3C9 {7,8}, target R3C1
+        var second = [at(model9, 6, 0), at(model9, 6, 4), at(model9, 6, 8), at(model9, 2, 8)];
+        var secondMasks = ['58', '56', '67', '78'];
+        var both = wxState(model9, WX_VECTOR.concat(second), WX_MASKS.concat(secondMasks));
+        var f = check('wxyzWing', model9, both, { eliminations: [['R5C1', 4]] });
+        expect(f.cells).toEqual([0, 4, 8, 44]);
+        expect(wxyzOf(model9, both).map(function (p) { return p.cells.join(','); }))
+          .toEqual(['0,4,8,44', '26,54,58,62']);
+        var alone = wxState(model9, second, secondMasks);
+        var g = check('wxyzWing', model9, alone, {
+          eliminations: [['R3C1', 8]],
+          args: { digits: [5, 6, 7, 8], digit: 8, cells: ['R3C9', 'R7C1', 'R7C5', 'R7C9'] }
+        });
+        expect(g.cells).toEqual([26, 54, 58, 62]);
+      });
+
+    it('the answer is the same after another call, the state is not written, and a Finding\'s arrays are the ' +
+      'call\'s own', function () {
+        var state = wxState(model9, WX_VECTOR);
+        var snapshot = SG.model.cloneState(state);
+        var a = wxFind(model9, state);
+        a.cells.push(99);
+        a.eliminations.push([1, 1]);
+        a.i18nArgs.digits.push(9);
+        a.i18nArgs.cells.push('x');
+        var b = wxFind(model9, state);
+        expect(b.cells).toEqual([0, 4, 8, 44]);
+        expect(b.eliminations).toEqual([[36, 4]]);
+        expect(b.i18nArgs).toEqual({ digits: [1, 2, 3, 4], digit: 4, cells: ['R1C1', 'R1C5', 'R1C9', 'R5C9'] });
+        expect(state.candidates).toEqual(snapshot.candidates);
+        expect(state.value).toEqual(snapshot.value);
+        expect(state.unsolvedCount).toBe(snapshot.unsolvedCount);
+      });
+
+    it('a cell of five candidates or more is never part of a quartet', function () {
+      var five = wxState(model9, WX_VECTOR, ['14', '12', '23', '34']);
+      five.candidates[0] = maskOf('14567');
+      checkNone('wxyzWing', model9, five);
+      // the same cell with the digits of the quartet only is the vector again
+      expect(wxFind(model9, wxState(model9, WX_VECTOR))).not.toBeNull();
+    });
+  });
+
+  describe('wxyzWing (R13): actual peers on other unit shapes', function () {
+    function variantModel(id) {
+      if (!SG.testkit.hasVariant(id)) SG.test.skip('no board of ' + id + ' can be built here');
+      return H.model(id);
+    }
+
+    // A cage is a partial all-different unit: cage-mates are real peers, also when they share no complete row, column or
+    // box. C = R1C9 and D' = R5C8 share no unit, so the 3 of the vector's C and D is restricted only through the cage.
+    it('a cage-only edge counts as a peer: the 3 is restricted through the cage, and the uncaged board finds nothing',
+      function () {
+        var cells = [0, 4, 8, 43];
+        var caged = rebuild(model9, 'killer', {
+          units: [{ cells: [8, 43], meta: { kind: 'cage', gridIndex: 0, label: 'K1', partial: true } }],
+          cages: [{ cells: [8, 43], sum: 9, distinct: true }]
+        });
+        expect(sees(caged, 8, 43)).toBe(true);
+        expect(Array.prototype.indexOf.call(caged.peers[8], 43)).not.toBe(-1);
+        expect(sees(model9, 8, 43)).toBe(false);
+        var f = check('wxyzWing', caged, wxState(caged, cells), {
+          eliminations: [['R1C8', 4], ['R5C1', 4]],
+          args: { digits: [1, 2, 3, 4], digit: 4, cells: ['R1C1', 'R1C5', 'R1C9', 'R5C8'] }
+        });
+        expect(f.cells).toEqual([0, 4, 8, 43]);
+        expect(f.eliminations).toEqual([[7, 4], [36, 4]]);
+        // without the cage the 3 and the 4 are both unrestricted: two non-restricted digits
+        checkNone('wxyzWing', model9, wxState(model9, cells));
+      });
+
+    it('diagonalX: a restricted digit seen only along the diagonal; classic9 has no such edge', function () {
+      var diag = variantModel('diagonalX');
+      // R1C1 and R5C5 are on the main diagonal and share no row, column or box
+      expect(sees(diag, 0, 40)).toBe(true);
+      expect(sees(model9, 0, 40)).toBe(false);
+      // A = R1C1 {1,4}, B = R5C5 {1,2} (the 1 through the diagonal), C = R5C9 {2,3} (row 5), D = R2C9 {3,4} (column 9)
+      var cells = [0, 40, 44, 17];
+      var state = wxState(diag, cells);
+      var f = check('wxyzWing', diag, state, {
+        args: { digits: [1, 2, 3, 4], digit: 4, cells: ['R1C1', 'R2C9', 'R5C5', 'R5C9'] }
+      });
+      expect(f.eliminations.length).toBeGreaterThan(0);
+      checkNone('wxyzWing', model9, wxState(model9, cells));
+    });
+
+    it('samurai: two cells that share a layout row but no unit are not peers, so the digit between them is not ' +
+      'restricted', function () {
+        var samurai = variantModel('samurai');
+        // A = G1-R1C1 and B = G2-R1C1 lie in layout row 1; T = G1-R4C1 and D = G2-R4C2 in layout row 4. Were the layout
+        // rows units, A-B-C-D (B-C and C-D are real peers) would be a vector with the target T
+        var A = byLayout(samurai, 0, 0);
+        var B = byLayout(samurai, 0, 12);
+        var C = byLayout(samurai, 1, 13);
+        var D = byLayout(samurai, 3, 13);
+        var T = byLayout(samurai, 3, 0);
+        expect(samurai.layout.cellRow[A]).toBe(samurai.layout.cellRow[B]);
+        expect(samurai.layout.cellRow[T]).toBe(samurai.layout.cellRow[D]);
+        expect(sees(samurai, A, B)).toBe(false);
+        expect(sees(samurai, T, D)).toBe(false);
+        expect(sees(samurai, B, C) && sees(samurai, C, D) && sees(samurai, T, A)).toBe(true);
+        var state = wxState(samurai, [A, B, C, D]);
+        checkNone('wxyzWing', samurai, state);
+        expect(has(state, T, 4)).toBe(true);
+      });
+
+    // Constructed vectors on every board: the lowest induced chain of four cells whose ends see a common cell (only
+    // neighbours see each other), holding the masks of the vector. Each setup must fire, so a finder that never
+    // fires on a board shape cannot agree vacuously.
+    [['classic9', 'classic9'], ['classic6', 'classic6'], ['12 digits', null], ['16 digits', null],
+      ['diagonalX', 'diagonalX'], ['hyper', 'hyper'], ['jigsaw9', 'jigsaw9'], ['samurai', 'samurai'],
+      ['sohei', 'sohei'], ['flower', 'flower'], ['butterfly', 'butterfly']].forEach(function (setup) {
+      it('finds the constructed vector on ' + setup[0] + ' (three start cells), as the enumeration does', function () {
+        var model = setup[1] === null ? (setup[0] === '12 digits' ? model12 : model16) : null;
+        if (model === null) {
+          if (!SG.testkit.hasVariant(setup[1])) SG.test.skip('no board of ' + setup[1] + ' can be built here');
+          model = H.model(setup[1]);
+        }
+        var seen = {};
+        var fired = 0;
+        [0, Math.floor(model.cellCount / 3), Math.floor(2 * model.cellCount / 3)].forEach(function (from) {
+          var chain = inducedChain(model, 4, from);
+          if (chain === null || seen[chain.join(',')]) return;
+          seen[chain.join(',')] = true;
+          var state = wxState(model, chain);
+          var out = wxObserved(model, state, { seam: true, limit: 100000000 });
+          expect(out.record.capHit).toBeNull();
+          var f = check('wxyzWing', model, state, {});
+          expect(out.finding).toEqual(f);
+          expect(f.cells).toEqual(chain.slice().sort(byNumber));
+          expect(f.i18nArgs.digit).toBe(4);
+          fired++;
+        });
+        expect(fired).toBeGreaterThanOrEqual(2);
+      });
+    });
+
+    it('classic4: every cell holds four digits already, so the enumeration decides which quartet is the first',
+      function () {
+        var chain = inducedChain(model4, 4, 0);
+        if (chain === null) SG.test.skip('no induced chain of four cells with a common peer on the 4 x 4 board');
+        var state = wxState(model4, chain);
+        var found = wxFind(model4, state) !== null;
+        expect(found).toBe(ORACLE.wxyzWing.exists(model4, state));
+        if (found) ORACLE.wxyzWing.verify(model4, state, wxFind(model4, state));
+      });
+  });
+
+  describe('wxyzWing (R13): real positions', function () {
+    var entry = SG.fixtures.techniques.byId.wxyzWing;
+
+    // The exact Findings of the two real positive fixtures (core/tests/fixtures/techniques.js).
+    var REAL = [
+      { cells: ['R1C2', 'R1C3', 'R1C9', 'R2C8'], eliminations: [['R2C1', 4], ['R2C2', 4]],
+        args: { digits: [3, 4, 7, 9], digit: 4, cells: ['R1C2', 'R1C3', 'R1C9', 'R2C8'] } },
+      { cells: ['R2C7', 'R6C7', 'R8C7', 'R8C9'], eliminations: [['R9C7', 4]],
+        args: { digits: [1, 4, 7, 9], digit: 4, cells: ['R2C7', 'R6C7', 'R8C7', 'R8C9'] } }
+    ];
+
+    function positionOf(fixture) {
+      return fixture.after !== null ? H.stateAfter(model9, fixture.puzzle, fixture.after)
+        : H.makeState(model9, fixture.puzzle, { propagate: fixture.propagate });
+    }
+
+    it('has two positive and two negative fixtures; the positives are the positions where the registry reaches it',
+      function () {
+        expect(entry.positive).toHaveLength(2);
+        expect(entry.negative).toHaveLength(2);
+        var below = SG.fixtures.techniques.registryOrder.slice(0, SG.fixtures.techniques.registryOrder.indexOf('wxyzWing'));
+        entry.positive.forEach(function (fixture) { expect(fixture.after.slice().sort()).toEqual(below.slice().sort()); });
+        // nothing left after the technique itself; the neighbour's boundary is the position before nakedQuad
+        expect(entry.negative[0].after).toContain('wxyzWing');
+        expect(entry.negative[0].after).toContain('xyzWing');
+        expect(entry.negative[1].after).not.toContain('nakedQuad');
+      });
+
+    REAL.forEach(function (want, i) {
+      it('finds the exact Finding of real position ' + (i + 1) + ', sound against an independent completion',
+        function () {
+          var fixture = entry.positive[i];
+          var givens = H.parsePuzzle(model9, fixture.puzzle);
+          // the puzzle has exactly one solution (plain depth first search, no technique)
+          expect(SG.dfs.countSolutions(model9, givens, 2)).toBe(1);
+          var solution = SG.dfs.solve(model9, givens);
+          var state = positionOf(fixture);
+          var finding = check('wxyzWing', model9, state, want);
+          expect(finding.eliminations.length).toBe(want.eliminations.length);
+          finding.eliminations.forEach(function (e) { expect(solution[e[0]]).not.toBe(e[1]); });
+          // the proof, read from the solution: the restricted digits occur at most once among the four cells, so z
+          // is held by one of them
+          var z = finding.i18nArgs.digit;
+          var values = finding.cells.map(function (c) { return solution[c]; });
+          expect(finding.cells.some(function (c) { return has(state, c, z) && solution[c] === z; })).toBe(true);
+          finding.i18nArgs.digits.filter(function (d) { return d !== z; }).forEach(function (d) {
+            expect(values.filter(function (v) { return v === d; }).length).toBeLessThanOrEqual(1);
+          });
+          // the position without the eliminated candidates still completes, and only to that solution
+          var reduced = SG.model.cloneState(state);
+          finding.eliminations.forEach(function (e) {
+            expect(SG.constraints.eliminate(model9, reduced, e[0], e[1])).toBe(true);
+          });
+          var done = SG.dfs.searchFrom(model9, reduced, { limit: 2 });
+          expect(done.found).toBe(1);
+          expect(Array.from(done.solution)).toEqual(Array.from(solution));
+          // no cheaper technique of the registry finds anything here: wxyzWing is the first one reached
+          SG.techniques.list().filter(function (t) { return t.variantScope === null && t.order < 155; })
+            .forEach(function (t) {
+              expect([t.id, t.find(model9, state, SG.techniques.createContext(model9, { assumeUniqueness: true })) === null])
+                .toEqual([t.id, true]);
+            });
+        });
+    });
+
+    it('finds nothing at the negative positions: nothing left after it, and a naked quad', function () {
+      entry.negative.forEach(function (fixture) {
+        var state = positionOf(fixture);
+        H.expectNoFinding(SG.test, 'wxyzWing', state);
+        expect(wxyzOf(model9, state)).toEqual([]);
+      });
+      // the second position holds a genuine naked quad, which belongs to nakedQuad
+      var quad = SG.techniques.get('nakedQuad').find(model9, positionOf(entry.negative[1]),
+        SG.techniques.createContext(model9, {}));
+      expect(quad).not.toBeNull();
+      expect(positionOf(entry.negative[0]).unsolvedCount).toBeGreaterThan(0);
+    });
+
+    it('the three supplements of the soundness sweep are real unique positions that hold a WXYZ-Wing', function () {
+      var supplements = SG.fixtures.techniques.supplements.wxyzWing;
+      expect(supplements).toHaveLength(3);
+      supplements.forEach(function (fixture) {
+        expect(SG.dfs.countSolutions(model9, H.parsePuzzle(model9, fixture.puzzle), 2)).toBe(1);
+        var state = positionOf(fixture);
+        expect(wxFind(model9, state)).not.toBeNull();
+        check('wxyzWing', model9, state, {});
+      });
+    });
+  });
+
+  describe('wxyzWing (R13): work limit, budget and cancellation', function () {
+    // Every cell of the 4 x 4 board holds {1, 2, 3, 4}: a quartet inside a unit has four restricted digits, any other
+    // has two or more unrestricted ones, so nothing is found and the whole enumeration is spent. The same on a 9 x 9
+    // board spends more than the limit.
+    var FLOOD4_UNITS = 583;
+
+    it('has R10\'s limit of 50000, and the registered finder reports it for every call', function () {
+      expect(SG.wingSearch.WXYZ_WORK_LIMIT).toBe(50000);
+      var out = wxObserved(model9, wxState(model9, WX_VECTOR));
+      expect(out.finding).not.toBeNull();
+      expect(out.records).toEqual([{ id: 'wxyzWing', work: 4, limit: 50000, capHit: null, retained: null }]);
+    });
+
+    it('counts one unit per cell tested as the next member of a partial quartet, from a fresh counter', function () {
+      // the vector: four pool cells, one test each; without a target the same four tests; fewer than four cells none
+      expect(wxObserved(model9, wxState(model9, WX_VECTOR)).record.work).toBe(4);
+      var bare = wxState(model9, WX_VECTOR);
+      dropDigit(bare, 4, [36]);
+      var none4 = wxObserved(model9, bare);
+      expect(none4.finding).toBeNull();
+      expect(none4.record).toEqual({ id: 'wxyzWing', work: 4, limit: 50000, capHit: null, retained: null });
+      expect(wxObserved(model9, wxState(model9, WX_VECTOR.slice(0, 3))).record.work).toBe(0);
+      expect(wxObserved(model9, board(model9, [])).record.work).toBe(0);
+      // a flood: the exact count, pinned and recounted from the rule of the header
+      var flood = wxFlood(model4);
+      var first = wxObserved(model4, flood);
+      expect(first.finding).toBeNull();
+      expect(first.record).toEqual({ id: 'wxyzWing', work: FLOOD4_UNITS, limit: 50000, capHit: null, retained: null });
+      expect(wxyzUnits(model4, flood)).toBe(FLOOD4_UNITS);
+      var second = wxObserved(model4, flood);
+      expect(second.record).toEqual(first.record);
+      expect(second.record).not.toBe(first.record);
+    });
+
+    it('is counted as the rule says on real states: every call of 60 states agrees with the recount', function () {
+      var items = H.randomStatesWithKnownSolution(model9, SG.testkit.rng.create(777), 60);
+      var most = 0;
+      items.forEach(function (item, index) {
+        var out = wxObserved(model9, item.state);
+        expect(out.record.capHit).toBeNull();
+        if (out.record.work !== wxyzUnits(model9, item.state)) {
+          fail('state #' + index + ': ' + out.record.work + ' units counted, ' + wxyzUnits(model9, item.state) + ' by the rule');
+        }
+        most = Math.max(most, out.record.work);
+      });
+      expect(most).toBeGreaterThan(100);
+    });
+
+    it('ends a call whose limit is spent with nothing found (never a finding), and says so', function () {
+      var flood = wxFlood(model4);
+      [0, 1, 100, FLOOD4_UNITS - 1].forEach(function (limit) {
+        var out = wxObserved(model4, flood, { seam: true, limit: limit });
+        expect(out.finding).toBeNull();
+        expect(out.record).toEqual({ id: 'wxyzWing', work: limit, limit: limit, capHit: 'work', retained: null });
+      });
+      var exact = wxObserved(model4, flood, { seam: true, limit: FLOOD4_UNITS });
+      expect(exact.record.capHit).toBeNull();
+      expect(exact.record.work).toBe(FLOOD4_UNITS);
+      // the default limit of the seam is the registered one, which a 9 x 9 flood spends
+      var flood9 = wxFlood(model9);
+      var spent = wxObserved(model9, flood9, { seam: true });
+      expect(spent.finding).toBeNull();
+      expect(spent.record).toEqual({ id: 'wxyzWing', work: 50000, limit: 50000, capHit: 'work', retained: null });
+      expect(wxObserved(model9, flood9).record).toEqual(spent.record);
+    });
+
+    it('is complete or empty: the vector is found with its whole 4 units and lost with 3 (capped prefix)',
+      function () {
+        var state = wxState(model9, WX_VECTOR);
+        var plain = wxObserved(model9, state).finding;
+        var kept = wxObserved(model9, state, { seam: true, limit: 4 });
+        expect(kept.finding).toEqual(plain);
+        expect(kept.record).toEqual({ id: 'wxyzWing', work: 4, limit: 4, capHit: null, retained: null });
+        [3, 2, 1, 0].forEach(function (limit) {
+          var lost = wxObserved(model9, state, { seam: true, limit: limit });
+          expect(lost.finding).toBeNull();
+          expect(lost.record).toEqual({ id: 'wxyzWing', work: limit, limit: limit, capHit: 'work', retained: null });
+        });
+        // the capped call is repeatable
+        expect(wxObserved(model9, state, { seam: true, limit: 3 }).record).toEqual(
+          wxObserved(model9, state, { seam: true, limit: 3 }).record);
+      });
+
+    it('floors a fractional limit and rejects an invalid one with solver.invalidOption', function () {
+      var state = wxState(model9, WX_VECTOR);
+      expect(wxObserved(model9, state, { seam: true, limit: 2.9 }).record.work).toBe(2);
+      [-1, NaN, Infinity, '5', null].forEach(function (workLimit) {
+        var err = thrownBy(function () { wxObserved(model9, state, { seam: true, limit: workLimit }); });
+        expect([String(workLimit), err && err.code]).toEqual([String(workLimit), 'solver.invalidOption']);
+        expect(err.message).toContain('wingSearch.wxyzWing workLimit');
+      });
+      // an absent option object, a null one and an option object without a limit use the registered limit
+      var ctx = SG.techniques.createContext(model9, {});
+      expect(SG.wingSearch.wxyzWing(model9, state, ctx)).not.toBeNull();
+      expect(SG.wingSearch.wxyzWing(model9, state, ctx, null)).not.toBeNull();
+      expect(SG.wingSearch.wxyzWing(model9, state, ctx, {})).not.toBeNull();
+    });
+
+    /**
+     * The work done at each check of the parent budget: a context whose k-th check throws a spent budget lets the
+     * record of the (swallowed) call tell how many units were spent at that check.
+     */
+    function checkWorks(model, state, limit) {
+      var base = SG.techniques.createContext(model, {});
+      function attempt(target) {
+        var k = 0;
+        var record = null;
+        var ctx = Object.assign({}, base, {
+          options: { onPatternWork: function (r) { record = r; } },
+          check: function () {
+            k++;
+            if (k === target) throw new SG.errors.GenerationError('budget.exceeded', { reason: 'nodes' });
+          }
+        });
+        var finding = SG.wingSearch.wxyzWing(model, state, ctx, limit === undefined ? undefined : { workLimit: limit });
+        return { checks: k, record: record, finding: finding };
+      }
+      var free = attempt(0);
+      var works = [];
+      for (var target = 1; target <= free.checks; target++) {
+        var spent = attempt(target);
+        expect(spent.finding).toBeNull();
+        expect(spent.record.capHit).toBeNull();
+        works.push(spent.record.work);
+      }
+      var gaps = works.map(function (w, i) { return w - (i === 0 ? 0 : works[i - 1]); });
+      gaps.push(free.record.work - works[works.length - 1]);
+      return { works: works, max: Math.max.apply(null, gaps), free: free };
+    }
+
+    it('checks the parent budget at entry and so that at most 256 units pass between two checks', function () {
+      var out = checkWorks(model4, wxFlood(model4));
+      expect(out.works).toEqual([0, 256, 512]);
+      expect(out.max).toBeLessThanOrEqual(256);
+      // a call that ends at its limit keeps the same cadence
+      expect(checkWorks(model9, wxFlood(model9), 1000).works).toEqual([0, 256, 512, 768]);
+      // a small call has only the entry check
+      expect(checkWorks(model9, wxState(model9, WX_VECTOR)).works).toEqual([0]);
+    });
+
+    it('reports a spent budget as nothing found and lets cancellation and other errors through', function () {
+      var flood = wxFlood(model9);
+      var parent = SG.budget.create({ nodes: 3 });
+      var spent = wxObserved(model9, flood, { ctx: { budget: parent } });
+      expect(spent.finding).toBeNull();
+      expect(spent.records).toHaveLength(1);
+      expect(spent.record.capHit).toBeNull();
+      expect(spent.record.work).toBeLessThan(50000);
+      // capHit null is no proof of a complete scan: the caller's budget still fails after the call
+      expect(thrownBy(function () { parent.check(); }).code).toBe('budget.exceeded');
+
+      var budget = SG.budget.create({});
+      budget.cancel();
+      var records = [];
+      var err = thrownBy(function () {
+        SG.techniques.get('wxyzWing').find(model9, flood, SG.techniques.createContext(model9, {
+          budget: budget, onPatternWork: function (r) { records.push(r); } }));
+      });
+      expect(err.code).toBe('budget.cancelled');
+      expect(records).toEqual([]);
+
+      // cancellation in the middle of the scan, and an error that is not a budget error
+      [['budget.cancelled', true], ['boom', false]].forEach(function (kind) {
+        var k = 0;
+        var ctx = Object.assign({}, SG.techniques.createContext(model9, {}), {
+          check: function () {
+            if (++k === 3) {
+              throw kind[1] ? new SG.errors.GenerationError(kind[0], { reason: 'cancelled' }) : new Error(kind[0]);
+            }
+          }
+        });
+        var thrown = thrownBy(function () { SG.techniques.get('wxyzWing').find(model9, flood, ctx); });
+        expect(thrown).toBeTruthy();
+        expect(kind[1] ? thrown.code : thrown.message).toBe(kind[0]);
+        expect(k).toBe(3);
+      });
+    });
+
+    it('is not fooled by a hostile or absent observer', function () {
+      var state = wxState(model9, WX_VECTOR);
+      var plain = JSON.stringify(wxFind(model9, state));
+      ['not a function', null, 7].forEach(function (observer) {
+        expect(JSON.stringify(wxFind(model9, state, { onPatternWork: observer }))).toBe(plain);
+      });
+    });
+
+    it('leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one', function () {
+      var state = wxState(model9, WX_VECTOR);
+      var fresh = JSON.stringify(wxFind(model9, state));
+      var flood = wxFlood(model9);
+      wxObserved(model9, flood, { seam: true, limit: 500 });
+      wxObserved(model9, state, { seam: true, limit: 3 });
+      wxObserved(model9, state, { ctx: { budget: SG.budget.create({ nodes: 0 }) } });
+      expect(JSON.stringify(wxFind(model9, state))).toBe(fresh);
+      expect(wxObserved(model9, state).record.work).toBe(4);
+    });
+  });
+
+  describe('wxyzWing (R13): agreement with an independent enumeration', function () {
+    var cache = {};
+
+    function itemsOf(model, count, seed) {
+      var key = model.variantId + '/' + model.digits + '/' + seed;
+      if (!cache[key]) cache[key] = H.randomStatesWithKnownSolution(model, SG.testkit.rng.create(seed), count);
+      return cache[key].slice(0, count);
+    }
+
+    /**
+     * The finder finds a pattern exactly when the enumeration does, and its Finding is the first one, field by field.
+     * With `unbounded` the call goes through the seam with a limit that no call reaches (the multi-grid boards may
+     * spend the registered one, which is a lost deduction, not a disagreement); otherwise a spent limit is a failure.
+     */
+    function agree(model, state, what, unbounded) {
+      var out = wxObserved(model, state, unbounded ? { seam: true, limit: 100000000 } : {});
+      if (out.record.capHit !== null) fail('wxyzWing spent its limit on ' + what);
+      var wanted = wxyzOf(model, state, true);
+      if ((out.finding !== null) !== (wanted.length > 0)) {
+        fail('wxyzWing ' + (out.finding !== null ? 'reported a pattern that the enumeration does not know' :
+          'missed a pattern the enumeration found') + ' on ' + what + '\n  ' + JSON.stringify(out.finding));
+      }
+      if (out.finding === null) return false;
+      ORACLE.wxyzWing.verify(model, state, out.finding);
+      return true;
+    }
+
+    // Real puzzle states: a WXYZ-Wing is common in them (about two states in three on 9 x 9), so the minima are large.
+    [['classic9', 300, 777, 100], ['classic9', 300, 99, 100], ['classic6', 200, 777, 50],
+      ['classic4', 200, 777, 1]].forEach(function (setup) {
+      it('finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on ' + setup[0] + ' (seed ' +
+        setup[2] + ')', function () {
+        var model = H.model(setup[0]);
+        var found = 0;
+        itemsOf(model, setup[1], setup[2]).forEach(function (item, index) {
+          if (agree(model, item.state, 'state #' + index + ' (' + item.kind + ')')) found++;
+        });
+        expect(found).toBeGreaterThanOrEqual(setup[3]);
+      });
+    });
+
+    [12, 16].forEach(function (D) {
+      it('agrees on ' + D + ' digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)', function () {
+        var model = D === 12 ? model12 : model16;
+        var found = 0;
+        itemsOf(model, D === 12 ? 80 : 6, 2026).forEach(function (item, index) {
+          if (agree(model, item.state, 'state #' + index, true)) found++;
+        });
+        expect(found).toBeGreaterThanOrEqual(D === 12 ? 20 : 1);
+      });
+    });
+
+    ['diagonalX', 'hyper', 'jigsaw9'].forEach(function (variant) {
+      it('agrees on ' + variant + ' (extra regions or irregular regions are real peers)', function () {
+        if (!SG.testkit.hasVariant(variant)) SG.test.skip('no board of ' + variant + ' can be built here');
+        var model = H.model(variant);
+        var found = 0;
+        itemsOf(model, 120, 4242).forEach(function (item, index) {
+          if (agree(model, item.state, 'state #' + index + ' (' + item.kind + ')')) found++;
+        });
+        expect(found).toBeGreaterThanOrEqual(10);
+      });
+    });
+
+    ['samurai', 'sohei', 'butterfly', 'flower'].forEach(function (variant) {
+      it('agrees on ' + variant + ' (several grids: only real peers count, an unbounded seam)', function () {
+        if (!SG.testkit.hasVariant(variant)) SG.test.skip('no board of ' + variant + ' can be built here');
+        var model = H.model(variant);
+        var found = 0;
+        itemsOf(model, 4, 4242).forEach(function (item, index) {
+          if (agree(model, item.state, 'state #' + index + ' (' + item.kind + ')', true)) found++;
+        });
+        expect(found).toBeGreaterThanOrEqual(1);
+      });
     });
 
     it('agrees with the oracle on every published position', function () {

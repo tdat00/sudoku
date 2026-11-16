@@ -586,19 +586,24 @@
    * on, and where the shortest chain has 7 or 8 links: dug by SG.testkit.dig from the seeded stream 161 (fork
    * 'minimal.<i>', the index in the comment), found by scanning 3000 of them in MS07b. The stuck position is
    * the one reached with C = 6 (`longStuckItem`): below C = 4 chains of 5 and 6 links are still left in it. Under
-   * C = 4 and C = 6 alike its shortest chain is a forcingChainLong's.
+   * C = 4 and C = 6 alike its shortest chain is a forcingChainLong's. Since the WXYZ-Wing (MS10b) is registered
+   * before the chains, three of the twelve (#379, #452 and #725) are solved or leave no chain of up to 12 links in
+   * their stuck position: they are replaced in place by #3329 (8 links, solved at exactly 8; it lies beyond the
+   * 3000 of MS07b, none of which is an 8-link puzzle that the solver solves at exactly 8 now, so the scan was
+   * extended to 12000), #1036 (7 links) and #2475 (8 links), the lowest indices that qualify under the registered
+   * ladder; the nine others are the same puzzles with the same shortest chains.
    */
   var LONG_CHAIN_PUZZLES = [
     '..7..1..6.8....1..5..6.78.3..65..7.......8..2.9..6....459........2...5......1..9.', // #24: 7 links
     '...5....94.....31....39.6....7.......6...35...8..6.9...4....86..1.28.......6.9.7.', // #29: 7 links
     '...284.....51..83.....53....9.........8.....6.6..351.437.....6....4.2..88.......7', // #155: 7 links
     '.754.3...9.....1.....5....7.8..6....6.3.78..1..........3.......5.48...6.1....7.53', // #192: 7 links
-    '......4..4..8...15.5...7....8...19....23.8.......64.7........8614.........9.2...3', // #379: 8 links
-    '.32.....5.......4..1.6.8..2.......2.5.1...8...6...239.....739...9...1....8..2...3', // #452: 7 links
+    '7...8..3.13....4...2....198............9..67...74.8..15....6...91..5..8..4..2....', // #3329: 8 links
+    '.1...6.393.6............2.45.8.1....2.........7.6.4..89.....85.8.7.....2.3...29..', // #1036: 7 links
     '.....5..3..7....16...23....2.....8....5.4....4...1...2.9..875..8..1..6.9...3.....', // #521: 7 links
     '...5.94...4...2..82.71.....7.....26...3.....7.1.6...95...........92.5..1.36......', // #530: 7 links
     '2.6..7..4....3..1.45.......6........8329...7..4..2.3.....4.9...1......6...8.1..9.', // #713: 7 links
-    '..79.....2..4...7....15..9......16..726.....4..1..48.73.5.2..8......8....1......6', // #725: 8 links
+    '..82....1.24.....7....5..3.4....5..37..48....186.9.......561..........1.2..7..6.9', // #2475: 8 links
     '.2......6..892.7..1...8..3...6.74...2..5.6.........1..95......76..3..9...84.....5', // #1003: 7 links
     '..41..98.5..4.........9..7.....1...9..7..52..49...2..8...2.3.1.........261....5..' // #1024: 7 links
   ];
@@ -2402,8 +2407,8 @@
     it('honours maxChainLength given to the solver for the long window too: 7 and 8 links need that much',
       function () {
         // Lower techniques and the two chain ids, no nishio: puzzle #155 of the long-chain list is solved
-        // with chains of 7 links, #379 with chains of 8; a smaller limit leaves both stuck, a larger one
-        // changes nothing (the solver's option only narrows the windows).
+        // with chains of 7 links, #3329 with chains of 8 (#379 until the WXYZ-Wing of MS10b); a smaller limit
+        // leaves both stuck, a larger one changes nothing (the solver's option only narrows the windows).
         var ids = lowerIds().concat(['forcingChain', 'forcingChainLong']);
         [[LONG_CHAIN_PUZZLES[2], 7], [LONG_CHAIN_PUZZLES[4], 8]].forEach(function (tc) {
           for (var limit = 1; limit <= 12; limit++) {

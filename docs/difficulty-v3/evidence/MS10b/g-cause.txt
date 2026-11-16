@@ -1,0 +1,57 @@
+$ node tests\artifacts\difficulty-v3\MS10b\g-cause.js
+G01 classic9 expert seed 3275974478: same puzzle with and without: true; positions 28 / 28 (0.7 s)
+  positions that differ: 0
+G02 classic9 veryEasy seed 1: same puzzle with and without: true; positions 22 / 22 (0.0 s)
+  positions that differ: 0
+G03 classic9 nightmare seed 42: same puzzle with and without: true; positions 28 / 28 (0.3 s)
+  position 24: score without 1234, with 1317; hardest without wWing, with wWing; counts with minus without {"wxyzWing":1}
+  position 25: score without 1950, with 2046; hardest without forcingChainLong, with forcingChainLong; counts with minus without {"wxyzWing":1}
+  position 26: score without 1951, with 2048; hardest without forcingChainLong, with forcingChainLong; counts with minus without {"wxyzWing":1}
+  position 27: score without 1953, with 2049; hardest without forcingChainLong, with forcingChainLong; counts with minus without {"wxyzWing":1}
+  positions that differ: 4
+G04 classic9 hell1 seed 2400651925: same puzzle with and without: false; positions 31 / 29 (16.2 s)
+  position 28: score without 2403, with 1953; hardest without forcingChainLong, with forcingChain; counts with minus without {"hiddenSingleBox":1,"wxyzWing":1,"forcingChainLong":-1}
+  positions that differ: 1
+G05 classic9 hell1 seed 2299986211: same puzzle with and without: true; positions 30 / 30 (16.0 s)
+  position 29: score without 2501, with 2536; hardest without forcingChainLong, with forcingChainLong; counts with minus without {"wxyzWing":1}
+  positions that differ: 1
+G06 jigsaw9 nightmare seed 42: same puzzle with and without: true; positions 32 / 32 (0.1 s)
+  position 29: score without 2072, with 1293; hardest without forcingChainLong, with wxyzWing; counts with minus without {"nakedSingle":-6,"hiddenSingleBox":4,"hiddenSingleLine":2,"pointing":4,"boxLine":1,"nakedPair":1,"hiddenPair":1,"twoStringKite":1,"simpleColouring":-1,"wxyzWing":1,"skyscraper":-1,"forcingChainLong":-1}
+  position 30: score without 3017, with 2992; hardest without nishio, with nishio; counts with minus without {"nakedSingle":4,"hiddenSingleBox":-3,"hiddenSingleLine":-1,"pointing":-10,"boxLine":1,"twoStringKite":1,"simpleColouring":1,"emptyRectangle":1,"xyzWing":1,"wxyzWing":2,"nishio":-1,"nakedPair":-1,"hiddenPair":-1,"xWing":-2,"remotePairs":-1,"xyWing":-1}
+  positions that differ: 2
+G07 jigsaw9 nightmare seed 3962167687: same puzzle with and without: true; positions 32 / 32 (0.4 s)
+  position 30: score without 3215, with 3245; hardest without nishio, with nishio; counts with minus without {"nakedSingle":-1,"hiddenSingleLine":1,"pointing":1,"boxLine":1,"skyscraper":1,"wxyzWing":2,"forcingChain":-1}
+  positions that differ: 1
+G08 killer veryEasy seed 1: same puzzle with and without: true; positions 22 / 22 (0.0 s)
+  positions that differ: 0
+G10 killer nightmare seed 42: same puzzle with and without: false; positions 50 / 49 (50.7 s)
+  position 36: score without 2320, with 2300; hardest without forcingChainLong, with forcingChainLong; counts with minus without {"nakedSingle":-1,"cageCombo":-1,"nakedTriple":1,"wxyzWing":1,"hiddenPair":-1,"forcingChain":-1}
+  position 40: score without 2505, with 2491; hardest without forcingChainLong, with forcingChainLong; counts with minus without {"nakedSingle":-1,"cageCombo":-1,"nakedTriple":1,"wxyzWing":1,"hiddenPair":-1,"forcingChain":-1}
+  position 41: score without 2356, with 2338; hardest without forcingChainLong, with forcingChainLong; counts with minus without {"nakedSingle":-1,"cageCombo":-1,"hiddenPair":-1,"nakedTriple":1,"wxyzWing":1,"forcingChain":-1}
+  position 42: score without 2333, with 2314; hardest without forcingChainLong, with forcingChainLong; counts with minus without {"nakedSingle":-1,"cageCombo":-1,"nakedTriple":1,"wxyzWing":1,"hiddenPair":-1,"forcingChain":-1}
+  position 43: score without 2328, with 2308; hardest without forcingChainLong, with forcingChainLong; counts with minus without {"nakedSingle":-1,"cageCombo":-1,"nakedTriple":1,"wxyzWing":1,"hiddenPair":-1,"forcingChain":-1}
+  position 44: score without 2263, with 2241; hardest without forcingChainLong, with forcingChainLong; counts with minus without {"nakedSingle":-1,"cageCombo":-1,"nakedTriple":1,"wxyzWing":1,"hiddenPair":-1,"forcingChain":-1}
+  positions that differ: 10
+G12 greaterThan hard seed 3115968914: same puzzle with and without: true; positions 109 / 109 (1.1 s)
+  position 100: score without 3173, with 3098; hardest without nishio, with nishio; counts with minus without {"wxyzWing":3,"forcingChain":-4}
+  position 101: score without 3041, with 2977; hardest without nishio, with nishio; counts with minus without {"wxyzWing":1,"forcingChain":-2}
+  position 102: score without 3042, with 2977; hardest without nishio, with nishio; counts with minus without {"wxyzWing":1,"forcingChain":-2}
+  position 103: score without 2701, with 2724; hardest without forcingChainLong, with forcingChainLong; counts with minus without {"boxLine":1,"wxyzWing":2,"wWing":-1}
+  positions that differ: 4
+G13 samurai nightmare seed 42: same puzzle with and without: false; positions 123 / 133 (12.2 s)
+  position 86: score without 68, with 68; hardest without nakedSingle, with nakedSingle; counts with minus without {"nakedSingle":1}
+  position 87: score without 68, with 68; hardest without nakedSingle, with nakedSingle; counts with minus without {"nakedSingle":1}
+  position 88: score without 68, with 68; hardest without nakedSingle, with nakedSingle; counts with minus without {"nakedSingle":1}
+  position 89: score without 68, with 68; hardest without nakedSingle, with nakedSingle; counts with minus without {"nakedSingle":1}
+  position 90: score without 68, with 68; hardest without nakedSingle, with nakedSingle; counts with minus without {"nakedSingle":1}
+  position 91: score without 68, with 68; hardest without nakedSingle, with nakedSingle; counts with minus without {"nakedSingle":1}
+  positions that differ: 36
+G14 mega16 hell2 seed 12: same puzzle with and without: true; positions 78 / 78 (9.8 s)
+  position 70: score without 1698, with 1766; hardest without forcingChain, with forcingChain; counts with minus without {"wxyzWing":1}
+  position 71: score without 2606, with 2635; hardest without forcingChainLong, with forcingChainLong; counts with minus without {"wxyzWing":1}
+  position 72: score without 3669, with 3675; hardest without nishio, with nishio; counts with minus without {"nakedSingle":-7,"hiddenSingleBox":5,"hiddenSingleLine":2,"boxLine":2,"nakedPair":3,"nakedTriple":-1,"xWing":1,"wxyzWing":1,"uniqueRectangle":1,"forcingChain":-1,"wWing":-1}
+  position 73: score without 3885, with 3894; hardest without nishio, with nishio; counts with minus without {"wxyzWing":1}
+  position 74: score without 4265, with 4263; hardest without nishio, with nishio; counts with minus without {"nakedSingle":-7,"hiddenSingleBox":5,"hiddenSingleLine":2,"boxLine":2,"nakedPair":3,"xWing":1,"wxyzWing":3,"uniqueRectangle":1,"nishio":-2,"nakedTriple":-1,"wWing":-1}
+  position 75: score without 4421, with 4422; hardest without nishio, with nishio; counts with minus without {"nakedSingle":-7,"hiddenSingleBox":5,"hiddenSingleLine":2,"boxLine":2,"nakedPair":3,"xWing":1,"wxyzWing":1,"wWing":-1,"uniqueRectangle":1,"forcingChain":-1,"nakedTriple":-1}
+  positions that differ: 7
+exit=0 seconds=107.878

@@ -1,0 +1,40 @@
+$ node tests\artifacts\difficulty-v3\MS10b\facts-pins.js
+G04 moves 31 kinds (kind, start, length) [["solution",0,1],["random",1,21],["guided",22,6],["exchange",28,2],["searchRemove",30,1]]
+G04 exchange at 28 removed 2 restored 2 phase search to 90 at 89
+G04 exchange at 29 removed 2 restored 2 phase search to 92 at 91
+G04 details steps 32 exchanges among the moves steps 2
+G04 compact audit [{"from":27,"to":30,"scope":"complete","inserted":[28],"remaining":false}]
+G04 counts compact 9 details 32
+== G13 compact steps 0,8,98,110,111,122,122
+== G14 compact steps 0,11,68,69,72,76,77,77
+  compact pos 69 choice {"kind":"guided","count":null,"chosen":null,"at":84,"rated":10,"refused":3,"others":6,"nulls":0,"max":66} tier jump
+  details pos 69 choice {"kind":"guided","count":null,"chosen":null,"at":84,"rated":10,"refused":3,"others":6,"nulls":0,"max":66} tier jump
+  move 69 at 84 span [10,3,6,0]
+  move 70 at 95 span [10,5,0,4]
+  move 71 at 106 span [10,2,0,7]
+  move 72 at 117 span [10,2,0,7]
+  move 73 at 128 span [10,7,0,2]
+  move 74 at 139 span [10,7,0,2]
+  move 75 at 150 span [10,7,0,2]
+  move 76 at 167 span [16,13,0,2]
+  move 77 at 170 span [2,1,0,0]
+== G10 compact steps 0,0,8,22,24,35,49,49
+  compact pos 49 choice {"kind":"combined","count":14,"chosen":null,"at":null,"rated":null,"refused":null,"others":null,"nulls":null,"max":null} tier jump
+  details pos 36 choice {"kind":"guided","count":null,"chosen":null,"at":207,"rated":5,"refused":0,"others":4,"nulls":0,"max":543} tier jump
+  move 36 at 207 span [5,0,4,0]
+  move 37 at 212 span [4,0,0,3]
+  move 38 at 216 span [3,0,0,2]
+  move 39 at 219 span [2,0,0,1]
+G13 compact step 5 to 122 chosen 2015
+G14 move 76 {"at":167,"span":[16,13,0,2]}
+G13 compact 111 sentences ["After the clues at G2-R6C2 and G3-R4C8 are removed, the generator's solution uses XY-Wing once; previously, its hardest technique was Hidden Single (row/column).","The largest technique weight, 650, contributes in full as the P term of the score (P = 650).","Removing the clue at G2-R6C2 alone gives 1,014; removing the clue at G3-R4C8 alone gives 72."]
+G13 compact 111 why ["P, peak technique weight: 1.5 → 650 (+648.5)","W, weighted sum of technique uses: 222 → 1,654.25","R = 0.25 × P × log₂(1 + W ÷ P): 2.71 → 296.69 (+293.98)","E, number of empty cells: 219 → 221","V = 80 × E ÷ (E + 40): 67.64 → 67.74 (+0.09)","Score = V + P + R, rounded: 72 → 1,014 (+942)","Level: Easy → Master","The log records 7 candidates before this accepted removal, with 2 rejected; the other 4 candidates with completed scores reached at most 72 by the generator's limited check.","In a separate check, this solver stopped before completing the board using only techniques with weights below 650.","First use in the generator's solution: logical deduction 194 of 225.","XY-Wing: the pivot G2-R5C6 holds 1 or 7; the pincer G2-R5C2 holds 1 or 2; the pincer G2-R4C5 holds 7 or 2. Whichever digit the pivot takes, one of the pincers must be 2, so 2 is removed from every cell that sees both pincers.","In that deduction, candidate 2 is removed from G2-R5C5.","These numbers describe the generator's solution, not every way to solve the puzzle."]
+G10 compact 49 sentences ["After the 14 changes in this step, the generator's solution uses Long Forcing Chain once; previously, its hardest technique was Cage Sum Combination.","The largest technique weight, 1,400, contributes in full as the P term of the score (P = 1,400).","Within this step, Long Forcing Chain first appears after complete change 1 of 14 (the clues at R3C4 and R7C6 are removed)."]
+G10 compact 49 why ["P, peak technique weight: 40 → 1,400 (+1,360)","W, weighted sum of technique uses: 1,698 → 4,813.25","R = 0.25 × P × log₂(1 + W ÷ P): 54.41 → 752.47 (+698.06)","E, number of empty cells: 69 → 57","V = 80 × E ÷ (E + 40): 50.64 → 47.01 (−3.63)","Score = V + P + R, rounded: 145 → 2,199 (+2,054)","Level: Easy → Nightmare","This step combines 14 changes; it is not a single candidate-comparison round.","In a separate check, this solver stopped before completing the board using only techniques with weights below 1,400.","First use in the generator's solution: logical deduction 46 of 78.","Long forcing chain of 5 links: R2C9≠2 ⇒ R2C9=9 ⇒ R8C9≠9 ⇒ R8C3=9 ⇒ R8C3≠1 ⇒ R8C5=1 | R2C9≠2 ⇒ R7C9=2 ⇒ R7C9≠1 ⇒ R7C6=1 ⇒ R8C5≠1. If the first candidate were false, some candidate would be both true and false, which is impossible. So the first candidate is true and is placed.","In that deduction, 2 is placed in R2C9.","These numbers describe the generator's solution, not every way to solve the puzzle."]
+G13 compact 114: no step
+G12 compact folded parts 0:{"key":"replay.solution","args":{"filled":81,"unit":"cell"}} | 1:{"key":"replay.signs","args":{"signs":108}} | 2:{"key":"replay.folded.peak","args":{"peak":133}} | 3:{"key":"replay.folded.peak","args":{"peak":138}} | 4:{"key":"replay.folded.reveal","args":{"peak":3149,"revealed":6}} | 5:{"key":"replay.signDig.some","args":{"tried":5,"removed":1,"kept":4,"reason":"ambiguous","signs":4,"unit":"sign"}} | 6:{"key":"replay.final.signs","args":{"clues":28,"signs":4}}
+G12 describeStep 4 Try to remove 10 signs: 3 signs removed, 7 signs kept because without them the puzzle would have more than one solution. The puzzle came out too hard for this level, so 2 clues more are shown. Try to remove 7 signs: 2 signs removed, 5 signs kept because without them the puzzle would have more than one solution. The puzzle came out too hard for this level, so 4 clues more are shown. Within this step, the score reached 3,149, above the chosen level, and 6 clues were restored during refinement.
+G12 details 103 {"total":"2,724 (−253)","line":"The generator's solution now uses Long Forcing Chain (weight 1,400) as its hardest technique, instead of Nishio (trial and error) (weight 1,700).","badge":null,"rowLabel":{"technique":"forcingChainLong","text":"New hardest technique"},"totalHighlight":false}
+G13 details 101 {"total":"70 (unchanged)","line":null,"badge":null,"rowLabel":null}
+G13 details 101 transition {"before":70,"after":70,"tier":null,"newHardest":false,"bh":"nakedSingle","ah":"nakedSingle"}
+exit=0 seconds=13.748

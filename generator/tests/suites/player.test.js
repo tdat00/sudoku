@@ -476,9 +476,9 @@
       var result = goldenResult('G04');
       var analysis = analysisOf(result);
       var steps = stepsOf(result);
-      expect(steps.length).toBe(30);
+      expect(steps.length).toBe(32);
       var exchanges = steps.filter(function (s) { return s.role === 'moves' && analysis.moves[s.position].kind === 'exchange'; });
-      expect(exchanges.length).toBe(1);
+      expect(exchanges.length).toBe(2);
       exchanges.forEach(function (s) {
         var move = analysis.moves[s.position];
         expect(s.kind).toBe('search');
@@ -705,8 +705,8 @@
           });
         });
         var g12 = compactOf(goldenResult('G12'));
-        expect(g12[4].parts[g12[4].parts.length - 1].args.peak).toBe(3173);
-        inLocale('en', function () { expect(P.describeStep(g12[4])).toContain('the score reached 3,173'); });
+        expect(g12[4].parts[g12[4].parts.length - 1].args.peak).toBe(3149);
+        inLocale('en', function () { expect(P.describeStep(g12[4])).toContain('the score reached 3,149'); });
         var plain = g12[2];
         expect(plain.parts[plain.parts.length - 1].key).toBe('replay.folded.peak');
         expect(plain.parts[plain.parts.length - 1].args.peak).toBe(133);

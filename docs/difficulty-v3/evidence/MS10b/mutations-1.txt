@@ -1,0 +1,183 @@
+mutation 0 (the union may reach five digits during the enumeration (the bound off by one)): DETECTED - 319 total, 317 passed, 2 failed, 0 skipped - 2 failing, 2 of wxyzWing - 8.9 s
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > is counted as the rule says on real states: every call of 60 states agrees with the recount
+    FAIL tech-wing > wing techniques: every Finding is a complete real pattern and none is missed > wxyzWing agrees with the brute-force oracle on 12 digits
+mutation 1 (a union of four digits is already too many (the bound off by one the other way)): DETECTED - 319 total, 261 passed, 58 failed, 0 skipped - 58 failing, 57 of wxyzWing - 6.5 s
+    FAIL tech-wing > wxyzWing (R13): geometry > the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed
+    FAIL tech-wing > wxyzWing (R13): geometry > the transposed vector: the quartet in ascending cell order, the target R1C5
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell that sees every z cell has no z to lose, and is no target
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell never is a target even when it holds z and sees every other z cell: it does not see itself
+mutation 2 (the union is not bounded during the enumeration (only the complete quartet is checked)): DETECTED - 319 total, 313 passed, 6 failed, 0 skipped - 6 failing, 6 of wxyzWing - 8.8 s
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > is counted as the rule says on real states: every call of 60 states agrees with the recount
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > agrees on hyper (extra regions or irregular regions are real peers)
+    FAIL tech-wing > wing techniques: every Finding is a complete real pattern and none is missed > wxyzWing agrees with the brute-force oracle on 9 digits
+    FAIL tech-wing > wing techniques: every Finding is a complete real pattern and none is missed > wxyzWing agrees with the brute-force oracle on 12 digits
+mutation 3 (a complete quartet with a union of three digits is accepted): DETECTED - 319 total, 307 passed, 12 failed, 0 skipped - 12 failing, 12 of wxyzWing - 7.4 s
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > is counted as the rule says on real states: every call of 60 states agrees with the recount
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic4 (seed 777)
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > agrees on 12 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+mutation 4 (a second non-restricted digit is accepted (the bound off by one)): DETECTED - 319 total, 290 passed, 29 failed, 0 skipped - 29 failing, 28 of wxyzWing - 6.5 s
+    FAIL tech-wing > wxyzWing (R13): actual peers on other unit shapes > a cage-only edge counts as a peer: the 3 is restricted through the cage, and the uncaged board finds nothing
+    FAIL tech-wing > wxyzWing (R13): actual peers on other unit shapes > classic4: every cell holds four digits already, so the enumeration decides which quartet is the first
+    FAIL tech-wing > wxyzWing (R13): real positions > finds the exact Finding of real position 1, sound against an independent completion
+    FAIL tech-wing > wxyzWing (R13): real positions > finds the exact Finding of real position 2, sound against an independent completion
+    FAIL tech-wing > wxyzWing (R13): real positions > finds nothing at the negative positions: nothing left after it, and a naked quad
+    FAIL tech-wing > wxyzWing (R13): real positions > the three supplements of the soundness sweep are real unique positions that hold a WXYZ-Wing
+mutation 5 (no non-restricted digit is accepted (the bound off by one the other way)): DETECTED - 319 total, 267 passed, 52 failed, 0 skipped - 52 failing, 51 of wxyzWing - 6.6 s
+    FAIL tech-wing > wxyzWing (R13): geometry > the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed
+    FAIL tech-wing > wxyzWing (R13): geometry > the transposed vector: the quartet in ascending cell order, the target R1C5
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell that sees every z cell has no z to lose, and is no target
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell never is a target even when it holds z and sees every other z cell: it does not see itself
+mutation 6 (a digit is non-restricted only against the first cell of the quartet (a pivot-only test)): DETECTED - 319 total, 274 passed, 45 failed, 0 skipped - 45 failing, 44 of wxyzWing - 6.6 s
+    FAIL tech-wing > wxyzWing (R13): geometry > every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell that sees every z cell has no z to lose, and is no target
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell never is a target even when it holds z and sees every other z cell: it does not see itself
+    FAIL tech-wing > wxyzWing (R13): actual peers on other unit shapes > a cage-only edge counts as a peer: the 3 is restricted through the cage, and the uncaged board finds nothing
+    FAIL tech-wing > wxyzWing (R13): actual peers on other unit shapes > finds the constructed vector on classic9 (three start cells), as the enumeration does
+    FAIL tech-wing > wxyzWing (R13): actual peers on other unit shapes > finds the constructed vector on classic6 (three start cells), as the enumeration does
+mutation 7 (the visibility of a pair is inverted (cells that see each other split a digit)): DETECTED - 319 total, 261 passed, 58 failed, 0 skipped - 58 failing, 57 of wxyzWing - 6.5 s
+    FAIL tech-wing > wxyzWing (R13): geometry > the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed
+    FAIL tech-wing > wxyzWing (R13): geometry > the transposed vector: the quartet in ascending cell order, the target R1C5
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell that sees every z cell has no z to lose, and is no target
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell never is a target even when it holds z and sees every other z cell: it does not see itself
+mutation 8 (cells that do not see each other make every digit of the new cell non-restricted): DETECTED - 319 total, 271 passed, 48 failed, 0 skipped - 48 failing, 47 of wxyzWing - 6.5 s
+    FAIL tech-wing > wxyzWing (R13): geometry > the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed
+    FAIL tech-wing > wxyzWing (R13): geometry > the transposed vector: the quartet in ascending cell order, the target R1C5
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell that sees every z cell has no z to lose, and is no target
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell never is a target even when it holds z and sees every other z cell: it does not see itself
+mutation 9 (every shared digit is non-restricted, whether the cells see each other or not): DETECTED - 319 total, 265 passed, 54 failed, 0 skipped - 54 failing, 53 of wxyzWing - 6.5 s
+    FAIL tech-wing > wxyzWing (R13): geometry > the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed
+    FAIL tech-wing > wxyzWing (R13): geometry > the transposed vector: the quartet in ascending cell order, the target R1C5
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell that sees every z cell has no z to lose, and is no target
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell never is a target even when it holds z and sees every other z cell: it does not see itself
+mutation 10 (a target must see only the first two cells that hold z (an overlooked occurrence)): DETECTED - 319 total, 290 passed, 29 failed, 0 skipped - 29 failing, 28 of wxyzWing - 6.5 s
+    FAIL tech-wing > wxyzWing (R13): geometry > a z occurrence that the target misses proves nothing: with a 4 added to B, R5C1 no longer sees all of them
+    FAIL tech-wing > wxyzWing (R13): geometry > every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell that sees every z cell has no z to lose, and is no target
+    FAIL tech-wing > wxyzWing (R13): actual peers on other unit shapes > classic4: every cell holds four digits already, so the enumeration decides which quartet is the first
+    FAIL tech-wing > wxyzWing (R13): real positions > finds the exact Finding of real position 2, sound against an independent completion
+    FAIL tech-wing > wxyzWing (R13): real positions > finds nothing at the negative positions: nothing left after it, and a naked quad
+mutation 11 (a target must see only the first cell that holds z (a pivot-only test)): DETECTED - 319 total, 265 passed, 54 failed, 0 skipped - 54 failing, 53 of wxyzWing - 6.5 s
+    FAIL tech-wing > wxyzWing (R13): geometry > the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed
+    FAIL tech-wing > wxyzWing (R13): geometry > a target loses only z, and only if it still has it
+    FAIL tech-wing > wxyzWing (R13): geometry > the transposed vector: the quartet in ascending cell order, the target R1C5
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a z occurrence that the target misses proves nothing: with a 4 added to B, R5C1 no longer sees all of them
+    FAIL tech-wing > wxyzWing (R13): geometry > every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is restricted
+mutation 12 (a target need not hold z): DETECTED - 319 total, 281 passed, 38 failed, 0 skipped - 38 failing, 37 of wxyzWing - 6.6 s
+    FAIL tech-wing > wxyzWing (R13): geometry > the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed
+    FAIL tech-wing > wxyzWing (R13): geometry > a target loses only z, and only if it still has it
+    FAIL tech-wing > wxyzWing (R13): geometry > the transposed vector: the quartet in ascending cell order, the target R1C5
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a z occurrence that the target misses proves nothing: with a 4 added to B, R5C1 no longer sees all of them
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell that sees every z cell has no z to lose, and is no target
+mutation 13 (a solved cell may be a target): DETECTED - 319 total, 318 passed, 1 failed, 0 skipped - 1 failing, 1 of wxyzWing - 9.0 s
+    FAIL tech-wing > wxyzWing (R13): geometry > solved cells take no part: a solved target, and a solved cell of the quartet
+mutation 14 (the cells that do not hold z are the cells the target must see): DETECTED - 319 total, 265 passed, 54 failed, 0 skipped - 54 failing, 53 of wxyzWing - 6.5 s
+    FAIL tech-wing > wxyzWing (R13): geometry > the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed
+    FAIL tech-wing > wxyzWing (R13): geometry > a target loses only z, and only if it still has it
+    FAIL tech-wing > wxyzWing (R13): geometry > the transposed vector: the quartet in ascending cell order, the target R1C5
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a z occurrence that the target misses proves nothing: with a 4 added to B, R5C1 no longer sees all of them
+    FAIL tech-wing > wxyzWing (R13): geometry > every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is restricted
+mutation 15 (only the first three cells of the quartet are looked at for z): DETECTED - 319 total, 269 passed, 50 failed, 0 skipped - 50 failing, 49 of wxyzWing - 6.5 s
+    FAIL tech-wing > wxyzWing (R13): geometry > the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed
+    FAIL tech-wing > wxyzWing (R13): geometry > a target loses only z, and only if it still has it
+    FAIL tech-wing > wxyzWing (R13): geometry > the transposed vector: the quartet in ascending cell order, the target R1C5
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a z occurrence that the target misses proves nothing: with a 4 added to B, R5C1 no longer sees all of them
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell that sees every z cell has no z to lose, and is no target
+mutation 16 (z is the highest digit of the union): DETECTED - 319 total, 294 passed, 25 failed, 0 skipped - 25 failing, 24 of wxyzWing - 6.5 s
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): real positions > finds the exact Finding of real position 1, sound against an independent completion
+    FAIL tech-wing > wxyzWing (R13): real positions > finds the exact Finding of real position 2, sound against an independent completion
+    FAIL tech-wing > wxyzWing (R13): real positions > the three supplements of the soundness sweep are real unique positions that hold a WXYZ-Wing
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+mutation 17 (the digits are listed highest first): DETECTED - 319 total, 276 passed, 43 failed, 0 skipped - 43 failing, 42 of wxyzWing - 6.7 s
+    FAIL tech-wing > wxyzWing (R13): geometry > the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed
+    FAIL tech-wing > wxyzWing (R13): geometry > the transposed vector: the quartet in ascending cell order, the target R1C5
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell that sees every z cell has no z to lose, and is no target
+    FAIL tech-wing > wxyzWing (R13): geometry > a naked single is an open cell like any other: here D holds only the 4, the quartet is still valid (R13 says four open cells)
+mutation 18 (the digits list holds the three restricted digits only): DETECTED - 319 total, 276 passed, 43 failed, 0 skipped - 43 failing, 42 of wxyzWing - 6.6 s
+    FAIL tech-wing > wxyzWing (R13): geometry > the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed
+    FAIL tech-wing > wxyzWing (R13): geometry > the transposed vector: the quartet in ascending cell order, the target R1C5
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell that sees every z cell has no z to lose, and is no target
+    FAIL tech-wing > wxyzWing (R13): geometry > a naked single is an open cell like any other: here D holds only the 4, the quartet is still valid (R13 says four open cells)
+mutation 19 (the cells of the Finding are not in ascending order): DETECTED - 319 total, 276 passed, 43 failed, 0 skipped - 43 failing, 42 of wxyzWing - 6.6 s
+    FAIL tech-wing > wxyzWing (R13): geometry > the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed
+    FAIL tech-wing > wxyzWing (R13): geometry > the transposed vector: the quartet in ascending cell order, the target R1C5
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell that sees every z cell has no z to lose, and is no target
+    FAIL tech-wing > wxyzWing (R13): geometry > a naked single is an open cell like any other: here D holds only the 4, the quartet is still valid (R13 says four open cells)
+mutation 20 (the labels are not those of the cells (the first cell repeated)): DETECTED - 319 total, 276 passed, 43 failed, 0 skipped - 43 failing, 42 of wxyzWing - 6.5 s
+    FAIL tech-wing > wxyzWing (R13): geometry > the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed
+    FAIL tech-wing > wxyzWing (R13): geometry > the transposed vector: the quartet in ascending cell order, the target R1C5
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell that sees every z cell has no z to lose, and is no target
+    FAIL tech-wing > wxyzWing (R13): geometry > a naked single is an open cell like any other: here D holds only the 4, the quartet is still valid (R13 says four open cells)
+mutation 21 (a cell may be chosen twice (the next cell is not above the last)): DETECTED - 319 total, 299 passed, 20 failed, 0 skipped - 20 failing, 20 of wxyzWing - 6.8 s
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports it for every call
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > counts one unit per cell tested as the next member of a partial quartet, from a fresh counter
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > is counted as the rule says on real states: every call of 60 states agrees with the recount
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > is complete or empty: the vector is found with its whole 4 units and lost with 3 (capped prefix)
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one
+mutation 22 (the last candidate cell of every level is missed (the bound off by one)): DETECTED - 319 total, 277 passed, 42 failed, 0 skipped - 42 failing, 42 of wxyzWing - 7.3 s
+    FAIL tech-wing > wxyzWing (R13): geometry > the vector: R5C1 sees both cells that hold the unrestricted 4 and loses it; the digits and cells are listed
+    FAIL tech-wing > wxyzWing (R13): geometry > the transposed vector: the quartet in ascending cell order, the target R1C5
+    FAIL tech-wing > wxyzWing (R13): geometry > works with any four digits: the digits are listed ascending, z is the one that is not restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > every z cell counts: R1C2 and R1C3 see all three, R1C5 sees two and keeps the 4; a digit held once is restricted
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell that sees every z cell has no z to lose, and is no target
+    FAIL tech-wing > wxyzWing (R13): geometry > a quartet cell never is a target even when it holds z and sees every other z cell: it does not see itself
+mutation 23 (cells that cannot complete the quartet are still tested (the bound off by one the other way)): DETECTED - 319 total, 306 passed, 13 failed, 0 skipped - 13 failing, 12 of wxyzWing - 7.3 s
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > counts one unit per cell tested as the next member of a partial quartet, from a fresh counter
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > is counted as the rule says on real states: every call of 60 states agrees with the recount
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic4 (seed 777)
+mutation 24 (a cell with a single candidate is never part of a quartet): DETECTED - 319 total, 302 passed, 17 failed, 0 skipped - 17 failing, 17 of wxyzWing - 6.9 s
+    FAIL tech-wing > wxyzWing (R13): geometry > a naked single is an open cell like any other: here D holds only the 4, the quartet is still valid (R13 says four open cells)
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > is counted as the rule says on real states: every call of 60 states agrees with the recount
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic4 (seed 777)
+mutation 25 (a cell of five candidates may be part of a quartet): DETECTED - 319 total, 318 passed, 1 failed, 0 skipped - 1 failing, 1 of wxyzWing - 9.0 s
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > is counted as the rule says on real states: every call of 60 states agrees with the recount
+mutation 26 (a cell of three candidates or more is not part of a quartet): DETECTED - 319 total, 300 passed, 19 failed, 0 skipped - 19 failing, 18 of wxyzWing - 7.0 s
+    FAIL tech-wing > wxyzWing (R13): real positions > finds nothing at the negative positions: nothing left after it, and a naked quad
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > counts one unit per cell tested as the next member of a partial quartet, from a fresh counter
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > is counted as the rule says on real states: every call of 60 states agrees with the recount
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 27 (a solved cell may be part of a quartet): DETECTED - 319 total, 296 passed, 23 failed, 0 skipped - 23 failing, 22 of wxyzWing - 11.1 s
+    FAIL tech-wing > wxyzWing (R13): geometry > solved cells take no part: a solved target, and a solved cell of the quartet
+    FAIL tech-wing > wxyzWing (R13): real positions > finds the exact Finding of real position 2, sound against an independent completion
+    FAIL tech-wing > wxyzWing (R13): real positions > finds nothing at the negative positions: nothing left after it, and a naked quad
+    FAIL tech-wing > wxyzWing (R13): real positions > the three supplements of the soundness sweep are real unique positions that hold a WXYZ-Wing
+    FAIL tech-wing > wxyzWing (R13): work limit, budget and cancellation > is counted as the rule says on real states: every call of 60 states agrees with the recount
+    FAIL tech-wing > wxyzWing (R13): agreement with an independent enumeration > finds a WXYZ-Wing exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+detected 28 of 28, 200.7 s

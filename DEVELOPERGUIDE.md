@@ -893,6 +893,19 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    are done, every Remote Pairs deduction on a standard board is also a Simple Colouring deduction, and the ladder names
    the simpler pattern first, so a placement behind Simple Colouring was never reached by a hint (0 of 20,000 solves);
    the reasoning, the scan rates at order 116 and the named item S-AV32 are in `generator/design.md`, "Remote pairs".
+   The WXYZ-Wing (same file, task MS10b) is the four-cell capacity proof and a bounded finder as well. It takes four
+   distinct open cells of one to four candidates each whose candidates together are exactly four digits; a digit is
+   *restricted* when every pair of its occurrences in the four cells sees each other (`model.peers`, cages included),
+   and exactly one digit z must not be. The other three digits fill at most three of the four cells and every cell
+   holds one of the four, so one of the cells that hold z is z, and z leaves every open cell outside the quartet that
+   sees every quartet cell holding it. The quartets are taken in ascending cell order and the first one with a target
+   is returned with all its targets (`cells` the four cells ascending, `i18nArgs { digits (the four digits ascending,
+   z included), digit (z), cells (labels) }`). One work unit is one open cell of at most four candidates tested as the
+   next member of a partial quartet, 50,000 per call (`SG.wingSearch.WXYZ_WORK_LIMIT`; `SG.wingSearch.wxyzWing(model,
+   state, ctx, { workLimit })` is its unregistered seam), the parent budget is checked at entry and at most every 256
+   units, and a spent limit gives `null` with `capHit: 'work'`, which proves no absence. It is registered at order 155
+   and weight 800 (Master: 1.25 × 800 is not below Expert's maximum 1000); its cap and cost evidence is the named item
+   S-AV33 in `generator/design.md`, "WXYZ-Wing".
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
    `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
@@ -931,7 +944,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    that belongs to the true solution — needs no code of yours: `techniques.test.js` runs it for every registered
    technique. A rare pattern that the seeded random states seldom reach gets deterministic real positions in the
    `SUPPLEMENTS` of that fixture file (`{ name, puzzle, after, propagate }` with an explicit `after` array, a puzzle
-   with one solution; `forcingChainLong`, `nishioDeep`, `skyscraper`, `twoStringKite`, `remotePairs`, `emptyRectangle`, `finnedXWing` and `finnedSwordfish` have three real positions each): the sweep runs the
+   with one solution; `forcingChainLong`, `nishioDeep`, `skyscraper`, `twoStringKite`, `remotePairs`, `emptyRectangle`, `finnedXWing`, `finnedSwordfish` and `wxyzWing` have three real positions each): the sweep runs the
    complete random population of its call site first, never fewer states
    and never a lower firing minimum, and the supplements after it. What a finder costs on its fixtures is measured
    with `tests/pattern-cost.js` (see "Pattern cost" below); a finder reports its work through
@@ -946,7 +959,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (53 suites, 4,018 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (53 suites, 4,097 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (61 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -958,7 +971,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 53 suites,
-4,018 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+4,097 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -1015,7 +1028,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 61 suites, 53 of them quick (4,018 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 61 suites, 53 of them quick (4,097 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1263,7 +1276,7 @@ on the reference machine and measured by `node tests/perf.js`.
   `SG.fixtures.patternCost` (`tests/fixtures/pattern-cost.js`), tested on fake observations, fake clocks, the real
   fixtures of the chain techniques and the tool itself by the `pattern-cost-tools` suite; its test output goes to a
   folder of its own for each invocation (`.scratch-pattern-cost-tools/<pid-time-random>/` in the repository root,
-  ignored by git) and only that folder is removed. The active fixtures cover `skyscraper`, `twoStringKite`, `remotePairs`, `emptyRectangle`, `finnedXWing`, `finnedSwordfish`,
+  ignored by git) and only that folder is removed. The active fixtures cover `skyscraper`, `twoStringKite`, `remotePairs`, `emptyRectangle`, `finnedXWing`, `finnedSwordfish`, `wxyzWing`,
   `forcingChain`, `forcingChainLong`, `nishio` and `nishioDeep` with real positions (the scoped `lawOfLeftovers`
   adapter is MS14b's).
 - **Qualification of the levels** — `node tests/qualify.js` runs the protocol that decides which levels each
@@ -1423,7 +1436,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (30, 2,260 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (30, 2,338 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

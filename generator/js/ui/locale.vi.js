@@ -367,6 +367,12 @@
     'technique.xyzWing': 'XYZ-Wing',
     'technique.xyzWing.desc': 'Giống XY-Wing nhưng ô trục có ba ứng viên: chữ số chung bị loại khỏi mọi ô ' +
       'nhìn thấy ô trục và cả hai ô càng.',
+    'technique.wxyzWing': 'WXYZ-Wing',
+    'technique.wxyzWing.desc': 'Bốn ô chỉ chứa bốn chữ số giữa chúng. Ba chữ số bị hạn chế: các ô chứa một ' +
+      'trong số đó đều nhìn thấy nhau, nên chữ số ấy chỉ đặt được vào một trong bốn ô. Chữ số thứ tư là chữ ' +
+      'số duy nhất mà hai ô chứa nhưng không nhìn thấy nhau. Ba chữ số hạn chế chỉ điền được tối đa ba trong ' +
+      'bốn ô, nên chữ số thứ tư phải nằm trong một ô chứa nó, và bị loại khỏi mọi ô khác nhìn thấy tất cả ' +
+      'các ô chứa nó.',
     'technique.jellyfish': 'Jellyfish (sứa)',
     'technique.jellyfish.desc': 'Phiên bản bốn đường của X-Wing: chữ số chỉ nằm trong cùng bốn cột ở bốn ' +
       'hàng thì bị loại khỏi phần còn lại của bốn cột đó.',
@@ -475,6 +481,10 @@
     'technique.xyzWing.step': 'XYZ-Wing: ô trục {pivot} chứa {digitX}, {digitY} hoặc {digit}; ô càng ' +
       '{pincer1} chứa {digitX} hoặc {digit}; ô càng {pincer2} chứa {digitY} hoặc {digit}. Một trong ba ô ' +
       'này phải là {digit}, nên {digit} bị loại khỏi mọi ô nhìn thấy cả ba ô.',
+    'technique.wxyzWing.step': 'WXYZ-Wing trên {digits}: các ô {cells} không chứa chữ số nào khác. Mọi chữ ' +
+      'số ngoài {digit} chỉ xuất hiện trong các ô nhìn thấy nhau, nên chỉ đặt được vào nhiều nhất một trong ' +
+      'bốn ô. Ba chữ số điền được tối đa ba ô, nên một trong các ô chứa {digit} phải là {digit}. {digit} bị ' +
+      'loại khỏi mọi ô khác nhìn thấy tất cả các ô của mẫu hình chứa {digit}.',
     'technique.wWing.step': 'W-Wing: {cell1} và {cell2} đều chỉ chứa {digitX} hoặc {digit} và không nhìn ' +
       'thấy nhau. Một liên kết mạnh trên {digitX} trong {unit} ({link1} và {link2}) nối hai ô này, nên một ' +
       'trong hai ô phải là {digit}. {digit} bị loại khỏi mọi ô nhìn thấy cả hai.',

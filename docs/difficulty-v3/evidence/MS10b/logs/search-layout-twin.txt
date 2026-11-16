@@ -1,0 +1,9 @@
+$ node tests\artifacts\difficulty-v3\MS10b\search-layout-twin.js
+A G1-R1C1 B G2-R1C1 C G2-R2C2 D G2-R4C2 T G1-R4C1 | real finder: none | layout rows 0,0,1,3 cols 0,12,13,13
+A G1-R1C1 B G2-R1C1 C G2-R2C2 D G2-R5C2 T G1-R5C1 | real finder: none | layout rows 0,0,1,4 cols 0,12,13,13
+A G1-R1C1 B G2-R1C1 C G2-R2C2 D G2-R6C2 T G1-R6C1 | real finder: none | layout rows 0,0,1,5 cols 0,12,13,13
+A G1-R1C1 B G2-R1C1 C G2-R2C2 D G2-R7C2 T G1-R7C1 | real finder: none | layout rows 0,0,1,6 cols 0,12,13,13
+A G1-R1C1 B G2-R1C1 C G2-R2C2 D G2-R8C2 T G1-R8C1 | real finder: none | layout rows 0,0,1,7 cols 0,12,13,13
+A G1-R1C1 B G2-R1C1 C G2-R2C2 D G2-R9C2 T G1-R9C1 | real finder: none | layout rows 0,0,1,8 cols 0,12,13,13
+found 6
+exit=0 seconds=0.184

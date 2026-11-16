@@ -1,0 +1,48 @@
+$ node tests\artifacts\difficulty-v3\MS10a\facts-all.js
+== G01 final 925 compact 7 details 29 digLog 72
+  compact #4 pos 26 from 25 to 26 47>593 class single-culprit frame remove:R2C4 choice guided hardest hiddenSingleBox>twoStringKite new true n 1 k null signs.cause null
+  details #26 pos 26 from 25 to 26 47>593 class single-culprit frame remove:R2C4 choice guided hardest hiddenSingleBox>twoStringKite new true n 1 k null signs.cause null
+== G02 final 43 compact 5 details 23 digLog 23
+== G03 final 2049 compact 6 details 29 digLog 80
+  compact #3 pos 23 from 22 to 23 44>870 class together frame null choice guided hardest nakedSingle>xyWing new true n 1 k null signs.cause null
+  details #23 pos 23 from 22 to 23 44>870 class together frame null choice guided hardest nakedSingle>xyWing new true n 1 k null signs.cause null
+== G04 final 3071 compact 9 details 32 digLog 94
+  compact #4 pos 23 from 22 to 23 45>915 class together frame null choice guided hardest hiddenSingleBox>xyWing new true n 1 k null signs.cause null
+  details #23 pos 23 from 22 to 23 45>915 class together frame null choice guided hardest hiddenSingleBox>xyWing new true n 1 k null signs.cause null
+== G05 final 2536 compact 6 details 31 digLog 78
+  compact #4 pos 29 from 28 to 29 50>2536 class together frame null choice guided hardest hiddenSingleLine>forcingChainLong new true n 1 k null signs.cause null
+  details #29 pos 29 from 28 to 29 50>2536 class together frame null choice guided hardest hiddenSingleLine>forcingChainLong new true n 1 k null signs.cause null
+  compact jump end 29 (50>2536) is no jump in details: 2536>2536 change 0 ratio null
+== G06 final 2331 compact 8 details 33 digLog 132
+  compact #5 pos 29 from 28 to 29 138>1293 class single-culprit frame remove:R4C6 choice guided hardest boxLine>wxyzWing new true n 1 k null signs.cause null
+  details #29 pos 29 from 28 to 29 138>1293 class single-culprit frame remove:R4C6 choice guided hardest boxLine>wxyzWing new true n 1 k null signs.cause null
+== G07 final 2268 compact 7 details 33 digLog 110
+  compact #5 pos 31 from 29 to 31 141>2268 class multi-move frame null choice combined hardest boxLine>forcingChainLong new true n 2 k 1 signs.cause null
+  details #30 pos 30 from 29 to 30 141>3245 class single-culprit frame remove:R1C4 choice guided hardest boxLine>nishio new true n 1 k null signs.cause null
+  compact jump end 31 (141>2268) is no jump in details: 3245>2268 change -977 ratio null
+  compact jump end 31 (141>2268) is no jump in details: 2268>2268 change 0 ratio null
+== G08 final 43 compact 6 details 24 digLog 23
+== G09 final 809 compact 9 details 39 digLog 204
+  compact #6 pos 35 from 34 to 35 142>510 class single-culprit frame remove:R8C5 choice guided hardest cageCombo>ruleOf45 new true n 1 k null signs.cause null
+  details #36 pos 35 from 34 to 35 142>510 class single-culprit frame remove:R8C5 choice guided hardest cageCombo>ruleOf45 new true n 1 k null signs.cause null
+  G09 rebuilt-log groups 36
+== G10 final 2199 compact 8 details 52 digLog 231
+  compact #6 pos 49 from 35 to 49 145>2199 class multi-move frame null choice combined hardest cageCombo>forcingChainLong new true n 14 k 1 signs.cause null
+  details #37 pos 36 from 35 to 36 145>2300 class single-culprit frame remove:R7C6 choice guided hardest cageCombo>forcingChainLong new true n 1 k null signs.cause null
+  compact jump end 49 (145>2199) is no jump in details: 2210>2199 change -11 ratio null
+  compact jump end 49 (145>2199) is no jump in details: 2199>2199 change 0 ratio null
+== G11 final 740 compact 7 details 103 digLog 122
+  compact #4 pos 70 from 69 to 70 135>577 class single-sign frame sign 98 choice checked hardest ineqChain>xWing new true n 1 k null signs.cause [98]
+  details #71 pos 70 from 69 to 70 135>577 class single-sign frame sign 98 choice checked hardest ineqChain>xWing new true n 1 k null signs.cause [98]
+== G12 final 647 compact 7 details 111 digLog 165
+  compact #4 pos 107 from 99 to 107 133>513 class multi-move frame null choice combined hardest ineqChain>xWing new true n 8 k 2 signs.cause []
+  details #101 pos 100 from 99 to 100 133>3098 class single-sign frame sign 34 choice checked hardest ineqChain>nishio new true n 1 k null signs.cause [34]
+  details #104 pos 103 newPeak flat/lower 2977>2724 change -253 hardest nishio>forcingChainLong
+  compact jump end 107 (133>513) is no jump in details: 2488>513 change -1975 ratio null
+== G13 final 2015 compact 7 details 124 digLog 301
+  compact #4 pos 111 from 110 to 111 72>1014 class single-culprit frame remove:G2-R6C2 choice guided hardest hiddenSingleLine>xyWing new true n 1 k null signs.cause null
+  details #111 pos 111 from 110 to 111 72>1014 class single-culprit frame remove:G2-R6C2 choice guided hardest hiddenSingleLine>xyWing new true n 1 k null signs.cause null
+== G14 final 6473 compact 8 details 79 digLog 171
+  compact #3 pos 69 from 68 to 69 65>1685 class single-culprit frame remove:R8C4 choice guided hardest hiddenSingleBox>forcingChain new true n 1 k null signs.cause null
+  details #69 pos 69 from 68 to 69 65>1685 class single-culprit frame remove:R8C4 choice guided hardest hiddenSingleBox>forcingChain new true n 1 k null signs.cause null
+exit=0 seconds=23.168

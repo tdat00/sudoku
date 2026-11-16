@@ -1,0 +1,31 @@
+$ node tests\artifacts\difficulty-v3\MS10b\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS10b\mutations-2.txt 28 55
+mutation 28 (fewer than five cells of at most four candidates end the call): DETECTED - 319 total, 291 passed, 28 failed, 0 skipped - 28 failing, 28 of wxyzWing - 9.0 s
+mutation 29 (a tested cell counts no unit): DETECTED - 319 total, 310 passed, 9 failed, 0 skipped - 9 failing, 9 of wxyzWing - 9.0 s
+mutation 30 (a tested cell counts two units): DETECTED - 319 total, 312 passed, 7 failed, 0 skipped - 7 failing, 7 of wxyzWing - 9.0 s
+mutation 31 (the budget is checked one unit early): DETECTED - 319 total, 317 passed, 2 failed, 0 skipped - 2 failing, 1 of wxyzWing - 9.1 s
+mutation 32 (the budget is checked one unit late): DETECTED - 319 total, 317 passed, 2 failed, 0 skipped - 2 failing, 1 of wxyzWing - 9.0 s
+mutation 33 (the position of the last check is not updated): DETECTED - 319 total, 317 passed, 2 failed, 0 skipped - 2 failing, 1 of wxyzWing - 9.8 s
+mutation 34 (the limit is off by one (one unit too many)): DETECTED - 319 total, 313 passed, 6 failed, 0 skipped - 6 failing, 3 of wxyzWing - 8.9 s
+mutation 35 (the entry check of the parent budget is gone): DETECTED - 319 total, 318 passed, 1 failed, 0 skipped - 1 failing, 1 of wxyzWing - 9.0 s
+mutation 36 (cancellation and every other error are swallowed): DETECTED - 319 total, 318 passed, 1 failed, 0 skipped - 1 failing, 1 of wxyzWing - 9.0 s
+mutation 37 (a spent parent budget is propagated instead of "nothing found"): DETECTED - 319 total, 316 passed, 3 failed, 0 skipped - 3 failing, 3 of wxyzWing - 9.0 s
+mutation 38 (a spent work limit is propagated instead of "nothing found"): DETECTED - 319 total, 314 passed, 5 failed, 0 skipped - 5 failing, 5 of wxyzWing - 9.1 s
+mutation 39 (the limit constant is 50001): DETECTED - 319 total, 316 passed, 3 failed, 0 skipped - 3 failing, 3 of wxyzWing - 9.0 s
+mutation 40 (the registered finder ignores the constant): DETECTED - 319 total, 316 passed, 3 failed, 0 skipped - 3 failing, 3 of wxyzWing - 9.0 s
+mutation 41 (the exported constant is another number): DETECTED - 319 total, 318 passed, 1 failed, 0 skipped - 1 failing, 1 of wxyzWing - 9.0 s
+mutation 42 (the seam ignores its limit): DETECTED - 319 total, 314 passed, 5 failed, 0 skipped - 5 failing, 5 of wxyzWing - 8.9 s
+mutation 43 (the seam accepts NaN and an infinite limit): DETECTED - 319 total, 318 passed, 1 failed, 0 skipped - 1 failing, 1 of wxyzWing - 9.0 s
+mutation 44 (the seam rounds a fractional limit instead of flooring it): DETECTED - 319 total, 318 passed, 1 failed, 0 skipped - 1 failing, 1 of wxyzWing - 9.0 s
+mutation 45 (the observer record reports one unit too many): DETECTED - 319 total, 310 passed, 9 failed, 0 skipped - 9 failing, 9 of wxyzWing - 9.0 s
+mutation 46 (the observer record carries the id of remotePairs): DETECTED - 319 total, 315 passed, 4 failed, 0 skipped - 4 failing, 4 of wxyzWing - 8.9 s
+mutation 47 (the observer record reports the default limit whatever the call used): DETECTED - 319 total, 317 passed, 2 failed, 0 skipped - 2 failing, 2 of wxyzWing - 9.0 s
+mutation 48 (the observer record never reports a capped call): DETECTED - 319 total, 317 passed, 2 failed, 0 skipped - 2 failing, 2 of wxyzWing - 9.0 s
+mutation 49 (the observer record retains something): DETECTED - 319 total, 315 passed, 4 failed, 0 skipped - 4 failing, 4 of wxyzWing - 8.9 s
+mutation 50 (another base cost): DETECTED - 319 total, 318 passed, 1 failed, 0 skipped - 1 failing, 1 of wxyzWing - 9.0 s
+mutation 51 (another order, ahead of XYZ-Wing (149)): DETECTED - 319 total, 314 passed, 5 failed, 0 skipped - 5 failing, 5 of wxyzWing - 9.0 s
+mutation 52 (another order, after W-Wing (171)): DETECTED - 319 total, 316 passed, 3 failed, 0 skipped - 3 failing, 3 of wxyzWing - 9.0 s
+mutation 53 (the technique is flagged as assuming uniqueness): DETECTED - 319 total, 317 passed, 2 failed, 0 skipped - 2 failing, 1 of wxyzWing - 9.0 s
+mutation 54 (the weight is below the Expert edge (799: 1.25 x 799 is below 1000)): DETECTED - 13 total, 12 passed, 1 failed, 0 skipped - 1 failing, 1 of wxyzWing - 0.2 s
+mutation 55 (the weight is above the one of W-Wing (851)): DETECTED - 13 total, 9 passed, 4 failed, 0 skipped - 4 failing, 1 of wxyzWing - 0.2 s
+detected 28 of 28, 234.9 s
+exit=0 seconds=234.945

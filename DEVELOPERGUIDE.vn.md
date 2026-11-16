@@ -651,6 +651,19 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    luận Remote Pairs trên một bàn tiêu chuẩn cũng là một phép suy luận Simple Colouring, và bậc thang nêu tên mẫu đơn
    giản hơn trước; vì vậy một vị trí sau Simple Colouring chưa bao giờ được gợi ý chạm tới (0 trên 20.000 lần giải);
    lý lẽ, tỷ lệ của các lần quét ở order 116 và mục được đặt tên S-AV32 nằm trong `generator/design.md`, "Remote pairs".
+   WXYZ-Wing (cùng tệp, nhiệm vụ MS10b) là phép chứng minh sức chứa bốn ô, cũng là một bộ tìm có giới hạn. Nó lấy bốn
+   ô trống khác nhau, mỗi ô có từ một đến bốn ứng viên và hợp các ứng viên đúng bốn chữ số; một chữ số là *bị hạn chế*
+   khi mọi cặp vị trí của nó trong bốn ô nhìn thấy nhau (`model.peers`, kể cả lồng), và phải có đúng một chữ số *z*
+   không bị hạn chế. Ba chữ số kia điền được tối đa ba trong bốn ô, mà mỗi ô mang một trong bốn chữ số, nên một trong
+   các ô chứa *z* phải là *z*, và *z* bị loại khỏi mọi ô trống ngoài bộ bốn nhìn thấy mọi ô của bộ bốn chứa *z*. Các bộ
+   bốn được duyệt theo thứ tự ô tăng dần, bộ đầu tiên có ô đích được trả về cùng mọi ô đích của nó (`cells` là bốn ô tăng
+   dần, `i18nArgs { digits (bốn chữ số tăng dần, gồm cả z), digit (z), cells (nhãn) }`). Một đơn vị công việc là một ô
+   trống có tối đa bốn ứng viên được thử làm thành viên kế tiếp của một bộ bốn dở dang, 50.000 mỗi lần gọi
+   (`SG.wingSearch.WXYZ_WORK_LIMIT`, và `SG.wingSearch.wxyzWing(model, state, ctx, { workLimit })` là cổng không đăng ký
+   của nó), ngân sách của nơi gọi được kiểm tra khi vào và tối đa mỗi 256 đơn vị, khi hết giới hạn thì trả `null` kèm
+   `capHit: 'work'` (không chứng minh được rằng không có mẫu). Nó được đăng ký ở order 155 với trọng số 800 (tầng
+   Master: 1,25 × 800 không nhỏ hơn cận trên 1000 của mức expert); số liệu chi phí và các lần chạm giới hạn là mục được
+   đặt tên S-AV33 trong `generator/design.md`, "WXYZ-Wing".
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
    [Cách hoạt động](#cách-hoạt-động) — và trong các danh sách script của trình chơi (`index.html`, `help.html`,
    `tests.html`, `tests/node-runner.js`), vì kỹ thuật nằm trong bộ máy dùng chung (`core/js/engine/`) và gợi ý
@@ -704,7 +717,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (53 suite, 4.018 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (53 suite, 4.097 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (61 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -715,7 +728,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.018 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.097 bài —
 37 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -771,7 +784,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.018 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.097 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -1015,7 +1028,7 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   (`tests/fixtures/pattern-cost.js`), do suite `pattern-cost-tools` kiểm thử trên các quan sát giả, đồng hồ giả, các
   mẫu thật của các kỹ thuật chuỗi và chính công cụ; đầu ra thử nghiệm của nó nằm trong một thư mục riêng cho mỗi lần
   gọi (`.scratch-pattern-cost-tools/<pid-thời-gian-ngẫu-nhiên>/` ở gốc kho mã, bị git bỏ qua) và chỉ thư mục đó bị xóa.
-  Các mẫu đang dùng bao gồm `skyscraper`, `twoStringKite`, `remotePairs`, `emptyRectangle`, `finnedXWing`, `finnedSwordfish`, `forcingChain`, `forcingChainLong`, `nishio` và
+  Các mẫu đang dùng bao gồm `skyscraper`, `twoStringKite`, `remotePairs`, `emptyRectangle`, `finnedXWing`, `finnedSwordfish`, `wxyzWing`, `forcingChain`, `forcingChainLong`, `nishio` và
   `nishioDeep` bằng các thế cờ thật (bộ chuyển đổi có phạm vi `lawOfLeftovers` thuộc MS14b).
 - **Kiểm định các mức** — `node tests/qualify.js` chạy quy trình quyết định mỗi biến thể có những mức nào (40
   seed cố định cho mỗi biến thể và mức qua pipeline thật, thêm 60 seed cho mức ở ranh giới, ngân sách thời gian
@@ -1170,7 +1183,7 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.260 bài); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.338 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

@@ -1,0 +1,142 @@
+[
+  {
+    "label": "g-analysis-G01",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G01",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS10b\\analysis\\G01.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10a final E g-analysis-G01 0.863 s (same shard, the previous task's source, without WXYZ-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G02",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G02",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS10b\\analysis\\G02.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10a final E g-analysis-G02 0.528 s (same shard, the previous task's source, without WXYZ-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G03",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G03",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS10b\\analysis\\G03.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10a final E g-analysis-G03 0.728 s (same shard, the previous task's source, without WXYZ-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G04",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G04",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS10b\\analysis\\G04.json"
+    ],
+    "projectionSeconds": 23,
+    "projectionBasis": "MS10a final E g-analysis-G04 8.948 s (same shard, the previous task's source, without WXYZ-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G05",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G05",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS10b\\analysis\\G05.json"
+    ],
+    "projectionSeconds": 22,
+    "projectionBasis": "MS10a final E g-analysis-G05 8.259 s (same shard, the previous task's source, without WXYZ-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G06",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G06",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS10b\\analysis\\G06.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10a final E g-analysis-G06 0.64 s (same shard, the previous task's source, without WXYZ-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G07",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G07",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS10b\\analysis\\G07.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10a final E g-analysis-G07 0.772 s (same shard, the previous task's source, without WXYZ-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G08",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G08",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS10b\\analysis\\G08.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10a final E g-analysis-G08 0.514 s (same shard, the previous task's source, without WXYZ-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G09",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS10b\\analysis\\G09.json"
+    ],
+    "projectionSeconds": 47,
+    "projectionBasis": "MS10a final E g-analysis-G09 20.603 s (same shard, the previous task's source, without WXYZ-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G10",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS10b\\analysis\\G10.json"
+    ],
+    "projectionSeconds": 58,
+    "projectionBasis": "MS10a final E g-analysis-G10 26.246 s (same shard, the previous task's source, without WXYZ-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G11",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS10b\\analysis\\G11.json"
+    ],
+    "projectionSeconds": 38,
+    "projectionBasis": "MS10a final E g-analysis-G11 16.27 s (same shard, the previous task's source, without WXYZ-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G12",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS10b\\analysis\\G12.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS10a final E g-analysis-G12 1.198 s (same shard, the previous task's source, without WXYZ-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G13",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS10b\\analysis\\G13.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS10a final E g-analysis-G13 0.768 s (same shard, the previous task's source, without WXYZ-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G14",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G14",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS10b\\analysis\\G14.json"
+    ],
+    "projectionSeconds": 16,
+    "projectionBasis": "MS10a final E g-analysis-G14 5.382 s (same shard, the previous task's source, without WXYZ-Wing); 2 x + 5 s"
+  }
+]

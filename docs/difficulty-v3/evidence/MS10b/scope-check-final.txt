@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS10b\scope-check.js 3000 4242
+seed 4242: 3000 positions after the techniques below wxyzWing, 352 hold a pattern with a target, 628 patterns in all; patterns with a single-candidate cell 0, with a cell that shares no digit with the other three 0; positions where the first pattern differs from the first pattern of a rule without those two cases 0
+exit=0 seconds=4.400
