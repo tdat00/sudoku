@@ -42,7 +42,20 @@ Support both numeric raw group nodes and Player-localized `{cells:[labels],digit
 True group text: `(R1C1=5 ∨ R1C2=5)`; false: `(R1C1≠5 ∧ R1C2≠5)`. Mathematical join symbols need
 no language-specific "or" token. Preserve existing `⇒` path and `|` two-path separators.
 Do not mutate Finding args during localization; never turn a group into one guessed cell.
-The existing step keys stay; update both languages' descriptions to explain grouping/bounded coverage.
+The existing step keys stay; update both languages' descriptions to explain group truth and bounded
+grouped coverage, without claiming that the existing `forcingChain` has a new work cap.
+
+### GC-01 / S-AV36 handoff — SA2, 2026-11-17
+
+The MS13a census exposes a conflict between MS13c's proposed shared 50,000-work cap and MS07b's
+accepted IR54 policy (`forcingChain` unbounded in work, with parent budget/cancellation intact).
+The owner question **GC-01** is recorded in the MS13c brief; its answer and the corresponding pack
+amendment are prerequisites for **MS13c dispatch**, not for this inactive consumer task.
+Do not implement or advertise either a whole-ID cap or a singleton fallback here. Document the
+inactive proof-format support and the existing live policy, not an unapproved proposal as product
+behavior. Continue to accept legacy triples and v2/mixed proofs under either eventual choice.
+Carry **S-AV36** (group construction cost/caps) to MS13c and the final cost/audit owners; no census,
+limit selection, new measurement campaign or engine change is assigned to MS13b.
 
 Baseline anchors:
 `player/js/ui/play.js:226-245` (`function localizeArgs`);
@@ -90,7 +103,9 @@ the later MS13c activation does not waive this task's own closure.
 
 ## Definition of done & handoff
 
-MS13c may activate only after both consumers accept the new proof. Report exact display vectors.
+MS13c may activate only after both consumers accept the new proof and GC-01 has an owner answer
+incorporated into the pack. Report exact display vectors and carry S-AV36; do not infer a resolved
+activation policy from successful formatting tests.
 
 ## Resume rules — S-OD4
 
