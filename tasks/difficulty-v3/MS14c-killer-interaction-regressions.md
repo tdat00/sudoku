@@ -18,6 +18,12 @@ advertise a duplicate cageLocked technique.
 In: core-built Killer positive/negative regression cases, list/doc updates. Out: stronger assignment
 pruning, new ID/weight, production engine changes. AGENTS/checklist; no Git/pack/log edits.
 
+**S-AV37 handoff only:** carry MS14b's current-source leftover-layout cost/cap disposition and
+remaining gaps into the M14 handoff. This task remains the corpus-free **Killer regression**
+task: no Jigsaw census, generation/discovery campaign, leftover-kernel change, limit tuning or
+extra cost gate is assigned here. A green Killer regression does not close the Jigsaw item.
+MS18c receives measured availability consequences, MS18d the cost item, and MS18e audits it.
+
 ## Inputs & context
 
 R17, verbatim:
@@ -85,6 +91,7 @@ No GG/GR/GH, qualification, whole Killer generation or production rewrite.
 
 Report both exact behaviors and that cageCombo remains the sole corresponding ID. If an actual
 engine defect is found, report it for assignment rather than adding stronger pruning here.
+Carry S-AV37 with MS14b's source, limits, evidence and disposition; preserve any unmeasured gap.
 
 ## Resume rules — S-OD4
 

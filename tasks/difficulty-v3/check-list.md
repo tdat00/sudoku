@@ -175,35 +175,37 @@ S-OD11:** owner, Discord, 2026-11-17 04:30 (+07:00), **"GC-01: chọn A."** MS13
 bounded grouped attempt first and a short-only, uncapped singleton fallback on a local cap,
 under the same parent budget/window; IR54 is preserved and the long ID remains bounded.
 The original question/answer are in the resolved archive; MS13c holds the binding contract
-and S-AV36's numerical handoff. The policy hold is lifted, not MS14a's serial prerequisite.
+and S-AV36's numerical handoff. The policy hold is lifted, and MS14a's serial prerequisite is now satisfied by `ea14798`.
 MS14a/MS15a kernels likewise precede their registrations. Final GQ is MS18c,
 after all S3, MS17b and final rechecks MS18b.
 No intermediate pruning. Parent milestones are not additional waves or commits.
 
 **GC-01 scheduling exception retained after S-OD11 (2026-11-17).** The current accepted
-implementation boundary is MS13b, `55d11ee`, with inactive MS14a running. The order remains
-**MS14a -> MS13c -> MS14b -> MS14c**, then the unchanged remainder. Keep the assigned
+implementation boundary is **MS14a, `ea14798`**. **MS13c is ready to dispatch under S-OD11**,
+followed by **MS14b -> MS14c**, then the unchanged remainder. Keep the assigned
 MS14a/MS13c wave numbers 34/35; do not renumber IDs, change Done marks or rewrite historical
 logs. MS14a requires MS13b, MS13c also waits for accepted MS14a, and MS14b explicitly requires
 both MS14a and MS13c. The parent MS14 dependency governs activation/closure, not this inactive
-preparation. No further later task may run ahead. The answer does not preempt MS14a: finish,
-review, accept and commit it first, then dispatch MS13c under S-OD11. Never park a dirty task
-or run a second developer. The question is archived unchanged beside the answer. S-OD11
-changes no MS14a scope or implementation requirement; its running brief is not amended.
+preparation. No further later task may run ahead. MS14a was reviewed, accepted and committed
+before this dispatch; do not reopen it or rewrite its log. Never park a dirty task or run a
+second developer. The question is archived unchanged beside the answer. Readiness is not
+implementation acceptance: MS13c keeps its full final gates and SA1 analyst review.
 
-MS14a depends only on the existing subset/model/unit APIs and stays unregistered. Its
-`tech-subset.js` change invalidates all three E source identities, so it owns fresh complete
-5-wire/14-analysis/520-hash records and current-source merge-checks with no canonical writes,
-plus GH `--check`, both quick sets and CI, under the existing inactive rule and command bounds.
-Its old "no heavy gate" sentence is not an E waiver. MS13c starts from accepted MS14a and runs
+MS14a's kernel stays unregistered. It completed fresh full 5-wire/14-analysis/520-hash records
+and current-source merge-checks with no canonical writes, GH 37/37, both quick sets and CI.
+MS13c starts from accepted MS14a and runs
 its already-required full activation E on that source; it absorbs the source, not missing
 predecessor evidence. No canonical fixture transaction, activation scope, gate or review is moved.
 
-MS13b's **4,416 Generator / 2,658 Player** tests and 37 catalogue entries are the source-qualified
-baseline. MS14a derives/reports its actual larger quick inventories and costs, preserves both
-apps' accepted consumers/docs and maintains CI projections before handoff. MS13c uses that new
-baseline rather than restoring MS13b's totals or whole files. The new tests remain in subsequent
-quick sets; historical passes are not relabelled as current-source measurements. Full S3 scope,
+The accepted baseline is now **4,456 Generator tests (415.5 s) / 2,698 Player tests (79.9 s)**,
+53/30 suites, catalogue 37, and core-shared projection **110 s** (own-fast 320, Player job 120).
+MS13c's brief records the full accepted fingerprints and source. Retain all 40 MS14a shared
+tests, its Jigsaw helper/HTML entries and the inactive kernel. Derive new final inventories/
+fingerprints from MS13c's actual edits; never restore MS13b's 4,416/2,658 totals, old projections
+or whole files. MS13c also updates the living GC-01-open statements in both app designs and
+both developer-guide languages on activation, preserving MS13a/MS13b measurements as history.
+Carry S-AV37 without implementing its MS14b work. Historical passes are not relabelled as
+current-source measurements. Full S3 scope,
 active registration/milestone order and the S-OD4 review matrix stay unchanged. S-OD11 resolves
 the separate policy question without changing this preparatory scheduling or waiving any gate.
 
@@ -429,6 +431,7 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | S-AV34 UR second-pass bounded-prefix coverage/cost | MS11a accepted source `ef95fc5`; `docs/difficulty-v3/evidence/MS11a/evidence.md`, `work-census.json`, `structural-max.txt` and `pattern-cost.json`. The real-cell cap is removed; the **50,000-unit second-pass work limit stays unchanged**. Of 7,168 sampled finder calls, **6,842 entered pass 2; none was capped**. The crude unpruned bounds (9 digits 242,028; 16 digits 301,860,864) exceed the limit but do not prove an actual cap hit or missed deduction. A separate constructed 16-digit row costs 5,832 units, uncapped; the Type 4 vector costs 35 because Type 3 runs first (expected, pinned). Mean full finder-call latency on the 12-state 16-digit sample is about 1.75 ms, including one-time table construction, not a steady-state second-pass estimate. Correct capped-prefix/boundary tests exist; what is not established is exhaustive deduction coverage within 50,000 beyond the measured populations. Keep structural bounds, constructed work and sampled costs separate; do not describe this as absent coverage evidence, a demonstrated loss, or a GP/qualification failure. Track UR separately from WXYZ's S-AV33 and carry later UR measurements under this ID. No immediate campaign, limit change, new gate or hold on MS11b is authorized. | MS18d coverage/cost report under its existing protocol; MS18e audit |
 | S-AV35 Jellyfish normal-hint source availability | MS12, JF-01 origin: GH 36/37; saved Nightmare-828 Jellyfish no longer replays. The known-source groups and all 48 authorized Generator discovery requests supplied no normal-hint source (`docs/difficulty-v3/evidence/MS12/logs/gh-check-all-37.txt`, `gh-jellyfish-*`; source sets may overlap). Owner decision S-OD10 approves only JF-01 option A's bounded corpus route; this is not a GH waiver or a claim that a source has been found. MS12 records construction/replay work, attempted/completed/incomplete index ranges, selected source provenance and the final all-37 GH/quick/CI results. If the bound fails, return to the owner rather than defer the missing example or extend the search. Keep the exception and its result for the final audit; no standing permission for later tasks. | MS12 completion under S-OD10; MS18e audit; owner if the approved route cannot finish |
 | S-AV36 grouped-graph construction cost/cap exposure | MS13a final inactive engine SHA-256 `501481B415F1AD9B49D3BE355767C8922C5475FF2D93200A41DA1338705B9AEE`; SA1's locked review, relayed 2026-11-17 01:52 (+07:00), and corrected `docs/difficulty-v3/evidence/MS13a/census-all/table.md`/per-model JSONs. **Construction only**, default 50,000/4,096: seeded ladder chain-group positions over the work cap are Samurai **38/48** (median/max full-build 85,352/138,529), Sohei **43/51** (109,951/124,066), Flower **17/44** (44,057/70,583), mega16 **20/321** (23,349/57,089); classic9/mega12/Butterfly have none (max 6,117/13,644/31,008). Constructed blank maxima reach 1,715,391 (Samurai) and 1,209,344 (mega16), with no measured blank exceeding 4,096 groups. SA1's real G13 observations cost 6,764/1,708 and G10 660; keep them separate from seeded/synthetic/blank cohorts. These are not active-finder cap rates, demonstrated lost-deduction counts or GQ/GP failures. MS13c retains the full table, measures construction plus search, short fallback and whole-call cost, and uses the data in its once-only own-new-limit decision; no automatic increase or board-specific limit. **GC-01 policy resolved by S-OD11:** owner, Discord, 2026-11-17 04:30 (+07:00), "GC-01: chọn A." Short-only uncapped singleton fallback on a local grouped cap, same parent/window, singleton minimum domain; long remains bounded. The numerical item stays open for source-qualified activation/final cost and audit, not an unanswered policy choice. | MS13c cost/limit records; MS18d final cost; MS18e audit; MS18c for measured availability consequences |
+| S-AV37 leftover kernel cost/caps on irregular Jigsaw layouts | Accepted inactive source **`ea14798`**; `docs/difficulty-v3/evidence/MS14a/evidence.md` C4 / named item and the Jigsaw fixture/subset suite. At 2 units/side, 4 cells/side and 50,000 work, reported full **blank-state** counts are **98,530 (`staggered`)**, **81,664 (`wavy`)**, **33,784 (`mixed`)**, 6,469 (`crossed`) and 3,436 (`boxes` control). **The first two cap at the default; 33,784 does not.** A complete blank negative is not a cap. These are constructed per-layout maxima, not a universal generated-layout bound, real-puzzle cap rate, demonstrated lost deduction or GQ/GP verdict; no generated-layout/real-puzzle-position cost census is established. The 480 seeded fixture-position agreement cases remain distinct evidence. MS14b records work/caps/latency on its existing scoped fixture and B/GH real-position populations, with layout/source/seed/preprocessing/denominator and any remaining gap, and owns any already-permitted once-only measured adjustment before E. No automatic rise to a blank maximum, layout-specific bound, S-OD11 fallback, wider discovery/corpus campaign or new gate follows. MS13c carries only; MS14c carries only and remains corpus-free Killer regression. Numerical item, not an owner stop or gate waiver. | MS14b measurements/limit disposition; MS14c M14 handoff only; MS18c measured availability; MS18d cost; MS18e audit |
 
 **Q-MS07e-2 — SA2 ruling, 2026-11-15: no rule change; route to MS18c.**
 Do not reopen MS07e or launch the six cells once speculatively. Its section 4 source/projections

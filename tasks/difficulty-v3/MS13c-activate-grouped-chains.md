@@ -3,10 +3,12 @@
 | Header | Value |
 |---|---|
 | Depends on | MS13b and the run-ahead MS14a accepted and committed; S-OD11 applies |
+| Accepted implementation base | `ea14798` (MS14a); later pack-only commits do not replace this runtime baseline |
 | Size / active time | Medium; 50-60 minutes plus E/GH/GP |
 | Owner / milestone | Shared chains and both apps; M13 complete |
 | Authority | R9/R10/R16/R20/R21; IR54; GC-01 option A / S-OD11 |
-| Status | Not started; awaits MS14a acceptance/commit |
+| Review | SA1 cross-review after the developer's final report and gates |
+| Status | Not started; ready for serial dispatch from accepted MS14a under S-OD11 |
 
 ## Goal & business context
 
@@ -175,11 +177,11 @@ trade-off. Under S-OD11, within this task's existing cost scope:
 
 ### Serial scheduling retained after S-OD11 — 2026-11-17
 
-The posted GC-01 question is archived unchanged with its answer. The scheduling exception
-remains: after accepted MS13b (`55d11ee`), finish the already-running inactive MS14a to its
-own accepted/committed boundary, then **MS13c -> MS14b -> MS14c**. S-OD11 lifts the policy
-hold, not MS14a's prerequisite. One task/writer at a time; no preemption, dirty-task parking,
-second writer or further run-ahead. MS14a's scope and running brief remain unchanged.
+The posted GC-01 question is archived unchanged with its answer. **MS14a is now accepted and
+committed at `ea14798`; both dispatch prerequisites are satisfied.** The next order is
+**MS13c -> MS14b -> MS14c**, after the completed MS14a preparation. One task/writer at a time;
+no dirty-task parking, second writer or further run-ahead. Ready means dispatchable, not
+implemented/accepted; the S-OD11 policy and final gates still have to be implemented and proved.
 
 This preserves the active technique order, milestone completion order, limits, qualification,
 review rules and full S3 scope. MS14a depends on the existing model/bit/unit APIs and remains
@@ -187,19 +189,48 @@ unregistered; it needs no grouped
 chain result. MS14b registration still requires this task's acceptance. No new approval is
 needed for this retained scheduling; the separate policy decision is now S-OD11.
 
-Start MS13c from the **accepted MS14a source**, retaining its inactive kernel, tests, fixture
-helper and current documentation/CI metadata. Capture that actual baseline's source identities
-and quick inventories; MS13b's 4,416 Generator / 2,658 Player totals remain historical, not
-the expected post-MS14a totals. Do not copy a pre-MS14a guide, manifest or whole source file
-over the accepted additions.
+### Accepted MS14a baseline and dispatch instructions — 2026-11-17
 
-MS14a owns complete current-source inactive E (five wires, fourteen analyses, 520 hashes,
-all check-only) before acceptance. Its canonical values must match the preceding boundary.
-MS13c's already-required full activation E then includes the accepted MS14a source; it does
-not absorb an unfinished MS14a gate or retag its ledgers. Compare against the unchanged
-canonical baseline, explain the activation's changes and record all families on final source.
-No extra activation E family or rerun of an accepted task is added merely by reordering;
-MS14a's tests remain in the subsequent complete quick sets. MS14b's full E remains its own.
+Start from **`ea14798`**, not MS13b. The final accepted measurements and fingerprints are in
+`docs/difficulty-v3/evidence/MS14a/evidence.md` section 9 and its `quick-final/` results:
+
+| App | Accepted tests / suites | Measured complete quick wall | Accepted fingerprint |
+|---|---|---|---|
+| Generator | **4,456 / 53** | **415.5 s** | `2e7fa7f86e4e795f1ceffec5d49f07c16e8d57da1665a63974874b0eaf1dba3e` |
+| Player | **2,698 / 30** | **79.9 s** | `3b3bebdec3454e3b2fcf8a159a7b1ed87b99fab5c75640768d519b8588c5970a` |
+
+Retain all **40 added shared subset tests**, `core/tests/fixtures/jigsaw-models.js`, both HTML
+fixture entries and the inactive `SG.leftoverPatterns` kernel. The baseline `core-shared`
+shard has 2,144 tests and **110 seconds** projection; `own-fast` stays 320 and the Player job
+120. Preserve the rest of the accepted manifest. MS13b's 4,416/2,658 totals and the old
+core-shared 100 projection are history, not values to restore.
+
+Derive final inventories/fingerprints from this task's changed source, update affected guides/
+designs before the quick fingerprint, and maintain projections under the existing measured
+rule. Do not copy an earlier whole guide/manifest/source file over MS14a's additions or omit
+its tests. These are baseline measurements, not promised MS13c timings or fingerprints; use
+current projections and the existing 450/540-second admission/process bounds for final runs.
+
+MS14a completed fresh 5-wire/14-analysis/520-hash E and GH 37/37, all check-only with canonical
+values unchanged. Its ledgers are the accepted baseline, not this activation's evidence.
+MS13c still owns fresh full activation E on its final source, including the accepted MS14a
+code, plus B/GH/quick/CI and SA1 review. Preserve the version-2 event/replay/wire round trip
+below; no predecessor gate is deferred or substituted.
+
+**Living chain documentation is owned here.** When activation lands, update the stale
+GC-01-open/inactive-forward-looking sentences in `generator/design.md`, `player/design.md`,
+`DEVELOPERGUIDE.md` and `DEVELOPERGUIDE.vn.md` to the implemented S-OD11 option A and the actual
+selected grouped limit. Describe the short fallback's separate singleton minimum domain,
+same parent budget/window and unbounded local work; the long ID has no fallback. Mark MS13a/
+MS13b measurements and inactivity statements as historical at their sources, not present
+behavior, while keeping their old numbers/evidence intact. Do not rewrite accepted task logs
+or the owner archive. Make these living-doc changes before the relevant final fingerprints.
+
+**Carry S-AV37 without taking its implementation scope.** It is the newly numbered MS14a
+leftover-layout cost item, owned first by MS14b. Leave that kernel unregistered and its
+2/4/50,000 limits unchanged; do not activate it, give it S-OD11's fallback, tune it or launch
+a Jigsaw-layout campaign from MS13c. Keep S-AV36 and S-AV37 distinct and return both with the
+inherited item list. This item introduces no new MS13c gate or dispatch stop.
 
 ## Files to create/modify
 
@@ -209,7 +240,7 @@ MS14a's tests remain in the subsequent complete quick sets. MS14b's full E remai
 
 ## Implementation steps
 
-0. Require accepted/committed MS14a and capture its actual source/inventory baseline.
+0. Capture the accepted `ea14798` source/inventory baseline above, retaining MS14a's additions.
    Implement S-OD11 option A only; the archived alternative is not an implementation choice.
 1. Connect the canonical graph to forcing/Long only, replacing every arithmetic node assumption.
 2. Emit owned mixed proofs and validate them independently; keep registered windows enforced.

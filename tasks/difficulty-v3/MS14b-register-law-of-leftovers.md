@@ -39,6 +39,39 @@ cells/side, 50000 work units/call. Scope check is explicit in the finder too. R1
 `technique.lawOfLeftovers.step`; localized args use numeric `digits` and string line/region/cell labels.
 Both EN+VI locale pairs get name, desc and step.
 
+### S-AV37 — inherited leftover-layout cost/cap item
+
+Source: accepted inactive kernel **`ea14798`**, `docs/difficulty-v3/evidence/MS14a/evidence.md`
+C4 and the named item, with `core/tests/fixtures/jigsaw-models.js` and the subset suite.
+The reported full blank-state work is **98,530 (`staggered`)**, **81,664 (`wavy`)**,
+**33,784 (`mixed`)**, **6,469 (`crossed`)** and **3,436 (`boxes` control)**.
+At the 50,000 default, **only the first two of these cap** and return null with `capHit:'work'`;
+33,784 is below the limit, not a third capped case. These are constructed per-layout work
+counts, not a universal bound for generated Jigsaws, a real-puzzle cap rate, lost-deduction
+count or GP/qualification verdict. The 480 seeded fixture-position agreement tests do not
+constitute the missing generated-layout/real-puzzle-position cost census.
+
+This task is the first measurement/disposition owner under its **existing** scoped fixture,
+cost-adapter and bounded integration work. Record default work, cap outcomes and latency on
+the actual scoped positive/negative fixtures and real-puzzle positions already used/acquired
+for B/GH, with the layout/region map, source/seed, preprocessing, denominator and final source.
+Keep blank stress, seeded fixture and real-puzzle populations separate. State what layout/
+position population remains unmeasured rather than claiming that a small sample covers all
+Jigsaws or that no real cap exists.
+
+Keep the 2/4/50,000 starting limits. If the already-permitted once-only R10 adjustment is
+proposed, justify the common new value with before/after cap and latency evidence before
+final E; otherwise record the reason for retaining the defaults. No automatic increase to
+98,530, board/layout-dependent limit, changed work unit, partial-support deduction, S-OD11
+fallback or tuning of another finder is authorized. This item alone authorizes no broad
+layout-generation campaign, extra discovery allowance, new tooling/evidence class or new gate.
+Continue within the existing locked command/admission bounds; ordinary B/GH/correctness
+requirements are not waived by a numerical item.
+
+Hand off the measured/current-limit disposition and remaining gaps as **S-AV37**. MS14c
+carries it through the M14 handoff only; final measured availability goes to MS18c, cost to
+MS18d and the full source/decision/evidence reconciliation to MS18e.
+
 Add real scoped cases under `SG.fixtures.jigsawTechniques`: `{cellRegion,givens,after,expect}`
 with explicit preprocessing IDs, or a full plain core model specification. Two positive cases
 (row/column duals) and negative cases; independently count/prove against that exact region map.
@@ -101,7 +134,8 @@ Only this introducing rule's limits may adjust once with evidence; 540-second pr
 
 ## Definition of done & handoff
 
-Report real region/proof/source data and final scoped limits. No duplicate cageLocked ID appears.
+Report real region/proof/source data, final scoped limits and S-AV37's source-qualified
+measurements/disposition or explicit remaining gaps. No duplicate cageLocked ID appears.
 
 ## Resume rules — S-OD4
 
