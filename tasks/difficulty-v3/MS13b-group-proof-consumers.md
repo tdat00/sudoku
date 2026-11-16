@@ -269,14 +269,14 @@ No new slow-cell evidence/tooling class. Return the inherited/new item list and 
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted after SA1 analyst review (S-OD4 review set). Five points before the final gates, ruled by SA2 in `2386638`: a one-cell node reads like the legacy literal; descriptions made conditional ("If a proof step represents a group...") and all three subtype explanations amended for group ends, giving 32 locale entries instead of 8; MS13a's shared-allowance sentence scoped to the grouped attempt, GC-01 still open; `Finding.cells` stays authoritative; one `notes.md` entry and a conditional user-guide sentence; E plan accepted. SA1 review: accept, no blocking finding; three evidence-text fixes applied; orchestrator named the checkpoint file in one evidence sentence |
+| Start | 2026-11-17 02:02:33 (+07:00), base `7932132` (pack-only `cd36c41` landed at 02:04 during the task) |
+| End | About 02:26 stop with 5 points; SA2 ruling about 02:28-02:38 (`2386638`), relayed about 02:40; 03:24 final report; SA1 review 03:25-03:35, accept; evidence fixes 03:37; orchestrator re-check and commit 03:40 |
+| Duration | About 1 h 10 min developer (24 min to the points, 44 min after the ruling, about 2 min fixes); about 10 min SA2 ruling; about 10 min SA1 review; 1 h 38 min from start to commit; locked commands in `docs/difficulty-v3/evidence/MS13b/lock-log.jsonl` |
+| Model | claude-sonnet-5.5 (developer); gpt-6-astra (SA2 ruling and brief amendment); claude-opus-5.5 (SA1 review; orchestrator) |
+| Token usage | Developer: 238 model calls; 100,196,600 input tokens (98,836,357 cache reads); 296,890 output tokens. SA1 review: 49 calls; 34,034,365 input (33,916,082 cache reads); 50,823 output. SA2 ruling: 7 calls; 1,337,341 input (1,293,871 cache reads); 21,185 output |
+| AI credits | about 1,625 (developer); about 839 (SA1 review); about 290 (SA2 ruling) |
+| Verification | Formatters `isGroupLiteral`/`formatLiteral` in both `i18n.js` (a triple or one-cell node reads `R1C2=1`; a true group `(... ∨ ...)`; a false group `(... ∧ ...)`); Player `localizeStep` in `play.js` (copies; no mutation or aliasing, checked by SA1 on deep-frozen input). 32 locale entries (8 keys x 2 languages x 2 apps) match the brief character for character (SA1). Tests: Generator `i18n` +8, Player `i18n` +5, Player `play` +6. Mutants 67/67 detected (the first 47-mutant run had 3 survivors; kept). Inactivity differential: 6,370 calls, 2,306 Findings, 135 ratings, 16,870 texts; engine digest `8c0f69aa...` equals MS13a's; with identical locale templates 0 of 66 (language, key) groups differ in both apps; exactly 32 locale entries differ; `core/js` untouched. E: 5 wires and 14 analyses recorded fresh (the replay identity includes Generator UI) and merge-checked "recorded from the current sources" with no writes (re-run by SA1); MS13a's 520-key hash ledgers merge-checked (the hash identity excludes `js/ui`); GH 37/37. Quick sets: Generator 4,416/4,416 (431.8 s), Player 2,658/2,658 (74.2 s); projections own-fast 290 -> 320, Player job 110 -> 120; fingerprints Generator `31d0af55...`, Player `ed0db69d...`; CI check passes. Orchestrator: locked `tech-chain,tech-wing,tech-fish,techniques,technique-weights,difficulty-floor,i18n,digger-target` 1,694/1,694 (79.3 s), Player `help,help-example-tools,play,i18n` 226/226 (9.0 s), CI shard check 4,416 of 4,416 |
+| Acceptance | MS13b-B01, B02, T01-T03 met (developer's evidence in `docs/difficulty-v3/evidence/MS13b/evidence.md` section 10); SA1 analyst review: accept |
+| Issues & resolutions | The first wording said a step "can also be a group" while no grouped finder is active; SA2 made the descriptions conditional and corrected the endpoint and contradiction explanations for group ends (locale delta 8 -> 32). One superseded Generator quick run failed a `help` test because a guide named `SG.play.localizeArgs`; wording fixed and re-run. Protocol slip: unlocked development trials (four `render-diff`, one `locale-diff` at 14.2 s, over the 10 s rule), disclosed, transcripts not kept; the final comparisons were re-run under the lock. SA1's three evidence-text findings fixed. Six new lines of 111-116 characters left until those files next change for behaviour (rewrapping Generator `i18n.js` would force E re-recording). Not run: browser DOM/SVG marking (inspected only), qualification, soak |
+| Handoff | To MS13c: version-2 group proofs display in both apps and the descriptions are conditional; MS13c must emit the full sorted cell union in `Finding.cells` and cover a version-2 Finding's round trip through events, replay and the wire (SA1 note, sent to SA2 for the brief); MS13c waits for the owner's GC-01 answer and the pack amendment; base quick totals Generator 4,416 (431.8 s) and Player 2,658 (74.2 s); projections own-fast 320, Player job 120; help catalogue 37; S-AV01-S-AV36 as recorded, S-AV08 re-measured (+5.3 % Generator); MS13c is in the S-OD4 analyst review set (SA1) |

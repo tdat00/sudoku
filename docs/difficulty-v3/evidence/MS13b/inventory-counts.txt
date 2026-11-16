@@ -1,0 +1,6 @@
+MS13b registered inventories (node tests\node-runner.js --list-tests=<file.json>, registration only, 2026-11-17 about 03:00, final tree before the last quick runs; the two inventory files were deleted after reading, as redundant with the complete results files of quick-final-2):
+
+Generator: Inventory: 4416 tests in 53 suites (0 skipped, 30 benchmarks), registration 0.6 s   (MS13a: 4,408; +8 = the Generator i18n suite 86 -> 94)
+Player:    Inventory: 2658 tests in 30 suites (0 skipped, 21 benchmarks), registration 0.3 s   (MS13a: 2,647; +11 = the Player i18n suite 69 -> 74 and the play suite 68 -> 74)
+
+The two complete quick results of quick-final-2 report the same totals: Generator 4,416 of 4,416 (core-shared 2,104; steps 57; replay 154; mega 108; own-fast 1,698; digger-target 75; pipeline 151; player 69), Player 2,658 of 2,658.

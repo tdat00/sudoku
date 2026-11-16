@@ -401,11 +401,18 @@
       'end must be. At least one end holds the digit, and a cell that sees both ends cannot hold it.',
     'technique.forcingChain': 'Forcing Chain',
     'technique.forcingChain.desc': 'A chain of "if this, then that" deductions that proves a candidate ' +
-      'false (or a digit true).',
+      'false (or a digit true). If a proof step represents a group, it lists the cells that can still hold ' +
+      'one digit where a box (or region) meets a row or column. A group is true when at least one of its ' +
+      'cells holds the digit, written (R1C1=5 \u2228 R1C2=5), and false when none of them does, written ' +
+      '(R1C1\u22605 \u2227 R1C2\u22605); a true group never says which of its cells holds the digit. ' +
+      'Any candidate removed by the endpoint rule must conflict with every candidate represented by each ' +
+      'end. Chains are searched up to a limited length, so a hint does not promise to find every chain.',
     'technique.forcingChainLong': 'Long Forcing Chain',
     'technique.forcingChainLong.desc': 'The same kind of chain as the Forcing Chain, but one that is too ' +
       'long for it: the shortest chain that works has more links than the plain Forcing Chain allows (up ' +
-      'to 12 links).',
+      'to 12 links). If a proof step represents a group, its truth and falsehood have the same meaning as ' +
+      'in a Forcing Chain. Any candidate removed by the endpoint rule must conflict with every candidate ' +
+      'represented by each end. A hint does not promise to find every chain.',
     'technique.nishio': 'Nishio (trial and error)',
     'technique.nishio.desc': 'Trial and error with a limit: assume a candidate is true; when simple ' +
       'deductions then lead to a contradiction, the candidate is false.',
@@ -546,26 +553,26 @@
       'exactly two candidates, and each link joins two cells that see each other through the same digit. If ' +
       'the first end is not {digit}, the links force the last end to be {digit}, so at least one end of the ' +
       'chain is {digit}. A candidate {digit} that sees both ends is removed.',
-    'technique.forcingChain.step.endpoints': 'Forcing chain of {length} links: {chains}. If the first ' +
-      'candidate is false, the last one is true, so at least one end of the chain is true. Candidates that ' +
-      'see both ends are removed.',
+    'technique.forcingChain.step.endpoints': 'Forcing chain of {length} links: {chains}. If the first end ' +
+      'is false, the last end is true, so at least one end is true. Candidates that conflict with every ' +
+      'candidate represented by each end are removed.',
     'technique.forcingChain.step.contradiction': 'Forcing chain of {length} links: {chains}. If the first ' +
-      'candidate were true, some candidate would be both true and false, which is impossible. So the first ' +
-      'candidate is false and is removed.',
+      'candidate were true, a statement about a candidate or group would be both true and false, which is ' +
+      'impossible. So the first candidate is false and is removed.',
     'technique.forcingChain.step.forced': 'Forcing chain of {length} links: {chains}. If the first ' +
-      'candidate were false, some candidate would be both true and false, which is impossible. So the ' +
-      'first candidate is true and is placed.',
+      'candidate were false, a statement about a candidate or group would be both true and false, which is ' +
+      'impossible. So the first candidate is true and is placed.',
     'technique.nishio.step': 'Trial and error (depth {depth}): if {label} were {digit}, simple deductions ' +
       'would end in a contradiction. So {digit} is removed from {label}.',
     'technique.forcingChainLong.step.endpoints': 'Long forcing chain of {length} links: {chains}. If the ' +
-      'first candidate is false, the last one is true, so at least one end of the chain is true. ' +
-      'Candidates that see both ends are removed.',
+      'first end is false, the last end is true, so at least one end is true. Candidates that conflict ' +
+      'with every candidate represented by each end are removed.',
     'technique.forcingChainLong.step.contradiction': 'Long forcing chain of {length} links: {chains}. If ' +
-      'the first candidate were true, some candidate would be both true and false, which is impossible. ' +
-      'So the first candidate is false and is removed.',
+      'the first candidate were true, a statement about a candidate or group would be both true and false, ' +
+      'which is impossible. So the first candidate is false and is removed.',
     'technique.forcingChainLong.step.forced': 'Long forcing chain of {length} links: {chains}. If the ' +
-      'first candidate were false, some candidate would be both true and false, which is impossible. So ' +
-      'the first candidate is true and is placed.',
+      'first candidate were false, a statement about a candidate or group would be both true and false, ' +
+      'which is impossible. So the first candidate is true and is placed.',
     'technique.nishioDeep.step': 'Deep trial and error (depth {depth}): if {label} were {digit}, simple ' +
       'deductions together with a second trial inside that assumption would end in a contradiction. So ' +
       '{digit} is removed from {label}.'

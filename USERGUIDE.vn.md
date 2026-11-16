@@ -336,7 +336,9 @@ chú, hoàn tác / làm lại chính xác, kiểm tra lỗi, gợi ý nêu tên 
   số trên màn hình; ghi chú (`N`); xóa; hoàn tác / làm lại (`Ctrl+Z`, `Ctrl+Y`).
 - Kiểm tra lỗi: tắt, vi phạm luật (trùng số, tổng lồng, dấu so sánh) hoặc mọi ô sai ngay khi gõ.
 - **Gợi ý** ba bước (kỹ thuật và nơi cần nhìn, các ô, nước đi), luôn đúng và nêu tên một trong 37 kỹ thuật, kèm
-  tên và mô tả đã dịch.
+  tên và mô tả đã dịch. Nếu một bước trong chuỗi biểu diễn một nhóm ô, bước đó được viết trong ngoặc:
+  `(R1C1=5 ∨ R1C2=5)` nghĩa là có ít nhất một trong các ô ấy chứa số 5, `(R1C1≠5 ∧ R1C2≠5)` nghĩa là không ô nào
+  chứa số 5; nhóm đúng không cho biết ô nào chứa số.
 - Kiểu ký hiệu: chữ số, chữ cái, màu (luôn kèm hình), hình dạng và chữ của từ khóa; đề Sudoku Chữ giải xong sẽ hiện từ
   khóa và, nếu sách từ có sẵn trong trình chơi biết từ đó, cả nghĩa của từ.
 - Đồng hồ tạm dừng khi bạn rời tab, nhận biết hoàn thành và hiện một ô.

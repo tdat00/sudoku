@@ -765,7 +765,26 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    được đồ thị dùng được. Việc hủy và lỗi được truyền đi, và bộ dựng không phát bản ghi nào cho bộ quan sát. Bộ kiểm
    tra độc lập là `SG.chainProofs` (`core/tests/fixtures/chain-proofs.js`), tính lại các nút, cạnh, công việc và chứng
    minh từ mô hình và trạng thái. Lần kích hoạt (MS13c) chỉ áp dụng việc gộp cho `forcingChain` và `forcingChainLong`,
-   không bao giờ cho XY-chain, và dùng chung mức 50.000 đơn vị giữa việc dựng đồ thị và việc tìm kiếm thay vì đặt lại.
+   không bao giờ cho XY-chain. Lần thử đồ thị nhóm trong MS13c dùng chung một giới hạn công việc cho dựng đồ thị và tìm
+   kiếm, ban đầu là 50.000, không đặt lại giữa hai giai đoạn. Điều này không quyết định chính sách cho toàn bộ lần gọi
+   `forcingChain`: GC-01 vẫn chờ chủ sở hữu chọn đường dự phòng trên đồ thị ứng viên đơn không giới hạn công việc cục bộ
+   hoặc giới hạn cho toàn bộ lần gọi. Hiện chưa có bộ tìm chuỗi nhóm hay đường dự phòng này hoạt động; ngân sách của bên
+   gọi và việc hủy vẫn được giữ nguyên.
+   **Đọc và hiển thị chứng minh nhóm phiên bản 2** (nhiệm vụ MS13b; chỉ phía tiêu thụ, chưa có bộ tìm nào phát ra chúng).
+   `i18nArgs` của một Finding chuỗi có thể là `{ proofVersion: 2, kind, length, chains }` với các bước
+   `{ cells, digit, truth }` (`truth` 1 đúng, 0 sai) bên cạnh bộ ba cũ `[cell, digit, truth]`; Finding chỉ gồm nút đơn vẫn
+   giữ bộ ba và một đường có thể trộn cả hai dạng. `formatChains` của `generator/js/ui/i18n.js` và `player/js/ui/i18n.js`
+   giữ `⇒` và `|`, viết bộ ba hoặc nút một ô là `R1C2=1` hay `R1C2≠1`, và nút nhiều ô trong ngoặc với mọi thành viên đều
+   có nhãn: **nhóm đúng là phép tuyển**, `(R1C1=5 ∨ R1C2=5)`, **nhóm sai là mọi thành viên đều sai**,
+   `(R1C1≠5 ∧ R1C2≠5)` (không bao giờ thu gọn thành một thành viên đoán). Ô có thể là số thứ tự hoặc nhãn đã viết và chữ
+   số là giá trị thô hoặc ký hiệu đã viết. Trong trình chơi hàm `localizeArgs` của `player/js/ui/play.js` trả về một bản sao và không bao giờ
+   ghi vào đối số của Finding: ô của mọi nút thành nhãn và chữ số thành ký hiệu mà bàn cờ vẽ (số 1 hệ mười sáu là `0`,
+   giá trị Wordoku là chữ cái của nó), ở nút cũng như ở bộ ba. Phần tô sáng vẫn là `cells` của Finding (bên sinh phải phát
+   ra hợp đầy đủ đã sắp xếp, do `SG.chainProofs` kiểm tra); giao diện không suy ra tập thứ hai từ `chains`. Các văn bản
+   của hai ID chuỗi ép đã đổi ở cả hai ngôn ngữ và cả hai ứng dụng (hai phần mô tả, theo dạng điều kiện "Nếu một bước chứng
+   minh biểu diễn một nhóm ...", và ba lời giải thích bước, nói về đầu chuỗi và về một mệnh đề về ứng viên hoặc nhóm nên
+   vẫn đúng khi đầu chuỗi là nhóm; 32 mục, kèm văn bản cũ và mới trong
+   `docs/difficulty-v3/evidence/MS13b/locale-delta.md`); khóa, tiền tố và chỗ giữ chỗ không đổi.
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
    [Cách hoạt động](#cách-hoạt-động) — và trong các danh sách script của trình chơi (`index.html`, `help.html`,
    `tests.html`, `tests/node-runner.js`), vì kỹ thuật nằm trong bộ máy dùng chung (`core/js/engine/`) và gợi ý
@@ -819,7 +838,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (53 suite, 4.408 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (53 suite, 4.416 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (61 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -830,7 +849,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.408 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.416 bài —
 37 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -886,7 +905,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.408 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.416 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -1285,7 +1304,7 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.647 bài); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.658 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

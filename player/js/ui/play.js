@@ -220,8 +220,26 @@
   const DIGIT_LIST_ARGS = ['digits', 'forced', 'partDigits'];
 
   /**
+   * One chain step for `localizeArgs`: a legacy triple `[cell, digit, truth]` or a proof version 2 node
+   * `{ cells, digit, truth }`. A node gets new `cells` and `digit` (ids and values only; labels and symbols that
+   * are already written stay) and keeps its other fields. Every member stays a member: a group is never reduced
+   * to one cell. No array or object of the input is returned, and none is written.
+   */
+  function localizeStep(model, step, mode) {
+    if (Array.isArray(step)) {
+      return [SG.model.cellLabel(model, step[0]), valueText(model, step[1], mode), step[2]];
+    }
+    if (step === null || typeof step !== 'object') return step;
+    if (!Array.isArray(step.cells)) return Object.assign({}, step);
+    return Object.assign({}, step, {
+      cells: step.cells.map(function (c) { return typeof c === 'number' ? SG.model.cellLabel(model, c) : c; }),
+      digit: typeof step.digit === 'number' ? valueText(model, step.digit, mode) : step.digit
+    });
+  }
+
+  /**
    * A copy of a step's i18nArgs with every digit written as the board draws it (a hexadecimal 0 is value 1, a
-   * Wordoku value a letter) and every chain cell as a label.
+   * Wordoku value a letter) and every chain cell as a label. The input is never written.
    */
   function localizeArgs(model, args, mode) {
     const out = Object.assign({}, args || {});
@@ -237,9 +255,7 @@
     });
     if (Array.isArray(out.chains)) {
       out.chains = out.chains.map(function (chain) {
-        return chain.map(function (lit) {
-          return [SG.model.cellLabel(model, lit[0]), valueText(model, lit[1], mode), lit[2]];
-        });
+        return chain.map(function (step) { return localizeStep(model, step, mode); });
       });
     }
     return out;

@@ -1,0 +1,10 @@
+$ node tests\node-runner.js --suite=i18n
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   i18n: 93 passed  (257 ms)
+
+Suites: 1
+Tests:  93 total, 93 passed, 0 failed, 0 skipped
+Time:   257 ms running tests, 367 ms total
+exit=0 seconds=0.467

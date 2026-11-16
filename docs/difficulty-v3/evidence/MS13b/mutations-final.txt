@@ -1,0 +1,286 @@
+mutation 0 (Generator formatChains: a node is read as a triple): DETECTED - 94 total, 88 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > shows a true group as the disjunction of its members and a false group as every member false
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the two paths of a forced proof and of a contradiction that mix singletons and a group, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple and a one-cell node the same way, alone and mixed in one path
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a proof whose cells and digits are already written (labels, hexadecimal and letter symbols) as it is
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the group proofs of a trace event with the labels of its model
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 1 (Player formatChains: a node is read as a triple): DETECTED - 148 total, 141 passed, 7 failed, 0 skipped - 7 failing - 0.6 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes a true group as the disjunction of its members and a false group as every member false, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols as they are
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+mutation 2 (Generator formatChains: a group reduced to its first member): DETECTED - 94 total, 89 passed, 5 failed, 0 skipped - 5 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > shows a true group as the disjunction of its members and a false group as every member false
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the two paths of a forced proof and of a contradiction that mix singletons and a group, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple and a one-cell node the same way, alone and mixed in one path
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a proof whose cells and digits are already written (labels, hexadecimal and letter symbols) as it is
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the group proofs of a trace event with the labels of its model
+mutation 3 (Player formatChains: a group reduced to its first member): DETECTED - 148 total, 141 passed, 7 failed, 0 skipped - 7 failing - 0.6 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes a true group as the disjunction of its members and a false group as every member false, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols as they are
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+mutation 4 (Generator formatChains: a group reduced to its last member): DETECTED - 94 total, 89 passed, 5 failed, 0 skipped - 5 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > shows a true group as the disjunction of its members and a false group as every member false
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the two paths of a forced proof and of a contradiction that mix singletons and a group, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple and a one-cell node the same way, alone and mixed in one path
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a proof whose cells and digits are already written (labels, hexadecimal and letter symbols) as it is
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the group proofs of a trace event with the labels of its model
+mutation 5 (Player formatChains: a group reduced to its last member): DETECTED - 148 total, 141 passed, 7 failed, 0 skipped - 7 failing - 0.6 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes a true group as the disjunction of its members and a false group as every member false, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols as they are
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+mutation 6 (Generator formatChains: a false group joined by a disjunction): DETECTED - 94 total, 88 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > shows a true group as the disjunction of its members and a false group as every member false
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the two paths of a forced proof and of a contradiction that mix singletons and a group, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple and a one-cell node the same way, alone and mixed in one path
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a proof whose cells and digits are already written (labels, hexadecimal and letter symbols) as it is
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the group proofs of a trace event with the labels of its model
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 7 (Player formatChains: a false group joined by a disjunction): DETECTED - 148 total, 141 passed, 7 failed, 0 skipped - 7 failing - 0.6 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes a true group as the disjunction of its members and a false group as every member false, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols as they are
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+mutation 8 (Generator formatChains: a true group joined by a conjunction): DETECTED - 94 total, 89 passed, 5 failed, 0 skipped - 5 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > shows a true group as the disjunction of its members and a false group as every member false
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the two paths of a forced proof and of a contradiction that mix singletons and a group, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a proof whose cells and digits are already written (labels, hexadecimal and letter symbols) as it is
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the group proofs of a trace event with the labels of its model
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 9 (Player formatChains: a true group joined by a conjunction): DETECTED - 148 total, 144 passed, 4 failed, 0 skipped - 4 failing - 0.7 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes a true group as the disjunction of its members and a false group as every member false, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols as they are
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+    FAIL play > play: group proofs of version 2 > writes the two paths of a forced proof and of a contradiction that mix singletons and a group: a true group as a disjunction, a false group as every member false
+mutation 10 (Generator formatChains: the two joins swapped): DETECTED - 94 total, 88 passed, 6 failed, 0 skipped - 6 failing - 0.5 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > shows a true group as the disjunction of its members and a false group as every member false
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the two paths of a forced proof and of a contradiction that mix singletons and a group, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple and a one-cell node the same way, alone and mixed in one path
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a proof whose cells and digits are already written (labels, hexadecimal and letter symbols) as it is
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the group proofs of a trace event with the labels of its model
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 11 (Player formatChains: the two joins swapped): DETECTED - 148 total, 141 passed, 7 failed, 0 skipped - 7 failing - 0.6 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes a true group as the disjunction of its members and a false group as every member false, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols as they are
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+mutation 12 (Generator formatChains: no parentheses around a group): DETECTED - 94 total, 89 passed, 5 failed, 0 skipped - 5 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > shows a true group as the disjunction of its members and a false group as every member false
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the two paths of a forced proof and of a contradiction that mix singletons and a group, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple and a one-cell node the same way, alone and mixed in one path
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a proof whose cells and digits are already written (labels, hexadecimal and letter symbols) as it is
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the group proofs of a trace event with the labels of its model
+mutation 13 (Player formatChains: no parentheses around a group): DETECTED - 148 total, 141 passed, 7 failed, 0 skipped - 7 failing - 0.6 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes a true group as the disjunction of its members and a false group as every member false, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols as they are
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+mutation 14 (Generator formatChains: a one-cell node in parentheses): DETECTED - 94 total, 90 passed, 4 failed, 0 skipped - 4 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > shows a true group as the disjunction of its members and a false group as every member false
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the two paths of a forced proof and of a contradiction that mix singletons and a group, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple and a one-cell node the same way, alone and mixed in one path
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a proof whose cells and digits are already written (labels, hexadecimal and letter symbols) as it is
+mutation 15 (Player formatChains: a one-cell node in parentheses): DETECTED - 148 total, 142 passed, 6 failed, 0 skipped - 6 failing - 0.6 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes a true group as the disjunction of its members and a false group as every member false, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols as they are
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+    FAIL play > play: group proofs of version 2 > writes the two paths of a forced proof and of a contradiction that mix singletons and a group: a true group as a disjunction, a false group as every member false
+mutation 16 (Generator formatChains: the polarity of a node swapped): DETECTED - 94 total, 88 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > shows a true group as the disjunction of its members and a false group as every member false
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the two paths of a forced proof and of a contradiction that mix singletons and a group, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple and a one-cell node the same way, alone and mixed in one path
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a proof whose cells and digits are already written (labels, hexadecimal and letter symbols) as it is
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the group proofs of a trace event with the labels of its model
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 17 (Player formatChains: the polarity of a node swapped): DETECTED - 148 total, 141 passed, 7 failed, 0 skipped - 7 failing - 0.6 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes a true group as the disjunction of its members and a false group as every member false, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols as they are
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+mutation 18 (Generator formatChains: the digit of a node read as a triple): DETECTED - 94 total, 88 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > shows a true group as the disjunction of its members and a false group as every member false
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the two paths of a forced proof and of a contradiction that mix singletons and a group, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple and a one-cell node the same way, alone and mixed in one path
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a proof whose cells and digits are already written (labels, hexadecimal and letter symbols) as it is
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the group proofs of a trace event with the labels of its model
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 19 (Player formatChains: the digit of a node read as a triple): DETECTED - 148 total, 141 passed, 7 failed, 0 skipped - 7 failing - 0.6 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes a true group as the disjunction of its members and a false group as every member false, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols as they are
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+mutation 20 (Generator formatChains: a node always true): DETECTED - 94 total, 88 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > shows a true group as the disjunction of its members and a false group as every member false
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the two paths of a forced proof and of a contradiction that mix singletons and a group, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple and a one-cell node the same way, alone and mixed in one path
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a proof whose cells and digits are already written (labels, hexadecimal and letter symbols) as it is
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the group proofs of a trace event with the labels of its model
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 21 (Player formatChains: a node always true): DETECTED - 148 total, 141 passed, 7 failed, 0 skipped - 7 failing - 0.6 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes a true group as the disjunction of its members and a false group as every member false, in both languages
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols as they are
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+mutation 22 (Generator formatChains: the polarity of a legacy triple swapped): DETECTED - 94 total, 90 passed, 4 failed, 0 skipped - 4 failing - 0.4 s
+    FAIL i18n > i18n: solving steps of the classic ladder > renders the XY-chain step in both languages from its real fixtures, with the digit, the length and the cells of the chain
+    FAIL i18n > i18n: solving steps of the classic ladder > writes a forcing chain with the labels of the board
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple and a one-cell node the same way, alone and mixed in one path
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a proof whose cells and digits are already written (labels, hexadecimal and letter symbols) as it is
+mutation 23 (Player formatChains: the polarity of a legacy triple swapped): DETECTED - 148 total, 145 passed, 3 failed, 0 skipped - 3 failing - 0.6 s
+    FAIL i18n > i18n: solving steps of the classic ladder > renders the XY-chain step in both languages from its real fixtures, with the digit, the length and the cells of the chain
+    FAIL i18n > i18n: solving steps of the classic ladder > writes a forcing chain with the labels of the board
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols as they are
+mutation 24 (Generator formatChains: a legacy triple read as a node): DETECTED - 94 total, 89 passed, 5 failed, 0 skipped - 5 failing - 0.4 s
+    FAIL i18n > i18n: solving steps of the classic ladder > renders the step of every technique with exactly the arguments its finding provides
+    FAIL i18n > i18n: solving steps of the classic ladder > renders the XY-chain step in both languages from its real fixtures, with the digit, the length and the cells of the chain
+    FAIL i18n > i18n: solving steps of the classic ladder > writes a forcing chain with the labels of the board
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple and a one-cell node the same way, alone and mixed in one path
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a proof whose cells and digits are already written (labels, hexadecimal and letter symbols) as it is
+mutation 25 (Player formatChains: a legacy triple read as a node): DETECTED - 148 total, 144 passed, 4 failed, 0 skipped - 4 failing - 0.6 s
+    FAIL i18n > i18n: solving steps of the classic ladder > renders the step of every technique with exactly the arguments its finding provides
+    FAIL i18n > i18n: solving steps of the classic ladder > renders the XY-chain step in both languages from its real fixtures, with the digit, the length and the cells of the chain
+    FAIL i18n > i18n: solving steps of the classic ladder > writes a forcing chain with the labels of the board
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols as they are
+mutation 26 (Generator formatChains: the label function not passed to a group member): DETECTED - 94 total, 91 passed, 3 failed, 0 skipped - 3 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > reads a proof whose cells and digits are already written (labels, hexadecimal and letter symbols) as it is
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > writes the group proofs of a trace event with the labels of its model
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 27 (Player localizeStep: a node is not localized): DETECTED - 74 total, 68 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+    FAIL play > play: group proofs of version 2 > writes every group member as a label and every digit as the board draws it, a hexadecimal 1 as 0
+    FAIL play > play: group proofs of version 2 > writes the digits of a Wordoku proof as its letters, in a node and in an old triple
+    FAIL play > play: group proofs of version 2 > keeps a node that is already written as it is, owns its arrays, and copies a step it does not know
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+    FAIL play > play: group proofs of version 2 > writes the two paths of a forced proof and of a contradiction that mix singletons and a group: a true group as a disjunction, a false group as every member false
+mutation 28 (Player localizeStep: the cells of a node are not labelled): DETECTED - 74 total, 68 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+    FAIL play > play: group proofs of version 2 > writes every group member as a label and every digit as the board draws it, a hexadecimal 1 as 0
+    FAIL play > play: group proofs of version 2 > writes the digits of a Wordoku proof as its letters, in a node and in an old triple
+    FAIL play > play: group proofs of version 2 > keeps a node that is already written as it is, owns its arrays, and copies a step it does not know
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+    FAIL play > play: group proofs of version 2 > writes the two paths of a forced proof and of a contradiction that mix singletons and a group: a true group as a disjunction, a false group as every member false
+mutation 29 (Player localizeStep: the digit of a node is not written): DETECTED - 74 total, 69 passed, 5 failed, 0 skipped - 5 failing - 0.4 s
+    FAIL play > play: group proofs of version 2 > writes every group member as a label and every digit as the board draws it, a hexadecimal 1 as 0
+    FAIL play > play: group proofs of version 2 > writes the digits of a Wordoku proof as its letters, in a node and in an old triple
+    FAIL play > play: group proofs of version 2 > keeps a node that is already written as it is, owns its arrays, and copies a step it does not know
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+mutation 30 (Player localizeStep: a group reduced to its first member): DETECTED - 74 total, 68 passed, 6 failed, 0 skipped - 6 failing - 0.5 s
+    FAIL play > play: group proofs of version 2 > writes every group member as a label and every digit as the board draws it, a hexadecimal 1 as 0
+    FAIL play > play: group proofs of version 2 > writes the digits of a Wordoku proof as its letters, in a node and in an old triple
+    FAIL play > play: group proofs of version 2 > keeps a node that is already written as it is, owns its arrays, and copies a step it does not know
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+    FAIL play > play: group proofs of version 2 > writes the two paths of a forced proof and of a contradiction that mix singletons and a group: a true group as a disjunction, a false group as every member false
+mutation 31 (Player localizeStep: the input node is written): DETECTED - 74 total, 68 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+    FAIL play > play: group proofs of version 2 > writes every group member as a label and every digit as the board draws it, a hexadecimal 1 as 0
+    FAIL play > play: group proofs of version 2 > writes the digits of a Wordoku proof as its letters, in a node and in an old triple
+    FAIL play > play: group proofs of version 2 > keeps a node that is already written as it is, owns its arrays, and copies a step it does not know
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+    FAIL play > play: group proofs of version 2 > writes the two paths of a forced proof and of a contradiction that mix singletons and a group: a true group as a disjunction, a false group as every member false
+mutation 32 (Player localizeStep: the input cells are shared): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL play > play: group proofs of version 2 > keeps a node that is already written as it is, owns its arrays, and copies a step it does not know
+mutation 33 (Player localizeStep: a written label is asked for again): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.5 s
+    FAIL play > play: group proofs of version 2 > keeps a node that is already written as it is, owns its arrays, and copies a step it does not know
+mutation 34 (Player localizeStep: a written symbol is written again): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL play > play: group proofs of version 2 > keeps a node that is already written as it is, owns its arrays, and copies a step it does not know
+mutation 35 (Player localizeStep: a step it does not know is returned itself): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.5 s
+    FAIL play > play: group proofs of version 2 > keeps a node that is already written as it is, owns its arrays, and copies a step it does not know
+mutation 36 (Player localizeStep: the truth of a node is lost): DETECTED - 74 total, 68 passed, 6 failed, 0 skipped - 6 failing - 0.5 s
+    FAIL play > play: group proofs of version 2 > writes every group member as a label and every digit as the board draws it, a hexadecimal 1 as 0
+    FAIL play > play: group proofs of version 2 > writes the digits of a Wordoku proof as its letters, in a node and in an old triple
+    FAIL play > play: group proofs of version 2 > keeps a node that is already written as it is, owns its arrays, and copies a step it does not know
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+    FAIL play > play: group proofs of version 2 > writes the two paths of a forced proof and of a contradiction that mix singletons and a group: a true group as a disjunction, a false group as every member false
+mutation 37 (Player localizeStep: the symbol mode of a node ignored): DETECTED - 74 total, 72 passed, 2 failed, 0 skipped - 2 failing - 0.5 s
+    FAIL play > play: group proofs of version 2 > writes the digits of a Wordoku proof as its letters, in a node and in an old triple
+    FAIL play > play: group proofs of version 2 > describes a group proof on a Wordoku with its letters, and the same proof with digits when asked
+mutation 38 (Player localizeStep: the symbol mode of a triple ignored): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.5 s
+    FAIL play > play: group proofs of version 2 > writes the digits of a Wordoku proof as its letters, in a node and in an old triple
+mutation 39 (Player localizeStep: the cell of a triple not labelled): DETECTED - 74 total, 71 passed, 3 failed, 0 skipped - 3 failing - 0.4 s
+    FAIL play > play: note grids, pad layout and keys > groups eliminations by digit and writes digits the way the board draws them
+    FAIL play > play: group proofs of version 2 > writes every group member as a label and every digit as the board draws it, a hexadecimal 1 as 0
+    FAIL play > play: group proofs of version 2 > writes the digits of a Wordoku proof as its letters, in a node and in an old triple
+mutation 40 (Player localizeStep: a triple turned into a node): DETECTED - 74 total, 71 passed, 3 failed, 0 skipped - 3 failing - 0.5 s
+    FAIL play > play: note grids, pad layout and keys > groups eliminations by digit and writes digits the way the board draws them
+    FAIL play > play: group proofs of version 2 > writes every group member as a label and every digit as the board draws it, a hexadecimal 1 as 0
+    FAIL play > play: group proofs of version 2 > writes the digits of a Wordoku proof as its letters, in a node and in an old triple
+mutation 41 (Player localizeStep: only the first chain localized): DETECTED - 74 total, 72 passed, 2 failed, 0 skipped - 2 failing - 0.5 s
+    FAIL play > play: group proofs of version 2 > writes every group member as a label and every digit as the board draws it, a hexadecimal 1 as 0
+    FAIL play > play: group proofs of version 2 > writes the two paths of a forced proof and of a contradiction that mix singletons and a group: a true group as a disjunction, a false group as every member false
+mutation 42 (Player describeHint: the last cell of the Finding is not listed): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.5 s
+    FAIL play > play: group proofs of version 2 > describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for the value 1, and nothing of the hint written
+mutation 43 (Generator le.en description: the true group example with a conjunction): DETECTED - 94 total, 93 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 44 (Player le.en description: the true group example with a conjunction): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 45 (Generator le.vi description: the true group example with a conjunction): DETECTED - 94 total, 93 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 46 (Player le.vi description: the true group example with a conjunction): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 47 (Generator en forcingChain.desc: the group clause stated as capability): DETECTED - 94 total, 93 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 48 (Generator en forcingChainLong.desc: the group clause stated as capability): DETECTED - 94 total, 93 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 49 (Generator en forcingChain.step.endpoints: candidates that see the ends): DETECTED - 94 total, 93 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, on the valid group vectors, with the prefix and the placeholders of
+mutation 50 (Generator en forcingChain.step.contradiction: some candidate with both truth values): DETECTED - 94 total, 93 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, on the valid group vectors, with the prefix and the placeholders of
+mutation 51 (Generator en forcingChainLong.step.forced: some candidate with both truth values): DETECTED - 94 total, 93 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, on the valid group vectors, with the prefix and the placeholders of
+mutation 52 (Player en forcingChain.desc: the group clause stated as capability): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 53 (Player en forcingChainLong.desc: the group clause stated as capability): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 54 (Player en forcingChain.step.endpoints: candidates that see the ends): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+mutation 55 (Player en forcingChain.step.contradiction: some candidate with both truth values): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+mutation 56 (Player en forcingChainLong.step.forced: some candidate with both truth values): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+mutation 57 (Generator vi forcingChain.desc: the group clause stated as capability): DETECTED - 94 total, 93 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 58 (Generator vi forcingChainLong.desc: the group clause stated as capability): DETECTED - 94 total, 93 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 59 (Generator vi forcingChain.step.endpoints: candidates that see the ends): DETECTED - 94 total, 93 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, on the valid group vectors, with the prefix and the placeholders of
+mutation 60 (Generator vi forcingChain.step.contradiction: some candidate with both truth values): DETECTED - 94 total, 93 passed, 1 failed, 0 skipped - 1 failing - 0.5 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, on the valid group vectors, with the prefix and the placeholders of
+mutation 61 (Generator vi forcingChainLong.step.forced: some candidate with both truth values): DETECTED - 94 total, 93 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, on the valid group vectors, with the prefix and the placeholders of
+mutation 62 (Player vi forcingChain.desc: the group clause stated as capability): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 63 (Player vi forcingChainLong.desc: the group clause stated as capability): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes
+mutation 64 (Player vi forcingChain.step.endpoints: candidates that see the ends): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+mutation 65 (Player vi forcingChain.step.contradiction: some candidate with both truth values): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+mutation 66 (Player vi forcingChainLong.step.forced: some candidate with both truth values): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+    FAIL i18n > i18n: chains of proof version 2 (grouped nodes) > says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the prefix and the placeholders of each text unchanged
+detected 67 of 67, survivors 0, 30.8 s

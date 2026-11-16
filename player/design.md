@@ -542,6 +542,20 @@ chain graph of MS13a (`SG.chainGraph`, `core/js/engine/tech-chain.js`) is **inac
 reads it, so the check of all 37 examples on the final source (`--check --max-puzzles=64 --max-hints=400`, no discovery,
 nothing written) matches the committed file, and the Player's quick set is 2,647 tests (the 40 `grouped graph` tests of the
 shared `tech-chain` suite and the `chain-proofs` fixture are the only addition).
+**Difficulty v3, MS13b (group proofs in the hint text):** the hint card reads the chain proofs of **version 2**, still emitted by no
+finder. `SG.play.localizeArgs` (used by `describeHint`) returns a copy of a step's arguments, never written, in which the cells of
+every chain node `{ cells, digit, truth }` are labels and its digit the symbol that the board draws (a hexadecimal 1 is 0, a
+Wordoku value its letter), in a node and in an old triple `[cell, digit, truth]` alike. The text (`formatChains` of
+`js/ui/i18n.js`) writes a one-cell node like its triple, a **true group** as the disjunction of its members, `(R1C1=5 ∨ R1C2=5)`,
+and a **false group** as every member false, `(R1C1≠5 ∧ R1C2≠5)`. The cells line and the marks of the board stay the hint's
+`cells`, the Finding's own list (MS13c has to emit the full union of the proof's cells; nothing is derived from `chains`); the
+DOM and SVG marking was inspected in the code, not run. The texts of the Forcing Chain and the Long Forcing Chain changed in both
+languages: the descriptions explain a group conditionally ("If a proof step represents a group ..."), the endpoint rule
+(a candidate must conflict with every candidate represented by each end) and that a hint does not promise every chain, and the
+three step explanations speak of ends and of a statement about a candidate or group (32 texts across both apps,
+`docs/difficulty-v3/evidence/MS13b/locale-delta.md`). The check of all 37 help examples on the final source is unchanged (no
+discovery, nothing written), and the Player's quick set is 2,658 tests (the 11 new tests of `play` and `i18n`). GC-01 is still
+open and this task adds no cap or fallback.
 **Decision:** there is no
 first-visit tour or other popup that stands in front of the welcome screen or the puzzle: a visitor who arrives
 from the generator's link wants to play.
@@ -575,7 +589,7 @@ strings; added: `player.*` (shell, open flow, info card, recent list, welcome), 
 
 ## 10. Testing
 `node tests/node-runner.js` (30 suites: the 14 of `tests/suites/` and the 16 shared ones of `core/tests/suites/`;
-2,647 tests; no install) is the default quick set: developers and coding
+2,658 tests; no install) is the default quick set: developers and coding
 agents run it (or a few suites with `--suite=`) while developing, and `.github/workflows/pages.yml` runs all of it
 before every deployment. When one command cannot hold the whole set, it is covered by disjoint shards as the
 generator's quick set is (`generator/design.md` section 15.1); the cost measured for each app, on a named source and
@@ -601,9 +615,9 @@ they are **manual**, not part of CI, and are run only when a change touches the 
 | `fixtures` | the committed documents themselves: all 15 variants and the three Vietnamese ones, each with a model that builds and has one solution |
 | `text-boards` | the boards rebuilt from the text export equal the generator's models; the Jigsaw builder checks the length of a region map and the model validation the regions |
 | `wordbook` | the data of both languages and the lookup (meaning in the language of the page) |
-| `i18n` | key parity, placeholders, no empty values, coverage computed from the code |
+| `i18n` | key parity, placeholders, no empty values, coverage computed from the code; the text of the chains of proof version 2 and the group-correct wording of the two forcing chains (MS13b) |
 | `store`, `progress` | prefs, safe storage, LRU, version purge, quota, blocked storage, same-puzzle id, recent list |
-| `play` | the engine on all 15 fixtures: values, notes, exact undo / redo, conflicts, completion, hint soundness, timer, serialisation; the key reader, pad and note layouts |
+| `play` | the engine on all 15 fixtures: values, notes, exact undo / redo, conflicts, completion, hint soundness, timer, serialisation; the key reader, pad and note layouts; `localizeArgs` and `describeHint` on the independent checker's group proofs (hexadecimal and Wordoku symbols, written labels, ownership, the cells line and the eliminations; MS13b) |
 | `symbols`, `board-view` | glyphs per mode, the legend, the 16 shapes; geometry and markup of all 15 fixtures (cells, layers, cages, signs, no colour literal) |
 | `a11y`, `theme` | cell labels, keyboard moves, the Settings data; token parity and contrast |
 | `app` | the surface and events of `SG.app`, the elements it needs from `index.html`, no HTML built from data, storage only through `store` / `progress` |

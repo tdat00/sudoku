@@ -1008,8 +1008,26 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    was built. Cancellation and errors propagate, and the builder publishes no observer record. The independent
    oracle is `SG.chainProofs` (`core/tests/fixtures/chain-proofs.js`), which recomputes the nodes, the edges, the
    work and the proofs from the model and the state. The activation (MS13c) applies grouping to `forcingChain` and
-   `forcingChainLong` only, never to the XY-chain, and shares the 50,000-unit allowance between the construction and
-   the search instead of resetting it.
+   `forcingChainLong` only, never to the XY-chain. The grouped attempt in MS13c shares one work allowance between
+   construction and search, starting at 50,000, without resetting it between stages. This does not decide the
+   whole-call policy for `forcingChain`: GC-01 still awaits the owner's choice of a singleton fallback with
+   unbounded local work or a cap on the whole call. No grouped finder or fallback is active yet; parent budgets and
+   cancellation remain in force.
+   **Reading and displaying version-2 group proofs** (task MS13b; the consumers only, no finder emits one yet). A chain
+   Finding's `i18nArgs` may be `{ proofVersion: 2, kind, length, chains }` with steps `{ cells, digit, truth }`
+   (`truth` 1 true, 0 false) beside the legacy triples `[cell, digit, truth]`; a pure singleton Finding keeps its
+   triples and one path may mix both forms. `formatChains` of `generator/js/ui/i18n.js` and `player/js/ui/i18n.js`
+   keeps `⇒` and `|`, writes a triple or a one-cell node as `R1C2=1` or `R1C2≠1`, and a node of several cells in
+   brackets with every member labelled: a **true group as a disjunction**, `(R1C1=5 ∨ R1C2=5)`, a **false group as every
+   member false**, `(R1C1≠5 ∧ R1C2≠5)` (never one guessed member). Cells may be ids or written labels and the digit a
+   raw value or a written symbol. In the Player the function `localizeArgs` of `player/js/ui/play.js` returns a copy and never writes the Finding's
+   arguments: the cells of every node become labels and its digit the symbol the board draws (a hexadecimal 1 is `0`, a
+   Wordoku value its letter), in a node and in a triple. Highlights stay the Finding's `cells` (the producer must emit
+   the full sorted union, checked by `SG.chainProofs`); the UI derives no second set from `chains`. The locale texts of
+   the two forcing IDs changed in both languages and both apps (the two descriptions, conditionally "If a proof step
+   represents a group ...", and the three step explanations, which speak of ends and of a statement about a candidate
+   or group, so that they stay true for group ends; 32 entries, listed with their old and new texts in
+   `docs/difficulty-v3/evidence/MS13b/locale-delta.md`); keys, prefixes and placeholders are unchanged.
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
    `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
@@ -1063,7 +1081,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (53 suites, 4,408 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (53 suites, 4,416 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (61 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -1075,7 +1093,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 53 suites,
-4,408 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+4,416 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -1132,7 +1150,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 61 suites, 53 of them quick (4,408 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 61 suites, 53 of them quick (4,416 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1540,7 +1558,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (30, 2,647 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (30, 2,658 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

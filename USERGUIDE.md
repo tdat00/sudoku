@@ -341,7 +341,9 @@ account, nothing to install. **Open it: [tdat00.github.io/sudoku/player](https:/
   on-screen number pad; notes (`N`); erase; undo / redo (`Ctrl+Z`, `Ctrl+Y`).
 - Error checking: off, rule conflicts (repeats, cage sums, signs) or every wrong entry as you type.
 - **Hints** in three steps (the technique and where to look, the cells, the move) that are always correct and
-  name one of 37 techniques, with a translated name and description.
+  name one of 37 techniques, with a translated name and description. If a chain step represents a group of cells, it
+  is written in brackets: `(R1C1=5 ∨ R1C2=5)` means that at least one of those cells holds the 5, and
+  `(R1C1≠5 ∧ R1C2≠5)` that none of them does; a true group does not tell you which cell holds the digit.
 - Symbol modes: digits, letters, colours (always with a shape), shapes and the Wordoku word; a solved Wordoku
   shows its key word and, when the built-in word book knows the word, its meaning.
 - A timer that pauses when you leave the tab, completion detection and reveal-a-cell.

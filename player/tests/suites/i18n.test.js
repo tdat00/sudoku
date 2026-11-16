@@ -1131,6 +1131,177 @@
     });
   });
 
+  // The group proofs of difficulty v3 (R16, MS13b): `i18nArgs = { proofVersion: 2, kind, length, chains }` with nodes
+  // `{ cells, digit, truth }`. No finder emits them yet. SG.play.localizeArgs writes the cells as labels and the
+  // digits as symbols first (play.test.js, with the proofs of the independent checker); here the formatter reads the
+  // forms it can be given: ids with a label function, or labels and symbols that are already written.
+  describe('i18n: chains of proof version 2 (grouped nodes)', function () {
+    var H = SG.techHelper;
+    var NE = '\u2260';
+    var OR = ' \u2228 ';
+    var AND = ' \u2227 ';
+    var THEN = ' \u21d2 ';
+
+    function node(cells, digit, truth) {
+      return { cells: cells, digit: digit, truth: truth };
+    }
+
+    function ready() {
+      packsReady();
+      if (!H) SG.test.skip('the technique helper is not loaded');
+    }
+
+    function withLabels(model, fn) {
+      I.setCellLabeler(function (cell) { return SG.model.cellLabel(model, cell); });
+      try {
+        return fn();
+      } finally {
+        I.setCellLabeler(null);
+      }
+    }
+
+    function chainsText(key, chains) {
+      return I.t(key, { kind: 'contradiction', length: 3, chains: chains });
+    }
+
+    it('writes a true group as the disjunction of its members and a false group as every member false, in both ' +
+      'languages', function () {
+        ready();
+        var model = H.model('classic9');
+        var key = 'technique.forcingChain.step.contradiction';
+        var chains = [[node([0], 5, 1), node([1], 5, 0), node([0, 1], 5, 1)],
+          [node([0], 5, 1), node([9], 5, 0), node([0, 1, 2], 5, 0)]];
+        withLabels(model, function () {
+          LOCALES.forEach(function (code) {
+            var text = inLocale(code, function () { return chainsText(key, chains); });
+            expect([code, text.indexOf('R1C1=5' + THEN + 'R1C2' + NE + '5' + THEN + '(R1C1=5' + OR + 'R1C2=5) | R1C1=5' +
+              THEN + 'R2C1' + NE + '5' + THEN + '(R1C1' + NE + '5' + AND + 'R1C2' + NE + '5' + AND + 'R1C3' + NE + '5)') !== -1])
+              .toEqual([code, true]);
+            expect(/[{}]|undefined|NaN|\[object/.test(text)).toBe(false);
+          });
+        });
+      });
+
+    // The body of each subtype explanation after its prefix "<name> of {length} links: {chains}. " (SA2's ruling of MS13b).
+    var BODY = {
+      en: {
+        endpoints: 'If the first end is false, the last end is true, so at least one end is true. Candidates that ' +
+          'conflict with every candidate represented by each end are removed.',
+        contradiction: 'If the first candidate were true, a statement about a candidate or group would be both true ' +
+          'and false, which is impossible. So the first candidate is false and is removed.',
+        forced: 'If the first candidate were false, a statement about a candidate or group would be both true and ' +
+          'false, which is impossible. So the first candidate is true and is placed.'
+      },
+      vi: {
+        endpoints: 'Nếu đầu thứ nhất sai thì đầu cuối đúng, nên ít nhất một đầu là đúng. Các ứng viên xung đột với ' +
+          'từng ứng viên được biểu diễn ở mỗi đầu đều bị loại.',
+        contradiction: 'Nếu ứng viên đầu tiên đúng thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, điều ' +
+          'không thể xảy ra. Vậy ứng viên đầu tiên sai và bị loại.',
+        forced: 'Nếu ứng viên đầu tiên sai thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, điều không thể ' +
+          'xảy ra. Vậy ứng viên đầu tiên đúng và được điền vào.'
+      }
+    };
+    var PREFIX = {
+      forcingChain: { en: 'Forcing chain of 3 links: ', vi: 'Chuỗi suy luận dài 3 liên kết: ' },
+      forcingChainLong: { en: 'Long forcing chain of 3 links: ', vi: 'Chuỗi suy luận dài hơn thường, 3 liên kết: ' }
+    };
+
+    it('says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the ' +
+      'prefix and the placeholders of each text unchanged', function () {
+        ready();
+        var model = H.model('classic9');
+        // a group end (an endpoints proof starts from the false group), a group inside and at the end of two paths
+        var chains = [[node([0, 1], 5, 0), node([4], 5, 1)], [node([0, 1], 5, 0), node([9], 5, 1)]];
+        var shown = '(R1C1' + NE + '5' + AND + 'R1C2' + NE + '5)' + THEN + 'R1C5=5 | (R1C1' + NE + '5' + AND + 'R1C2' + NE + '5)' +
+          THEN + 'R2C1=5';
+        withLabels(model, function () {
+          ['endpoints', 'contradiction', 'forced'].forEach(function (kind) {
+            ['forcingChain', 'forcingChainLong'].forEach(function (id) {
+              var key = 'technique.' + id + '.step.' + kind;
+              LOCALES.forEach(function (code) {
+                var text = inLocale(code, function () { return I.t(key, { kind: kind, length: 3, chains: chains }); });
+                expect([key, code, text]).toEqual([key, code, PREFIX[id][code] + shown + '. ' + BODY[code][kind]]);
+                expect(placeholders(SG.locales[code][key])).toEqual(['chains', 'length']);
+                // the old wording said that candidates "see" the ends and that "some candidate" had both truth values
+                expect(/see both ends|some candidate|nhìn thấy cả hai đầu|sẽ có một ứng viên/.test(text)).toBe(false);
+              });
+            });
+          });
+        });
+      });
+
+    it('reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols ' +
+      'as they are', function () {
+        ready();
+        var model = H.model('classic9');
+        var key = 'technique.forcingChain.step.contradiction';
+        withLabels(model, function () {
+          var plain = 'R1C1' + NE + '5' + THEN + 'R1C2=5' + THEN + 'R2C2' + NE + '5 | R1C1=5' + THEN + 'R2C1' + NE + '5';
+          expect(chainsText(key, [[[0, 5, 0], [1, 5, 1], [10, 5, 0]], [[0, 5, 1], [9, 5, 0]]])).toContain(plain);
+          expect(chainsText(key, [[node([0], 5, 0), node([1], 5, 1), node([10], 5, 0)],
+            [node([0], 5, 1), node([9], 5, 0)]])).toContain(plain);
+          expect(chainsText(key, [[[0, 5, 0], node([1], 5, 1), [10, 5, 0]], [node([0], 5, 1), [9, 5, 0]]]))
+            .toContain(plain);
+          var localized = [[node(['R4C4', 'R4C6'], '0', 1), node(['R4C9'], 'F', 0)],
+            [node(['R1C1', 'R1C2'], 'E', 0), ['R9C9', 'A', 1]]];
+          expect(chainsText(key, localized)).toContain('(R4C4=0' + OR + 'R4C6=0)' + THEN + 'R4C9' + NE + 'F | (R1C1' +
+            NE + 'E' + AND + 'R1C2' + NE + 'E)' + THEN + 'R9C9=A');
+        });
+      });
+
+    it('leaves the arguments of a Finding as they were and gives the same text on the next call', function () {
+      ready();
+      var model = H.model('classic9');
+      var args = { proofVersion: 2, kind: 'contradiction', length: 2, chains: [
+        [node([0], 5, 1), node([1], 5, 0), node([0, 1], 5, 1)], [node([0], 5, 1), node([9], 5, 0), node([0, 1], 5, 0)]] };
+      var before = JSON.stringify(args);
+      var key = 'technique.forcingChain.step.contradiction';
+      withLabels(model, function () {
+        var text = I.t(key, args);
+        expect(JSON.stringify(args)).toBe(before);
+        expect(I.t(key, args)).toBe(text);
+      });
+      expect(JSON.stringify(args)).toBe(before);
+    });
+
+    it('explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes',
+      function () {
+        packsReady();
+        var label = function (cell) { return 'R1C' + (cell + 1); };
+        I.setCellLabeler(label);
+        try {
+          var key = 'technique.forcingChain.step.endpoints';
+          var shown = function (truth) {
+            return I.t(key, { kind: 'endpoints', length: 1, chains: [[node([0, 1], 5, truth)]] });
+          };
+          LOCALES.forEach(function (code) {
+            var shortDesc = SG.locales[code]['technique.forcingChain.desc'];
+            var longDesc = SG.locales[code]['technique.forcingChainLong.desc'];
+            inLocale(code, function () {
+              expect(shown(1)).toContain('(R1C1=5' + OR + 'R1C2=5)');
+              expect(shown(0)).toContain('(R1C1' + NE + '5' + AND + 'R1C2' + NE + '5)');
+            });
+            expect(shortDesc).toContain('(R1C1=5' + OR + 'R1C2=5)');
+            expect(shortDesc).toContain('(R1C1' + NE + '5' + AND + 'R1C2' + NE + '5)');
+            // a group is described conditionally ("If a proof step represents a group ..."): no grouped finder is active yet
+            var conditional = code === 'en' ? 'If a proof step represents a group' :
+              'Nếu một bước chứng minh biểu diễn một nhóm';
+            expect(shortDesc).toContain(conditional);
+            expect(longDesc).toContain(conditional);
+            [shortDesc, longDesc].forEach(function (text) {
+              expect(text).toContain(code === 'en' ? 'must conflict with every candidate represented by each end' :
+                'phải xung đột với từng ứng viên được biểu diễn ở mỗi đầu');
+              expect(/[{}]/.test(text)).toBe(false);
+              // the existing forcingChain keeps its unbounded work policy: no description claims a work cap
+              expect(/50[,.\s]?000|work (cap|limit)/i.test(text)).toBe(false);
+            });
+          });
+        } finally {
+          I.setCellLabeler(null);
+        }
+      });
+  });
+
   // ---------------------------------------------------------------------------------------------
   // index.html
   // ---------------------------------------------------------------------------------------------

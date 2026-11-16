@@ -393,10 +393,18 @@
       'là chữ số đó. Ít nhất một đầu chuỗi chứa chữ số này, và ô nhìn thấy cả hai đầu không thể chứa nó.',
     'technique.forcingChain': 'Chuỗi suy luận (Forcing Chain)',
     'technique.forcingChain.desc': 'Chuỗi các suy luận kiểu “nếu thế này thì thế kia”, chứng minh một ứng ' +
-      'viên là sai (hoặc một chữ số là đúng).',
+      'viên là sai (hoặc một chữ số là đúng). Nếu một bước chứng minh biểu diễn một nhóm, bước đó liệt kê ' +
+      'các ô còn có thể chứa cùng một chữ số tại giao của một khối (hoặc vùng) với một hàng hoặc cột. Nhóm ' +
+      'đúng khi có ít nhất một ô của nhóm chứa chữ số đó, viết (R1C1=5 \u2228 R1C2=5), và sai khi không ô ' +
+      'nào của nhóm chứa nó, viết (R1C1\u22605 \u2227 R1C2\u22605); nhóm đúng không cho biết ô nào chứa ' +
+      'chữ số. Ứng viên bị loại theo quy tắc hai đầu phải xung đột với từng ứng viên được biểu diễn ở mỗi ' +
+      'đầu. Chuỗi chỉ được tìm đến một độ dài giới hạn, nên gợi ý không cam kết tìm ra mọi chuỗi.',
     'technique.forcingChainLong': 'Chuỗi suy luận dài (Long Forcing Chain)',
     'technique.forcingChainLong.desc': 'Cùng loại chuỗi với Chuỗi suy luận nhưng quá dài so với nó: chuỗi ' +
-      'ngắn nhất dùng được có nhiều liên kết hơn mức Chuỗi suy luận thường cho phép (tối đa 12 liên kết).',
+      'ngắn nhất dùng được có nhiều liên kết hơn mức Chuỗi suy luận thường cho phép (tối đa 12 liên kết). ' +
+      'Nếu một bước chứng minh biểu diễn một nhóm, ý nghĩa đúng và sai của nhóm giống như trong Chuỗi suy ' +
+      'luận. Ứng viên bị loại theo quy tắc hai đầu phải xung đột với từng ứng viên được biểu diễn ở mỗi ' +
+      'đầu. Gợi ý không cam kết tìm ra mọi chuỗi.',
     'technique.nishio': 'Nishio (thử–sai)',
     'technique.nishio.desc': 'Thử–sai có giới hạn: giả sử một ứng viên là đúng; nếu các suy luận đơn giản ' +
       'sau đó dẫn đến mâu thuẫn thì ứng viên ấy là sai.',
@@ -528,26 +536,26 @@
       'chuỗi chỉ có đúng hai ứng viên, và mỗi liên kết nối hai ô nhìn thấy nhau qua cùng một chữ số. Nếu ' +
       'đầu chuỗi đầu tiên không phải {digit} thì các liên kết buộc đầu cuối là {digit}, nên ít nhất một đầu ' +
       'chuỗi là {digit}. Ứng viên {digit} nhìn thấy cả hai đầu bị loại.',
-    'technique.forcingChain.step.endpoints': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu ứng viên ' +
-      'đầu tiên sai thì ứng viên cuối đúng, nên ít nhất một đầu của chuỗi là đúng. Các ứng viên nhìn thấy ' +
-      'cả hai đầu bị loại.',
+    'technique.forcingChain.step.endpoints': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu đầu thứ ' +
+      'nhất sai thì đầu cuối đúng, nên ít nhất một đầu là đúng. Các ứng viên xung đột với từng ứng viên ' +
+      'được biểu diễn ở mỗi đầu đều bị loại.',
     'technique.forcingChain.step.contradiction': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu ứng ' +
-      'viên đầu tiên đúng thì sẽ có một ứng viên vừa đúng vừa sai, điều không thể xảy ra. Vậy ứng viên đầu ' +
-      'tiên sai và bị loại.',
+      'viên đầu tiên đúng thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, điều không thể xảy ra. ' +
+      'Vậy ứng viên đầu tiên sai và bị loại.',
     'technique.forcingChain.step.forced': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu ứng viên ' +
-      'đầu tiên sai thì sẽ có một ứng viên vừa đúng vừa sai, điều không thể xảy ra. Vậy ứng viên đầu ' +
-      'tiên đúng và được điền vào.',
+      'đầu tiên sai thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, điều không thể xảy ra. Vậy ' +
+      'ứng viên đầu tiên đúng và được điền vào.',
     'technique.nishio.step': 'Thử–sai (độ sâu {depth}): nếu {label} là {digit} thì các suy luận đơn giản ' +
       'sẽ dẫn đến mâu thuẫn. Vậy {digit} bị loại khỏi {label}.',
     'technique.forcingChainLong.step.endpoints': 'Chuỗi suy luận dài hơn thường, {length} liên kết: ' +
-      '{chains}. Nếu ứng viên đầu tiên sai thì ứng viên cuối đúng, nên ít nhất một đầu của chuỗi là đúng. ' +
-      'Các ứng viên nhìn thấy cả hai đầu bị loại.',
+      '{chains}. Nếu đầu thứ nhất sai thì đầu cuối đúng, nên ít nhất một đầu là đúng. Các ứng viên xung ' +
+      'đột với từng ứng viên được biểu diễn ở mỗi đầu đều bị loại.',
     'technique.forcingChainLong.step.contradiction': 'Chuỗi suy luận dài hơn thường, {length} liên kết: ' +
-      '{chains}. Nếu ứng viên đầu tiên đúng thì sẽ có một ứng viên vừa đúng vừa sai, điều không thể xảy ' +
-      'ra. Vậy ứng viên đầu tiên sai và bị loại.',
+      '{chains}. Nếu ứng viên đầu tiên đúng thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, ' +
+      'điều không thể xảy ra. Vậy ứng viên đầu tiên sai và bị loại.',
     'technique.forcingChainLong.step.forced': 'Chuỗi suy luận dài hơn thường, {length} liên kết: {chains}. ' +
-      'Nếu ứng viên đầu tiên sai thì sẽ có một ứng viên vừa đúng vừa sai, điều không thể xảy ra. Vậy ứng ' +
-      'viên đầu tiên đúng và được điền vào.',
+      'Nếu ứng viên đầu tiên sai thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, điều không ' +
+      'thể xảy ra. Vậy ứng viên đầu tiên đúng và được điền vào.',
     'technique.nishioDeep.step': 'Thử–sai sâu (độ sâu {depth}): nếu {label} là {digit} thì các suy luận ' +
       'đơn giản, cùng một phép thử thứ hai bên trong giả thiết đó, sẽ dẫn đến mâu thuẫn. Vậy {digit} bị ' +
       'loại khỏi {label}.'

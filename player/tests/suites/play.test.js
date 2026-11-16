@@ -248,6 +248,224 @@
   });
 
   // ---------------------------------------------------------------------------------------------
+  // Group proofs (difficulty v3, R16, MS13b): `chains` of `{ cells, digit, truth }` nodes beside the old triples
+  // ---------------------------------------------------------------------------------------------
+
+  describe('play: group proofs of version 2', function () {
+    var CP = SG.chainProofs;
+    var NE = '\u2260';
+    var OR = ' \u2228 ';
+    var AND = ' \u2227 ';
+    var THEN = ' \u21d2 ';
+
+    function node(cells, digit, truth) {
+      return { cells: cells, digit: digit, truth: truth };
+    }
+
+    function ascending(a, b) {
+      return a - b;
+    }
+
+    /**
+     * The position of SA2's vector of MS13a, a 4x4 board of digits 1..4 with the rows [0,1,9,15], [2,10,3,4],
+     * [5,6,7,8] and [11,12,13,14], the box [0,1,2,10] and four more complete units; cells 10 to 15 hold a 4.
+     */
+    function sa2Position() {
+      var model = SG.model.create({ variantId: 'chain-sa2-vector', digits: 4,
+        units: [[0, 1, 2, 10], [0, 3, 4, 11], [1, 3, 8, 12], [0, 5, 6, 13], [5, 2, 7, 14], [0, 1, 9, 15]],
+        unitMeta: [{ kind: 'box', label: 'B1' }, { label: 'X1' }, { label: 'X2' }, { label: 'X3' }, { label: 'X4' },
+          { kind: 'row', label: 'R1' }],
+        layout: { rows: 4, cols: 4, cellRow: [0, 0, 1, 1, 1, 2, 2, 2, 2, 0, 1, 3, 3, 3, 3, 0],
+          cellCol: [0, 1, 0, 2, 3, 0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 3] } });
+      var state = SG.model.initState(model);
+      [[1, 2], [1, 2, 3], [1, 2, 3], [1, 3], [2, 3], [1, 2], [1, 3], [1, 2, 3], [1, 2, 3], [2, 3]]
+        .forEach(function (digits, c) {
+          state.candidates[c] = digits.reduce(function (mask, d) { return mask | (1 << (d - 1)); }, 0);
+        });
+      for (var c = 10; c < 16; c++) {
+        state.value[c] = 4;
+        state.candidates[c] = 1 << 3;
+      }
+      state.unsolvedCount = 10;
+      return { model: model, state: state };
+    }
+
+    /**
+     * An endpoints proof from a group that is false to a singleton that is true, on a board whose rows 1 and 2 hold
+     * the digit in `open` only: the group `{cells[0], cells[1]}` in row 1 with its strong partner `cells[2]`, a weak
+     * link to `cells[3]` in the column of the partner, and the strong link of row 2 to `cells[4]`. The independent
+     * checker accepts it, and its eliminations are the exact targets.
+     */
+    function groupProof(model, digit, open, cells) {
+      var state = SG.model.initState(model);
+      for (var c = 0; c < model.cellCount; c++) state.candidates[c] = open.indexOf(c) === -1 ? 0 : 1 << (digit - 1);
+      var nodes = [node([cells[0], cells[1]], digit, 0), node([cells[2]], digit, 1), node([cells[3]], digit, 0),
+        node([cells[4]], digit, 1)];
+      var union = [];
+      nodes.forEach(function (n) {
+        n.cells.forEach(function (c) { if (union.indexOf(c) === -1) union.push(c); });
+      });
+      var finding = {
+        technique: 'forcingChain', cells: union.sort(ascending), placements: [],
+        eliminations: CP.targets(model, state, nodes[0], nodes[3]), i18nKey: 'technique.forcingChain.step.endpoints',
+        i18nArgs: { proofVersion: 2, kind: 'endpoints', length: 3, chains: [nodes] }
+      };
+      expect(CP.pathProblems(model, state, finding)).toEqual([]);
+      expect(CP.pathProblems(model, state, finding, { canonical: true })).toEqual([]);
+      return finding;
+    }
+
+    function hintOf(finding) {
+      var targets = [];
+      finding.eliminations.forEach(function (e) { if (targets.indexOf(e[0]) === -1) targets.push(e[0]); });
+      return { ok: true, step: 0, steps: 1, level: 3, technique: finding.technique, nameKey: 'technique.forcingChain',
+        descKey: 'technique.forcingChain.desc', stepKey: finding.i18nKey, stepArgs: finding.i18nArgs,
+        kind: 'elimination', cells: finding.cells, targets: targets, placements: [], eliminations: finding.eliminations,
+        region: null, ignored: 0 };
+    }
+
+    // 16 digits: rows 1 and 2 hold the 1 (written 0) in R1C1, R1C2, R1C5 and R2C1, R2C5; R3C1-R3C4 and R4C1-R4C4 see
+    // the group and R2C1 and lose it.
+    var HEX_OPEN = [0, 1, 4, 16, 20, 32, 33, 34, 35, 48, 49, 50, 51];
+    // 9 digits (a Wordoku has the geometry of a classic board): the 5 in R1C1, R1C2, R1C5, R2C1, R2C5, R3C1-R3C3
+    var NINE_OPEN = [0, 1, 4, 9, 13, 18, 19, 20];
+
+    it('writes every group member as a label and every digit as the board draws it, a hexadecimal 1 as 0', function () {
+      ready();
+      var hex = realResult('mega16', 'veryEasy', 1).model;
+      var raw = { proofVersion: 2, kind: 'forced', length: 2, digit: 1, chains: [
+        [node([0], 1, 0), node([0, 1], 16, 1), node([2], 10, 0)], [[17, 1, 0], node([17, 18], 1, 1)]] };
+      var before = JSON.stringify(raw);
+      var args = P.localizeArgs(hex, raw, 'digits');
+      expect(args.chains[0]).toEqual([{ cells: ['R1C1'], digit: '0', truth: 0 },
+        { cells: ['R1C1', 'R1C2'], digit: 'F', truth: 1 }, { cells: ['R1C3'], digit: '9', truth: 0 }]);
+      // a legacy triple stays a triple beside the nodes
+      expect(args.chains[1]).toEqual([['R2C2', '0', 0], { cells: ['R2C2', 'R2C3'], digit: '0', truth: 1 }]);
+      expect([args.proofVersion, args.kind, args.length, args.digit]).toEqual([2, 'forced', 2, '0']);
+      expect(JSON.stringify(raw)).toBe(before);
+      // another call on the same saved arguments gives the same copy, and the copy owns its arrays and nodes
+      args.chains[0][1].cells.push('R9C9');
+      args.chains[0][0].truth = 1;
+      args.chains[1][0][0] = 'R16C16';
+      expect(JSON.stringify(raw)).toBe(before);
+      expect(P.localizeArgs(hex, raw, 'digits').chains[0][1]).toEqual({ cells: ['R1C1', 'R1C2'], digit: 'F', truth: 1 });
+    });
+
+    it('writes the digits of a Wordoku proof as its letters, in a node and in an old triple', function () {
+      ready();
+      var word = realResult('wordoku', 'easy', 1).model;
+      var letters = P.typedLabels(word, 'word');
+      expect(letters).toEqual(word.symbols.labels.map(String));
+      var raw = { proofVersion: 2, kind: 'endpoints', length: 3, chains: [[node([0, 1], 5, 0), node([4], 5, 1),
+        [13, 5, 0]]] };
+      var args = P.localizeArgs(word, raw, 'word');
+      expect(args.chains[0][0]).toEqual({ cells: ['R1C1', 'R1C2'], digit: letters[4], truth: 0 });
+      expect(args.chains[0][1]).toEqual({ cells: ['R1C5'], digit: letters[4], truth: 1 });
+      expect(args.chains[0][2]).toEqual(['R2C5', letters[4], 0]);
+      expect(letters[4]).not.toBe('5');
+      expect(P.localizeArgs(word, raw, 'digits').chains[0][0].digit).toBe('5');
+      expect(P.localizeArgs(word, raw, 'digits').chains[0][2]).toEqual(['R2C5', '5', 0]);
+    });
+
+    it('keeps a node that is already written as it is, owns its arrays, and copies a step it does not know', function () {
+      ready();
+      var model = realResult('classic9', 'normal', 4).model;
+      var raw = { chains: [[node(['R1C1', 'R1C2'], 'E', 1), node([3, 'R1C9'], 5, 0), { digit: 5, truth: 1 }, null]] };
+      var before = JSON.stringify(raw);
+      var args = P.localizeArgs(model, raw, 'digits');
+      expect(args.chains[0][0]).toEqual({ cells: ['R1C1', 'R1C2'], digit: 'E', truth: 1 });
+      expect(args.chains[0][0].cells).not.toBe(raw.chains[0][0].cells);
+      expect(args.chains[0][1]).toEqual({ cells: ['R1C4', 'R1C9'], digit: '5', truth: 0 });
+      expect(args.chains[0][2]).toEqual({ digit: 5, truth: 1 });
+      expect(args.chains[0][2]).not.toBe(raw.chains[0][2]);
+      expect(args.chains[0][3]).toBeNull();
+      args.chains[0][0].cells.push('R9C9');
+      expect(JSON.stringify(raw)).toBe(before);
+    });
+
+    it('describes a group proof on a hexadecimal board: the text, every member in the cells line, the symbol 0 for ' +
+      'the value 1, and nothing of the hint written', function () {
+        ready();
+        var hex = realResult('mega16', 'veryEasy', 1).model;
+        var finding = groupProof(hex, 1, HEX_OPEN, [0, 1, 4, 20, 16]);
+        expect(finding.cells).toEqual([0, 1, 4, 16, 20]);
+        expect(finding.eliminations.map(function (e) { return e[0]; })).toEqual([32, 33, 34, 35, 48, 49, 50, 51]);
+        var hint = hintOf(finding);
+        var before = JSON.stringify(hint);
+        var chain = '(R1C1' + NE + '0' + AND + 'R1C2' + NE + '0)' + THEN + 'R1C5=0' + THEN + 'R2C5' + NE + '0' + THEN +
+          'R2C1=0';
+        ['en', 'vi'].forEach(function (code) {
+          inLocale(code, function () {
+            var d = P.describeHint(hex, hint, { mode: 'digits' });
+            expect(d.ok).toBe(true);
+            expect(d.explanation).toContain(chain);
+            expect(d.explanation).toMatch(code === 'en' ? /conflict with every candidate represented by each end/ :
+              /xung đột với từng ứng viên được biểu diễn ở mỗi đầu/);
+            expect(d.explanation).not.toMatch(/\{\w+\}|undefined|NaN|\[object/);
+            finding.cells.forEach(function (c) { expect(d.cells).toContain(SG.model.cellLabel(hex, c)); });
+            expect(d.action).toContain('0');
+            finding.eliminations.forEach(function (e) { expect(d.action).toContain(SG.model.cellLabel(hex, e[0])); });
+            expect(JSON.stringify(hint)).toBe(before);
+            expect(P.describeHint(hex, hint, { mode: 'digits' })).toEqual(d);
+          });
+        });
+      });
+
+    it('describes a group proof on a Wordoku with its letters, and the same proof with digits when asked', function () {
+      ready();
+      var word = realResult('wordoku', 'easy', 1).model;
+      var finding = groupProof(word, 5, NINE_OPEN, [0, 1, 4, 13, 9]);
+      expect(finding.cells).toEqual([0, 1, 4, 9, 13]);
+      expect(finding.eliminations).toEqual([[18, 5], [19, 5], [20, 5]]);
+      var hint = hintOf(finding);
+      var letter = P.typedLabels(word, 'word')[4];
+      var asLetters = P.describeHint(word, hint, { mode: 'word' }).explanation;
+      expect(asLetters).toContain('(R1C1' + NE + letter + AND + 'R1C2' + NE + letter + ')' + THEN + 'R1C5=' + letter +
+        THEN + 'R2C5' + NE + letter + THEN + 'R2C1=' + letter);
+      var asDigits = P.describeHint(word, hint, { mode: 'digits' }).explanation;
+      expect(asDigits).toContain('(R1C1' + NE + '5' + AND + 'R1C2' + NE + '5)' + THEN + 'R1C5=5');
+      expect(P.describeHint(word, hint, { mode: 'word' }).cells).toContain('R1C2');
+    });
+
+    it('writes the two paths of a forced proof and of a contradiction that mix singletons and a group: a true group ' +
+      'as a disjunction, a false group as every member false', function () {
+        ready();
+        var v = sa2Position();
+        var vectors = [
+          ['technique.forcingChain.step.forced', { proofVersion: 2, kind: 'forced', length: 5, chains: [
+            [node([0], 1, 0), node([0], 2, 1), node([5], 2, 0), node([5], 1, 1), node([2], 1, 0), node([0, 1], 1, 1)],
+            [node([0], 1, 0), node([3], 1, 1), node([0, 1], 1, 0)]] }, [0, 1, 2, 3, 5], [[0, 1]], [],
+          'R1C1' + NE + '1' + THEN + 'R1C1=2' + THEN + 'R3C1' + NE + '2' + THEN + 'R3C1=1' + THEN + 'R2C1' + NE + '1' + THEN +
+            '(R1C1=1' + OR + 'R1C2=1) | R1C1' + NE + '1' + THEN + 'R2C3=1' + THEN + '(R1C1' + NE + '1' + AND + 'R1C2' + NE +
+            '1)'],
+          ['technique.forcingChain.step.contradiction', { proofVersion: 2, kind: 'contradiction', length: 3, chains: [
+            [node([1], 1, 1), node([2], 1, 0), node([0, 1], 1, 1)],
+            [node([1], 1, 1), node([0], 1, 0), node([3], 1, 1), node([0, 1], 1, 0)]] }, [0, 1, 2, 3], [], [[1, 1]],
+          'R1C2=1' + THEN + 'R2C1' + NE + '1' + THEN + '(R1C1=1' + OR + 'R1C2=1) | R1C2=1' + THEN + 'R1C1' + NE + '1' + THEN +
+            'R2C3=1' + THEN + '(R1C1' + NE + '1' + AND + 'R1C2' + NE + '1)']
+        ];
+        vectors.forEach(function (row) {
+          var finding = { technique: 'forcingChain', cells: row[2], placements: row[3], eliminations: row[4],
+            i18nKey: row[0], i18nArgs: row[1] };
+          expect(CP.pathProblems(v.model, v.state, finding)).toEqual([]);
+          expect(CP.pathProblems(v.model, v.state, finding, { canonical: true })).toEqual([]);
+          var before = JSON.stringify(finding);
+          var args = P.localizeArgs(v.model, row[1], 'digits');
+          ['en', 'vi'].forEach(function (code) {
+            inLocale(code, function () {
+              var text = SG.i18n.t(row[0], args);
+              expect([code, text.indexOf(row[5]) !== -1]).toEqual([code, true]);
+              expect(text).toMatch(code === 'en' ? /a statement about a candidate or group would be both true and false/ :
+                /một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai/);
+              expect(text).not.toMatch(/\{\w+\}|undefined|NaN|\[object/);
+            });
+          });
+          expect(JSON.stringify(finding)).toBe(before);
+        });
+      });
+  });
+
+  // ---------------------------------------------------------------------------------------------
   // Entries, notes, undo and redo
   // ---------------------------------------------------------------------------------------------
 

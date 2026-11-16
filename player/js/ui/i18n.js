@@ -233,15 +233,31 @@
     return '#' + (cell + 1);
   }
 
+  /** A literal of proof version 2 is a node `{ cells, digit, truth }` (ids or labels, a value or its symbol). */
+  function isGroupLiteral(lit) {
+    return lit !== null && typeof lit === 'object' && Array.isArray(lit.cells);
+  }
+
+  /**
+   * One literal: a legacy triple `[cell, digit, truth]` or a node `{ cells, digit, truth }`. A node with one cell
+   * reads like a triple. A true group is the disjunction of its members, `(R1C1=5 \u2228 R1C2=5)`; a false group is
+   * every member false, `(R1C1\u22605 \u2227 R1C2\u22605)`.
+   */
+  function formatLiteral(lit, labeler) {
+    if (!isGroupLiteral(lit)) return cellLabel(lit[0], labeler) + (lit[2] === 1 ? '=' : '\u2260') + lit[1];
+    const sign = lit.truth === 1 ? '=' : '\u2260';
+    const members = lit.cells.map(function (cell) { return cellLabel(cell, labeler) + sign + lit.digit; });
+    if (members.length === 1) return members[0];
+    return '(' + members.join(lit.truth === 1 ? ' \u2228 ' : ' \u2227 ') + ')';
+  }
+
   /**
    * The chains of a forcing chain as text: `R1C1\u22605 \u21d2 R1C4=5 | ...` (`=` the candidate is true,
-   * `\u2260` false, `|` separates the two chains of a contradiction).
+   * `\u2260` false, `|` separates the two chains of a contradiction). Each step is a triple or a group node.
    */
   function formatChains(chains, labeler) {
     return chains.map(function (chain) {
-      return chain.map(function (lit) {
-        return cellLabel(lit[0], labeler) + (lit[2] === 1 ? '=' : '\u2260') + lit[1];
-      }).join(' \u21d2 ');
+      return chain.map(function (lit) { return formatLiteral(lit, labeler); }).join(' \u21d2 ');
     }).join(' | ');
   }
 
