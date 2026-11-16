@@ -1,0 +1,5 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=jellyfish --discover --variants=classic9 --levels=hell2 --max-puzzles=12 --max-hints=400 --record-sources=tests\artifacts\difficulty-v3\MS12\discover-4.json
+selected 1 technique ID(s); mode discover + record
+the plan has no request for these --variants and --levels; nothing was generated
+the generator child failed (exit 1)
+exit=1 seconds=0.296

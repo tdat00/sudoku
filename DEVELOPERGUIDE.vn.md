@@ -589,16 +589,19 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    hàng và khối); gọi `ctx.check()` trong các vòng lặp dài. Một phép tìm kiếm có giới hạn báo công việc của nó qua bộ
    quan sát tùy chọn `ctx.options.onPatternWork(record)` (`{ id, work, limit, capHit, retained }`, mỗi lần gọi một bản
    ghi mới và nó không bao giờ chọn kết quả). Các phép tìm chuỗi được viết một lần thành các lõi
-   `SG.chainSearch.forcing(model, state, ctx, { id, minLength, maxLength, workLimit })` và
+   `SG.chainSearch.forcing(model, state, ctx, { id, minLength, maxLength, workLimit, edges })` và
    `SG.chainSearch.nishio(model, state, ctx, { id, minDepth, maxDepth, workLimit })` (`core/js/engine/tech-chain.js`):
    khoảng đóng áp dụng cho chứng minh **ngắn nhất** của toàn bộ phép tìm (cực tiểu nhỏ hơn `min` cho `null`, nên một
    kỹ thuật dài hơn không bao giờ gắn lại nhãn cho chứng minh ngắn hơn), `length` đếm số cạnh (chuỗi dài hơn của một
    chứng minh hai chuỗi, không phải tổng), `workLimit` là 50.000 khi vắng mặt và `null` (hoặc `Infinity`) nghĩa là
-   không giới hạn, và khi hết giới hạn thì trả `null`, không bao giờ trả chứng minh tốt nhất đã có. Một lần gọi có
+   không giới hạn, và khi hết giới hạn thì trả `null`, không bao giờ trả chứng minh tốt nhất đã có. `edges` (chỉ của
+   forcing, MS12) là chế độ cạnh tường minh của bộ dựng đồ thị dùng chung: `'general'` (mặc định; đồ thị và ba loại
+   chứng minh ở trên, không đổi) hoặc `'restricted'` (đồ thị XY-chain và chứng minh duy nhất của nó, bên dưới); giá trị
+   khác là `solver.invalidOption`, và không bộ tìm tổng quát nào đã đăng ký đọc nó. Một lần gọi có
    giới hạn không bao giờ để quá 256 đơn vị công việc trôi qua giữa hai lần kiểm tra ngân sách cha (nó chia một lần mở
-   rộng lớn hơn thành các đoạn tối đa 256 cạnh; lần gọi không giới hạn giữ nhịp cũ). Bốn kỹ thuật chuỗi đã đăng ký là
+   rộng lớn hơn thành các đoạn tối đa 256 cạnh; lần gọi không giới hạn giữ nhịp cũ). Năm kỹ thuật chuỗi đã đăng ký là
    các lớp bao truyền id, cả hai cận và giới hạn công việc của mình một cách tường minh, nên mỗi chứng minh thuộc đúng
-   một id: `forcingChain` từ 1 đến C cạnh và `nishio` độ sâu 1 (cả hai không giới hạn), `forcingChainLong` từ C + 1 đến
+   một id: `xyChain` từ 1 đến 12 cạnh hạn chế (50.000), `forcingChain` từ 1 đến C cạnh và `nishio` độ sâu 1 (cả hai không giới hạn), `forcingChainLong` từ C + 1 đến
    12 cạnh và `nishioDeep` độ sâu 2 (tối đa 3; cả hai ở mức 50.000). C là `SG.chainSearch.SHORT_MAX` (4, do nhiệm vụ MS07c
    chọn từ số lần đạt chính xác của 72 yêu cầu Nightmare mới, 36 so với 24 của 6:
    [docs/difficulty-v3/chain-window-2026-11-15.md](docs/difficulty-v3/chain-window-2026-11-15.md)), đọc ở
@@ -719,6 +722,24 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    bản ghi khi lần gọi trả về bình thường (cả khi chốt chặn từ chối mà không tốn công) và không có bản ghi nào khi hủy,
    khi có lỗi hoặc khi `assumeUniqueness: false`. Phép chứng minh, chi phí, tỷ lệ chạm tới và ảnh hưởng đến các đề tham
    chiếu, mã băm và bản ghi vàng nằm trong `generator/design.md`, "BUG+1".
+   **XY-chain** (`core/js/engine/tech-chain.js`, nhiệm vụ MS12; id `xyChain`, nhóm `chain`, order 186, chi phí cơ sở 82,
+   trọng số 1000, không giới hạn biến thể, `assumesUniqueness: false`, nằm giữa BUG+1 và Forcing Chain) là dạng hạn chế
+   của phép tìm chuỗi, được chọn bằng `edges: 'restricted'` của bộ dựng dùng chung. Liên kết mạnh chỉ là hai ứng viên
+   của một ô hai ứng viên, và liên kết yếu chỉ là cùng một chữ số ở hai ô nhìn thấy nhau (`model.peers`); đồ thị hạn chế
+   không xem nội dung của `ctx.completeUnits` và không dùng liên kết mạnh liên hợp của đơn vị. Một chứng minh đi từ
+   "s sai" đến "t đúng", cùng một chữ số ở hai ô khác nhau, ô sau có số thứ tự cao hơn, nên có 3, 5 đến 11 cạnh (khoảng
+   là 1 đến 12) và chỉ xác lập rằng ít nhất một trong hai ô chứa chữ số đó; mọi ứng viên của chữ số đó nhìn thấy cả hai
+   ô bị loại và không điền gì. Đường đi có thể ghé một ô hai lần. Chứng minh ngắn nhất của cả lượt quét được giữ (hòa:
+   điểm bắt đầu thấp nhất, rồi thứ tự của phép tìm theo chiều rộng) và nó có thể hành động trước một chứng minh chuỗi
+   tổng quát của Forcing Chain, ở order 190. Kết quả có `cells` (các ô khác nhau của chuỗi, tăng dần), `placements []`,
+   các loại bỏ tăng dần, khóa `technique.xyChain.step` (không có hậu tố loại) và `i18nArgs { digit, kind: 'endpoints',
+   length, chains }` với một chuỗi các bộ ba `[cell, digit, truth]` theo thứ tự đi qua. Một đơn vị công việc là một
+   cạnh được thăm (kể cả cạnh thăm lại và cạnh tới ứng viên cuối không có hai ứng viên), 50.000 mỗi lần gọi, không bao
+   giờ trả cực tiểu dở dang khi hết giới hạn; bộ quan sát nhận một bản ghi cho mỗi lần gọi trả về bình thường và không
+   có bản ghi nào khi hủy hoặc có lỗi. Các cờ của đồ thị mô tả đồ thị **nguyên tử**: đồ thị gộp cho các chuỗi ép (MS13)
+   cần cách biểu diễn nút và bộ giải mã riêng, việc gộp không áp dụng cho XY-chain, và không cấu hình nào của cổng chung
+   mở rộng được 12 cạnh và 50.000 đơn vị của bộ tìm đã đăng ký. Phép chứng minh, biến thể tương đương, chi phí, tỷ lệ
+   chạm tới và ảnh hưởng nằm trong `generator/design.md`, "The XY-chain".
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
    [Cách hoạt động](#cách-hoạt-động) — và trong các danh sách script của trình chơi (`index.html`, `help.html`,
    `tests.html`, `tests/node-runner.js`), vì kỹ thuật nằm trong bộ máy dùng chung (`core/js/engine/`) và gợi ý
@@ -772,7 +793,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (53 suite, 4.289 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (53 suite, 4.368 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (61 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -783,7 +804,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.289 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.368 bài —
 37 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -839,7 +860,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.289 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.368 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -1083,7 +1104,7 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   (`tests/fixtures/pattern-cost.js`), do suite `pattern-cost-tools` kiểm thử trên các quan sát giả, đồng hồ giả, các
   mẫu thật của các kỹ thuật chuỗi và chính công cụ; đầu ra thử nghiệm của nó nằm trong một thư mục riêng cho mỗi lần
   gọi (`.scratch-pattern-cost-tools/<pid-thời-gian-ngẫu-nhiên>/` ở gốc kho mã, bị git bỏ qua) và chỉ thư mục đó bị xóa.
-  Các mẫu đang dùng bao gồm `skyscraper`, `twoStringKite`, `remotePairs`, `emptyRectangle`, `finnedXWing`, `finnedSwordfish`, `wxyzWing`, `forcingChain`, `forcingChainLong`, `nishio` và
+  Các mẫu đang dùng bao gồm `skyscraper`, `twoStringKite`, `remotePairs`, `emptyRectangle`, `finnedXWing`, `finnedSwordfish`, `wxyzWing`, `xyChain`, `forcingChain`, `forcingChainLong`, `nishio` và
   `nishioDeep` bằng các thế cờ thật (bộ chuyển đổi có phạm vi `lawOfLeftovers` thuộc MS14b).
 - **Kiểm định các mức** — `node tests/qualify.js` chạy quy trình quyết định mỗi biến thể có những mức nào (40
   seed cố định cho mỗi biến thể và mức qua pipeline thật, thêm 60 seed cho mức ở ranh giới, ngân sách thời gian
@@ -1238,7 +1259,7 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.529 bài); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.607 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

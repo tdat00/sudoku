@@ -30,7 +30,7 @@
  * built from explicit `after` lists or an initial real puzzle state. MS07b replaces the four chain IDs
  * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way; MS08a adds skyscraper,
  * MS08b twoStringKite, MS08c emptyRectangle, MS09a finnedXWing, MS09b finnedSwordfish, MS10a remotePairs, MS10b
- * wxyzWing and MS11c bugPlusOne (MS11a and MS11b replace the uniqueRectangle entry).
+ * wxyzWing, MS11c bugPlusOne and MS12 xyChain (MS11a and MS11b replace the uniqueRectangle entry).
  */
 (function () {
   'use strict';
@@ -47,18 +47,18 @@
   ];
 
   /**
-   * The 31 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
-   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the ten
+   * The 32 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
+   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the eleven
    * techniques added since: skyscraper (MS08a), twoStringKite (MS08b), emptyRectangle (MS08c), finnedXWing
-   * (MS09a), remotePairs (MS10a), finnedSwordfish (MS09b), wxyzWing (MS10b), bugPlusOne (MS11c) and the two chain
-   * windows forcingChainLong and nishioDeep (MS07b).
+   * (MS09a), remotePairs (MS10a), finnedSwordfish (MS09b), wxyzWing (MS10b), bugPlusOne (MS11c), xyChain (MS12) and
+   * the two chain windows forcingChainLong and nishioDeep (MS07b).
    */
   var REGISTRY_ORDER = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite', 'remotePairs',
     'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'finnedSwordfish', 'jellyfish', 'xyWing',
-    'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle', 'bugPlusOne', 'forcingChain', 'forcingChainLong', 'nishio',
-    'nishioDeep'
+    'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle', 'bugPlusOne', 'xyChain', 'forcingChain', 'forcingChainLong',
+    'nishio', 'nishioDeep'
   ];
 
   /** The techniques the ladder tries before `id`: the position after them is where `id` is reached. */
@@ -754,14 +754,15 @@
   /**
    * Explicit positions of the chain IDs under rating v3 (MS07b). The arrays are copied lists of registered ids,
    * so that a technique registered later cannot move a position: the techniques below the chain group (in the
-   * order of the registry), then forcingChain, forcingChainLong and nishio, one after the other. Each position
-   * is where the solver, allowed only the ids of its list, gets stuck, which is where the next ID is reached.
+   * order of the registry) and xyChain (MS12, order 186), then forcingChain, forcingChainLong and nishio, one after
+   * the other. Each position is where the solver, allowed only the ids of its list, gets stuck, which is where the
+   * next ID is reached.
    */
   var BELOW_CHAINS = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite', 'remotePairs',
     'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'finnedSwordfish', 'jellyfish', 'xyWing',
-    'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle', 'bugPlusOne'
+    'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle', 'bugPlusOne', 'xyChain'
   ];
   var THROUGH_SHORT_CHAIN = BELOW_CHAINS.concat(['forcingChain']);
   var THROUGH_LONG_CHAIN = THROUGH_SHORT_CHAIN.concat(['forcingChainLong']);
@@ -817,6 +818,12 @@
   // technique registered later cannot move a position.
   var BELOW_BUG = THROUGH_UR.slice();
   var THROUGH_BUG = BELOW_BUG.concat(['bugPlusOne']);
+
+  // Where xyChain is reached (MS12, order 186): the techniques before it in the registry (through bugPlusOne, which
+  // runs on its own uniqueness assumption), and the same plus itself. Explicit lists, so that a technique registered
+  // later cannot move a position.
+  var BELOW_XY = THROUGH_BUG.slice();
+  var THROUGH_XY = BELOW_XY.concat(['xyChain']);
 
   // Real unique puzzles. The first two are the puzzles of the v2 chain fixtures; the next three are famous
   // puzzles of tests/fixtures/classic.js; the last three are minimal puzzles dug by SG.testkit.dig from the
@@ -993,6 +1000,19 @@
   var BUG_MID2 = '...3..4.8..9.4.1.38...9.7..1..2.....68...5.2....4....1..685.........9..4.7.6...1.';
   var BUG_WIDE = '.51.....7.9.3...6.28....3......5.6.........4....9.1.5..3..2.9.19.86........7...3.';
 
+  // Real unique puzzles of the xyChain fixtures (MS12), puzzles of the same seeded corpus (seed 4242; the puzzle of
+  // index i is the state #4i). They are positions where the registry reaches xyChain (after: BELOW_XY, every technique
+  // before it exhausted); the shortest restricted chain there has 9 or 11 edges (the shorter chains are the XY-Wings,
+  // Remote Pairs and W-Wings that the registry tries first). XY_NINE is puzzle 24 (the digit 8, from R3C7 through R5C4,
+  // R7C1, R7C4 to R7C7 in 9 edges: R5C7 loses the 8) and XY_ELEVEN puzzle 186 (the digit 8, from R1C6 through R7C6,
+  // R9C1, R9C6, R9C8 to R9C9 in 11 edges: R7C7 and R9C5 lose it). XY_SECOND, XY_THIRD and XY_FOURTH (puzzles 148, 78 and
+  // 114) are three more real positions for the soundness supplements.
+  var XY_NINE = '.785....2...3...7.3...6.......1.4.5.........1...279.....4....986.....2..2..9..73.';
+  var XY_ELEVEN = '.82....15...4..93.....5.....9...5........6.87.2.8416...17.....9..8..4....4.2..1..';
+  var XY_SECOND = '2.....7..1......656..1.74...7.3...4...9.....8..6...3.1..38....791..5.....8...1.2.';
+  var XY_THIRD = '4.38..5...5.....4.......2.938..17.....65.3....1....9.7.....6......94..5.....2.7.6';
+  var XY_FOURTH = '7.39...4....4..8....9.87...5...2......4.79..1.6.....5.62....7.......512..9.......';
+
   /**
    * Current fixtures that replace a historical entry or belong to an ID registered since (skyscraper, MS08a;
    * twoStringKite, MS08b; emptyRectangle, MS08c; finnedXWing, MS09a; finnedSwordfish, MS09b; remotePairs, MS10a;
@@ -1007,6 +1027,46 @@
    * highest candidate of the trivalue cell, and two negatives.
    */
   var CURRENT = {
+    xyChain: {
+      positive: [
+        {
+          name: 'xyChain on the 8, a chain of 9 edges R3C7 ... R7C7 of bivalue cells, R5C7 loses the 8 (a seeded dug ' +
+            'puzzle)',
+          puzzle: XY_NINE,
+          after: BELOW_XY,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[42, 8]]
+          }
+        },
+        {
+          name: 'xyChain on the 8, a chain of 11 edges R1C6 ... R9C9 of bivalue cells, R7C7 and R9C5 lose the 8 (a ' +
+            'second seeded dug puzzle)',
+          puzzle: XY_ELEVEN,
+          after: BELOW_XY,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[60, 8], [76, 8]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'xyChain has nothing left to do once the techniques through it are exhausted',
+          puzzle: WX_OPEN,
+          after: THROUGH_XY,
+          propagate: true
+        },
+        {
+          name: 'xyChain leaves a chain of unit-conjugate links (a forcing chain of 4 links) to forcingChain',
+          puzzle: V2_PUZZLE_2,
+          after: BELOW_XY,
+          propagate: true
+        }
+      ]
+    },
     bugPlusOne: {
       positive: [
         {
@@ -1602,6 +1662,14 @@
    * position with 42 open cells.
    */
   var SUPPLEMENTS = {
+    xyChain: [
+      { name: 'xyChain on the 8, a chain of 9 edges (a third seeded dug puzzle)', puzzle: XY_THIRD,
+        after: BELOW_XY, propagate: true },
+      { name: 'xyChain on the 5, a chain of 11 edges (a fourth seeded dug puzzle)', puzzle: XY_SECOND,
+        after: BELOW_XY, propagate: true },
+      { name: 'xyChain on the 3, a chain of 9 edges (a fifth seeded dug puzzle)', puzzle: XY_FOURTH,
+        after: BELOW_XY, propagate: true }
+    ],
     bugPlusOne: [
       { name: 'bugPlusOne at R4C2 {2,4,7}, a middle candidate (a third seeded dug puzzle)',
         puzzle: BUG_MID, after: BELOW_BUG, propagate: true },

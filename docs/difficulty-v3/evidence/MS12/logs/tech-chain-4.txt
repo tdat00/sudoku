@@ -1,0 +1,18 @@
+$ node tests\node-runner.js --suite=tech-chain
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-chain: 170 passed, 1 failed  (10.72 s)
+
+Failures:
+  FAIL tech-chain > xyChain: the edges it does not take > leaves every contradiction and forced chain, and the chains through conjugate pairs, to forcingChain
+       AssertionError: expected Array(2)["contradiction chain of 4 links", {technique: "xyChain", cells: Array(4)[37, 40, 73, 74], placements: Array(0)[], eliminations: Array(1)[Array(2)], i18nKey: "technique.xyChain.step", i18nArgs: {digit: 4, kind: "endpoints", length: 7, chains: Array(1)}}] to equal Array(2)["contradiction chain of 4 links", null]
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2752:62
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2747:24)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  171 total, 170 passed, 1 failed, 0 skipped
+Time:   10.72 s running tests, 10.83 s total
+exit=1 seconds=10.938

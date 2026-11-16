@@ -1,0 +1,77 @@
+$ node tests\tools\make-technique-examples.js ..\generator --check --ids=nakedSingle,hiddenSingleBox,hiddenSingleLine,pointing,cageCombo,ineqChain,boxLine,nakedPair,hiddenPair,nakedTriple,minMaxForcing,hiddenTriple,ruleOf45,nakedQuad,hiddenQuad,xWing,skyscraper,twoStringKite,remotePairs,simpleColouring,emptyRectangle,finnedXWing,swordfish,finnedSwordfish,cageSplit,jellyfish,xyWing,xyzWing,wxyzWing,wWing,uniqueRectangle,bugPlusOne,forcingChain,forcingChainLong,nishio,nishioDeep --max-puzzles=64 --max-hints=400
+selected 36 technique ID(s); mode check
+replaying 27 puzzle(s) for 36 ID(s) (--max-puzzles=64, --max-hints=400)
+puzzle 1/27 classic9 - - -> 47 hint(s), solved; wanted found: nakedSingle
+puzzle 2/27 classic9 - - -> 76 hint(s), solved; wanted found: hiddenSingleBox
+puzzle 3/27 classic9 - - -> 77 hint(s), solved; wanted found: hiddenSingleLine, forcingChainLong
+puzzle 4/27 classic9 - - -> 59 hint(s), solved; wanted found: pointing
+puzzle 5/27 killer - - -> 51 hint(s), solved; wanted found: cageCombo
+puzzle 6/27 greaterThan - - -> 67 hint(s), solved; wanted found: ineqChain
+puzzle 7/27 classic9 - - -> 62 hint(s), solved; wanted found: boxLine, skyscraper
+puzzle 8/27 classic9 - - -> 68 hint(s), solved; wanted found: nakedPair
+puzzle 9/27 classic9 - - -> 58 hint(s), solved; wanted found: hiddenPair
+puzzle 10/27 greaterThan - - -> 58 hint(s), solved; wanted found: minMaxForcing
+puzzle 11/27 classic9 - - -> 61 hint(s), solved; wanted found: hiddenTriple
+puzzle 12/27 killer - - -> 148 hint(s), solved; wanted found: ruleOf45
+puzzle 13/27 classic9 - - -> 60 hint(s), solved; wanted found: nakedQuad
+puzzle 14/27 hyper - - -> 93 hint(s), solved; wanted found: hiddenQuad
+puzzle 15/27 classic9 - - -> 81 hint(s), solved; wanted found: xWing, remotePairs
+puzzle 16/27 classic9 - - -> 70 hint(s), solved; wanted found: twoStringKite, emptyRectangle
+puzzle 17/27 classic9 - - -> 79 hint(s), solved; wanted found: simpleColouring, finnedXWing, forcingChain
+puzzle 18/27 classic9 - - -> 58 hint(s), solved; wanted found: swordfish
+puzzle 19/27 classic9 - - -> 60 hint(s), solved; wanted found: finnedSwordfish
+puzzle 20/27 killer - - -> 157 hint(s), solved; wanted found: cageSplit
+puzzle 21/27 classic9 - - -> 72 hint(s), solved; wanted found: -
+puzzle 22/27 classic9 - - -> 73 hint(s), solved; wanted found: xyWing, wxyzWing
+puzzle 23/27 classic9 - - -> 71 hint(s), solved; wanted found: xyzWing, uniqueRectangle
+puzzle 24/27 classic9 - - -> 67 hint(s), solved; wanted found: wWing
+puzzle 25/27 classic9 - - -> 57 hint(s), solved; wanted found: bugPlusOne
+puzzle 26/27 classic9 - - -> 70 hint(s), solved; wanted found: nishio
+puzzle 27/27 classic9 - - -> 111 hint(s), solved; wanted found: nishioDeep
+nakedTriple: no example found in 1 puzzle(s) within 400 hint(s)
+jellyfish: no example found in 1 puzzle(s) within 400 hint(s)
+nakedSingle: matches help-examples.js
+hiddenSingleBox: matches help-examples.js
+hiddenSingleLine: matches help-examples.js
+pointing: matches help-examples.js
+cageCombo: matches help-examples.js
+ineqChain: matches help-examples.js
+boxLine: matches help-examples.js
+nakedPair: matches help-examples.js
+hiddenPair: matches help-examples.js
+minMaxForcing: matches help-examples.js
+hiddenTriple: matches help-examples.js
+ruleOf45: matches help-examples.js
+nakedQuad: matches help-examples.js
+hiddenQuad: matches help-examples.js
+xWing: matches help-examples.js
+skyscraper: matches help-examples.js
+twoStringKite: matches help-examples.js
+remotePairs: matches help-examples.js
+simpleColouring: matches help-examples.js
+emptyRectangle: matches help-examples.js
+finnedXWing: matches help-examples.js
+swordfish: matches help-examples.js
+finnedSwordfish: matches help-examples.js
+cageSplit: matches help-examples.js
+xyWing: matches help-examples.js
+xyzWing: matches help-examples.js
+wxyzWing: matches help-examples.js
+wWing: matches help-examples.js
+uniqueRectangle: matches help-examples.js
+bugPlusOne: matches help-examples.js
+forcingChain: 22 field(s) differ from help-examples.js
+  values: saved ".....6.45......28..8....6....3..4.1849.785.6265.3..7......., fresh "........5..........8.........3....1.49.7.5..265.3..7.......
+  notes.67: saved 16, fresh 304
+  hint.stepArgs.chains[0][0][0]: saved 22, fresh 67
+  hint.stepArgs.chains[0][1][0]: saved 22, fresh 67
+  hint.stepArgs.chains[0][1][1]: saved 4, fresh 5
+  hint.stepArgs.chains[0][2][0]: saved 20, fresh 65
+  hint.stepArgs.chains[0][2][1]: saved 4, fresh 5
+  hint.stepArgs.chains[0][4][0]: saved 65, fresh 20
+  ... and 14 more
+forcingChainLong: matches help-examples.js
+nishio: matches help-examples.js
+nishioDeep: matches help-examples.js
+help-examples.js differs or lacks an example for 3 of the 36 selected ID(s)
+exit=1 seconds=2.497

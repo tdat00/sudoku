@@ -1,0 +1,95 @@
+$ node tests\node-runner.js --suite=pipeline,cache,worker,steps,replay,mega,player,digger-target
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   cache: 106 passed  (10.39 s)
+ok   digger-target: 75 passed  (1.88 s)
+ok   mega: 108 passed  (21.70 s)
+ok   pipeline: 151 passed  (39.63 s)
+(node:13084) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   player: 69 passed  (34.36 s)
+FAIL replay: 141 passed, 13 failed  (24.15 s)
+FAIL steps: 56 passed, 1 failed  (24.71 s)
+ok   worker: 144 passed  (48.71 s)
+
+Failures:
+  FAIL replay > replay: golden details > golden G03 details
+       AssertionError: expected length 34 of Array(34)[{role: "solution", first: 0, last: 0, position: 0, phases: Array(0)[], kinds: Array(0)[], transition: null}, {role: "moves", first: 1, last: 1, position: 1, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 5}, {role: "moves", first: 2, last: 2, position: 2, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 6}, {role: "moves", first: 3, last: 3, position: 3, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 7}, {role: "moves", first: 4, last: 4, position: 4, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 8}, {role: "moves", first: 5, last: 5, position: 5, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 9}, {role: "moves", first: 6, last: 6, position: 6, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 10}, {role: "moves", first: 7, last: 7, position: 7, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 11}, {role: "moves", first: 8, last: 8, position: 8, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 12}, {role: "moves", first: 9, last: 9, position: 9, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 13}, {role: "moves", first: 10, last: 10, position: 10, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 14}, {role: "moves", first: 11, last: 11, position: 11, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 15}, ...] to be 29
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:665:46)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden details > golden G04 details
+       AssertionError: expected Array(32)[0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, ...] to equal Array(32)[0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, ...]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:666:36)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden details > golden G14 details
+       AssertionError: expected Array(81)[0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, ...] to equal Array(81)[0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, ...]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:666:36)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > golden G03 compact rows, counts and invariants
+       AssertionError: expected length 34 of Array(34)[{role: "solution", first: 0, last: 0, position: 0, phases: Array(0)[], kinds: Array(0)[], transition: null}, {role: "moves", first: 1, last: 1, position: 1, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 5}, {role: "moves", first: 2, last: 2, position: 2, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 6}, {role: "moves", first: 3, last: 3, position: 3, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 7}, {role: "moves", first: 4, last: 4, position: 4, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 8}, {role: "moves", first: 5, last: 5, position: 5, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 9}, {role: "moves", first: 6, last: 6, position: 6, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 10}, {role: "moves", first: 7, last: 7, position: 7, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 11}, {role: "moves", first: 8, last: 8, position: 8, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 12}, {role: "moves", first: 9, last: 9, position: 9, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 13}, {role: "moves", first: 10, last: 10, position: 10, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 14}, {role: "moves", first: 11, last: 11, position: 11, phases: Array(1)["random"], kinds: Array(1)["random"], transition: 15}, ...] to be 29
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1084:46)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > golden G03 folds, jump terms and first rated step
+       AssertionError: expected 2421 to be null
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1133:33
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1128:15)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > golden G04 compact rows, counts and invariants
+       AssertionError: expected 1948 to be 1953
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1103:32
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1096:16)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > golden G14 compact rows, counts and invariants
+       AssertionError: expected 1686 to be 1824
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1103:32
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1096:16)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > golden G14 folds, jump terms and first rated step
+       AssertionError: expected 1686 to be 1824
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1148:33
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1144:17)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > has 12 compact, 12 details and 15 distinct jump transitions in the 14 goldens
+       AssertionError: expected length 16 of Array(16)["G01:25>26:47>593", "G03:22>32:45>2393", "G03:22>23:45>2396", "G04:22>23:45>915", "G05:28>29:50>2536", "G06:28>29:138>1293", "G07:29>31:141>2268", "G07:29>30:141>3245", "G09:34>35:142>510", "G10:35>49:145>2199", "G10:35>36:145>2300", "G11:69>70:135>577", ...] to be 15
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1225:42)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > golden G03: cause class, frame and single scores of its compact jumps
+       AssertionError: expected "newPeak" to be "jump"
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1334:26
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1332:17)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > golden G03: the generator's choice, the first use and the restricted check
+       TypeError: Cannot read properties of null (reading 'kind')
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1358:22
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1351:17)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > golden G14: cause class, frame and single scores of its compact jumps
+       AssertionError: expected Array(2)[{op: "remove", cell: "R8C4", score: 1494}, {op: "remove", cell: "R9C13", score: 65}] to equal Array(2)[{op: "remove", cell: "R8C4", score: 1623}, {op: "remove", cell: "R9C13", score: 65}]
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1339:15
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1332:17)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > golden G14: the generator's choice, the first use and the restricted check
+       AssertionError: expected {k: 93, n: 152, technique: "xyChain"} to equal {k: 93, n: 152, technique: "forcingChain"}
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1365:68
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1351:17)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the callout of a score jump > names the cause of a move per class, on the goldens
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at textOfStep (Q:\git\sudoku\generator\tests\suites\steps.test.js:66:27)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1067:24
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1066:18
+
+Suites: 8
+Tests:  864 total, 850 passed, 14 failed, 0 skipped
+Time:   205.54 s running tests, 205.68 s total
+exit=1 seconds=205.814

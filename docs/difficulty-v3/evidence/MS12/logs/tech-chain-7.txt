@@ -1,0 +1,18 @@
+$ node tests\node-runner.js --suite=tech-chain
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-chain: 174 passed, 1 failed  (11.49 s)
+
+Failures:
+  FAIL tech-chain > xyChain: agreement with the enumeration and soundness > agrees on arbitrary positions of pairs, solved cells and wider cells, whether or not a solution exists
+       AssertionError: expected Array(2)["classic6", false] to equal Array(2)["classic6", true]
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:3312:69
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:3281:100)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  175 total, 174 passed, 1 failed, 0 skipped
+Time:   11.49 s running tests, 11.59 s total
+exit=1 seconds=11.707

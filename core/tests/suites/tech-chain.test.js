@@ -245,6 +245,7 @@
       firings++;
       var problems = H.findingProblems(m, state, finding, { technique: id });
       if (id === 'forcingChain') problems = problems.concat(chainProblems(m, state, finding));
+      if (id === 'xyChain') problems = problems.concat(xyProblems(m, state, finding));
       problems = problems.concat(oracleProblems(m, state, finding, supportedMasks(m, state)));
       if (problems.length > 0) {
         fail(id + ' failed on ' + label + ' (step ' + step + '):\n  - ' + problems.join('\n  - ') +
@@ -641,13 +642,14 @@
   }
 
   describe('chain group: registration', function () {
-    // R9 (difficulty v3): id, order, baseCost; the weights (1100, 1400, 1700, 2600) are those of the Generator's
-    // technique-weights suite.
+    // R9 and R15 (difficulty v3): id, order, baseCost; the weights (1000, 1100, 1400, 1700, 2600) are those of the
+    // Generator's technique-weights suite.
     var TABLE = [
-      ['forcingChain', 190, 90], ['forcingChainLong', 198, 118], ['nishio', 200, 140], ['nishioDeep', 202, 210]
+      ['xyChain', 186, 82], ['forcingChain', 190, 90], ['forcingChainLong', 198, 118], ['nishio', 200, 140],
+      ['nishioDeep', 202, 210]
     ];
 
-    it('registers the four chain ids with the values of design.md 6.6 (R9)', function () {
+    it('registers the five chain ids with the values of design.md 6.6 (R9, R15)', function () {
       TABLE.forEach(function (row) {
         var t = SG.techniques.get(row[0]);
         expect([row[0], t.group, t.order, t.baseCost, t.i18nKey]).toEqual([row[0], 'chain', row[1], row[2],
@@ -655,7 +657,7 @@
       });
       expect(SG.techniques.list().filter(function (t) { return t.group === 'chain'; }).map(function (t) {
         return t.id;
-      })).toEqual(['forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep']);
+      })).toEqual(['xyChain', 'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep']);
     });
 
     it('applies to every variant and does not rely on a unique solution', function () {
@@ -2308,6 +2310,1198 @@
       var finding = CS.forcing(m, state, ctxFor(m, { onPatternWork: function (r) { records.push(r); } }), opts);
       return { finding: finding, record: records[0] };
     }
+  });
+
+  // ---------------------------------------------------------------------------------------------------------------
+  // xyChain (R15, MS12): the restricted edges. The enumeration and the proof checker below are written from the
+  // candidates and `model.peers` alone; nothing is shared with the finder's tables (strong links, scratch buffers).
+  // ---------------------------------------------------------------------------------------------------------------
+
+  /** The cell of row r, column c (1-based) of a classic9 board. */
+  function at(r, c) {
+    return (r - 1) * 9 + (c - 1);
+  }
+
+  /** The open candidates of a cell, ascending. */
+  function digitsOfCell(m, state, c) {
+    var out = [];
+    if (state.value[c] !== 0) return out;
+    for (var d = 1; d <= m.digits; d++) if ((state.candidates[c] & bitOf(d)) !== 0) out.push(d);
+    return out;
+  }
+
+  /** A position where each listed cell keeps only its listed digits and every other cell keeps all of them. */
+  function cellsState(m, edits, tweak) {
+    var state = SG.model.initState(m);
+    Object.keys(edits).forEach(function (c) {
+      var mask = 0;
+      edits[c].forEach(function (d) { mask |= bitOf(d); });
+      state.candidates[Number(c)] = mask;
+    });
+    if (tweak) tweak(state);
+    return state;
+  }
+
+  function sees(m, a, b) {
+    return m.peers[a].indexOf(b) !== -1;
+  }
+
+  /**
+   * What an XY-chain Finding must be, derived again from the position: a path that alternates from a false literal to a
+   * true one, every strong step the other candidate of a bivalue cell, every weak step the same digit in a distinct cell
+   * that sees it, the same digit at both ends in distinct cells, and eliminations that are exactly the candidates of that
+   * digit in the other cells that see both ends. Empty array = a valid proof.
+   */
+  function xyProblems(m, state, finding) {
+    var problems = [];
+    var args = finding.i18nArgs;
+    if (finding.technique !== 'xyChain') problems.push('technique is ' + finding.technique);
+    if (finding.i18nKey !== 'technique.xyChain.step') problems.push('i18nKey is ' + finding.i18nKey);
+    if (!same(Object.keys(args), ['digit', 'kind', 'length', 'chains'])) {
+      problems.push('i18nArgs keys are ' + JSON.stringify(Object.keys(args)));
+    }
+    if (args.kind !== 'endpoints') problems.push('kind is ' + args.kind);
+    if (!Array.isArray(args.chains) || args.chains.length !== 1) return problems.concat('exactly one chain');
+    var path = args.chains[0];
+    if (path.length < 4 || path.length % 2 !== 0) problems.push('the path has ' + path.length + ' literals');
+    path.forEach(function (step, i) {
+      var where = 'step ' + i + ' ' + JSON.stringify(step);
+      if (step[2] !== 0 && step[2] !== 1) problems.push(where + ': truth must be 0 or 1');
+      if (!isOpen(state, step[0], step[1])) problems.push(where + ' is not an open candidate');
+      if (i === 0) {
+        if (step[2] !== 0) problems.push('the path must start from a false literal');
+        return;
+      }
+      var prev = path[i - 1];
+      if (prev[2] === 0) {
+        var own = digitsOfCell(m, state, step[0]);
+        if (step[2] !== 1 || step[0] !== prev[0] || step[1] === prev[1] || own.length !== 2) {
+          problems.push(where + ': not the strong link of a bivalue cell');
+        }
+      } else if (step[2] !== 0 || step[1] !== prev[1] || step[0] === prev[0] || !sees(m, prev[0], step[0])) {
+        problems.push(where + ': not a weak link between the same digit of two cells that see each other');
+      }
+    });
+    var start = path[0];
+    var end = lastOf(path);
+    if (end[2] !== 1) problems.push('the path must end on a true literal');
+    if (start[1] !== end[1]) problems.push('the ends are different digits');
+    if (start[0] === end[0]) problems.push('the ends are one and the same cell');
+    if (args.digit !== start[1]) problems.push('digit is ' + args.digit);
+    if (args.length !== path.length - 1) problems.push('length is ' + args.length + ' for ' + (path.length - 1) + ' edges');
+    var cells = [];
+    path.forEach(function (step) { if (cells.indexOf(step[0]) === -1) cells.push(step[0]); });
+    if (!same(finding.cells, cells.sort(function (a, b) { return a - b; }))) {
+      problems.push('cells ' + JSON.stringify(finding.cells) + ' are not the distinct cells of the chain, ascending');
+    }
+    var wanted = [];
+    for (var p = 0; p < m.cellCount; p++) {
+      if (p !== start[0] && p !== end[0] && isOpen(state, p, start[1]) && sees(m, start[0], p) && sees(m, end[0], p)) {
+        wanted.push([p, start[1]]);
+      }
+    }
+    if (!same(finding.eliminations, wanted)) {
+      problems.push('eliminations ' + JSON.stringify(finding.eliminations) + ' are not ' + JSON.stringify(wanted));
+    }
+    if (finding.placements.length !== 0) problems.push('an XY-chain places nothing');
+    return problems;
+  }
+
+  /**
+   * Every start literal "d is false in c" of a bivalue cell with its shortest restricted proof, by a breadth first
+   * search over literals written from the candidates and the peers only: a false literal leads to the other candidate of
+   * its bivalue cell, a true literal to the same digit in every cell that sees it. A proof ends in a true literal of the
+   * start digit in a HIGHER cell and removes that digit from every other cell that sees both ends. `first` is the proof
+   * the finder must report: the shortest of the scan, the lowest start (cell, digit) among the shortest ones.
+   */
+  function xyOracle(m, state, maxEdges) {
+    function shortest(c0, d0) {
+      var seen = {};
+      var frontier = [[c0, d0, 0]];
+      seen[c0 + ':' + d0 + ':0'] = true;
+      for (var length = 1; length <= maxEdges && frontier.length > 0; length++) {
+        var next = [];
+        frontier.forEach(function (lit) {
+          var outs = [];
+          if (lit[2] === 0) {
+            var own = digitsOfCell(m, state, lit[0]);
+            if (own.length === 2) outs.push([lit[0], own[0] === lit[1] ? own[1] : own[0], 1]);
+          } else {
+            m.peers[lit[0]].forEach(function (p) { if (isOpen(state, p, lit[1])) outs.push([p, lit[1], 0]); });
+          }
+          outs.forEach(function (o) {
+            var key = o[0] + ':' + o[1] + ':' + o[2];
+            if (seen[key]) return;
+            seen[key] = true;
+            next.push(o);
+          });
+        });
+        frontier = next;
+        var ends = [];
+        frontier.forEach(function (lit) {
+          if (lit[2] !== 1 || lit[1] !== d0 || lit[0] <= c0) return;
+          var elim = [];
+          for (var p = 0; p < m.cellCount; p++) {
+            if (p !== c0 && p !== lit[0] && isOpen(state, p, d0) && sees(m, c0, p) && sees(m, lit[0], p)) {
+              elim.push(p);
+            }
+          }
+          if (elim.length > 0) ends.push({ cell: lit[0], eliminations: elim });
+        });
+        if (ends.length > 0) return { start: [c0, d0], length: length, ends: ends };
+      }
+      return null;
+    }
+    var results = [];
+    for (var c = 0; c < m.cellCount; c++) {
+      var ds = digitsOfCell(m, state, c);
+      if (ds.length !== 2) continue;
+      ds.forEach(function (d) {
+        var found = shortest(c, d);
+        if (found !== null) results.push(found);
+      });
+    }
+    var min = Infinity;
+    results.forEach(function (r) { min = Math.min(min, r.length); });
+    var first = null;
+    for (var i = 0; i < results.length && first === null; i++) if (results[i].length === min) first = results[i];
+    return { min: min, first: first, all: results };
+  }
+
+  /**
+   * The registered xyChain against the enumeration: both find nothing, or the finder reports the shortest proof of the
+   * scan, from the lowest start among the shortest, ending in one of that start's shortest ends, with a Finding that
+   * passes the proof checker and the contract. Returns the Finding (null for none).
+   */
+  function xyAgreement(m, state, label, caller, solution) {
+    var finding = run('xyChain', m, state, caller === undefined ? {} : { maxChainLength: caller });
+    var oracle = xyOracle(m, state, caller === undefined ? 12 : Math.min(12, caller));
+    if (oracle.first === null) {
+      if (finding !== null) fail('xyChain found ' + JSON.stringify(finding) + ' on ' + label + ', the enumeration none');
+      return null;
+    }
+    if (finding === null) {
+      fail('xyChain found nothing on ' + label + ', the enumeration a proof of ' + oracle.min + ' edges from ' +
+        JSON.stringify(oracle.first.start));
+    }
+    var problems = xyProblems(m, state, finding)
+      .concat(H.findingProblems(m, state, finding, { technique: 'xyChain', solution: solution }));
+    var chain = finding.i18nArgs.chains[0];
+    var end = lastOf(chain);
+    var pair = oracle.first.ends.filter(function (e) { return e.cell === end[0]; })[0];
+    if (finding.i18nArgs.length !== oracle.min) {
+      problems.push('length ' + finding.i18nArgs.length + ', the enumeration ' + oracle.min);
+    }
+    if (chain[0][0] !== oracle.first.start[0] || chain[0][1] !== oracle.first.start[1]) {
+      problems.push('start ' + JSON.stringify(chain[0]) + ', the enumeration ' + JSON.stringify(oracle.first.start));
+    }
+    if (pair === undefined) problems.push('the end ' + end[0] + ' is not a shortest end of the start');
+    if (problems.length > 0) fail('xyChain disagrees on ' + label + ':\n  - ' + problems.join('\n  - ') +
+      '\n  finding: ' + JSON.stringify(finding));
+    return finding;
+  }
+
+  /**
+   * The work the finder must count, from the enumeration's own breadth first search in the documented order: the starts
+   * in node order, the search of a start stopping at its first proof or at the limit (the window, or one less than the
+   * shortest proof so far), a literal being expanded only below the limit, a false literal with its one strong edge (a
+   * bivalue cell) or a true literal with a weak edge to every cell of `model.peers` order that holds the digit, each
+   * edge counted whether or not it leads somewhere new, the edge of the proof included.
+   */
+  function xyWork(m, state, maxEdges) {
+    var work = 0;
+    var best = Infinity;
+    for (var c0 = 0; c0 < m.cellCount; c0++) {
+      var ds = digitsOfCell(m, state, c0);
+      if (ds.length !== 2) continue;
+      for (var k = 0; k < 2; k++) {
+        var limit = Math.min(maxEdges, best - 1);
+        if (limit < 1) return work;
+        var d0 = ds[k];
+        var seen = {};
+        seen[c0 + ':' + d0 + ':0'] = true;
+        var queue = [[c0, d0, 0, 0]];
+        var found = false;
+        for (var head = 0; head < queue.length && !found; head++) {
+          var lit = queue[head];
+          if (lit[3] >= limit) break;
+          var outs = [];
+          if (lit[2] === 0) {
+            var own = digitsOfCell(m, state, lit[0]);
+            outs.push([lit[0], own[0] === lit[1] ? own[1] : own[0], 1]);
+          } else {
+            m.peers[lit[0]].forEach(function (p) { if (isOpen(state, p, lit[1])) outs.push([p, lit[1], 0]); });
+          }
+          for (var i = 0; i < outs.length && !found; i++) {
+            work++;
+            var o = outs[i];
+            var key = o[0] + ':' + o[1] + ':' + o[2];
+            if (seen[key]) continue;
+            seen[key] = true;
+            var dist = lit[3] + 1;
+            if (o[2] === 1) {
+              var elim = false;
+              if (o[1] === d0 && o[0] > c0) {
+                for (var p = 0; p < m.cellCount && !elim; p++) {
+                  elim = p !== c0 && p !== o[0] && isOpen(state, p, d0) && sees(m, c0, p) && sees(m, o[0], p);
+                }
+              }
+              if (elim) {
+                best = dist;
+                found = true;
+              } else {
+                queue.push([o[0], o[1], 1, dist]);
+              }
+            } else if (digitsOfCell(m, state, o[0]).length === 2) {
+              queue.push([o[0], o[1], 0, dist]);
+            }
+          }
+        }
+      }
+    }
+    return work;
+  }
+
+  /** The vector of R15: A = R1C1 {1,4}, B = R1C5 {1,2}, C = R1C9 {2,3}, D = R5C9 {3,4}; `pos` maps (row, col) to a cell. */
+  function vectorEdits(pos) {
+    var edits = {};
+    edits[pos(1, 1)] = [1, 4];
+    edits[pos(1, 5)] = [1, 2];
+    edits[pos(1, 9)] = [2, 3];
+    edits[pos(5, 9)] = [3, 4];
+    return edits;
+  }
+
+  var ORIENTATIONS = [
+    { name: 'as written', pos: function (r, c) { return at(r, c); } },
+    { name: 'transposed', pos: function (r, c) { return at(c, r); } }
+  ];
+
+  // Seven cells where each sees the next: cell i holds {i + 1, i + 2} and the last {n, 1}, so n cells are 2n - 1 edges
+  var SNAKE = [at(1, 1), at(1, 4), at(4, 4), at(4, 7), at(7, 7), at(9, 7), at(9, 2)];
+
+  function snake(n) {
+    var edits = {};
+    for (var i = 0; i < n; i++) edits[SNAKE[i]] = [i + 1, i === n - 1 ? 1 : i + 2];
+    return cellsState(model9, edits);
+  }
+
+  describe('xyChain: registration and the shared builder (R15)', function () {
+    var CS = SG.chainSearch;
+
+    it('is a chain technique of order 186 and base cost 82, for every variant, between bugPlusOne and ' +
+      'forcingChain, with the uniqueness assumption off', function () {
+        var t = SG.techniques.get('xyChain');
+        expect([t.id, t.group, t.order, t.baseCost, t.i18nKey]).toEqual(['xyChain', 'chain', 186, 82,
+          'technique.xyChain']);
+        expect(t.variantScope).toBeNull();
+        expect(t.assumesUniqueness).toBe(false);
+        var ids = SG.techniques.list().map(function (x) { return x.id; });
+        expect(ids.indexOf('xyChain')).toBe(ids.indexOf('bugPlusOne') + 1);
+        expect(ids.indexOf('forcingChain')).toBe(ids.indexOf('xyChain') + 1);
+      });
+
+    it('asks the shared builder for the restricted edges, 1 to 12 edges and 50000 units, and nothing else',
+      function () {
+        var states = [];
+        ORIENTATIONS.forEach(function (o) { states.push(cellsState(model9, vectorEdits(o.pos))); });
+        prunedStates(model9, SG.testkit.rng.create(241), 40, function (r) { return 0.04 + 0.16 * r.next(); })
+          .forEach(function (item) { states.push(item.state); });
+        var fired = 0;
+        states.forEach(function (state, i) {
+          var seam = CS.forcing(model9, state, ctxFor(model9), { id: 'xyChain', edges: 'restricted', minLength: 1,
+            maxLength: 12, workLimit: 50000 });
+          var own = run('xyChain', model9, state);
+          if (!same(seam, own)) fail('xyChain differs from the restricted seam on state #' + i);
+          if (own !== null) fired++;
+        });
+        expect(fired).toBeGreaterThan(20);
+      });
+
+    it('defaults to the general edges, refuses any other mode, and gives the general Findings with their kinds',
+      function () {
+        var state = fixtureState(CHAIN_FIXTURES[0]); // an X-chain of 3 links through conjugate pairs
+        var plain = CS.forcing(model9, state, ctxFor(model9), { id: 'forcingChain', minLength: 1, maxLength: 4,
+          workLimit: null });
+        var general = CS.forcing(model9, state, ctxFor(model9), { id: 'forcingChain', minLength: 1, maxLength: 4,
+          workLimit: null, edges: 'general' });
+        expect(general).toEqual(plain);
+        expect(plain).toEqual(run('forcingChain', model9, state));
+        expect(plain.i18nKey).toBe('technique.forcingChain.step.endpoints');
+        [null, 'xy', 'Restricted', 1, true, {}].forEach(function (bad) {
+          var err = caught(function () {
+            CS.forcing(model9, state, ctxFor(model9), { id: 'x', edges: bad });
+          });
+          expect([String(bad), err && err.code]).toEqual([String(bad), 'solver.invalidOption']);
+        });
+        // nishio has no edges
+        expect(CS.nishio(model9, H.makeState(model9, fixture('escargot').puzzle), ctxFor(model9),
+          { id: 'x', minDepth: 1, maxDepth: 1, edges: 'restricted' })).toEqual(
+          CS.nishio(model9, H.makeState(model9, fixture('escargot').puzzle), ctxFor(model9),
+            { id: 'x', minDepth: 1, maxDepth: 1 }));
+      });
+
+    it('keeps each mode unchanged when the two are interleaved on one model (the search buffers are shared)',
+      function () {
+        var states = [cellsState(model9, vectorEdits(at)), fixtureState(CHAIN_FIXTURES[0]), fixtureState(CHAIN_FIXTURES[3])];
+        prunedStates(model9, SG.testkit.rng.create(246), 24, function (r) { return 0.04 + 0.2 * r.next(); })
+          .forEach(function (item) { states.push(item.state); });
+        var modes = [{ id: 'probe', minLength: 1, maxLength: 12 },
+          { id: 'probe', minLength: 1, maxLength: 12, edges: 'general' },
+          { id: 'probe', minLength: 1, maxLength: 12, edges: 'restricted' },
+          { id: 'probe', minLength: 1, maxLength: 12, workLimit: 300 },
+          { id: 'probe', minLength: 1, maxLength: 12, workLimit: 300, edges: 'restricted' }];
+        function once(state, opts) {
+          var records = [];
+          var finding = CS.forcing(model9, state, ctxFor(model9, { onPatternWork: function (r) { records.push(r); } }),
+            opts);
+          return { finding: finding, records: records };
+        }
+        var alone = states.map(function (state) { return modes.map(function (opts) { return once(state, opts); }); });
+        // every state with every mode after every other mode, in two orders
+        [false, true].forEach(function (reverse) {
+          states.slice().map(function (s, i) { return i; }).sort(function (a, b) { return reverse ? b - a : a - b; })
+            .forEach(function (i) {
+              modes.map(function (m, k) { return k; }).sort(function (a, b) { return reverse ? a - b : b - a; })
+                .forEach(function (k) {
+                  expect([i, k, once(states[i], modes[k])]).toEqual([i, k, alone[i][k]]);
+                });
+            });
+        });
+        // the default is the general mode, and an explicit general mode the same call
+        states.forEach(function (state, i) { expect(alone[i][0]).toEqual(alone[i][1]); });
+        expect(alone.some(function (row) { return !same(row[1].finding, row[2].finding); })).toBe(true);
+      });
+
+    it('returns only the endpoints proof under the id it is given, whatever the position', function () {
+      var seen = 0;
+      prunedStates(model9, SG.testkit.rng.create(242), 40, function (r) { return 0.04 + 0.16 * r.next(); })
+        .forEach(function (item, i) {
+          var f = CS.forcing(model9, item.state, ctxFor(model9), { id: 'probeXy', edges: 'restricted',
+            minLength: 1, maxLength: 12 });
+          if (f === null) return;
+          seen++;
+          expect([i, f.technique, f.i18nKey, f.i18nArgs.kind, f.placements.length])
+            .toEqual([i, 'probeXy', 'technique.probeXy.step', 'endpoints', 0]);
+          expect(xyProblems(model9, item.state, Object.assign({}, f, { technique: 'xyChain',
+            i18nKey: 'technique.xyChain.step' }))).toEqual([]);
+        });
+      expect(seen).toBeGreaterThan(20);
+      // odd rings of pair units hold a forced chain (a polarity proof) for the general edges and none for these
+      [5, 7, 9].forEach(function (n) {
+        var m = ringModel(n);
+        var state = SG.model.initState(m);
+        var general = CS.forcing(m, state, ctxFor(m), { id: 'x', minLength: 1, maxLength: 12 });
+        var restricted = CS.forcing(m, state, ctxFor(m), { id: 'x', minLength: 1, maxLength: 12,
+          edges: 'restricted' });
+        expect(general.i18nArgs.kind).toBe('forced');
+        expect(restricted === null || restricted.i18nArgs.kind === 'endpoints').toBe(true);
+        expect(restricted === null || restricted.placements.length === 0).toBe(true);
+      });
+    });
+  });
+
+  describe('xyChain: the vector of the brief and its near misses', function () {
+    ORIENTATIONS.forEach(function (o) {
+      it('finds the seven-edge chain of the brief, ' + o.name + ': false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4',
+        function () {
+          var pos = o.pos;
+          var state = cellsState(model9, vectorEdits(pos));
+          var finding = xyAgreement(model9, state, 'the vector ' + o.name);
+          var A = pos(1, 1);
+          var B = pos(1, 5);
+          var C = pos(1, 9);
+          var D = pos(5, 9);
+          expect(finding).toEqual({
+            technique: 'xyChain',
+            cells: [A, B, C, D].sort(function (a, b) { return a - b; }),
+            placements: [],
+            eliminations: [[pos(5, 1), 4]],
+            i18nKey: 'technique.xyChain.step',
+            i18nArgs: { digit: 4, kind: 'endpoints', length: 7, chains: [[[A, 4, 0], [A, 1, 1], [B, 1, 0], [B, 2, 1],
+              [C, 2, 0], [C, 3, 1], [D, 3, 0], [D, 4, 1]]] }
+          });
+          expect(H.findingProblems(model9, state, finding, { technique: 'xyChain' })).toEqual([]);
+        });
+    });
+
+    var NEAR_MISSES = [
+      ['the far end holds another digit (R5C9 {3,5}): the chain ends on a 5, not on the 4 it starts from',
+        function (e, pos) { e[pos(5, 9)] = [3, 5]; }],
+      ['a cell with three candidates in the chain (R1C9 {2,3,6}) is no strong link',
+        function (e, pos) { e[pos(1, 9)] = [2, 3, 6]; }],
+      ['the third cell shares no digit with the second (R1C9 {3,5}): no weak link on the 2',
+        function (e, pos) { e[pos(1, 9)] = [3, 5]; }],
+      ['the second cell does not see the first (R1C5 moved to R2C5)',
+        function (e, pos) { delete e[pos(1, 5)]; e[pos(2, 5)] = [1, 2]; }],
+      ['the last cell does not see the third (R5C9 moved to R6C8)',
+        function (e, pos) { delete e[pos(5, 9)]; e[pos(6, 8)] = [3, 4]; }],
+      ['the only cell that sees both ends (R5C1) is solved, whatever candidates its neighbours kept', null,
+        function (state, pos) {
+          state.value[pos(5, 1)] = 4;
+          state.candidates[pos(5, 1)] = bitOf(4);
+        }],
+      ['nothing to remove: the only cell that sees both ends (R5C1) holds no 4', null,
+        function (state, pos) { state.candidates[pos(5, 1)] &= ~bitOf(4); }]
+    ];
+
+    ORIENTATIONS.forEach(function (o) {
+      NEAR_MISSES.forEach(function (miss) {
+        it('finds nothing when ' + miss[0] + ', ' + o.name, function () {
+          var edits = vectorEdits(o.pos);
+          if (miss[1]) miss[1](edits, o.pos);
+          var state = cellsState(model9, edits, miss[2] ? function (s) { miss[2](s, o.pos); } : null);
+          expect(xyAgreement(model9, state, 'the near miss "' + miss[0] + '" ' + o.name)).toBeNull();
+          expect(xyOracle(model9, state, 12).first).toBeNull();
+        });
+      });
+    });
+
+    it('removes the 4 from exactly the cells that see both ends, and from no cell that sees only one', function () {
+      var state = cellsState(model9, vectorEdits(at));
+      var finding = run('xyChain', model9, state);
+      expect(finding.eliminations).toEqual([[at(5, 1), 4]]);
+      // R1C2 sees R1C1 only, R5C8 sees R5C9 only, R2C9 sees R1C9 (a middle cell) only: all still hold the 4
+      [at(1, 2), at(5, 8), at(2, 9)].forEach(function (c) {
+        expect([c, (state.candidates[c] & bitOf(4)) !== 0]).toEqual([c, true]);
+        expect(finding.eliminations.some(function (e) { return e[0] === c; })).toBe(false);
+      });
+    });
+  });
+
+  describe('xyChain: the edges it does not take', function () {
+    var CS = SG.chainSearch;
+
+    /** The vector plus a tempting shortcut: the 1 is held only by R1C5 and R5C5 in column 5, a conjugate pair. */
+    function shortcutState(pos) {
+      var edits = vectorEdits(pos);
+      edits[pos(5, 5)] = [1, 5, 7];
+      edits[pos(5, 7)] = [1, 4];
+      return cellsState(model9, edits, function (state) {
+        for (var r = 1; r <= 9; r++) {
+          if (r !== 1 && r !== 5) state.candidates[pos(r, 5)] &= ~bitOf(1);
+        }
+      });
+    }
+
+    /** How many strong links of a general chain join two different cells, that is, a conjugate pair of a unit. */
+    function crossCellStrongLinks(finding) {
+      var n = 0;
+      finding.i18nArgs.chains.forEach(function (chain) {
+        chain.forEach(function (step, i) {
+          if (i > 0 && chain[i - 1][2] === 0 && chain[i - 1][0] !== step[0]) n++;
+        });
+      });
+      return n;
+    }
+
+    ORIENTATIONS.forEach(function (o) {
+      it('does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, ' +
+        o.name, function () {
+          var state = shortcutState(o.pos);
+          var general = CS.forcing(model9, state, ctxFor(model9), { id: 'probe', minLength: 1, maxLength: 12 });
+          expect(general).not.toBeNull();
+          expect(chainProblems(model9, state, general)).toEqual([]);
+          expect(crossCellStrongLinks(general)).toBeGreaterThan(0);
+          expect(general.i18nArgs.length).toBeLessThan(7);
+          var finding = xyAgreement(model9, state, 'the shortcut ' + o.name);
+          var plain = run('xyChain', model9, cellsState(model9, vectorEdits(o.pos)));
+          expect(finding.i18nArgs.length).toBe(7);
+          expect(finding.i18nArgs.chains).toEqual(plain.i18nArgs.chains);
+          expect(finding.eliminations).toEqual(plain.eliminations);
+          expect(crossCellStrongLinks(finding)).toBe(0);
+        });
+    });
+
+    it('is the same with every unit declared incomplete, where the general edges lose their conjugate links',
+      function () {
+        var plain = ctxFor(model9);
+        var none = Object.assign({}, plain, { completeUnits: new Uint8Array(plain.completeUnits.length) });
+        var xy = { id: 'xyChain', edges: 'restricted', minLength: 1, maxLength: 12 };
+        var states = [cellsState(model9, vectorEdits(at)), shortcutState(at)];
+        prunedStates(model9, SG.testkit.rng.create(243), 30, function (r) { return 0.04 + 0.16 * r.next(); })
+          .forEach(function (item) { states.push(item.state); });
+        states.forEach(function (state, i) {
+          expect([i, CS.forcing(model9, state, none, xy)]).toEqual([i, CS.forcing(model9, state, plain, xy)]);
+        });
+        var shortcut = shortcutState(at);
+        var general = { id: 'probe', minLength: 1, maxLength: 12 };
+        expect(CS.forcing(model9, shortcut, none, general)).not.toEqual(CS.forcing(model9, shortcut, plain, general));
+      });
+
+    it('takes a weak link through a partial unit (a digit may be missing from it) and no strong link from it',
+      function () {
+        var m = partialUnitModel();
+        // cells 0 and 10 see each other only through the partial unit [0, 5, 10]
+        expect(Array.from(m.units[m.units.length - 1])).toEqual([0, 5, 10]);
+        expect(sees(m, 0, 10)).toBe(true);
+        expect(m.units.slice(0, -1).some(function (u) { return u.indexOf(0) !== -1 && u.indexOf(10) !== -1; }))
+          .toBe(false);
+        var state = cellsState(m, { 0: [1, 2], 10: [1, 2] });
+        var finding = xyAgreement(m, state, 'a pair through a partial unit');
+        expect(finding.i18nArgs.length).toBe(3);
+        expect(finding.eliminations.map(function (e) { return e[0]; })).toContain(5);
+        // a digit confined to two cells of the partial unit is no conjugate pair: nothing to start from
+        var confined = cellsState(m, { 0: [1, 2, 3], 5: [1, 2, 3], 10: [1, 2, 3] }, function (s) {
+          for (var c = 0; c < m.cellCount; c++) if (c !== 0 && c !== 5 && c !== 10) s.candidates[c] &= ~bitOf(3);
+        });
+        expect(xyAgreement(m, confined, 'a digit confined to a partial unit')).toBeNull();
+      });
+
+    it('claims no general chain: a position where only a chain through conjugate pairs, a contradiction or a forced ' +
+      'chain exists is forcingChain\'s, and an XY-chain it does hold is a proof of its own', function () {
+        var only = [];
+        CHAIN_FIXTURES.forEach(function (fx) {
+          var state = fixtureState(fx);
+          var xy = run('xyChain', model9, state);
+          var fc = SG.chainSearch.forcing(model9, state, ctxFor(model9), { id: 'forcingChain', minLength: 1,
+            maxLength: 12 });
+          expect([fx.name, fc !== null]).toEqual([fx.name, true]);
+          if (xy === null) {
+            only.push(fx.name);
+            return;
+          }
+          // what xyChain says is a bivalue-only proof whatever the general chain is, never the general Finding relabelled
+          expect([fx.name, xyProblems(model9, state, xy)]).toEqual([fx.name, []]);
+          expect(xy.i18nKey).not.toBe(fc.i18nKey);
+          expect(xy.i18nArgs.kind).toBe('endpoints');
+        });
+        expect(only.length).toBeGreaterThan(2);
+        // the forced chains and the contradiction chains are never relabelled: a forced one has a placement
+        CHAIN_FIXTURES.filter(function (fx) { return fx.kind === 'forced'; }).forEach(function (fx) {
+          var xy = run('xyChain', model9, fixtureState(fx));
+          expect(xy === null || xy.placements.length === 0).toBe(true);
+        });
+      });
+  });
+
+  describe('xyChain: the shortest proof of the whole scan', function () {
+    /** A chain of `n` cells in the given cells: cell i holds {digit + i, digit + i + 1}, the last {digit + n - 1, digit}. */
+    function chainEdits(cells, digit) {
+      var edits = {};
+      cells.forEach(function (c, i) {
+        edits[c] = [digit + i, i === cells.length - 1 ? digit : digit + i + 1];
+      });
+      return edits;
+    }
+
+    var LONG = [at(1, 1), at(1, 4), at(4, 4)]; // digits 1, 2, 3: five edges, ends R1C1 and R4C4
+    var SHORT = [at(8, 1), at(8, 2)]; // digits 4, 5: three edges
+
+    it('takes a shorter proof on a later start over a longer one on an earlier start', function () {
+      var edits = Object.assign(chainEdits(LONG, 1), chainEdits(SHORT, 4));
+      var state = cellsState(model9, edits);
+      var finding = xyAgreement(model9, state, 'a chain of 5 edges before one of 3');
+      expect(finding.i18nArgs.length).toBe(3);
+      expect(finding.cells).toEqual(SHORT);
+      expect(finding.i18nArgs.digit).toBe(4);
+      var longOnly = cellsState(model9, chainEdits(LONG, 1));
+      expect(xyAgreement(model9, longOnly, 'the chain of 5 edges alone').i18nArgs.length).toBe(5);
+    });
+
+    it('takes the lowest start among proofs of the same length, the lower digit first inside one pair of cells',
+      function () {
+        var first = [at(2, 1), at(2, 2)];
+        var second = [at(7, 1), at(7, 2)];
+        var state = cellsState(model9, Object.assign(chainEdits(first, 6), chainEdits(second, 4)));
+        var finding = xyAgreement(model9, state, 'two chains of 3 edges, the earlier with the higher digits');
+        expect(finding.cells).toEqual(first);
+        expect(finding.i18nArgs.digit).toBe(6);
+        expect(finding.i18nArgs.chains[0][0]).toEqual([first[0], 6, 0]);
+        var swapped = cellsState(model9, Object.assign(chainEdits(first, 4), chainEdits(second, 6)));
+        var other = xyAgreement(model9, swapped, 'the same chains, digits swapped');
+        expect(other.cells).toEqual(first);
+        expect(other.i18nArgs.digit).toBe(4);
+        var reversed = cellsState(model9, Object.assign(chainEdits(second, 6), chainEdits([at(2, 1), at(2, 2)], 4)));
+        expect(xyAgreement(model9, reversed, 'the earlier chain is the one with the lower digits').cells)
+          .toEqual(first);
+      });
+
+    it('looks at a pair of ends from its lower cell: the chain starts in the lower of the two ends', function () {
+      var seen = 0;
+      prunedStates(model9, SG.testkit.rng.create(244), 60, function (r) { return 0.04 + 0.16 * r.next(); })
+        .forEach(function (item, i) {
+          var f = run('xyChain', model9, item.state);
+          if (f === null) return;
+          seen++;
+          var chain = f.i18nArgs.chains[0];
+          expect([i, chain[0][0] < lastOf(chain)[0]]).toEqual([i, true]);
+        });
+      expect(seen).toBeGreaterThan(20);
+    });
+  });
+
+  describe('xyChain: the window of 12 edges and the caller limit', function () {
+    var CS = SG.chainSearch;
+
+    it('finds a chain of 3, 5, 7, 9 and 11 edges, each the shortest proof of its position', function () {
+      [2, 3, 4, 5, 6].forEach(function (n) {
+        var finding = xyAgreement(model9, snake(n), 'a chain of ' + n + ' cells');
+        expect([n, finding.i18nArgs.length]).toEqual([n, 2 * n - 1]);
+        expect(finding.i18nArgs.chains[0].length).toBe(2 * n);
+      });
+    });
+
+    it('stops at 12 edges: one of 11 is found, one of 13 is nobody\'s (an XY-chain has an odd number of edges)',
+      function () {
+        var long = snake(7);
+        expect(run('xyChain', model9, long)).toBeNull();
+        expect(xyOracle(model9, long, 12).first).toBeNull();
+        expect(xyOracle(model9, long, 13).first.min).toBeUndefined();
+        expect(xyOracle(model9, long, 13).min).toBe(13);
+        // the seam is not clamped: it finds the chain of 13 edges and of any more, with a proof that checks
+        var seam = CS.forcing(model9, long, ctxFor(model9), { id: 'xyChain', edges: 'restricted', minLength: 1,
+          maxLength: 13 });
+        expect(seam.i18nArgs.length).toBe(13);
+        expect(xyProblems(model9, long, seam)).toEqual([]);
+        expect(CS.forcing(model9, long, ctxFor(model9), { id: 'xyChain', edges: 'restricted', minLength: 1,
+          maxLength: 12 })).toBeNull();
+        // 11 is found with the registered window whatever larger caller limit comes with it
+        [undefined, 11, 12, 13, 100, Infinity].forEach(function (asked) {
+          var options = asked === undefined ? {} : { maxChainLength: asked };
+          expect([asked, run('xyChain', model9, snake(6), options).i18nArgs.length]).toEqual([asked, 11]);
+          expect([asked, run('xyChain', model9, long, options)]).toEqual([asked, null]);
+        });
+      });
+
+    it('narrows its window with maxChainLength and never widens it: invalid or off reads as for the other chains',
+      function () {
+        var nine = snake(5);
+        [[8, false], [8.9, false], [9, true], [9.9, true], [10, true], [11, true], [12, true], [Infinity, true],
+          [0, false], [-1, false], [-Infinity, false], [NaN, true], ['3', true], [null, true], [undefined, true],
+          [{}, true], [false, true]].forEach(function (row) {
+          var finding = run('xyChain', model9, nine, { maxChainLength: row[0] });
+          expect([String(row[0]), finding !== null]).toEqual([String(row[0]), row[1]]);
+          if (finding !== null) expect(finding.i18nArgs.length).toBe(9);
+        });
+        // a smaller limit is a maximum on the shortest proof: it hides nothing shorter and finds no longer one
+        var shorter = cellsState(model9, chainEdits3());
+        expect(run('xyChain', model9, shorter, { maxChainLength: 5 }).i18nArgs.length).toBe(3);
+        expect(run('xyChain', model9, shorter, { maxChainLength: 2 })).toBeNull();
+      });
+
+    /** Three cells of {1,2}, {2,3} and {3,1} next to a pair of {4,5} cells: the shortest proof is the pair's (3 edges). */
+    function chainEdits3() {
+      var edits = {};
+      edits[at(1, 1)] = [1, 2];
+      edits[at(1, 4)] = [2, 3];
+      edits[at(4, 4)] = [3, 1];
+      edits[at(8, 1)] = [4, 5];
+      edits[at(8, 2)] = [4, 5];
+      return edits;
+    }
+
+    it('applies the same window through the solver: maxChainLength given to it narrows xyChain too', function () {
+      var puzzle = F.unique.filter(function (fx) { return fx.name === 'escargot'; })[0].puzzle;
+      var givens = H.parsePuzzle(model9, puzzle);
+      var ids = lowerIds().concat(['xyChain', 'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep']);
+      function xyUses(options) {
+        var report = SG.logicalSolver.solve(model9, givens, Object.assign({ allowedTechniques: ids,
+          collectSteps: true }, options));
+        return report.steps.filter(function (s) { return s.technique === 'xyChain'; });
+      }
+      var open = xyUses({});
+      var off = xyUses({ maxChainLength: 0 });
+      expect(open.length).toBeGreaterThan(0);
+      expect(off).toEqual([]);
+      open.forEach(function (step) { expect(step.i18nArgs.length).toBeLessThan(13); });
+    });
+  });
+
+  describe('xyChain: work limit, observer and budget', function () {
+    var CS = SG.chainSearch;
+    var XY = { id: 'xyChain', edges: 'restricted', minLength: 1, maxLength: 12 };
+    // Two bivalue cells of {1,2} side by side on the 4 x 4 board, every other cell with all four digits
+    var pair4 = cellsState(model4, { 0: [1, 2], 1: [1, 2] });
+
+    /** One restricted seam call with every record its observer got. */
+    function observed(m, state, opts, ctxOptions) {
+      var records = [];
+      var options = Object.assign({ onPatternWork: function (r) { records.push(r); } }, ctxOptions);
+      var finding = CS.forcing(m, state, ctxFor(m, options), Object.assign({}, XY, opts));
+      return { finding: finding, records: records, record: records[0] };
+    }
+
+    /** The work counted at each parent-budget check of a restricted call (see checkWorks of the seam suite). */
+    function checkWorksXy(m, state, opts) {
+      var base = ctxFor(m);
+      function attempt(target) {
+        var k = 0;
+        var record = null;
+        var ctx = Object.assign({}, base, {
+          options: { onPatternWork: function (r) { record = r; } },
+          check: function () {
+            k++;
+            if (k === target) throw new SG.errors.GenerationError('budget.exceeded', { reason: 'nodes' });
+          }
+        });
+        var finding = CS.forcing(m, state, ctx, Object.assign({}, XY, opts));
+        return { checks: k, record: record, finding: finding };
+      }
+      var free = attempt(0);
+      var works = [];
+      for (var target = 1; target <= free.checks; target++) works.push(attempt(target).record.work);
+      var gaps = works.map(function (w, i) { return w - (i === 0 ? 0 : works[i - 1]); });
+      gaps.push(free.record.work - (works.length === 0 ? 0 : works[works.length - 1]));
+      return { works: works, gaps: gaps, max: Math.max.apply(null, gaps), record: free.record };
+    }
+
+    it('counts one unit per edge expansion, and only the edges of the restricted graph: 33 on a pair of cells',
+      function () {
+        // R1C1 and R1C2 hold {1,2} and see each other and 6 more cells each... A has 7 peers. The first root (false 1 in
+        // A) costs 1 strong edge, 7 weak edges of the true 2 and 1 strong edge to the true 1 in B, which is the proof: 9.
+        // The proof is 3 edges, so each of the three later roots (false 2 in A, false 1 and 2 in B) searches 2 edges
+        // only: 1 strong edge and the 7 weak edges of the true literal, 8 each. No edge joins two candidates of one
+        // cell, and no unit gives a strong edge. 9 + 3 * 8 = 33.
+        expect(model4.peers[0].length).toBe(7);
+        var out = observed(model4, pair4, {});
+        expect(out.finding.i18nArgs.length).toBe(3);
+        expect(out.record).toEqual({ id: 'xyChain', work: 33, limit: 50000, capHit: null, retained: null });
+        var again = observed(model4, pair4, {});
+        expect(again.record).toEqual(out.record);
+        var records = [];
+        run('xyChain', model4, pair4, { onPatternWork: function (r) { records.push(r); } });
+        expect(records).toEqual([out.record]);
+      });
+
+    it('counts exactly the edges of the enumeration\'s own breadth first search, with every window', function () {
+      var states = [];
+      ORIENTATIONS.forEach(function (o) { states.push(cellsState(model9, vectorEdits(o.pos))); });
+      [2, 3, 4, 5, 6, 7].forEach(function (n) { states.push(snake(n)); });
+      states.push(cellsState(model9, { 0: [1, 2], 1: [1, 2], 2: [1, 2], 9: [3, 4], 10: [4, 5] }));
+      prunedStates(model9, SG.testkit.rng.create(245), 30, function (r) { return 0.04 + 0.16 * r.next(); })
+        .forEach(function (item) { states.push(item.state); });
+      var counted = 0;
+      states.forEach(function (state, i) {
+        [undefined, 3, 4, 5, 7, 9, 11, 12, 13].forEach(function (asked) {
+          var records = [];
+          var options = { onPatternWork: function (r) { records.push(r); } };
+          if (asked !== undefined) options.maxChainLength = asked;
+          run('xyChain', model9, state, options);
+          var expected = xyWork(model9, state, asked === undefined ? 12 : Math.min(12, asked));
+          expect([i, asked, records[0].work]).toEqual([i, asked, expected]);
+          if (expected > 0) counted++;
+        });
+      });
+      expect(counted).toBeGreaterThan(200);
+      // the chain of 13 edges is searched to its 12th edge and no further: the registered window is what costs
+      var wide = [];
+      run('xyChain', model9, snake(7), { onPatternWork: function (r) { wide.push(r); } });
+      var seam = observed(model9, snake(7), { maxLength: 13 });
+      expect(seam.record.work).toBeGreaterThan(wide[0].work);
+      expect(seam.record.work).toBe(xyWork(model9, snake(7), 13));
+    });
+
+    it('returns null with capHit "work" once the limit is spent, never the best proof so far', function () {
+      [[33, true], [33.9, true], [34, true], [32, false], [9, false], [8, false], [1, false], [0, false]]
+        .forEach(function (row) {
+          var out = observed(model4, pair4, { workLimit: row[0] });
+          var limit = Math.floor(row[0]);
+          expect([row[0], out.finding !== null]).toEqual([row[0], row[1]]);
+          expect(out.records.length).toBe(1);
+          // the proof of 3 edges is met at the 9th unit, but the minimum is only known once the scan is done
+          if (row[1]) expect(out.record).toEqual({ id: 'xyChain', work: 33, limit: limit, capHit: null, retained: null });
+          else expect(out.record).toEqual({ id: 'xyChain', work: limit, limit: limit, capHit: 'work', retained: null });
+        });
+      // no unbounded mode for the registered finder, and a limit that is not a number is refused by the seam
+      [-1, NaN, '5', {}].forEach(function (bad) {
+        var err = caught(function () { observed(model4, pair4, { workLimit: bad }); });
+        expect([String(bad), err && err.code]).toEqual([String(bad), 'solver.invalidOption']);
+      });
+      expect(observed(model4, pair4, { workLimit: null }).record.limit).toBeNull();
+      expect(observed(model4, pair4, {}).record.limit).toBe(50000);
+    });
+
+    it('reports one record per normal return, whatever the answer, and none when the call throws', function () {
+      var vector = cellsState(model9, vectorEdits(at));
+      var records = [];
+      var run1 = run('xyChain', model9, vector, { onPatternWork: function (r) { records.push(r); } });
+      expect(run1).not.toBeNull();
+      expect(records.length).toBe(1);
+      expect(Object.keys(records[0]).sort()).toEqual(['capHit', 'id', 'limit', 'retained', 'work']);
+      expect([records[0].id, records[0].limit, records[0].capHit, records[0].retained])
+        .toEqual(['xyChain', 50000, null, null]);
+      expect(records[0].work).toBeGreaterThan(0);
+      records[0].work = -1; // a copy: the next call is not affected
+      run('xyChain', model9, vector, { onPatternWork: function (r) { records.push(r); } });
+      expect(records[1]).not.toBe(records[0]);
+      expect(records[1].work).toBeGreaterThan(0);
+      // nothing found (the empty grid), an empty window and a solved position: one record each, with no work
+      var solved = H.makeState(model9, F.unique[0].solution, { propagate: false });
+      [[SG.model.initState(model9), {}], [vector, { maxChainLength: 0 }], [solved, {}]].forEach(function (row, i) {
+        var seen = [];
+        expect([i, run('xyChain', model9, row[0], Object.assign({ onPatternWork: function (r) { seen.push(r); } },
+          row[1]))]).toEqual([i, null]);
+        expect([i, seen.length, seen[0].work, seen[0].capHit]).toEqual([i, 1, 0, null]);
+      });
+      // a hostile observer changes nothing
+      var calls = 0;
+      var hostile = run('xyChain', model9, vector, { onPatternWork: function (r) {
+        calls++;
+        r.work = 0;
+        r.capHit = 'work';
+        return 'ignored';
+      } });
+      expect(calls).toBe(1);
+      expect(hostile).toEqual(run('xyChain', model9, vector));
+      expect(run('xyChain', model9, vector, { onPatternWork: 'not a function' })).toEqual(hostile);
+    });
+
+    it('reports a spent budget as nothing found, without a cap, and lets cancellation and errors through with ' +
+      'no record', function () {
+        var vector = cellsState(model9, vectorEdits(at));
+        var parent = SG.budget.create({ nodes: 3 });
+        var spent = observed(model9, vector, {}, { budget: parent });
+        expect(spent.finding).toBeNull();
+        expect(spent.records.length).toBe(1);
+        expect(spent.record.capHit).toBeNull();
+        // capHit null is no proof of a complete scan: the caller's own budget still fails after the call
+        expect(caught(function () { parent.check(); }).code).toBe('budget.exceeded');
+        var registered = [];
+        expect(run('xyChain', model9, vector, { budget: SG.budget.create({ nodes: 3 }),
+          onPatternWork: function (r) { registered.push(r); } })).toBeNull();
+        expect(registered.length).toBe(1);
+
+        var budget = SG.budget.create({});
+        budget.cancel();
+        var records = [];
+        [function () {
+          run('xyChain', model9, vector, { budget: budget, onPatternWork: function (r) { records.push(r); } });
+        }, function () {
+          CS.forcing(model9, vector, ctxFor(model9, { budget: budget, onPatternWork: function (r) {
+            records.push(r);
+          } }), Object.assign({ workLimit: null }, XY));
+        }].forEach(function (call, i) {
+          expect([i, caught(call).code]).toEqual([i, 'budget.cancelled']);
+        });
+        var boom = new Error('boom');
+        var ctx = Object.assign({}, ctxFor(model9), { check: function () { throw boom; },
+          options: { onPatternWork: function (r) { records.push(r); } } });
+        expect(caught(function () { SG.techniques.get('xyChain').find(model9, vector, ctx); })).toBe(boom);
+        expect(records).toEqual([]);
+      });
+
+    it('checks the parent budget at entry (it is bounded) and lets no more than 256 units pass between two checks',
+      function () {
+        function counting(m) {
+          var ctx = Object.assign({}, ctxFor(m), { check: function () { ctx.checks++; } });
+          ctx.checks = 0;
+          return ctx;
+        }
+        var solved = H.makeState(model9, F.unique[0].solution, { propagate: false });
+        var own = counting(model9);
+        SG.techniques.get('xyChain').find(model9, solved, own);
+        expect(own.checks).toBe(1);
+        var unbounded = counting(model9);
+        expect(CS.forcing(model9, solved, unbounded, Object.assign({ workLimit: null }, XY))).toBeNull();
+        expect(unbounded.checks).toBe(0);
+
+        // Hubs of 40 to 300 spokes: every cell is a bivalue cell and the hub's true literal has `spokes` weak edges
+        [40, 100, 250, 300].forEach(function (spokes) {
+          var m = starModel(spokes);
+          var seen = checkWorksXy(m, SG.model.initState(m), { minLength: 1, maxLength: Infinity, workLimit: 3000 });
+          var where = 'star of ' + spokes + ' spokes';
+          expect([where, seen.record.work, seen.record.capHit]).toEqual([where, 3000, 'work']);
+          expect([where, seen.works[0], seen.works[1]]).toEqual([where, 0, 0]); // the entry, the first root
+          expect([where, seen.max <= 256]).toEqual([where, true]);
+        });
+        // 300 spokes, in pieces: the first root is 1 strong edge (a check before it carries the first piece of 256 edges
+        // to 257), then the 300 weak edges in pieces of 256 and 44 (checks at 1 and 257), 300 strong and 300 weak edges one by
+        // one (checks where the next edge would pass 256: at 513 and at 769), and the second root starts at 901.
+        var hub = starModel(300);
+        var seen300 = checkWorksXy(hub, SG.model.initState(hub), { minLength: 1, maxLength: Infinity, workLimit: 3000 });
+        expect(seen300.works.slice(0, 8)).toEqual([0, 0, 1, 257, 513, 769, 901, 902]);
+        expect(seen300.max).toBe(256);
+        // a ring of 201 cells, one root at a time: expansions of one and two edges, a check at the first 1-edge boundary
+        var ring = ringModel(201);
+        var seenRing = checkWorksXy(ring, SG.model.initState(ring), { minLength: 1, maxLength: Infinity,
+          workLimit: 600 });
+        expect(seenRing.works).toEqual([0, 0, 256, 511]);
+        expect(seenRing.gaps).toEqual([0, 0, 256, 255, 89]);
+      });
+  });
+
+  describe('xyChain: ownership, determinism and purity', function () {
+    it('never writes to the state, answers the same after other calls, and hands out arrays of its own', function () {
+      var state = cellsState(model9, vectorEdits(at));
+      var snapshot = SG.model.cloneState(state);
+      var a = run('xyChain', model9, state);
+      expect(state.candidates).toEqual(snapshot.candidates);
+      expect(state.value).toEqual(snapshot.value);
+      var copy = JSON.parse(JSON.stringify(a));
+      expect(a).toEqual(copy);
+      // another position and another technique in between
+      run('xyChain', model9, cellsState(model9, { 3: [1, 2], 4: [1, 2] }));
+      run('forcingChain', model9, state);
+      var b = run('xyChain', model9, state);
+      expect(b).toEqual(copy);
+      // nothing of a Finding is shared with the next one or with the scratch buffers of the search
+      a.cells.push(99);
+      a.eliminations.push([99, 9]);
+      a.eliminations[0][1] = 9;
+      a.i18nArgs.chains[0][0][2] = 1;
+      a.i18nArgs.chains[0].push([1, 1, 1]);
+      a.i18nArgs.chains.push([]);
+      a.i18nArgs.digit = 0;
+      expect(run('xyChain', model9, state)).toEqual(copy);
+      expect(b).toEqual(copy);
+      var all = [b.cells, b.eliminations, b.eliminations[0], b.i18nArgs, b.i18nArgs.chains, b.i18nArgs.chains[0],
+        b.i18nArgs.chains[0][0]];
+      var other = run('xyChain', model9, state);
+      all.forEach(function (part, i) {
+        var peer = [other.cells, other.eliminations, other.eliminations[0], other.i18nArgs, other.i18nArgs.chains,
+          other.i18nArgs.chains[0], other.i18nArgs.chains[0][0]][i];
+        expect([i, part === peer]).toEqual([i, false]);
+      });
+      expect(Object.isFrozen(state.candidates)).toBe(false);
+    });
+
+    it('does not trip the solver\'s state-mutation guard while solving with it', function () {
+      var before = SG.DEBUG;
+      SG.setDebug(true);
+      try {
+        var ids = lowerIds().concat(['xyChain', 'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep']);
+        EVIL.slice(0, 3).forEach(function (name) {
+          var report = SG.logicalSolver.solve(model9, F.parse(fixture(name).puzzle), { allowedTechniques: ids,
+            collectSteps: false });
+          expect(report.status).toBe('solved');
+        });
+      } finally {
+        SG.setDebug(before);
+      }
+    });
+  });
+
+  describe('xyChain: agreement with the enumeration and soundness', function () {
+    var model12 = SG.fixtures.models.boxGrid('chain-box12', 3, 4);
+    var model16 = SG.fixtures.models.boxGrid('chain-box16', 4, 4);
+
+    function pruned(m, count, seed, low, span) {
+      return prunedStates(m, SG.testkit.rng.create(seed), count, function (r) { return low + span * r.next(); });
+    }
+
+    /** Agreement on every item (and soundness against its known solution); how many positions have a proof. */
+    function agreeAll(m, items, label) {
+      var fired = 0;
+      items.forEach(function (item, i) {
+        if (xyAgreement(m, item.state, label + ' #' + i + ' (' + item.kind + ')', undefined, item.solution) !== null) {
+          fired++;
+        }
+      });
+      return fired;
+    }
+
+    [['classic9', model9, 60, 251, 20], ['classic9', model9, 60, 252, 20], ['classic6', model6, 120, 253, 10],
+      ['classic4', model4, 120, 254, 1]].forEach(function (setup) {
+      it('finds the shortest proof exactly when one exists, on ' + setup[0] + ' positions with many wrong candidates ' +
+        '(seed ' + setup[3] + ')', function () {
+          var items = pruned(setup[1], setup[2], setup[3], 0.04, 0.2);
+          expect(agreeAll(setup[1], items, setup[0])).toBeGreaterThanOrEqual(setup[4]);
+        });
+    });
+
+    it('finds the shortest proof exactly when one exists, on real puzzles: initial, propagated and pruned states',
+      function () {
+        var items = H.randomStatesWithKnownSolution(model9, SG.testkit.rng.create(4242), 160);
+        var fired = agreeAll(model9, items, 'classic9 puzzle state');
+        expect(fired).toBeGreaterThanOrEqual(1);
+      });
+
+    it('agrees on arbitrary positions of pairs, solved cells and wider cells, whether or not a solution exists',
+      function () {
+        // random masks: most cells hold two digits, some are solved with stale neighbours, the rest hold three or all
+        var everyLength = {};
+        [[model4, 400, 0.7, 0.06, 40], [model6, 300, 0.7, 0.05, 40], [model9, 60, 0.55, 0.03, 20]].forEach(
+          function (setup) {
+            var m = setup[0];
+            var rng = SG.testkit.rng.create(300 + m.digits);
+            var fired = 0;
+            var lengths = {};
+            for (var i = 0; i < setup[1]; i++) {
+              var state = SG.model.initState(m);
+              for (var c = 0; c < m.cellCount; c++) {
+                var roll = rng.next();
+                if (roll < setup[2]) {
+                  var a = 1 + rng.int(m.digits);
+                  var b = 1 + rng.int(m.digits - 1);
+                  if (b >= a) b++;
+                  state.candidates[c] = bitOf(a) | bitOf(b);
+                } else if (roll < setup[2] + setup[3]) {
+                  var v = 1 + rng.int(m.digits);
+                  state.value[c] = v;
+                  state.candidates[c] = bitOf(v);
+                } else if (roll < 0.9) {
+                  state.candidates[c] = bitOf(1 + rng.int(m.digits)) | bitOf(1 + rng.int(m.digits)) |
+                    bitOf(1 + rng.int(m.digits));
+                }
+              }
+              var finding = xyAgreement(m, state, m.variantId + ' arbitrary position #' + i);
+              var seen = [];
+              run('xyChain', m, state, { onPatternWork: function (r) { seen.push(r); } });
+              expect([m.variantId, i, seen[0].work]).toEqual([m.variantId, i, xyWork(m, state, 12)]);
+              if (finding !== null) {
+                fired++;
+                lengths[finding.i18nArgs.length] = (lengths[finding.i18nArgs.length] || 0) + 1;
+              }
+            }
+            expect([m.variantId, fired >= setup[4]]).toEqual([m.variantId, true]);
+            Object.keys(lengths).forEach(function (len) { everyLength[len] = true; });
+          });
+        expect(Object.keys(everyLength).length).toBeGreaterThanOrEqual(2);
+      });
+
+    [12, 16].forEach(function (D) {
+      it('agrees on ' + D + ' digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)', function () {
+        var m = D === 12 ? model12 : model16;
+        var items = pruned(m, D === 12 ? 6 : 3, 2026, 0.02, 0.06);
+        expect(agreeAll(m, items, D + ' digits')).toBeGreaterThanOrEqual(1);
+      });
+    });
+
+    ['diagonalX', 'hyper', 'jigsaw9'].forEach(function (variant) {
+      it('agrees on ' + variant + ' (extra regions or irregular regions are real peers)', function () {
+        if (!SG.testkit.hasVariant(variant)) SG.test.skip('no board of ' + variant + ' can be built here');
+        var m = H.model(variant);
+        expect(agreeAll(m, pruned(m, 30, 4242, 0.04, 0.16), variant)).toBeGreaterThanOrEqual(5);
+      });
+    });
+
+    it('is sound, applied again and again, on 300 states and on positions with many wrong candidates', function () {
+      H.assertSound(SG.test, 'xyChain', { count: 300, minFirings: 3 });
+      var stats = H.assertSound(SG.test, 'xyChain', { model: model9, states: pruned(model9, 100, 255, 0.04, 0.2),
+        minFirings: 60, maxSteps: 12 });
+      expect(stats.eliminations).toBeGreaterThan(60);
+      H.assertSound(SG.test, 'xyChain', { model: model6, count: 120, seed: 61 });
+      H.assertSound(SG.test, 'xyChain', { model: model4, count: 60, seed: 41 });
+    });
+
+    it('is sound on 6x6 grids with irregular regions and on a model with a partial unit', function () {
+      var rng = SG.testkit.rng.create(71);
+      for (var k = 0; k < 4; k++) {
+        var m = irregularModel(rng.fork('model.' + k), 'chain-irregular-' + k);
+        agreeAll(m, pruned(m, 24, 700 + k, 0.04, 0.2), 'irregular 6x6 #' + k);
+      }
+      var partial = partialUnitModel();
+      var fired = agreeAll(partial, pruned(partial, 120, 82, 0.1, 0.5), 'partial unit model');
+      expect(fired).toBeGreaterThan(5);
+      H.assertSound(SG.test, 'xyChain', { model: partial, count: 120, seed: 81 });
+    });
+
+    it('never removes a candidate of a solution when a position has several solutions', function () {
+      var rng = SG.testkit.rng.create(101);
+      var firings = 0;
+      for (var i = 0; i < 60; i++) {
+        var r = rng.fork('multi.' + i);
+        var solution = randomSolution(model6, r.fork('grid'));
+        var state = prunedFromSolution(model6, solution, r.fork('state'), 0.1 * r.next(), 0.2 + 0.2 * r.next());
+        firings += runWithOracle('xyChain', model6, state, 6, 'classic6 position #' + i);
+      }
+      expect(firings).toBeGreaterThan(20);
+      for (var j = 0; j < 8; j++) {
+        var q = rng.fork('sparse.' + j);
+        var grid = randomSolution(model9, q.fork('grid'));
+        var givens = new Int32Array(81);
+        for (var c = 0; c < 81; c++) if (q.next() < 0.3) givens[c] = grid[c];
+        runWithOracle('xyChain', model9, H.makeState(model9, givens), 3, 'sparse classic9 position #' + j);
+      }
+    });
+
+    it('finds nothing when every candidate belongs to one of 2-4 solutions (twin positions), on every board',
+      function () {
+        var rng = SG.testkit.rng.create(111);
+        for (var i = 0; i < 40; i++) {
+          var r = rng.fork('twin.' + i);
+          var base = randomSolution(model9, r.fork('grid'));
+          var solutions = [base];
+          for (var k = 1; k < 2 + (i % 3); k++) solutions.push(symmetric9(base, r.fork('sym.' + k)));
+          var state = twinState(model9, solutions);
+          var finding = run('xyChain', model9, state);
+          if (finding !== null) fail('xyChain found something in twin position #' + i + ': ' + JSON.stringify(finding));
+        }
+        var models = [model4, model6, SG.fixtures.models.boxGrid('chain-box12', 3, 4), SG.fixtures.models.samurai(),
+          partialUnitModel()];
+        models.forEach(function (m, j) {
+          var q = rng.fork('model.' + j);
+          var grid = randomSolution(m, q.fork('grid'));
+          for (var t = 0; t < (m.cellCount > 100 ? 2 : 10); t++) {
+            var sols = [grid, relabel(grid, randomPerm(q.fork('p.' + t), m.digits))];
+            if (t % 2 === 1) sols.push(relabel(grid, randomPerm(q.fork('q.' + t), m.digits)));
+            var twin = twinState(m, sols);
+            if (run('xyChain', m, twin) !== null) fail('xyChain found something in a twin ' + m.variantId + ' position');
+          }
+        });
+        // an even ring of pair units: every link is strong and weak at once, two solutions, nothing to find
+        [4, 6, 10, 16, 30].forEach(function (n) {
+          var ring = ringModel(n);
+          expect(run('xyChain', ring, SG.model.initState(ring), { maxChainLength: Infinity })).toBeNull();
+        });
+      });
+
+    /** n cells of `m` where each sees the next and the two ends see a common cell outside the chain; null if none. */
+    function chainCells(m, n, from) {
+      var path = [];
+      function endsHaveCommonPeer() {
+        for (var p = 0; p < m.cellCount; p++) {
+          if (path.indexOf(p) === -1 && sees(m, path[0], p) && sees(m, path[n - 1], p)) return true;
+        }
+        return false;
+      }
+      function extend() {
+        if (path.length === n) return endsHaveCommonPeer();
+        var next = m.peers[path[path.length - 1]].slice().sort(function (a, b) { return a - b; });
+        for (var i = 0; i < next.length; i++) {
+          if (path.indexOf(next[i]) !== -1) continue;
+          path.push(next[i]);
+          if (extend()) return true;
+          path.pop();
+        }
+        return false;
+      }
+      for (var s = from; s < m.cellCount; s++) {
+        path = [s];
+        if (extend()) return path;
+      }
+      return null;
+    }
+
+    /** The cells hold {1,2}, {2,3} ... {n,1}: one chain of 2n - 1 edges, every other cell holds every digit. */
+    function chainOn(m, cells) {
+      var edits = {};
+      cells.forEach(function (c, i) { edits[c] = [i + 1, i === cells.length - 1 ? 1 : i + 2]; });
+      return cellsState(m, edits);
+    }
+
+    // Constructed chains on every unit shape: each setup must fire, so a finder that never fires on a board shape
+    // cannot agree vacuously.
+    [['classic9', 'classic9', [2, 3, 5]], ['classic6', 'classic6', [2, 3, 5]], ['classic4', 'classic4', [2, 3]],
+      ['12 digits', null, [2, 3, 5]], ['16 digits', null, [2, 3, 5]], ['diagonalX', 'diagonalX', [2, 3, 5]],
+      ['hyper', 'hyper', [2, 3, 5]], ['jigsaw9', 'jigsaw9', [2, 3, 5]], ['samurai', 'samurai', [2, 3, 5]],
+      ['sohei', 'sohei', [2, 3]], ['flower', 'flower', [2, 3]], ['butterfly', 'butterfly', [2, 3]]]
+      .forEach(function (setup) {
+        it('agrees on constructed chains on ' + setup[0] + ' (chains of ' + setup[2].join(', ') + ' cells)',
+          function () {
+            var m = setup[1] === null ? (setup[0] === '12 digits' ? model12 : model16) : null;
+            if (m === null) {
+              if (!SG.testkit.hasVariant(setup[1])) SG.test.skip('no board of ' + setup[1] + ' can be built here');
+              m = H.model(setup[1]);
+            }
+            var seen = {};
+            var fired = 0;
+            setup[2].forEach(function (n) {
+              [0, Math.floor(m.cellCount / 3), Math.floor(2 * m.cellCount / 3)].forEach(function (from) {
+                var cells = chainCells(m, n, from);
+                if (cells === null || seen[cells.join(',')]) return;
+                seen[cells.join(',')] = true;
+                var finding = xyAgreement(m, chainOn(m, cells), 'the chain ' + cells.join(','));
+                expect(finding).not.toBeNull();
+                expect(finding.i18nArgs.length).toBeLessThan(2 * n);
+                expect(finding.i18nArgs.length % 2).toBe(1);
+                fired++;
+              });
+            });
+            expect(fired).toBeGreaterThanOrEqual(2);
+          });
+      });
   });
 
   // Acceptance: nightmare puzzles that the lower technique groups cannot finish

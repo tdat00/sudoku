@@ -34,7 +34,7 @@ sudoku-generator and plays it:
   contrast, keyboard operable, `role="grid"` board, `aria-live` announcements, responsive (three columns on a wide
   desktop, two on a desktop, one on a phone with the keys fixed to the bottom).
 - A **guide** (`help.html`, a page of its own that the Help button opens in a new tab): the basics, how the hints
-  work, the 36 techniques each with a ready-made example, the keyboard.
+  work, the 37 techniques each with a ready-made example, the keyboard.
 - Everything runs **locally**: no server, no account, no network request after the page is loaded.
 
 ### 1.2 Non-goals (and a test that proves it)
@@ -344,7 +344,7 @@ of the player (language and theme switches that change the same stored preferenc
 agree) and a back link. It has four sections — the basics of playing, how the hints work (the hints are part of
 the guide), the techniques that solve harder puzzles, the keyboard — and a **table of contents** (a floating
 card on a wide screen, folded on a phone) that lists the sections, the eight technique groups and the name of
-each of the 36 techniques; the header floats with the scroll as well. In the techniques section every group is a
+each of the 37 techniques; the header floats with the scroll as well. In the techniques section every group is a
 card with a **tab for each technique** (`role=tablist`, arrow keys, Home / End); the panel of a tab says what the
 technique means and shows **one hardcoded example**: a board drawn like the hint card draws it (the area, the
 cells that make it work, the cells that change, the note to remove or the digit to place) with the words of
@@ -513,6 +513,30 @@ synthetic snapshot, disabled earlier technique or weakened assertion was used. T
 of the new ID, and the final check of all 36 are kept in `docs/difficulty-v3/evidence/MS11c/logs/`. The tests pin 36 (the
 catalogue, the user guide's "one of 36 techniques", the translated technique names) and the Player's quick set is 2,529
 tests. `--check` without options reproduces the whole committed file.
+**Difficulty v3, MS12:** the catalogue holds 37 examples. `xyChain` (the restricted XY-chain, registered at order 186, between
+BUG+1 and the Forcing Chain) is new, and the XY-chain takes the place of a heavier forcing-chain step on many trajectories,
+so all 36 earlier examples were checked first (`docs/difficulty-v3/evidence/MS12/logs/gh-check-36-1.txt`): 33 matched,
+`forcingChain` differed (22 fields on its own source) and `nakedTriple` and `jellyfish` no longer had a hint of their own
+technique on their own source. The order of the work was fixed beforehand: `xyChain` from the existing forcing-chain
+sources (`player/tests/artifacts/difficulty-v3/MS12/sources-xy-existing.json`, four sources; the tool takes the easiest
+example: Hell 1 seed 8, step 28, digit 1, cells R3C1, R6C1, R6C6, R8C1 and R8C6, R4C1 loses the 1), `forcingChain` made
+again from its own source (Nightmare 648, step 54 to 30: R8C5 loses the 9), `nakedTriple` from the recorded candidate sources
+of the catalogue (`sources-refresh.json`, 27 puzzles; Hell 2 escargot, step 30: R1C4, R1C5 and R3C6, R3C5 loses the 3).
+**`jellyfish` could not be made again from any of the catalogue's puzzles**: its hint is reached on no solving path of the
+27 catalogue sources, the 2 Jellyfish positives and the 123 other unique puzzles of the test fixtures (13 of them give no hint at all), the 17 other puzzles that
+earlier tasks used as sources, or 48 Generator puzzles of four discovery batches of twelve (classic9 Nightmare, Master,
+Hell 1 and Hard, seeds 1 to 12), and the `help` test that replays every example with the hint code of the player failed on
+it. The owner's decision S-OD10 (JF-01) allowed one bounded corpus scan through the same tool: the original givens of the
+test-kit corpus of seed 4242 (the same corpus as `testkit-4242-14`), indices 0 to 19,999 in ascending order, materialized
+once (`logs/jf-corpus-materialize.txt`, 80,000 constructed states, 14.9 s, checked against the nine earlier
+`testkit-4242-*` sources: identical), replayed in chunks of 64 with 400 hints at most. **The first chunk with a Jellyfish
+hint was 5312-5375 (84 chunks, 0 to 5,375 replayed, 5,376 puzzles): `testkit-4242-5335`**, the export header
+`#1,Classic Sudoku 9x9,,testkit-4242-5335` (level empty, as the corpus has none; 26 givens, one solution), after 52 of its 83 hints:
+the base rows R3, R6, R7 and R9 and the columns C1, C2, C7 and C8, R5C8 loses the 8. The scan stopped there (no further puzzle
+was acquired); the chunk ledger is `docs/difficulty-v3/evidence/MS12/jellyfish-scan-chunks.jsonl`. The final check of all
+**37** passes. The tests pin 37 (the catalogue, the user guide's "one of 37 techniques", the translated technique names) and
+the Player's quick set is 2,607 tests. No synthetic snapshot, disabled earlier technique or weakened assertion was used.
+`--check` without options reproduces the whole committed file.
 **Decision:** there is no
 first-visit tour or other popup that stands in front of the welcome screen or the puzzle: a visitor who arrives
 from the generator's link wants to play.
@@ -546,7 +570,7 @@ strings; added: `player.*` (shell, open flow, info card, recent list, welcome), 
 
 ## 10. Testing
 `node tests/node-runner.js` (30 suites: the 14 of `tests/suites/` and the 16 shared ones of `core/tests/suites/`;
-2,529 tests; no install) is the default quick set: developers and coding
+2,607 tests; no install) is the default quick set: developers and coding
 agents run it (or a few suites with `--suite=`) while developing, and `.github/workflows/pages.yml` runs all of it
 before every deployment. When one command cannot hold the whole set, it is covered by disjoint shards as the
 generator's quick set is (`generator/design.md` section 15.1); the cost measured for each app, on a named source and
@@ -565,7 +589,7 @@ they are **manual**, not part of CI, and are run only when a change touches the 
 |-------|----------------|
 | `bits`, `model`, `constraints`, `solver` | foundation, the model (V1–V8, classic builder), propagation, DFS (ported) |
 | `harness` | the test harness itself (`expect`, deep equality, the runner and its isolation) |
-| `techniques`, `tech-*`, `logical-solver` | the 36 techniques: positive / negative fixtures, soundness against known solutions (the sweep of `techniques` runs it for every registered technique, with real supplemental positions for the skyscraper, the two-string kite, the remote pairs, the empty rectangle, the finned X-Wing, the finned Swordfish, the WXYZ-Wing, BUG+1 and the long and the deep chain techniques), the solver loop (ported; a small test kit stands in for generation) |
+| `techniques`, `tech-*`, `logical-solver` | the 37 techniques: positive / negative fixtures, soundness against known solutions (the sweep of `techniques` runs it for every registered technique, with real supplemental positions for the skyscraper, the two-string kite, the remote pairs, the empty rectangle, the finned X-Wing, the finned Swordfish, the WXYZ-Wing, BUG+1, the restricted XY-chain and the long and the deep chain techniques), the solver loop (ported; a small test kit stands in for generation) |
 | `exchange` | token round trips (documents and text bundles), the active puzzle of a link, errors (shared, byte-identical) |
 | `importer` | all 18 fixtures rebuild valid models with exactly one solution; tokens, links, bundles (`t.` / `s.`, `active`); text lines (4 / 6 / 9); the nine level names in both languages and rating metadata; wrong version, damaged and hostile input, fuzzed damage |
 | `model-aids` | sign edges, word line, symbol modes |
@@ -578,7 +602,7 @@ they are **manual**, not part of CI, and are run only when a change touches the 
 | `symbols`, `board-view` | glyphs per mode, the legend, the 16 shapes; geometry and markup of all 15 fixtures (cells, layers, cages, signs, no colour literal) |
 | `a11y`, `theme` | cell labels, keyboard moves, the Settings data; token parity and contrast |
 | `app` | the surface and events of `SG.app`, the elements it needs from `index.html`, no HTML built from data, storage only through `store` / `progress` |
-| `help` | the sections, texts in both languages, an example for each of the 36 techniques (rebuilt from the snapshot, replayed with the hint code, readable in EN and VI), a real Jigsaw puzzle whose hint is snapshotted by the helper, rebuilt with its own regions, notes and move, and refused when its `cellRegion` is missing or malformed, shortcuts against the keys `play.js` handles, the claims of the Player part of the user and developer guides |
+| `help` | the sections, texts in both languages, an example for each of the 37 techniques (rebuilt from the snapshot, replayed with the hint code, readable in EN and VI), a real Jigsaw puzzle whose hint is snapshotted by the helper, rebuilt with its own regions, notes and move, and refused when its `cellRegion` is missing or malformed, shortcuts against the keys `play.js` handles, the claims of the Player part of the user and developer guides |
 | `help-example-tools` | the help-example tool (§8.3): options and their conflicts, the source schema, the cap on puzzles and hints, replaying a saved source with the hint code of the player, the choice and tie rule, the owned `cellRegion` copy of a Jigsaw snapshot (and none in any other), the merge and the CRLF text of the catalogue, bounded discovery and the child process with fakes; in Node real runs of the tool on saved sources and sandbox catalogues (never generating, never writing the committed file) |
 | `ui-contract` | module surface, no colour literals outside the token files, script order of `index.html` = runner = `tests.html` (and `help.html` = runner minus its exceptions), no hard-coded text in either page, forbidden globals absent, no DOM in `js/core` |
 | browser run (manual) | `tests/browser/*.js`: headless Edge over CDP (fragment, paste, file, drop, play with real key events, hints, reload, keyboard-only walk, Settings, the guide page with its tabs and floating contents, themes, 1440 / 900 / 375 px with touch, blocked storage); recorded in `docs/qa/browser-run.md` |

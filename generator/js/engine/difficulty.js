@@ -106,6 +106,7 @@
     wWing: 850,
     uniqueRectangle: 900,
     bugPlusOne: 920,
+    xyChain: 1000,
     forcingChain: 1100,
     forcingChainLong: 1400,
     nishio: 1700,

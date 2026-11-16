@@ -1,0 +1,37 @@
+$ node tests\node-runner.js --suite=pipeline,cache,worker,steps,replay,mega,player,digger-target
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   cache: 106 passed  (10.58 s)
+ok   digger-target: 75 passed  (2.04 s)
+ok   mega: 108 passed  (21.67 s)
+ok   pipeline: 151 passed  (39.14 s)
+(node:23748) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   player: 69 passed  (34.37 s)
+FAIL replay: 152 passed, 2 failed  (24.21 s)
+FAIL steps: 56 passed, 1 failed  (24.78 s)
+ok   worker: 144 passed  (46.47 s)
+
+Failures:
+  FAIL replay > replay: golden compact view and transitions > has 12 compact, 12 details and 15 distinct jump transitions in the 14 goldens
+       AssertionError: expected length 16 of Array(16)["G01:25>26:47>593", "G03:22>32:45>2393", "G03:22>23:45>2396", "G04:22>23:45>915", "G05:28>29:50>2536", "G06:28>29:138>1293", "G07:29>31:141>2268", "G07:29>30:141>3245", "G09:34>35:142>510", "G10:35>49:145>2199", "G10:35>36:145>2300", "G11:69>70:135>577", ...] to be 15
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1225:42)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > golden G03: the generator's choice, the first use and the restricted check
+       AssertionError: expected "combined" to be undefined
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1355:28
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1351:17)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the callout of a score jump > names the cause of a move per class, on the goldens
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at textOfStep (Q:\git\sudoku\generator\tests\suites\steps.test.js:66:27)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1067:24
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1066:18
+
+Suites: 8
+Tests:  864 total, 861 passed, 3 failed, 0 skipped
+Time:   203.27 s running tests, 203.42 s total
+exit=1 seconds=203.564

@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS12\xy-dug.js 4242 30000
+xy-dug: seed 4242, puzzles 30000 from 0, mode below, model classic9, cutoff = order of xyChain = 186, prefix of 27 techniques (nakedSingle hiddenSingleBox hiddenSingleLine pointing boxLine nakedPair hiddenPair nakedTriple hiddenTriple nakedQuad hiddenQuad xWing skyscraper twoStringKite remotePairs simpleColouring emptyRectangle finnedXWing swordfish finnedSwordfish jellyfish xyWing xyzWing wxyzWing wWing uniqueRectangle bugPlusOne), print limit 0
+seed 4242 puzzles 30000 (from 0): attempted 30000, fully solved by the prefix 25356, Findings 1413 by length {"7":77,"9":952,"11":384}, most work 4861, capped calls 0, 38.8 s
+exit=0 seconds=39.118

@@ -1,0 +1,227 @@
+mutation 0 (the restricted graph takes a conjugate pair of a unit for a strong link): DETECTED - 69 total, 44 passed, 25 failed, 0 skipped - 25 failing, 25 of xyChain - 2.3 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > returns only the endpoints proof under the id it is given, whatever the position
+    FAIL tech-chain > xyChain: the edges it does not take > does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, as written
+    FAIL tech-chain > xyChain: the edges it does not take > does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, transposed
+    FAIL tech-chain > xyChain: the edges it does not take > is the same with every unit declared incomplete, where the general edges lose their conjugate links
+    FAIL tech-chain > xyChain: the edges it does not take > takes a weak link through a partial unit (a digit may be missing from it) and no strong link from it
+    FAIL tech-chain > xyChain: the edges it does not take > claims no general chain: a position where only a chain through conjugate pairs, a contradiction or a forced chain exists is forcingChain's, and an XY-chain it does hold is a
+mutation 1 (the restricted graph takes an edge between two candidates of one cell for a weak link): DETECTED - 69 total, 64 passed, 5 failed, 0 skipped - 5 failing, 5 of xyChain - 4.2 s
+    FAIL tech-chain > xyChain: work limit, observer and budget > counts one unit per edge expansion, and only the edges of the restricted graph: 33 on a pair of cells
+    FAIL tech-chain > xyChain: work limit, observer and budget > counts exactly the edges of the enumeration's own breadth first search, with every window
+    FAIL tech-chain > xyChain: work limit, observer and budget > returns null with capHit "work" once the limit is spent, never the best proof so far
+    FAIL tech-chain > xyChain: work limit, observer and budget > checks the parent budget at entry (it is bounded) and lets no more than 256 units pass between two checks
+    FAIL tech-chain > xyChain: agreement with the enumeration and soundness > agrees on arbitrary positions of pairs, solved cells and wider cells, whether or not a solution exists
+mutation 2 (the restricted graph searches the two polarities of a node (a contradiction or a forced chain)): DETECTED - 69 total, 19 passed, 50 failed, 0 skipped - 50 failing, 50 of xyChain - 1.5 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > asks the shared builder for the restricted edges, 1 to 12 edges and 50000 units, and nothing else
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > keeps each mode unchanged when the two are interleaved on one model (the search buffers are shared)
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > returns only the endpoints proof under the id it is given, whatever the position
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds the seven-edge chain of the brief, as written: false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds the seven-edge chain of the brief, transposed: false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > removes the 4 from exactly the cells that see both ends, and from no cell that sees only one
+mutation 3 (the restricted graph accepts ends of different digits (the filter is off)): DETECTED - 69 total, 33 passed, 36 failed, 0 skipped - 36 failing, 36 of xyChain - 1.9 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > returns only the endpoints proof under the id it is given, whatever the position
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds the seven-edge chain of the brief, as written: false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds the seven-edge chain of the brief, transposed: false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4
+    FAIL tech-chain > xyChain: the edges it does not take > does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, as written
+    FAIL tech-chain > xyChain: the edges it does not take > does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, transposed
+    FAIL tech-chain > xyChain: the edges it does not take > takes a weak link through a partial unit (a digit may be missing from it) and no strong link from it
+mutation 4 (the same-digit test of the ends is skipped inside the search): DETECTED - 69 total, 68 passed, 1 failed, 0 skipped - 1 failing, 1 of xyChain - 4.1 s
+    FAIL tech-chain > xyChain: agreement with the enumeration and soundness > agrees on arbitrary positions of pairs, solved cells and wider cells, whether or not a solution exists
+mutation 5 (a proof may end in a lower cell than its start (the lower-end rule dropped)): NOT DETECTED (exit 0) - 69 total, 69 passed, 0 failed, 0 skipped - 0 failing, 0 of xyChain - 5.1 s
+mutation 6 (a proof may end in the cell it starts from): DETECTED - 69 total, 67 passed, 2 failed, 0 skipped - 2 failing, 2 of xyChain - 4.1 s
+    FAIL tech-chain > xyChain: work limit, observer and budget > counts exactly the edges of the enumeration's own breadth first search, with every window
+    FAIL tech-chain > xyChain: agreement with the enumeration and soundness > agrees on arbitrary positions of pairs, solved cells and wider cells, whether or not a solution exists
+mutation 7 (a start that is "true" is searched too in the restricted mode): DETECTED - 69 total, 59 passed, 10 failed, 0 skipped - 10 failing, 10 of xyChain - 4.4 s
+    FAIL tech-chain > xyChain: work limit, observer and budget > counts one unit per edge expansion, and only the edges of the restricted graph: 33 on a pair of cells
+    FAIL tech-chain > xyChain: work limit, observer and budget > counts exactly the edges of the enumeration's own breadth first search, with every window
+    FAIL tech-chain > xyChain: work limit, observer and budget > returns null with capHit "work" once the limit is spent, never the best proof so far
+    FAIL tech-chain > xyChain: work limit, observer and budget > reports one record per normal return, whatever the answer, and none when the call throws
+    FAIL tech-chain > xyChain: work limit, observer and budget > checks the parent budget at entry (it is bounded) and lets no more than 256 units pass between two checks
+    FAIL tech-chain > xyChain: agreement with the enumeration and soundness > agrees on arbitrary positions of pairs, solved cells and wider cells, whether or not a solution exists
+mutation 8 (a strong link from a cell with more than two candidates (the two highest)): DETECTED - 176 total, 74 passed, 102 failed, 0 skipped - 102 failing, 60 of xyChain - 3.6 s
+    FAIL tech-chain > chain group: soundness (I7) > forcingChain never removes a solution candidate (300 states)
+    FAIL tech-chain > chain group: soundness (I7) > forcingChainLong never removes a solution candidate on real positions where only a long chain is left
+    FAIL tech-chain > chain group: soundness (I7) > nishioDeep never removes a solution candidate on the stuck positions of the famous puzzles
+    FAIL tech-chain > chain group: soundness (I7) > forcingChain is sound on positions with many wrong candidates left (chains up to C links)
+    FAIL tech-chain > chain group: soundness (I7) > is sound on 4x4 and 6x6 puzzles
+    FAIL tech-chain > chain group: soundness (I7) > is sound on 6x6 grids with irregular (jigsaw-like) regions
+mutation 9 (the elimination rule sees one end only (a weak link to either end)): DETECTED - 176 total, 64 passed, 112 failed, 0 skipped - 112 failing, 47 of xyChain - 3.6 s
+    FAIL tech-chain > chain group: soundness (I7) > forcingChain never removes a solution candidate (300 states)
+    FAIL tech-chain > chain group: soundness (I7) > forcingChainLong never removes a solution candidate on real positions where only a long chain is left
+    FAIL tech-chain > chain group: soundness (I7) > nishioDeep never removes a solution candidate on the stuck positions of the famous puzzles
+    FAIL tech-chain > chain group: soundness (I7) > forcingChain is sound on positions with many wrong candidates left (chains up to C links)
+    FAIL tech-chain > chain group: soundness (I7) > is sound on 4x4 and 6x6 puzzles
+    FAIL tech-chain > chain group: soundness (I7) > is sound on 6x6 grids with irregular (jigsaw-like) regions
+mutation 10 (a solved cell is a weak neighbour): DETECTED - 176 total, 173 passed, 3 failed, 0 skipped - 3 failing, 3 of xyChain - 13.1 s
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds nothing when the only cell that sees both ends (R5C1) is solved, whatever candidates its neighbours kept, as written
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds nothing when the only cell that sees both ends (R5C1) is solved, whatever candidates its neighbours kept, transposed
+    FAIL tech-chain > xyChain: agreement with the enumeration and soundness > agrees on arbitrary positions of pairs, solved cells and wider cells, whether or not a solution exists
+mutation 11 (the scan keeps the last proof found, not the shortest (no narrowing of the limit)): DETECTED - 176 total, 117 passed, 59 failed, 0 skipped - 59 failing, 35 of xyChain - 24.3 s
+    FAIL tech-chain > chain group: positions without any valid deduction > still finds the decoy candidates that no solution contains
+    FAIL tech-chain > forcingChain: chain proofs > every reported chain alternates strong and weak links and justifies its deduction
+    FAIL tech-chain > forcingChain: chain proofs > the proof checker rejects a chain that does not alternate or has a bogus link
+    FAIL tech-chain > forcingChain: fixtures > reports the X-chain of 3 links (two eliminations)
+    FAIL tech-chain > forcingChain: fixtures > reports the X-chain of 3 links (one elimination)
+    FAIL tech-chain > forcingChain: fixtures > reports the contradiction chain of 3 links
+mutation 12 (the scan takes the starts in descending order (ties to the highest start)): DETECTED - 176 total, 122 passed, 54 failed, 0 skipped - 54 failing, 35 of xyChain - 9.0 s
+    FAIL tech-chain > forcingChain: chain proofs > the proof checker rejects a chain that does not alternate or has a bogus link
+    FAIL tech-chain > forcingChain: fixtures > reports the X-chain of 3 links (two eliminations)
+    FAIL tech-chain > forcingChain: fixtures > reports the X-chain of 3 links (one elimination)
+    FAIL tech-chain > forcingChain: fixtures > reports the contradiction chain of 3 links
+    FAIL tech-chain > forcingChain: fixtures > reports the contradiction chain of 4 links
+    FAIL tech-chain > forcingChain: fixtures > reports the contradiction chain of 5 links
+mutation 13 (the window of xyChain is 13 edges): DETECTED - 69 total, 65 passed, 4 failed, 0 skipped - 4 failing, 4 of xyChain - 4.1 s
+    FAIL tech-chain > xyChain: the window of 12 edges and the caller limit > stops at 12 edges: one of 11 is found, one of 13 is nobody's (an XY-chain has an odd number of edges)
+    FAIL tech-chain > xyChain: work limit, observer and budget > counts exactly the edges of the enumeration's own breadth first search, with every window
+    FAIL tech-chain > xyChain: agreement with the enumeration and soundness > finds the shortest proof exactly when one exists, on real puzzles: initial, propagated and pruned states
+    FAIL tech-chain > xyChain: agreement with the enumeration and soundness > agrees on arbitrary positions of pairs, solved cells and wider cells, whether or not a solution exists
+mutation 14 (the window of xyChain is 11 edges): DETECTED - 69 total, 67 passed, 2 failed, 0 skipped - 2 failing, 2 of xyChain - 4.1 s
+    FAIL tech-chain > xyChain: work limit, observer and budget > counts exactly the edges of the enumeration's own breadth first search, with every window
+    FAIL tech-chain > xyChain: agreement with the enumeration and soundness > agrees on arbitrary positions of pairs, solved cells and wider cells, whether or not a solution exists
+mutation 15 (the caller's maxChainLength does not narrow xyChain): DETECTED - 69 total, 65 passed, 4 failed, 0 skipped - 4 failing, 4 of xyChain - 5.1 s
+    FAIL tech-chain > xyChain: the window of 12 edges and the caller limit > narrows its window with maxChainLength and never widens it: invalid or off reads as for the other chains
+    FAIL tech-chain > xyChain: the window of 12 edges and the caller limit > applies the same window through the solver: maxChainLength given to it narrows xyChain too
+    FAIL tech-chain > xyChain: work limit, observer and budget > counts exactly the edges of the enumeration's own breadth first search, with every window
+    FAIL tech-chain > xyChain: work limit, observer and budget > reports one record per normal return, whatever the answer, and none when the call throws
+mutation 16 (the caller's maxChainLength widens xyChain): DETECTED - 69 total, 64 passed, 5 failed, 0 skipped - 5 failing, 5 of xyChain - 5.3 s
+    FAIL tech-chain > xyChain: the window of 12 edges and the caller limit > stops at 12 edges: one of 11 is found, one of 13 is nobody's (an XY-chain has an odd number of edges)
+    FAIL tech-chain > xyChain: the window of 12 edges and the caller limit > narrows its window with maxChainLength and never widens it: invalid or off reads as for the other chains
+    FAIL tech-chain > xyChain: the window of 12 edges and the caller limit > applies the same window through the solver: maxChainLength given to it narrows xyChain too
+    FAIL tech-chain > xyChain: work limit, observer and budget > counts exactly the edges of the enumeration's own breadth first search, with every window
+    FAIL tech-chain > xyChain: work limit, observer and budget > reports one record per normal return, whatever the answer, and none when the call throws
+mutation 17 (xyChain has a minimum of 5 edges): DETECTED - 69 total, 34 passed, 35 failed, 0 skipped - 35 failing, 35 of xyChain - 1.9 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > asks the shared builder for the restricted edges, 1 to 12 edges and 50000 units, and nothing else
+    FAIL tech-chain > xyChain: the edges it does not take > takes a weak link through a partial unit (a digit may be missing from it) and no strong link from it
+    FAIL tech-chain > xyChain: the shortest proof of the whole scan > takes a shorter proof on a later start over a longer one on an earlier start
+    FAIL tech-chain > xyChain: the shortest proof of the whole scan > takes the lowest start among proofs of the same length, the lower digit first inside one pair of cells
+    FAIL tech-chain > xyChain: the shortest proof of the whole scan > looks at a pair of ends from its lower cell: the chain starts in the lower of the two ends
+    FAIL tech-chain > xyChain: the window of 12 edges and the caller limit > finds a chain of 3, 5, 7, 9 and 11 edges, each the shortest proof of its position
+mutation 18 (the work limit of xyChain is 50001): DETECTED - 69 total, 67 passed, 2 failed, 0 skipped - 2 failing, 2 of xyChain - 5.3 s
+    FAIL tech-chain > xyChain: work limit, observer and budget > counts one unit per edge expansion, and only the edges of the restricted graph: 33 on a pair of cells
+    FAIL tech-chain > xyChain: work limit, observer and budget > reports one record per normal return, whatever the answer, and none when the call throws
+mutation 19 (xyChain has no work limit): DETECTED - 69 total, 66 passed, 3 failed, 0 skipped - 3 failing, 3 of xyChain - 5.1 s
+    FAIL tech-chain > xyChain: work limit, observer and budget > counts one unit per edge expansion, and only the edges of the restricted graph: 33 on a pair of cells
+    FAIL tech-chain > xyChain: work limit, observer and budget > reports one record per normal return, whatever the answer, and none when the call throws
+    FAIL tech-chain > xyChain: work limit, observer and budget > checks the parent budget at entry (it is bounded) and lets no more than 256 units pass between two checks
+mutation 20 (the limit is off by one (an edge may be visited past it)): DETECTED - 176 total, 168 passed, 8 failed, 0 skipped - 8 failing, 2 of xyChain - 12.2 s
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > returns null with capHit "work" once the limit is spent, never the best proof so far
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > lets no more than 256 work units pass between two checks, uneven expansions and tail included
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > checks at an exact boundary of 256 when the next edge would pass it, and not before
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > splits an expansion of more than 256 edges into pieces, each behind the gate
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > counts a Finding in the middle of a piece, a cut and a spent budget exactly, edge by edge
+    FAIL tech-chain > chain windows: the four registered ids on their own > keeps forcingChain unbounded where an accidental limit of 50000 would stop it, and bounds the long id
+mutation 21 (every visited edge is counted twice): DETECTED - 176 total, 164 passed, 12 failed, 0 skipped - 12 failing, 5 of xyChain - 11.0 s
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > returns null with capHit "work" once the limit is spent, never the best proof so far
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > lets no more than 256 work units pass between two checks, uneven expansions and tail included
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > checks at an exact boundary of 256 when the next edge would pass it, and not before
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > splits an expansion of more than 256 edges into pieces, each behind the gate
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > counts a Finding in the middle of a piece, a cut and a spent budget exactly, edge by edge
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > keeps the legacy cadence on the unbounded path: a check at each root, none in between
+mutation 22 (the budget is checked one unit early (>=)): DETECTED - 176 total, 171 passed, 5 failed, 0 skipped - 5 failing, 1 of xyChain - 12.2 s
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > lets no more than 256 work units pass between two checks, uneven expansions and tail included
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > splits an expansion of more than 256 edges into pieces, each behind the gate
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > counts a Finding in the middle of a piece, a cut and a spent budget exactly, edge by edge
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > keeps the legacy cadence on the unbounded path: a check at each root, none in between
+    FAIL tech-chain > xyChain: work limit, observer and budget > checks the parent budget at entry (it is bounded) and lets no more than 256 units pass between two checks
+mutation 23 (the budget is checked 257 units late (> 512)): DETECTED - 176 total, 170 passed, 6 failed, 0 skipped - 6 failing, 1 of xyChain - 12.3 s
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > lets no more than 256 work units pass between two checks, uneven expansions and tail included
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > checks at an exact boundary of 256 when the next edge would pass it, and not before
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > splits an expansion of more than 256 edges into pieces, each behind the gate
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > counts a Finding in the middle of a piece, a cut and a spent budget exactly, edge by edge
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > keeps the legacy cadence on the unbounded path: a check at each root, none in between
+    FAIL tech-chain > xyChain: work limit, observer and budget > checks the parent budget at entry (it is bounded) and lets no more than 256 units pass between two checks
+mutation 24 (the entry check of a bounded call is dropped): DETECTED - 176 total, 169 passed, 7 failed, 0 skipped - 7 failing, 1 of xyChain - 12.1 s
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > checks the parent budget at entry, and not at all on the unbounded path, of a solved position
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > lets no more than 256 work units pass between two checks, uneven expansions and tail included
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > checks at an exact boundary of 256 when the next edge would pass it, and not before
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > splits an expansion of more than 256 edges into pieces, each behind the gate
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > counts a Finding in the middle of a piece, a cut and a spent budget exactly, edge by edge
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > keeps the legacy cadence on the unbounded path: a check at each root, none in between
+mutation 25 (cancellation and every other error are swallowed): DETECTED - 176 total, 173 passed, 3 failed, 0 skipped - 3 failing, 1 of xyChain - 12.1 s
+    FAIL tech-chain > chain group: budget > does not swallow any other error: a cancelled budget still throws
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > reports a spent budget as nothing found, without a cap, and lets cancellation through
+    FAIL tech-chain > xyChain: work limit, observer and budget > reports a spent budget as nothing found, without a cap, and lets cancellation and errors through with no record
+mutation 26 (a record is published for an error that is thrown): DETECTED - 176 total, 174 passed, 2 failed, 0 skipped - 2 failing, 1 of xyChain - 12.1 s
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > reports a spent budget as nothing found, without a cap, and lets cancellation through
+    FAIL tech-chain > xyChain: work limit, observer and budget > reports a spent budget as nothing found, without a cap, and lets cancellation and errors through with no record
+mutation 27 (a spent parent budget is reported as a work cap): DETECTED - 176 total, 168 passed, 8 failed, 0 skipped - 8 failing, 1 of xyChain - 12.1 s
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > reports a spent budget as nothing found, without a cap, and lets cancellation through
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > lets no more than 256 work units pass between two checks, uneven expansions and tail included
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > checks at an exact boundary of 256 when the next edge would pass it, and not before
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > splits an expansion of more than 256 edges into pieces, each behind the gate
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > counts a Finding in the middle of a piece, a cut and a spent budget exactly, edge by edge
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > keeps the legacy cadence on the unbounded path: a check at each root, none in between
+mutation 28 (the cells of the Finding are in the order of the chain, not ascending): DETECTED - 69 total, 46 passed, 23 failed, 0 skipped - 23 failing, 23 of xyChain - 3.0 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > returns only the endpoints proof under the id it is given, whatever the position
+    FAIL tech-chain > xyChain: the edges it does not take > claims no general chain: a position where only a chain through conjugate pairs, a contradiction or a forced chain exists is forcingChain's, and an XY-chain it does hold is a
+    FAIL tech-chain > xyChain: the window of 12 edges and the caller limit > stops at 12 edges: one of 11 is found, one of 13 is nobody's (an XY-chain has an odd number of edges)
+    FAIL tech-chain > xyChain: agreement with the enumeration and soundness > finds the shortest proof exactly when one exists, on classic9 positions with many wrong candidates (seed 251)
+    FAIL tech-chain > xyChain: agreement with the enumeration and soundness > finds the shortest proof exactly when one exists, on classic9 positions with many wrong candidates (seed 252)
+    FAIL tech-chain > xyChain: agreement with the enumeration and soundness > finds the shortest proof exactly when one exists, on classic6 positions with many wrong candidates (seed 253)
+mutation 29 (the eliminations of the Finding are descending): DETECTED - 69 total, 37 passed, 32 failed, 0 skipped - 32 failing, 32 of xyChain - 1.9 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > returns only the endpoints proof under the id it is given, whatever the position
+    FAIL tech-chain > xyChain: the edges it does not take > takes a weak link through a partial unit (a digit may be missing from it) and no strong link from it
+    FAIL tech-chain > xyChain: the edges it does not take > claims no general chain: a position where only a chain through conjugate pairs, a contradiction or a forced chain exists is forcingChain's, and an XY-chain it does hold is a
+    FAIL tech-chain > xyChain: the shortest proof of the whole scan > takes a shorter proof on a later start over a longer one on an earlier start
+    FAIL tech-chain > xyChain: the shortest proof of the whole scan > takes the lowest start among proofs of the same length, the lower digit first inside one pair of cells
+    FAIL tech-chain > xyChain: the window of 12 edges and the caller limit > finds a chain of 3, 5, 7, 9 and 11 edges, each the shortest proof of its position
+mutation 30 (the i18n key has the kind as a suffix (the general key)): DETECTED - 69 total, 33 passed, 36 failed, 0 skipped - 36 failing, 36 of xyChain - 1.9 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > returns only the endpoints proof under the id it is given, whatever the position
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds the seven-edge chain of the brief, as written: false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds the seven-edge chain of the brief, transposed: false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4
+    FAIL tech-chain > xyChain: the edges it does not take > does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, as written
+    FAIL tech-chain > xyChain: the edges it does not take > does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, transposed
+    FAIL tech-chain > xyChain: the edges it does not take > takes a weak link through a partial unit (a digit may be missing from it) and no strong link from it
+mutation 31 (the length of the Finding counts the literals, not the edges): DETECTED - 69 total, 31 passed, 38 failed, 0 skipped - 38 failing, 38 of xyChain - 1.9 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > returns only the endpoints proof under the id it is given, whatever the position
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds the seven-edge chain of the brief, as written: false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds the seven-edge chain of the brief, transposed: false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4
+    FAIL tech-chain > xyChain: the edges it does not take > does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, as written
+    FAIL tech-chain > xyChain: the edges it does not take > does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, transposed
+    FAIL tech-chain > xyChain: the edges it does not take > takes a weak link through a partial unit (a digit may be missing from it) and no strong link from it
+mutation 32 (the kind of the Finding is forced): DETECTED - 69 total, 33 passed, 36 failed, 0 skipped - 36 failing, 36 of xyChain - 1.9 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > returns only the endpoints proof under the id it is given, whatever the position
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds the seven-edge chain of the brief, as written: false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds the seven-edge chain of the brief, transposed: false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4
+    FAIL tech-chain > xyChain: the edges it does not take > does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, as written
+    FAIL tech-chain > xyChain: the edges it does not take > does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, transposed
+    FAIL tech-chain > xyChain: the edges it does not take > takes a weak link through a partial unit (a digit may be missing from it) and no strong link from it
+mutation 33 (the Finding names the digit of the second literal, not of the ends): DETECTED - 69 total, 33 passed, 36 failed, 0 skipped - 36 failing, 36 of xyChain - 1.9 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > returns only the endpoints proof under the id it is given, whatever the position
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds the seven-edge chain of the brief, as written: false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds the seven-edge chain of the brief, transposed: false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4
+    FAIL tech-chain > xyChain: the edges it does not take > does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, as written
+    FAIL tech-chain > xyChain: the edges it does not take > does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, transposed
+    FAIL tech-chain > xyChain: the edges it does not take > takes a weak link through a partial unit (a digit may be missing from it) and no strong link from it
+mutation 34 (the chain is reported from its far end (the wrong anchor)): DETECTED - 69 total, 32 passed, 37 failed, 0 skipped - 37 failing, 37 of xyChain - 1.8 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > returns only the endpoints proof under the id it is given, whatever the position
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds the seven-edge chain of the brief, as written: false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4
+    FAIL tech-chain > xyChain: the vector of the brief and its near misses > finds the seven-edge chain of the brief, transposed: false 4 in R1C1 ... true 4 in R5C9, R5C1 loses the 4
+    FAIL tech-chain > xyChain: the edges it does not take > does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, as written
+    FAIL tech-chain > xyChain: the edges it does not take > does not take the conjugate pair of a unit for a strong link: it shortens the general chain, not this one, transposed
+    FAIL tech-chain > xyChain: the edges it does not take > takes a weak link through a partial unit (a digit may be missing from it) and no strong link from it
+mutation 35 (xyChain is registered at order 191): DETECTED - 69 total, 68 passed, 1 failed, 0 skipped - 1 failing, 1 of xyChain - 5.1 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > is a chain technique of order 186 and base cost 82, for every variant, between bugPlusOne and forcingChain, with the uniqueness assumption off
+mutation 36 (xyChain has a base cost of 80): DETECTED - 69 total, 68 passed, 1 failed, 0 skipped - 1 failing, 1 of xyChain - 5.0 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > is a chain technique of order 186 and base cost 82, for every variant, between bugPlusOne and forcingChain, with the uniqueness assumption off
+mutation 37 (xyChain is registered in the wing group): DETECTED - 69 total, 68 passed, 1 failed, 0 skipped - 1 failing, 1 of xyChain - 5.0 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > is a chain technique of order 186 and base cost 82, for every variant, between bugPlusOne and forcingChain, with the uniqueness assumption off
+mutation 38 (xyChain assumes uniqueness): DETECTED - 69 total, 68 passed, 1 failed, 0 skipped - 1 failing, 1 of xyChain - 5.1 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > is a chain technique of order 186 and base cost 82, for every variant, between bugPlusOne and forcingChain, with the uniqueness assumption off
+mutation 39 (xyChain is scoped to a variant): DETECTED - 69 total, 66 passed, 3 failed, 0 skipped - 3 failing, 3 of xyChain - 5.0 s
+    FAIL tech-chain > xyChain: registration and the shared builder (R15) > is a chain technique of order 186 and base cost 82, for every variant, between bugPlusOne and forcingChain, with the uniqueness assumption off
+    FAIL tech-chain > xyChain: agreement with the enumeration and soundness > is sound, applied again and again, on 300 states and on positions with many wrong candidates
+    FAIL tech-chain > xyChain: agreement with the enumeration and soundness > is sound on 6x6 grids with irregular regions and on a model with a partial unit
+mutation 40 (the weight of xyChain is 1050): DETECTED - 15 total, 13 passed, 2 failed, 0 skipped - 2 failing, 2 of xyChain - 0.2 s
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > places bugPlusOne between uniqueRectangle and forcingChain: order 182, weight 920, a Master-tier technique that assumes uniqueness (R
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > places xyChain between bugPlusOne and forcingChain: order 186, weight 1000, a Master-tier chain technique of its own group (R15)
+mutation 41 (the weight of xyChain is 1100 (a tie with forcingChain)): DETECTED - 15 total, 12 passed, 3 failed, 0 skipped - 3 failing, 3 of xyChain - 0.2 s
+    FAIL technique-weights > techniques: the weight table of SG.difficulty > puts the techniques of a group in the ladder in the order of their weights
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > places bugPlusOne between uniqueRectangle and forcingChain: order 182, weight 920, a Master-tier technique that assumes uniqueness (R
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > places xyChain between bugPlusOne and forcingChain: order 186, weight 1000, a Master-tier chain technique of its own group (R15)
+mutation 42 (the weight of xyChain is 900 (a tie with uniqueRectangle)): DETECTED - 15 total, 11 passed, 4 failed, 0 skipped - 4 failing, 4 of xyChain - 0.2 s
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > has no heavier technique directly before a lighter one in the actual sorted registry
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > places bugPlusOne between uniqueRectangle and forcingChain: order 182, weight 920, a Master-tier technique that assumes uniqueness (R
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > places xyChain between bugPlusOne and forcingChain: order 186, weight 1000, a Master-tier chain technique of its own group (R15)
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > lets a tie of weight and of order fall to the smaller id and still sorts the sequence
+detected 42 of 43, 247.9 s

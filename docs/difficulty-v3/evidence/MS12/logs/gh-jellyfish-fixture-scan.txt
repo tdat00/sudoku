@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS12\jf-fixture-scan.js
+distinct 81-character puzzle strings in the fixtures: 130
+unique: 125, solved by the ladder: 125, with a jellyfish step: 0
+exit=0 seconds=2.075

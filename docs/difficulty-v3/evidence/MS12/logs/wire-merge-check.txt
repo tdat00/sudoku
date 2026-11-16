@@ -1,0 +1,35 @@
+$ node tests\replay-fixtures.js --merge=..\docs\difficulty-v3\evidence\MS12\wire --check
+merged 5 ledgers: all 5 keys exactly once, recorded from the current sources
+G09: matches replay-wire.js
+G10: matches replay-wire.js
+G11: matches replay-wire.js
+G12: matches replay-wire.js
+G13: 28 fields differ from replay-wire.js
+  givens[30]: saved 6, fresh 0
+  givens[53]: saved 7, fresh 0
+  givens[55]: saved 2, fresh 0
+  givens[75]: saved 5, fresh 0
+  givens[248]: saved 5, fresh 0
+  givens[268]: saved 9, fresh 0
+  givens[270]: saved 5, fresh 0
+  givens[293]: saved 8, fresh 0
+  rating.score: saved 2015, fresh 2347
+  rating.rawScore: saved 2015, fresh 2347
+  rating.confidence: saved 0.8555555555555555, fresh 0.11777777777777777
+  rating.empties: saved 243, fresh 251
+  rating.techniqueCounts.nakedSingle: saved 225, fresh 207
+  rating.techniqueCounts.hiddenSingleBox: saved 15, fresh 34
+  rating.techniqueCounts.hiddenSingleLine: saved 3, fresh 10
+  rating.techniqueCounts.wxyzWing: saved 1, fresh 2
+  rating.techniqueCounts.pointing: saved undefined, fresh 5
+  rating.techniqueCounts.skyscraper: saved undefined, fresh 1
+  rating.techniqueCounts.xyWing: saved undefined, fresh 1
+  rating.techniqueCounts.wWing: saved undefined, fresh 1
+  rating.techniqueCounts.xyChain: saved undefined, fresh 1
+  digLog.length: saved 301, fresh 333
+  digLog[286].score: saved 2015, fresh 1502
+  digLog[294].score: saved 2015, fresh 1503
+  digLog[297].score: saved 2015, fresh 1503
+  ... and 3 more
+replay-wire.js differs; regenerate it with node tests/replay-fixtures.js --write only if the generator changed on purpose
+exit=1 seconds=0.446

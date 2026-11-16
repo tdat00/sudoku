@@ -1,0 +1,31 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=jellyfish --discover --variants=classic9 --levels=hard --max-puzzles=12 --max-hints=400 --record-sources=tests\artifacts\difficulty-v3\MS12\discover-4.json
+selected 1 technique ID(s); mode discover + record
+request 1/12 classic9 hard 1: made
+request 2/12 classic9 hard 2: made
+request 3/12 classic9 hard 3: made
+request 4/12 classic9 hard 4: made
+request 5/12 classic9 hard 5: made
+request 6/12 classic9 hard 6: made
+request 7/12 classic9 hard 7: made
+request 8/12 classic9 hard 8: made
+request 9/12 classic9 hard 9: made
+request 10/12 classic9 hard 10: made
+request 11/12 classic9 hard 11: made
+request 12/12 classic9 hard 12: made
+discovery: 12 request(s), 12 puzzle(s), 0 failed
+replaying 12 puzzle(s) for 1 ID(s) (--max-puzzles=12, --max-hints=400)
+puzzle 1/12 classic9 hard 1 -> 62 hint(s), solved; wanted found: -
+puzzle 2/12 classic9 hard 2 -> 59 hint(s), solved; wanted found: -
+puzzle 3/12 classic9 hard 3 -> 54 hint(s), solved; wanted found: -
+puzzle 4/12 classic9 hard 4 -> 52 hint(s), solved; wanted found: -
+puzzle 5/12 classic9 hard 5 -> 57 hint(s), solved; wanted found: -
+puzzle 6/12 classic9 hard 6 -> 55 hint(s), solved; wanted found: -
+puzzle 7/12 classic9 hard 7 -> 56 hint(s), solved; wanted found: -
+puzzle 8/12 classic9 hard 8 -> 53 hint(s), solved; wanted found: -
+puzzle 9/12 classic9 hard 9 -> 59 hint(s), solved; wanted found: -
+puzzle 10/12 classic9 hard 10 -> 59 hint(s), solved; wanted found: -
+puzzle 11/12 classic9 hard 11 -> 54 hint(s), solved; wanted found: -
+puzzle 12/12 classic9 hard 12 -> 57 hint(s), solved; wanted found: -
+jellyfish: no example found in 12 puzzle(s) within 400 hint(s)
+no example for 1 selected ID(s); nothing was written
+exit=1 seconds=0.998

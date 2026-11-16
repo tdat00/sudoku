@@ -1,0 +1,9 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=xyChain --sources=tests\artifacts\difficulty-v3\MS12\sources-xy-existing.json --max-puzzles=8 --max-hints=400 --write
+selected 1 technique ID(s); mode write
+replaying 4 puzzle(s) for 1 ID(s) (--max-puzzles=8, --max-hints=400)
+puzzle 1/4 classic9 Nightmare 648 -> 79 hint(s), solved; wanted found: xyChain
+puzzle 2/4 classic9 Nightmare 75 -> 77 hint(s), solved; wanted found: -
+puzzle 3/4 classic9 Hell 1 8 -> 70 hint(s), solved; wanted found: xyChain
+puzzle 4/4 classic9 Hell 2 escargot -> 111 hint(s), solved; wanted found: xyChain
+wrote player/js/ui/help-examples.js (37 examples; 1 selected: xyChain; the others kept)
+exit=0 seconds=1.211

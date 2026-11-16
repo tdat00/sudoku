@@ -257,6 +257,10 @@
       'for it, once the extra candidate of the cell with three is left out. Such a position has no solution ' +
       'or at least two solutions. A puzzle has exactly one solution, so the cell with three candidates must ' +
       'be that extra digit.',
+    'technique.xyChain': 'XY-Chain',
+    'technique.xyChain.desc': 'A chain of cells that each have exactly two candidates. Neighbouring cells of ' +
+      'the chain see each other and share a digit, so if one end of the chain is not that digit, the other ' +
+      'end must be. At least one end holds the digit, and a cell that sees both ends cannot hold it.',
     'technique.forcingChain': 'Forcing Chain',
     'technique.forcingChain.desc': 'A chain of "if this, then that" deductions that proves a candidate ' +
       'false (or a digit true).',
@@ -394,6 +398,10 @@
       'Without {digit} in {label}, every digit that is still to be placed in a row, a column, a box or any ' +
       'other unit would have exactly two cells for it. Such a position has no solution or at least two ' +
       'solutions. The puzzle has just one solution, so {label} is {digit}.',
+    'technique.xyChain.step': 'XY-chain on {digit} of {length} links: {chains}. Every cell of the chain has ' +
+      'exactly two candidates, and each link joins two cells that see each other through the same digit. If ' +
+      'the first end is not {digit}, the links force the last end to be {digit}, so at least one end of the ' +
+      'chain is {digit}. A candidate {digit} that sees both ends is removed.',
     'technique.forcingChain.step.endpoints': 'Forcing chain of {length} links: {chains}. If the first ' +
       'candidate is false, the last one is true, so at least one end of the chain is true. Candidates ' +
       'that see both ends are removed.',

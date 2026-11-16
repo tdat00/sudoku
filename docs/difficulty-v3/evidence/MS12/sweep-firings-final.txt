@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS12\sweep-firings.js
+sweep, 120 random states of classic9 (seed 20260101): {"states":120,"firings":68,"placements":0,"eliminations":150,"byKind":{"initial":16,"propagated":23,"pruned":29}}
+the 3 supplements alone: {"states":3,"firings":4,"placements":0,"eliminations":5,"byKind":{"supplement":4}}
+300 random states (seed 20260101): {"states":300,"firings":272,"placements":0,"eliminations":569,"byKind":{"initial":77,"propagated":91,"pruned":104}}
+exit=0 seconds=0.347

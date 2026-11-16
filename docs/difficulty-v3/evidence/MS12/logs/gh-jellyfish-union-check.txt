@@ -1,0 +1,23 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=jellyfish --sources=tests\artifacts\difficulty-v3\MS12\sources-jellyfish-union.json --max-puzzles=64 --max-hints=400 --check
+selected 1 technique ID(s); mode check
+replaying 17 puzzle(s) for 1 ID(s) (--max-puzzles=64, --max-hints=400)
+puzzle 1/17 classic9 easy 1 -> 47 hint(s), solved; wanted found: -
+puzzle 2/17 jigsaw9 hard 1 -> 71 hint(s), solved; wanted found: -
+puzzle 3/17 classic9 Hell 2 worlds-hardest-2012 -> 125 hint(s), solved; wanted found: -
+puzzle 4/17 classic9 Hell 2 hard-platinum -> 123 hint(s), solved; wanted found: -
+puzzle 5/17 classic9 Hell 2 hard-nugget -> 87 hint(s), solved; wanted found: -
+puzzle 6/17 classic9 Hell 2 hard-b -> 96 hint(s), solved; wanted found: -
+puzzle 7/17 classic9 Hell 2 hard-c -> 90 hint(s), solved; wanted found: -
+puzzle 8/17 classic9 Hell 1 1016 -> 84 hint(s), solved; wanted found: -
+puzzle 9/17 classic9 Nightmare 1427 -> 58 hint(s), solved; wanted found: -
+puzzle 10/17 classic9 - testkit-4242-254 -> 66 hint(s), solved; wanted found: -
+puzzle 11/17 classic9 - testkit-4242-1758 -> 66 hint(s), solved; wanted found: -
+puzzle 12/17 classic9 - testkit-4242-1810 -> 69 hint(s), solved; wanted found: -
+puzzle 13/17 classic9 - testkit-4242-2202 -> 67 hint(s), solved; wanted found: -
+puzzle 14/17 classic9 - testkit-4242-2250 -> 67 hint(s), solved; wanted found: -
+puzzle 15/17 classic9 - testkit-4242-3916 -> 64 hint(s), solved; wanted found: -
+puzzle 16/17 classic9 - testkit-4242-3928 -> 76 hint(s), solved; wanted found: -
+puzzle 17/17 classic9 - testkit-4242-4533 -> 48 hint(s), solved; wanted found: -
+jellyfish: no example found in 17 puzzle(s) within 400 hint(s)
+help-examples.js differs or lacks an example for 1 of the 1 selected ID(s)
+exit=1 seconds=2.642

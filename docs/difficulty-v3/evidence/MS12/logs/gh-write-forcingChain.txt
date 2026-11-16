@@ -1,0 +1,6 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=forcingChain --max-puzzles=64 --max-hints=400 --write
+selected 1 technique ID(s); mode write
+replaying 1 puzzle(s) for 1 ID(s) (--max-puzzles=64, --max-hints=400)
+puzzle 1/1 classic9 - - -> 79 hint(s), solved; wanted found: forcingChain
+wrote player/js/ui/help-examples.js (37 examples; 1 selected: forcingChain; the others kept)
+exit=0 seconds=0.471

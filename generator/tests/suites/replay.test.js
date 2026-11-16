@@ -1211,7 +1211,7 @@
       expect(toPosition(g01, 'details', 27).before.W).toBeCloseTo(1518.75, 6);
     });
 
-    slow('has 12 compact, 12 details and 15 distinct jump transitions in the 14 goldens', function () {
+    slow('has 12 compact, 12 details and 16 distinct jump transitions in the 14 goldens', function () {
       var count = { compact: 0, details: 0 };
       var distinctJumps = {};
       GOLDENS.forEach(function (g) {
@@ -1222,7 +1222,7 @@
         });
       });
       expect(count).toEqual({ compact: 12, details: 12 });
-      expect(Object.keys(distinctJumps)).toHaveLength(15);
+      expect(Object.keys(distinctJumps)).toHaveLength(16);
     });
 
     // Since the WXYZ-Wing (MS10b) no golden has a flat position with a new hardest technique: G13 (Samurai) took
@@ -1262,7 +1262,8 @@
   describe('replay: explaining the jumps', function () {
     var NONE = '\u2014';
     // The goldens whose jump has no candidates recorded by the generator, with the kind that says so.
-    var UNRECORDED = { 'G07:6': 'combined', 'G10:7': 'combined', 'G11:5': 'checked', 'G12:5': 'combined' };
+    var UNRECORDED = { 'G03:5': 'combined', 'G07:6': 'combined', 'G10:7': 'combined', 'G11:5': 'checked',
+      'G12:5': 'combined' };
 
     function labeller(id) {
       return function (cell) { return SG.model.cellLabel(entry(id).result.model, cell); };

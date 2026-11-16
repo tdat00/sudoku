@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "sources": {
+    "jellyfish": [
+      {"variantId":"classic9","level":null,"seed":"fixture-jellyfish-1","text":"#1,Classic Sudoku 9x9,,fixture-jellyfish-1\n....64.38\n...3..5.6\n.....2..7\n3.7...1..\n....4....\n6.1.8....\n1..7...5.\n..6.5.781\n........."},
+      {"variantId":"classic9","level":null,"seed":"fixture-jellyfish-2","text":"#1,Classic Sudoku 9x9,,fixture-jellyfish-2\n63..9..1.\n......4.3\n........5\n.5.963.7.\n..357....\n..7..1...\n7.1......\n.8.2..1..\n4...58..."}
+    ]
+  }
+}

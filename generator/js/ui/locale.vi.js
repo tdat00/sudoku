@@ -387,6 +387,10 @@
       'còn phải điền trong một hàng, một cột, một khối hay bất kỳ vùng nào khác đều có đúng hai ô để điền, ' +
       'khi bỏ ứng viên thừa của ô có ba ứng viên. Một vị trí như vậy không có lời giải hoặc có ít nhất hai ' +
       'lời giải. Đề có đúng một lời giải, nên ô có ba ứng viên phải là chữ số thừa đó.',
+    'technique.xyChain': 'Chuỗi XY (XY-Chain)',
+    'technique.xyChain.desc': 'Chuỗi các ô mà mỗi ô chỉ còn đúng hai ứng viên. Hai ô liền nhau trong chuỗi ' +
+      'nhìn thấy nhau và có chung một chữ số, nên nếu một đầu chuỗi không phải chữ số đó thì đầu kia phải ' +
+      'là chữ số đó. Ít nhất một đầu chuỗi chứa chữ số này, và ô nhìn thấy cả hai đầu không thể chứa nó.',
     'technique.forcingChain': 'Chuỗi suy luận (Forcing Chain)',
     'technique.forcingChain.desc': 'Chuỗi các suy luận kiểu “nếu thế này thì thế kia”, chứng minh một ứng ' +
       'viên là sai (hoặc một chữ số là đúng).',
@@ -520,6 +524,10 @@
       'bỏ {digit} khỏi {label}, mọi chữ số còn phải điền trong một hàng, một cột, một khối hay bất kỳ vùng ' +
       'nào khác đều có đúng hai ô để điền. Một vị trí như vậy không có lời giải hoặc có ít nhất hai lời ' +
       'giải. Đề chỉ có một lời giải, nên {label} là {digit}.',
+    'technique.xyChain.step': 'Chuỗi XY của chữ số {digit}, dài {length} liên kết: {chains}. Mọi ô trong ' +
+      'chuỗi chỉ có đúng hai ứng viên, và mỗi liên kết nối hai ô nhìn thấy nhau qua cùng một chữ số. Nếu ' +
+      'đầu chuỗi đầu tiên không phải {digit} thì các liên kết buộc đầu cuối là {digit}, nên ít nhất một đầu ' +
+      'chuỗi là {digit}. Ứng viên {digit} nhìn thấy cả hai đầu bị loại.',
     'technique.forcingChain.step.endpoints': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu ứng viên ' +
       'đầu tiên sai thì ứng viên cuối đúng, nên ít nhất một đầu của chuỗi là đúng. Các ứng viên nhìn thấy ' +
       'cả hai đầu bị loại.',

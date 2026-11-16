@@ -1,0 +1,16 @@
+$ node tests\artifacts\difficulty-v3\MS12\xy-dug.js 4242 300
+xy-dug: seed 4242, puzzles 300 from 0, mode below, model classic9, cutoff = order of xyChain = 186, prefix of 27 techniques (nakedSingle hiddenSingleBox hiddenSingleLine pointing boxLine nakedPair hiddenPair nakedTriple hiddenTriple nakedQuad hiddenQuad xWing skyscraper twoStringKite remotePairs simpleColouring emptyRectangle finnedXWing swordfish finnedSwordfish jellyfish xyWing xyzWing wxyzWing wWing uniqueRectangle bugPlusOne), print limit 40
+#24 .785....2...3...7.3...6.......1.4.5.........1...279.....4....986.....2..2..9..73. open 45 digit 8 length 9 cells R3C7,R5C4,R7C1,R7C4,R7C7 removes R5C7<>8 work 1102
+#78 4.38..5...5.....4.......2.938..17.....65.3....1....9.7.....6......94..5.....2.7.6 open 48 digit 5 length 9 cells R3C5,R3C6,R6C1,R6C6,R7C5 removes R7C1<>5 work 1470
+#114 7.39...4....4..8....9.87...5...2......4.79..1.6.....5.62....7.......512..9....... open 41 digit 3 length 9 cells R2C6,R3C4,R4C4,R4C8,R9C8 removes R9C6<>3 work 1010
+#139 .....675.3...42.9.89...5.4....25....6.......4..8...9..249.3..17.....7.82...5.1... open 32 digit 6 length 9 cells R3C5,R3C9,R5C5,R5C7,R8C7 removes R2C7<>6 work 1097
+#142 ..7.......9..3....3.87.9....4..6..58.......6.1....74.9..6...17.4.......3..25...9. open 41 digit 6 length 9 cells R1C1,R1C9,R3C7,R8C6,R8C7 removes R1C6<>6 work 1132
+#148 2.....7..1......656..1.74...7.3...4...9.....8..6...3.1..38....791..5.....8...1.2. open 43 digit 9 length 11 cells R1C9,R3C3,R3C8,R7C1,R7C8,R9C3 removes R9C9<>9 work 629
+#186 .82....15...4..93.....5.....9...5........6.87.2.8416...17.....9..8..4....4.2..1.. open 31 digit 8 length 11 cells R1C6,R7C6,R9C1,R9C6,R9C8,R9C9 removes R7C7<>8,R9C5<>8 work 752
+#242 9.2.....34....7.1..5.4.......6......5..6...9.8.9.14...3..7.152...8.5..........3.8 open 49 digit 7 length 9 cells R1C2,R2C2,R7C2,R7C9,R9C8 removes R1C8<>7,R9C2<>7 work 443
+#274 ...84...78...5..6..79....1.2.5.7.3....6............741....8.....9.4..57..5...6... open 47 digit 9 length 9 cells R1C3,R1C6,R2C2,R7C2,R7C8 removes R7C6<>9 work 1342
+#282 9...1....8.1....7....8.7.5...49..5.2...27...4..8..3...31...........6.2..6.....849 open 38 digit 6 length 9 cells R3C9,R4C2,R4C8,R8C8,R8C9 removes R3C2<>6 work 1014
+#286 3..6..7..2.15.8.6......4...6.........9....4....4.....3......1....6..587.72.8..34. open 41 digit 5 length 11 cells R3C7,R4C5,R4C7,R5C1,R6C2,R6C5 removes R3C1<>5 work 956
+#296 ...1.8..7...64...3..3..58.......6.1......7458.12...............43..5....895...... open 42 digit 6 length 9 cells R1C3,R3C1,R3C2,R3C4,R3C5 removes R1C1<>6 work 1826
+seed 4242 puzzles 300 (from 0): attempted 300, fully solved by the prefix 259, Findings 12 by length {"9":9,"11":3}, most work 1893, capped calls 0, 0.5 s
+exit=0 seconds=0.658

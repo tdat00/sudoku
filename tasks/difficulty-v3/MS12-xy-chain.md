@@ -276,14 +276,14 @@ Return the inherited/new item list, actual gates and CI membership.
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (orchestrator check against IR72 A-J; outside the analyst review set). Eight points before E, all accepted by SA2 (`64a7cd6`), with a wording correction (the restricted graph does not consult `ctx.completeUnits` contents) and the precise equivalence proof (reverse the path and complement every truth bit). After E the bounded Jellyfish GH route failed; SA2 escalated JF-01 to the owner, who chose option A (owner decision S-OD10, `57057bc`; S-AV35) |
+| Start | 2026-11-16 19:25 (+07:00), base `5d49130` |
+| End | About 20:25 stop before E (8 points); 20:59 SA2 ruling (`64a7cd6`); 21:50 Jellyfish QUESTION; 22:13 JF-01 posted to the owner; 22:20 owner answer A (S-OD10); 22:50 final report; orchestrator re-check and commit at about 22:56 |
+| Duration | About 2 h 51 min developer (1 h to the questions, 47 min to the Jellyfish question, 29 min after S-OD10); about 34 min for the first ruling and about 30 min for JF-01 (SA2 escalation and the owner); locked commands in `docs/difficulty-v3/evidence/MS12/lock-log.jsonl` |
+| Model | claude-sonnet-5.5 (developer); gpt-6-astra (SA2 rulings, JF-01 and pack amendments); claude-opus-5.5 (orchestrator) |
+| Token usage | 390 model calls; 140,189,149 input tokens (137,956,235 cache reads); 505,835 output tokens (developer) |
+| AI credits | about 2,444 (developer) |
+| Verification | `xyChain` (chain group, order 186, base cost 82, weight 1000, Master, unscoped, no uniqueness) as the `edges: 'restricted'` mode of the shared chain search in `core/js/engine/tech-chain.js`: strong links only inside bivalue cells, weak links only the same digit in peers, a false-to-true path of 3-11 edges proving that one end holds the digit; one work unit per visited edge, 50,000 per call, window 12, exhaustion returns null; observer record on a normal return. General mode output-neutral (3,682 calls, 1,305 Findings, identical SHA-256 on the tree and `5d49130`). Tests: `tech-chain` 107 -> 176, `techniques` 259 -> 267, `technique-weights` +1, i18n +1 per app. Mutants: 42 detected + 1 equivalent (SA2's complemented-reverse proof). Reach (seed 4242): 1,413 of 30,000 positions, 1,646 of 20,000 complete solves (8.23 %). **E** on frozen bytes: wire G13 (another Samurai puzzle); analyses G03, G04, G13, G14; **18 of 520 hashes changed** (`classic9/master` 2, `classic9/nightmare` 13, `diagonalX/nightmare` 3), the same with and without the technique, none below Master. R20: three scores change (escargot 5,506 -> 5,499; constructed-nightmare-1 2,739 -> 2,572; constructed-nightmare-3 2,586 -> 2,653), no level, requiredness, hardest or `v3Expected` change. GH: `xyChain` from Nightmare 648 step 79; `forcingChain` and `nakedTriple` refreshed; `jellyfish` from `testkit-4242-5335` (chunk 5312-5375; 5,376 puzzles examined under S-OD10, corpus built once in 14.9 s); 37/37. Pins: replay distinct jump transitions 15 -> 16 and `G03:5: 'combined'`; steps "together" line moved to G04's real jump (the branch is still exercised); help 36 -> 37. Quick sets: Generator 4,368/4,368 (407.4 s), Player 2,607/2,607 (72.7 s); projections core-shared 90 -> 100, Player 100 -> 110 (180 + 3 x 110 = 510 of 900); fingerprints match; CI check passes. Orchestrator: locked `tech-chain,tech-wing,tech-fish,techniques,technique-weights,difficulty-floor,i18n,digger-target` 1,646/1,646 (77.9 s), Player `help,help-example-tools,play,i18n` 215/215 (9.2 s), CI shard check 4,368 of 4,368 |
+| Acceptance | MS12-B01, B02, T01-T03 met; IR72 A-J pass (developer's table in `docs/difficulty-v3/evidence/MS12/evidence.md` section 9, acceptance in section 10) |
+| Issues & resolutions | **JF-01 / S-OD10:** with xyChain at 186 the saved Jellyfish example (Nightmare 828) no longer replayed, and the bounded route (169 known puzzles, 48 discovery requests) found no source; the owner approved a one-off test-kit corpus scan (indices 0-19,999, chunks of at most 64, stop at the first hit), which found one at index 5,335; S-AV35 records the source availability. The Player quick set grew 10.5 % for 3.0 % more tests (not investigated; S-AV08 re-measured). Process: three exploratory mutation outputs corrupted by an edit slip were deleted (tee-log summaries kept); one scan-driver path error (no range counted). Not run: the manual `difficulty` suite (pure assertions evaluated by script), qualification, soak |
+| Handoff | To MS13a: the shared chain search has `edges: 'general' | 'restricted'`; grouping applies to forcingChain/Long, not xyChain, and the grouped builder stays inactive until its activation; the reference seam must never widen xyChain's 12-edge / 50,000 limits; IR72 A-J is the checklist; base quick totals Generator 4,368 (407.4 s) and Player 2,607 (72.7 s); help catalogue 37; S-AV01-S-AV35 open as recorded; MS13a-c are in the S-OD4 analyst review set; ask before E |

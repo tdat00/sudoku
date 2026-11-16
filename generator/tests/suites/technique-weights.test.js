@@ -227,9 +227,11 @@
         expect(SG.techniques.get('bugPlusOne').assumesUniqueness).toBe(true);
         expect(SG.techniques.get('bugPlusOne').variantScope).toBeNull();
         expect(position('bugPlusOne')).toBe(position('uniqueRectangle') + 1);
-        expect(position('bugPlusOne')).toBe(position('forcingChain') - 1);
-        // the order follows the weight: the neighbours are 180 / 900 and 190 / 1100
+        expect(position('bugPlusOne')).toBe(position('xyChain') - 1);
+        expect(position('bugPlusOne')).toBeLessThan(position('forcingChain'));
+        // the order follows the weight: the neighbours are 180 / 900 and, since MS12, 186 / 1000 (then 190 / 1100)
         expect([SG.techniques.get('uniqueRectangle').order, D.WEIGHTS.uniqueRectangle]).toEqual([180, 900]);
+        expect([SG.techniques.get('xyChain').order, D.WEIGHTS.xyChain]).toEqual([186, 1000]);
         expect([SG.techniques.get('forcingChain').order, D.WEIGHTS.forcingChain]).toEqual([190, 1100]);
         expect(D.WEIGHTS.uniqueRectangle).toBeLessThan(D.WEIGHTS.bugPlusOne);
         expect(D.WEIGHTS.bugPlusOne).toBeLessThan(D.WEIGHTS.forcingChain);
@@ -248,6 +250,35 @@
         // lists both and uses neither)
         expect(D.spec('master', model).allowedTechniques.indexOf('bugPlusOne'))
           .toBe(D.spec('master', model).allowedTechniques.indexOf('uniqueRectangle') + 1);
+      });
+
+    it('places xyChain between bugPlusOne and forcingChain: order 186, weight 1000, a Master-tier chain technique ' +
+      'of its own group (R15)', function () {
+        var model = SG.techHelper.model('classic9');
+        var xy = SG.techniques.get('xyChain');
+        expect([xy.order, D.WEIGHTS.xyChain]).toEqual([186, 1000]);
+        expect([xy.group, xy.baseCost, xy.variantScope, xy.assumesUniqueness]).toEqual(['chain', 82, null, false]);
+        expect(position('xyChain')).toBe(position('bugPlusOne') + 1);
+        expect(position('xyChain')).toBe(position('forcingChain') - 1);
+        // the order follows the weight: the neighbours are 182 / 920 and 190 / 1100
+        expect([SG.techniques.get('bugPlusOne').order, D.WEIGHTS.bugPlusOne]).toEqual([182, 920]);
+        expect([SG.techniques.get('forcingChain').order, D.WEIGHTS.forcingChain]).toEqual([190, 1100]);
+        expect(D.WEIGHTS.bugPlusOne).toBeLessThan(D.WEIGHTS.xyChain);
+        expect(D.WEIGHTS.xyChain).toBeLessThan(D.WEIGHTS.forcingChain);
+        // its own weight decides the hardest technique, no tie is needed
+        expect(D.breakdown({ bugPlusOne: 1, xyChain: 1 }, 10).hardest).toBe('xyChain');
+        expect(D.breakdown({ xyChain: 1, forcingChain: 1 }, 10).hardest).toBe('forcingChain');
+        // 1.25 x 1000 = 1250 is above Expert's maximum (1000) and below Master's (1500): Master's tier
+        expect(1.25 * D.WEIGHTS.xyChain).toBeGreaterThan(D.spec('expert', model).max);
+        expect(1.25 * D.WEIGHTS.xyChain).toBeLessThan(D.spec('master', model).max);
+        expect(D.spec('expert', model).allowedTechniques).not.toContain('xyChain');
+        expect(D.spec('master', model).allowedTechniques).toContain('xyChain');
+        expect(D.spec('master', model).tierTechniques).toContain('xyChain');
+        expect(D.spec('master', model).floorTechniques).not.toContain('xyChain');
+        expect(D.spec('nightmare', model).floorTechniques).toContain('xyChain');
+        // allowed right after bugPlusOne
+        expect(D.spec('master', model).allowedTechniques.indexOf('xyChain'))
+          .toBe(D.spec('master', model).allowedTechniques.indexOf('bugPlusOne') + 1);
       });
 
     it('places finnedSwordfish between swordfish and jellyfish: order 134, weight 480, a Hard-tier technique ' +

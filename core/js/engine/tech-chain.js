@@ -1,9 +1,11 @@
 /**
- * Chain techniques (group `chain`): Forcing Chain / X-Cycle and Nishio, each in a short and a long (shallow
- * and deep) window; these are the most expensive techniques, so all honour `ctx.check()` and turn a
- * `budget.exceeded` into "nothing found" (other errors, e.g. `budget.cancelled`, propagate).
+ * Chain techniques (group `chain`): the restricted XY-chain, Forcing Chain / X-Cycle and Nishio, each chain
+ * in a short and a long window and Nishio in a shallow and a deep one; these are the most expensive
+ * techniques, so all honour `ctx.check()` and turn a `budget.exceeded` into "nothing found" (other errors,
+ * e.g. `budget.cancelled`, propagate).
  *
  *   id                baseCost  order  window of the shortest proof
+ *   xyChain               82     186   1 .. 12 edges over the RESTRICTED edges (3, 5 .. 11 occur)
  *   forcingChain          90     190   1 .. C links (C = SG.chainSearch.SHORT_MAX, 4)
  *   forcingChainLong     118     198   C + 1 .. 12 links
  *   nishio               140     200   depth 1
@@ -47,6 +49,26 @@
  * i18nKey: 'technique.forcingChain.step.' + kind and 'technique.forcingChainLong.step.' + kind, with kind
  * 'endpoints' | 'contradiction' | 'forced'.
  *
+ * xyChain (difficulty v3, R15, MS12): the same search over a RESTRICTED graph, chosen by the explicit edge
+ * filters of the shared builder (below), so that every step of its proof is a bivalue-only inference:
+ *   strong link  "at least one of the two is true": ONLY the two candidates of a bivalue cell (never the two
+ *                places of a digit in a unit, however complete the unit is, and never a cell with more
+ *                candidates);
+ *   weak link    "at most one of the two is true": ONLY the same digit in two distinct cells that see each
+ *                other (`model.peers`, partial units included; never two candidates of one cell).
+ * The only proof is `endpoints`: from "s is false" to "t is true", where s and t are the same digit in two
+ * DISTINCT cells. The edges alternate from a strong one to a strong one, so a proof has 3, 5, ... edges.
+ * At least one of s and t is true, so that digit is eliminated from every candidate that sees both cells
+ * (the cells of the chain included). No placement and no contradiction is searched: a start that is "true"
+ * has no use and the two polarities of one node are not compared. The search keeps the shortest proof of
+ * the whole scan (ties: the lowest start node, then the order of the breadth first search) up to 12 edges,
+ * and the caller's maxChainLength can only narrow that. The restricted graph does not consult the contents
+ * of `ctx.completeUnits` or use unit-conjugate strong links. A path may visit a cell twice (soundness never
+ * depends on the chain being simple); it is still a path of restricted edges. i18nKey
+ * 'technique.xyChain.step'; i18nArgs { digit, kind: 'endpoints', length, chains } with one chain of
+ * [cell, digit, truth] triples as above and `digit` the digit of both ends; `cells` are the distinct cells of
+ * the chain, ascending; eliminations ascending by cell.
+ *
  * nishio: controlled trial and error. For every open cell (fewest candidates first) and each of its
  * candidates, assume it true on a COPY of the state and run `SG.constraints.place` (peer elimination,
  * singles, registered extensions); a contradiction eliminates the candidate. The first one found is returned;
@@ -61,27 +83,33 @@
  * 'technique.nishio.step' ('technique.nishioDeep.step' for nishioDeep), i18nArgs { cell, label, digit,
  * depth } (the nesting of the guess needed).
  *
- * The caller's options. `ctx.options.maxChainLength` (forcingChain, forcingChainLong) and
+ * The caller's options. `ctx.options.maxChainLength` (xyChain, forcingChain, forcingChainLong) and
  * `ctx.options.maxNishioDepth` (nishio, nishioDeep) only narrow the window of an ID: absent, not a number or
- * NaN is the ID's own default maximum; a number is floored and clamped to the ID's ceiling (C, 12, 1 and 3,
- * so Infinity reaches the ceiling and not the default 2 of nishioDeep); 0 or less, or a maximum below the
- * ID's minimum, is an empty window (null, never a raised maximum). C is read from `SG.chainSearch.SHORT_MAX`
- * at every call. Every registered finder hands the seam below its ID, both bounds and its work limit
- * explicitly: forcingChain and nishio none (their accepted unbounded work policy; the parent budget and
- * cancellation still apply), the two new IDs 50000 (R10's starting limit of a new pattern finder,
- * `NEW_FINDER_WORK_LIMIT`).
+ * NaN is the ID's own default maximum; a number is floored and clamped to the ID's ceiling (12, C, 12, 1
+ * and 3, so Infinity reaches the ceiling and not the default 2 of nishioDeep); 0 or less, or a maximum
+ * below the ID's minimum, is an empty window (null, never a raised maximum). C is read from
+ * `SG.chainSearch.SHORT_MAX` at every call. Every registered finder hands the seam below its ID, both
+ * bounds and its work limit explicitly: forcingChain and nishio none (their accepted unbounded work
+ * policy; the parent budget and cancellation still apply), the three new IDs 50000 (R10's starting limit
+ * of a new pattern finder, `NEW_FINDER_WORK_LIMIT`; for xyChain the unit is the edge expansion of the
+ * restricted graph).
  *
  * The seam. The two searches are also a parameterised, unregistered seam (difficulty v3, MS07a):
  *
- *   SG.chainSearch.forcing(model, state, ctx, { id, minLength, maxLength, workLimit })
+ *   SG.chainSearch.forcing(model, state, ctx, { id, minLength, maxLength, workLimit, edges })
  *   SG.chainSearch.nishio(model, state, ctx, { id, minDepth, maxDepth, workLimit })
  *
- * `id` becomes Finding.technique and the prefix of its i18nKey ('technique.' + id + '.step[.kind]'). The
- * inclusive range [min, max] is applied to the SHORTEST proof of the whole search: the search always starts
- * at length (depth) 1 and runs up to max, and a minimum below min is rejected (null), so a longer or deeper
- * technique called alone never relabels a proof that a shorter one owns. Nothing is clamped here (the seam
- * serves tests of chains longer than 12 edges). Defaults of the seam only: min 1, max 12 edges / depth 2.
- * The tie order and the iterative deepening are those of the registered finders.
+ * `edges` (forcing only) is the explicit edge mode of the shared builder: 'general' (the default: the graph
+ * and the three proofs described above, unchanged) or 'restricted' (the xyChain graph and its only proof);
+ * anything else is `solver.invalidOption`. A restricted call returns the xyChain Finding under the given
+ * `id`. The registered xyChain asks for it explicitly; no general finder reads it.
+ * `id` becomes Finding.technique and the prefix of its i18nKey ('technique.' + id + '.step[.kind]'; a
+ * restricted call has no kind suffix). The inclusive range [min, max] is applied to the SHORTEST proof of
+ * the whole search: the search always starts at length (depth) 1 and runs up to max, and a minimum below
+ * min is rejected (null), so a longer or deeper technique called alone never relabels a proof that a
+ * shorter one owns. Nothing is clamped here (the seam serves tests of chains longer than 12 edges).
+ * Defaults of the seam only: min 1, max 12 edges / depth 2. The tie order and the iterative deepening are
+ * those of the registered finders.
  *
  * Work. A forcing unit is one edge expansion of the breadth first search, a nishio unit one trial (one
  * assumption entered on a copy). `workLimit` is a whole number: absent = DEFAULT_WORK_LIMIT (50000, R10),
@@ -106,7 +134,7 @@
   const SG = root.SG = root.SG || {};
 
   // Keep the first registration on repeated loads.
-  if (['forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep'].some(function (id) {
+  if (['xyChain', 'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep'].some(function (id) {
     return SG.techniques.has(id);
   })) return;
 
@@ -115,6 +143,10 @@
   // forcingChainLong takes C + 1 up to the old ceiling of 12.
   const INITIAL_SHORT_MAX = 4;
   const LONG_MAX_CHAIN_LENGTH = 12;
+
+  // R15: an XY-chain has at most 12 edges, which the caller's maxChainLength can only narrow. Its edges
+  // alternate and it starts and ends with a strong edge, so it has an odd number of edges: at most 11 occur.
+  const XY_MAX_CHAIN_LENGTH = 12;
 
   // Windows of nishio (depth 1) and nishioDeep (from 2, default maximum 2, explicit maximum at most 3);
   // every level multiplies the work.
@@ -146,6 +178,19 @@
   const KIND_ENDPOINTS = 'endpoints';
   const KIND_CONTRADICTION = 'contradiction';
   const KIND_FORCED = 'forced';
+
+  // The explicit edge filters of the shared graph search (difficulty v3, MS12). `general` is the graph of the
+  // header with its three proofs. `restricted` (the XY-chain) keeps only the strong edges of a bivalue cell
+  // (`unitStrong`: false, no conjugate pair of a unit), only the weak edges between the same digit of two
+  // distinct cells (`cellWeak`: false, none between two candidates of one cell), only an `endpoints` proof
+  // whose two ends are the same digit (`sameDigitEnds`), and no comparison of the two polarities of a node
+  // (`polarityProofs`: false, so no contradiction and no forced placement).
+  const EDGE_FILTERS = Object.freeze({
+    general: Object.freeze({ unitStrong: true, cellWeak: true, sameDigitEnds: false, polarityProofs: true }),
+    restricted: Object.freeze({
+      unitStrong: false, cellWeak: false, sameDigitEnds: true, polarityProofs: false
+    })
+  });
 
   const scratches = new WeakMap();
 
@@ -244,6 +289,15 @@
     };
   }
 
+  // The edge mode of a forcing seam call: absent is 'general'; anything but the two modes is refused.
+  function edgeFilters(seam, value) {
+    if (value === undefined) return EDGE_FILTERS.general;
+    if (typeof value !== 'string' || !Object.prototype.hasOwnProperty.call(EDGE_FILTERS, value)) {
+      throw invalidOption(seam, 'edges', 'must be "general" or "restricted"');
+    }
+    return EDGE_FILTERS[value];
+  }
+
   // A finder call: a spent budget is "no result" (the logical solver notices the spent budget on its own at
   // the next check); cancellation and every other error propagate. The work goes to the optional observer.
   function measured(model, state, ctx, spec, run, scan) {
@@ -278,8 +332,9 @@
   }
 
   // Collects the strong links of `state` as pairs of nodes and lays them out as adjacency lists (`sStart` /
-  // `sTo`, compressed rows) in a fixed order: cell links by cell, then unit links by unit.
-  function buildStrongLinks(model, state, completeUnits, s) {
+  // `sTo`, compressed rows) in a fixed order: cell links by cell, then unit links by unit (the latter only
+  // with the `unitStrong` filter).
+  function buildStrongLinks(model, state, completeUnits, s, unitStrong) {
     const digits = model.digits;
     const cand = state.candidates;
     const val = state.value;
@@ -299,7 +354,7 @@
       }
     }
 
-    for (let u = 0; u < model.units.length; u++) {
+    for (let u = 0; unitStrong && u < model.units.length; u++) {
       if (completeUnits[u] === 0) continue;
       const cells = model.units[u];
       let once = 0;
@@ -358,7 +413,7 @@
   }
 
   // Writes the weak neighbours of `node` (open candidates that cannot be true together with it) into `buf`;
-  // returns how many.
+  // returns how many. The other candidates of its own cell only count with the `cellWeak` filter.
   function collectWeak(r, node, buf) {
     const digits = r.digits;
     const cell = (node / digits) | 0;
@@ -367,7 +422,7 @@
     const cand = r.cand;
     const val = r.val;
     let count = 0;
-    let others = cand[cell] & ~bit;
+    let others = r.edges.cellWeak ? cand[cell] & ~bit : 0;
     while (others !== 0) {
       const low = others & -others;
       others ^= low;
@@ -423,21 +478,24 @@
   }
 
   // Visits a literal reached from `from` after `nd` links; true when this proves something. Opposite
-  // polarities of one node in the same search are a contradiction of the start assumption.
+  // polarities of one node in the same search are a contradiction of the start assumption (only with the
+  // `polarityProofs` filter). With `sameDigitEnds` the only proof is "s is false, t is true" with t the same
+  // digit as s in a higher cell (the lower of the two ends starts the search, as in the general mode).
   function visit(r, next, from, nd) {
     const s = r.s;
     if (s.stamp[next] === r.stampId) return false;
     s.stamp[next] = r.stampId;
     s.parent[next] = from;
     s.dist[next] = nd;
-    if (s.stamp[next ^ 1] === r.stampId) {
+    if (r.edges.polarityProofs && s.stamp[next ^ 1] === r.stampId) {
       return record(r, r.startTruth === 1 ? KIND_CONTRADICTION : KIND_FORCED, next, nd, null);
     }
     const node = next >> 1;
     if ((next & 1) === 1) {
       // Starting from "false", every true literal t gives "start or t". Pairs are looked at from their
       // lower node only: the search from the other end meets the same pair at the same length.
-      if (r.startTruth === 0 && node > r.startNode) {
+      if (r.startTruth === 0 && node > r.startNode &&
+          (!r.edges.sameDigitEnds || (node - r.startNode) % r.digits === 0)) {
         const eliminated = commonWeak(r, node);
         if (eliminated !== null) return record(r, KIND_ENDPOINTS, next, nd, eliminated);
       }
@@ -549,6 +607,35 @@
     };
   }
 
+  // The Finding of a restricted (XY-chain) proof: one chain, the digit of both ends, the distinct cells of
+  // the chain and every candidate of that digit that sees both ends, ascending; all arrays are new.
+  function buildRestrictedFinding(model, best, id) {
+    const digits = model.digits;
+    const chain = pathData(digits, best.path);
+    const cells = [];
+    chain.forEach(function (step) {
+      if (cells.indexOf(step[0]) === -1) cells.push(step[0]);
+    });
+    cells.sort(function (a, b) { return a - b; });
+    const eliminations = best.eliminated.slice().sort(function (a, b) { return a - b; }).map(function (node) {
+      const cell = (node / digits) | 0;
+      return [cell, node - cell * digits + 1];
+    });
+    return {
+      technique: id,
+      cells: cells,
+      placements: [],
+      eliminations: eliminations,
+      i18nKey: 'technique.' + id + '.step',
+      i18nArgs: { digit: chain[0][1], kind: KIND_ENDPOINTS, length: best.length, chains: [chain] }
+    };
+  }
+
+  function findingOf(model, r, id) {
+    return r.edges.sameDigitEnds ? buildRestrictedFinding(model, r.best, id)
+      : buildChainFinding(model, r.best, id);
+  }
+
   // The forcing chain search of the seam: the shortest proof of the whole scan up to `spec.max` links, kept
   // only when it has at least `spec.min` links. `r` is the search state with the counters of the call.
   function scanForcing(model, state, ctx, spec, r) {
@@ -560,17 +647,19 @@
       s.stamp.fill(0);
       s.stampId = 0;
     }
-    buildStrongLinks(model, state, ctx.completeUnits, s);
+    buildStrongLinks(model, state, ctx.completeUnits, s, r.edges.unitStrong);
     r.s = s;
 
     const digits = r.digits;
+    // A start that is "true" can only prove a contradiction, which the restricted edges do not search for.
+    const lastTruth = r.edges.polarityProofs ? 1 : 0;
     for (let node = 0; node < s.nodes; node++) {
       const cell = (node / digits) | 0;
       if (r.val[cell] !== 0 || (r.cand[cell] & (1 << (node - cell * digits))) === 0) continue;
-      for (let truth = 0; truth <= 1; truth++) {
+      for (let truth = 0; truth <= lastTruth; truth++) {
         if (truth === 0 && s.sStart[node + 1] === s.sStart[node]) continue;
         const limit = Math.min(maxLength, r.bestLength - 1);
-        if (limit < 1) return buildChainFinding(model, r.best, spec.id);
+        if (limit < 1) return findingOf(model, r, spec.id);
         ctx.check();
         r.checkedAt = r.work;
         search(r, node, truth, limit);
@@ -579,11 +668,11 @@
         if (r.best !== null && r.bestLength < spec.min) return null;
       }
     }
-    return r.best === null ? null : buildChainFinding(model, r.best, spec.id);
+    return r.best === null ? null : findingOf(model, r, spec.id);
   }
 
-  // The search of a spec { id, min, max, limit }: the seam checks one from its options, the registered
-  // finders build theirs with their old defaults.
+  // The search of a spec { id, min, max, limit, edges? }: the seam checks one from its options, the
+  // registered finders build theirs with their old defaults (the general edges unless they ask for others).
   function forcingWith(model, state, ctx, spec) {
     const r = {
       model: model,
@@ -593,6 +682,7 @@
       cand: state.candidates,
       val: state.value,
       peers: model.peers,
+      edges: spec.edges === undefined ? EDGE_FILTERS.general : spec.edges,
       ctx: ctx,
       bounded: spec.limit !== Infinity,
       work: 0,
@@ -611,8 +701,21 @@
   }
 
   function chainForcing(model, state, ctx, opts) {
-    return forcingWith(model, state, ctx,
-      seamOptions('forcing', opts, 'minLength', 'maxLength', SEAM_DEFAULT_MAX_CHAIN_LENGTH));
+    const spec = seamOptions('forcing', opts, 'minLength', 'maxLength', SEAM_DEFAULT_MAX_CHAIN_LENGTH);
+    spec.edges = edgeFilters('forcing', opts.edges);
+    return forcingWith(model, state, ctx, spec);
+  }
+
+  // xyChain: the shortest restricted proof when it has up to 12 edges, R10's work limit of a new finder. The
+  // caller's maxChainLength can only narrow the range of edges.
+  function findXyChain(model, state, ctx) {
+    return forcingWith(model, state, ctx, {
+      id: 'xyChain',
+      min: 1,
+      max: Math.min(XY_MAX_CHAIN_LENGTH, callerMax(ctx, 'maxChainLength', XY_MAX_CHAIN_LENGTH)),
+      limit: NEW_FINDER_WORK_LIMIT,
+      edges: EDGE_FILTERS.restricted
+    });
   }
 
   // forcingChain: the shortest proof when it has 1 to C links; no work limit (its accepted policy, the parent
@@ -766,6 +869,17 @@
   }
 
   SG.chainSearch = { forcing: chainForcing, nishio: chainNishio, SHORT_MAX: INITIAL_SHORT_MAX };
+
+  SG.techniques.register({
+    id: 'xyChain',
+    group: 'chain',
+    baseCost: 82,
+    order: 186,
+    i18nKey: 'technique.xyChain',
+    variantScope: null,
+    assumesUniqueness: false,
+    find: findXyChain
+  });
 
   SG.techniques.register({
     id: 'forcingChain',

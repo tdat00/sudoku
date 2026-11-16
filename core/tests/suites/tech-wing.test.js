@@ -5746,7 +5746,9 @@
         var ids = SG.techniques.list().filter(function (t) { return t.variantScope === null; })
           .map(function (t) { return t.id; });
         expect(ids.indexOf('uniqueRectangle') + 1).toBe(ids.indexOf('bugPlusOne'));
-        expect(ids.indexOf('bugPlusOne') + 1).toBe(ids.indexOf('forcingChain'));
+        // since MS12 the XY-chain (order 186) comes between BUG+1 and the forcing chain
+        expect(ids.indexOf('bugPlusOne') + 1).toBe(ids.indexOf('xyChain'));
+        expect(ids.indexOf('xyChain') + 1).toBe(ids.indexOf('forcingChain'));
         expect(SG.techniques.get('uniqueRectangle').order).toBeLessThan(182);
         expect(SG.techniques.get('forcingChain').order).toBeGreaterThan(182);
       });

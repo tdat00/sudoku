@@ -1058,7 +1058,7 @@
 
     it('names the cause of a move per class, on the goldens', function () {
       var results = {};
-      ['G03', 'G05', 'G09', 'G11', 'G13'].forEach(function (id) { results[id] = golden(id); });
+      ['G04', 'G05', 'G09', 'G11', 'G13'].forEach(function (id) { results[id] = golden(id); });
       function third(id, position, view) {
         var res = results[id];
         var step = stepAt(viewsOf(res)[view || 'compact'].steps, position);
@@ -1069,8 +1069,8 @@
           });
         });
       }
-      expect(third('G03', 23).sentences[2])
-        .toBe('Removing each clue alone gives 45 and 44; removing the whole group gives 870.');
+      expect(third('G04', 23).sentences[2])
+        .toBe('Removing each clue alone gives 45 and 46; removing the whole group gives 915.');
       expect(third('G05', 29).sentences[2])
         .toBe('Removing each clue alone gives 50 and 50; removing the whole group gives 2,536.');
       // G09's jump was the "mixed" class (one clue against its whole symmetric group); its jump is now a single

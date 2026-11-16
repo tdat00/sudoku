@@ -1,0 +1,18 @@
+$ node tests\node-runner.js --suite=tech-chain
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-chain: 106 passed, 1 failed  (7.30 s)
+
+Failures:
+  FAIL tech-chain > chain group: registration > registers the four chain ids with the values of design.md 6.6 (R9)
+       AssertionError: expected Array(5)["xyChain", "forcingChain", "forcingChainLong", "nishio", "nishioDeep"] to equal Array(4)["forcingChain", "forcingChainLong", "nishio", "nishioDeep"]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:658:11)
+       at main (Q:\git\sudoku\generator\tests\node-runner.js:356:33)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\node-runner.js:409:1)
+       at Module._compile (node:internal/modules/cjs/loader:1968:14)
+
+Suites: 1
+Tests:  107 total, 106 passed, 1 failed, 0 skipped
+Time:   7.30 s running tests, 7.41 s total
+exit=1 seconds=7.525

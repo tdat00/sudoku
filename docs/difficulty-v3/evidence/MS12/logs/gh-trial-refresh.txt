@@ -1,0 +1,43 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=nakedTriple,jellyfish --sources=tests\artifacts\difficulty-v3\MS12\sources-refresh.json --max-puzzles=64 --max-hints=400 --check
+selected 2 technique ID(s); mode check
+replaying 27 puzzle(s) for 2 ID(s) (--max-puzzles=64, --max-hints=400)
+puzzle 1/27 classic9 Easy 1 -> 47 hint(s), solved; wanted found: -
+puzzle 2/27 classic9 Nightmare 1156 -> 76 hint(s), solved; wanted found: -
+puzzle 3/27 classic9 Nightmare 75 -> 77 hint(s), solved; wanted found: -
+puzzle 4/27 classic9 Nightmare 44 -> 59 hint(s), solved; wanted found: -
+puzzle 5/27 killer Easy 11 -> 51 hint(s), solved; wanted found: -
+puzzle 6/27 greaterThan Normal 4 -> 67 hint(s), solved; wanted found: -
+puzzle 7/27 classic9 Hard 18 -> 62 hint(s), solved; wanted found: -
+puzzle 8/27 classic9 Nightmare 176 -> 68 hint(s), solved; wanted found: -
+puzzle 9/27 classic9 Hard 55 -> 58 hint(s), solved; wanted found: -
+puzzle 10/27 greaterThan Normal 8 -> 58 hint(s), solved; wanted found: -
+puzzle 11/27 classic9 Nightmare 692 -> 61 hint(s), solved; wanted found: -
+puzzle 12/27 killer Hard 16 -> 148 hint(s), solved; wanted found: -
+puzzle 13/27 classic9 Nightmare 989 -> 60 hint(s), solved; wanted found: -
+puzzle 14/27 hyper Nightmare 162 -> 93 hint(s), solved; wanted found: -
+puzzle 15/27 classic9 Hell 1 644 -> 81 hint(s), solved; wanted found: -
+puzzle 16/27 classic9 Hell 1 214 -> 70 hint(s), solved; wanted found: nakedTriple
+puzzle 17/27 classic9 Nightmare 648 -> 79 hint(s), solved; wanted found: -
+puzzle 18/27 classic9 Nightmare 561 -> 58 hint(s), solved; wanted found: -
+puzzle 19/27 classic9 Nightmare 3 -> 60 hint(s), solved; wanted found: -
+puzzle 20/27 killer Master 54 -> 157 hint(s), solved; wanted found: -
+puzzle 21/27 classic9 Nightmare 828 -> 72 hint(s), solved; wanted found: -
+puzzle 22/27 classic9 Nightmare 13 -> 73 hint(s), solved; wanted found: -
+puzzle 23/27 classic9 Nightmare 70 -> 71 hint(s), solved; wanted found: -
+puzzle 24/27 classic9 Nightmare 11 -> 67 hint(s), solved; wanted found: -
+puzzle 25/27 classic9 - testkit-4242-14 -> 57 hint(s), solved; wanted found: -
+puzzle 26/27 classic9 Hell 1 8 -> 70 hint(s), solved; wanted found: nakedTriple
+puzzle 27/27 classic9 Hell 2 escargot -> 111 hint(s), solved; wanted found: nakedTriple
+jellyfish: no example found in 27 puzzle(s) within 400 hint(s)
+nakedTriple: 35 field(s) differ from help-examples.js
+  givens: saved ".......417.1.6.5....3....2.....56...14.9.3.75...24.....3..., fresh "1....7.9..3..2...8..96..5....53..9...1..8...26....4...3....
+  values: saved ".6................4...1...6........4..6.8.2.........6.6...., fresh ".........5........7.........7.........3....................
+  notes.3: saved 132, fresh 144
+  notes.12: saved 12, fresh 265
+  notes.21: saved 208, fresh undefined
+  notes.30: saved 65, fresh undefined
+  notes.57: saved 17, fresh undefined
+  notes.66: saved 136, fresh undefined
+  ... and 27 more
+help-examples.js differs or lacks an example for 2 of the 2 selected ID(s)
+exit=1 seconds=2.490
