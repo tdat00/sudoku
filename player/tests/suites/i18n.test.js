@@ -980,6 +980,40 @@
       expect(Object.keys(kinds).length).toBeGreaterThanOrEqual(F.ids.length);
     }, 30000);
 
+    it('renders the step of the Jigsaw technique lawOfLeftovers in both languages from its real fixtures, with exactly ' +
+      'the arguments its finding provides', function () {
+        packsReady();
+        var JT = SG.fixtures && SG.fixtures.jigsawTechniques;
+        if (!JT || !H) SG.test.skip('the Jigsaw technique fixtures are not loaded');
+        var tech = SG.techniques.get('lawOfLeftovers');
+        JT.byId.lawOfLeftovers.positive.forEach(function (fixture) {
+          var model = JT.modelOf(fixture);
+          var finding = tech.find(model, JT.stateOf(fixture), SG.techniques.createContext(model));
+          if (finding === null) throw new Error('fixture "' + fixture.name + '" found nothing');
+          expect(finding.i18nKey).toBe('technique.lawOfLeftovers.step');
+          var args = finding.i18nArgs;
+          expect(Object.keys(args).sort()).toEqual(['cells', 'digits', 'lines', 'regions']);
+          args.digits.forEach(function (digit) { expect(typeof digit).toBe('number'); });
+          ['lines', 'regions', 'cells'].forEach(function (name) {
+            args[name].forEach(function (label) { expect(typeof label).toBe('string'); });
+          });
+          LOCALES.forEach(function (code) {
+            var text = inLocale(code, function () { return I.t(finding.i18nKey, args); });
+            if (/[{}]|undefined|NaN|\[object/.test(text) || text === finding.i18nKey) {
+              throw new Error(finding.i18nKey + ' renders as "' + text + '" in ' + code + ' with args ' +
+                JSON.stringify(args));
+            }
+            placeholders(SG.locales[code][finding.i18nKey]).forEach(function (name) {
+              expect(hasOwn(args, name)).toBe(true);
+            });
+            // the lines, the regions, the cells left over and the removed digits are all named, in the order given
+            ['lines', 'regions', 'cells', 'digits'].forEach(function (name) {
+              expect([code, name, text.indexOf(args[name].join(', ')) !== -1]).toEqual([code, name, true]);
+            });
+          });
+        });
+      });
+
     it('renders every subtype of the Unique Rectangle in both languages from its real fixtures (types 1 to 4 and the ' +
       'hidden form)',
       function () {

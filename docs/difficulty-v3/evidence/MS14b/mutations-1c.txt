@@ -1,0 +1,32 @@
+mutation 30 (A01 no scoped fixtures are read: the technique is refused again): DETECTED by run 0 (generator pattern-cost-tools) - 30 total, 29 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.8 s
+    FAIL pattern-cost-tools > pattern cost: the scoped Jigsaw adapter (MS14b) > plans the scoped positives then negatives, each with its scope, and a classic id as before
+mutation 31 (A02 the scope of the fixtures is not compared with the technique's): DETECTED by run 0 (generator pattern-cost-tools) - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.8 s
+    FAIL pattern-cost-tools > pattern cost: the scoped Jigsaw adapter (MS14b) > refuses scoped fixtures made for another scope, another board or none, and says why, with no case
+mutation 32 (A03 the fixture file is not compared with the board of the scope): DETECTED by run 0 (generator pattern-cost-tools) - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.9 s
+    FAIL pattern-cost-tools > pattern cost: the scoped Jigsaw adapter (MS14b) > refuses scoped fixtures made for another scope, another board or none, and says why, with no case
+mutation 33 (A04 every case on the classic9 board): DETECTED by run 0 (generator pattern-cost-tools) - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.9 s
+    FAIL pattern-cost-tools > pattern cost: the scoped Jigsaw adapter (MS14b) > rebuilds every scoped case on the board of its own region map, never on the classic9 board
+mutation 34 (A05 a classic case is planned with a scope): DETECTED by run 0 (generator pattern-cost-tools) - 22 total, 21 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL pattern-cost-tools > pattern cost: measuring real fixtures with a fake clock > runs every case of forcingChain and nishio the same number of times, with the work records
+mutation 35 (A06 the puzzle of a scoped record is the classic field): DETECTED by run 0 (generator pattern-cost-tools) - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.9 s
+    FAIL pattern-cost-tools > pattern cost: the scoped Jigsaw adapter (MS14b) > measures every scoped case on its own board with a fake clock, and records its region map
+mutation 36 (A07 the record names no board): DETECTED by run 0 (generator pattern-cost-tools) - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.9 s
+    FAIL pattern-cost-tools > pattern cost: the scoped Jigsaw adapter (MS14b) > measures every scoped case on its own board with a fake clock, and records its region map
+mutation 37 (A08 the record keeps no region map): DETECTED by run 0 (generator pattern-cost-tools) - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.9 s
+    FAIL pattern-cost-tools > pattern cost: the scoped Jigsaw adapter (MS14b) > measures every scoped case on its own board with a fake clock, and records its region map
+mutation 38 (A09 the board of a run is always classic9): DETECTED by run 0 (generator pattern-cost-tools) - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.9 s
+    FAIL pattern-cost-tools > pattern cost: the scoped Jigsaw adapter (MS14b) > measures every scoped case on its own board with a fake clock, and records its region map
+mutation 39 (A10 a mixed run names its first board): DETECTED by run 0 (generator pattern-cost-tools) - 35 total, 34 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.9 s
+    FAIL pattern-cost-tools > pattern cost: the scoped Jigsaw adapter (MS14b) > keeps a classic record as it was and names the board of the run: classic9, jigsaw9 or mixed
+mutation 40 (A11 a second board accepted for the killer scope): NOT DETECTED - 44 total, 44 passed, 0 failed, 0 skipped - 0 failing - 5.4 s
+mutation 41 (A12 the empty scoped lists are accepted): DETECTED by run 0 (generator pattern-cost-tools) - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.8 s
+    FAIL pattern-cost-tools > pattern cost: the scoped Jigsaw adapter (MS14b) > refuses scoped fixtures made for another scope, another board or none, and says why, with no case
+mutation 42 (A13 the scoped refusal text names no scope): DETECTED by run 0 (generator pattern-cost-tools) - 7 total, 6 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL pattern-cost-tools > pattern cost: the cases > fails an unknown id, a scoped technique, missing fixtures and an empty selection, with no case
+mutation 43 (T01 the tool hash leaves out the helper): DETECTED by run 0 (generator pattern-cost-tools) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.4 s
+    FAIL pattern-cost-tools > pattern cost: tests/pattern-cost.js (Node only) > writes one complete scoped record on the board of its own region map, and its identity covers the scoped fixtures and the helper
+mutation 44 (T02 the fixture hash leaves out the scoped fixtures): DETECTED by run 0 (generator pattern-cost-tools) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.4 s
+    FAIL pattern-cost-tools > pattern cost: tests/pattern-cost.js (Node only) > writes one complete scoped record on the board of its own region map, and its identity covers the scoped fixtures and the helper
+mutation 45 (T03 the fixture hash leaves out the Jigsaw builder): DETECTED by run 0 (generator pattern-cost-tools) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.4 s
+    FAIL pattern-cost-tools > pattern cost: tests/pattern-cost.js (Node only) > writes one complete scoped record on the board of its own region map, and its identity covers the scoped fixtures and the helper
+detected 15 of 16, survivors 1, 30.9 s

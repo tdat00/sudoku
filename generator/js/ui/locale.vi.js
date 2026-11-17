@@ -306,6 +306,12 @@
     'technique.nakedTriple': 'Bộ ba trần (Naked Triple)',
     'technique.nakedTriple.desc': 'Ba ô trong cùng một nhóm mà ứng viên chỉ gồm cùng ba chữ số thì phải ' +
       'chứa ba chữ số đó, nên ta loại chúng khỏi các ô còn lại của nhóm.',
+    'technique.lawOfLeftovers': 'Luật phần dư (Law of Leftovers)',
+    'technique.lawOfLeftovers.desc': 'Trong Jigsaw, một hoặc hai hàng (hoặc cột) trọn vẹn không có ô chung ' +
+      'chứa mỗi chữ số một lần trên mỗi hàng, và số vùng trọn vẹn không có ô chung bằng đúng số đó cũng vậy. ' +
+      'Bỏ đi những ô mà các hàng và các vùng dùng chung: các ô còn lại của các hàng và các ô còn lại của ' +
+      'các vùng (từ một đến bốn ô mỗi phía) phải chứa cùng các chữ số, tính cả chữ số lặp và chữ số đã ' +
+      'điền. Ứng viên nào không thuộc một cách điền nào làm hai phía giống nhau thì bị loại.',
     'technique.hiddenTriple': 'Bộ ba ẩn (Hidden Triple)',
     'technique.hiddenTriple.desc': 'Ba chữ số chỉ có thể nằm trong cùng ba ô của một nhóm thì phải lấp đầy ' +
       'ba ô đó, nên ta loại mọi ứng viên khác khỏi các ô này.',
@@ -439,6 +445,12 @@
       '{digits}. Các chữ số này thuộc về hai ô đó, nên được loại khỏi các ô còn lại của {unit}.',
     'technique.nakedTriple.step': 'Trong {unitKind} {unit}, ba ô {cells} chỉ có thể chứa các chữ số ' +
       '{digits}. Các chữ số này thuộc về ba ô đó, nên được loại khỏi các ô còn lại của {unit}.',
+    'technique.lawOfLeftovers.step': 'Luật phần dư: các hàng/cột {lines} và các vùng {regions} đều trọn vẹn ' +
+      'và trong mỗi nhóm không có hai đơn vị nào chung ô, nên mỗi nhóm chứa mỗi chữ số đúng bằng số đơn vị ' +
+      'của nhóm. Bỏ đi những ô mà các hàng/cột và các vùng dùng chung. Các ô còn lại, {cells}, chia thành ' +
+      'hai phía, một phía từ các hàng/cột và một phía từ các vùng, và hai phía phải chứa cùng các chữ số, ' +
+      'tính cả chữ số lặp. Ở ô nào mà mọi cách điền hai phía giống nhau đều không đặt một trong các chữ số ' +
+      '{digits} vào đó, chữ số ấy bị loại khỏi ô.',
     'technique.nakedQuad.step': 'Trong {unitKind} {unit}, bốn ô {cells} chỉ có thể chứa các chữ số ' +
       '{digits}. Các chữ số này thuộc về bốn ô đó, nên được loại khỏi các ô còn lại của {unit}.',
     'technique.hiddenPair.step': 'Trong {unitKind} {unit}, các chữ số {digits} chỉ có thể nằm ở hai ô ' +

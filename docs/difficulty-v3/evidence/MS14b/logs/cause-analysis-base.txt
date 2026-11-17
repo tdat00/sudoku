@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS14b\cause.js --kind=analysis --ledgers=..\docs\difficulty-v3\evidence\MS14b\analysis --only=G06,G07 --json=..\docs\difficulty-v3\evidence\MS14b\cause-analysis-base.json
+{"id":"G06","request":"jigsaw9 nightmare 42","equalsSaved":false,"equalsLedger":false,"ledgerEqualsSaved":true,"seconds":2.1}
+{"id":"G07","request":"jigsaw9 nightmare 3962167687","equalsSaved":true,"equalsLedger":true,"ledgerEqualsSaved":true,"seconds":5.5}
+goldens examined 2 (engine git:7eddb15, 7.6 s); equal to the saved output 1, equal to the ledger 1, ledger differs from the saved 0
+exit=0 seconds=7.956

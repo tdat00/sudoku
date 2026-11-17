@@ -1,0 +1,32 @@
+$ node tests\artifacts\difficulty-v3\MS14b\pick-fixtures.js crossed 2 wavy 3 ordered 2 staggered 4 crossed 4
+== crossed seed 2: clues 18, solutions 1 / 1, open 59
+   puzzle  ....71...27.......1...5.8....8...........4....4.....9.7..86..1.......5..6...2....
+   T puzzle .21...7.6.7...4......8...........8..7.5...6.21...4......8....5......91...........
+   A R1+R2/J1+J2 cells R1C9 R2C1 R2C9 R3C3 R3C8 R4C8 removes R1C9:8 R2C9:8 work 278
+   B C1+C2/J1+J2 cells R1C2 R3C3 R8C3 R8C4 R9C1 R9C2 removes R9C1:8 R9C2:8 work 1901
+   dual EXACT DUAL; after the technique itself: nothing
+== wavy seed 3: clues 20, solutions 1 / 1, open 56
+   puzzle  .8...7..4....1.........97..............5..1....4.8...3....5...1.6.2..4.59...6.5..
+   T puzzle ........98......6......4.......5..2..1...85.67.9........7.1..45.........4....315.
+   A R7/J7 cells R6C1 R7C6 R7C7 R7C8 R7C9 R8C2 R8C3 R8C5 removes R8C5:7 work 1336
+   B C7/J7 cells R1C6 R2C8 R3C8 R5C8 R6C7 R7C7 R8C7 R9C7 removes R5C8:7 work 1429
+   dual EXACT DUAL; after the technique itself: nothing
+== ordered seed 2: clues 16, solutions 1 / 1, open 60
+   puzzle  ....96...38......4.4....5....6...................1..2....7....3..1.....82...6....
+   T puzzle .3......2.84.........6...1.......7..9....1..66..........5...........2....4....38.
+   A R1+R2/J1+J2 cells R1C9 R2C1 R2C9 R3C3 R3C8 R4C8 removes R1C9:5 work 476
+   B R1+R2/J4+J7 cells R1C1 R2C1 R2C2 R3C5 R3C6 R3C9 removes R1C1:1 R2C1:1 work 564
+   dual different (72:5 vs 0:1 9:1); after the technique itself: nothing
+== staggered seed 4: clues 20, solutions 1 / 1, open 57
+   puzzle  .........5.61...2..4.5...3..81.............8.4....7..53..8..1.9..4.......9....3..
+   T puzzle .5...43....48....9.6.1...4..15...8................7.........1.3.23.8.........59..
+   A R4+R5/J4+J6 cells R5C4 R5C6 R5C7 R6C1 R7C1 R7C2 removes R7C2:7 work 1751
+   B C4+C5/J4+J6 cells R1C6 R1C7 R2C7 R4C5 R6C5 R7C5 removes R2C7:7 work 3403
+   dual EXACT DUAL; after the technique itself: nothing
+== crossed seed 4: clues 19, solutions 1 / 1, open 55
+   puzzle  ...........84...1.41.5...6.835..1............3...6.2.99..2..8.4..................
+   T puzzle ..48.39....13......8.5......45...2.......6......1..........28...16...........94..
+   A R1+R2/J1+J2 cells R1C9 R2C1 R2C9 R3C3 R3C8 R4C8 removes R1C9:5 R2C9:5 R3C3:9 R4C8:9 work 234
+   B C1+C2/J1+J2 cells R1C2 R3C3 R8C3 R8C4 R9C1 R9C2 removes R3C3:9 R8C4:9 R9C1:5 R9C2:5 work 1858
+   dual EXACT DUAL; after the technique itself: nothing
+exit=0 seconds=0.297

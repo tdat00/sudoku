@@ -1,0 +1,32 @@
+mutation 70 (H saved example: the technique id of the entry renamed): DETECTED by run 0 (player help) - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL help > help: an example for every technique > has an example for exactly the techniques of the registry, as a fixed snapshot
+mutation 71 (H saved example: variant classic9): DETECTED by run 0 (player help) - 9 total, 8 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.8 s
+    FAIL help > help: an example for every technique > a technique that only some variants have is shown on such a variant
+mutation 72 (H saved example: the map has a region of ten cells): DETECTED by run 0 (player help) - 7 total, 6 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL help > help: an example for every technique > builds every example without playing: the board, the notes of the cells shown and the hint
+mutation 73 (H saved example: the map of the regular boxes): DETECTED by run 0 (player help) - 16 total, 15 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.9 s
+    FAIL help > help: an example on a Jigsaw board > the saved Law of Leftovers example sits on real irregular regions: its lines and regions leave equal sides, and the hint names exactly their cells
+mutation 74 (H saved example: two cells of the map swapped (same region sizes)): NOT DETECTED - 51 total, 51 passed, 0 failed, 0 skipped - 0 failing - 11.5 s
+mutation 75 (H saved example: the other region named in the step): DETECTED by run 0 (player help) - 16 total, 15 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.8 s
+    FAIL help > help: an example on a Jigsaw board > the saved Law of Leftovers example sits on real irregular regions: its lines and regions leave equal sides, and the hint names exactly their cells
+mutation 76 (H saved example: the other lines named in the step): DETECTED by run 0 (player help) - 16 total, 15 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.8 s
+    FAIL help > help: an example on a Jigsaw board > the saved Law of Leftovers example sits on real irregular regions: its lines and regions leave equal sides, and the hint names exactly their cells
+mutation 77 (H saved example: another digit in the step): DETECTED by run 0 (player help) - 16 total, 15 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.8 s
+    FAIL help > help: an example on a Jigsaw board > the saved Law of Leftovers example sits on real irregular regions: its lines and regions leave equal sides, and the hint names exactly their cells
+mutation 78 (H saved example: another digit eliminated): DETECTED by run 0 (player help) - 8 total, 7 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 1.5 s
+    FAIL help > help: an example for every technique > replaying the puzzle of an example with the hint code of the player gives the same hint
+mutation 79 (H saved example: another cell eliminated): DETECTED by run 0 (player help) - 7 total, 6 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL help > help: an example for every technique > builds every example without playing: the board, the notes of the cells shown and the hint
+mutation 80 (H saved example: a cell missing from the hint): DETECTED by run 0 (player help) - 8 total, 7 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 1.5 s
+    FAIL help > help: an example for every technique > replaying the puzzle of an example with the hint code of the player gives the same hint
+mutation 81 (H saved example: another step of the source): DETECTED by run 0 (player help) - 8 total, 7 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 1.5 s
+    FAIL help > help: an example for every technique > replaying the puzzle of an example with the hint code of the player gives the same hint
+mutation 82 (H saved example: another mask of the notes shown): DETECTED by run 0 (player help) - 8 total, 7 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 1.5 s
+    FAIL help > help: an example for every technique > replaying the puzzle of an example with the hint code of the player gives the same hint
+mutation 83 (H saved example: the values changed): DETECTED by run 0 (player help) - 8 total, 7 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 1.4 s
+    FAIL help > help: an example for every technique > replaying the puzzle of an example with the hint code of the player gives the same hint
+mutation 84 (H generator tests.html lists no jigsaw-techniques fixture): DETECTED by run 0 (generator ui-contract) - 61 total, 60 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.5 s
+    FAIL ui-contract > ui contract: one list of source files everywhere > every fixture file of ../core/tests/fixtures and tests/fixtures is listed in the CORE_FIXTURE_FILES and FIXTURE_FILES of tests.html, and only those
+mutation 85 (H player tests.html lists no jigsaw-techniques fixture): DETECTED by run 0 (player ui-contract) - 62 total, 61 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.5 s
+    FAIL ui-contract > ui contract: one list of source files everywhere > every fixture file of ../core/tests/fixtures and tests/fixtures is listed in the FIXTURE_FILES of tests.html, and only those
+detected 15 of 16, survivors 1, 44.7 s

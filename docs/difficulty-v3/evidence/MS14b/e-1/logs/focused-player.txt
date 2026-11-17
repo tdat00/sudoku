@@ -1,0 +1,28 @@
+$ node tests\node-runner.js --suite=tech-subset,help,text-boards,help-example-tools,play,i18n
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+ok   tech-subset: 167 passed  (8.09 s)
+FAIL help-example-tools: 49 passed, 2 failed  (6.10 s)
+ok   help: 27 passed  (4.30 s)
+ok   i18n: 75 passed  (163 ms)
+ok   play: 75 passed  (375 ms)
+ok   text-boards: 14 passed  (14 ms)
+
+Failures:
+  FAIL help-example-tools > help example tools: the snapshot of a Jigsaw puzzle > adds no cellRegion to any other variant, and its examples are the same data as the saved ones
+       AssertionError: expected true to be false
+       at Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:436:79
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:436:18)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL help-example-tools > help example tools: the snapshot of a Jigsaw puzzle > replays the real source into a Jigsaw example that the writer accepts and the header documents
+       AssertionError: expected "/**\r\n * A concrete example for every technique of the guide (help.html): `SG.helpExamples[id]`. The data is a\r\n * sna..." not to contain "cellRegion"
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:462:50)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+
+Suites: 6
+Tests:  409 total, 407 passed, 2 failed, 0 skipped
+Time:   19.04 s running tests, 19.13 s total
+exit=1 seconds=19.264

@@ -341,7 +341,7 @@ account, nothing to install. **Open it: [tdat00.github.io/sudoku/player](https:/
   on-screen number pad; notes (`N`); erase; undo / redo (`Ctrl+Z`, `Ctrl+Y`).
 - Error checking: off, rule conflicts (repeats, cage sums, signs) or every wrong entry as you type.
 - **Hints** in three steps (the technique and where to look, the cells, the move) that are always correct and
-  name one of 37 techniques, with a translated name and description. If a chain step represents a group of cells, it
+  name one of 38 techniques, with a translated name and description. If a chain step represents a group of cells, it
   is written in brackets: `(R1C1=5 ∨ R1C2=5)` means that at least one of those cells holds the 5, and
   `(R1C1≠5 ∧ R1C2≠5)` that none of them does; a true group does not tell you which cell holds the digit.
 - Symbol modes: digits, letters, colours (always with a shape), shapes and the Wordoku word; a solved Wordoku
@@ -358,7 +358,7 @@ account, nothing to install. **Open it: [tdat00.github.io/sudoku/player](https:/
   keys next to it; on a small screen the tools and the pad are fixed to the bottom and the buttons are icons.
 - Settings (language, theme, text size, reduced motion, colour symbol, check mode, notes behaviour,
   coordinates), and a **guide** (`help.html`, opened by the Help button in a new tab): the basics of playing, how
-  the hints work, the techniques that solve harder puzzles with a real example for each of the 37, and the
+  the hints work, the techniques that solve harder puzzles with a real example for each of the 38, and the
   keyboard shortcuts.
 - Accessible: skip link, an ARIA grid with spoken cell labels, live announcements, focus kept in dialogs,
   contrast checked from the design tokens, forced-colours and reduced-motion support.

@@ -1,0 +1,42 @@
+key | clues old->new | old puzzle: base rating -> tree rating | new puzzle: base rating -> tree rating | regions equal
+CHANGED   jigsaw9/normal#1 | 26->24 | normal/289 -> normal/289 | hard/623 -> normal/355 L1 | yes
+unchanged jigsaw9/normal#2 | 26->26 | normal/289 -> normal/289 | normal/289 -> normal/289 | yes
+unchanged jigsaw9/normal#3 | 24->24 | normal/305 -> normal/305 | normal/305 -> normal/305 | yes
+CHANGED   jigsaw9/normal#5 | 24->28 | normal/350 -> normal/350 | hard/490 -> normal/325 L1 | yes
+CHANGED   jigsaw9/normal#8 | 24->24 | normal/251 -> normal/251 | hard/632 -> normal/336 L1 | yes
+unchanged jigsaw9/normal#13 | 28->28 | normal/379 -> normal/379 | normal/379 -> normal/379 | yes
+CHANGED   jigsaw9/normal#21 | 26->28 | normal/396 -> normal/396 | hard/568 -> normal/353 L1 | yes
+unchanged jigsaw9/normal#34 | 27->27 | normal/298 -> normal/298 | normal/298 -> normal/298 | yes
+CHANGED   jigsaw9/normal#55 | 24->24 | normal/300 -> normal/300 | hard/636 -> normal/368 L1 | yes
+CHANGED   jigsaw9/normal#89 | 24->26 | normal/286 -> normal/286 | nightmare/1871 -> normal/343 L1 | yes
+CHANGED   jigsaw9/normal#144 | 24->24 | normal/325 -> normal/325 | hard/662 -> normal/395 L1 | yes
+CHANGED   jigsaw9/normal#233 | 24->30 | normal/392 -> normal/374 L1 | hard/547 -> normal/326 L1 | yes
+CHANGED   jigsaw9/normal#377 | 24->24 | normal/278 -> normal/278 | expert/717 -> normal/397 L1 | yes
+CHANGED   jigsaw9/normal#610 | 24->24 | normal/295 -> normal/295 | hard/534 -> normal/381 L2 | yes
+CHANGED   jigsaw9/normal#987 | 24->26 | normal/280 -> normal/280 | hard/572 -> normal/370 L1 | yes
+CHANGED   jigsaw9/normal#1597 | 24->28 | normal/367 -> normal/367 | hard/652 -> normal/349 L1 | yes
+unchanged jigsaw9/normal#2584 | 27->27 | normal/310 -> normal/310 | normal/310 -> normal/310 | yes
+CHANGED   jigsaw9/normal#4181 | 24->27 | normal/294 -> normal/294 | hard/699 -> normal/373 L1 | yes
+unchanged jigsaw9/normal#6765 | 30->30 | normal/294 -> normal/294 | normal/294 -> normal/294 | yes
+CHANGED   jigsaw9/normal#10946 | 28->30 | normal/352 -> normal/352 | hard/570 -> normal/322 L1 | yes
+unchanged jigsaw9/master#1 | 20->20 | master/1235 -> master/1235 | master/1235 -> master/1235 | yes
+CHANGED   jigsaw9/master#2 | 22->22 | master/1427 -> master/1319 L1 floor-solved | master/1441 -> master/1348 L1 | yes
+unchanged jigsaw9/master#3 | 26->26 | master/1439 -> master/1439 | master/1439 -> master/1439 | yes
+unchanged jigsaw9/master#5 | 30->30 | master/1393 -> master/1393 | master/1393 -> master/1393 | yes
+unchanged jigsaw9/master#8 | 20->20 | master/1446 -> master/1446 | master/1446 -> master/1446 | yes
+unchanged jigsaw9/master#13 | 24->24 | master/1318 -> master/1318 | master/1318 -> master/1318 | yes
+unchanged jigsaw9/master#21 | 26->26 | master/1267 -> master/1267 | master/1267 -> master/1267 | yes
+CHANGED   jigsaw9/master#34 | 20->24 | master/1425 -> master/1161 L2 floor-solved | nightmare/1749 -> master/1432 L2 | yes
+unchanged jigsaw9/master#55 | 22->22 | master/1354 -> master/1366 L1 | master/1354 -> master/1366 L1 | yes
+unchanged jigsaw9/master#89 | 24->24 | master/1423 -> master/1415 L1 | master/1423 -> master/1415 L1 | yes
+CHANGED   jigsaw9/master#144 | 22->22 | master/1495 -> master/1495 | master/1451 -> master/1466 L1 | yes
+CHANGED   jigsaw9/master#233 | 26->28 | master/1473 -> expert/917 L1 floor-solved | nightmare/1553 -> master/1336 L1 | yes
+unchanged jigsaw9/master#377 | 30->30 | master/1452 -> master/1438 L1 | master/1452 -> master/1438 L1 | yes
+CHANGED   jigsaw9/master#610 | 20->22 | master/1340 -> hard/673 L1 floor-solved | nightmare/2035 -> master/1495 L3 | yes
+unchanged jigsaw9/master#987 | 23->23 | master/1387 -> master/1389 L1 | master/1387 -> master/1389 L1 | yes
+CHANGED   jigsaw9/master#1597 | 24->22 | master/1297 -> normal/369 L1 floor-solved | master/1453 -> master/1446 L1 | yes
+unchanged jigsaw9/master#2584 | 24->24 | master/1240 -> master/1240 | master/1240 -> master/1240 | yes
+CHANGED   jigsaw9/master#4181 | 22->22 | master/1231 -> master/1231 | nightmare/2136 -> master/1415 L3 | yes
+unchanged jigsaw9/master#6765 | 24->24 | master/1370 -> master/1382 L1 | master/1370 -> master/1382 L1 | yes
+CHANGED   jigsaw9/master#10946 | 24->24 | master/1396 -> normal/378 L1 floor-solved | master/1210 -> master/1197 L1 | yes
+changed 22, unchanged 18 of 40; {"changedOldUsesLeftovers":7,"changedNewUsesLeftovers":22,"changedOldRatedOtherwise":7,"sameRegions":40,"unchangedOldUsesLeftovers":5,"unchangedTotal":18}

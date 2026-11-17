@@ -1,0 +1,49 @@
+mutation 46 (H name of the technique missing (generator English)): DETECTED by run 0 (generator i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > has the same key set in both languages
+mutation 47 (H description key renamed (generator English)): DETECTED by run 0 (generator i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > has the same key set in both languages
+mutation 48 (H step keeps no {lines} (generator English)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 49 (H step keeps no {regions} (generator English)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 50 (H step keeps no {cells} (generator English)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 51 (H step names {digit} instead of {digits} (generator English)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 52 (H name of the technique missing (generator Vietnamese)): DETECTED by run 0 (generator i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > has the same key set in both languages
+mutation 53 (H description key renamed (generator Vietnamese)): DETECTED by run 0 (generator i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > has the same key set in both languages
+mutation 54 (H step keeps no {lines} (generator Vietnamese)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 55 (H step keeps no {regions} (generator Vietnamese)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 56 (H step keeps no {cells} (generator Vietnamese)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 57 (H step names {digit} instead of {digits} (generator Vietnamese)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 58 (H name of the technique missing (player English)): DETECTED by run 0 (player i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > has the same key set in both languages
+mutation 59 (H description key renamed (player English)): DETECTED by run 0 (player i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > has the same key set in both languages
+mutation 60 (H step keeps no {lines} (player English)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 61 (H step keeps no {regions} (player English)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 62 (H step keeps no {cells} (player English)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 63 (H step names {digit} instead of {digits} (player English)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 64 (H name of the technique missing (player Vietnamese)): DETECTED by run 0 (player i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > has the same key set in both languages
+mutation 65 (H description key renamed (player Vietnamese)): DETECTED by run 0 (player i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > has the same key set in both languages
+mutation 66 (H step keeps no {lines} (player Vietnamese)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 67 (H step keeps no {regions} (player Vietnamese)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 68 (H step keeps no {cells} (player Vietnamese)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+mutation 69 (H step names {digit} instead of {digits} (player Vietnamese)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL i18n > i18n: language packs > uses the same {placeholders} in both languages for every key
+detected 24 of 24, survivors 0, 7.1 s

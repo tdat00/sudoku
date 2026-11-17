@@ -628,7 +628,8 @@
     it('has the weight table of section 5.2, and a technique without a weight is an error', function () {
       expect(D.WEIGHTS).toEqual({
         nakedSingle: 1, hiddenSingleBox: 1.25, hiddenSingleLine: 1.5, pointing: 40, boxLine: 50,
-        nakedPair: 120, hiddenPair: 145, nakedTriple: 180, hiddenTriple: 220, nakedQuad: 260, hiddenQuad: 300,
+        nakedPair: 120, hiddenPair: 145, nakedTriple: 180, lawOfLeftovers: 200, hiddenTriple: 220, nakedQuad: 260,
+        hiddenQuad: 300,
         xWing: 320, skyscraper: 330, twoStringKite: 340, remotePairs: 350, simpleColouring: 360, emptyRectangle: 380,
         finnedXWing: 400, swordfish: 420, finnedSwordfish: 480,
         jellyfish: 520, xyWing: 650, xyzWing: 750, wxyzWing: 800, wWing: 850, uniqueRectangle: 900,

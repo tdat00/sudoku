@@ -126,18 +126,18 @@
         'c5828c56cc86043a', '7a89449a7dd91316', 'b5407a1771d50303', '5a740a58f4fea224'
       ],
       'jigsaw9/normal': [
-        '2c4d9f7b5163597f', 'bfdd28db6b1108ef', '6e3f276349ae5557', '5fdb990b0a55114f',
-        '5cece083ad6917d7', '5191bc2b20f4459f', '99f875861f5431ea', '379c679d77e25c21',
-        'e9bd4be186bef15d', 'de8e0f60d17b0e0c', '6101aba1cdef118d', '7238027967442e45',
-        'a503ec29aed16c35', '55bbc11b89197faf', 'ac82ffd4783b28e8', '9f7fc1c2cd0fba9e',
-        '75897d415d35867d', 'f9c28b39778a6835', '58758a2c4fce9f80', 'f4fcec5137967c1d'
+        '229595a6594b523a', 'bfdd28db6b1108ef', '6e3f276349ae5557', '9b8fa6394851bca5',
+        '81539fad9a231461', '5191bc2b20f4459f', '0c21b74b77706e2f', '379c679d77e25c21',
+        '545e182b73ef3b1f', '8387fc84b42859c8', 'c3c1aaf3b1a0bf37', '455e1f77c8cdb9d3',
+        '918bb9bf712d4c2b', 'f3f89aa7588760b3', 'd199cd3a37aae596', '72b1875ce209a3e0',
+        '75897d415d35867d', 'fed3eb4be007b90f', '58758a2c4fce9f80', '02f85726a9844efa'
       ],
       'jigsaw9/master': [
-        '7fdd14af9030981b', '9aa45cd70525e113', 'f11e9c363638d72a', '16dfd4f95762fd45',
-        '8ceb13357ce25ee9', '77b607b3986cca97', '693948643a17b428', '0f3176d420b98cb8',
-        'd12e8ca57ac36569', '2bdbe0f5336aa299', 'ee5d5dd358a98a07', '17a8565d9f6db421',
-        '73c507594a734845', 'd47c910898b04b74', 'c7570cd179262e6d', 'd2136b0771fd2a23',
-        'abce69b204215f3e', '2f1c95d7244538e3', '9285ffe9911e70a5', 'a7800211c3d4df8d'
+        '7fdd14af9030981b', '6d21affb4d1576cf', 'f11e9c363638d72a', '16dfd4f95762fd45',
+        '8ceb13357ce25ee9', '77b607b3986cca97', '693948643a17b428', '9b2eda41b7340c9d',
+        'd12e8ca57ac36569', '2bdbe0f5336aa299', 'e55235bc5abec080', '603cc0b4c7d8cc88',
+        '73c507594a734845', '83d2e1d5b828e299', 'c7570cd179262e6d', '925808ff4d1d3b3b',
+        'abce69b204215f3e', '4dd4ae877ce2e7f3', '9285ffe9911e70a5', 'bb018b9dfc069f01'
       ],
       'killer/easy': [
         'da1eebf5af0b0cb9', 'e02d325e6f5a2f02', '8e5621f702060fcb', 'a4fd2fa9ebcce985',

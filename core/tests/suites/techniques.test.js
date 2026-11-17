@@ -49,6 +49,21 @@
   }
 
   /**
+   * The scoped supplements of a technique (fixtures/jigsaw-techniques.js) as soundness states, each with the model of its
+   * own region map: [{ model, item }] in the shape of supplementItems, empty for a technique without any.
+   */
+  function scopedSupplementItems(id) {
+    var kit = SG.fixtures.jigsawTechniques;
+    var list = kit && kit.supplements && kit.supplements[id] ? kit.supplements[id] : [];
+    return list.map(function (fixture) {
+      var model = kit.modelOf(fixture);
+      var givens = H.parsePuzzle(model, fixture.givens);
+      return { model: model, item: { state: kit.stateOf(fixture), solution: SG.dfs.solve(model, givens),
+        givens: givens, kind: 'supplement' } };
+    });
+  }
+
+  /**
    * The states of one soundness sweep: the complete seeded random population of the call site, then the
    * supplemental positions. assertSound uses `states` INSTEAD of generating random ones, so the random
    * prefix is built here with the helper's own default seed and the supplements are only ever appended.
@@ -205,6 +220,12 @@
             }
             variants.forEach(function (id) {
               var stats = H.assertSound(SG.test, tech.id, { model: H.model(id), count: count });
+              firings[tech.id] = (firings[tech.id] || 0) + stats.firings;
+            });
+            // The supplements of a scoped technique come after the complete seeded random population of its call site,
+            // each on the board of its own region map (MS14b: the Jigsaw positions of fixtures/jigsaw-techniques.js).
+            scopedSupplementItems(tech.id).forEach(function (one) {
+              var stats = H.assertSound(SG.test, tech.id, { model: one.model, states: [one.item], minFirings: 1 });
               firings[tech.id] = (firings[tech.id] || 0) + stats.firings;
             });
           });

@@ -165,33 +165,34 @@
     },
     {
       id: 'G06', request: { variantId: 'jigsaw9', difficulty: 'nightmare', seed: '42' },
-      today: { steps: 16, missing: 2 }, counts: { compact: 8, details: 34 },
+      today: { steps: 16, missing: 2 }, counts: { compact: 9, details: 33 },
       board: { cells: 81, cages: 0, signsFrom: 0, signsTo: 0, log: 'normal' },
       // [#, m, phase, E, score, delta, hardest, J, culprit, line]
       rows: [
         [1, 0, 'S/Sol', 0, 0, 0, '—', '—', '—', '—'],
-        [2, 8, 'D/Dig', 16, 25, 25, 'nakedSingle', '—', '—', 'F'],
-        [3, 22, 'D/Dig', 43, 44, 19, 'nakedSingle', '—', '—', '—'],
-        [4, 27, 'G/Choose', 53, 49, 5, 'hiddenSingleBox', '—', '—', 'N'],
-        [5, 28, 'G/Choose', 55, 138, 89, 'boxLine', '—', '—', 'N'],
-        [6, 29, 'G/Choose', 57, 1293, 1155, 'wxyzWing', 'Y', 'R4C6', '—'],
-        [7, 32, 'G+X/Mixed', 57, 2369, 1076, 'forcingChainLong', '—', '—', 'N'],
-        [8, 32, 'F/Final', 57, 2369, 0, 'forcingChainLong', '—', '—', '—']
+        [2, 9, 'D/Dig', 17, 26, 26, 'nakedSingle', '—', '—', 'F'],
+        [3, 22, 'D/Dig', 43, 44, 18, 'nakedSingle', '—', '—', '—'],
+        [4, 26, 'G/Choose', 51, 109, 65, 'pointing', '—', '—', 'N'],
+        [5, 27, 'G/Choose', 53, 538, 429, 'skyscraper', 'Y', 'R2C4', '—'],
+        [6, 29, 'G/Choose', 57, 1549, 1011, 'wxyzWing', '—', '—', 'N'],
+        [7, 30, 'G/Choose', 59, 2177, 628, 'forcingChain', '—', '—', 'N'],
+        [8, 31, 'X/Adjust', 59, 2374, 197, 'forcingChainLong', '—', '—', 'N'],
+        [9, 31, 'F/Final', 59, 2374, 0, 'forcingChainLong', '—', '—', '—']
       ],
-      details: [0, 5, 9, 12, 15, 18, 20, 23, 25, 27, 29, 31, 32, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
-        48, 49, 138, 1293, 2021, 1955, 2369, 2369],
+      details: [0, 5, 9, 12, 14, 17, 19, 22, 24, 26, 28, 30, 31, 33, 34, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47,
+        109, 538, 632, 1549, 2177, 2374, 2374],
       alive: null,
       folds: [],
       jumps: [
         {
-          step: 6, from: 138, to: 1293,
-          before: { P: 50, W: 449.5, R: 41.506058, V: 46.315789, E: 55, level: 'easy' },
-          after: { P: 800, W: 2958.5, R: 446.41702, V: 47.010309, E: 57, level: 'master' },
-          choice: { chosen: 1293, others: 4, nulls: 0, max: 616, at: 122, rated: 6, refused: 1 },
-          singles: [{ op: 'remove', cell: 'R4C6', score: 1293 }, { op: 'remove', cell: 'R6C4', score: 138 }],
-          cause: 'single-culprit', frame: 'R4C6',
-          firstUse: { k: 26, n: 80, technique: 'wxyzWing' }, key: 'technique.wxyzWing.step',
-          effects: 'remove candidate 2@R6C7'
+          step: 5, from: 109, to: 538,
+          before: { P: 40, W: 174.75, R: 24.245862, V: 44.835165, E: 51, level: 'easy' },
+          after: { P: 330, W: 962.75, R: 162.517193, V: 45.591398, E: 53, level: 'hard' },
+          choice: { chosen: 538, others: 8, nulls: 0, max: 139, at: 102, rated: 11, refused: 2 },
+          singles: [{ op: 'remove', cell: 'R2C4', score: 534 }, { op: 'remove', cell: 'R8C6', score: 112 }],
+          cause: 'single-culprit', frame: 'R2C4',
+          firstUse: { k: 22, n: 63, technique: 'skyscraper' }, key: 'technique.skyscraper.step',
+          effects: 'remove candidate 1@R6C3'
         }
       ]
     },

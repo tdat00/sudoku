@@ -20,8 +20,8 @@
  * ascending); the first combination that removes a candidate is returned. Works on any unit shape and digit
  * count; state is only read.
  *
- * The law-of-leftovers kernel at the end of the file (SG.leftoverPatterns, Jigsaw only) is a separate engine:
- * it is not registered here and nothing in a solve, rating, generation or hint calls it.
+ * The law-of-leftovers finder at the end of the file (SG.leftoverPatterns, Jigsaw only) is a separate engine
+ * with its own tables; it is registered as `lawOfLeftovers` (group locked, order 87, scope jigsaw9).
  */
 (function (root) {
   'use strict';
@@ -250,9 +250,10 @@
   });
 
   // ---------------------------------------------------------------------------------------------------------
-  // Law of leftovers (rating v3, R17): the complete-support kernel. INACTIVE: nothing registers it and no
-  // solve, rating, generation or hint reaches it; only tests call SG.leftoverPatterns.find. It shares no
-  // scratch with the subset scan above: every call allocates its own small tables.
+  // Law of leftovers (rating v3, R17): the complete-support finder, registered as `lawOfLeftovers` (MS14b:
+  // group locked, order 87, base cost 20, scope jigsaw9, no uniqueness assumption; the weight is in
+  // difficulty.js). SG.leftoverPatterns.find is the same finder with the work-limit seam of the tests. It
+  // shares no scratch with the subset scan above: every call allocates its own small tables.
   //
   // In a Jigsaw, n complete rows (or columns) that share no cell hold every digit exactly n times, and so
   // do n complete regions that share no cell. Take both with the same n and set aside the cells they share:
@@ -534,4 +535,18 @@
   }
 
   SG.leftoverPatterns = { find: findLeftovers, LIMITS: LEFTOVER_LIMITS };
+
+  // The registered finder takes no options: it always runs with the default work limit.
+  if (!SG.techniques.has(LEFTOVER_ID)) {
+    SG.techniques.register({
+      id: LEFTOVER_ID,
+      group: 'locked',
+      baseCost: 20,
+      order: 87,
+      i18nKey: 'technique.' + LEFTOVER_ID,
+      variantScope: [LEFTOVER_VARIANT],
+      assumesUniqueness: false,
+      find: function (model, state, ctx) { return findLeftovers(model, state, ctx); }
+    });
+  }
 })(typeof self !== 'undefined' ? self : globalThis);

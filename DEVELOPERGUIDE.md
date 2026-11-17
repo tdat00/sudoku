@@ -1041,9 +1041,11 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    represents a group ...", and the three step explanations, which speak of ends and of a statement about a candidate
    or group, so that they stay true for group ends; 32 entries, listed with their old and new texts in
    `docs/difficulty-v3/evidence/MS13b/locale-delta.md`); keys, prefixes and placeholders are unchanged.
-   **The Law of Leftovers kernel** (`core/js/engine/tech-subset.js`, task MS14a; **inactive**: not registered, with no
-   weight, locale text or help example, and no solve, rating, generation or hint calls it, so every Finding, observer
-   record, hash, wire, golden and help example is unchanged; the registration and the activation are MS14b and MS14c).
+   **The Law of Leftovers** (`core/js/engine/tech-subset.js`; the kernel is task MS14a's, and MS14b registers it as
+   the technique `lawOfLeftovers`: group `locked`, order 87, base cost 20, weight 200, scope `['jigsaw9']`, no
+   uniqueness; the Findings, observer records, hashes, wires, goldens and help examples of every other board are
+   unchanged, and the changes of the Jigsaw ones are listed in `generator/design.md` §6.6; at MS14a it was
+   **inactive**: not registered, with no weight, locale text or help example).
    `SG.leftoverPatterns.find(model, state, ctx[, { workLimit }])` returns the first Finding of `lawOfLeftovers` or null
    on a Jigsaw 9 board (another model: null with work 0), and the frozen `SG.leftoverPatterns.LIMITS` is
    `{ units: 2, cells: 4, work: 50000 }`. *n* complete rows (or columns) and *n* complete regions that share no cell
@@ -1065,9 +1067,13 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    `cells` (the distinct cells left over on both sides, ascending, fixed ones included, the cancelled shared cells
    not), eliminations by cell then digit, no placements, and `i18nArgs` `{ lines, regions, cells, digits }`: labels by
    unit index (never by label text) and the **distinct removed digits**, which is not a signature and not a digit
-   removed from every listed cell. The 40 tests (`tech-subset` suite, `law of leftovers kernel`) use the fixture
-   `SG.fixtures.jigsawModels` (`core/tests/fixtures/jigsaw-models.js`) and an independent enumeration; the proof, the
-   equivalent mutant and the evidence are in `generator/design.md` §6.6.
+   removed from every listed cell. The 40 kernel tests (`tech-subset` suite, `law of leftovers kernel`) use the fixture
+   `SG.fixtures.jigsawModels` (`core/tests/fixtures/jigsaw-models.js`) and an independent enumeration; since MS14b the
+   suite also tests the registration and has real Jigsaw positions in `SG.fixtures.jigsawTechniques`
+   (`core/tests/fixtures/jigsaw-techniques.js`: four positives, two real positions and their transposes, and three
+   negatives, each with its own region map, which the cost tool `generator/tests/pattern-cost.js` also reads through
+   its scoped adapter; both `tests.html` pages list the file); a scoped technique's help example is a Jigsaw
+   snapshot with its own `cellRegion`. The proof, the equivalent mutant and the evidence are in `generator/design.md` §6.6.
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
    `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
@@ -1121,7 +1127,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (53 suites, 4,483 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (53 suites, 4,526 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (61 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -1133,7 +1139,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 53 suites,
-4,483 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+4,526 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -1190,7 +1196,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 61 suites, 53 of them quick (4,483 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 61 suites, 53 of them quick (4,526 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1598,7 +1604,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (30, 2,722 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (30, 2,753 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

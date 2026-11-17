@@ -4,8 +4,11 @@
  * hash function or process: the Node tool passes the clock and `digest(text)` in, loads the engine and writes the
  * file. The tool measures the cost of the registered technique finders on the REAL fixtures of
  * core/tests/fixtures/techniques.js (the active `byId` map, never the frozen history), read-only: it generates no
- * puzzle and runs no suite. Its numbers are evidence for the owner of a technique (GP-cost), never an assertion of
- * a quick suite: the quick suite `pattern-cost-tools` tests these helpers on fake observations only.
+ * puzzle and runs no suite. A technique scoped to one variant is measured on the scoped fixtures of
+ * core/tests/fixtures/jigsaw-techniques.js (MS14b: the Jigsaw `lawOfLeftovers`), every case rebuilt on the board of its
+ * own region map (SG.fixtures.jigsawTechniques.modelOf), never on the default classic9 board. Its numbers are
+ * evidence for the owner of a technique (GP-cost), never an assertion of a quick suite: the quick suite
+ * `pattern-cost-tools` tests these helpers on fake observations only.
  *
  * One case is one fixture (positive or negative) of one technique id: `<id>:<positive|negative>:<n>`. A case is
  * run `runs` times (default 20) on the same state, each time with a fresh context whose optional
@@ -17,9 +20,11 @@
  *
  *  - parseArgs(argv)                    { mode: 'help' | 'list' | 'run', ids, runs, json, caseText }; a bad command
  *                                       line throws an Error whose `code` is 'usage' (exit code 2)
- *  - inventoryOf(ids)                   what the registry and the fixtures hold for those ids (needs the engine)
- *  - planCases(inventory, caseText)     { cases, problems }: unknown id, scoped technique, missing fixtures and an
- *                                       empty selection are problems (no run), the text selects by substring
+ *  - inventoryOf(ids)                   what the registry and the fixtures (classic and scoped) hold for those ids (needs
+ *                                       the engine)
+ *  - planCases(inventory, caseText)     { cases, problems }: unknown id, a scoped technique without scoped fixtures
+ *                                       for exactly its scope, missing fixtures and an empty selection are problems
+ *                                       (no run), the text selects by substring
  *  - measure(cases, config, env)        the runs: { records, problems, stopped, wallMs }; never throws for a finder
  *                                       result; env = { clock(), digest(text) }; config = { runs, budgetMs }
  *  - recordOf(c, observations, env)     the record of one case, with its own problems; env.digest(text)
@@ -45,6 +50,9 @@
   var MAX_RUNS = 200;
   var BUDGET_MS = 480000;
   var MODEL_ID = 'classic9';
+  // The scoped fixtures the tool can build a board for: the variant id of the technique's scope -> the fixture file that
+  // holds its cases (SG.fixtures.<name>.byId[id], { scope, positive, negative }, with modelOf(fixture) and stateOf(fixture)).
+  var SCOPED_FIXTURES = { jigsaw9: 'jigsawTechniques' };
   var ID_PATTERN = /^[A-Za-z][A-Za-z0-9_]*$/;
   var KINDS = ['positive', 'negative'];
 
@@ -52,7 +60,8 @@
     'Usage: node tests/pattern-cost.js --ids=<id>[,<id>] --json=<new.json> [--runs=20] [--case=<text>]',
     '       node tests/pattern-cost.js --ids=<id>[,<id>] [--case=<text>] --list',
     '',
-    '  --ids=<id>[,<id>]  registered, unscoped technique ids; every positive and negative fixture of each is a case',
+    '  --ids=<id>[,<id>]  registered technique ids; every positive and negative fixture of each is a case. A technique',
+    '                     scoped to a variant needs the scoped fixtures of exactly that scope (jigsaw9: lawOfLeftovers)',
     '  --json=<file>      a new project-relative .json file for the record (an existing file is refused)',
     '  --runs=<n>         identical read-only finds per case, 1 to 200 (default 20)',
     '  --case=<text>      only the cases whose key or fixture name contains the text (case-insensitive)',
@@ -61,8 +70,8 @@
     'No puzzle is generated and no suite runs. The caller budget is 480000 ms (the process limit is 540 s):',
     'run it through `Invoke-Dv3Node`. Exit code: 0 a complete record; 1 an incomplete or inconsistent one',
     '(a spent budget, a Finding or work record that changed between runs, a state that was written, a missing',
-    'case, an outcome that is not the fixture\'s); 2 an invalid command line, an unknown or scoped id, missing',
-    'fixtures or an empty selection.'
+    'case, an outcome that is not the fixture\'s); 2 an invalid command line, an unknown id, a scoped id without',
+    'scoped fixtures for its scope, missing fixtures or an empty selection.'
   ].join('\n');
 
   // ---------------------------------------------------------------------------------------------
@@ -149,47 +158,82 @@
   // The cases
   // ---------------------------------------------------------------------------------------------
 
-  /** What the registry and the active fixtures hold for these ids; needs the engine and the fixtures. */
+  /**
+   * What the registry and the fixtures hold for these ids; needs the engine and the fixtures. The classic fixtures are
+   * the active `byId` map of techniques.js; a technique scoped to a variant may also have scoped fixtures
+   * ({ source, scope, positive, negative }: the name in SG.fixtures of the file that holds them and the scope they
+   * were made for), which `planCases` accepts only for exactly its scope.
+   */
   function inventoryOf(ids) {
     var fixtures = SG.fixtures.techniques;
     return ids.map(function (id) {
       var tech = SG.techniques.has(id) ? SG.techniques.get(id) : null;
       var entry = has(fixtures.byId, id) ? fixtures.byId[id] : null;
+      var scoped = null;
+      Object.keys(SCOPED_FIXTURES).forEach(function (variant) {
+        var source = SCOPED_FIXTURES[variant];
+        var kit = SG.fixtures[source];
+        if (scoped === null && kit && has(kit.byId, id)) {
+          scoped = { source: source, scope: kit.byId[id].scope, positive: kit.byId[id].positive,
+            negative: kit.byId[id].negative };
+        }
+      });
       return {
         id: id,
         registered: tech !== null,
         scope: tech === null ? null : tech.variantScope,
         hasEntry: entry !== null,
         positive: entry ? entry.positive : [],
-        negative: entry ? entry.negative : []
+        negative: entry ? entry.negative : [],
+        scoped: scoped
       };
     });
+  }
+
+  function sameList(a, b) {
+    return Array.isArray(a) && Array.isArray(b) && a.length === b.length &&
+      a.every(function (x, i) { return x === b[i]; });
   }
 
   /**
    * The cases of an inventory, in the order of the ids, positives then negatives. Anything that would make the
    * record meaningless is a problem and there are no cases then: an id that is not registered, a scoped technique
-   * (its fixtures need a model of their own: the scoped adapter belongs to MS14b), an id without fixtures, and a
-   * text that selects nothing.
+   * without scoped fixtures made for exactly its scope on a board the tool can build (today jigsaw9), an id without
+   * fixtures, and a text that selects nothing. The cases of a scoped technique carry their scope: each is rebuilt on
+   * the board of its own region map, never on the classic9 board.
    */
   function planCases(inventory, caseText) {
     var problems = [];
     var cases = [];
+    function add(item, lists, scope) {
+      KINDS.forEach(function (kind) {
+        lists[kind].forEach(function (fixture, i) {
+          cases.push({ key: item.id + ':' + kind + ':' + (i + 1), id: item.id, kind: kind, name: fixture.name,
+            fixture: fixture, scope: scope });
+        });
+      });
+    }
     inventory.forEach(function (item) {
       if (!item.registered) {
         problems.push('unknown technique id ' + item.id);
       } else if (item.scope !== null) {
-        problems.push('technique ' + item.id + ' is scoped to [' + item.scope.join(', ') + ']: the tool has no ' +
-          'scoped fixtures yet');
+        var scoped = item.scoped || null;
+        var board = item.scope.length === 1 && has(SCOPED_FIXTURES, item.scope[0]) ? SCOPED_FIXTURES[item.scope[0]] : null;
+        var where = 'technique ' + item.id + ' is scoped to [' + item.scope.join(', ') + ']';
+        if (scoped === null) {
+          problems.push(where + ': the tool has no scoped fixtures for it');
+        } else if (board === null || scoped.source !== board || !sameList(scoped.scope, item.scope)) {
+          problems.push(where + ', but its scoped fixtures (' + scoped.source + ') are for [' +
+            (Array.isArray(scoped.scope) ? scoped.scope.join(', ') : '?') + '] and the tool builds no such board');
+        } else if (scoped.positive.length + scoped.negative.length === 0) {
+          problems.push('no scoped fixtures for ' + item.id + ' in SG.fixtures.' + scoped.source);
+        } else {
+          add(item, scoped, item.scope[0]);
+        }
       } else if (!item.hasEntry || item.positive.length + item.negative.length === 0) {
         problems.push('no fixtures for ' + item.id + ' in the active map of core/tests/fixtures/techniques.js');
       } else {
-        KINDS.forEach(function (kind) {
-          item[kind].forEach(function (fixture, i) {
-            cases.push({ key: item.id + ':' + kind + ':' + (i + 1), id: item.id, kind: kind, name: fixture.name,
-              fixture: fixture });
-          });
-        });
+        add(item, item, null);
       }
     });
     if (problems.length > 0) return { cases: [], problems: problems };
@@ -204,13 +248,25 @@
     return { cases: cases, problems: problems };
   }
 
-  /** The state of a fixture position, built like the tests build it (techniques.test.js). */
+  /** The state of a classic fixture position, built like the tests build it (techniques.test.js). */
   function stateOf(fixture) {
     var H = SG.techHelper;
     var model = H.model(MODEL_ID);
     return fixture.after !== null
       ? H.stateAfter(model, fixture.puzzle, fixture.after)
       : H.makeState(model, fixture.puzzle, { propagate: fixture.propagate });
+  }
+
+  /**
+   * The board and the position of a case: a scoped case on the board of its own region map (the scoped fixtures'
+   * modelOf / stateOf), any other on classic9. { model, state }.
+   */
+  function boardOf(c) {
+    if (c.scope === null || c.scope === undefined) {
+      return { model: SG.techHelper.model(MODEL_ID), state: stateOf(c.fixture) };
+    }
+    var kit = SG.fixtures[SCOPED_FIXTURES[c.scope]];
+    return { model: kit.modelOf(c.fixture), state: kit.stateOf(c.fixture) };
   }
 
   // ---------------------------------------------------------------------------------------------
@@ -274,25 +330,29 @@
       workUnits = 0;
       first.reports.forEach(function (r) { workUnits += r.work; });
     }
-    return {
-      record: {
-        key: c.key, id: c.id, kind: c.kind, name: c.name, puzzle: c.fixture.puzzle,
-        after: c.fixture.after, propagate: c.fixture.propagate === undefined ? null : c.fixture.propagate,
-        runs: observations.length,
-        outcome: finding === null ? 'none' : 'found',
-        matchesFixture: matchesFixture(c, finding),
-        finding: finding,
-        findingDigest: finding === null ? null : env.digest(first.finding),
-        reports: first.reports.length,
-        work: copy(first.reports),
-        workUnits: workUnits,
-        capHit: capHits.length > 0 ? capHits[0] : null,
-        deterministic: problems.length === 0,
-        timeMs: timeStats(samples),
-        samplesMs: samples
-      },
-      problems: problems
+    var scoped = c.scope !== null && c.scope !== undefined;
+    var record = {
+      key: c.key, id: c.id, kind: c.kind, name: c.name, puzzle: scoped ? c.fixture.givens : c.fixture.puzzle,
+      after: c.fixture.after, propagate: c.fixture.propagate === undefined ? null : c.fixture.propagate,
+      runs: observations.length,
+      outcome: finding === null ? 'none' : 'found',
+      matchesFixture: matchesFixture(c, finding),
+      finding: finding,
+      findingDigest: finding === null ? null : env.digest(first.finding),
+      reports: first.reports.length,
+      work: copy(first.reports),
+      workUnits: workUnits,
+      capHit: capHits.length > 0 ? capHits[0] : null,
+      deterministic: problems.length === 0,
+      timeMs: timeStats(samples),
+      samplesMs: samples
     };
+    // A scoped case names its board and keeps the region map it was measured on; a classic record is unchanged.
+    if (scoped) {
+      record.model = c.scope;
+      record.cellRegion = copy(c.fixture.cellRegion);
+    }
+    return { record: record, problems: problems };
   }
 
   function sameState(state, snapshot) {
@@ -308,9 +368,10 @@
    */
   function measureCase(c, config, env, budget, started) {
     var H = SG.techHelper;
-    var model = H.model(MODEL_ID);
+    var board = boardOf(c);
+    var model = board.model;
     var tech = SG.techniques.get(c.id);
-    var state = stateOf(c.fixture);
+    var state = board.state;
     var snapshot = {
       value: Array.prototype.slice.call(state.value), candidates: Array.prototype.slice.call(state.candidates),
       unsolvedCount: state.unsolvedCount
@@ -415,6 +476,16 @@
     return problems;
   }
 
+  /** The board id of a run's config: classic9 for the classic cases, the scope for scoped ones, 'mixed' for both. */
+  function modelOfRun(cases) {
+    var ids = [];
+    cases.forEach(function (c) {
+      var id = c.scope === null || c.scope === undefined ? MODEL_ID : c.scope;
+      if (ids.indexOf(id) === -1) ids.push(id);
+    });
+    return ids.length === 1 ? ids[0] : ids.length === 0 ? MODEL_ID : 'mixed';
+  }
+
   /**
    * The document of a run. parts: { argv, identity, machine, config: { runs, ids, caseText, budgetMs }, cases (the
    * planned cases), startedAt, endedAt, measured ({ records, problems, stopped, wallMs }) }. `complete` is true
@@ -431,7 +502,7 @@
       machine: parts.machine,
       config: {
         ids: parts.config.ids.slice(), caseText: parts.config.caseText, runs: parts.config.runs,
-        budgetMs: parts.config.budgetMs, model: MODEL_ID, assumeUniqueness: true,
+        budgetMs: parts.config.budgetMs, model: modelOfRun(parts.cases), assumeUniqueness: true,
         cases: parts.cases.map(function (c) { return c.key; })
       },
       startedAt: parts.startedAt,
@@ -522,6 +593,8 @@
     inventoryOf: inventoryOf,
     planCases: planCases,
     stateOf: stateOf,
+    boardOf: boardOf,
+    SCOPED_FIXTURES: SCOPED_FIXTURES,
     timeStats: timeStats,
     recordOf: recordOf,
     measure: measure,

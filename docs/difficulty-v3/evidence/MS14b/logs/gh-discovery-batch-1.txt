@@ -1,0 +1,30 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=lawOfLeftovers --discover --variants=jigsaw9 --levels=hard --max-puzzles=12 --max-hints=400 --record-sources=tests\artifacts\difficulty-v3\MS14b\sources.json
+selected 1 technique ID(s); mode discover + record
+request 1/12 jigsaw9 hard 1: made
+request 2/12 jigsaw9 hard 2: made
+request 3/12 jigsaw9 hard 3: made
+request 4/12 jigsaw9 hard 4: made
+request 5/12 jigsaw9 hard 5: made
+request 6/12 jigsaw9 hard 6: made
+request 7/12 jigsaw9 hard 7: made
+request 8/12 jigsaw9 hard 8: made
+request 9/12 jigsaw9 hard 9: made
+request 10/12 jigsaw9 hard 10: made
+request 11/12 jigsaw9 hard 11: made
+request 12/12 jigsaw9 hard 12: made
+discovery: 12 request(s), 12 puzzle(s), 0 failed
+replaying 12 puzzle(s) for 1 ID(s) (--max-puzzles=12, --max-hints=400)
+puzzle 1/12 jigsaw9 hard 1 -> 67 hint(s), solved; wanted found: lawOfLeftovers
+puzzle 2/12 jigsaw9 hard 2 -> 63 hint(s), solved; wanted found: -
+puzzle 3/12 jigsaw9 hard 3 -> 58 hint(s), solved; wanted found: -
+puzzle 4/12 jigsaw9 hard 4 -> 77 hint(s), solved; wanted found: -
+puzzle 5/12 jigsaw9 hard 5 -> 58 hint(s), solved; wanted found: lawOfLeftovers
+puzzle 6/12 jigsaw9 hard 6 -> 69 hint(s), solved; wanted found: -
+puzzle 7/12 jigsaw9 hard 7 -> 75 hint(s), solved; wanted found: -
+puzzle 8/12 jigsaw9 hard 8 -> 54 hint(s), solved; wanted found: -
+puzzle 9/12 jigsaw9 hard 9 -> 83 hint(s), solved; wanted found: lawOfLeftovers
+puzzle 10/12 jigsaw9 hard 10 -> 72 hint(s), solved; wanted found: -
+puzzle 11/12 jigsaw9 hard 11 -> 73 hint(s), solved; wanted found: -
+puzzle 12/12 jigsaw9 hard 12 -> 59 hint(s), solved; wanted found: -
+recorded 1 source(s) into player/tests/artifacts/difficulty-v3/MS14b/sources.json
+exit=0 seconds=1.904

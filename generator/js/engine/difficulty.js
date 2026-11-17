@@ -87,6 +87,7 @@
     nakedPair: 120,
     hiddenPair: 145,
     nakedTriple: 180,
+    lawOfLeftovers: 200,
     hiddenTriple: 220,
     nakedQuad: 260,
     hiddenQuad: 300,

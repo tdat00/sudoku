@@ -565,7 +565,7 @@
       expect(Object.keys(out.counts).length).toBeGreaterThan(0);
       var rated = R.rateBoard(result.model, result.givens, { forceCount: true });
       expect(rated.status).toBe('rated');
-      expect(rated.score).toBe(2369);
+      expect(rated.score).toBe(2374);
     });
 
     slow('reports the progress of prepare once per position, then after every probe and optional solve', function () {
@@ -1600,12 +1600,12 @@
       expect(count).toEqual({ compact: 12, details: 12 });
     });
 
-    slow('frames the details jumps too: G06 R4C6 and the sign jumps of G11 and G12', function () {
+    slow('frames the details jumps too: G06 R2C4 and the sign jumps of G11 and G12', function () {
       var g06 = analysisOf('G06');
-      var t = toPosition(g06, 'details', 29);
-      expect([t.before.total, t.after.total, t.cause.class]).toEqual([138, 1293, 'single-culprit']);
-      expect(frameLabel('G06', t.cause.frame)).toBe('R4C6');
-      expect(t.cause.culprit.otherScore).toBe(138);
+      var t = toPosition(g06, 'details', 27);
+      expect([t.before.total, t.after.total, t.cause.class]).toEqual([109, 538, 'single-culprit']);
+      expect(frameLabel('G06', t.cause.frame)).toBe('R2C4');
+      expect(t.cause.culprit.otherScore).toBe(112);
       var signs = jumpsOf(analysisOf('G11'), 'details').concat(jumpsOf(analysisOf('G12'), 'details'));
       expect(signs.map(function (x) { return x.cause.frame; })).toEqual([
         { kind: 'sign', sign: 98 }, { kind: 'sign', sign: 34 }]);

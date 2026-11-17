@@ -302,6 +302,43 @@
         expect(D.spec('hard', model).floorTechniques).not.toContain('finnedSwordfish');
       });
 
+    it('places lawOfLeftovers between nakedTriple and hiddenTriple: order 87, weight 200, a Normal-tier technique of ' +
+      'the locked group that only Jigsaw has (R17)', function () {
+        var jigsaw = SG.techHelper.model('jigsaw9');
+        var classic = SG.techHelper.model('classic9');
+        var def = SG.techniques.get('lawOfLeftovers');
+        expect([def.order, D.WEIGHTS.lawOfLeftovers]).toEqual([87, 200]);
+        expect([def.group, def.baseCost, def.variantScope, def.assumesUniqueness])
+          .toEqual(['locked', 20, ['jigsaw9'], false]);
+        expect(position('nakedTriple')).toBeLessThan(position('lawOfLeftovers'));
+        expect(position('lawOfLeftovers')).toBe(position('hiddenTriple') - 1);
+        // the order follows the weight: the neighbours are 80 / 180 and 90 / 220 (minMaxForcing, 85 / 180, is
+        // Greater-Than's)
+        expect([SG.techniques.get('nakedTriple').order, D.WEIGHTS.nakedTriple]).toEqual([80, 180]);
+        expect([SG.techniques.get('minMaxForcing').order, D.WEIGHTS.minMaxForcing]).toEqual([85, 180]);
+        expect([SG.techniques.get('hiddenTriple').order, D.WEIGHTS.hiddenTriple]).toEqual([90, 220]);
+        expect(D.WEIGHTS.nakedTriple).toBeLessThan(D.WEIGHTS.lawOfLeftovers);
+        expect(D.WEIGHTS.lawOfLeftovers).toBeLessThan(D.WEIGHTS.hiddenTriple);
+        // its own weight decides the hardest technique, no tie is needed
+        expect(D.breakdown({ nakedTriple: 1, lawOfLeftovers: 1 }, 10).hardest).toBe('lawOfLeftovers');
+        expect(D.breakdown({ lawOfLeftovers: 1, hiddenTriple: 1 }, 10).hardest).toBe('hiddenTriple');
+        // 1.25 x 200 = 250 is above Easy's maximum (180) and below Normal's (400): Normal's tier, on Jigsaw boards
+        expect(1.25 * D.WEIGHTS.lawOfLeftovers).toBeGreaterThan(D.spec('easy', jigsaw).max);
+        expect(1.25 * D.WEIGHTS.lawOfLeftovers).toBeLessThan(D.spec('normal', jigsaw).max);
+        expect(D.spec('easy', jigsaw).allowedTechniques).not.toContain('lawOfLeftovers');
+        expect(D.spec('normal', jigsaw).allowedTechniques).toContain('lawOfLeftovers');
+        expect(D.spec('normal', jigsaw).tierTechniques).toContain('lawOfLeftovers');
+        expect(D.spec('normal', jigsaw).floorTechniques).not.toContain('lawOfLeftovers');
+        expect(D.spec('hard', jigsaw).floorTechniques).toContain('lawOfLeftovers');
+        // allowed right after nakedTriple (registry order)
+        var allowed = D.spec('normal', jigsaw).allowedTechniques;
+        expect(allowed.indexOf('lawOfLeftovers')).toBe(allowed.indexOf('nakedTriple') + 1);
+        // and on no other variant
+        ['easy', 'normal', 'hard', 'master', 'nightmare'].forEach(function (level) {
+          expect([level, D.spec(level, classic).allowedTechniques.indexOf('lawOfLeftovers')]).toEqual([level, -1]);
+        });
+      });
+
     it('lets a tie of weight and of order fall to the smaller id and still sorts the sequence', function () {
       var ids = ['orderProbeB', 'orderProbeA'];
       try {

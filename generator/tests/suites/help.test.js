@@ -209,7 +209,12 @@
         });
         var registered = SG.techniques.list().map(function (t) { return t.id; });
         expect(listed.slice().sort()).toEqual(registered.slice().sort());
-        expect(lad.variantGroups.map(function (g) { return g.group; }).sort()).toEqual(['cage', 'ineq']);
+        expect(lad.variantGroups.map(function (g) { return g.group; }).sort()).toEqual(['cage', 'ineq', 'locked']);
+        // The Law of Leftovers is the only technique of its group that belongs to one variant: Jigsaw (MS14b)
+        var locked = lad.variantGroups.filter(function (g) { return g.group === 'locked'; })[0];
+        expect(locked.techniques.map(function (x) { return x.id; })).toEqual(['lawOfLeftovers']);
+        expect(locked.techniques[0].variants).toEqual(['jigsaw9']);
+        expect(locked.techniques[0].points).toBe(200);
       });
 
     it('lists a technique that is registered later, at the level where its points first fit', function () {

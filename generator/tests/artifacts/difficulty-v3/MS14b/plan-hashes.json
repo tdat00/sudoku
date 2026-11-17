@@ -1,0 +1,1250 @@
+[
+  {
+    "label": "g-hash-classic4-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic4-veryEasy-00.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic4-veryEasy-00 0.599 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic4-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic4-veryEasy-05.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic4-veryEasy-05 0.587 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic4-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic4-veryEasy-10.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic4-veryEasy-10 0.577 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic4-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic4/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic4-veryEasy-15.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic4-veryEasy-15 0.575 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic6-veryEasy-00.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic6-veryEasy-00 0.583 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic6-veryEasy-05.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic6-veryEasy-05 0.578 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic6-veryEasy-10.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic6-veryEasy-10 0.595 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic6-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic6-veryEasy-15.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic6-veryEasy-15 0.601 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic6-hard-00.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS13c final E g-hash-classic6-hard-00 1.129 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic6-hard-05.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS13c final E g-hash-classic6-hard-05 1.197 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic6-hard-10.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS13c final E g-hash-classic6-hard-10 1.317 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic6-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic6/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic6-hard-15.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS13c final E g-hash-classic6-hard-15 1.518 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-veryEasy-00.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic9-veryEasy-00 0.594 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-veryEasy-05.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic9-veryEasy-05 0.603 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-veryEasy-10.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic9-veryEasy-10 0.593 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-veryEasy-15.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic9-veryEasy-15 0.593 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-easy-00.json"
+    ],
+    "projectionSeconds": 15,
+    "projectionBasis": "MS13c final E g-hash-classic9-easy-00 2.134 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-easy-05.json"
+    ],
+    "projectionSeconds": 15,
+    "projectionBasis": "MS13c final E g-hash-classic9-easy-05 2.096 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-easy-10.json"
+    ],
+    "projectionSeconds": 15,
+    "projectionBasis": "MS13c final E g-hash-classic9-easy-10 2.191 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-easy-15.json"
+    ],
+    "projectionSeconds": 18,
+    "projectionBasis": "MS13c final E g-hash-classic9-easy-15 3.542 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-normal-00.json"
+    ],
+    "projectionSeconds": 16,
+    "projectionBasis": "MS13c final E g-hash-classic9-normal-00 2.675 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-normal-05.json"
+    ],
+    "projectionSeconds": 19,
+    "projectionBasis": "MS13c final E g-hash-classic9-normal-05 4.156 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-normal-10.json"
+    ],
+    "projectionSeconds": 16,
+    "projectionBasis": "MS13c final E g-hash-classic9-normal-10 2.933 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-normal-15.json"
+    ],
+    "projectionSeconds": 16,
+    "projectionBasis": "MS13c final E g-hash-classic9-normal-15 2.571 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-hard-00.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic9-hard-00 0.862 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-hard-05.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic9-hard-05 0.81 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-hard-10.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic9-hard-10 0.706 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-hard-15.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic9-hard-15 0.767 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-expert-00.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS13c final E g-hash-classic9-expert-00 1.306 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-expert-05.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS13c final E g-hash-classic9-expert-05 1.707 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-expert-10.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS13c final E g-hash-classic9-expert-10 1.246 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-expert-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/expert",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-expert-15.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS13c final E g-hash-classic9-expert-15 1.588 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-master-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-master-00.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS13c final E g-hash-classic9-master-00 1.574 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-master-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-master-05.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-classic9-master-05 0.884 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-master-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-master-10.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS13c final E g-hash-classic9-master-10 1.177 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-master-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/master",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-master-15.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS13c final E g-hash-classic9-master-15 1.63 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-nightmare-00.json"
+    ],
+    "projectionSeconds": 17,
+    "projectionBasis": "MS13c final E g-hash-classic9-nightmare-00 3.423 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-nightmare-05.json"
+    ],
+    "projectionSeconds": 24,
+    "projectionBasis": "MS13c final E g-hash-classic9-nightmare-05 6.925 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-nightmare-10.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MS13c final E g-hash-classic9-nightmare-10 4.597 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-classic9-nightmare-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=classic9/nightmare",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\classic9-nightmare-15.json"
+    ],
+    "projectionSeconds": 21,
+    "projectionBasis": "MS13c final E g-hash-classic9-nightmare-15 5.115 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\mega12-normal-00.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-mega12-normal-00 0.682 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\mega12-normal-05.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-mega12-normal-05 0.699 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\mega12-normal-10.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-mega12-normal-10 0.692 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-mega12-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega12/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\mega12-normal-15.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-mega12-normal-15 0.681 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\mega16-easy-00.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-mega16-easy-00 0.694 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\mega16-easy-05.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-mega16-easy-05 0.697 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\mega16-easy-10.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-mega16-easy-10 0.713 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-mega16-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=mega16/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\mega16-easy-15.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-mega16-easy-15 0.712 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\diagonalX-easy-00.json"
+    ],
+    "projectionSeconds": 21,
+    "projectionBasis": "MS13c final E g-hash-diagonalX-easy-00 5.494 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\diagonalX-easy-05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MS13c final E g-hash-diagonalX-easy-05 4.77 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\diagonalX-easy-10.json"
+    ],
+    "projectionSeconds": 15,
+    "projectionBasis": "MS13c final E g-hash-diagonalX-easy-10 2.139 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-diagonalX-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\diagonalX-easy-15.json"
+    ],
+    "projectionSeconds": 19,
+    "projectionBasis": "MS13c final E g-hash-diagonalX-easy-15 4.346 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\diagonalX-nightmare-00.json"
+    ],
+    "projectionSeconds": 83,
+    "projectionBasis": "MS13c final E g-hash-diagonalX-nightmare-00 36.002 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\diagonalX-nightmare-05.json"
+    ],
+    "projectionSeconds": 103,
+    "projectionBasis": "MS13c final E g-hash-diagonalX-nightmare-05 46.003 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\diagonalX-nightmare-10.json"
+    ],
+    "projectionSeconds": 48,
+    "projectionBasis": "MS13c final E g-hash-diagonalX-nightmare-10 18.927 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-diagonalX-nightmare-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=diagonalX/nightmare",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\diagonalX-nightmare-15.json"
+    ],
+    "projectionSeconds": 69,
+    "projectionBasis": "MS13c final E g-hash-diagonalX-nightmare-15 29.087 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\hyper-hard-00.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-hyper-hard-00 0.763 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\hyper-hard-05.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-hyper-hard-05 0.702 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\hyper-hard-10.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-hyper-hard-10 0.744 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-hyper-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=hyper/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\hyper-hard-15.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-hyper-hard-15 0.772 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\jigsaw9-normal-00.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS13c final E g-hash-jigsaw9-normal-00 1.877 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\jigsaw9-normal-05.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-jigsaw9-normal-05 0.811 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\jigsaw9-normal-10.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS13c final E g-hash-jigsaw9-normal-10 1.104 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\jigsaw9-normal-15.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS13c final E g-hash-jigsaw9-normal-15 1.656 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\jigsaw9-master-00.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS13c final E g-hash-jigsaw9-master-00 1.446 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\jigsaw9-master-05.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS13c final E g-hash-jigsaw9-master-05 1.906 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\jigsaw9-master-10.json"
+    ],
+    "projectionSeconds": 24,
+    "projectionBasis": "MS13c final E g-hash-jigsaw9-master-10 6.979 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-jigsaw9-master-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=jigsaw9/master",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\jigsaw9-master-15.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS13c final E g-hash-jigsaw9-master-15 1.346 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-killer-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\killer-easy-00.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-killer-easy-00 0.647 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-killer-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\killer-easy-05.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-killer-easy-05 0.667 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-killer-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\killer-easy-10.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-killer-easy-10 0.662 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-killer-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\killer-easy-15.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-killer-easy-15 0.701 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-killer-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\killer-hard-00.json"
+    ],
+    "projectionSeconds": 67,
+    "projectionBasis": "MS13c final E g-hash-killer-hard-00 28.167 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-killer-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\killer-hard-05.json"
+    ],
+    "projectionSeconds": 71,
+    "projectionBasis": "MS13c final E g-hash-killer-hard-05 30.101 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-killer-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\killer-hard-10.json"
+    ],
+    "projectionSeconds": 68,
+    "projectionBasis": "MS13c final E g-hash-killer-hard-10 28.874 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-killer-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=killer/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\killer-hard-15.json"
+    ],
+    "projectionSeconds": 69,
+    "projectionBasis": "MS13c final E g-hash-killer-hard-15 29.046 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\greaterThan-normal-00.json"
+    ],
+    "projectionSeconds": 38,
+    "projectionBasis": "MS13c final E g-hash-greaterThan-normal-00 13.822 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\greaterThan-normal-05.json"
+    ],
+    "projectionSeconds": 36,
+    "projectionBasis": "MS13c final E g-hash-greaterThan-normal-05 12.679 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\greaterThan-normal-10.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS13c final E g-hash-greaterThan-normal-10 1.396 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-greaterThan-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\greaterThan-normal-15.json"
+    ],
+    "projectionSeconds": 39,
+    "projectionBasis": "MS13c final E g-hash-greaterThan-normal-15 14.378 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\greaterThan-hard-00.json"
+    ],
+    "projectionSeconds": 36,
+    "projectionBasis": "MS13c final E g-hash-greaterThan-hard-00 12.767 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\greaterThan-hard-05.json"
+    ],
+    "projectionSeconds": 33,
+    "projectionBasis": "MS13c final E g-hash-greaterThan-hard-05 11.245 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\greaterThan-hard-10.json"
+    ],
+    "projectionSeconds": 23,
+    "projectionBasis": "MS13c final E g-hash-greaterThan-hard-10 6.111 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-greaterThan-hard-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=greaterThan/hard",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\greaterThan-hard-15.json"
+    ],
+    "projectionSeconds": 28,
+    "projectionBasis": "MS13c final E g-hash-greaterThan-hard-15 8.932 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\samurai-easy-00.json"
+    ],
+    "projectionSeconds": 17,
+    "projectionBasis": "MS13c final E g-hash-samurai-easy-00 3.086 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\samurai-easy-05.json"
+    ],
+    "projectionSeconds": 18,
+    "projectionBasis": "MS13c final E g-hash-samurai-easy-05 3.869 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\samurai-easy-10.json"
+    ],
+    "projectionSeconds": 18,
+    "projectionBasis": "MS13c final E g-hash-samurai-easy-10 3.656 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-samurai-easy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=samurai/easy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\samurai-easy-15.json"
+    ],
+    "projectionSeconds": 16,
+    "projectionBasis": "MS13c final E g-hash-samurai-easy-15 2.828 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\sohei-veryEasy-00.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-sohei-veryEasy-00 0.673 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\sohei-veryEasy-05.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-sohei-veryEasy-05 0.683 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\sohei-veryEasy-10.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-sohei-veryEasy-10 0.671 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-sohei-veryEasy-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=sohei/veryEasy",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\sohei-veryEasy-15.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS13c final E g-hash-sohei-veryEasy-15 0.713 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\butterfly-normal-00.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS13c final E g-hash-butterfly-normal-00 1.781 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\butterfly-normal-05.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS13c final E g-hash-butterfly-normal-05 1.154 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\butterfly-normal-10.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS13c final E g-hash-butterfly-normal-10 1.796 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-butterfly-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=butterfly/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\butterfly-normal-15.json"
+    ],
+    "projectionSeconds": 16,
+    "projectionBasis": "MS13c final E g-hash-butterfly-normal-15 2.727 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-flower-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\flower-normal-00.json"
+    ],
+    "projectionSeconds": 17,
+    "projectionBasis": "MS13c final E g-hash-flower-normal-00 3.103 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-flower-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\flower-normal-05.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS13c final E g-hash-flower-normal-05 1.213 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-flower-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\flower-normal-10.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS13c final E g-hash-flower-normal-10 1.503 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-flower-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=flower/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\flower-normal-15.json"
+    ],
+    "projectionSeconds": 15,
+    "projectionBasis": "MS13c final E g-hash-flower-normal-15 2.476 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-00",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=0",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\wordoku-normal-00.json"
+    ],
+    "projectionSeconds": 15,
+    "projectionBasis": "MS13c final E g-hash-wordoku-normal-00 2.499 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-05",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=5",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\wordoku-normal-05.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS13c final E g-hash-wordoku-normal-05 1.444 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-10",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=10",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\wordoku-normal-10.json"
+    ],
+    "projectionSeconds": 15,
+    "projectionBasis": "MS13c final E g-hash-wordoku-normal-10 2.45 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-hash-wordoku-normal-15",
+    "args": [
+      "tests\\perf.js",
+      "--hash-key=wordoku/normal",
+      "--hash-from=15",
+      "--hash-count=5",
+      "--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14b\\hashes\\wordoku-normal-15.json"
+    ],
+    "projectionSeconds": 16,
+    "projectionBasis": "MS13c final E g-hash-wordoku-normal-15 2.948 s (same shard); 2 x + 10 s"
+  }
+]

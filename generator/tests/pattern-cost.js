@@ -9,8 +9,10 @@
  *   node tests/pattern-cost.js --ids=forcingChain,nishio --runs=20 --json=<new.json> [--case=<text>]
  *   node tests/pattern-cost.js --ids=forcingChain --list
  *
- *   --ids=<id>[,<id>]   registered, unscoped technique ids; every positive and negative fixture of each one (the
- *                       active `byId` map of core/tests/fixtures/techniques.js) is a case
+ *   --ids=<id>[,<id>]   registered technique ids; every positive and negative fixture of each one (the active `byId`
+ *                       map of core/tests/fixtures/techniques.js, or, for a technique scoped to a variant, the scoped
+ *                       fixtures of core/tests/fixtures/jigsaw-techniques.js on the board of each case's own region
+ *                       map) is a case
  *   --runs=<n>          identical read-only finds per case (default 20)
  *   --json=<file>       a new project-relative .json file (never overwritten); required for a run
  *   --case=<text>       only the cases whose key or fixture name contains the text

@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS14b\g06-pins.js
+rateBoard with countNodes 1: unverified score null; default: rated score 2374
+compact jump: to 27 role step before 109 after 538 class single-culprit frame R2C4 culprit.otherScore 112 firstUse n/a
+details jump: to 27 role step before 109 after 538 class single-culprit frame R2C4 culprit.otherScore 112 firstUse n/a
+exit=0 seconds=7.568

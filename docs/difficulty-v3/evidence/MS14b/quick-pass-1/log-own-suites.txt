@@ -1,0 +1,64 @@
+$ node ..\.github\scripts\generator-quick.js run own-suites --results-dir=..\docs\difficulty-v3\evidence\MS14b\quick-pass-1
+==== shard own-fast (1713 tests): node tests/node-runner.js --suite=a11y,cache,controls,difficulty-diagnostics,difficulty-floor,digger,events,export,format,full-grid,help,history,i18n,manual-corpus,mega-contract,multigrid,pattern-cost-tools,perf-tooling,purity,qualification-records,recovery-profile,replay-recorders,result-view,rng,smoke,store,technique-weights,theme,ui-contract,variants-registry,worker --results=..\docs\difficulty-v3\evidence\MS14b\quick-pass-1\generator-own-fast.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   a11y: 31 passed  (97 ms)
+ok   cache: 106 passed  (10.74 s)
+(node:12980) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   controls: 46 passed  (111 ms)
+ok   difficulty-diagnostics: 94 passed  (14.44 s)
+ok   difficulty-floor: 48 passed  (29.69 s)
+ok   digger: 64 passed  (971 ms)
+ok   events: 68 passed  (579 ms)
+ok   export: 78 passed  (6.80 s)
+ok   format: 18 passed  (199 ms)
+ok   full-grid: 42 passed  (2.47 s)
+FAIL help: 29 passed, 1 failed  (5.39 s)
+ok   history: 15 passed  (1.75 s)
+ok   i18n: 95 passed  (1.38 s)
+ok   manual-corpus: 46 passed  (2.50 s)
+ok   mega-contract: 44 passed  (2.02 s)
+ok   multigrid: 184 passed  (26.57 s)
+ok   pattern-cost-tools: 44 passed  (4.84 s)
+ok   perf-tooling: 31 passed  (13.63 s)
+ok   purity: 41 passed  (28 ms)
+ok   qualification-records: 46 passed  (2.29 s)
+ok   recovery-profile: 27 passed  (632 ms)
+ok   replay-recorders: 39 passed  (10.06 s)
+ok   result-view: 22 passed  (2.54 s)
+ok   rng: 28 passed  (30 ms)
+ok   smoke: 44 passed  (5.00 s)
+ok   store: 85 passed  (112 ms)
+ok   technique-weights: 16 passed  (5 ms)
+ok   theme: 57 passed  (42 ms)
+ok   ui-contract: 68 passed  (362 ms)
+ok   variants-registry: 12 passed  (10 ms)
+ok   worker: 144 passed  (52.73 s)
+
+Failures:
+  FAIL help > help: the ladder, the steps and the shortcuts > lists every registered technique exactly once: by level, or under the variant it belongs to
+       AssertionError: expected Array(3)["cage", "ineq", "locked"] to equal Array(2)["cage", "ineq"]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\help.test.js:212:80)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 31
+Tests:  1713 total, 1712 passed, 1 failed, 0 skipped
+Time:   198.02 s running tests, 198.50 s total
+Results: docs/difficulty-v3/evidence/MS14b/quick-pass-1/generator-own-fast.json
+==== shard digger-target (75 tests): node tests/node-runner.js --suite=digger-target --results=..\docs\difficulty-v3\evidence\MS14b\quick-pass-1\generator-digger-target.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   digger-target: 75 passed  (2.17 s)
+
+Suites: 1
+Tests:  75 total, 75 passed, 0 failed, 0 skipped
+Time:   2.17 s running tests, 2.41 s total
+Results: docs/difficulty-v3/evidence/MS14b/quick-pass-1/generator-digger-target.json
+shard own-fast: exit 1, 198.8 s
+shard digger-target: exit 0, 2.7 s
+FAILED: own-fast
+exit=1 seconds=202.462

@@ -1,0 +1,27 @@
+mutation 17 (S01 scope: every variant): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 6.3 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is registered once, as R17 fixes it: group locked, order 87, base cost 20, scope jigsaw9, no uniqueness assumption
+mutation 18 (S02 scope: jigsaw9 and classic9): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.7 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is registered once, as R17 fixes it: group locked, order 87, base cost 20, scope jigsaw9, no uniqueness assumption
+mutation 19 (S03 scope: killer): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.7 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is registered once, as R17 fixes it: group locked, order 87, base cost 20, scope jigsaw9, no uniqueness assumption
+mutation 20 (S04 the finder's own scope check dropped): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-subset > law of leftovers kernel: scoped > does nothing outside jigsaw9, and the call costs no work
+mutation 21 (S05 the finder's scope id is jigsaw): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-subset > law of leftovers kernel: scoped > does nothing outside jigsaw9, and the call costs no work
+mutation 22 (S06 the finder's scope check also lets classic9 through): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-subset > law of leftovers kernel: scoped > does nothing outside jigsaw9, and the call costs no work
+mutation 23 (W01 weight 199): DETECTED by run 0 (generator technique-weights) - 15 total, 14 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > places lawOfLeftovers between nakedTriple and hiddenTriple: order 87, weight 200, a Normal-tier technique of the locked group that on
+mutation 24 (W02 weight 201): DETECTED by run 0 (generator technique-weights) - 15 total, 14 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > places lawOfLeftovers between nakedTriple and hiddenTriple: order 87, weight 200, a Normal-tier technique of the locked group that on
+mutation 25 (W03 weight 180 (tie with nakedTriple)): DETECTED by run 0 (generator technique-weights) - 15 total, 14 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > places lawOfLeftovers between nakedTriple and hiddenTriple: order 87, weight 200, a Normal-tier technique of the locked group that on
+mutation 26 (W04 weight 220 (tie with hiddenTriple)): DETECTED by run 0 (generator technique-weights) - 15 total, 14 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > places lawOfLeftovers between nakedTriple and hiddenTriple: order 87, weight 200, a Normal-tier technique of the locked group that on
+mutation 27 (W05 weight 320 (a Hard-tier weight)): DETECTED by run 0 (generator technique-weights) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > has no heavier technique directly before a lighter one in the actual sorted registry
+mutation 28 (W06 weight 140 (an Easy-tier weight)): DETECTED by run 0 (generator technique-weights) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > has no heavier technique directly before a lighter one in the actual sorted registry
+mutation 29 (W07 no weight entry): DETECTED by run 0 (generator technique-weights) - 1 total, 0 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL technique-weights > techniques: the weight table of SG.difficulty > covers every registered technique (add a WEIGHTS entry for a new technique)
+detected 13 of 13, survivors 0, 21.0 s

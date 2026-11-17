@@ -1,0 +1,1096 @@
+{
+  "tool": "s-av37.js",
+  "node": "v26.13.0",
+  "limit": 50000,
+  "engine": {
+    "core/js/engine/tech-subset.js": "d3da8a1133097a8a95a81d6b60c3ee3b0608fcb3f5b72769370eed5a7ed4d382",
+    "generator/js/engine/difficulty.js": "568fe2726487fb36eeb8ab187ad82dce42109d37b833e193732b3bcf75a6a410"
+  },
+  "populations": {
+    "blank": {
+      "note": "constructed: every candidate open, nothing placed; not real positions",
+      "rows": [
+        {
+          "layout": "staggered",
+          "regions": "000002222 002222211 001111111 333555555 333454455 366444444 336888888 666668887 677777777",
+          "defaultWork": 50000,
+          "defaultCap": "work",
+          "defaultMs": 2.434,
+          "fullWork": 98530
+        },
+        {
+          "layout": "wavy",
+          "regions": "000222222 000002212 011111111 333335555 333355545 644444445 666668848 766768888 777777788",
+          "defaultWork": 50000,
+          "defaultCap": "work",
+          "defaultMs": 2.222,
+          "fullWork": 81664
+        },
+        {
+          "layout": "mixed",
+          "regions": "000000022 001222222 111111112 666647885 644447855 633347855 633447885 633347885 637777855",
+          "defaultWork": 33784,
+          "defaultCap": null,
+          "defaultMs": 1.662,
+          "fullWork": 33784
+        },
+        {
+          "layout": "crossed",
+          "regions": "000011112 300001112 330444512 333345512 663345552 666444452 676688552 776778882 777788882",
+          "defaultWork": 6469,
+          "defaultCap": null,
+          "defaultMs": 0.79,
+          "fullWork": 6469
+        },
+        {
+          "layout": "boxes",
+          "regions": "000111222 000111222 000111222 333444555 333444555 333444555 666777888 666777888 666777888",
+          "defaultWork": 3436,
+          "defaultCap": null,
+          "defaultMs": 0.623,
+          "fullWork": 3436
+        }
+      ]
+    },
+    "seeded": {
+      "note": "seeded dug puzzles on test layouts, at the position after the registry techniques below it",
+      "positions": 60,
+      "found": 30,
+      "capped": 0,
+      "work": {
+        "n": 60,
+        "min": 234,
+        "p50": 3436,
+        "p95": 5305,
+        "max": 5842,
+        "mean": 3036.817
+      },
+      "ms": {
+        "n": 60,
+        "min": 0.034,
+        "p50": 0.674,
+        "p95": 0.781,
+        "max": 0.822,
+        "mean": 0.501
+      },
+      "rows": [
+        {
+          "layout": "staggered",
+          "seed": 1,
+          "clues": 18,
+          "open": 37,
+          "work": 3811,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "staggered",
+          "seed": 2,
+          "clues": 17,
+          "open": 55,
+          "work": 4700,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "staggered",
+          "seed": 3,
+          "clues": 21,
+          "open": 0,
+          "work": 3436,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "staggered",
+          "seed": 4,
+          "clues": 20,
+          "open": 57,
+          "work": 1751,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "staggered",
+          "seed": 5,
+          "clues": 19,
+          "open": 56,
+          "work": 5842,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "staggered",
+          "seed": 6,
+          "clues": 17,
+          "open": 0,
+          "work": 3436,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "staggered (transposed)",
+          "seed": 1,
+          "clues": 19,
+          "open": 50,
+          "work": 687,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "staggered (transposed)",
+          "seed": 2,
+          "clues": 21,
+          "open": 58,
+          "work": 3995,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "staggered (transposed)",
+          "seed": 3,
+          "clues": 20,
+          "open": 54,
+          "work": 406,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "staggered (transposed)",
+          "seed": 4,
+          "clues": 18,
+          "open": 50,
+          "work": 3367,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "staggered (transposed)",
+          "seed": 5,
+          "clues": 19,
+          "open": 51,
+          "work": 3826,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "staggered (transposed)",
+          "seed": 6,
+          "clues": 19,
+          "open": 56,
+          "work": 556,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "wavy",
+          "seed": 1,
+          "clues": 21,
+          "open": 42,
+          "work": 4690,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "wavy",
+          "seed": 2,
+          "clues": 18,
+          "open": 61,
+          "work": 4818,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "wavy",
+          "seed": 3,
+          "clues": 20,
+          "open": 56,
+          "work": 1336,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "wavy",
+          "seed": 4,
+          "clues": 21,
+          "open": 53,
+          "work": 4539,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "wavy",
+          "seed": 5,
+          "clues": 20,
+          "open": 31,
+          "work": 3706,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "wavy",
+          "seed": 6,
+          "clues": 21,
+          "open": 52,
+          "work": 4438,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "wavy (transposed)",
+          "seed": 1,
+          "clues": 19,
+          "open": 56,
+          "work": 4842,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "wavy (transposed)",
+          "seed": 2,
+          "clues": 22,
+          "open": 51,
+          "work": 5305,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "wavy (transposed)",
+          "seed": 3,
+          "clues": 19,
+          "open": 0,
+          "work": 3436,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "wavy (transposed)",
+          "seed": 4,
+          "clues": 19,
+          "open": 41,
+          "work": 3719,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "wavy (transposed)",
+          "seed": 5,
+          "clues": 20,
+          "open": 44,
+          "work": 3942,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "wavy (transposed)",
+          "seed": 6,
+          "clues": 20,
+          "open": 57,
+          "work": 4267,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "mixed",
+          "seed": 1,
+          "clues": 20,
+          "open": 43,
+          "work": 3560,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "mixed",
+          "seed": 2,
+          "clues": 20,
+          "open": 0,
+          "work": 3436,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "mixed",
+          "seed": 3,
+          "clues": 19,
+          "open": 59,
+          "work": 5596,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "mixed",
+          "seed": 4,
+          "clues": 20,
+          "open": 51,
+          "work": 3739,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "mixed",
+          "seed": 5,
+          "clues": 21,
+          "open": 56,
+          "work": 4135,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "mixed",
+          "seed": 6,
+          "clues": 20,
+          "open": 43,
+          "work": 3587,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "mixed (transposed)",
+          "seed": 1,
+          "clues": 21,
+          "open": 45,
+          "work": 2341,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "mixed (transposed)",
+          "seed": 2,
+          "clues": 19,
+          "open": 62,
+          "work": 5638,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "mixed (transposed)",
+          "seed": 3,
+          "clues": 20,
+          "open": 56,
+          "work": 4220,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "mixed (transposed)",
+          "seed": 4,
+          "clues": 21,
+          "open": 51,
+          "work": 4127,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "mixed (transposed)",
+          "seed": 5,
+          "clues": 19,
+          "open": 54,
+          "work": 4147,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "mixed (transposed)",
+          "seed": 6,
+          "clues": 22,
+          "open": 0,
+          "work": 3436,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "ordered",
+          "seed": 1,
+          "clues": 17,
+          "open": 61,
+          "work": 4297,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "ordered",
+          "seed": 2,
+          "clues": 16,
+          "open": 60,
+          "work": 476,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "ordered",
+          "seed": 3,
+          "clues": 18,
+          "open": 59,
+          "work": 669,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "ordered",
+          "seed": 4,
+          "clues": 16,
+          "open": 60,
+          "work": 1066,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "ordered",
+          "seed": 5,
+          "clues": 16,
+          "open": 55,
+          "work": 804,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "ordered",
+          "seed": 6,
+          "clues": 17,
+          "open": 62,
+          "work": 2749,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "ordered (transposed)",
+          "seed": 1,
+          "clues": 16,
+          "open": 59,
+          "work": 3920,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "ordered (transposed)",
+          "seed": 2,
+          "clues": 16,
+          "open": 64,
+          "work": 3240,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "ordered (transposed)",
+          "seed": 3,
+          "clues": 17,
+          "open": 60,
+          "work": 1061,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "ordered (transposed)",
+          "seed": 4,
+          "clues": 15,
+          "open": 66,
+          "work": 1803,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "ordered (transposed)",
+          "seed": 5,
+          "clues": 18,
+          "open": 63,
+          "work": 3593,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "ordered (transposed)",
+          "seed": 6,
+          "clues": 17,
+          "open": 40,
+          "work": 1949,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "crossed",
+          "seed": 1,
+          "clues": 17,
+          "open": 63,
+          "work": 2252,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "crossed",
+          "seed": 2,
+          "clues": 18,
+          "open": 59,
+          "work": 278,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "crossed",
+          "seed": 3,
+          "clues": 16,
+          "open": 61,
+          "work": 2089,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "crossed",
+          "seed": 4,
+          "clues": 19,
+          "open": 55,
+          "work": 234,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "crossed",
+          "seed": 5,
+          "clues": 16,
+          "open": 55,
+          "work": 1935,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "crossed",
+          "seed": 6,
+          "clues": 18,
+          "open": 62,
+          "work": 278,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "crossed (transposed)",
+          "seed": 1,
+          "clues": 16,
+          "open": 64,
+          "work": 2047,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "crossed (transposed)",
+          "seed": 2,
+          "clues": 17,
+          "open": 60,
+          "work": 1928,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "crossed (transposed)",
+          "seed": 3,
+          "clues": 17,
+          "open": 55,
+          "work": 1831,
+          "cap": null,
+          "found": true
+        },
+        {
+          "layout": "crossed (transposed)",
+          "seed": 4,
+          "clues": 17,
+          "open": 60,
+          "work": 3684,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "crossed (transposed)",
+          "seed": 5,
+          "clues": 17,
+          "open": 50,
+          "work": 3559,
+          "cap": null,
+          "found": false
+        },
+        {
+          "layout": "crossed (transposed)",
+          "seed": 6,
+          "clues": 16,
+          "open": 62,
+          "work": 3654,
+          "cap": null,
+          "found": true
+        }
+      ]
+    },
+    "realChecks": {
+      "winnerSeed": "5",
+      "regeneratedEqualsRecordedSource": true
+    },
+    "real": {
+      "note": "every call of the finder along the canonical solve of real Jigsaw puzzles (observer records), latency replayed on the same positions",
+      "puzzles": 14,
+      "calls": 38,
+      "capHits": 0,
+      "maxWork": 3845,
+      "puzzlesWithAStep": 4,
+      "stepsOfTheTechnique": 5,
+      "allReplaysMatch": true,
+      "allSolved": true,
+      "rows": [
+        {
+          "label": "discovery batch 1: jigsaw9 hard seed 1",
+          "status": "solved",
+          "clues": 26,
+          "steps": 67,
+          "steps_lawOfLeftovers": 1,
+          "calls": 3,
+          "work": {
+            "n": 3,
+            "min": 175,
+            "p50": 3551,
+            "p95": 3575,
+            "max": 3575,
+            "mean": 2433.667
+          },
+          "maxWork": 3575,
+          "capHits": 0,
+          "replayedCalls": 3,
+          "replayMatchesObserver": true,
+          "ms": {
+            "n": 3,
+            "min": 0.024,
+            "p50": 0.688,
+            "p95": 0.701,
+            "max": 0.701,
+            "mean": 0.471
+          },
+          "source": "discovery batch 1",
+          "seed": "1",
+          "level": "hard",
+          "regions": "111223333 114223333 114222223 144444455 166645557 666668557 996888557 999888777 999988777",
+          "modelEqualsPipeline": true,
+          "textSha256": "c4ada6ed81f9007a"
+        },
+        {
+          "label": "discovery batch 1: jigsaw9 hard seed 2",
+          "status": "solved",
+          "clues": 28,
+          "steps": 63,
+          "steps_lawOfLeftovers": 0,
+          "calls": 6,
+          "work": {
+            "n": 6,
+            "min": 3502,
+            "p50": 3509,
+            "p95": 3538,
+            "max": 3538,
+            "mean": 3519.833
+          },
+          "maxWork": 3538,
+          "capHits": 0,
+          "replayedCalls": 6,
+          "replayMatchesObserver": true,
+          "ms": {
+            "n": 6,
+            "min": 0.677,
+            "p50": 0.684,
+            "p95": 0.725,
+            "max": 0.725,
+            "mean": 0.692
+          },
+          "source": "discovery batch 1",
+          "seed": "2",
+          "level": "hard",
+          "regions": "111123333 111124333 122224443 552226443 555566444 555666677 888866777 888899977 899999977",
+          "modelEqualsPipeline": true,
+          "textSha256": "136905d0167765f7"
+        },
+        {
+          "label": "discovery batch 1: jigsaw9 hard seed 3",
+          "status": "solved",
+          "clues": 30,
+          "steps": 58,
+          "steps_lawOfLeftovers": 0,
+          "calls": 3,
+          "work": {
+            "n": 3,
+            "min": 3550,
+            "p50": 3568,
+            "p95": 3568,
+            "max": 3568,
+            "mean": 3562
+          },
+          "maxWork": 3568,
+          "capHits": 0,
+          "replayedCalls": 3,
+          "replayMatchesObserver": true,
+          "ms": {
+            "n": 3,
+            "min": 0.673,
+            "p50": 0.688,
+            "p95": 0.695,
+            "max": 0.695,
+            "mean": 0.685
+          },
+          "source": "discovery batch 1",
+          "seed": "3",
+          "level": "hard",
+          "regions": "111223333 111223334 111222334 555226444 555556744 885666774 888669974 888669977 899999777",
+          "modelEqualsPipeline": true,
+          "textSha256": "f2d5ac18e1c60394"
+        },
+        {
+          "label": "discovery batch 1: jigsaw9 hard seed 4",
+          "status": "solved",
+          "clues": 22,
+          "steps": 77,
+          "steps_lawOfLeftovers": 0,
+          "calls": 3,
+          "work": {
+            "n": 3,
+            "min": 3509,
+            "p50": 3515,
+            "p95": 3515,
+            "max": 3515,
+            "mean": 3513
+          },
+          "maxWork": 3515,
+          "capHits": 0,
+          "replayedCalls": 3,
+          "replayMatchesObserver": true,
+          "ms": {
+            "n": 3,
+            "min": 0.67,
+            "p50": 0.682,
+            "p95": 0.708,
+            "max": 0.708,
+            "mean": 0.686
+          },
+          "source": "discovery batch 1",
+          "seed": "4",
+          "level": "hard",
+          "regions": "112222334 112222344 111552344 115556334 555566334 776666384 779966884 777999888 779999888",
+          "modelEqualsPipeline": true,
+          "textSha256": "4b0581f628fb595b"
+        },
+        {
+          "label": "discovery batch 1: jigsaw9 hard seed 5",
+          "status": "solved",
+          "clues": 30,
+          "steps": 58,
+          "steps_lawOfLeftovers": 1,
+          "calls": 3,
+          "work": {
+            "n": 3,
+            "min": 1994,
+            "p50": 3614,
+            "p95": 3614,
+            "max": 3614,
+            "mean": 3074
+          },
+          "maxWork": 3614,
+          "capHits": 0,
+          "replayedCalls": 3,
+          "replayMatchesObserver": true,
+          "ms": {
+            "n": 3,
+            "min": 0.354,
+            "p50": 0.69,
+            "p95": 0.705,
+            "max": 0.705,
+            "mean": 0.583
+          },
+          "source": "discovery batch 1",
+          "seed": "5",
+          "level": "hard",
+          "regions": "111222222 111344422 113354462 133354466 773354466 773555666 775558969 778888999 788889999",
+          "modelEqualsPipeline": true,
+          "textSha256": "0c949c20558871aa"
+        },
+        {
+          "label": "discovery batch 1: jigsaw9 hard seed 6",
+          "status": "solved",
+          "clues": 22,
+          "steps": 69,
+          "steps_lawOfLeftovers": 0,
+          "calls": 1,
+          "work": {
+            "n": 1,
+            "min": 3545,
+            "p50": 3545,
+            "p95": 3545,
+            "max": 3545,
+            "mean": 3545
+          },
+          "maxWork": 3545,
+          "capHits": 0,
+          "replayedCalls": 1,
+          "replayMatchesObserver": true,
+          "ms": {
+            "n": 1,
+            "min": 0.669,
+            "p50": 0.669,
+            "p95": 0.669,
+            "max": 0.669,
+            "mean": 0.669
+          },
+          "source": "discovery batch 1",
+          "seed": "6",
+          "level": "hard",
+          "regions": "112223333 112223333 112224344 111564444 555564478 955567778 959667778 999667888 999667888",
+          "modelEqualsPipeline": true,
+          "textSha256": "46341c140dbec422"
+        },
+        {
+          "label": "discovery batch 1: jigsaw9 hard seed 7",
+          "status": "solved",
+          "clues": 26,
+          "steps": 74,
+          "steps_lawOfLeftovers": 0,
+          "calls": 1,
+          "work": {
+            "n": 1,
+            "min": 3483,
+            "p50": 3483,
+            "p95": 3483,
+            "max": 3483,
+            "mean": 3483
+          },
+          "maxWork": 3483,
+          "capHits": 0,
+          "replayedCalls": 1,
+          "replayMatchesObserver": true,
+          "ms": {
+            "n": 1,
+            "min": 0.701,
+            "p50": 0.701,
+            "p95": 0.701,
+            "max": 0.701,
+            "mean": 0.701
+          },
+          "source": "discovery batch 1",
+          "seed": "7",
+          "level": "hard",
+          "regions": "111233334 111223444 112233544 122233544 626665547 666665577 888955577 888999977 888999977",
+          "modelEqualsPipeline": true,
+          "textSha256": "1607c6c483fc38ed"
+        },
+        {
+          "label": "discovery batch 1: jigsaw9 hard seed 8",
+          "status": "solved",
+          "clues": 32,
+          "steps": 54,
+          "steps_lawOfLeftovers": 0,
+          "calls": 1,
+          "work": {
+            "n": 1,
+            "min": 3528,
+            "p50": 3528,
+            "p95": 3528,
+            "max": 3528,
+            "mean": 3528
+          },
+          "maxWork": 3528,
+          "capHits": 0,
+          "replayedCalls": 1,
+          "replayMatchesObserver": true,
+          "ms": {
+            "n": 1,
+            "min": 0.694,
+            "p50": 0.694,
+            "p95": 0.694,
+            "max": 0.694,
+            "mean": 0.694
+          },
+          "source": "discovery batch 1",
+          "seed": "8",
+          "level": "hard",
+          "regions": "111111123 415512223 445552223 444552233 445533336 477777776 899999776 888899666 888899666",
+          "modelEqualsPipeline": true,
+          "textSha256": "b49077b6cee3b76f"
+        },
+        {
+          "label": "discovery batch 1: jigsaw9 hard seed 9",
+          "status": "solved",
+          "clues": 22,
+          "steps": 83,
+          "steps_lawOfLeftovers": 2,
+          "calls": 5,
+          "work": {
+            "n": 5,
+            "min": 512,
+            "p50": 3690,
+            "p95": 3845,
+            "max": 3845,
+            "mean": 3101.6
+          },
+          "maxWork": 3845,
+          "capHits": 0,
+          "replayedCalls": 5,
+          "replayMatchesObserver": true,
+          "ms": {
+            "n": 5,
+            "min": 0.05,
+            "p50": 0.715,
+            "p95": 1.065,
+            "max": 1.065,
+            "mean": 0.709
+          },
+          "source": "discovery batch 1",
+          "seed": "9",
+          "level": "hard",
+          "regions": "111112223 441112223 444152223 464455553 664755533 667775833 667798883 677799988 699999888",
+          "modelEqualsPipeline": true,
+          "textSha256": "5781b538b57828b5"
+        },
+        {
+          "label": "discovery batch 1: jigsaw9 hard seed 10",
+          "status": "solved",
+          "clues": 24,
+          "steps": 72,
+          "steps_lawOfLeftovers": 0,
+          "calls": 3,
+          "work": {
+            "n": 3,
+            "min": 3501,
+            "p50": 3512,
+            "p95": 3570,
+            "max": 3570,
+            "mean": 3527.667
+          },
+          "maxWork": 3570,
+          "capHits": 0,
+          "replayedCalls": 3,
+          "replayMatchesObserver": true,
+          "ms": {
+            "n": 3,
+            "min": 0.693,
+            "p50": 0.693,
+            "p95": 0.697,
+            "max": 0.697,
+            "mean": 0.695
+          },
+          "source": "discovery batch 1",
+          "seed": "10",
+          "level": "hard",
+          "regions": "112222223 112224443 111144333 551444433 555667733 556677778 566697778 566999888 999998888",
+          "modelEqualsPipeline": true,
+          "textSha256": "1e48d00ff05c00ac"
+        },
+        {
+          "label": "discovery batch 1: jigsaw9 hard seed 11",
+          "status": "solved",
+          "clues": 26,
+          "steps": 73,
+          "steps_lawOfLeftovers": 0,
+          "calls": 4,
+          "work": {
+            "n": 4,
+            "min": 3470,
+            "p50": 3470,
+            "p95": 3698,
+            "max": 3698,
+            "mean": 3527
+          },
+          "maxWork": 3698,
+          "capHits": 0,
+          "replayedCalls": 4,
+          "replayMatchesObserver": true,
+          "ms": {
+            "n": 4,
+            "min": 0.659,
+            "p50": 0.672,
+            "p95": 0.676,
+            "max": 0.676,
+            "mean": 0.67
+          },
+          "source": "discovery batch 1",
+          "seed": "11",
+          "level": "hard",
+          "regions": "112222233 111222333 114525333 114555663 744455666 744455666 774888869 777889999 778889999",
+          "modelEqualsPipeline": true,
+          "textSha256": "79739c05b7895971"
+        },
+        {
+          "label": "discovery batch 1: jigsaw9 hard seed 12",
+          "status": "solved",
+          "clues": 28,
+          "steps": 59,
+          "steps_lawOfLeftovers": 0,
+          "calls": 2,
+          "work": {
+            "n": 2,
+            "min": 3436,
+            "p50": 3436,
+            "p95": 3436,
+            "max": 3436,
+            "mean": 3436
+          },
+          "maxWork": 3436,
+          "capHits": 0,
+          "replayedCalls": 2,
+          "replayMatchesObserver": true,
+          "ms": {
+            "n": 2,
+            "min": 0.655,
+            "p50": 0.655,
+            "p95": 0.659,
+            "max": 0.659,
+            "mean": 0.657
+          },
+          "source": "discovery batch 1",
+          "seed": "12",
+          "level": "hard",
+          "regions": "111122333 111422233 144422233 144455233 644555577 688855777 688859977 668889977 666699999",
+          "modelEqualsPipeline": true,
+          "textSha256": "6a5aa20eff783a2c"
+        },
+        {
+          "label": "existing source 1: jigsaw9 hard seed 1",
+          "status": "solved",
+          "clues": 24,
+          "steps": 72,
+          "steps_lawOfLeftovers": 1,
+          "calls": 3,
+          "work": {
+            "n": 3,
+            "min": 175,
+            "p50": 3551,
+            "p95": 3575,
+            "max": 3575,
+            "mean": 2433.667
+          },
+          "maxWork": 3575,
+          "capHits": 0,
+          "replayedCalls": 3,
+          "replayMatchesObserver": true,
+          "ms": {
+            "n": 3,
+            "min": 0.027,
+            "p50": 0.691,
+            "p95": 0.692,
+            "max": 0.692,
+            "mean": 0.47
+          },
+          "source": "jigsawHelpSource (MS03c)",
+          "seed": "1",
+          "level": "hard",
+          "regions": "111223333 114223333 114222223 144444455 166645557 666668557 996888557 999888777 999988777"
+        },
+        {
+          "label": "existing source 2: jigsaw9 easy seed 3",
+          "status": "solved",
+          "clues": 34,
+          "steps": 47,
+          "steps_lawOfLeftovers": 0,
+          "calls": 0,
+          "work": null,
+          "maxWork": 0,
+          "capHits": 0,
+          "replayedCalls": 0,
+          "replayMatchesObserver": true,
+          "ms": null,
+          "source": "structured export puzzle 1 (player fixture)",
+          "seed": "3",
+          "level": "easy",
+          "regions": "111223333 111223334 111222334 555226444 555556744 885666774 888669974 888669977 899999777"
+        }
+      ],
+      "withCalls": 13
+    }
+  }
+}

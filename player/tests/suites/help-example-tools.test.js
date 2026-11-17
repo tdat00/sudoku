@@ -431,9 +431,10 @@
       expect(map[40]).toBe(kept[40]);
     });
 
-    it('adds no cellRegion to any other variant, and its examples are the same data as the saved ones', function () {
+    it('adds a cellRegion only to a Jigsaw example (the one of lawOfLeftovers), and the other examples are the same data as the saved ones', function () {
       ready();
-      registry().forEach(function (id) { expect('cellRegion' in EXAMPLES[id]).toBe(false); });
+      registry().forEach(function (id) { expect('cellRegion' in EXAMPLES[id]).toBe(EXAMPLES[id].variant === 'jigsaw9'); });
+      expect(registry().filter(function (id) { return EXAMPLES[id].variant === 'jigsaw9'; })).toEqual(['lawOfLeftovers']);
       ['nakedSingle', 'cageCombo', 'ineqChain'].forEach(function (id) {
         var run = T.replayPuzzle(SG, sourceOf(id), [id], { maxHints: EXAMPLES[id].source.step + 1 });
         expect(JSON.stringify(run.best[id].data)).toBe(JSON.stringify(EXAMPLES[id]));
@@ -457,9 +458,9 @@
       var merged = T.mergeCatalogue(registry(), EXAMPLES, [id], byId);
       expect(merged.ok).toBe(true);
       var text = T.render(registry(), merged.catalogue);
-      expect(text).toContain('cellRegion');
+      expect(text.split('"cellRegion":[').length - 1).toBe(id === 'lawOfLeftovers' ? 1 : 2);
       expect(clone(T.catalogueOf(text)[id])).toEqual(clone(fresh));
-      expect(T.render(registry(), EXAMPLES)).not.toContain('cellRegion');
+      expect(T.render(registry(), EXAMPLES).split('"cellRegion":[').length - 1).toBe(1);
     });
 
     it('does not accept a Jigsaw example without its map, or a map in an example of another variant', function () {

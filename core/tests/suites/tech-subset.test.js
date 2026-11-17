@@ -1400,8 +1400,9 @@
     });
   });
 
-  // Law of leftovers (MS14a, R17): the inactive complete-support kernel SG.leftoverPatterns.find. It is never
-  // registered, so the helper's registry based checks do not apply. Every expectation comes from `oracle`, a
+  // Law of leftovers (MS14a, R17; registered by MS14b): the complete-support finder, here as SG.leftoverPatterns.find (the
+  // seam with a work limit) and as the registered technique `lawOfLeftovers`. The helper's registry based checks do not
+  // apply to a Jigsaw-only technique, so the checks below are their own. Every expectation comes from `oracle`, a
   // deliberately naive enumeration built only from model.units, model.unitMeta and the units' cells (no table
   // of the finder, no bit mask, signatures as sorted digit lists), from hand-checked vectors, or from known
   // solutions that satisfy every unit of their board.
@@ -1784,11 +1785,12 @@
       return { finding: out.finding, work: truth.work, declined: false };
     }
 
-    describe('law of leftovers kernel: inactive and scoped', function () {
-      it('is not registered, so no solve, rating or hint can reach it', function () {
-        expect(SG.techniques.has(ID)).toBe(false);
-        expect(caught(function () { SG.techniques.get(ID); }).code).toBe('technique.unknown');
-        expect(SG.techniques.list().map(function (t) { return t.id; })).not.toContain(ID);
+    describe('law of leftovers kernel: scoped', function () {
+      it('is in the registry now (MS14a pinned the opposite while the kernel was inactive)', function () {
+        expect(SG.techniques.has(ID)).toBe(true);
+        expect(SG.techniques.get(ID).id).toBe(ID);
+        expect(SG.techniques.list().map(function (t) { return t.id; })).toContain(ID);
+        expect(caught(function () { SG.techniques.get('lawOfLeftovers2'); }).code).toBe('technique.unknown');
       });
 
       it('has R10\'s starting limits: 2 units and 4 cells per side, 50000 work units', function () {
@@ -2653,6 +2655,432 @@
         expect(order(['R3C3', 'R5C7'])).toEqual(['C9 J3', 'R1+R2 J1+J2', 'C8+C9 J3+J8']);
         expect(order(['R3C3', 'R8C7'])).toEqual(['R1+R2 J1+J2', 'C8+C9 J3+J8']);
         expect(order(['R8C7'])).toEqual(['C8+C9 J3+J8']);
+      });
+    });
+
+    // ----- law of leftovers registered (MS14b): the registry, the scope, the real positions on their own region maps
+
+    var JT = SG.fixtures.jigsawTechniques;
+    // the variants of the project other than jigsaw9
+    var OTHER_VARIANTS = ['classic4', 'classic6', 'classic9', 'mega12', 'mega16', 'diagonalX', 'hyper', 'killer',
+      'greaterThan', 'samurai', 'sohei', 'butterfly', 'flower', 'wordoku'];
+    var DEFAULT_WORK = 50000;
+
+    /** The registered ids before lawOfLeftovers that apply to jigsaw9: where the registry reaches it. */
+    function belowLeftovers() {
+      var order = SG.techniques.get(ID).order;
+      return SG.techniques.list().filter(function (t) {
+        return t.order < order && SG.techniques.appliesTo(t, 'jigsaw9');
+      }).map(function (t) { return t.id; });
+    }
+
+    /** The registered finder on a position, at the default limit: { finding, records, record }. */
+    function registered(model, state, contextOptions) {
+      var records = [];
+      var ctx = SG.techniques.createContext(model, Object.assign({
+        onPatternWork: function (r) { records.push(r); }
+      }, contextOptions));
+      var finding = SG.techniques.get(ID).find(model, state, ctx);
+      return { finding: finding, records: records, record: records[0] };
+    }
+
+    function transposeCell(cell) { return (cell % 9) * 9 + Math.floor(cell / 9); }
+
+    function transposeText(text) {
+      var out = '';
+      for (var r = 0; r < 9; r++) for (var c = 0; c < 9; c++) out += text.charAt(c * 9 + r);
+      return out;
+    }
+
+    /** R1C2 <-> R2C1 and R4 <-> C4; a region (J7) is the region of the same number in the transposed layout. */
+    function transposeLabel(label) {
+      var cell = /^R(\d)C(\d)$/.exec(label);
+      if (cell) return 'R' + cell[2] + 'C' + cell[1];
+      var line = /^([RC])(\d)$/.exec(label);
+      return line ? (line[1] === 'R' ? 'C' : 'R') + line[2] : label;
+    }
+
+    function byCellThenDigit(x, y) { return x[0] - y[0] || x[1] - y[1]; }
+
+    describe('law of leftovers registered: registration, scope and order', function () {
+      it('is registered once, as R17 fixes it: group locked, order 87, base cost 20, scope jigsaw9, no uniqueness ' +
+        'assumption', function () {
+        var def = SG.techniques.get(ID);
+        expect(SG.techniques.list().filter(function (t) { return t.id === ID; })).toHaveLength(1);
+        expect(def.id).toBe(ID);
+        expect(def.group).toBe('locked');
+        expect(def.order).toBe(87);
+        expect(def.baseCost).toBe(20);
+        expect(def.i18nKey).toBe('technique.lawOfLeftovers');
+        expect(def.variantScope).toEqual(['jigsaw9']);
+        expect(def.assumesUniqueness).toBe(false);
+        expect(typeof def.find).toBe('function');
+      });
+
+      it('is registered once even when the file is loaded again: the registry keeps its first definition', function () {
+        var source = SG.test.node && SG.test.node.fs.readFileSync(
+          SG.test.node.path.join(SG.test.node.root, '../core/js/engine/tech-subset.js'), 'utf8');
+        if (!source) SG.test.skip('needs the Node runner to reload the source');
+        var def = SG.techniques.get(ID);
+        var count = SG.techniques.list().length;
+        SG.test.node.vm.runInThisContext(source, { filename: '../core/js/engine/tech-subset.js' });
+        expect(SG.techniques.get(ID)).toBe(def);
+        expect(SG.techniques.list().length).toBe(count);
+        expect(SG.techniques.list().filter(function (t) { return t.id === ID; })).toHaveLength(1);
+        expect(SG.leftoverPatterns.LIMITS).toEqual({ units: 2, cells: 4, work: 50000 });
+      });
+
+      it('sits between the naked and the hidden triple, and no other technique has its order', function () {
+        var ids = SG.techniques.list().map(function (t) { return t.id; });
+        expect(ids.indexOf(ID)).toBeGreaterThan(ids.indexOf('nakedTriple'));
+        expect(ids.indexOf(ID)).toBe(ids.indexOf('hiddenTriple') - 1);
+        expect(SG.techniques.get('nakedTriple').order).toBeLessThan(87);
+        expect(SG.techniques.get('hiddenTriple').order).toBeGreaterThan(87);
+        SG.techniques.list().forEach(function (t) {
+          if (t.id !== ID) expect([t.id, t.order === 87]).toEqual([t.id, false]);
+        });
+      });
+
+      it('is a scoped technique with its own fixtures: not in the classic map, and no second id for the cage rule',
+        function () {
+          var F = SG.fixtures.techniques;
+          expect(F.ids).not.toContain(ID);
+          expect(F.byId[ID]).toBeUndefined();
+          expect(F.registryOrder).not.toContain(ID);
+          expect(JT.ids).toEqual([ID]);
+          expect(JT.byId[ID].scope).toEqual(SG.techniques.get(ID).variantScope);
+          var ids = SG.techniques.list().map(function (t) { return t.id; });
+          expect(ids.filter(function (id) { return /cageLocked/i.test(id); })).toEqual([]);
+        });
+
+      it('applies to jigsaw9 only: the registry offers it to no other variant', function () {
+        var def = SG.techniques.get(ID);
+        expect(SG.techniques.appliesTo(def, 'jigsaw9')).toBe(true);
+        OTHER_VARIANTS.forEach(function (id) {
+          expect([id, SG.techniques.appliesTo(def, id)]).toEqual([id, false]);
+        });
+      });
+
+      it('does nothing on any other board, called through the registry, with a record of no work: the finder checks ' +
+        'the scope itself', function () {
+        var checked = 0;
+        OTHER_VARIANTS.forEach(function (id) {
+          if (!SG.testkit.hasVariant(id)) return;
+          var model = H.model(id);
+          var out = registered(model, SG.model.initState(model));
+          expect([id, out.finding]).toEqual([id, null]);
+          expect([id, out.records]).toEqual([id, [{ id: ID, work: 0, limit: DEFAULT_WORK, capHit: null,
+            retained: null }]]);
+          checked++;
+        });
+        expect(checked).toBeGreaterThanOrEqual(3);
+      });
+
+      it('is never offered to the solver of another variant: a classic solve has no step and no record of it',
+        function () {
+          var model = H.model('classic9');
+          SG.fixtures.classic.unique.slice(0, 3).forEach(function (item) {
+            var records = [];
+            var report = SG.logicalSolver.solve(model, H.parsePuzzle(model, item.puzzle), {
+              collectSteps: true, onPatternWork: function (r) { records.push(r); }
+            });
+            expect(report.techniqueCounts[ID]).toBeUndefined();
+            report.steps.forEach(function (s) { expect(s.technique).not.toBe(ID); });
+            expect(records.filter(function (r) { return r.id === ID; })).toEqual([]);
+          });
+          // asking for it by name on another variant is skipped, not an error: the ladder holds what applies
+          var asked = SG.logicalSolver.solve(model, H.parsePuzzle(model, SG.fixtures.classic.unique[0].puzzle), {
+            allowedTechniques: ['nakedSingle', ID], collectSteps: true
+          });
+          expect(asked.techniqueCounts[ID]).toBeUndefined();
+        });
+
+      it('is the kernel at the default limit: the registry call and the seam give the same Finding and record',
+        function () {
+          JT.byId[ID].positive.concat(JT.byId[ID].negative).forEach(function (fixture) {
+            var model = JT.modelOf(fixture);
+            var state = JT.stateOf(fixture);
+            var viaRegistry = registered(model, state);
+            var viaSeam = call(model, state);
+            expect([fixture.name, viaRegistry.finding]).toEqual([fixture.name, viaSeam.finding]);
+            expect([fixture.name, viaRegistry.records]).toEqual([fixture.name, viaSeam.records]);
+            expect(viaRegistry.record.limit).toBe(DEFAULT_WORK);
+          });
+        });
+
+      it('is deterministic after another call, and leaves the position and the Finding of an earlier call alone',
+        function () {
+          var first = JT.byId[ID].positive[0];
+          var second = JT.byId[ID].positive[2];
+          var modelA = JT.modelOf(first);
+          var stateA = JT.stateOf(first);
+          var snapshot = SG.model.cloneState(stateA);
+          var before = registered(modelA, stateA).finding;
+          var kept = JSON.stringify(before);
+          registered(JT.modelOf(second), JT.stateOf(second));
+          before.eliminations.length = 0;
+          before.cells.length = 0;
+          var again = registered(modelA, stateA).finding;
+          expect(JSON.stringify(again)).toBe(kept);
+          expect(Array.from(stateA.candidates)).toEqual(Array.from(snapshot.candidates));
+          expect(Array.from(stateA.value)).toEqual(Array.from(snapshot.value));
+          expect(stateA.unsolvedCount).toBe(snapshot.unsolvedCount);
+        });
+    });
+
+    describe('law of leftovers registered: real positions on their own region maps (jigsaw-techniques.js)', function () {
+      var ENTRY = JT.byId[ID];
+
+      it('has two positive pairs, rows and columns, and three negatives, each with a name of its own', function () {
+        expect(ENTRY.positive).toHaveLength(4);
+        expect(ENTRY.negative).toHaveLength(3);
+        var names = ENTRY.positive.concat(ENTRY.negative).map(function (f) { return f.name; });
+        expect(new Set(names).size).toBe(names.length);
+        expect(ENTRY.positive.map(function (f) { return f.expect.args.lines[0].charAt(0); }))
+          .toEqual(['R', 'C', 'R', 'C']);
+        expect(ENTRY.positive.map(function (f) { return f.expect.args.lines.length; })).toEqual([1, 1, 2, 2]);
+      });
+
+      ENTRY.positive.forEach(function (fixture) {
+        it('finds exactly the recorded deduction, field by field, on its own board: ' + fixture.name, function () {
+          var model = JT.modelOf(fixture);
+          expect(J.problems(fixture.cellRegion)).toEqual([]);
+          expect(Array.from(model.layout.cellRegion)).toEqual(fixture.cellRegion);
+          expect(fixture.after).toEqual(belowLeftovers());
+          var givens = H.parsePuzzle(model, fixture.givens);
+          expect(SG.dfs.countSolutions(model, givens, 2)).toBe(1);
+          var state = JT.stateOf(fixture);
+          var finding = H.expectFinding(SG.test, ID, state, {
+            placements: [], eliminations: fixture.expect.eliminations, cells: fixture.expect.cells,
+            args: fixture.expect.args
+          }, { model: model });
+          expect(finding.technique).toBe(ID);
+          expect(finding.i18nKey).toBe('technique.lawOfLeftovers.step');
+          expect(finding.placements).toEqual([]);
+          expect(finding.eliminations).toEqual(fixture.expect.eliminations);
+          expect(finding.cells).toEqual(fixture.expect.cells);
+          expect(finding.i18nArgs).toEqual(fixture.expect.args);
+          // the independent enumeration, built from model.units alone, finds the same first choice in the same work
+          expect(expectSame(model, state, fixture.name).finding).toEqual(finding);
+          var out = registered(model, state);
+          expect(out.finding).toEqual(finding);
+          expect(out.record.capHit).toBeNull();
+          expect(out.record.work).toBeLessThan(DEFAULT_WORK);
+        });
+
+        it('proves its eliminations against the unique solution, and the puzzle completes: ' + fixture.name,
+          function () {
+            var model = JT.modelOf(fixture);
+            var givens = H.parsePuzzle(model, fixture.givens);
+            var solution = SG.dfs.solve(model, givens);
+            expect(validSolution(model, solution)).toBe(true);
+            fixture.expect.eliminations.forEach(function (e) {
+              expect([fixture.name, e, solution[e[0]] === e[1]]).toEqual([fixture.name, e, false]);
+            });
+            var state = JT.stateOf(fixture);
+            expect(H.findingProblems(model, state, registered(model, state).finding,
+              { technique: ID, solution: solution })).toEqual([]);
+            // the solution lies in every candidate set of the position and survives the eliminations
+            var reduced = SG.model.cloneState(state);
+            fixture.expect.eliminations.forEach(function (e) {
+              expect(SG.constraints.eliminate(model, reduced, e[0], e[1])).toBe(true);
+            });
+            for (var c = 0; c < model.cellCount; c++) {
+              expect(reduced.candidates[c] & (1 << (solution[c] - 1))).not.toBe(0);
+            }
+            // the full solver finishes the puzzle and takes this very step first among the steps of the technique
+            var records = [];
+            var report = SG.logicalSolver.solve(model, givens, {
+              collectSteps: true, onPatternWork: function (r) { records.push(r); }
+            });
+            expect(report.status).toBe('solved');
+            expect(Array.from(report.state.value)).toEqual(Array.from(solution));
+            var steps = report.steps.filter(function (s) { return s.technique === ID; });
+            expect(steps.length).toBeGreaterThan(0);
+            expect(steps[0].eliminations).toEqual(fixture.expect.eliminations);
+            expect(steps[0].i18nArgs).toEqual(fixture.expect.args);
+            expect(report.techniqueCounts[ID]).toBe(steps.length);
+            var mine = records.filter(function (r) { return r.id === ID; });
+            expect(mine.length).toBeGreaterThanOrEqual(steps.length);
+            mine.forEach(function (r) { expect(r.limit).toBe(DEFAULT_WORK); });
+          });
+      });
+
+      it('has each positive pair as exact duals: the second is the first with rows and columns exchanged', function () {
+        [[0, 1], [2, 3]].forEach(function (pair) {
+          var a = ENTRY.positive[pair[0]];
+          var b = ENTRY.positive[pair[1]];
+          var modelB = JT.modelOf(b);
+          expect(b.cellRegion).toEqual(J.transpose(a.cellRegion));
+          expect(b.givens).toBe(transposeText(a.givens));
+          expect(b.expect.eliminations).toEqual(a.expect.eliminations.map(function (e) {
+            return [transposeCell(e[0]), e[1]];
+          }).sort(byCellThenDigit));
+          expect(b.expect.cells).toEqual(a.expect.cells.map(transposeCell).sort(numeric));
+          expect(b.expect.args.lines).toEqual(a.expect.args.lines.map(transposeLabel));
+          expect(b.expect.args.regions).toEqual(a.expect.args.regions);
+          expect(b.expect.args.digits).toEqual(a.expect.args.digits);
+          expect(b.expect.args.cells).toEqual(b.expect.cells.map(function (c) { return SG.model.cellLabel(modelB, c); }));
+          expect(a.expect.args.lines[0].charAt(0)).toBe('R');
+          expect(b.expect.args.lines[0].charAt(0)).toBe('C');
+        });
+      });
+
+      ENTRY.negative.forEach(function (fixture) {
+        it('finds nothing, by a complete search and not by a cap: ' + fixture.name, function () {
+          var model = JT.modelOf(fixture);
+          expect(J.problems(fixture.cellRegion)).toEqual([]);
+          expect(SG.dfs.countSolutions(model, H.parsePuzzle(model, fixture.givens), 2)).toBe(1);
+          var state = JT.stateOf(fixture);
+          H.expectNoFinding(SG.test, ID, state, { model: model });
+          var out = registered(model, state);
+          expect(out.finding).toBeNull();
+          expect(out.record.capHit).toBeNull();
+          var truth = oracle(model, state);
+          expect(truth.result).toBeNull();
+          expect(out.record.work).toBe(truth.work);
+        });
+      });
+
+      it('keeps each negative where it belongs: the two "nothing left" positions are the positives\' own after the ' +
+        'technique, the boxes puzzle is on the plain boxes', function () {
+        var neg = ENTRY.negative;
+        var pos = ENTRY.positive;
+        [[0, 0], [1, 1]].forEach(function (pair) {
+          expect(neg[pair[0]].after).toEqual(belowLeftovers().concat([ID]));
+          expect(neg[pair[0]].givens).toBe(pos[pair[1]].givens);
+          expect(neg[pair[0]].cellRegion).toEqual(pos[pair[1]].cellRegion);
+        });
+        expect(neg[2].cellRegion).toEqual(J.parse(J.LAYOUTS.boxes));
+        expect(neg[2].after).toEqual(belowLeftovers());
+        // no choice of units leaves at most four cells there: the scan costs what a blank board of the layout costs
+        var model = JT.modelOf(neg[2]);
+        expect(oracle(model, JT.stateOf(neg[2])).work).toBe(3436);
+      });
+
+      it('has supplements that are real unique puzzles with a Finding at the registry position, rows and columns',
+        function () {
+          var list = JT.supplements[ID];
+          expect(list.length).toBeGreaterThanOrEqual(7);
+          var kinds = { R: 0, C: 0 };
+          list.forEach(function (fixture) {
+            var model = JT.modelOf(fixture);
+            expect(J.problems(fixture.cellRegion)).toEqual([]);
+            expect(fixture.after).toEqual(belowLeftovers());
+            var givens = H.parsePuzzle(model, fixture.givens);
+            expect(SG.dfs.countSolutions(model, givens, 2)).toBe(1);
+            var state = JT.stateOf(fixture);
+            var out = expectSame(model, state, fixture.name);
+            expect([fixture.name, out.finding === null]).toEqual([fixture.name, false]);
+            kinds[out.finding.i18nArgs.lines[0].charAt(0)]++;
+            expect(H.findingProblems(model, state, out.finding,
+              { technique: ID, solution: SG.dfs.solve(model, givens) })).toEqual([]);
+          });
+          expect(kinds.R).toBeGreaterThanOrEqual(3);
+          expect(kinds.C).toBeGreaterThanOrEqual(3);
+        });
+    });
+
+    describe('law of leftovers registered: the default limit and the caller\'s budget', function () {
+      it('runs with the default limit of 50000 through the registry, and no option reaches it', function () {
+        [['staggered', 50000, 'work'], ['wavy', 50000, 'work'], ['mixed', 33784, null], ['crossed', 6469, null],
+          ['boxes', 3436, null]].forEach(function (row) {
+          var model = board(row[0]);
+          var out = registered(model, SG.model.initState(model));
+          expect([row[0], out.finding]).toEqual([row[0], null]);
+          expect([row[0], out.record]).toEqual([row[0], { id: ID, work: row[1], limit: DEFAULT_WORK, capHit: row[2],
+            retained: null }]);
+        });
+        // the registered finder takes no options: a fourth argument, which no solver passes, is ignored
+        var model = board('staggered');
+        var records = [];
+        var ctx = SG.techniques.createContext(model, { onPatternWork: function (r) { records.push(r); } });
+        expect(SG.techniques.get(ID).find(model, SG.model.initState(model), ctx, { workLimit: 5 })).toBeNull();
+        expect(records).toEqual([{ id: ID, work: DEFAULT_WORK, limit: DEFAULT_WORK, capHit: 'work', retained: null }]);
+      });
+
+      it('passes the budget of the caller through unchanged: spent is nothing found, cancellation propagates',
+        function () {
+          var model = board('staggered');
+          var blank = SG.model.initState(model);
+          var parent = SG.budget.create({ nodes: 3 });
+          var spent = registered(model, blank, { budget: parent });
+          expect(spent.finding).toBeNull();
+          expect(spent.record).toEqual({ id: ID, work: 768, limit: DEFAULT_WORK, capHit: null, retained: null });
+          expect(caught(function () { parent.check(); }).code).toBe('budget.exceeded');
+
+          var budget = SG.budget.create({});
+          budget.cancel();
+          var records = [];
+          var err = caught(function () {
+            SG.techniques.get(ID).find(model, blank, SG.techniques.createContext(model, {
+              budget: budget, onPatternWork: function (r) { records.push(r); } }));
+          });
+          expect(err.code).toBe('budget.cancelled');
+          expect(records).toEqual([]);
+        });
+    });
+
+    describe('law of leftovers registered: seeded dug puzzles at the position where the registry reaches it', function () {
+      var LAYOUTS = ['staggered', 'wavy', 'mixed', 'ordered', 'crossed'];
+
+      /** A unique puzzle dug from a seeded solution of the layout, and the position after the techniques below. */
+      function dugPosition(name, transposed, seed) {
+        var model = board(name, transposed);
+        var rng = SG.testkit.rng.create(seed * 7919 + (transposed ? 1 : 0));
+        var solution = J.solve(model, rng.fork('grid'));
+        var dug = SG.testkit.dig(model, solution, rng.fork('dig'), { minClues: 0 });
+        return { model: model, solution: solution,
+          state: H.stateAfter(model, dug.givens, belowLeftovers()) };
+      }
+
+      it('gives the oracle\'s Finding, and its cap where the oracle needs more than 50000 units, on 60 puzzles of the ' +
+        'five layouts and their transposes', function () {
+        var seen = { positions: 0, found: 0, capped: 0, units: { 1: 0, 2: 0 }, kind: { R: 0, C: 0 } };
+        LAYOUTS.forEach(function (name) {
+          [false, true].forEach(function (transposed) {
+            for (var seed = 1; seed <= 6; seed++) {
+              var item = dugPosition(name, transposed, seed);
+              var where = name + (transposed ? ' (transposed)' : '') + ' seed ' + seed;
+              var truth = oracle(item.model, item.state);
+              var out = registered(item.model, item.state);
+              seen.positions++;
+              if (truth.work > DEFAULT_WORK) {
+                seen.capped++;
+                expect([where, out.finding]).toEqual([where, null]);
+                expect([where, out.record]).toEqual([where, { id: ID, work: DEFAULT_WORK, limit: DEFAULT_WORK,
+                  capHit: 'work', retained: null }]);
+                continue;
+              }
+              expect([where, out.record.capHit]).toEqual([where, null]);
+              expect([where, out.record.work]).toEqual([where, truth.work]);
+              if (truth.result === null || truth.result === 'declined') {
+                expect([where, out.finding]).toEqual([where, null]);
+                continue;
+              }
+              seen.found++;
+              expect(out.finding.cells).toEqual(truth.result.cells);
+              expect(out.finding.eliminations).toEqual(truth.result.eliminations);
+              expect(out.finding.i18nArgs).toEqual({
+                lines: truth.result.lines, regions: truth.result.regions,
+                cells: truth.result.cells.map(function (c) { return SG.model.cellLabel(item.model, c); }),
+                digits: truth.result.digits
+              });
+              expect(H.findingProblems(item.model, item.state, out.finding,
+                { technique: ID, solution: item.solution })).toEqual([]);
+              seen.units[out.finding.i18nArgs.lines.length]++;
+              seen.kind[out.finding.i18nArgs.lines[0].charAt(0)]++;
+            }
+          });
+        });
+        // minimums from the recorded scan (logs/seeded-distribution.txt): 30 findings, 4 with one unit a side and 26 with
+        // two, 16 with rows and 14 with columns as the lines, none capped
+        expect(seen.positions).toBe(60);
+        expect(seen.found).toBeGreaterThanOrEqual(25);
+        expect(seen.units[1]).toBeGreaterThanOrEqual(3);
+        expect(seen.units[2]).toBeGreaterThanOrEqual(20);
+        expect(seen.kind.R).toBeGreaterThanOrEqual(10);
+        expect(seen.kind.C).toBeGreaterThanOrEqual(10);
       });
     });
 

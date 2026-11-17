@@ -567,6 +567,25 @@
       expect(listed.filter(function (name) { return suites.indexOf(name) === -1; })).toEqual([]);
     });
 
+    it('every fixture file of ../core/tests/fixtures and tests/fixtures is listed in the CORE_FIXTURE_FILES and FIXTURE_FILES of tests.html, and only those', function () {
+      var html = readText('tests.html');
+      var core = quotedList(html, 'var CORE_FIXTURE_FILES');
+      var own = quotedList(html, 'var FIXTURE_FILES');
+      expect(core).not.toBeNull();
+      expect(own).not.toBeNull();
+      var named = function (dir) {
+        return listDir(dir, '.js').map(function (name) { return name.slice(0, -'.js'.length); });
+      };
+      var coreFiles = named('../core/tests/fixtures');
+      var ownFiles = named('tests/fixtures');
+      expect(coreFiles.length).toBeGreaterThan(5);
+      expect(ownFiles.length).toBeGreaterThan(10);
+      expect(coreFiles.filter(function (name) { return core.indexOf(name) === -1; })).toEqual([]);
+      expect(core.filter(function (name) { return coreFiles.indexOf(name) === -1; })).toEqual([]);
+      expect(ownFiles.filter(function (name) { return own.indexOf(name) === -1; })).toEqual([]);
+      expect(own.filter(function (name) { return ownFiles.indexOf(name) === -1; })).toEqual([]);
+    });
+
     it('the list reader of this file notices a missing entry', function () {
       var listed = quotedList("var SUITE_FILES = [\n  'a', 'b', // c\n  'd'\n];", 'var SUITE_FILES');
       expect(listed).toEqual(['a', 'b', 'd']);

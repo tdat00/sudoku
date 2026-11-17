@@ -92,7 +92,7 @@
     it('every technique has a translated name and description, and so has its group', function () {
       ready();
       var list = SG.techniques.list();
-      expect(list.length).toBe(37);
+      expect(list.length).toBe(38);
       list.forEach(function (tech) {
         bothLanguages('technique.' + tech.id);
         bothLanguages('technique.' + tech.id + '.desc');
@@ -166,6 +166,9 @@
         var parsed = SG.importer.parseExportBlock(block[0], 1);
         expect(parsed.ok).toBe(true);
         var puzzle = SG.importer.openDocument(parsed.data, { kind: 'export' }).puzzle;
+        // The regions of a Jigsaw example are the regions of the source it was cut from, cell by cell.
+        expect('cellRegion' in ex).toBe(ex.variant === 'jigsaw9');
+        if (ex.variant === 'jigsaw9') expect(Array.from(puzzle.model.layout.cellRegion)).toEqual(ex.cellRegion);
         var game = SG.play.createGame(puzzle.model, puzzle.givens, puzzle.solution, { now: function () { return 0; } });
         game.fillNotes();
         for (var k = 0; k < ex.source.step; k++) {
@@ -388,6 +391,43 @@
       });
     });
 
+    it('the saved Law of Leftovers example sits on real irregular regions: its lines and regions leave equal sides, and the hint names exactly their cells', function () {
+      ready();
+      var ex = SG.helpExamples.lawOfLeftovers;
+      var built = H.buildExample('lawOfLeftovers');
+      expect(built === null ? 'no example' : '').toBe('');
+      expect(built.variantId).toBe('jigsaw9');
+      var model = built.model;
+      expect(Array.from(model.layout.cellRegion)).toEqual(ex.cellRegion);
+      expect(Array.from(model.layout.cellRegion)).not.toEqual(Array.from(SG.classicModel.build(9).layout.cellRegion));
+      var args = ex.hint.stepArgs;
+      var unitCells = function (label) {
+        var unit = model.unitMeta.findIndex(function (m) { return m.label === label; });
+        expect(unit).toBeGreaterThan(-1);
+        return Array.from(model.units[unit]);
+      };
+      var lines = [].concat.apply([], args.lines.map(unitCells));
+      var regions = [].concat.apply([], args.regions.map(unitCells));
+      var byNumber = function (a, b) { return a - b; };
+      var lineSide = lines.filter(function (cell) { return regions.indexOf(cell) === -1; });
+      var regionSide = regions.filter(function (cell) { return lines.indexOf(cell) === -1; });
+      expect(lineSide.length).toBeGreaterThan(0);
+      expect(lineSide.length).toBe(regionSide.length);
+      expect(lineSide.concat(regionSide).sort(byNumber)).toEqual(ex.hint.cells.slice().sort(byNumber));
+      expect(args.regions.every(function (label) { return /^J\d$/.test(label); })).toBe(true);
+      ex.hint.eliminations.forEach(function (e) {
+        expect(ex.hint.cells).toContain(e[0]);
+        expect(args.digits).toContain(e[1]);
+      });
+      ['en', 'vi'].forEach(function (code) {
+        inLocale(code, function () {
+          var said = SG.play.describeHint(built.model, built.hint, { mode: 'digits' });
+          expect(said.ok).toBe(true);
+          args.lines.concat(args.regions).forEach(function (label) { expect(said.explanation).toContain(label); });
+        });
+      });
+    });
+
     it('builds a board of its own: a later change of the example or of the board leaves the other as it was',
       function () {
         jigsawReady();
@@ -524,13 +564,13 @@
       expect(Object.keys(SG.importer.VARIANTS).length).toBe(15);
     });
 
-    it('its numbers are the numbers of the code: 37 techniques, 100 + 100 puzzles, 8 MB files', function () {
+    it('its numbers are the numbers of the code: 38 techniques, 100 + 100 puzzles, 8 MB files', function () {
       ready();
       var en = playerPart('../USERGUIDE.md');
       var vi = playerPart('../USERGUIDE.vn.md');
-      expect(en).toContain('one of 37 techniques');
-      expect(vi).toContain('một trong 37 kỹ thuật');
-      expect(SG.techniques.list().length).toBe(37);
+      expect(en).toContain('one of 38 techniques');
+      expect(vi).toContain('một trong 38 kỹ thuật');
+      expect(SG.techniques.list().length).toBe(38);
       expect(en).toContain('the last 100 puzzles');
       expect(en).toContain('the last 100 imported puzzles');
       expect(vi).toContain('100 đề gần nhất');

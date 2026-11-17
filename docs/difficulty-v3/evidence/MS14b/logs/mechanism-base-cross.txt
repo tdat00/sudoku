@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS14b\mechanism.js --out=..\docs\difficulty-v3\evidence\MS14b\mechanism-base-cross.json --cross=..\docs\difficulty-v3\evidence\MS14b\mechanism-tree.json
+engine git:7eddb15: 40 puzzles (+ the puzzles of tree rated under this engine)
+exit=0 seconds=23.118

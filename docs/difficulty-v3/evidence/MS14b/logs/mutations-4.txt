@@ -1,0 +1,27 @@
+$ node generator\tests\artifacts\difficulty-v3\MS14b\run-mutations.cjs docs\difficulty-v3\evidence\MS14b\mutations-4.txt 46 69
+mutation 46 (H name of the technique missing (generator English)): DETECTED by run 0 (generator i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 47 (H description key renamed (generator English)): DETECTED by run 0 (generator i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 48 (H step keeps no {lines} (generator English)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 49 (H step keeps no {regions} (generator English)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 50 (H step keeps no {cells} (generator English)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 51 (H step names {digit} instead of {digits} (generator English)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 52 (H name of the technique missing (generator Vietnamese)): DETECTED by run 0 (generator i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 53 (H description key renamed (generator Vietnamese)): DETECTED by run 0 (generator i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 54 (H step keeps no {lines} (generator Vietnamese)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 55 (H step keeps no {regions} (generator Vietnamese)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 56 (H step keeps no {cells} (generator Vietnamese)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 57 (H step names {digit} instead of {digits} (generator Vietnamese)): DETECTED by run 0 (generator i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 58 (H name of the technique missing (player English)): DETECTED by run 0 (player i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 59 (H description key renamed (player English)): DETECTED by run 0 (player i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 60 (H step keeps no {lines} (player English)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 61 (H step keeps no {regions} (player English)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 62 (H step keeps no {cells} (player English)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 63 (H step names {digit} instead of {digits} (player English)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 64 (H name of the technique missing (player Vietnamese)): DETECTED by run 0 (player i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 65 (H description key renamed (player Vietnamese)): DETECTED by run 0 (player i18n) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 66 (H step keeps no {lines} (player Vietnamese)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 67 (H step keeps no {regions} (player Vietnamese)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 68 (H step keeps no {cells} (player Vietnamese)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 69 (H step names {digit} instead of {digits} (player Vietnamese)): DETECTED by run 0 (player i18n) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+detected 24 of 24, survivors 0, 7.1 s
+exit=0 seconds=7.212

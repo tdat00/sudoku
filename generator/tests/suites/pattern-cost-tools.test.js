@@ -539,6 +539,247 @@
     });
   });
 
+  describe('pattern cost: the scoped Jigsaw adapter (MS14b)', function () {
+    var ID = 'lawOfLeftovers';
+    var JT = SG.fixtures.jigsawTechniques;
+    var ENTRY = JT.byId[ID];
+
+    function scopedPlan() {
+      var plan = P.planCases(P.inventoryOf([ID]), null);
+      expect(plan.problems).toEqual([]);
+      return plan;
+    }
+
+    /** An inventory of a scoped technique with the scoped fixtures of its own, changed by `extra`. */
+    function scopedInventory(extra, scopedExtra) {
+      return [Object.assign({ id: 'alpha', registered: true, scope: ['jigsaw9'], hasEntry: false, positive: [],
+        negative: [], scoped: Object.assign({ source: 'jigsawTechniques', scope: ['jigsaw9'],
+          positive: [{ name: 'Alpha scoped one' }], negative: [{ name: 'Alpha scoped nothing' }] }, scopedExtra) },
+      extra)];
+    }
+
+    it('reads the scoped fixtures of a scoped technique and none for the others', function () {
+      var items = P.inventoryOf([ID, 'nishio', 'cageCombo']);
+      expect(items[0].registered).toBe(true);
+      expect(items[0].scope).toEqual(['jigsaw9']);
+      expect(items[0].hasEntry).toBe(false);
+      expect(items[0].scoped.source).toBe('jigsawTechniques');
+      expect(items[0].scoped.scope).toEqual(['jigsaw9']);
+      expect(items[0].scoped.positive).toBe(ENTRY.positive);
+      expect(items[0].scoped.negative).toBe(ENTRY.negative);
+      expect(items[1].scoped).toBeNull();
+      expect(items[2].scope).toEqual(['killer']);
+      expect(items[2].scoped).toBeNull();
+    });
+
+    it('plans the scoped positives then negatives, each with its scope, and a classic id as before', function () {
+      var plan = scopedPlan();
+      expect(plan.cases.map(function (c) { return c.key; })).toEqual([
+        ID + ':positive:1', ID + ':positive:2', ID + ':positive:3', ID + ':positive:4', ID + ':negative:1',
+        ID + ':negative:2', ID + ':negative:3']);
+      plan.cases.forEach(function (c) { expect(c.scope).toBe('jigsaw9'); });
+      expect(plan.cases[4].kind).toBe('negative');
+      expect(plan.cases[0].fixture).toBe(ENTRY.positive[0]);
+      var mixed = P.planCases(P.inventoryOf(['nishio', ID]), 'positive:1');
+      expect(mixed.problems).toEqual([]);
+      expect(mixed.cases.map(function (c) { return c.key + ' ' + c.scope; })).toEqual([
+        'nishio:positive:1 null', ID + ':positive:1 jigsaw9']);
+    });
+
+    it('selects scoped cases by text like the others', function () {
+      expect(P.planCases(P.inventoryOf([ID]), 'columns position').cases.map(function (c) { return c.key; })).toEqual([
+        ID + ':negative:2']);
+      expect(P.planCases(P.inventoryOf([ID]), 'zzz').problems[0]).toContain('empty selection');
+    });
+
+    it('refuses scoped fixtures made for another scope, another board or none, and says why, with no case',
+      function () {
+        [[scopedInventory({}, { scope: ['killer'] }), 'scoped fixtures (jigsawTechniques) are for [killer]'],
+          [scopedInventory({ scope: ['killer'] }), 'is scoped to [killer], but its scoped fixtures'],
+          [scopedInventory({ scope: ['killer'] }, { scope: ['killer'] }),
+            'is scoped to [killer], but its scoped fixtures (jigsawTechniques) are for [killer] and the tool builds no ' +
+            'such board'],
+          [scopedInventory({ scope: ['jigsaw9', 'killer'] }), 'is scoped to [jigsaw9, killer], but its scoped fixtures'],
+          [scopedInventory({}, { source: 'somewhereElse' }), 'scoped fixtures (somewhereElse) are for [jigsaw9]'],
+          [scopedInventory({}, { scope: undefined }), 'are for [?]'],
+          [scopedInventory({}, { positive: [], negative: [] }), 'no scoped fixtures for alpha'],
+          [scopedInventory({ scoped: null }), 'is scoped to [jigsaw9]: the tool has no scoped fixtures for it']]
+          .forEach(function (tc) {
+            var plan = P.planCases(tc[0], null);
+            expect(plan.cases).toEqual([]);
+            expect(plan.problems).toHaveLength(1);
+            expect(plan.problems[0]).toContain(tc[1]);
+          });
+        // the supported scope with fixtures for exactly that scope plans
+        var fine = P.planCases(scopedInventory({}), null);
+        expect(fine.problems).toEqual([]);
+        expect(fine.cases.map(function (c) { return c.key + ' ' + c.scope; })).toEqual([
+          'alpha:positive:1 jigsaw9', 'alpha:negative:1 jigsaw9']);
+        // one bad scoped id fails the whole plan, like a bad classic one
+        var mixed = P.planCases(scopedInventory({ scoped: null }).concat(P.inventoryOf(['nishio'])), null);
+        expect(mixed.cases).toEqual([]);
+        expect(mixed.problems).toHaveLength(1);
+      });
+
+    it('rebuilds every scoped case on the board of its own region map, never on the classic9 board', function () {
+      var classic = SG.techHelper.model('classic9');
+      var classicRegions = Array.from(classic.layout.cellRegion);
+      scopedPlan().cases.forEach(function (c) {
+        var board = P.boardOf(c);
+        expect(board.model.variantId).toBe('jigsaw9');
+        expect(Array.from(board.model.layout.cellRegion)).toEqual(c.fixture.cellRegion);
+        // the boxes puzzle has the layout of the boxes, but it is a Jigsaw board of regions, not the classic9 board
+        expect(board.model).not.toBe(classic);
+        expect(board.model.unitMeta.slice(18).map(function (m) { return m.kind; }).join()).toBe(
+          'region,region,region,region,region,region,region,region,region');
+        if (c.fixture !== ENTRY.negative[2]) {
+          expect(Array.from(board.model.layout.cellRegion)).not.toEqual(classicRegions);
+        }
+        expect(board.model.units.length).toBe(27);
+        expect(board.model).toBe(JT.modelOf(c.fixture));
+        // the position of the fixture: the givens of its own puzzle are placed on its own board
+        for (var cell = 0; cell < board.model.cellCount; cell++) {
+          var given = c.fixture.givens.charAt(cell);
+          if (given !== '.') expect(board.state.value[cell]).toBe(Number(given));
+        }
+      });
+      var plain = P.planCases(P.inventoryOf(['nishio']), 'positive:1').cases[0];
+      expect(P.boardOf(plain).model).toBe(SG.techHelper.model('classic9'));
+    });
+
+    it('measures every scoped case on its own board with a fake clock, and records its region map', function () {
+      var plan = scopedPlan();
+      var run = P.measure(plan.cases, { runs: 3, budgetMs: 1e9 }, fakeEnv());
+      expect(run.stopped).toBe(false);
+      expect(run.problems).toEqual([]);
+      expect(run.records.map(function (r) { return r.key; })).toEqual(plan.cases.map(function (c) { return c.key; }));
+      run.records.forEach(function (r, i) {
+        var fixture = plan.cases[i].fixture;
+        expect(r.runs).toBe(3);
+        expect(r.deterministic).toBe(true);
+        expect(r.matchesFixture).toBe(true);
+        expect(r.model).toBe('jigsaw9');
+        expect(r.cellRegion).toEqual(fixture.cellRegion);
+        expect(r.cellRegion).not.toBe(fixture.cellRegion);
+        expect(r.puzzle).toBe(fixture.givens);
+        expect(r.after).toEqual(fixture.after);
+        expect(r.reports).toBe(1);
+        expect(r.work[0].id).toBe(ID);
+        expect(r.work[0].limit).toBe(50000);
+        expect(r.capHit).toBeNull();
+        // the work of the record is the work of the kernel itself on the same board and position
+        var model = JT.modelOf(fixture);
+        var records = [];
+        SG.leftoverPatterns.find(model, JT.stateOf(fixture), SG.techniques.createContext(model, {
+          onPatternWork: function (w) { records.push(w); } }));
+        expect(r.work).toEqual(records);
+        expect(r.workUnits).toBe(records[0].work);
+        expect(r.outcome).toBe(plan.cases[i].kind === 'positive' ? 'found' : 'none');
+      });
+      expect(run.records[0].finding.technique).toBe(ID);
+      expect(run.records[0].finding.eliminations).toEqual(ENTRY.positive[0].expect.eliminations);
+      var doc = P.documentOf({ argv: [], identity: {}, machine: {}, config: { ids: [ID], caseText: null, runs: 3,
+        budgetMs: 1e9 }, cases: plan.cases, startedAt: 'a', endedAt: 'b', measured: run });
+      expect(doc.complete).toBe(true);
+      expect(doc.config.model).toBe('jigsaw9');
+      expect(P.exitCodeOf(doc)).toBe(0);
+      expect(doc.summary.found).toBe(4);
+      expect(doc.summary.none).toBe(3);
+      expect(doc.summary.mismatches).toBe(0);
+      expect(doc.summary.capped).toBe(0);
+    });
+
+    it('keeps a classic record as it was and names the board of the run: classic9, jigsaw9 or mixed', function () {
+      var classicPlan = P.planCases(P.inventoryOf(['nishio']), 'positive:1');
+      var scoped = scopedPlan();
+      function config(ids) { return { ids: ids, caseText: null, runs: 1, budgetMs: 1e9 }; }
+      var classicRun = P.measure(classicPlan.cases, { runs: 1, budgetMs: 1e9 }, fakeEnv());
+      expect(Object.keys(classicRun.records[0]).indexOf('model')).toBe(-1);
+      expect(Object.keys(classicRun.records[0]).indexOf('cellRegion')).toBe(-1);
+      expect(typeof classicRun.records[0].puzzle).toBe('string');
+      function modelOf(cases) {
+        return P.documentOf({ argv: [], identity: {}, machine: {}, config: config(['x']), cases: cases, startedAt: 'a',
+          endedAt: 'b', measured: { records: [], problems: [], stopped: false, wallMs: 0 } }).config.model;
+      }
+      expect(modelOf(classicPlan.cases)).toBe('classic9');
+      expect(modelOf(scoped.cases)).toBe('jigsaw9');
+      expect(modelOf(classicPlan.cases.concat(scoped.cases))).toBe('mixed');
+      expect(modelOf([])).toBe('classic9');
+    });
+
+    it('fails a scoped case whose answer is not the fixture\'s, keeping the measured numbers', function () {
+      var wrongPositive = { key: ID + ':positive:1', id: ID, kind: 'positive', name: 'a wrong expectation',
+        scope: 'jigsaw9', fixture: Object.assign({}, ENTRY.positive[0], { expect: { placements: [],
+          eliminations: [[0, 1]] } }) };
+      var wrongNegative = { key: ID + ':negative:1', id: ID, kind: 'negative', name: 'a positive position as a negative',
+        scope: 'jigsaw9', fixture: ENTRY.positive[1] };
+      var cases = [wrongPositive, wrongNegative];
+      var run = P.measure(cases, { runs: 2, budgetMs: 1e9 }, fakeEnv());
+      expect(run.stopped).toBe(false);
+      expect(run.problems).toEqual([]);
+      expect(run.records.map(function (r) { return r.matchesFixture; })).toEqual([false, false]);
+      expect(run.records[0].workUnits).toBeGreaterThan(0);
+      var doc = P.documentOf({ argv: [], identity: {}, machine: {}, config: { ids: [ID], caseText: null, runs: 2,
+        budgetMs: 1e9 }, cases: cases, startedAt: 'a', endedAt: 'b', measured: run });
+      expect(doc.complete).toBe(false);
+      expect(doc.problems).toEqual([
+        ID + ':positive:1: the outcome is not the fixture\'s (found where the fixture records a deduction)',
+        ID + ':negative:1: the outcome is not the fixture\'s (found where the fixture records nothing)']);
+      expect(P.exitCodeOf(doc)).toBe(1);
+    });
+
+    it('stops with a problem and no record when the budget is spent, also for a scoped case', function () {
+      var tick = 0;
+      var env = { clock: function () { tick += 10; return tick; }, digest: fakeEnv().digest };
+      var plan = scopedPlan();
+      var run = P.measure(plan.cases, { runs: 3, budgetMs: 15 }, env);
+      expect(run.stopped).toBe(true);
+      expect(run.records).toEqual([]);
+      expect(run.problems).toEqual([ID + ':positive:1: the caller budget of 15 ms was spent after 0 of 3 runs']);
+    });
+
+    it('checks the budget again after a find of a scoped case, and fails a finder that writes to its state',
+      function () {
+        // A probe of its own, scoped to jigsaw9, on a real scoped fixture: the real technique stays registered.
+        var probeId = 'patternCostScopedProbe';
+        var plan = scopedPlan();
+        var probeCase = { key: probeId + ':positive:1', id: probeId, kind: 'positive', name: 'probe', scope: 'jigsaw9',
+          fixture: ENTRY.positive[0] };
+        function register(find) {
+          SG.techniques.unregister(probeId);
+          SG.techniques.register({ id: probeId, group: 'chain', baseCost: 1, order: 100000,
+            i18nKey: 'technique.' + probeId, variantScope: ['jigsaw9'], assumesUniqueness: false, find: find });
+        }
+        var now = 0;
+        var env = { clock: function () { return now; }, digest: fakeEnv().digest };
+        try {
+          register(function (model, state, ctx) {
+            expect(model.variantId).toBe('jigsaw9');
+            expect(Array.from(model.layout.cellRegion)).toEqual(ENTRY.positive[0].cellRegion);
+            ctx.budget.tick(5000); // enough ticks for the budget to look at the clock at its next check
+            now += 1e6;
+            return null;
+          });
+          var run = P.measure([probeCase], { runs: 3, budgetMs: 1000 }, env);
+          expect(run.stopped).toBe(true);
+          expect(run.records).toEqual([]);
+          expect(run.problems[0]).toContain('the caller budget was spent in run 1 of 3 (budget.exceeded)');
+          register(function (model, state) {
+            state.candidates[0] ^= 1;
+            return null;
+          });
+          var written = P.measure([probeCase], { runs: 2, budgetMs: 1e9 }, fakeEnv());
+          expect(written.stopped).toBe(true);
+          expect(written.problems).toEqual([probeId + ':positive:1: the finder wrote to the state in run 1']);
+        } finally {
+          SG.techniques.unregister(probeId);
+        }
+        expect(SG.techniques.has(probeId)).toBe(false);
+        expect(plan.cases).toHaveLength(7);
+        expect(SG.techniques.get(ID).order).toBe(87);
+      });
+  });
+
   describe('pattern cost: tests/pattern-cost.js (Node only)', function () {
     // Every file these tests write goes to a folder of its own under the repository's ignored `.scratch-*/` rule:
     // `.scratch-pattern-cost-tools/<unique run>/` at the repository root (never the task evidence, never a folder
@@ -649,6 +890,79 @@
         }
         expect(n.host.fs.existsSync(own.dir)).toBe(false);
       });
+
+    it('lists the scoped cases of lawOfLeftovers, and refuses a scoped id that has no scoped fixtures', function () {
+      var list = tool(['--ids=lawOfLeftovers', '--list']);
+      expect(list.code).toBe(0);
+      expect(list.out.split('\n').filter(function (line) { return line.indexOf(':') !== -1; })).toHaveLength(7);
+      expect(list.out).toContain('lawOfLeftovers:positive:1  lawOfLeftovers on R7 with J7');
+      expect(list.out).toContain('lawOfLeftovers:negative:3  lawOfLeftovers finds nothing on the ordinary 3x3 boxes');
+      var one = tool(['--ids=lawOfLeftovers', '--list', '--case=columns position']);
+      expect(one.out.trim().split('\n')).toHaveLength(1);
+      expect(one.out).toContain('lawOfLeftovers:negative:2');
+      var killer = tool(['--ids=cageCombo,lawOfLeftovers', '--list']);
+      expect(killer.code).toBe(2);
+      expect(killer.out).toBe('');
+      expect(killer.err).toContain('technique cageCombo is scoped to [killer]: the tool has no scoped fixtures for it');
+    });
+
+    it('writes one complete scoped record on the board of its own region map, and its identity covers the scoped ' +
+      'fixtures and the helper', function () {
+      var n = node();
+      var own = ownScratch(n);
+      try {
+        var file = own.relative + '/scoped.json';
+        var run = tool(['--ids=lawOfLeftovers', '--runs=2', '--case=positive:2', '--json=' + file]);
+        expect(run.code).toBe(0);
+        expect(run.out).toContain('pattern-cost: 1 of 1 cases x 2 runs (2 finds), complete true');
+        var doc = JSON.parse(n.host.fs.readFileSync(n.host.path.join(own.dir, 'scoped.json'), 'utf8'));
+        expect(doc.complete).toBe(true);
+        expect(doc.config.model).toBe('jigsaw9');
+        expect(doc.config.cases).toEqual(['lawOfLeftovers:positive:2']);
+        var record = doc.cases[0];
+        var fixture = SG.fixtures.jigsawTechniques.byId.lawOfLeftovers.positive[1];
+        expect(record.model).toBe('jigsaw9');
+        expect(record.cellRegion).toEqual(fixture.cellRegion);
+        expect(record.puzzle).toBe(fixture.givens);
+        expect(record.matchesFixture).toBe(true);
+        expect(record.outcome).toBe('found');
+        expect(record.work).toHaveLength(1);
+        expect(record.work[0].id).toBe('lawOfLeftovers');
+        expect(record.work[0].limit).toBe(50000);
+        expect(record.capHit).toBeNull();
+        expect(P.problemsOf(doc)).toEqual([]);
+
+        // The fixture hash is the hash of every fixture file the runner loads, the scoped ones and the Jigsaw builder
+        // among them (read from the runner's own list, as the tool does), and the tool hash covers tool and helper.
+        var crypto = process.getBuiltinModule('crypto');
+        var runner = n.host.fs.readFileSync(n.host.path.join(n.host.root, 'tests', 'node-runner.js'), 'utf8');
+        var dirs = (/const FIXTURES_DIRS = \[([\s\S]*?)\];/.exec(runner)[1].match(/'[^']+'/g) || [])
+          .map(function (s) { return s.slice(1, -1); });
+        var hash = crypto.createHash('sha256');
+        var hashed = [];
+        dirs.forEach(function (dir) {
+          n.host.fs.readdirSync(n.host.path.join(n.host.root, dir)).filter(function (name) {
+            return name.slice(-3) === '.js';
+          }).sort().forEach(function (name) {
+            var text = n.host.fs.readFileSync(n.host.path.join(n.host.root, dir, name), 'utf8').replace(/^\uFEFF/, '');
+            hash.update(dir + '/' + name + '\0' + text.replace(/\r\n/g, '\n'));
+            hashed.push(dir + '/' + name);
+          });
+        });
+        expect(hashed).toContain('../core/tests/fixtures/jigsaw-techniques.js');
+        expect(hashed).toContain('../core/tests/fixtures/jigsaw-models.js');
+        expect(doc.identity.fixtureHash).toBe(hash.digest('hex'));
+        var tools = crypto.createHash('sha256');
+        ['tests/pattern-cost.js', 'tests/fixtures/pattern-cost.js'].forEach(function (rel) {
+          var text = n.host.fs.readFileSync(n.host.path.join(n.host.root, rel), 'utf8').replace(/^\uFEFF/, '');
+          tools.update(rel + '\0' + text.replace(/\r\n/g, '\n'));
+        });
+        expect(doc.identity.toolHash).toBe(tools.digest('hex'));
+      } finally {
+        n.host.fs.rmSync(own.dir, { recursive: true, force: true });
+      }
+      expect(n.host.fs.existsSync(own.dir)).toBe(false);
+    });
 
     it('gives every invocation a folder of its own and leaves the shared base and other runs alone', function () {
       var n = node();

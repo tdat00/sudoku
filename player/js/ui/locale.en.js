@@ -174,6 +174,12 @@
     'technique.nakedTriple': 'Naked Triple',
     'technique.nakedTriple.desc': 'Three cells of a unit whose candidates are limited to the same three ' +
       'digits must hold them, so those digits can be removed from the other cells of the unit.',
+    'technique.lawOfLeftovers': 'Law of Leftovers',
+    'technique.lawOfLeftovers.desc': 'In a Jigsaw, one or two whole rows (or columns) that share no cell hold ' +
+      'every digit once per row, and so do the same number of whole regions that share no cell. Set aside the ' +
+      'cells that the rows and the regions share: the cells left over in the rows and the cells left over in ' +
+      'the regions (one to four on each side) must hold the same digits, repeats and placed digits counted. ' +
+      'A candidate that no way of filling the two sides alike uses is removed.',
     'technique.hiddenTriple': 'Hidden Triple',
     'technique.hiddenTriple.desc': 'Three digits that can only go in the same three cells of a unit must ' +
       'fill those cells, so every other candidate can be removed from them.',
@@ -306,6 +312,12 @@
     'technique.nakedTriple.step': 'In the {unitKind} {unit}, the three cells {cells} can only hold the ' +
       'digits {digits} between them. Those digits belong to these cells, so they are removed from the ' +
       'other cells of {unit}.',
+    'technique.lawOfLeftovers.step': 'Law of Leftovers: the lines {lines} and the regions {regions} are ' +
+      'complete and, inside each group, share no cell, so each group holds every digit as many times as it ' +
+      'has units. Set aside the cells that the lines and the regions share. The cells left over, {cells}, ' +
+      'form two sides, one from the lines and one from the regions, that must hold the same digits, ' +
+      'repeats counted. Wherever no way of filling both sides alike puts one of the digits {digits} in a ' +
+      'cell, that digit is removed from the cell.',
     'technique.nakedQuad.step': 'In the {unitKind} {unit}, the four cells {cells} can only hold the ' +
       'digits {digits} between them. Those digits belong to these cells, so they are removed from the ' +
       'other cells of {unit}.',
