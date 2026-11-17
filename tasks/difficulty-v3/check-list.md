@@ -170,7 +170,8 @@ the audit. S-OD8 approves only section 9's four-case tier proposal. The next ser
 **MS08a (already running) -> MS07f (wave 21a) -> MS08b**. MS07f uses the accepted post-MS08a
 tree and owns its CI-manifest handoff; do not interrupt MS08a or run the two writers together.
 All six S3 groups still run; neither decision drops a qualification cell or changes an assertion.
-MS13a graph stays inactive until consumers MS13b and activation MS13c. **GC-01 is resolved by
+The grouped graph prepared in MS13a is now active in accepted MS13c, with MS13b's consumers.
+**GC-01 is resolved by
 S-OD11:** owner, Discord, 2026-11-17 04:30 (+07:00), **"GC-01: chọn A."** MS13c implements a
 bounded grouped attempt first and a short-only, uncapped singleton fallback on a local cap,
 under the same parent budget/window; IR54 is preserved and the long ID remains bounded.
@@ -180,35 +181,31 @@ MS14a/MS15a kernels likewise precede their registrations. Final GQ is MS18c,
 after all S3, MS17b and final rechecks MS18b.
 No intermediate pruning. Parent milestones are not additional waves or commits.
 
-**GC-01 scheduling exception retained after S-OD11 (2026-11-17).** The current accepted
-implementation boundary is **MS14a, `ea14798`**. MS13c was dispatched under S-OD11; its
-uncommitted candidate now has **JF-02 resolved by S-OD12 (A + S0)** and awaits reviewed fix/verification closure.
-MS14b -> MS14c remain behind MS13c acceptance/commit, then the unchanged remainder. Keep the assigned
+**Current serial handoff, 2026-11-17.** MS13c is accepted and committed at **`9d58d86`**,
+with JF-02 resolved by S-OD12 (A + S0) and SA1 round-2 acceptance. **MS14b is ready to dispatch**,
+then MS14c and the unchanged remainder. Keep the assigned
 MS14a/MS13c wave numbers 34/35; do not renumber IDs, change Done marks or rewrite historical
 logs. MS14a requires MS13b, MS13c also waits for accepted MS14a, and MS14b explicitly requires
 both MS14a and MS13c. The parent MS14 dependency governs activation/closure, not this inactive
-preparation. No further later task may run ahead. MS14a was reviewed, accepted and committed
-before this dispatch; do not reopen it or rewrite its log. Never park a dirty task or run a
-second developer. The question is archived unchanged beside the answer. Readiness is not
-implementation acceptance: MS13c keeps its full final gates and SA1 analyst review.
+preparation. No further later task may run ahead. Preserve the completed task logs; never park
+a dirty task or run a second developer. The owner questions/answers remain in the archive.
+MS14b and MS14c receive the orchestrator's MS08a/IR72 template and generic soundness/order
+review, **not routine SA1 review**. A specific unresolved question is routed by the orchestrator.
 
-MS14a's kernel stays unregistered. It completed fresh full 5-wire/14-analysis/520-hash records
-and current-source merge-checks with no canonical writes, GH 37/37, both quick sets and CI.
-MS13c starts from accepted MS14a and runs
-its already-required full activation E on that source; it absorbs the source, not missing
-predecessor evidence. No canonical fixture transaction, activation scope, gate or review is moved.
+MS14b starts from active grouped chains and the **MS13c** canonical E/GH baseline. It owns
+its own 5-wire -> 14-analysis -> 520-hash activation E, current GH, quick sets and CI; no
+predecessor ledger or pre-grouped whole-file copy substitutes for that closure.
 
-The accepted baseline is now **4,456 Generator tests (415.5 s) / 2,698 Player tests (79.9 s)**,
-53/30 suites, catalogue 37, and core-shared projection **110 s** (own-fast 320, Player job 120).
-MS13c's brief records the full accepted fingerprints and source. Retain all 40 MS14a shared
-tests, its Jigsaw helper/HTML entries and the inactive kernel. Derive new final inventories/
-fingerprints from MS13c's actual edits; never restore MS13b's 4,416/2,658 totals, old projections
-or whole files. MS13c also updates the living GC-01-open statements in both app designs and
-both developer-guide languages on activation, preserving MS13a/MS13b measurements as history.
-Carry S-AV37 without implementing its MS14b work. Historical passes are not relabelled as
-current-source measurements. Full S3 scope,
-active registration/milestone order and the S-OD4 review matrix stay unchanged. S-OD11 resolves
-the separate policy question without changing this preparatory scheduling or waiving any gate.
+The accepted baseline is **4,483 Generator tests (476.0 s) / 2,722 Player tests (93.6 s)**,
+53/30 suites and catalogue 37. Projections are core-shared 130, steps 60, replay 60,
+pipeline 80, Generator player shard 70 and Player job 150; mega 40, own-fast 320 and
+digger-target 30 remain. MS14b's brief records the full accepted fingerprints. Keep MS14a's
+kernel/helper/tests and MS13c's active chain policy, consumers, round trip and current fixtures.
+Derive final inventories/fingerprints after owned changes; do not restore older counts,
+projections, examples or source files. MS14b owns S-AV37's existing measurement/limit duty;
+MS14c carries it only. S-AV36/S-AV38 remain context/items, not permission to retune chains
+or widen measurement/acquisition scope. S-OD12/S0 grants no standing corpus scan. Full S3
+scope, activation order, owner policies and the S-OD4 review matrix are unchanged.
 
 **Preservation:** no reset/discard of b1, provisional allowance, off-by-default switch, seed
 substitution, browser-budget raise or further checkpoint branch commit. G13 persistence and
@@ -286,6 +283,16 @@ taking another task's work.
    as a table using the gate's exact predicate, every condition included, and waits for the
    orchestrator before the first production edit. This also applies when the table supports
    proceeding; S-OD4's performance-only rule does not waive the gate. No task scope changes.
+   **QUESTION pause, from MS14b onward:** any `QUESTION:` stops the task for the orchestrator.
+   Stop before the undecided action; do not apply a proposed default, continue independent
+   edits/runs or start more gates/acquisition until the answer and resumption are explicit.
+   Return state, evidence, options and the default as a proposal. Preserve/finish or safely
+   interrupt an already-running owned bounded command through the normal helper; do not
+   orphan a process or leave a stale lock. An unresolved permission/contract still needs
+   this pause if labelled "informational" instead. This is not a new owner stop for every
+   timing miss: settled performance findings use numbered items under S-OD4, while any
+   needed owner authorization (including an acquisition exception under S-OD12/S0) must
+   be obtained before acting. MS14c and later serial dispatches inherit this same rule.
 3. **Developer never stages, commits, stashes, resets, pushes or switches branches; never edits the
    task pack, checklist or Execution log.** Do not change unrelated work in this shared checkout.
 4. Orchestrator re-runs the task's quick checks, reviews the diff and acceptance IDs, fills the empty
@@ -434,7 +441,7 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | S-AV35 Jellyfish normal-hint source availability | MS12, JF-01 origin: GH 36/37; saved Nightmare-828 Jellyfish no longer replays. The known-source groups and all 48 authorized Generator discovery requests supplied no normal-hint source (`docs/difficulty-v3/evidence/MS12/logs/gh-check-all-37.txt`, `gh-jellyfish-*`; source sets may overlap). Owner decision S-OD10 approves only JF-01 option A's bounded corpus route; this is not a GH waiver or a claim that a source has been found. MS12 records construction/replay work, attempted/completed/incomplete index ranges, selected source provenance and the final all-37 GH/quick/CI results. If the bound fails, return to the owner rather than defer the missing example or extend the search. Keep the exception and its result for the final audit; no standing permission for later tasks. | MS12 completion under S-OD10; MS18e audit; owner if the approved route cannot finish |
 | S-AV36 grouped-graph construction cost/cap exposure | MS13a final inactive engine SHA-256 `501481B415F1AD9B49D3BE355767C8922C5475FF2D93200A41DA1338705B9AEE`; SA1's locked review, relayed 2026-11-17 01:52 (+07:00), and corrected `docs/difficulty-v3/evidence/MS13a/census-all/table.md`/per-model JSONs. **Construction only**, default 50,000/4,096: seeded ladder chain-group positions over the work cap are Samurai **38/48** (median/max full-build 85,352/138,529), Sohei **43/51** (109,951/124,066), Flower **17/44** (44,057/70,583), mega16 **20/321** (23,349/57,089); classic9/mega12/Butterfly have none (max 6,117/13,644/31,008). Constructed blank maxima reach 1,715,391 (Samurai) and 1,209,344 (mega16), with no measured blank exceeding 4,096 groups. SA1's real G13 observations cost 6,764/1,708 and G10 660; keep them separate from seeded/synthetic/blank cohorts. These are not active-finder cap rates, demonstrated lost-deduction counts or GQ/GP failures. MS13c retains the full table, measures construction plus search, short fallback and whole-call cost, and uses the data in its once-only own-new-limit decision; no automatic increase or board-specific limit. **GC-01 policy resolved by S-OD11:** owner, Discord, 2026-11-17 04:30 (+07:00), "GC-01: chọn A." Short-only uncapped singleton fallback on a local grouped cap, same parent/window, singleton minimum domain; long remains bounded. The numerical item stays open for source-qualified activation/final cost and audit, not an unanswered policy choice. | MS13c cost/limit records; MS18d final cost; MS18e audit; MS18c for measured availability consequences |
 | S-AV37 leftover kernel cost/caps on irregular Jigsaw layouts | Accepted inactive source **`ea14798`**; `docs/difficulty-v3/evidence/MS14a/evidence.md` C4 / named item and the Jigsaw fixture/subset suite. At 2 units/side, 4 cells/side and 50,000 work, reported full **blank-state** counts are **98,530 (`staggered`)**, **81,664 (`wavy`)**, **33,784 (`mixed`)**, 6,469 (`crossed`) and 3,436 (`boxes` control). **The first two cap at the default; 33,784 does not.** A complete blank negative is not a cap. These are constructed per-layout maxima, not a universal generated-layout bound, real-puzzle cap rate, demonstrated lost deduction or GQ/GP verdict; no generated-layout/real-puzzle-position cost census is established. The 480 seeded fixture-position agreement cases remain distinct evidence. MS14b records work/caps/latency on its existing scoped fixture and B/GH real-position populations, with layout/source/seed/preprocessing/denominator and any remaining gap, and owns any already-permitted once-only measured adjustment before E. No automatic rise to a blank maximum, layout-specific bound, S-OD11 fallback, wider discovery/corpus campaign or new gate follows. MS13c carries only; MS14c carries only and remains corpus-free Killer regression. Numerical item, not an owner stop or gate waiver. | MS14b measurements/limit disposition; MS14c M14 handoff only; MS18c measured availability; MS18d cost; MS18e audit |
-| S-AV38 grouped-activation generation cost and incomplete GP | **Uncommitted MS13c candidate**, engine SHA-256 `5EBA1AE580D5F63AD0A1B2DA0FCC4CAD0C515C297C9391C691D4CB58626AC9D1`, accepted chain comparator `4aa3d11`/`ea14798`, not `main`; `docs/difficulty-v3/evidence/MS13c/evidence.md` section 11, GP table/ledgers/logs and SA1 review. **50 affected cells:** 21 complete 50-run records (15 meet, six miss); 16 with complete two-run pilots only (including the separate greaterThan/nightmare 50-run timeout); 13 with no complete pilot (12 unpiloted multi-grid cells and mega16/hell1's two aborted pilots). Mega16/easy is a separate successful control. Five paired 50-run p95s, ms base -> candidate: classic9/nightmare **3,061 -> 4,902**, diagonalX/nightmare **7,693 -> 16,534**, wordoku/nightmare **1,624 -> 3,371**, mega12/nightmare **5,485 -> 8,396**, killer/hell2 **8,806 -> 14,528** (only Killer crosses from meeting to missing among these five). Butterfly/nightmare **24,335 vs 8,000** is a current miss without a paired base-50 record. Two-run **observed maxima**, not population p95/GP verdicts: hyper/nightmare **658 -> 19,543**, jigsaw9/nightmare **4,272 -> 22,283**, greaterThan/nightmare **6,931 -> 11,450**. G13's single-request increase is S-AV04. Keep each cell's population/source/status/projection basis explicit; no copied Samurai timing as a bound for other models/levels, no pilot pass ticks or full-matrix aggregate. The item permits honest intermediate deferral of unsafe/unmeasured cells under S-OD4, not a complete GP/release claim, target/guard relaxation or new timing campaign. Inform the owner of the magnitude now; performance alone does not require a new policy decision. | MS13c corrected cell-qualified record/handoff; MS18c availability; MS18d full final GP/cost; MS18e audit |
+| S-AV38 grouped-activation generation cost and incomplete GP | **MS13c accepted at `9d58d86`**, measurements from its engine SHA-256 `5EBA1AE580D5F63AD0A1B2DA0FCC4CAD0C515C297C9391C691D4CB58626AC9D1`, accepted chain comparator `4aa3d11`/`ea14798`, not `main`; `docs/difficulty-v3/evidence/MS13c/evidence.md` section 11, GP table/ledgers/logs and SA1 review. **50 affected cells:** 21 complete 50-run records (15 meet, six miss); 16 with complete two-run pilots only (including the separate greaterThan/nightmare 50-run timeout); 13 with no complete pilot (12 unpiloted multi-grid cells and mega16/hell1's two aborted pilots). Mega16/easy is a separate successful control. Five paired 50-run p95s, ms base -> candidate: classic9/nightmare **3,061 -> 4,902**, diagonalX/nightmare **7,693 -> 16,534**, wordoku/nightmare **1,624 -> 3,371**, mega12/nightmare **5,485 -> 8,396**, killer/hell2 **8,806 -> 14,528** (only Killer crosses from meeting to missing among these five). Butterfly/nightmare **24,335 vs 8,000** is a current miss without a paired base-50 record. Two-run **observed maxima**, not population p95/GP verdicts: hyper/nightmare **658 -> 19,543**, jigsaw9/nightmare **4,272 -> 22,283**, greaterThan/nightmare **6,931 -> 11,450**. G13's single-request increase is S-AV04. Keep each cell's population/source/status/projection basis explicit; no copied Samurai timing as a bound for other models/levels, no pilot pass ticks or full-matrix aggregate. The item permits honest intermediate deferral of unsafe/unmeasured cells under S-OD4, not a complete GP/release claim, target/guard relaxation or new timing campaign. Inform the owner of the magnitude now; performance alone does not require a new policy decision. | MS13c corrected cell-qualified record/handoff; MS18c availability; MS18d full final GP/cost; MS18e audit |
 
 **Q-MS07e-2 — SA2 ruling, 2026-11-15: no rule change; route to MS18c.**
 Do not reopen MS07e or launch the six cells once speculatively. Its section 4 source/projections
