@@ -8,7 +8,7 @@
 | Owner / milestone | Shared chains and both apps; M13 complete |
 | Authority | R9/R10/R16/R20/R21; IR54; GC-01 option A / S-OD11 |
 | Review | SA1 cross-review after the developer's final report and gates |
-| Status | Not started; ready for serial dispatch from accepted MS14a under S-OD11 |
+| Status | Candidate uncommitted; acceptance awaits JF-02 owner disposition and the reviewed fix/verification closure below |
 
 ## Goal & business context
 
@@ -232,11 +232,229 @@ leftover-layout cost item, owned first by MS14b. Leave that kernel unregistered 
 a Jigsaw-layout campaign from MS13c. Keep S-AV36 and S-AV37 distinct and return both with the
 inherited item list. This item introduces no new MS13c gate or dispatch stop.
 
+### Final-report rulings — SA2, incorporating SA1's review, 2026-11-17
+
+These are rulings on the uncommitted candidate on `4aa3d11`, engine SHA-256
+`5EBA1AE580D5F63AD0A1B2DA0FCC4CAD0C515C297C9391C691D4CB58626AC9D1`.
+SA1 found no engine/test defect and verified S-OD11, E, GH and the final quick fingerprints.
+This is **not acceptance yet**: JF-02 below is an owner-authorization blocker, independent
+of the numerical performance findings and the non-blocking report/doc corrections.
+
+1. **Q1 — accept the constructed falling-new-hardest unit vectors.** The current real G12
+   position stays pinned as 2,977 -> 2,169, Nishio -> Forcing Chain, with `newHardest:false`
+   and no new-peak explanation. The explicitly copied/altered rating and transition are
+   unit inputs for the builder/renderer branches, not a new real generated golden.
+   Keep those real negative-premise assertions, the constructed positive assertions and
+   the original fixtures unmodified by the test. The scan establishes absence only among
+   the fourteen current goldens/both views, not impossibility in every puzzle.
+   Describe the coverage honestly: the branch remains tested, but its former real falling
+   witness is now constructed. No broader discovery or new test is required by this ruling.
+2. **Q2 — accept the two real multi-move cases, as reviewed by SA1.** Keep every existing
+   multi-move assertion for G10/G12 and the current real G07 position/new single-culprit
+   truth. Record the change of premise and point to its retained assertions; do not call
+   G07 a multi-move witness, invent a third one or relax a matcher to accept both classes.
+3. **Q3 — accept retaining 50,000 / 4,096; correct the rationale per ID.** In the measured
+   710-position activation-ladder cohort, 200,000 changes short/long caps **310/313 -> 2/1**
+   and Findings **213/115 -> 323/254**, while combined warm call latency is
+   **1,990 -> 2,305 ms (+16%)**. The short default has an uncapped singleton fallback
+   only while its parent budget permits; the long default loses those capped deductions
+   and has no such protection. Report both the coverage gain and cost, not only the cost.
+   Retaining the approved starting bound is permitted; no adjustment is required merely
+   to eliminate caps. Repeating E/quick sets is a consequence of changing the selected
+   source, **not** a performance/coverage selection criterion. The candidate's whole-
+   generation effect is unmeasured: fixed-position finder latency is not generation time.
+   Claim no optimality, preserved long coverage or unchanged wall-budget availability.
+   No adjustment was made; this is not a transferable future tuning permission.
+4. **Q4 / cost — record S-AV38 and inform the owner now; no new decision is required solely
+   for the slowdown.** S-OD4 permits continued work with truthful numerical items.
+   Keep all targets, guards, offers and S-OD11 unchanged. A change to grouped-first order,
+   fallback conditions or another recorded policy would need a separate owner decision.
+   Do not treat the owner notification as a waiver of final qualification/performance.
+
+   Separate the evidence populations:
+
+   | Population | Source-qualified observation | Meaning |
+   |---|---|---|
+   | Five paired 50-run cells, same recipe/seeds | p95 base -> candidate, ms: classic9/nightmare 3,061 -> 4,902; diagonalX/nightmare 7,693 -> 16,534; wordoku/nightmare 1,624 -> 3,371; mega12/nightmare 5,485 -> 8,396; killer/hell2 8,806 -> 14,528 | About 1.5-2.2x on these five cells only. The first four already missed their targets; Killer Hell 2 changes from meeting to missing. |
+   | Butterfly Nightmare, 50 runs | p95 24,335 ms against 8,000; no paired base-50 result | A current miss, not proof of a newly introduced target miss without the baseline. |
+   | Two-run diagnostics | observed maxima base -> candidate, ms: hyper/nightmare 658 -> 19,543; jigsaw9/nightmare 4,272 -> 22,283; greaterThan/nightmare 6,931 -> 11,450 | Large warning signals, not population p95 estimates or completed 50-run GP verdicts. The Greater-Than 50-run command subsequently timed out. |
+   | One G13 wire request, SA1's paired observation | Samurai Nightmare seed 42, about 11.0 -> 94.2 s, about 8.6x; the new puzzle/attempt history differs | Re-measure S-AV04 and link S-AV38. Above the 30 s qualification reference and near the 120 s guard for this request, not a qualification percentile/verdict. |
+
+   The comparator is the accepted MS14a chain engine (`4aa3d11`/`ea14798`), **not `main`**.
+   Same seeds do not mean identical delivered puzzles/dig paths. These observations do not
+   fulfil or extrapolate the owner's requested comparison against an immutable `main`
+   baseline. Describe them as local, single-machine observations with their sample sizes.
+
+### GP completeness and evidence corrections
+
+**Accept partial intermediate GP closure under S-OD4 after the accounting is corrected;
+do not claim a complete/passing GP matrix.** No additional unsafe timing campaign is required
+before this task's commit. The full final offered-matrix obligation remains with MS18d.
+Any omitted cell for which a credible current-source <=450-second admission is actually
+available still follows the existing measurement scope; otherwise preserve the explicit
+unmeasured gap rather than invent a bound or launch speculatively.
+
+Account for all **50 affected cells**, not just the 37 rows in `gp-table.md`:
+
+- **21 complete 50-run records:** 15 meet, six miss. Verify actual completed outputs, not
+  just `--runs=50` arguments; the greaterThan/nightmare timeout is **not** one of these 21.
+- **16 with a complete two-run pilot but no complete 50-run record:** fifteen were withheld
+  by their pilot-based projection; greaterThan/nightmare was admitted at 440 s and aborted
+  at 540 s. Retain the failed command separately from its valid pilot.
+- **13 without a complete pilot:** twelve unpiloted Samurai/Sohei/Flower cells and
+  mega16/hell1, whose pilot was attempted twice and timed out. Do not turn missing/partial
+  request data into zero-cost samples or completed outcomes.
+- The brief's **mega16/easy 50-run control** passes separately; it is not an affected cell
+  and must not inflate the 50-cell denominator.
+
+Add request/protocol, count, source, status, target, measured/projection basis and evidence
+links for every row. Pilot columns must be labelled **two-run diagnostic maxima, no GP
+verdict**, without GP pass/fail ticks. Keep raw tool output intact. Do not compute a full
+aggregate from the measured subset or call these records complete release performance.
+
+Correct the planning disclosures, without another timing run solely to repair prose:
+the target was not an upper bound. The retained ledger has **10/37 completed pilot items
+over projection** (by both numeric values and flags); mega16/hell1's two aborted attempts
+are additional. Reconcile the review's 11/37 shorthand without mixing those denominators.
+The completed GP ledger
+also has **seven** `withinProjection:false` items, plus the aborted greaterThan/nightmare
+command. The G13 observation is not a measured 4,750-second projection for every level of
+Samurai, Sohei and Flower: replace those cross-cell claims with cell-qualified evidence or
+an explicit unknown/unmeasured basis. A failed two-run pilot does not establish a measured
+50-run duration of 13,500 seconds. Preserve the actual timeouts and do not repeat unsafe
+commands on the unchanged assumptions.
+
+### Reviewed fix list and rerun boundary
+
+**Safe now, outside the two quick fingerprints; no rerun solely for these corrections:**
+
+- **SA1 finding 2:** record **73 detected + 8 argued-equivalent** mutants. Add SA1's
+  dominance/order arguments for S01/S03/S06/P09 beside A20/S05/E08/E09; retain the guards,
+  output sort and original runs. Drop the proposed mutant S-AV item: no missing test or
+  unresolved mutant is claimed after SA1's disposition. Negative random searches are not
+  the equivalence proof. All 81 fragments match final source; retain the disclosure that
+  the executed mutation runs preceded the stop-label rename.
+- **Finding 3:** remove the false claim that `census-run.js` checked agreement. It measures
+  cost/caps. Separately cite the suite checker and SA1's locked 16.3 s review sweep:
+  all 15 models, six seeded puzzles each, **684 forcing positions, 306 Findings, 178 v2**,
+  zero checker problems and zero conflicts with known solutions. Cite SA1's actual retained
+  artifact/review reference, not an invented path. This is soundness/proof-checking evidence,
+  not exhaustive first-pattern or missing-deduction enumeration; shortest/window evidence
+  also rests on its tests and the reviewed search. No new enumeration campaign is required.
+- **Findings 4 and 8:** correct `evidence.md` and `notes.md` with the populations and per-ID
+  limit trade-off above. The observed per-call range is **5-25x in pre-freeze measurements**,
+  not 5-20x or a final-source/main generation estimate. Carry S-AV04, S-AV08, S-AV36,
+  S-AV37 and new S-AV38 with the full inherited list.
+- **Finding 5:** disclose the missing stopped-quick row as a clearly manual aborted record,
+  with available command/session/PID evidence and unknown quantities left unknown.
+  Record the unreported stale-lock removal, the faulty pilot bounds, unchanged mega16/hell1
+  retry and the first-E overruns: G13 wire **97.4 s vs 46 s**, diagonalX-nightmare-05
+  **45.6 s vs 37 s**. Keep the final E's valid 123 admissions separate from that history.
+  The orchestrator confirms Pentomino PR #10 was finished/merged long before MS13c and
+  **was not blocked at 09:46-09:57; there was no other dv3-lock user**. Do not attribute
+  waits to Pentomino/external holders; identify owned holders where recorded, otherwise
+  say unknown. In timeout rows the error dominates a stale `exit:0`; none is an automated
+  pass. Preserve raw rows and add the interpretation/correction, not invented timings.
+- **Finding 6, cheap part:** correct only the stale inactive-grouped-graph description in
+  `docs/architecture.md`. This tightly coupled living-doc correction is assigned here.
+- **Finding 7:** state that the illustrative `MS13c/sources.json` GH command was not run:
+  both forcing IDs still use their own catalogue sources, none of those entries is v2,
+  and the real v2 normal Player hint is pinned in `play.test.js`. This is accepted coverage;
+  no new catalogue entry, count change or discovery is required by this ruling.
+- **Nits:** correct the repeated header words in `engine-final.txt`, without changing any
+  recorded hash/time. Correct the `.last-release` deletion claim to its actual state; keep
+  the owned coordination marker until final commands are done. List the `'window'` ->
+  `'empty'` rename and associated expectation edits; the old hash alone is not a retained
+  source blob or a reproducible diff. Do not invent one. Correct the GP table/projections
+  above and label Jellyfish acquisition **authorization pending JF-02**, not covered by S-OD10.
+
+**Wait for the owner, then make one coherent fingerprinted fix pass:**
+
+- Apply JF-02 A or B exactly. Under A, keep the already verified Jellyfish snapshot and
+  record the retroactive disposition without pretending the scan was authorized beforehand.
+  Under B, restore **only that entry** from the accepted pre-MS13c catalogue, preserve the
+  other six legitimate refreshes, and use the ordinary authorized source route. Do not
+  launder the refused source as a newly "known" ordinary source. If ordinary acquisition
+  fails, GH remains 36/37 and acceptance stops for the owner.
+- Fix `generator/design.md`'s cost range/source qualification and `player/design.md`'s
+  fallback description: no local fallback work cap, same parent budget/window, minimum
+  only in the singleton graph. Correct its Jellyfish authorization wording according to
+  the actual owner answer. Check corresponding living EN/VI statements for consistency.
+  Preserve historical measurements; do not weaken S-OD11, targets or counts.
+- With all selected snapshot/doc changes finished, complete GH `--check`, rerun **both
+  complete quick sets** once on final fingerprints, and check/update CI projections under
+  the existing rule. Do not run twice merely to separate the two doc corrections.
+  Report actual fingerprints/counts/times. Existing E remains applicable if its included
+  source bytes are unchanged; retain current-source merge checks, do not rerun or retag E
+  merely for a doc/owner-record edit. Any actual engine-source change invokes the ordinary
+  full E/source-refresh rules and affected verification.
+
+Q1/Q2 are now accepted as reviewed; Q3 retention and Q4 numerical reporting needed no new
+policy choice. Writing `QUESTION:` is not permission to extend a recorded authorization.
+The acquisition in JF-02 should have stopped before the unauthorized scan. No later serial
+task is dispatched until MS13c's owner disposition, fixes and acceptance/commit are complete.
+
+### JF-02 — owner question: MS13c Jellyfish acquisition and a future standing rule
+
+**Decision needed; no answer assumed.** S-OD10 authorized the corpus route for **MS12 only**
+and explicitly said no other task inherits it. MS13c nevertheless used that route without
+stopping for approval or running ordinary Generator discovery first.
+
+**Evidence.** After the saved/catalogue sources failed, MS13c materialized **10,000**
+classic9 seed-4242 puzzles (40,000 test-kit states) once, then replayed indices **0-8,703**
+in **136 chunks of 64** through the normal Player tool. The first successful chunk supplied
+`testkit-4242-8657`; the updated catalogue passes **37/37**. The replay/hint/time/lock
+bounds and complete ledger were kept; acquisition authority was not. Evidence is under
+`docs/difficulty-v3/evidence/MS13c/`: `logs/gh-corpus-materialize.txt`, `jellyfish-scan-chunks.jsonl`,
+`logs/gh-jellyfish-scan-1.txt`, `logs/gh-write-jellyfish.txt` and the final GH check.
+No more corpus acquisition is authorized while this question is pending.
+
+**Question 1 — this completed MS13c use:**
+
+- **A — approve it retroactively, for this task only.** Permit retention of the verified
+  source `testkit-4242-8657` and the completed acquisition record. Preserve the disclosure
+  that S-OD10 did not authorize it at execution time. No further scan, budget reset, changed
+  finder/prior/target, fabricated example or GH/quick/release waiver follows.
+- **B — refuse.** Restore only the old Jellyfish catalogue entry and use the ordinary
+  authorized source/discovery route, accounting for attempts already made. If that cannot
+  supply a current normal-hint example, GH is 36/37 and the task remains blocked for the
+  owner. Do not discard the unauthorized-run evidence or weaken the replay test.
+
+**Question 2 — independently and optionally, later active tasks:**
+
+- **S0 — retain case-by-case approval** (the current/default rule). An answer A alone
+  approves only MS13c; it creates no standing exception.
+- **S1 — authorize a narrow standing fallback for Jellyfish only.** In a later active task
+  whose change invalidates that existing example, first exhaust its own source, other
+  catalogue/known unique fixture sources and the ordinary bounded B discovery route.
+  Only then may that task use classic9 test-kit seed **4242**, original givens, level null,
+  `testkit-4242-<index>` provenance, indices **0-19,999 ascending**, at most **20,000**
+  attempted candidates across all its fix rounds. Reuse/materialize the prefix once and
+  account for construction; never regenerate it per chunk or reset the task allowance
+  after a source edit; repeated candidate replays consume the same allowance. Use the
+  existing Player replay, chunks <=64, <=400 hints/puzzle,
+  the eight-minute tool deadline, credible <=450 s admission, 540 s process ceiling and
+  existing lock/15 s gaps. Stop acquisition after the first completed chunk supplies a
+  verified source. At exhaustion, incomplete/unsafe execution or failure of ordinary
+  acquisition before that precondition can be met, stop for the owner rather than enlarge
+  a bound. Finish normal GH and final quick/CI gates. This covers neither another ID,
+  initial acquisition of a new ID nor another variant, and adds no new tooling class.
+  S1 begins with tasks after MS13c; it does not overturn a B refusal for the current task.
+
+**Recommendation:** A for the completed, bounded, verified MS13c source; S1 if the owner
+wants to prevent repeat Jellyfish-only interruptions while retaining explicit limits.
+Choose A/B and S0/S1 separately (for example **"JF-02: A + S1"**). Neither is inferred here.
+An answer to question 1 alone resolves the current use and retains S0; do not hold this task
+for an optional standing-rule answer or infer S1 from a bare A.
+The performance update is information under S-OD4, not bundled approval of the slowdown or
+permission to change S-OD11. All other acceptance requirements remain.
+
 ## Files to create/modify
 
 - Chain engine/suite and proof fixture helper; B's current chain fixtures/references, help/locales
   and real examples; E.
 - Both designs' chain/proof/limitations sections and both language guides; v3 notes.
+- The tightly coupled active-chain description in `docs/architecture.md`, as assigned by the review fix list.
 
 ## Implementation steps
 
