@@ -105,7 +105,7 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [x] | MS14b | [MS14b](MS14b-register-law-of-leftovers.md) | Law of leftovers integration | MS14a + MS13c | M, 40-55 min | Shared subsets | M14b | 36 |
 | [x] | MS14c | [MS14c](MS14c-killer-interaction-regressions.md) | Existing Killer regressions | MS14b | S, 25-40 min | Core tests | M14 | 37 |
 | [ ] | MS15 | MS15a-MS15b | ALS-XZ (parent) | MS14c | split | Shared ALS | M15 | 38-39 |
-| [ ] | MS15a | [MS15a](MS15a-als-enumerator.md) | Inactive bounded ALS enumerator | MS14c | M, 45-60 min | Shared ALS | M15a | 38 |
+| [ ] | MS15a | [MS15a](MS15a-als-enumerator.md) | Inactive bounded ALS enumerator | MS14c | M, 45-60 min + inactive E | Shared ALS | M15a | 38 |
 | [ ] | MS15b | [MS15b](MS15b-als-xz.md) | ALS-XZ integration | MS15a | M, 50-60 min | Shared ALS | M15 | 39 |
 | [ ] | MS16 | [MS16](MS16-sue-de-coq.md) | Sue de Coq | MS15b | M, 50-60 min | Shared ALS | M16 | 40 |
 | [ ] | MS17 | MS17a-MS17b | Persistence/version (parent) | MS16 | split | Integration | M17 | 41-42 |
@@ -181,37 +181,42 @@ MS14a/MS15a kernels likewise precede their registrations. Final GQ is MS18c,
 after all S3, MS17b and final rechecks MS18b.
 No intermediate pruning. Parent milestones are not additional waves or commits.
 
-**Current serial handoff, 2026-11-17.** MS14b is accepted and committed at **`0e3a0c4`**,
-after orchestrator template review, following MS13c (`9d58d86`) and resolved JF-02/S-OD12
-(A + S0). **MS14c is ready to dispatch**, then MS15a and the unchanged remainder. Keep the assigned
+**Current serial handoff, 2026-11-17.** MS14c is accepted and committed at **`6a9fbf6`**,
+after orchestrator template review; **M14 is complete**. MS14b (`0e3a0c4`), MS13c (`9d58d86`)
+and resolved JF-02/S-OD12 (A + S0) remain the prior boundaries. **MS15a is ready to dispatch**,
+then MS15b -> MS16 and the unchanged remainder. Keep the assigned
 MS14a/MS13c wave numbers 34/35; do not renumber IDs, change Done marks or rewrite historical
 logs. MS14a requires MS13b, MS13c also waits for accepted MS14a, and MS14b explicitly requires
 both MS14a and MS13c. The parent MS14 dependency governs activation/closure, not this inactive
 preparation. No further later task may run ahead. Preserve the completed task logs; never park
 a dirty task or run a second developer. The owner questions/answers remain in the archive.
-MS14b and MS14c receive the orchestrator's MS08a/IR72 template and generic soundness/order
-review, **not routine SA1 review**. **MS15a is next in the SA1 review set**.
+MS14b and MS14c received the orchestrator's MS08a/IR72 template and generic soundness/order
+review, not routine SA1 review. **MS15a requires SA1 cross-review before acceptance**;
+MS15b remains blocked until that reviewed implementation is accepted and committed.
 A specific unresolved question is routed by the orchestrator.
 
 MS14b closed its own 5-wire -> 14-analysis -> 520-hash activation E, current GH, quick sets
-and CI. MS14c preserves that canonical baseline, including G06, the 22 changed Jigsaw hashes
-and the 38th help example. Its expected E closure is **reuse/check-only of MS14b's final E-2
-families**, plus complete existing-source GH check; the old leaf's blanket "No GG/GR/GH"
-is superseded by IR72. New test/doc/HTML/CI files do not themselves invalidate E; compare
-the actual required identities. Any affected-family refresh follows IR72 without changing
-canonical outputs or expanding MS14c's test-only scope. Format-check before any E freeze
-and finalize fingerprinted docs/counts before the final quick runs.
+and CI. MS14c preserved that canonical baseline, including G06, the 22 changed Jigsaw hashes
+and the 38th help example: no E input changed, so it reused/merge-checked MS14b's final E-2
+families and checked all 38 GH IDs. **MS15a is inactive, but adds a production module and
+eight loader entries: all three E identities change.** It owns fresh complete **5-wire ->
+14-analysis -> 520-hash recording/check-only** under IR72, not MS14c-style ledger reuse
+or an activation refresh. Canonical fixtures, registry/weights/hints and catalogue stay
+unchanged. Its former "No heavy gate" clause is superseded for E provenance, without adding
+GP/qualification/discovery. Format-check before any E freeze and finalize fingerprinted
+docs/counts before the final quick runs.
 
-The accepted baseline is **4,526 Generator tests (501.9 s) / 2,753 Player tests (96.4 s)**,
-53/30 suites and catalogue 38. Projections are core-shared 130, steps 70, replay 70,
+The accepted baseline is **4,559 Generator tests (500.9 s) / 2,786 Player tests (97.1 s)**,
+54/31 suites and catalogue 38. Projections are core-shared 130, steps 70, replay 70,
 pipeline 80, Generator player shard 90 and Player job 150; mega 40, own-fast 320 and
-digger-target 30 remain. MS14c's brief records the full accepted fingerprints (Generator
-`c44d7bd6...`, Player `63329fbe...`). Keep MS14a's kernel/helper/tests, MS14b's activation
-and MS13c's active chain policy, consumers and round trip.
+digger-target 30 remain. MS15a's brief records the full accepted fingerprints (Generator
+`e587fe7e...`, Player `cb4f326e...`). Keep MS14c's `tech-cage` suite, MS14a's kernel/helper/tests,
+MS14b's activation and MS13c's active chain policy, consumers and round trip.
 Derive final inventories/fingerprints after owned changes; do not restore older counts,
 projections, examples or source files. MS14b retained 2/4/50,000 and measured S-AV37 on its
-blank/seeded/real populations; MS14c carries those results and the remaining gaps only.
-S-AV36/S-AV38 remain context/items, not permission to retune chains
+blank/seeded/real populations; MS14c carried those results unchanged. MS15a carries
+**S-AV36/S-AV37/S-AV38**, their source-qualified measurements and remaining gaps only;
+they are not permission to retune chains/leftovers
 or widen measurement/acquisition scope. S-OD12/S0 grants no standing corpus scan. Full S3
 scope, activation order, owner policies and the S-OD4 review matrix are unchanged.
 
