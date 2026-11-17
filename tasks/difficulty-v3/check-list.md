@@ -181,13 +181,14 @@ MS14a/MS15a kernels likewise precede their registrations. Final GQ is MS18c,
 after all S3, MS17b and final rechecks MS18b.
 No intermediate pruning. Parent milestones are not additional waves or commits.
 
-**Current serial handoff, 2026-11-17.** MS15a is accepted and committed at **`b958a58`**,
+**Current serial handoff, 2026-11-18.** MS15a is accepted and committed at **`b958a58`**,
 after SA1 acceptance, SA2's `01e06629` rulings, the developer's fix round and orchestrator
 rechecks. MS14c (`6a9fbf6`; M14 complete), MS14b (`0e3a0c4`), MS13c (`9d58d86`) and resolved
-JF-02/S-OD12 (A + S0) remain prior boundaries. **MS15b was dispatched and paused correctly
-before implementation on Q1-Q4**; its brief now fixes pair/target accounting, canonical
-Finding order, the diagnostic API and budget/observer semantics. Resume only on the
-orchestrator's explicit relay. The next order remains MS16 -> MS17a -> MS17b and the unchanged
+JF-02/S-OD12 (A + S0) remain prior boundaries. **MS15b implemented under the Q1-Q4 rulings
+and paused correctly on Q5 before changing predecessor tests.** Its brief permits explicit
+pre-ALS specimen recipes for isolated chain contracts, with a narrow task-local standing
+rule; current-ladder integration stays current and no corpus scan is authorized.
+Resume only on the orchestrator's explicit relay. The next order remains MS16 -> MS17a -> MS17b and the unchanged
 remainder. Keep the assigned
 MS14a/MS13c wave numbers 34/35; do not renumber IDs, change Done marks or rewrite historical
 logs. MS14a requires MS13b, MS13c also waits for accepted MS14a, and MS14b explicitly requires
@@ -600,6 +601,14 @@ No 32-bit mask for all board cells, input-state mutation, stale state-identity c
 Preserve original `LADDER`, preprocessing arrays and v2 records. MS04 supplies current registry
 order/active overrides and v3Expected reference data. New positions use explicit copied `after`
 arrays or initial real puzzle states; never dynamic `before(newId)` from the frozen old ladder.
+**MS15b Q5:** an isolated predecessor-finder specimen displaced solely by valid ALS-XZ
+pre-emption may retain its accepted pre-ALS preparatory ID sequence as a new explicit local
+recipe, under the leaf's proof/inventory/standing conditions. Keep the puzzles, population,
+assertions and predecessor implementation unchanged; do not edit the existing frozen data
+or turn a current-ladder claim into a historical one. Current normal hints, GH, replay,
+ratings, E, generation, qualification and GP are not covered. No new scan/source is selected,
+so no replacement-seed search is inferred. This is task-local test-fixture maintenance,
+not a change to S-OD12/S0 or a standing acquisition exception.
 Document intentional current-fixture/reclassification changes, never fit weights to historical labels.
 `v3Expected.required` is checked at `v3Expected.level`, not at the historical label. A test deliberately
 checking an old requested level names that level and its separate expected verdict explicitly.

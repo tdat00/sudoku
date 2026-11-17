@@ -8,7 +8,7 @@
 | Owner / milestone | Shared ALS / both apps; M15 complete |
 | Authority | R10/R18/R20/R21; SA2-Q-S05/S08; S-OD4, S-OD12/S0 and accepted MS15a D1-D8 |
 | Review | Orchestrator against MS08a/IR72 and generic soundness/order checks; no routine SA1 review |
-| Status | Paused before implementation; Q1-Q4 ruled below; awaiting explicit orchestrator resumption |
+| Status | Implementation in progress; Q5 ruled below; awaiting explicit orchestrator resumption |
 
 ## Goal & business context
 
@@ -216,6 +216,94 @@ merely to correct these descriptions:
   The six oracle-positive states and zero solution-conflicting removals remain this finite
   observation, not completed GH or a whole-generator soundness/availability claim.
 
+### SA2 ruling — Q5 predecessor chain specimens, 2026-11-18
+
+**Choose A, with an explicit frozen preprocessing recipe and the boundaries below.**
+The four named failures test chain-window ownership and S-OD11 cap/fallback/parent-budget
+behavior on input states, not the requirement that today's full ladder reach those states.
+They already use diagnostic C values and direct finder/seam calls. A valid puzzle-derived
+state remains a legitimate input when an earlier new technique can solve it.
+Preserve that coverage; do not lower `>20`, alter a cap/window, remove a case or replace a
+failed search-cap premise by a solved/no-work position. **B is neither needed nor authorized;
+no owner question or new corpus scan is required for this repair. C remains forbidden.**
+
+Implementation:
+
+1. Define a clearly named **explicit ID-list snapshot** of the accepted MS15a (`b958a58`)
+   classic, unscoped prefix before `forcingChainLong`, with its existing order and scope
+   filtering. It includes the earlier approved techniques and `forcingChain`, but no
+   `alsXz`. Use a copied/immutable test-local list; do not use the unrelated frozen v2
+   `LADDER` as a substitute. Do not leave this historical recipe as a live
+   `idsBefore(...).filter(...)` expression that silently absorbs future registrations.
+2. Pass that recipe only to the isolated specimen builders/call sites: the windows test's
+   `below`, the grouped-cap `stuck()` helper and `capState()`. Audit shared helper callers
+   before changing a default. The other isolated soundness/registered-versus-seam uses of
+   `LONG_CHAIN_PUZZLES` may use the same recipe where they rely on the same long-proof
+   premise, even if an aggregate assertion did not fail. List all affected callers.
+   If a helper also serves a current-ladder contract, make the historical use opt-in instead.
+3. Keep all twelve puzzle strings, seed/index provenance, `PUZZLE_530`, givens, models,
+   C=4/C=6 settings, budgets, thresholds and substantive assertions unchanged. Do not
+   duplicate/filter specimens to repair a firing count or hand-edit their candidate masks.
+   Preserve the old acquisition history, but label these as **valid states derived through
+   the pre-ALS prefix**, not positions guaranteed to be reached by today's full ladder.
+   Describe the preprocessing under its actual bounded policies, not as proof that every
+   possible earlier logical deduction is absent.
+4. Prove the recipe preserves the accepted specimen inputs/premises: compare values and
+   candidates (or their deterministic hashes) with the accepted pre-ALS derivation, or
+   provide the exact unchanged-source/argument identity proof. Keep the existing paired
+   effect logs and verify the earlier ALS deductions against the puzzles' solutions /
+   existing soundness checks. Re-establish the unchanged window coverage and the #530
+   C=6 `search-work`/50,000 premise, singleton seven-link proof and parent-budget controls.
+   A mismatch/unsound deduction is a real investigation, not grounds to freeze away a bug.
+
+**Keep the live registry live.** Do not change `idsBefore()` itself to exclude ALS, remove
+or disable `alsXz`, run assertions against an old engine, alter production ordering, or
+change the solver's allowed-technique set under test. Only the fixture's preparatory
+deduction sequence is historical; the finders/seams being asserted are the current ones.
+The registration membership pin should describe the **six current chain-group IDs**:
+`xyChain`, `forcingChain`, `alsXz`, `forcingChainLong`, `nishio`, `nishioDeep`.
+Preserve the existing predecessor metadata checks. Do not add `alsXz` to chain-proof/window
+lists such as `CHAIN_IDS` merely because it shares the `chain` group.
+
+**Task-local standing permission — yes, narrowly for MS15b.** The same recipe-freezing
+repair may be applied to another existing quick predecessor-finder contract test without
+a fresh QUESTION only when all of the following hold:
+
+- It is an isolated finder/window/cap/cancellation/purity/soundness specimen, not a claim
+  about the current full hint/generation ladder. Its intended contract is unchanged.
+- Valid earlier ALS-XZ activity is the sole reason its required specimen premise disappeared;
+  the predecessor implementation/policy has not regressed, and the baseline recipe restores
+  the same input/premise. Keep the existing puzzle/seed/model population and assertions.
+- The change is test-only preprocessing plus truthful labels/provenance. No original `LADDER`,
+  existing frozen `after` array, v2 record, producer code, limit, threshold or puzzle source is
+  rewritten to obtain a pass. A local explicit recipe replaces the problematic live lookup.
+- Every changed file/test and every affected shared-helper caller is inventoried in this
+  task's evidence, with the baseline/recipe, causal evidence and final verification.
+
+This ruling grants only those derivation edits in existing quick predecessor-finder tests,
+not general ownership of their implementation or a permanent exception for later tasks.
+If the test has mixed/unclear intent or any condition is unproved, **QUESTION before editing**.
+Do not silently reclassify a current-ladder test as an isolated/historical test.
+
+**Excluded:** normal-hint reachability, Player normal-hint/event/replay/wire integration,
+GH/catalogue sources, current ratings/`v3Expected`, E/canonical data, generation, qualification,
+GP and availability contracts. They continue to run the current ladder including ALS-XZ.
+Use their existing current-source B/E/GH/I2 refresh routes, or ask if those routes do not
+cover the failure; never use A to fabricate a current example or green integration result.
+All-39 current GH and the activation's ordinary integration gates remain mandatory.
+I2's explanation/provenance duty stays; its new-source/lowest-qualifying-seed selection clause
+does not require a scan when the existing input puzzles and their provenance are retained.
+
+Record each application in the evidence and final reply, preserving the failed focused run
+and current-ladder takeover observations rather than relabelling them passes. Run the
+affected chain suite in **both app harnesses**, then the remaining owned focused/final gates
+under the normal lock/admission rules. These test-only edits do not themselves invalidate E;
+follow actual recorder identities and never re-record merely to erase the incident.
+The activation's first complete E is still required; this is not permission to reuse MS15a's
+ledgers for the changed production source.
+They do change both quick fingerprints: settle the test changes and formatting before the
+final complete quick sets/CI. No new evidence class, acquisition allowance or assertion waiver.
+
 ## Inputs & context
 
 R18, verbatim:
@@ -336,6 +424,10 @@ before/after justification; keep the boundary, prefix, cadence and soundness cov
 ## Files to create/modify
 
 - `core/js/engine/tech-als.js`, ALS suite; full B/E; both designs/guides and notes.
+- `core/tests/suites/tech-chain.test.js`: current chain-group membership and the Q5
+  fixed-specimen derivations. The task-local standing permission above owns only equivalent
+  derivation/label edits in other existing quick predecessor-finder tests, with its inventory
+  and exclusions; it grants no additional production or current-ladder integration scope.
 - Existing unscoped technique fixtures/cost route for `alsXz`; no new cost-tool family.
 - `.github/scripts/generator-quick.json`: current inventories/measured projections and any
   owned selector coupling, preserving `core-shared` membership and every predecessor test.
