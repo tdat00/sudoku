@@ -184,8 +184,11 @@ No intermediate pruning. Parent milestones are not additional waves or commits.
 **Current serial handoff, 2026-11-17.** MS15a is accepted and committed at **`b958a58`**,
 after SA1 acceptance, SA2's `01e06629` rulings, the developer's fix round and orchestrator
 rechecks. MS14c (`6a9fbf6`; M14 complete), MS14b (`0e3a0c4`), MS13c (`9d58d86`) and resolved
-JF-02/S-OD12 (A + S0) remain prior boundaries. **MS15b is ready to dispatch**, then MS16 ->
-MS17a -> MS17b and the unchanged remainder. Keep the assigned
+JF-02/S-OD12 (A + S0) remain prior boundaries. **MS15b was dispatched and paused correctly
+before implementation on Q1-Q4**; its brief now fixes pair/target accounting, canonical
+Finding order, the diagnostic API and budget/observer semantics. Resume only on the
+orchestrator's explicit relay. The next order remains MS16 -> MS17a -> MS17b and the unchanged
+remainder. Keep the assigned
 MS14a/MS13c wave numbers 34/35; do not renumber IDs, change Done marks or rewrite historical
 logs. MS14a requires MS13b, MS13c also waits for accepted MS14a, and MS14b explicitly requires
 both MS14a and MS13c. The parent MS14 dependency governs activation/closure, not this inactive
@@ -641,6 +644,13 @@ Pattern-cost recordings use the MS07a CLI, 20 runs/case, both positive and negat
 They are GP cost evidence, not a new wall-time assertion in quick tests. Starting limits are the
 accepted R10 values; only the introducing finder can adjust its own new limit once, with
 before/after data and resulting E/GH. MS15b selects shared ALS defaults; MS16 cannot retune them.
+**MS15b Q1-Q4 clarification:** once its work definition is fixed, the developer may retain
+defaults or make that single common own-limit adjustment on recorded before/after cap and
+latency evidence, with values/rationale in the task record and notes before final E. This is
+the existing delegated R10 choice, not a new approval gate. It is not one change per model,
+phase or failed gate; unused permission does not transfer to MS16. A second adjustment,
+work-unit redefinition, permission expansion or genuinely unresolved choice needs a QUESTION
+before acting. P0's small lifted-limit probe is not a global cap/latency study.
 MS17b freezes the actual new-pattern limits with v3.
 
 ## 3. Shared conventions

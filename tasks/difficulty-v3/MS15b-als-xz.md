@@ -8,7 +8,7 @@
 | Owner / milestone | Shared ALS / both apps; M15 complete |
 | Authority | R10/R18/R20/R21; SA2-Q-S05/S08; S-OD4, S-OD12/S0 and accepted MS15a D1-D8 |
 | Review | Orchestrator against MS08a/IR72 and generic soundness/order checks; no routine SA1 review |
-| Status | Not started; ready for serial dispatch from `b958a58` |
+| Status | Paused before implementation; Q1-Q4 ruled below; awaiting explicit orchestrator resumption |
 
 ## Goal & business context
 
@@ -88,6 +88,133 @@ code convention, CRLF/no BOM, final newline and trailing whitespace) before reco
 Preserve the exact source/diff and complete identities. Any later included-source byte change
 requires fresh affected-family records; no comment exemption or retagging. Finish all
 fingerprinted docs, counts, fixtures and lists before the final quick sets as well.
+
+### SA2 rulings — pre-implementation Q1-Q4, 2026-11-17
+
+The developer stopped correctly before a tracked edit. These rulings settle the four points;
+none needs an owner decision. Resume only on the orchestrator's explicit relay/resumption.
+The R10 permission below is an already-delegated quantitative choice, not permission to
+silently settle another unresolved contract.
+
+**Q1 — accept (a), with the precise charge points below.** Preserve enumeration's existing
+extension counter. The subsequent phase spends from the **same guard**, before each:
+
+1. **Record pair visited**, once for `i < j`, before rejecting overlap, insufficient common
+   digits or failed RCC conditions. This unit includes the disjointness/common-digit work
+   and the bounded RCC cross-peer checks for that pair; no extra per-lookup unit is charged.
+2. **(x,z) target scan opened**, for an RCC x and a different common z, even if it yields
+   nothing.
+3. **Peer-list cell visited in that scan**, before any eligibility/visibility rejection:
+   solved cells, cells inside the proof, cells lacking z and cells failing an occurrence
+   check all cost one unit. Do not prefilter them for free or count only successful targets.
+
+Repeated visits in different scans are distinct units. No unmetered all-pair/RCC/target
+prepass, new guard, refund or phase reset. A refused spend sets the work cap but does not
+charge an extra unit. Merely finishing exactly at the limit is not a cap without a refused
+operation. Document this counter and keep entry/256-unit parent checks and phase/publication
+checks; the work unit is not a wall-time promise. The choice is fixed for the subsequent
+limit comparison, not something to redefine to make 50,000 appear sufficient.
+Option (c) alone would leave rejected pairs uncharged; it is not the selected accounting.
+Total work is enumeration extensions + visited pairs + opened (x,z) scans + visited peer cells.
+
+**Q2 — accept the proposed first-witness order/granularity, not "most eliminations".**
+Use records in their canonical order; i outer, j increasing with j > i; x numerically
+ascending over RCC digits, then z numerically ascending over other common digits. A z that
+is also an RCC is allowed: the proof requires z != x, not that z be unrestricted.
+Use the actual record digits / `model.digits`, not P0's literal nine.
+Use **`A.occurrences[z][0]` as the target-scan pivot**, matching P0.1; iterate its actual
+`model.peers` in ascending cell order. This fixes "first occurrence" unambiguously without
+changing the probe's accounting. Test every z occurrence of both sets for visibility.
+
+The first fully scanned (A,B,x,z) with nonempty targets supplies one Finding: all its valid
+z targets, eliminations sorted by cell, no placements; sorted A-union-B proof cells and
+their `SG.model.cellLabel` labels in that order. Never aggregate different witnesses.
+**Finish that target scan before publishing it.** A work/parent stop during the scan drops
+the partial target list, even if some individual eliminations were already proved; do not
+return a subset while claiming all targets. An incomplete record prefix can still support
+the first witness within that retained prefix, with its record cap visible; no global
+first/minimum/most-eliminating witness is promised over omitted ALS records.
+
+**Q3 — accept the owned diagnostic export**
+`SG.alsPatterns.findXz(model,state,ctx[,opts])`, with `opts = {workLimit,limits}`.
+The registered entry calls it with **no opts**. The helper creates exactly one guard via
+`createWork()` when opts is omitted, otherwise `createWork(opts.workLimit)` (an undefined
+value selects the default), and uses enumeration's defaults
+unless the explicit diagnostic `opts.limits` is supplied. Do not forward `ctx.options`
+into this seam or create an unbounded production path. `undefined` means no options;
+otherwise require a non-null, non-array options object and preserve the existing helper
+validation / `solver.invalidOption`, flooring and zero semantics for its values. No input object is mutated.
+Add `findXz` deliberately to the exact API pin; preserve `enumerate`, `createWork`, `spend`
+and the frozen `LIMITS`. The registered wrapper and this implementation must not both emit:
+the shared implementation owns the one R10 record.
+
+**Q4 — accept the decline/final-check rules, with a cap-precedence correction.**
+Remember a parent stop from enumeration (`complete:false`, `capHit:null`) even if a diagnostic
+context does not throw again; no prefix use or pair continuation follows. Recheck the parent
+as specified. A final `budget.exceeded` before publication drops an otherwise complete
+Finding. Cancellation and other errors propagate; a local work stop returns no Finding.
+
+Use the observer's local-cap field as:
+
+```text
+guard.capped ? 'work' : recordQuotaHit ? 'records' : null
+```
+
+`recordQuotaHit` means enumeration actually returned `capHit:'records'`, not merely that
+`complete` was false or a record-count bound was exactly reached.
+Thus a **parent-only** stop has `capHit:null`; a later parent stop does **not erase** an
+already observed work/record cap. Work refusal takes precedence if both local caps occur.
+The parent-stop status is separate from this local-cap field in the measurements. Keep
+the normal post-finder budget check; for one-shot diagnostic contexts also retain whether
+a budget stop was observed during the call, since a later successful check cannot undo it.
+
+Emit one fresh `{id:'alsXz',work:guard.used,limit:guard.limit,capHit,retained:records.length}`
+on a handled return (including capped/budget-declined null). Do not emit after an operation
+has thrown cancellation or an unhandled error. Run the final budget check **before** observer
+publication, and invoke the observer **outside** the budget-exceeded handler: an observer
+exception propagates unchanged, even if its code is `budget.exceeded`, with no second record
+or manufactured successful return. A record-cap Finding remains valid with that cap visible.
+
+Add focused coverage of exact-limit completion versus one-unit-short target scans, rejected
+peer-cell charges, another RCC as z, record-cap witnesses, parent-only and coincident
+local-cap/parent stops, a one-shot parent stop, and observer exceptions. Keep them within
+the existing ALS suite and combine with the planned gates; no new tooling/evidence class.
+
+**R10 — the developer may make the already-authorized choice itself, within its envelope.**
+It may retain 4/4,096/50,000 or make the introducing task's single common, finite own-ALS
+adjustment, **after** recording before/after cap and latency evidence under the fixed Q1
+accounting. Bounded diagnostic comparisons through the Q3 seam on the already-owned
+populations can establish that evidence without changing production constants; they are
+not themselves production-limit adjustments. Record the chosen values, rationale and
+populations in the task evidence and v3 notes **before final E**. No additional approval gate is added for that settled,
+evidenced, explicitly delegated choice. P0 alone is not a global cap/latency study or a
+reason to raise a bound automatically.
+
+This is not one adjustment per phase, model or failed gate. It changes no other finder,
+weight, band, caller budget, target or offer, and waives no correctness/fixture/GH obligation.
+Retaining defaults does not spend the adjustment, but unused permission does not transfer
+to MS16. A proposed second adjustment, changed work definition, model-dependent limit,
+permission expansion or still-unsettled choice is a `QUESTION:` **before acting**, not a
+routine default saved for later review. The one permitted selected configuration still
+receives the normal orchestrator review and full current-source E/GH/quick/CI closure.
+
+**Correct P0's report labels; preserve its raw script/log.** No new puzzle run is needed
+merely to correct these descriptions:
+
+- The script uses work **`1e9`** and records **`1e7`**, not the default record bound. Cells
+  retain the default four. All observed counts happen to fit the nominal production bounds;
+  that is an arithmetic prediction under (a), not production-finder cap telemetry.
+- W2's 91-16,653 values are **pair counts only**, not the proposed option (b)'s pair-plus-cell
+  cost. Relabel W2; no comparison run of the rejected alternative is required.
+- The largest recorded **per-position full-scan sum is 46,041** = 1,140 enumeration + 44,901
+  pair/target units (`uniqueRectangles`). **46,627** sums maxima from different positions:
+  a conservative bound, not an observed maximum. The production finder will stop at its
+  first completed witness; P0's full scans are not its measured per-call work.
+- There are 86 distinct fixture strings inspected and 19 measured unique-solution states
+  remaining open after the lower-order prefix. Uniqueness-rejected versus solved skip counts
+  were not logged; do not claim the other 67 were all solved or infer a census/rate.
+  The six oracle-positive states and zero solution-conflicting removals remain this finite
+  observation, not completed GH or a whole-generator soundness/availability claim.
 
 ## Inputs & context
 
