@@ -1,0 +1,125 @@
+$ node tests\node-runner.js --suite=tech-chain
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-chain: 202 passed, 14 failed  (16.44 s)
+
+Failures:
+  FAIL tech-chain > chain group: soundness (I7) > forcingChainLong never removes a solution candidate on real positions where only a long chain is left
+       AssertionError: technique "forcingChainLong" fired only 6 times on 12 states (minFirings is 12): the soundness check is too weak; raise count or pass harder states
+       at fail (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:107:11)
+       at Object.assertSound (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:624:7)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:696:23)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL tech-chain > chain group: soundness (I7) > never removes a candidate of a solution when a position has several solutions
+       AssertionError: forcingChain failed on classic6 position #18 (step 1):
+  - chain 0, step 0 {"cells":[28],"digit":3,"truth":1}: truth must be 0 or 1
+  - chain 0, step 0 {"cells":[28],"digit":3,"truth":1} is not an open candidate
+  - chain 0, step 1 {"cells":[29],"digit":3,"truth":0}: truth must be 0 or 1
+  - chain 0, step 1 {"cells":[29],"digit":3,"truth":0} is not an open candidate
+  - chain 0, step 1 {"cells":[29],"digit":3,"truth":0}: a true node must be followed by a false node
+  - chain 0, step 2 {"cells":[29],"digit":4,"truth":1}: truth must be 0 or 1
+  - chain 0, step 2 {"cells":[29],"digit":4,"truth":1} is not an open candidate
+  - chain 0, step 2 {"cells":[29],"digit":4,"truth":1}: a true node must be followed by a false node
+  - chain 0, step 3 {"cells":[24,25],"digit":4,"truth":0}: truth must be 0 or 1
+  - chain 0, step 3 {"cells":[24,25],"digit":4,"truth":0} is not an open candidate
+  - chain 0, step 3 {"cells":[24,25],"digit":4,"truth":0}: a true node must be followed by a false node
+  - chain 0, step 4 {"cells":[30],"digit":4,"truth":1}: truth must be 0 or 1
+  - chain 0, step 4 {"cells":[30],"digit":4,"truth":1} is not an open candidate
+  - chain 0, step 4 {"cells":[30],"digit":4,"truth":1}: a true node must be followed by a false node
+  - chain 1, step 0 {"cells":[28],"digit":3,"truth":1}: truth must be 0 or 1
+  - chain 1, step 0 {"cells":[28],"digit":3,"truth":1} is not an open candidate
+  - chain 1, step 1 {"cells":[24,25,26],"digit":3,"truth":0}: truth must be 0 or 1
+  - chain 1, step 1 {"cells":[24,25,26],"digit":3,"truth":0} is not an open candidate
+  - chain 1, step 1 {"cells":[24,25,26],"digit":3,"truth":0}: a true node must be followed by a false node
+  - chain 1, step 2 {"cells":[30],"digit":3,"truth":1}: truth must be 0 or 1
+  - chain 1, step 2 {"cells":[30],"digit":3,"truth":1} is not an open candidate
+  - chain 1, step 2 {"cells":[30],"digit":3,"truth":1}: a true node must be followed by a false node
+  - chain 1, step 3 {"cells":[30],"digit":4,"truth":0}: truth must be 0 or 1
+  - chain 1, step 3 {"cells":[30],"digit":4,"truth":0} is not an open candidate
+  - chain 1, step 3 {"cells":[30],"digit":4,"truth":0}: a true node must be followed by a false node
+  - cells [24,25,26,28,29,30] are not the cells of the chains
+  - the chains must end in the two polarities of one node
+  - contradiction must start from truth 1
+  - contradiction must give exactly eliminations [[null,null]]
+  finding: {"technique":"forcingChain","cells":[24,25,26,28,29,30],"placements":[],"eliminations":[[28,3]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"proofVersion":2,"kind":"contradiction","length":4,"chains":[[{"cells":[28],"digit":3,"truth":1},{"cells":[29],"digit":3,"truth":0},{"cells":[29],"digit":4,"truth":1},{"cells":[24,25],"digit":4,"truth":0},{"cells":[30],"digit":4,"truth":1}],[{"cells":[28],"digit":3,"truth":1},{"cells":[24,25,26],"digit":3,"truth":0},{"cells":[30],"digit":3,"truth":1},{"cells":[30],"digit":4,"truth":0}]]}}
+       at fail (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:29:11)
+       at runWithOracle (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:251:9)
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:776:26
+       at Array.forEach (<anonymous>)
+  FAIL tech-chain > forcingChain: chain proofs > every reported chain alternates strong and weak links and justifies its deduction
+       AssertionError: state #152, step 4: chain 0, step 0 {"cells":[9],"digit":8,"truth":1}: truth must be 0 or 1; chain 0, step 0 {"cells":[9],"digit":8,"truth":1} is not an open candidate; chain 0, step 1 {"cells":[19],"digit":8,"truth":0}: truth must be 0 or 1; chain 0, step 1 {"cells":[19],"digit":8,"truth":0} is not an open candidate; chain 0, step 1 {"cells":[19],"digit":8,"truth":0}: a true node must be followed by a false node; chain 0, step 2 {"cells":[19],"digit":5,"truth":1}: truth must be 0 or 1; chain 0, step 2 {"cells":[19],"digit":5,"truth":1} is not an open candidate; chain 0, step 2 {"cells":[19],"digit":5,"truth":1}: a true node must be followed by a false node; chain 0, step 3 {"cells":[11],"digit":5,"truth":0}: truth must be 0 or 1; chain 0, step 3 {"cells":[11],"digit":5,"truth":0} is not an open candidate; chain 0, step 3 {"cells":[11],"digit":5,"truth":0}: a true node must be followed by a false node; chain 0, step 4 {"cells":[65,74],"digit":5,"truth":1}: truth must be 0 or 1; chain 0, step 4 {"cells":[65,74],"digit":5,"truth":1} is not an open candidate; chain 0, step 4 {"cells":[65,74],"digit":5,"truth":1}: a true node must be followed by a false node; chain 1, step 0 {"cells":[9],"digit":8,"truth":1}: truth must be 0 or 1; chain 1, step 0 {"cells":[9],"digit":8,"truth":1} is not an open candidate; chain 1, step 1 {"cells":[54],"digit":8,"truth":0}: truth must be 0 or 1; chain 1, step 1 {"cells":[54],"digit":8,"truth":0} is not an open candidate; chain 1, step 1 {"cells":[54],"digit":8,"truth":0}: a true node must be followed by a false node; chain 1, step 2 {"cells":[54],"digit":5,"truth":1}: truth must be 0 or 1; chain 1, step 2 {"cells":[54],"digit":5,"truth":1} is not an open candidate; chain 1, step 2 {"cells":[54],"digit":5,"truth":1}: a true node must be followed by a false node; chain 1, step 3 {"cells":[65,74],"digit":5,"truth":0}: truth must be 0 or 1; chain 1, step 3 {"cells":[65,74],"digit":5,"truth":0} is not an open candidate; chain 1, step 3 {"cells":[65,74],"digit":5,"truth":0}: a true node must be followed by a false node; cells [9,11,19,54,65,74] are not the cells of the chains; the chains must end in the two polarities of one node; contradiction must start from truth 1; contradiction must give exactly eliminations [[null,null]]
+  {"technique":"forcingChain","cells":[9,11,19,54,65,74],"placements":[],"eliminations":[[9,8]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"proofVersion":2,"kind":"contradiction","length":4,"chains":[[{"cells":[9],"digit":8,"truth":1},{"cells":[19],"digit":8,"truth":0},{"cells":[19],"digit":5,"truth":1},{"cells":[11],"digit":5,"truth":0},{"cells":[65,74],"digit":5,"truth":1}],[{"cells":[9],"digit":8,"truth":1},{"cells":[54],"digit":8,"truth":0},{"cells":[54],"digit":5,"truth":1},{"cells":[65,74],"digit":5,"truth":0}]]}}
+       at fail (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:29:11)
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:927:13
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:920:34)
+  FAIL tech-chain > forcingChain: fixtures > reports the contradiction chain of 6 links
+       AssertionError: technique "forcingChainLong" found nothing, but a Finding was expected
+       at fail (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:107:11)
+       at Object.expectFinding (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:426:7)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:970:25)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL tech-chain > forcingChain: fixtures > finds nothing, in either chain window, on the stuck positions of the famous puzzles
+       AssertionError: technique "forcingChain" should find nothing here, but returned: {"technique":"forcingChain","cells":[36,46,49,57,58,63,66,67,68,76],"placements":[],"eliminations":[[57,9]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"proofVersion":2,"kind":"contradiction","length":4,"chains":[[{"cells":[57],"digit":9,"truth":1},{"cells":[58,67,76],"digit":9,"truth":0},{"cells":[49],"digit":9,"truth":1},{"cells":[46],"digit":9,"truth":0},{"cells":[36],"digit":9,"truth":1}],[{"cells":[57],"digit":9,"truth":1},{"cells":[66,67,68],"digit":9,"truth":0},{"cells":[63],"digit":9,"truth":1},{"cells":[36],"digit":9,"truth":0}]]}}
+       at fail (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:107:11)
+       at Object.expectNoFinding (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:473:7)
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:987:11
+       at Array.forEach (<anonymous>)
+  FAIL tech-chain > forcingChain: maxChainLength > treats the fixtures as exact: one link less and the chain is out of reach
+       TypeError: Cannot read properties of null (reading 'i18nArgs')
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:1042:19
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:1036:22)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL tech-chain > forcingChain: cyclic link graphs > terminates on pure cycles of any length, finding a proof only where one exists
+       AssertionError: expected 67 to be <= 64
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:1102:27
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:1098:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL tech-chain > chain search seam: windows over the shortest proof > is what every registered finder asks for: its id, both bounds of its window and its work limit
+       AssertionError: forcingChain differs from the seam on state #65
+       at fail (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:29:11)
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:1443:54
+       at Array.forEach (<anonymous>)
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:1441:36
+  FAIL tech-chain > chain search seam: work limit and pattern-work report > reports a fresh record per call, with no limit and no cap for the registered finders
+       AssertionError: expected Array(8)["capHit", "domain", "fallback", "grouped", "id", "limit", "retained", "work"] to equal Array(5)["capHit", "id", "limit", "retained", "work"]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:1703:46)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-chain > chain search seam: work limit and pattern-work report > checks the parent budget at entry, and not at all on the unbounded path, of a solved position
+       AssertionError: expected Array(2)["forcingChain", 4] to equal Array(2)["forcingChain", 0]
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:1899:40
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:1896:90)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL tech-chain > chain windows: the four registered ids on their own > owns every shortest proof exactly once, for C = 4 and C = 6: the windows partition the scan
+       AssertionError: expected Array(2)["C = 4, state #65", {technique: "forcingChain", cells: Array(6)[39, 42, 43, 51, 66, 69], placements: Array(0)[], eliminations: Array(1)[Array(2)], i18nKey: "technique.forcingChain.step.contradiction", i18nArgs: {proofVersion: 2, kind: "contradiction", length: 3, chains: Array(2)}}] to equal Array(2)["C = 4, state #65", null]
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2224:37
+       at Array.forEach (<anonymous>)
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2211:23
+       at withShortMax (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2072:16)
+  FAIL tech-chain > grouped graph (R16, inactive): the API and the registered kernels > is referenced by nothing but its own table: the registered finders and the seam keep the singleton graph
+       AssertionError: expected 3 to be 2
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:3721:42)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > reads the legacy triples of the real forcingChain Findings like the old checker does, and as version 2
+       AssertionError: expected Array(2)["contradiction chain of 6 links", Array(23)["chain 0, step 0 {\"cells\":[51],\"digit\":7,\"truth\":1}: truth must be 0 or 1", "chain 0, step 0 {\"cells\":[51],\"digit\":7,\"truth\":1} is not an open candidate", "chain 0, step 1 {\"cells\":[69],\"digit\":7,\"truth\":0}: truth must be 0 or 1", "chain 0, step 1 {\"cells\":[69],\"digit\":7,\"truth\":0} is not an open candidate", "chain 0, step 1 {\"cells\":[69],\"digit\":7,\"truth\":0}: a true node must be followed by a false node", "chain 0, step 2 {\"cells\":[66],\"digit\":7,\"truth\":1}: truth must be 0 or 1", "chain 0, step 2 {\"cells\":[66],\"digit\":7,\"truth\":1} is not an open candidate", "chain 0, step 2 {\"cells\":[66],\"digit\":7,\"truth\":1}: a true node must be followed by a false node", "chain 0, step 3 {\"cells\":[39],\"digit\":7,\"truth\":0}: truth must be 0 or 1", "chain 0, step 3 {\"cells\":[39],\"digit\":7,\"truth\":0} is not an open candidate", "chain 0, step 3 {\"cells\":[39],\"digit\":7,\"truth\":0}: a true node must be followed by a false node", "chain 1, step 0 {\"cells\":[51],\"digit\":7,\"truth\":1}: truth must be 0 or 1", ...]] to equal Array(2)["contradiction chain of 6 links", Array(0)[]]
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:4855:70
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:4851:26)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL tech-chain > chain group: nightmare puzzles > honours maxChainLength given to the solver for the long window too: 7 and 8 links need that much
+       AssertionError: expected Array(3)[7, 6, true] to equal Array(3)[7, 6, false]
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:5059:51
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:5055:66)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  216 total, 202 passed, 14 failed, 0 skipped
+Time:   16.44 s running tests, 16.56 s total
+exit=1 seconds=16.686

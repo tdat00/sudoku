@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS13c\smoke.js 300 classic4
+classic4 {"states":300,"bothNull":545,"equal":55,"groupFinding":0,"groupShorter":0,"groupedOnly":0,"pureDiffers":0,"legacyOnly":0,"fallback":0,"fallbackFound":0,"capped":0,"bad":0}
+exit=0 seconds=0.275

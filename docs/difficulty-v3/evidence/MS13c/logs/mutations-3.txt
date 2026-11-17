@@ -1,0 +1,18 @@
+$ node tests\artifacts\difficulty-v3\MS13c\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS13c\mutations-3.txt 66 80
+mutation 66 (E09 a start marks the group neighbours too): NOT DETECTED, EQUIVALENT (commonTargets reads r.mark[j] only for j < r.singles (its first condition), so a mark written for a group node (index >= singles) is never read) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 23.0 s
+mutation 67 (E10 the group weak link of one shared digit only): DETECTED - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 68 (E11 a conjugate link without the cover): DETECTED - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+mutation 69 (B01 a window with the minimum above the maximum searched): DETECTED - 96 total, 95 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 7.2 s
+mutation 70 (B02 no entry check of the search): DETECTED - 83 total, 82 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 7.3 s
+mutation 71 (B03 no check before a start): DETECTED - 45 total, 44 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 6.1 s
+mutation 72 (B04 no gate in the expansions): DETECTED - 229 total, 228 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 20.0 s
+mutation 73 (B05 pieces of 512 links): DETECTED - 229 total, 228 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 20.3 s
+mutation 74 (B06 the link that proves is not counted): NOT DETECTED (exit 0) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 22.9 s
+mutation 75 (B07 a negative limit accepted by the seam): DETECTED - 222 total, 221 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+mutation 76 (B08 a fractional limit kept): DETECTED - 222 total, 221 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.0 s
+mutation 77 (B09 a non-boolean fallback accepted): DETECTED - 222 total, 221 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+mutation 78 (B10 the caller maximum of forcingChain ignored): DETECTED - 36 total, 35 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.9 s
+mutation 79 (B11 the minimum of forcingChainLong is C): DETECTED - 22 total, 21 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.5 s
+mutation 80 (B12 the entry check of the construction missing): DETECTED - 83 total, 82 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 7.2 s
+detected 13 of 15, survivors 2, 177.2 s
+exit=0 seconds=177.308

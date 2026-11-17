@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "8406957b0fc6ce7029a2cc1b8efb0e80ba6e0de4efd1224d67538e802c2d87f4",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "4aa3d11dc82276c114ce2aea47767949996b1cdd",
+  "dirty": true,
+  "generatedAt": "2026-11-17T02:04:50.532Z",
+  "argv": ["--ids=G02","--record=..\\docs\\difficulty-v3\\evidence\\MS13c\\analysis\\G02.json"],
+  "records": [
+    {"key":"G02","request":{"variantId":"classic9","difficulty":"veryEasy","seed":"1"},"value":{"id":"G02","request":{"variantId":"classic9","difficulty":"veryEasy","seed":"1"},"today":{"steps":7,"missing":1},"counts":{"compact":5,"details":23},"board":{"cells":81,"cages":0,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,4,"D/Dig",8,15,15,"nakedSingle","—","—","F"],[3,8,"D/Dig",16,25,10,"nakedSingle","—","—","—"],[4,21,"D/Dig",41,43,18,"nakedSingle","—","—","—"],[5,21,"F/Final",41,43,0,"nakedSingle","—","—","—"]],"details":[0,5,9,12,15,18,20,23,25,27,29,31,32,34,35,37,38,39,40,41,42,43,43],"alive":null,"folds":[],"jumps":[]},"ms":22,"overrides":[]}
+  ]
+}

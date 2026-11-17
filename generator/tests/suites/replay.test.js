@@ -523,8 +523,8 @@
       expect(rating.P).toBeNull();
       expect(rating.empties).toBe(53);
       expect(rating.counts).toEqual({
-        nakedSingle: 3, hiddenSingleBox: 16, pointing: 6, boxLine: 1, nakedPair: 2, hiddenPair: 2, finnedXWing: 1,
-        wxyzWing: 1, wWing: 2, uniqueRectangle: 2, forcingChain: 2
+        nakedSingle: 3, hiddenSingleBox: 16, pointing: 6, boxLine: 1, nakedPair: 1, hiddenPair: 2, finnedXWing: 1,
+        wxyzWing: 1, wWing: 2, uniqueRectangle: 2, forcingChain: 3
       });
       expect(rating.checks).toBeGreaterThan(0);
       expect(rating.memo).toBe(false);
@@ -565,7 +565,7 @@
       expect(Object.keys(out.counts).length).toBeGreaterThan(0);
       var rated = R.rateBoard(result.model, result.givens, { forceCount: true });
       expect(rated.status).toBe('rated');
-      expect(rated.score).toBe(2331);
+      expect(rated.score).toBe(2369);
     });
 
     slow('reports the progress of prepare once per position, then after every probe and optional solve', function () {
@@ -1194,8 +1194,8 @@
       });
     });
 
-    slow('has the same end position as a jump in one view and not in the other (G07, G12, G01)', function () {
-      [['G07', 31, [141, 2268], [3245, 2268]], ['G12', 107, [133, 513], [2488, 513]]].forEach(function (c) {
+    slow('has the same end position as a jump in one view and not in the other (G10, G12, G01)', function () {
+      [['G10', 49, [145, 2199], [2210, 2199]], ['G12', 107, [133, 513], [2605, 513]]].forEach(function (c) {
         var analysis = analysisOf(c[0]);
         var compact = toPosition(analysis, 'compact', c[1]);
         var details = toPosition(analysis, 'details', c[1]);
@@ -1204,14 +1204,14 @@
         expect(details.tier).not.toBe('jump');
         expect(details.ratio).toBeNull();
       });
-      expect(toPosition(analysisOf('G07'), 'details', 31).change).toBe(-977);
-      expect(toPosition(analysisOf('G12'), 'details', 107).change).toBe(-1975);
+      expect(toPosition(analysisOf('G10'), 'details', 49).change).toBe(-11);
+      expect(toPosition(analysisOf('G12'), 'details', 107).change).toBe(-2092);
       var g01 = analysisOf('G01');
       expect(toPosition(g01, 'compact', 27).before.W).toBeCloseTo(1518.75, 6);
       expect(toPosition(g01, 'details', 27).before.W).toBeCloseTo(1518.75, 6);
     });
 
-    slow('has 12 compact, 12 details and 16 distinct jump transitions in the 14 goldens', function () {
+    slow('has 12 compact, 12 details and 14 distinct jump transitions in the 14 goldens', function () {
       var count = { compact: 0, details: 0 };
       var distinctJumps = {};
       GOLDENS.forEach(function (g) {
@@ -1222,31 +1222,48 @@
         });
       });
       expect(count).toEqual({ compact: 12, details: 12 });
-      expect(Object.keys(distinctJumps)).toHaveLength(16);
+      expect(Object.keys(distinctJumps)).toHaveLength(14);
     });
 
     // Since the WXYZ-Wing (MS10b) no golden has a flat position with a new hardest technique: G13 (Samurai) took
     // another dig path and its position 101 is 70 to 70 with Naked Single on both sides. The flat case is therefore
     // read from that real position with its hardest technique set to Hidden Single (which the position before has
-    // not used) and the transitions rebuilt; the falling case (G12) is a real position.
-    slow('labels a new hardest technique also at a flat or lower score (details: G13 with a set rating, G12)', function () {
-      var g13 = analysisOf('G13');
-      var ratings = g13.ratings.slice();
-      ratings[100] = Object.assign({}, ratings[100], { counts: Object.assign({}, ratings[100].counts, { hiddenSingleBox: 0 }) });
-      ratings[101] = Object.assign({}, ratings[101], { hardest: 'hiddenSingleBox' });
-      var plain = toPosition(g13, 'details', 101);
-      expect([plain.before.total, plain.after.total, plain.after.hardest, plain.before.hardest, plain.tier, plain.newHardest])
-        .toEqual([70, 70, 'nakedSingle', 'nakedSingle', null, false]);
-      var set = Object.assign({}, g13, { transitions: R.buildViews(Object.assign({}, g13, { ratings: ratings })).transitions });
-      [[set, 101, 70, 70, 'hiddenSingleBox', 'nakedSingle'],
-        [analysisOf('G12'), 103, 2977, 2724, 'forcingChainLong', 'nishio']
-      ].forEach(function (c) {
-        var t = toPosition(c[0], 'details', c[1]);
-        expect([t.before.total, t.after.total, t.change]).toEqual([c[2], c[3], c[3] - c[2]]);
-        expect([t.after.hardest, t.before.hardest]).toEqual([c[4], c[5]]);
-        expect([t.tier, t.newHardest, t.ratio]).toEqual(['newPeak', true, null]);
+    // not used) and the transitions rebuilt. Since the grouped chains (MS13c) no golden has a falling position
+    // with a new hardest technique either (the 14 goldens hold none in either view): the falling case is G12's
+    // position 103 (2,977 to 2,169, Nishio to Forcing Chain), whose position before is set to have no Forcing
+    // Chain, with the transitions rebuilt in the same way.
+    slow('labels a new hardest technique also at a flat or lower score (details: G13 and G12 with a set rating)',
+      function () {
+        function withCount(analysis, index, technique, count) {
+          var ratings = analysis.ratings.slice();
+          var counts = Object.assign({}, ratings[index].counts);
+          counts[technique] = count;
+          ratings[index] = Object.assign({}, ratings[index], { counts: counts });
+          return ratings;
+        }
+        var g13 = analysisOf('G13');
+        var ratings = withCount(g13, 100, 'hiddenSingleBox', 0);
+        ratings[101] = Object.assign({}, ratings[101], { hardest: 'hiddenSingleBox' });
+        var plain = toPosition(g13, 'details', 101);
+        expect([plain.before.total, plain.after.total, plain.after.hardest, plain.before.hardest, plain.tier,
+          plain.newHardest]).toEqual([70, 70, 'nakedSingle', 'nakedSingle', null, false]);
+        var set = Object.assign({}, g13, { transitions: R.buildViews(Object.assign({}, g13, { ratings: ratings }))
+          .transitions });
+        var g12 = analysisOf('G12');
+        var real12 = toPosition(g12, 'details', 103);
+        expect([real12.before.total, real12.after.total, real12.after.hardest, real12.before.hardest, real12.tier,
+          real12.newHardest]).toEqual([2977, 2169, 'forcingChain', 'nishio', null, false]);
+        var fall = Object.assign({}, g12, { transitions: R.buildViews(Object.assign({}, g12, {
+          ratings: withCount(g12, 102, 'forcingChain', 0) })).transitions });
+        [[set, 101, 70, 70, 'hiddenSingleBox', 'nakedSingle'],
+          [fall, 103, 2977, 2169, 'forcingChain', 'nishio']
+        ].forEach(function (c) {
+          var t = toPosition(c[0], 'details', c[1]);
+          expect([t.before.total, t.after.total, t.change]).toEqual([c[2], c[3], c[3] - c[2]]);
+          expect([t.after.hardest, t.before.hardest]).toEqual([c[4], c[5]]);
+          expect([t.tier, t.newHardest, t.ratio]).toEqual(['newPeak', true, null]);
+        });
       });
-    });
 
     slow('ends the example with the transition 925 to 925, role final, change 0, no tier', function () {
       var analysis = analysisOf('G01');
@@ -1595,8 +1612,8 @@
       expect(signs.every(function (x) { return x.cause.changes.length === 0 && x.cause.sign !== null; })).toBe(true);
     });
 
-    slow('describes a jump over several moves by its first move with the new technique (G07, G10, G12)', function () {
-      [['G07', 5], ['G10', 6], ['G12', 4]].forEach(function (c) {
+    slow('describes a jump over several moves by its first move with the new technique (G10, G12)', function () {
+      [['G10', 6], ['G12', 4]].forEach(function (c) {
         var analysis = analysisOf(c[0]);
         var t = into(analysis, 'compact', c[1]);
         var step = analysis.views.compact.steps[c[1]];
@@ -1786,6 +1803,119 @@
       expect(JSON.parse(JSON.stringify({ cause: jump.cause, choice: jump.choice, proof: again.proofs[jump.to] })))
         .toEqual({ cause: jump.cause, choice: jump.choice, proof: again.proofs[jump.to] });
       if (typeof structuredClone === 'function') expect(structuredClone(again)).toEqual(again);
+    });
+  });
+
+  // MS13c: a real grouped (proofVersion 2) Finding on its way through the step events, the replay and the wire.
+  // The Finding's nested chains (arrays of nodes, each with its own `cells` array) sit at the depth where the
+  // error-only `toPlain` of the events would cut them; none of these paths may.
+  describe('replay: a real grouped forcing chain through events, replay and wire (MS13c)', function () {
+    // Classic 9x9 puzzle #1375 of the long-chain list: its canonical solve first uses forcingChain at step 12 of 82,
+    // with a proof that has a group node.
+    var TEXT = '3.4....7.2..76...1....3.2...5..2.....6.8.9...8....1..2..7......1..3...84.4..1.5..';
+    var kept = null;
+
+    function real() {
+      if (kept === null) {
+        var model = SG.variants.get('classic9').build({}, null);
+        var givens = Int32Array.from(TEXT.split('').map(function (c) { return c === '.' ? 0 : Number(c); }));
+        var rating = SG.difficulty.rate(model, givens, { collectSteps: true });
+        var at = rating.steps.findIndex(function (s) { return s.technique === 'forcingChain'; });
+        kept = {
+          model: model, givens: givens, rating: rating, at: at, step: rating.steps[at],
+          solution: SG.logicalSolver.solve(model, givens, { collectSteps: false }).state.value
+        };
+      }
+      return kept;
+    }
+
+    function json(value) {
+      return JSON.parse(JSON.stringify(value));
+    }
+
+    it('is a grouped version 2 Finding with nested nodes, a group node and the full proof cells', function () {
+      var r = real();
+      expect(r.rating.solved).toBe(true);
+      expect(r.at).toBe(11);
+      expect(r.rating.steps).toHaveLength(82);
+      var args = r.step.i18nArgs;
+      expect(args.proofVersion).toBe(2);
+      expect(['forced', 'contradiction', 'endpoints']).toContain(args.kind);
+      expect(args.chains.length).toBeGreaterThan(0);
+      var nodes = [];
+      args.chains.forEach(function (chain) {
+        expect(chain.length).toBeGreaterThan(1);
+        chain.forEach(function (node) {
+          expect(Object.keys(node).sort()).toEqual(['cells', 'digit', 'truth']);
+          expect(Array.isArray(node.cells)).toBe(true);
+          nodes.push(node);
+        });
+      });
+      expect(nodes.some(function (node) { return node.cells.length > 1; })).toBe(true);
+      expect(args.length).toBe(Math.max.apply(null, args.chains.map(function (c) { return c.length - 1; })));
+      var union = [];
+      nodes.forEach(function (node) {
+        node.cells.forEach(function (cell) { if (union.indexOf(cell) === -1) union.push(cell); });
+      });
+      expect(r.step.cells).toEqual(union.sort(function (a, b) { return a - b; }));
+      expect(r.step.eliminations.length + r.step.placements.length).toBeGreaterThan(0);
+    });
+
+    it('step events carry the Finding unchanged: valid events, no truncation, same after a JSON round trip', function () {
+      var r = real();
+      var seen = [];
+      var emitter = SG.events.createEmitter('full', function (e) { seen.push(e); });
+      emitter.step('rate', 'progress', r.step.i18nKey, r.step.i18nArgs, null);
+      emitter.micro('rate', r.step.i18nKey, r.step.i18nArgs, null, null);
+      expect(seen.map(function (e) { return e.type; })).toEqual(['step', 'micro']);
+      seen.forEach(function (e) {
+        expect(SG.events.eventProblems(e)).toEqual([]);
+        expect(e.i18nKey).toBe(r.step.i18nKey);
+        expect(e.i18nArgs.proofVersion).toBe(2);
+        expect(e.i18nArgs).toEqual(r.step.i18nArgs);
+        expect(json(e)).toEqual(e);
+        expect(json(e).i18nArgs.chains).toEqual(r.step.i18nArgs.chains);
+        expect(SG.events.eventProblems(json(e))).toEqual([]);
+      });
+    });
+
+    it('the replay keeps it: firstUse returns plain copies of the args, eliminations and placements', function () {
+      var r = real();
+      var use = R.firstUse(r.model, r.givens, 'forcingChain');
+      expect(use).not.toBeNull();
+      expect(use.k).toBe(r.at + 1);
+      expect(use.n).toBe(82);
+      expect(use.i18nKey).toBe(r.step.i18nKey);
+      expect(use.i18nArgs.proofVersion).toBe(2);
+      expect(use.i18nArgs).toEqual(json(r.step.i18nArgs));
+      expect(use.i18nArgs.chains).toEqual(json(r.step.i18nArgs.chains));
+      expect(use.eliminations).toEqual(json(r.step.eliminations));
+      expect(use.placements).toEqual(json(r.step.placements));
+      expect(use.i18nArgs.chains).not.toBe(r.step.i18nArgs.chains);
+      use.i18nArgs.chains[0][0].cells.push(-1);
+      expect(R.firstUse(r.model, r.givens, 'forcingChain').i18nArgs).toEqual(json(r.step.i18nArgs));
+    });
+
+    it('the wire keeps it: toPlainWire, JSON and fromPlainWire give back every step of the rating', function () {
+      var r = real();
+      var result = {
+        model: r.model, givens: r.givens, solution: r.solution, rating: r.rating, exact: true, seed: 1375,
+        config: { difficulty: 'expert' }, timings: {}, attempts: 1, warnings: [], digLog: [], target: null
+      };
+      var wire = R.toPlainWire(result);
+      expect(hasFunction(wire)).toBe(false);
+      var back = R.fromPlainWire(json(wire));
+      expect(back.rating.steps).toHaveLength(82);
+      expect(back.rating.steps).toEqual(json(r.rating.steps));
+      var step = back.rating.steps[r.at];
+      expect(step.technique).toBe('forcingChain');
+      expect(step.i18nArgs.proofVersion).toBe(2);
+      expect(step.i18nArgs).toEqual(json(r.step.i18nArgs));
+      expect(step.i18nArgs.chains).toEqual(json(r.step.i18nArgs.chains));
+      expect(step.cells).toEqual(r.step.cells);
+      expect(step.eliminations).toEqual(json(r.step.eliminations));
+      expect(step.placements).toEqual(json(r.step.placements));
+      expect(Array.from(back.givens)).toEqual(Array.from(r.givens));
     });
   });
 })();

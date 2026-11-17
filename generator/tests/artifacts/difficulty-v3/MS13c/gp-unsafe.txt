@@ -1,0 +1,29 @@
+samurai/master: not piloted; no cell-qualified measurement exists (the decision rested on one G13 wire request, Samurai Nightmare 42, about 94 to 97 s, which does not measure this cell); the duration of 50 runs is unknown
+samurai/nightmare: not piloted; no cell-qualified measurement exists (the decision rested on one G13 wire request, Samurai Nightmare 42, about 94 to 97 s, which does not measure this cell); the duration of 50 runs is unknown
+samurai/hell1: not piloted; no cell-qualified measurement exists (the decision rested on one G13 wire request, Samurai Nightmare 42, about 94 to 97 s, which does not measure this cell); the duration of 50 runs is unknown
+samurai/hell2: not piloted; no cell-qualified measurement exists (the decision rested on one G13 wire request, Samurai Nightmare 42, about 94 to 97 s, which does not measure this cell); the duration of 50 runs is unknown
+flower/master: not piloted; no cell-qualified measurement exists (the decision rested on one G13 wire request, Samurai Nightmare 42, about 94 to 97 s, which does not measure this cell); the duration of 50 runs is unknown
+flower/nightmare: not piloted; no cell-qualified measurement exists (the decision rested on one G13 wire request, Samurai Nightmare 42, about 94 to 97 s, which does not measure this cell); the duration of 50 runs is unknown
+flower/hell1: not piloted; no cell-qualified measurement exists (the decision rested on one G13 wire request, Samurai Nightmare 42, about 94 to 97 s, which does not measure this cell); the duration of 50 runs is unknown
+flower/hell2: not piloted; no cell-qualified measurement exists (the decision rested on one G13 wire request, Samurai Nightmare 42, about 94 to 97 s, which does not measure this cell); the duration of 50 runs is unknown
+sohei/master: not piloted; no cell-qualified measurement exists (the decision rested on one G13 wire request, Samurai Nightmare 42, about 94 to 97 s, which does not measure this cell); the duration of 50 runs is unknown
+sohei/nightmare: not piloted; no cell-qualified measurement exists (the decision rested on one G13 wire request, Samurai Nightmare 42, about 94 to 97 s, which does not measure this cell); the duration of 50 runs is unknown
+sohei/hell1: not piloted; no cell-qualified measurement exists (the decision rested on one G13 wire request, Samurai Nightmare 42, about 94 to 97 s, which does not measure this cell); the duration of 50 runs is unknown
+sohei/hell2: not piloted; no cell-qualified measurement exists (the decision rested on one G13 wire request, Samurai Nightmare 42, about 94 to 97 s, which does not measure this cell); the duration of 50 runs is unknown
+mega16/hell1: the pilot of two runs was attempted twice and each attempt was stopped by the 540-second ceiling with no result; no duration of 50 runs is inferred
+classic9/hell1: projected 566 s (pilot 17.39 s for 2 runs) exceeds 450 s
+diagonalX/hell1: projected 4577 s (pilot 140.824 s for 2 runs) exceeds 450 s
+hyper/nightmare: projected 1033 s (pilot 31.778 s for 2 runs) exceeds 450 s
+hyper/hell1: projected 2525 s (pilot 77.687 s for 2 runs) exceeds 450 s
+jigsaw9/nightmare: projected 1401 s (pilot 43.079 s for 2 runs) exceeds 450 s
+jigsaw9/hell1: projected 2777 s (pilot 85.431 s for 2 runs) exceeds 450 s
+wordoku/hell1: projected 578 s (pilot 17.764 s for 2 runs) exceeds 450 s
+killer/master: projected 1514 s (pilot 46.564 s for 2 runs) exceeds 450 s
+killer/nightmare: projected 1417 s (pilot 43.571 s for 2 runs) exceeds 450 s
+killer/hell1: projected 2940 s (pilot 90.452 s for 2 runs) exceeds 450 s
+greaterThan/nightmare: projected 440 s (pilot 13.531 s), launched and stopped by the 540 s ceiling with no result
+greaterThan/hell1: projected 6322 s (pilot 194.494 s for 2 runs) exceeds 450 s
+mega12/hell1: projected 3985 s (pilot 122.586 s for 2 runs) exceeds 450 s
+mega16/nightmare: projected 2453 s (pilot 75.463 s for 2 runs) exceeds 450 s
+mega16/hell2: projected 718 s (pilot 22.077 s for 2 runs) exceeds 450 s
+butterfly/hell1: projected 3540 s (pilot 108.91 s for 2 runs) exceeds 450 s

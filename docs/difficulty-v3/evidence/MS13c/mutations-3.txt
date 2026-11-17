@@ -1,0 +1,29 @@
+mutation 66 (E09 a start marks the group neighbours too): NOT DETECTED, EQUIVALENT (commonTargets reads r.mark[j] only for j < r.singles (its first condition), so a mark written for a group node (index >= singles) is never read) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 23.0 s
+mutation 67 (E10 the group weak link of one shared digit only): DETECTED - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-chain > chain group: soundness (I7) > forcingChain never removes a solution candidate (300 states)
+mutation 68 (E11 a conjugate link without the cover): DETECTED - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-chain > chain group: soundness (I7) > forcingChain never removes a solution candidate (300 states)
+mutation 69 (B01 a window with the minimum above the maximum searched): DETECTED - 96 total, 95 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 7.2 s
+    FAIL tech-chain > chain windows: the four registered ids on their own > narrows its window with maxChainLength and never widens it, nor raises a maximum to make it fire
+mutation 70 (B02 no entry check of the search): DETECTED - 83 total, 82 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 7.3 s
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > checks the parent budget at entry, and not at all on the unbounded path, of a solved position
+mutation 71 (B03 no check before a start): DETECTED - 45 total, 44 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 6.1 s
+    FAIL tech-chain > chain group: budget > returns null instead of throwing when the node budget runs out
+mutation 72 (B04 no gate in the expansions): DETECTED - 229 total, 228 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 20.0 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the parent budget, cancellation and the record > lets no more than 256 units pass between two parent-budget checks across both stages
+mutation 73 (B05 pieces of 512 links): DETECTED - 229 total, 228 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 20.3 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the parent budget, cancellation and the record > lets no more than 256 units pass between two parent-budget checks across both stages
+mutation 74 (B06 the link that proves is not counted): NOT DETECTED (exit 0) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 22.9 s
+mutation 75 (B07 a negative limit accepted by the seam): DETECTED - 222 total, 221 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > hands the grouped seam the limits of R10: 4096 additional nodes and one allowance of 50000 units
+mutation 76 (B08 a fractional limit kept): DETECTED - 222 total, 221 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.0 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > hands the grouped seam the limits of R10: 4096 additional nodes and one allowance of 50000 units
+mutation 77 (B09 a non-boolean fallback accepted): DETECTED - 222 total, 221 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > hands the grouped seam the limits of R10: 4096 additional nodes and one allowance of 50000 units
+mutation 78 (B10 the caller maximum of forcingChain ignored): DETECTED - 36 total, 35 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.9 s
+    FAIL tech-chain > forcingChain: maxChainLength > reports the shortest chain up to C links, and nothing at all below its length
+mutation 79 (B11 the minimum of forcingChainLong is C): DETECTED - 22 total, 21 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.5 s
+    FAIL tech-chain > chain group: positions without any valid deduction > still finds the decoy candidates that no solution contains
+mutation 80 (B12 the entry check of the construction missing): DETECTED - 83 total, 82 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 7.2 s
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > checks the parent budget at entry, and not at all on the unbounded path, of a solved position
+detected 13 of 15, survivors 2, 177.2 s

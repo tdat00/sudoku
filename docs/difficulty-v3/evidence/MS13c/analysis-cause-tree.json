@@ -1,0 +1,61 @@
+{
+ "engine": "tree",
+ "rows": [
+  {
+   "id": "G03",
+   "request": "classic9 nightmare 42",
+   "equalsSaved": false,
+   "equalsLedger": true,
+   "ledgerEqualsSaved": false,
+   "seconds": 0.9
+  },
+  {
+   "id": "G04",
+   "request": "classic9 hell1 2400651925",
+   "equalsSaved": false,
+   "equalsLedger": true,
+   "ledgerEqualsSaved": false,
+   "seconds": 8.5
+  },
+  {
+   "id": "G06",
+   "request": "jigsaw9 nightmare 42",
+   "equalsSaved": false,
+   "equalsLedger": true,
+   "ledgerEqualsSaved": false,
+   "seconds": 1.9
+  },
+  {
+   "id": "G07",
+   "request": "jigsaw9 nightmare 3962167687",
+   "equalsSaved": false,
+   "equalsLedger": true,
+   "ledgerEqualsSaved": false,
+   "seconds": 6
+  },
+  {
+   "id": "G12",
+   "request": "greaterThan hard 3115968914",
+   "equalsSaved": false,
+   "equalsLedger": true,
+   "ledgerEqualsSaved": false,
+   "seconds": 0.7
+  },
+  {
+   "id": "G13",
+   "request": "samurai nightmare 42",
+   "equalsSaved": false,
+   "equalsLedger": true,
+   "ledgerEqualsSaved": false,
+   "seconds": 95.7
+  },
+  {
+   "id": "G14",
+   "request": "mega16 hell2 12",
+   "equalsSaved": false,
+   "equalsLedger": true,
+   "ledgerEqualsSaved": false,
+   "seconds": 5.6
+  }
+ ]
+}

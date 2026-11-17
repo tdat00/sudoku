@@ -1,0 +1,10 @@
+$ node tests\artifacts\difficulty-v3\MS13c\cause.js --kind=analysis --ledgers=..\docs\difficulty-v3\evidence\MS13c\analysis --only=G03,G04,G06,G07,G12,G13,G14 --json=..\docs\difficulty-v3\evidence\MS13c\analysis-cause-tree.json
+{"id":"G03","request":"classic9 nightmare 42","equalsSaved":false,"equalsLedger":true,"ledgerEqualsSaved":false,"seconds":0.9}
+{"id":"G04","request":"classic9 hell1 2400651925","equalsSaved":false,"equalsLedger":true,"ledgerEqualsSaved":false,"seconds":8.5}
+{"id":"G06","request":"jigsaw9 nightmare 42","equalsSaved":false,"equalsLedger":true,"ledgerEqualsSaved":false,"seconds":1.9}
+{"id":"G07","request":"jigsaw9 nightmare 3962167687","equalsSaved":false,"equalsLedger":true,"ledgerEqualsSaved":false,"seconds":6}
+{"id":"G12","request":"greaterThan hard 3115968914","equalsSaved":false,"equalsLedger":true,"ledgerEqualsSaved":false,"seconds":0.7}
+{"id":"G13","request":"samurai nightmare 42","equalsSaved":false,"equalsLedger":true,"ledgerEqualsSaved":false,"seconds":95.7}
+{"id":"G14","request":"mega16 hell2 12","equalsSaved":false,"equalsLedger":true,"ledgerEqualsSaved":false,"seconds":5.6}
+goldens examined 7 (engine tree, 119.2 s); equal to the saved output 0, equal to the ledger 7, ledger differs from the saved 7
+exit=0 seconds=119.464

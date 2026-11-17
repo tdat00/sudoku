@@ -1,0 +1,46 @@
+$ node tests\artifacts\difficulty-v3\MS13c\survivor-all.cjs 42 45 47 50
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m42.js for P09 the endpoint eliminations unsorted
+== mutation 42 on classic9 900 5151
+1800 calls, 0 differ
+== mutation 42 on classic6 800 5151
+1600 calls, 0 differ
+== mutation 42 on jigsaw9 150 77003
+300 calls, 0 differ
+== mutation 42 on hyper 150 77003
+300 calls, 0 differ
+== mutation 42 on diagonalX 150 77003
+300 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m45.js for S01 every start a singleton
+== mutation 45 on classic9 900 5151
+1800 calls, 0 differ
+== mutation 45 on classic6 800 5151
+1600 calls, 0 differ
+== mutation 45 on jigsaw9 150 77003
+300 calls, 0 differ
+== mutation 45 on hyper 150 77003
+300 calls, 0 differ
+== mutation 45 on diagonalX 150 77003
+300 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m47.js for S03 polarity proofs from a group start
+== mutation 47 on classic9 900 5151
+1800 calls, 0 differ
+== mutation 47 on classic6 800 5151
+1600 calls, 0 differ
+== mutation 47 on jigsaw9 150 77003
+300 calls, 0 differ
+== mutation 47 on hyper 150 77003
+300 calls, 0 differ
+== mutation 47 on diagonalX 150 77003
+300 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m50.js for S06 an endpoint at the start node itself
+== mutation 50 on classic9 900 5151
+1800 calls, 0 differ
+== mutation 50 on classic6 800 5151
+1600 calls, 0 differ
+== mutation 50 on jigsaw9 150 77003
+300 calls, 0 differ
+== mutation 50 on hyper 150 77003
+300 calls, 0 differ
+== mutation 50 on diagonalX 150 77003
+300 calls, 0 differ
+exit=0 seconds=25.901

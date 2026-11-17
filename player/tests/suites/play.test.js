@@ -463,6 +463,58 @@
           expect(JSON.stringify(finding)).toBe(before);
         });
       });
+
+    it('plays a real grouped hint of the engine: the full union of the cells, every group member written, ' +
+      'nothing of the hint changed (MS13c)', function () {
+        ready();
+        var model = realResult('classic9', 'normal', 4).model;
+        // classic puzzle #1375 of the long-chain list: its solution uses a forcing chain with a group node
+        var givens = Int32Array.from('3.4....7.2..76...1....3.2...5..2.....6.8.9...8....1..2..7......1..3...84.4..1.5..'
+          .split('').map(function (c) { return c === '.' ? 0 : Number(c); }));
+        var solved = SG.logicalSolver.solve(model, givens, { collectSteps: false });
+        expect(solved.solved).toBe(true);
+        var game = P.createGame(model, givens, Int32Array.from(solved.state.value), { now: function () { return 0; } });
+        game.fillNotes();
+        var found = null;
+        for (var k = 0; k < 400 && found === null; k++) {
+          game.clearHint();
+          var hint = game.hint();
+          expect(hint.ok).toBe(true);
+          if ((hint.technique === 'forcingChain' || hint.technique === 'forcingChainLong') &&
+              hint.stepArgs.proofVersion === 2) found = { index: k, hint: hint };
+          else game.applyHint();
+        }
+        expect(found).not.toBeNull();
+        var hint2 = found.hint;
+        var union = [];
+        var group = null;
+        hint2.stepArgs.chains.forEach(function (chain) {
+          chain.forEach(function (n) {
+            n.cells.forEach(function (c) { if (union.indexOf(c) === -1) union.push(c); });
+            if (n.cells.length > 1 && group === null) group = n;
+          });
+        });
+        expect(group).not.toBeNull();
+        expect(hint2.cells).toEqual(union.sort(ascending));
+        var before = JSON.stringify(hint2);
+        ['en', 'vi'].forEach(function (code) {
+          inLocale(code, function () {
+            var d = P.describeHint(model, hint2, { mode: 'digits' });
+            expect(d.ok).toBe(true);
+            expect(d.explanation).not.toMatch(/\{\w+\}|undefined|NaN|\[object/);
+            // a group is written in brackets with every member, as a disjunction (true) or a conjunction (false)
+            var members = group.cells.map(function (c) { return SG.model.cellLabel(model, c); });
+            var sign = group.truth === 1 ? '=' : NE;
+            var written = '(' + members.map(function (m) { return m + sign + group.digit; })
+              .join(group.truth === 1 ? OR : AND) + ')';
+            expect(d.explanation).toContain(written);
+            hint2.cells.forEach(function (c) { expect(d.cells).toContain(SG.model.cellLabel(model, c)); });
+            expect(JSON.stringify(hint2)).toBe(before);
+          });
+        });
+        expect([found.index, hint2.technique, hint2.stepArgs.kind, hint2.stepArgs.length]).toEqual(
+          [9, 'forcingChainLong', 'contradiction', 6]);
+      });
   });
 
   // ---------------------------------------------------------------------------------------------

@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS13c\census-run.js ..\docs\difficulty-v3\evidence\MS13c\census\trial ..\docs\difficulty-v3\evidence\MS13c\census\positions classic9,jigsaw9
+== classic9 0.3 s: base-ladder 5, activation-ladder 11, fixtures 8
+== jigsaw9 0.4 s: base-ladder 26, activation-ladder 18
+exit=0 seconds=0.920

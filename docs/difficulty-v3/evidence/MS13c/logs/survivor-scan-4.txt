@@ -1,0 +1,54 @@
+$ node tests\artifacts\difficulty-v3\MS13c\survivor-all.cjs 45 47 50 42
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m45.js for S01 every start a singleton
+== mutation 45 on digit:classic9:8:16:1 40000 6
+80000 calls, 0 differ
+== mutation 45 on digit:classic9:10:20:2 30000 7
+60000 calls, 0 differ
+== mutation 45 on digit:jigsaw9:8:16:1 40000 8
+80000 calls, 0 differ
+== mutation 45 on digit:diagonalX:8:16:1 40000 9
+80000 calls, 0 differ
+== mutation 45 on digit:hyper:8:16:1 40000 10
+80000 calls, 0 differ
+== mutation 45 on digit:jigsaw9:10:20:2 30000 11
+60000 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m47.js for S03 polarity proofs from a group start
+== mutation 47 on digit:classic9:8:16:1 40000 6
+80000 calls, 0 differ
+== mutation 47 on digit:classic9:10:20:2 30000 7
+60000 calls, 0 differ
+== mutation 47 on digit:jigsaw9:8:16:1 40000 8
+80000 calls, 0 differ
+== mutation 47 on digit:diagonalX:8:16:1 40000 9
+80000 calls, 0 differ
+== mutation 47 on digit:hyper:8:16:1 40000 10
+80000 calls, 0 differ
+== mutation 47 on digit:jigsaw9:10:20:2 30000 11
+60000 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m50.js for S06 an endpoint at the start node itself
+== mutation 50 on digit:classic9:8:16:1 40000 6
+80000 calls, 0 differ
+== mutation 50 on digit:classic9:10:20:2 30000 7
+60000 calls, 0 differ
+== mutation 50 on digit:jigsaw9:8:16:1 40000 8
+80000 calls, 0 differ
+== mutation 50 on digit:diagonalX:8:16:1 40000 9
+80000 calls, 0 differ
+== mutation 50 on digit:hyper:8:16:1 40000 10
+80000 calls, 0 differ
+== mutation 50 on digit:jigsaw9:10:20:2 30000 11
+60000 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m42.js for P09 the endpoint eliminations unsorted
+== mutation 42 on digit:classic9:8:16:1 40000 6
+80000 calls, 0 differ
+== mutation 42 on digit:classic9:10:20:2 30000 7
+60000 calls, 0 differ
+== mutation 42 on digit:jigsaw9:8:16:1 40000 8
+80000 calls, 0 differ
+== mutation 42 on digit:diagonalX:8:16:1 40000 9
+80000 calls, 0 differ
+== mutation 42 on digit:hyper:8:16:1 40000 10
+80000 calls, 0 differ
+== mutation 42 on digit:jigsaw9:10:20:2 30000 11
+60000 calls, 0 differ
+exit=0 seconds=169.439

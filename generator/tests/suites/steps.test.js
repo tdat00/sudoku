@@ -897,8 +897,9 @@
       }, 60000);
 
     // G13 (Samurai) has no flat position with a new hardest technique since the WXYZ-Wing (MS10b changed its dig
-    // path: its position 101 is 70 to 70 with Naked Single on both sides). The flat case is therefore read from that
-    // real step with the transition of a new hardest technique (Hidden Single); the falling case (G12) is real.
+    // path: its position 101 is 70 to 70 with Naked Single on both sides), and no golden has a falling one since the
+    // grouped chains (MS13c): G12's position 103 is 2,977 to 2,169 but Forcing Chain was already used before it. Both
+    // cases are read from these real steps with the transition of a new hardest technique set on them.
     it('also tells a new hardest technique when the score is flat or falls (details view)', function () {
       var flat = viewsOf(golden('G13')).details.steps;
       var fall = viewsOf(golden('G12')).details.steps;
@@ -918,15 +919,20 @@
         expect(text.total).toBe('70 (unchanged)');
         expect(text.line).toMatch(/^The generator's solution now uses .* \(weight [\d.,]+\) as its hardest technique, instead of /);
         expect(text.rowLabel.technique).toBe(a.table.transition.after.hardest);
-        var b = stepAt(fall, 103);
+        var real12 = stepAt(fall, 103);
+        expect(real12.table.transition.tier).toBeNull();
+        expect(real12.table.transition.newHardest).toBe(false);
+        expect(textOfStep(real12).line).toBeNull();
+        var falling = Object.assign({}, real12.table.transition, { tier: 'newPeak', newHardest: true });
+        var b = Object.assign({}, real12, { table: Object.assign({}, real12.table, { transition: falling }) });
         var drop = textOfStep(b);
         expect(b.table.transition.before.total).toBe(2977);
-        expect(b.table.transition.after.total).toBe(2724);
+        expect(b.table.transition.after.total).toBe(2169);
         expect(drop.badge).toBeNull();
-        expect(drop.total).toBe(SG.i18n.formatNumber(2724) + ' (\u2212' + SG.i18n.formatNumber(253) + ')');
-        expect(drop.total).toBe('2,724 (\u2212253)');
-        expect(drop.line).toContain('now uses Long Forcing Chain (weight 1,400)');
-        expect(drop.rowLabel.technique).toBe('forcingChainLong');
+        expect(drop.total).toBe(SG.i18n.formatNumber(2169) + ' (\u2212' + SG.i18n.formatNumber(808) + ')');
+        expect(drop.total).toBe('2,169 (\u2212808)');
+        expect(drop.line).toContain('now uses Forcing Chain (weight 1,100)');
+        expect(drop.rowLabel.technique).toBe('forcingChain');
         expect(drop.totalHighlight).toBe(false);
       });
     }, 120000);
@@ -1080,8 +1086,8 @@
       var sign = third('G11', 70, 'details');
       expect(sign.sentences[0]).toContain('After the sign between R8C7 and R9C7 is removed, ');
       expect(sign.sentences[2]).toBe('This step removes one sign; there is no smaller sign-removal move to show.');
-      expect(third('G13', 111).sentences[2])
-        .toBe('Removing the clue at G2-R6C2 alone gives 1,014; removing the clue at G3-R4C8 alone gives 72.');
+      expect(third('G13', 127).sentences[2])
+        .toBe('Removing the clue at G2-R3C2 alone gives 1,011; removing the clue at G3-R7C8 alone gives 73.');
     }, 120000);
 
     function fragmentEn(move) {
@@ -1099,7 +1105,7 @@
     }
 
     it('a jump over several moves says in which complete change the new technique first appears', function () {
-      [['G07', 31, 'compact'], ['G10', 49, 'compact'], ['G12', 107, 'compact']].forEach(function (c) {
+      [['G10', 49, 'compact'], ['G12', 107, 'compact']].forEach(function (c) {
         var res = golden(c[0]);
         var analysis = analysisOf(res);
         var step = stepAt(viewsOf(res)[c[2]].steps, c[1]);
@@ -1352,7 +1358,7 @@
       }
     });
 
-    it('the first deductions of the goldens: Killer candidate 7 in a cell, a placement, candidate 2 in a cell',
+    it('the first deductions of the goldens: Killer candidate 7 in a cell, a placement, candidate 7 in a cell',
       function () {
         var nine = golden('G09');
         var ten = golden('G10');
@@ -1372,8 +1378,8 @@
         });
         withLabels(thirteen, function () {
           inLocale('en', function () {
-            var why = textOfStep(stepAt(viewsOf(thirteen).compact.steps, 111)).callout.why;
-            expect(why).toContain('In that deduction, candidate 2 is removed from G2-R5C5.');
+            var why = textOfStep(stepAt(viewsOf(thirteen).compact.steps, 127)).callout.why;
+            expect(why).toContain('In that deduction, candidate 7 is removed from G2-R6C6.');
           });
         });
       }, 120000);

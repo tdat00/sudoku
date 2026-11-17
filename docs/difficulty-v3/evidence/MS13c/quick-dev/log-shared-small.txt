@@ -1,0 +1,123 @@
+$ node ..\.github\scripts\generator-quick.js run shared-small --results-dir=..\docs\difficulty-v3\evidence\MS13c\quick-dev
+==== shard core-shared (2167 tests): node tests/node-runner.js --suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook --results=..\docs\difficulty-v3\evidence\MS13c\quick-dev\generator-core-shared.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   bits: 32 passed  (74 ms)
+ok   board-view: 37 passed  (61 ms)
+ok   constraints: 43 passed  (92 ms)
+ok   exchange: 20 passed  (272 ms)
+ok   harness: 25 passed  (3.20 s)
+ok   logical-solver: 100 passed  (352 ms)
+ok   model: 49 passed  (37 ms)
+ok   solver: 50 passed  (2.66 s)
+ok   symbols: 12 passed  (2 ms)
+ok   tech-basic: 167 passed  (1.84 s)
+ok   tech-chain: 239 passed  (26.24 s)
+ok   tech-fish: 483 passed  (24.09 s)
+ok   tech-subset: 140 passed  (6.97 s)
+ok   tech-wing: 496 passed  (11.59 s)
+ok   techniques: 267 passed  (5.08 s)
+ok   wordbook: 7 passed  (9 ms)
+
+Suites: 16
+Tests:  2167 total, 2167 passed, 0 failed, 0 skipped
+Time:   82.55 s running tests, 82.94 s total
+Results: docs/difficulty-v3/evidence/MS13c/quick-dev/generator-core-shared.json
+==== shard steps (57 tests): node tests/node-runner.js --suite=steps --results=..\docs\difficulty-v3\evidence\MS13c\quick-dev\generator-steps.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL steps: 53 passed, 4 failed  (34.29 s)
+
+Failures:
+  FAIL steps > stepView: the tiers, the badge and the lines > also tells a new hardest technique when the score is flat or falls (details view)
+       AssertionError: expected 2169 to be 2724
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:924:48
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:905:7)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL steps > stepView: the callout of a score jump > names the cause of a move per class, on the goldens
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at textOfStep (Q:\git\sudoku\generator\tests\suites\steps.test.js:66:27)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1067:24
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1066:18
+  FAIL steps > stepView: the callout of a score jump > a jump over several moves says in which complete change the new technique first appears
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1106:26
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1102:81)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL steps > stepView: "Why?" lines: the choice, the proof and the effects > the first deductions of the goldens: Killer candidate 7 in a cell, a placement, candidate 2 in a cell
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at textOfStep (Q:\git\sudoku\generator\tests\suites\steps.test.js:66:27)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1375:23
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1374:11
+
+Suites: 1
+Tests:  57 total, 53 passed, 4 failed, 0 skipped
+Time:   34.29 s running tests, 34.53 s total
+Results: docs/difficulty-v3/evidence/MS13c/quick-dev/generator-steps.json
+==== shard replay (158 tests): node tests/node-runner.js --suite=replay --results=..\docs\difficulty-v3\evidence\MS13c\quick-dev\generator-replay.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL replay: 152 passed, 6 failed  (33.56 s)
+
+Failures:
+  FAIL replay > replay: ratings > rates a stuck board honestly: attempted counts and two solutions (Classic 9x9, section 2.3)
+       AssertionError: expected {nakedSingle: 3, hiddenSingleBox: 16, pointing: 6, boxLine: 1, nakedPair: 1, hiddenPair: 2, finnedXWing: 1, wxyzWing: 1, ...} to equal {nakedSingle: 3, hiddenSingleBox: 16, pointing: 6, boxLine: 1, nakedPair: 2, hiddenPair: 2, finnedXWing: 1, wxyzWing: 1, ...}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:525:29)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: ratings > is unverified when the uniqueness count runs out of its guard, and rated with the default one
+       AssertionError: expected 2369 to be 2331
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:568:27)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > has the same end position as a jump in one view and not in the other (G07, G12, G01)
+       TypeError: Cannot read properties of undefined (reading 'before')
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1202:25
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1198:87)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL replay > replay: golden compact view and transitions > has 12 compact, 12 details and 16 distinct jump transitions in the 14 goldens
+       AssertionError: expected length 14 of Array(14)["G01:25>26:47>593", "G03:25>26:47>2227", "G04:22>23:45>915", "G05:28>29:50>2536", "G06:28>29:138>1293", "G07:26>27:126>2175", "G09:34>35:142>510", "G10:35>49:145>2199", "G10:35>36:145>2300", "G11:69>70:135>577", "G12:99>107:133>513", "G12:99>100:133>3226", ...] to be 16
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1225:42)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > labels a new hardest technique also at a flat or lower score (details: G13 with a set rating, G12)
+       AssertionError: expected Array(3)[2977, 2169, -808] to equal Array(3)[2977, 2724, -253]
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1245:59
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1243:9)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL replay > replay: explaining the jumps > describes a jump over several moves by its first move with the new technique (G07, G10, G12)
+       AssertionError: expected "single-culprit" to be "multi-move"
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1605:29
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1599:44)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  158 total, 152 passed, 6 failed, 0 skipped
+Time:   33.56 s running tests, 33.80 s total
+Results: docs/difficulty-v3/evidence/MS13c/quick-dev/generator-replay.json
+==== shard mega (108 tests): node tests/node-runner.js --suite=mega --results=..\docs\difficulty-v3\evidence\MS13c\quick-dev\generator-mega.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   mega: 108 passed  (24.83 s)
+
+Suites: 1
+Tests:  108 total, 108 passed, 0 failed, 0 skipped
+Time:   24.83 s running tests, 25.08 s total
+Results: docs/difficulty-v3/evidence/MS13c/quick-dev/generator-mega.json
+shard core-shared: exit 0, 83.2 s
+shard steps: exit 1, 34.8 s
+shard replay: exit 1, 34.0 s
+shard mega: exit 0, 25.3 s
+FAILED: steps, replay
+exit=1 seconds=178.989

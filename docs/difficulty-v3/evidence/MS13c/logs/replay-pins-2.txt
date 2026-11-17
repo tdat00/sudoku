@@ -1,0 +1,68 @@
+$ node tests\artifacts\difficulty-v3\MS13c\replay-pins.js
+stuck board counts {"nakedSingle":3,"hiddenSingleBox":16,"pointing":6,"boxLine":1,"nakedPair":1,"hiddenPair":2,"finnedXWing":1,"wxyzWing":1,"wWing":2,"uniqueRectangle":2,"forcingChain":3} stuck 53
+G06 rated score 2369
+jumps {"compact":12,"details":12} 14 G01:25>26:47>593 G03:25>26:47>2227 G04:22>23:45>915 G05:28>29:50>2536 G06:28>29:138>1293 G07:26>27:126>2175 G09:34>35:142>510 G10:35>49:145>2199 G10:35>36:145>2300 G11:69>70:135>577 G12:99>107:133>513 G12:99>100:133>3226 G13:126>127:73>1011 G14:68>69:65>1686
+compact-jump-only G10 to 49 compact 145 2199 details 2210 2199 change -11 tier null ratio null
+compact-jump-only G12 to 107 compact 133 513 details 2605 513 change -2092 tier null ratio null
+G13 details 90 68 68 0 nakedSingle nakedSingle null false
+G13 details 91 68 68 0 nakedSingle nakedSingle null false
+G13 details 92 68 69 1 nakedSingle nakedSingle null false
+G13 details 93 69 69 0 nakedSingle nakedSingle null false
+G13 details 94 69 69 0 nakedSingle nakedSingle null false
+G13 details 95 69 69 0 nakedSingle nakedSingle null false
+G13 details 96 69 69 0 nakedSingle nakedSingle null false
+G13 details 97 69 69 0 nakedSingle nakedSingle null false
+G13 details 98 69 69 0 nakedSingle nakedSingle null false
+G13 details 99 69 69 0 nakedSingle nakedSingle null false
+G13 details 100 69 70 1 nakedSingle nakedSingle null false
+G13 details 101 70 70 0 nakedSingle nakedSingle null false
+G13 details 102 70 70 0 nakedSingle nakedSingle null false
+G13 details 103 70 70 0 nakedSingle nakedSingle null false
+G13 details 104 70 70 0 nakedSingle nakedSingle null false
+G13 details 105 70 70 0 nakedSingle nakedSingle null false
+G13 details 106 70 70 0 nakedSingle nakedSingle null false
+G13 details 107 70 70 0 nakedSingle nakedSingle null false
+G13 details 108 70 70 0 nakedSingle nakedSingle null false
+G13 details 109 70 70 0 nakedSingle nakedSingle null false
+G13 details 110 70 71 1 nakedSingle nakedSingle null false
+G13 details 111 71 71 0 nakedSingle nakedSingle null false
+G13 details 112 71 71 0 nakedSingle nakedSingle null false
+G13 details 113 71 72 1 nakedSingle hiddenSingleBox newPeak true
+G13 details 114 72 72 0 hiddenSingleBox hiddenSingleBox null false
+G13 details 115 72 72 0 hiddenSingleBox hiddenSingleBox null false
+G13 details 116 72 72 0 hiddenSingleBox hiddenSingleBox null false
+G13 details 117 72 72 0 hiddenSingleBox hiddenSingleBox null false
+G13 details 118 72 72 0 hiddenSingleBox hiddenSingleBox null false
+G13 details 119 72 72 0 hiddenSingleBox hiddenSingleBox null false
+G13 details 120 72 72 0 hiddenSingleBox hiddenSingleBox null false
+G13 details 121 72 73 1 hiddenSingleBox hiddenSingleLine newPeak true
+G13 details 122 73 73 0 hiddenSingleLine hiddenSingleLine null false
+G13 details 123 73 73 0 hiddenSingleLine hiddenSingleLine null false
+G13 details 124 73 73 0 hiddenSingleLine hiddenSingleLine null false
+G13 details 125 73 73 0 hiddenSingleLine hiddenSingleLine null false
+G13 details 126 73 73 0 hiddenSingleLine hiddenSingleLine null false
+G13 details 127 73 1011 938 hiddenSingleLine xyWing jump true
+G13 details 128 1011 2422 1411 xyWing forcingChainLong newPeak true
+G13 details 129 2422 2422 0 forcingChainLong forcingChainLong null false
+G13 details 130 2422 2423 1 forcingChainLong forcingChainLong null false
+G12 details 98 134 133 -1 ineqChain ineqChain null false
+G12 details 99 133 133 0 ineqChain ineqChain null false
+G12 details 100 133 3226 3093 ineqChain nishio jump true
+G12 details 101 3226 2977 -249 nishio nishio null false
+G12 details 102 2977 2977 0 nishio nishio null false
+G12 details 103 2977 2169 -808 nishio forcingChain null false
+G12 details 104 2169 2754 585 forcingChain forcingChainLong newPeak true
+G12 details 105 2754 2753 -1 forcingChainLong forcingChainLong null false
+G12 details 106 2753 2605 -148 forcingChainLong forcingChainLong null false
+G12 details 107 2605 513 -2092 forcingChainLong xWing null false
+G12 details 108 513 647 134 xWing emptyRectangle newPeak true
+compact jump G07 step 5 class single-culprit n null k null tech forcingChainLong from 26 to 27 126 -> 2175
+compact jump G10 step 6 class multi-move n 14 k 1 tech forcingChainLong from 35 to 49 145 -> 2199
+compact jump G12 step 4 class multi-move n 8 k 2 tech xWing from 99 to 107 133 -> 513
+compact jump G13 step 4 class single-culprit n null k null tech xyWing from 126 to 127 73 -> 1011
+compact jump G06 step 5 class single-culprit n null k null tech wxyzWing from 28 to 29 138 -> 1293
+compact jump G03 step 4 class together n null k null tech forcingChainLong from 25 to 26 47 -> 2227
+compact jump G04 step 4 class together n null k null tech xyWing from 22 to 23 45 -> 915
+compact jump G14 step 3 class single-culprit n null k null tech xyChain from 68 to 69 65 -> 1686
+compact jump G01 step 4 class single-culprit n null k null tech twoStringKite from 25 to 26 47 -> 593
+exit=0 seconds=33.367

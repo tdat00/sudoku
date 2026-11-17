@@ -1,0 +1,296 @@
+[
+  {
+    "label": "gp-classic9-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=classic9",
+      "--level=master",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "pilot 0.293 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-classic9-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=classic9",
+      "--level=nightmare",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 33,
+    "projectionBasis": "pilot 0.99 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-diagonalX-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=diagonalX",
+      "--level=master",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 19,
+    "projectionBasis": "pilot 0.57 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-diagonalX-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=diagonalX",
+      "--level=nightmare",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 157,
+    "projectionBasis": "pilot 4.816 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-diagonalX-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=diagonalX",
+      "--level=hell2",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 24,
+    "projectionBasis": "pilot 0.723 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-hyper-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=hyper",
+      "--level=master",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 38,
+    "projectionBasis": "pilot 1.161 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-hyper-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=hyper",
+      "--level=hell2",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 134,
+    "projectionBasis": "pilot 4.119 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-jigsaw9-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=jigsaw9",
+      "--level=master",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 63,
+    "projectionBasis": "pilot 1.913 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-jigsaw9-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=jigsaw9",
+      "--level=hell2",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 98,
+    "projectionBasis": "pilot 3.005 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-wordoku-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=wordoku",
+      "--level=master",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 35,
+    "projectionBasis": "pilot 1.072 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-wordoku-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=wordoku",
+      "--level=nightmare",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 19,
+    "projectionBasis": "pilot 0.567 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-killer-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=killer",
+      "--level=hell2",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 132,
+    "projectionBasis": "pilot 4.041 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-greaterThan-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=greaterThan",
+      "--level=master",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 130,
+    "projectionBasis": "pilot 3.992 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-greaterThan-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=greaterThan",
+      "--level=hell2",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 171,
+    "projectionBasis": "pilot 5.237 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-mega12-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=mega12",
+      "--level=master",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 23,
+    "projectionBasis": "pilot 0.699 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-mega12-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=mega12",
+      "--level=nightmare",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 195,
+    "projectionBasis": "pilot 5.996 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-mega12-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=mega12",
+      "--level=hell2",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 154,
+    "projectionBasis": "pilot 4.72 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-mega16-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=mega16",
+      "--level=master",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 122,
+    "projectionBasis": "pilot 3.751 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-butterfly-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=butterfly",
+      "--level=master",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 16,
+    "projectionBasis": "pilot 0.468 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-butterfly-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=butterfly",
+      "--level=nightmare",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 209,
+    "projectionBasis": "pilot 6.412 s for 2 runs x 25 x 1.3"
+  },
+  {
+    "label": "gp-butterfly-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=butterfly",
+      "--level=hell2",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 305,
+    "projectionBasis": "pilot 9.366 s for 2 runs x 25 x 1.3"
+  }
+]

@@ -1,0 +1,7 @@
+$ node tests\artifacts\difficulty-v3\MS13c\group-stats.js classic6 3000 5151
+classic6 3000 states, seed 5151
+  19 forcingChain contradiction len3 innerGroup {"index":121,"elim":[[1,1]],"plc":[],"problems":0}
+  14 forcingChain endpoints len3 endGroup {"index":568,"elim":[[4,2]],"plc":[],"problems":0}
+   2 forcingChain endpoints len3 endGroup innerGroup {"index":832,"elim":[[5,1],[11,1]],"plc":[],"problems":0}
+   7 forcingChain endpoints len3 innerGroup {"index":848,"elim":[[22,2]],"plc":[],"problems":0}
+exit=0 seconds=1.239

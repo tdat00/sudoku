@@ -1,0 +1,203 @@
+[
+  {
+    "label": "base-classic9-hell1",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS13c\\base-run.cjs",
+      "tests\\perf.js",
+      "--variant=classic9",
+      "--level=hell1",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "the tree pilot of the same two runs took 17.4 s; the base is not slower"
+  },
+  {
+    "label": "base-wordoku-hell1",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS13c\\base-run.cjs",
+      "tests\\perf.js",
+      "--variant=wordoku",
+      "--level=hell1",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "the tree pilot of the same two runs took 17.8 s"
+  },
+  {
+    "label": "base-hyper-nightmare",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS13c\\base-run.cjs",
+      "tests\\perf.js",
+      "--variant=hyper",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 50,
+    "projectionBasis": "the tree pilot of the same two runs took 31.8 s"
+  },
+  {
+    "label": "base-diagonalX-nightmare",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS13c\\base-run.cjs",
+      "tests\\perf.js",
+      "--variant=diagonalX",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 15,
+    "projectionBasis": "the tree pilot of the same two runs took 4.8 s"
+  },
+  {
+    "label": "base-killer-master",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS13c\\base-run.cjs",
+      "tests\\perf.js",
+      "--variant=killer",
+      "--level=master",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 70,
+    "projectionBasis": "the tree pilot of the same two runs took 46.6 s"
+  },
+  {
+    "label": "base-greaterThan-nightmare",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS13c\\base-run.cjs",
+      "tests\\perf.js",
+      "--variant=greaterThan",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "the tree pilot of the same two runs took 13.5 s"
+  },
+  {
+    "label": "base-jigsaw9-nightmare",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS13c\\base-run.cjs",
+      "tests\\perf.js",
+      "--variant=jigsaw9",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 70,
+    "projectionBasis": "the tree pilot of the same two runs took 43.1 s"
+  },
+  {
+    "label": "base-mega12-nightmare",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS13c\\base-run.cjs",
+      "tests\\perf.js",
+      "--variant=mega12",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "the tree pilot of the same two runs took 6.0 s"
+  },
+  {
+    "label": "base-diagonalX-hell1",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS13c\\base-run.cjs",
+      "tests\\perf.js",
+      "--variant=diagonalX",
+      "--level=hell1",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 200,
+    "projectionBasis": "the tree pilot of the same two runs took 140.8 s (the base is not slower)"
+  },
+  {
+    "label": "base50-classic9-nightmare",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS13c\\base-run.cjs",
+      "tests\\perf.js",
+      "--variant=classic9",
+      "--level=nightmare",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "the tree GP of the same 50 runs took 57.5 s (the base is not slower)"
+  },
+  {
+    "label": "base50-wordoku-nightmare",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS13c\\base-run.cjs",
+      "tests\\perf.js",
+      "--variant=wordoku",
+      "--level=nightmare",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "the tree GP of the same 50 runs took 49.8 s (the base is not slower)"
+  },
+  {
+    "label": "base50-diagonalX-nightmare",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS13c\\base-run.cjs",
+      "tests\\perf.js",
+      "--variant=diagonalX",
+      "--level=nightmare",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 230,
+    "projectionBasis": "the tree GP of the same 50 runs took 221.9 s (the base is not slower)"
+  },
+  {
+    "label": "base50-mega12-nightmare",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS13c\\base-run.cjs",
+      "tests\\perf.js",
+      "--variant=mega12",
+      "--level=nightmare",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 180,
+    "projectionBasis": "the tree GP of the same 50 runs took 169.6 s (the base is not slower)"
+  },
+  {
+    "label": "base50-killer-hell2",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS13c\\base-run.cjs",
+      "tests\\perf.js",
+      "--variant=killer",
+      "--level=hell2",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate"
+    ],
+    "projectionSeconds": 250,
+    "projectionBasis": "the tree GP of the same 50 runs took 247.8 s (the base is not slower)"
+  }
+]

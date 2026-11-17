@@ -1,0 +1,14 @@
+$ node tests\artifacts\difficulty-v3\MS13c\investigate-long.js run tests\artifacts\difficulty-v3\MS13c\dump-long.json
+#0 base-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/16926","forcingChainLong":{"len":5,"v2":true,"kind":"contradiction","elim":1},"forcingChainLong#rec":"grouped/null/24529"}
+#1 base-stuck {"forcingChain":{"len":4,"v2":true,"kind":"contradiction","elim":1},"forcingChain#rec":"grouped/null/14801","forcingChainLong":null,"forcingChainLong#rec":"grouped/null/11405"}
+#2 base-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/17942","forcingChainLong":{"len":5,"v2":true,"kind":"contradiction","elim":1},"forcingChainLong#rec":"grouped/null/22102"}
+#3 base-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/15973","forcingChainLong":{"len":5,"v2":true,"kind":"contradiction","elim":1},"forcingChainLong#rec":"grouped/null/17902"}
+#4 base-stuck {"forcingChain":{"len":4,"v2":true,"kind":"contradiction","elim":1},"forcingChain#rec":"grouped/null/18231","forcingChainLong":null,"forcingChainLong#rec":"grouped/null/26989"}
+#5 base-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/16332","forcingChainLong":{"len":6,"v2":true,"kind":"contradiction","elim":1},"forcingChainLong#rec":"grouped/null/30100"}
+#6 base-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/12130","forcingChainLong":{"len":6,"v2":true,"kind":"contradiction","elim":1},"forcingChainLong#rec":"grouped/null/18494"}
+#7 base-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/22445","forcingChainLong":{"len":6,"v2":true,"kind":"contradiction","elim":1},"forcingChainLong#rec":"grouped/null/44312"}
+#8 base-stuck {"forcingChain":{"len":4,"v2":true,"kind":"contradiction","elim":1},"forcingChain#rec":"grouped/null/10909","forcingChainLong":null,"forcingChainLong#rec":"grouped/null/6083"}
+#9 base-stuck {"forcingChain":{"len":4,"v2":true,"kind":"contradiction","elim":1},"forcingChain#rec":"grouped/null/14866","forcingChainLong":null,"forcingChainLong#rec":"grouped/null/18190"}
+#10 base-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/16271","forcingChainLong":{"len":5,"v2":true,"kind":"contradiction","elim":1},"forcingChainLong#rec":"grouped/null/23930"}
+#11 base-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/14533","forcingChainLong":{"len":5,"v2":true,"kind":"contradiction","elim":1},"forcingChainLong#rec":"grouped/null/18703"}
+exit=0 seconds=0.268

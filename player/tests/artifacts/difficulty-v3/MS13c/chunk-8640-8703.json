@@ -1,0 +1,391 @@
+{
+ "schema": 1,
+ "sources": {
+  "jellyfish": [
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8640",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8640\n..2.9.6..\n....6.8..\n...3....1\n..8..4.76\n....5....\n1..9...28\n.97....3.\n..54....9\n8.....7.."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8641",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8641\n8.......1\n...9.....\n...32.49.\n.415..6..\n5.6...7.3\n.2..16..4\n..7.6924.\n.9.4...7.\n6........"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8642",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8642\n.83.4.6.1\n.4...13..\n..78..9..\n...5....2\n.....7.3.\n.72.6....\n.6.......\n4....579.\n..5.8...."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8643",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8643\n..9.34162\n346.1..8.\n2..6..734\n.6.9...2.\n..546...8\n918...64.\n....4..59\n...1....6\n.928.7.1."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8644",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8644\n...7..4..\n..32...1.\n.9......6\n..26.9...\n63..8...5\n........1\n.2..5....\n1..4..5.9\n.8...63.."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8645",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8645\n1..5..83.\n34..21..6\n.9.4...1.\n........2\n..3.4..5.\n.....5..9\n98.......\n4...9.1..\n....12..."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8646",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8646\n.3....1..\n...7....4\n69.......\n8....2...\n...94.6..\n42..179..\n...2.8...\n1...9..5.\n...3...2."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8647",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8647\n.3.84..9.\n9.....5..\n4....37..\n754..93.1\n..351.9..\n2.9.3.845\n345....7.\n19..7.65.\n6.832..19"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8648",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8648\n....4.7..\n........1\n4581..2.6\n.3..95..4\n6....81..\n.......82\n...92....\n.....3.19\n31..5...."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8649",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8649\n3..7..2..\n.84.2...5\n5.2.....3\n...341.2.\n........8\n14.2.83.7\n.23.9....\n418...9..\n..7.36..2"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8650",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8650\n.245.....\n.....2.7.\n..7....82\n9........\n.6...35..\n..5.4...1\n...45....\n.8..6..4.\n.368....."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8651",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8651\n.35..67..\n...8.3...\n..8.1..63\n...79..1.\n.8.13..9.\n..1.4.2..\n......1.5\n6.2..48..\n.5.2....."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8652",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8652\n3.......2\n.587...1.\n..6...35.\n..5.2....\n...4....8\n....134..\n.4.......\n..317.8.9\n.87.6...1"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8653",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8653\n..2...69.\n.......7.\n73.1.948.\n...54.3..\n.76.8...4\n2...97...\n....7..4.\n.....3...\n..74.81.6"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8654",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8654\n..52.78..\n..9......\n.8...1.9.\n.9....3..\n4......7.\n2...54...\n....1..67\n6....9...\n.4.82...1"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8655",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8655\n1..6984.3\n.3.......\n8...4..5.\n.4..75.8.\n..21.....\n..8...5..\n...8247.6\n3.69....2\n2..36.9.."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8656",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8656\n.41.7....\n9..6..2.7\n..6.....1\n....9.3..\n.2...5...\n...82.4.6\n8.7......\n....1.86.\n4.....9.2"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8657",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8657\n82......5\n3.5.8.7.2\n..6..1...\n..3.62.4.\n2..84.5..\n...7.....\n6..374...\n5.2......\n.3..2.86."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8658",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8658\n2.39.....\n....4....\n.9.3....1\n.6..38.9.\n4........\n5..6.7...\n....6..15\n3..7....2\n7..5...48"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8659",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8659\n..62.5...\n8.9......\n.1....4..\n5...29146\n1...465..\n6....798.\n.2......1\n.5..9.2..\n4..5..7.."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8660",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8660\n...6.9...\n5..83...7\n......2.1\n3....5829\n..2...7..\n........5\n.9...615.\n2.......4\n46..27..."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8661",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8661\n...386...\n7...45..9\n46..2....\n.3..5..97\n....6....\n9.2.736..\n3.4......\n..5...97.\n89..3...."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8662",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8662\n1.693.5..\n...2.5...\n.......9.\n.94..23..\n.5..73...\n7......4.\n...6....7\n.4...72..\n5.......6"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8663",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8663\n95..4.6..\n8..9.7..3\n.76.5..84\n..7.924..\n1698.42..\n.....5769\n..2...3.6\n6.5.13.2.\n..3......"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8664",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8664\n...15..4.\n.3...2...\n.619..3..\n..43..817\n.7.......\n9........\n.....8..3\n7.8.....2\n...41.9.."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8665",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8665\n142......\n.39.4.5..\n87.6...2.\n.6.....8.\n..4..7..3\n.1.2.4...\n......2.9\n39.7..6..\n4...3..71"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8666",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8666\n...2....9\n.7..1....\n.263.8..5\n3......47\n8.....1..\n...72.8..\n...8.....\n.......9.\n.894.132."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8667",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8667\n........8\n..27.3...\n..6....53\n73...5.1.\n.........\n...46.8..\n.219.6...\n..81...2.\n.73...98."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8668",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8668\n.5.6.8...\n1......4.\n6...7....\n7.......2\n.....4..5\n...2..37.\n.6.....3.\n2..5.1...\n..5.4..8."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8669",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8669\n.1....3.6\n..8953...\n.5....9..\n482.39...\n..5.8.2..\n3...6.8..\n8763.15..\n.....2...\n...89.13."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8670",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8670\n9...2...7\n21.9.....\n.......9.\n..57..48.\n.8.....69\n....39...\n...3.....\n.7...28.6\n..8..6.1."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8671",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8671\n13546.8..\n....3...7\n..2...1.4\n......6.5\n8679..4..\n2..6.39.1\n58...92..\n4..385.1.\n.1.24..5."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8672",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8672\n1...28...\n5........\n3.45..16.\n.......47\n..8......\n..26.79..\n.96.1.2..\n.....3.7.\n8.....59."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8673",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8673\n.8495....\n..16.35.8\n.62..7.3.\n.3..9..76\n6.97..1..\n1.7...359\n..5.4..9.\n.76.1.825\n......6.."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8674",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8674\n..3..25.6\n....4...2\n.8.......\n1......7.\n.6.97....\n37.2614..\n7..51..98\n..6..9...\n........."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8675",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8675\n.........\n3..16..28\n9..4..5..\n..6.512..\n...32.6.9\n..3..4..5\n...5.2..1\n.1...7..2\n42.9..83."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8676",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8676\n.......9.\n.9......4\n..41..7..\n...35..6.\n.2.69...1\n91...8.5.\n35.2...49\n.....6...\n...91...."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8677",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8677\n7.1....3.\n462......\n.83.42.65\n.....638.\n.9...1.4.\n.....3.71\n.2..5.4..\n.756.4..9\n...12.6.."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8678",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8678\n..8......\n6..97....\n..95..3..\n..7.6...5\n8......69\n.2...41..\n2....5.4.\n1....9.7.\n.8.2....1"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8679",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8679\n.9..5....\n...72..8.\n.7..815.2\n.8.....51\n.....9.6.\n.........\n6.45...28\n.3.6..19.\n.....3..."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8680",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8680\n9........\n.43.12..7\n.1.......\n....6.4..\n82...3...\n6.5...32.\n...3.518.\n.8...1...\n....4.23."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8681",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8681\n5796..1..\n681.53.2.\n23.......\n.......9.\n....92754\n.9..4.362\n...7.951.\n96.2.....\n....6.27."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8682",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8682\n.2.......\n9.1.2.5.6\n.....3...\n..83...7.\n.5.......\n6..4....3\n..985.3.1\n.1.....69\n.4.1....."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8683",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8683\n865..132.\n43...57.1\n..9.23.58\n15..39...\n..481.5..\n6....2...\n.8..5....\n5..3....2\n34.2...8."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8684",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8684\n.8.......\n.17...2..\n9.4....6.\n.5.61.7..\n2..7...5.\n4...53...\n7.....52.\n......8.4\n89.12.3.."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8685",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8685\n7.1......\n.8.4571.3\n.34...87.\n6..1...2.\n47..8....\n....7....\n..7.6..82\n...82...7\n3..714.65"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8686",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8686\n.3...9...\n.8.3....4\n...7..5..\n....4.1.7\n9....7..2\n.621.....\n..6.7.2..\n....639..\n8......5."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8687",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8687\n6..5.4...\n..8.9.3..\n...61.74.\n.26.....5\n.....618.\n1......73\n.5.9...6.\n...8...34\n83...5.21"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8688",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8688\n...3.4...\n..17....3\n..5....9.\n.9..1.27.\n......9..\n5.4..9...\n..9..36..\n4......2.\n.32.51..."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8689",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8689\n....6...8\n32......5\n.....9...\n.39754...\n5.4......\n..8.32...\n.5...6.4.\n16......3\n.9..1.25."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8690",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8690\n1......6.\n.25.6....\n79..1....\n8..2..4..\n...7....5\n.1.35.8..\n....7.9..\n......1.4\n48......."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8691",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8691\n..5.9....\n..74.....\n.9..72..4\n....54.6.\n...2.9.4.\n.5.7832..\n..8....9.\n1...486..\n742.....8"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8692",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8692\n24.3..1..\n...4..23.\n..1..7..5\n..9.3...8\n15....7..\n....9...6\n.34......\n...6..8..\n92.....7."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8693",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8693\n.2.5....3\n....279..\n...619.5.\n6.3......\n.5...4..9\n..1......\n...4..28.\n.1...25..\n.758...1."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8694",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8694\n....8...6\n1.87.....\n...39..2.\n4....3...\n.3.4..2..\n...62..5.\n.4....1.9\n7........\n9..8.14.."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8695",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8695\n6.572841.\n81..3.2..\n324.91...\n4.......8\n56.81..3.\n.8.6...94\n.4.3...2.\n..3..5..1\n9.6...38."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8696",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8696\n2....3.17\n.3....4..\n.5.9.7...\n..4..2...\n62..7...5\n.7.....8.\n....1.2..\n.8..9...3\n........8"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8697",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8697\n9.83.72..\n6.1.8.5..\n5......4.\n..9132.8.\n2..7...5.\n3...4...2\n.9.2..4.1\n......975\n.....6328"
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8698",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8698\n..9.8....\n23.....9.\n1.57..23.\n.819.4...\n......7..\n....5....\n5..6...7.\n.94.2.51.\n......4.."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8699",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8699\n..541.7..\n..6..8.45\n....73.2.\n......2..\n83......1\n7426.....\n.8436....\n9..84....\n.......6."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8700",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8700\n..43..17.\n...1..8..\n83...9...\n54....62.\n....2.3..\n.1...5...\n...6.....\n1.......8\n.7.2.395."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8701",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8701\n...1..7..\n..6..7.1.\n7.5.96.2.\n9.2..3.4.\n..328.5..\n5684..392\n6....2.81\n2.47.5.3.\n.9...4.7."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8702",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8702\n........3\n.6...7.1.\n....3.2..\n4...9376.\n...4..9..\n.71..8.3.\n.8.25...7\n..3....5.\n....8.6.."
+   },
+   {
+    "variantId": "classic9",
+    "level": null,
+    "seed": "testkit-4242-8703",
+    "text": "#1,Classic Sudoku 9x9,,testkit-4242-8703\n.6.1.....\n27.384...\n.84..7.23\n8.6..1...\n5..4.86..\n497652.3.\n.5.796...\n7..215.8.\n..9.437.5"
+   }
+  ]
+ }
+}

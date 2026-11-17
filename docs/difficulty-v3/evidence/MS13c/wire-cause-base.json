@@ -1,0 +1,45 @@
+{
+ "engine": "git:4aa3d11",
+ "rows": [
+  {
+   "id": "G09",
+   "request": "killer expert 3514204290",
+   "equalsSaved": true,
+   "equalsLedger": true,
+   "ledgerEqualsSaved": true,
+   "seconds": 20.9
+  },
+  {
+   "id": "G10",
+   "request": "killer nightmare 42",
+   "equalsSaved": true,
+   "equalsLedger": false,
+   "ledgerEqualsSaved": false,
+   "seconds": 25.4
+  },
+  {
+   "id": "G11",
+   "request": "greaterThan expert 42",
+   "equalsSaved": true,
+   "equalsLedger": true,
+   "ledgerEqualsSaved": true,
+   "seconds": 16.6
+  },
+  {
+   "id": "G12",
+   "request": "greaterThan hard 3115968914",
+   "equalsSaved": true,
+   "equalsLedger": true,
+   "ledgerEqualsSaved": true,
+   "seconds": 0.4
+  },
+  {
+   "id": "G13",
+   "request": "samurai nightmare 42",
+   "equalsSaved": true,
+   "equalsLedger": false,
+   "ledgerEqualsSaved": false,
+   "seconds": 11
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+$ node tests\artifacts\difficulty-v3\MS13c\long-cap-probe.js
+#29 open 47 registered null {"construction":3414,"search":36968,"additional":80,"graph":"complete","minimum":"complete","stop":null} work 40382 capHit null | singleton null
+#155 solved
+#1036 solved
+#521 solved
+#530 open 52 registered null {"construction":3929,"search":46071,"additional":87,"graph":"complete","minimum":"incomplete","stop":"search-work"} work 50000 capHit work | singleton 7
+#713 solved
+#1003 solved
+exit=0 seconds=0.474

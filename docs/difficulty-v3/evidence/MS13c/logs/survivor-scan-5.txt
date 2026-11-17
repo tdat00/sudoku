@@ -1,0 +1,26 @@
+$ node tests\artifacts\difficulty-v3\MS13c\survivor-all.cjs 48 45 47 50 42
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m48.js for S04 contradiction and forced swapped
+== mutation 48 on sa2 200000 12
+DIFF sa2 index 11 forcingChain
+  registered: {"technique":"forcingChain","cells":[1,3,8],"placements":[],"eliminations":[[1,1]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"kind":"contradiction","length":3,"chains":[[[1,1,1],[3,1,0],[3,3,1],[8,3,0]],[[1,1,1],[8,1,0],[8,3,1]]]}}
+  mutated:    {"technique":"forcingChain","cells":[1,3,8],"placements":[[1,1]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"kind":"forced","length":3,"chains":[[[1,1,1],[3,1,0],[3,3,1],[8,3,0]],[[1,1,1],[8,1,0],[8,3,1]]]}}
+DIFF sa2 index 25 forcingChain
+  registered: {"technique":"forcingChain","cells":[7,2],"placements":[],"eliminations":[[7,1]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"kind":"contradiction","length":3,"chains":[[[7,1,1],[7,2,0],[2,2,1],[2,3,0]],[[7,1,1],[7,3,0],[2,3,1]]]}}
+  mutated:    {"technique":"forcingChain","cells":[7,2],"placements":[[7,1]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"kind":"forced","length":3,"chains":[[[7,1,1],[7,2,0],[2,2,1],[2,3,0]],[[7,1,1],[7,3,0],[2,3,1]]]}}
+DIFF sa2 index 40 forcingChain
+  registered: {"technique":"forcingChain","cells":[0,1,9],"placements":[],"eliminations":[[0,3]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"kind":"contradiction","length":3,"chains":[[[0,3,1],[1,3,0],[1,1,1],[9,1,0]],[[0,3,1],[9,3,0],[9,1,1]]]}}
+  mutated:    {"technique":"forcingChain","cells":[0,1,9],"placements":[[0,3]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"kind":"forced","length":3,"chains":[[[0,3,1],[1,3,0],[1,1,1],[9,1,0]],[[0,3,1],[9,3,0],[9,1,1]]]}}
+400000 calls, 17869 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m45.js for S01 every start a singleton
+== mutation 45 on sa2 200000 12
+400000 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m47.js for S03 polarity proofs from a group start
+== mutation 47 on sa2 200000 12
+400000 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m50.js for S06 an endpoint at the start node itself
+== mutation 50 on sa2 200000 12
+400000 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m42.js for P09 the endpoint eliminations unsorted
+== mutation 42 on sa2 200000 12
+400000 calls, 0 differ
+exit=0 seconds=130.981

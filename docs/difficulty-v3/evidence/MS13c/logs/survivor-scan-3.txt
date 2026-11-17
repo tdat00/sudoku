@@ -1,0 +1,22 @@
+$ node tests\artifacts\difficulty-v3\MS13c\survivor-all.cjs 45 47 50 42
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m45.js for S01 every start a singleton
+== mutation 45 on digit:6:12 20000 6
+40000 calls, 0 differ
+== mutation 45 on digit:10:16 20000 7
+40000 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m47.js for S03 polarity proofs from a group start
+== mutation 47 on digit:6:12 20000 6
+40000 calls, 0 differ
+== mutation 47 on digit:10:16 20000 7
+40000 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m50.js for S06 an endpoint at the start node itself
+== mutation 50 on digit:6:12 20000 6
+40000 calls, 0 differ
+== mutation 50 on digit:10:16 20000 7
+40000 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m42.js for P09 the endpoint eliminations unsorted
+== mutation 42 on digit:6:12 20000 6
+40000 calls, 0 differ
+== mutation 42 on digit:10:16 20000 7
+40000 calls, 0 differ
+exit=0 seconds=29.685

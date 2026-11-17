@@ -1,0 +1,14 @@
+$ node tests\artifacts\difficulty-v3\MS13c\investigate-long.js own
+#0 own-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/16838","forcingChainLong":{"len":7,"v2":false,"kind":"contradiction","elim":1},"forcingChainLong#rec":"grouped/null/26202"}
+#1 own-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/16586","forcingChainLong":null,"forcingChainLong#rec":"grouped/null/40382"}
+#2 own-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/0","forcingChainLong":null,"forcingChainLong#rec":"grouped/null/0"}
+#3 own-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/14914","forcingChainLong":{"len":7,"v2":false,"kind":"contradiction","elim":1},"forcingChainLong#rec":"grouped/null/20903"}
+#4 own-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/19718","forcingChainLong":{"len":8,"v2":false,"kind":"contradiction","elim":1},"forcingChainLong#rec":"grouped/null/37423"}
+#5 own-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/0","forcingChainLong":null,"forcingChainLong#rec":"grouped/null/0"}
+#6 own-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/0","forcingChainLong":null,"forcingChainLong#rec":"grouped/null/0"}
+#7 own-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/22626","forcingChainLong":null,"forcingChainLong#rec":"null/search-work/50000"}
+#8 own-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/0","forcingChainLong":null,"forcingChainLong#rec":"grouped/null/0"}
+#9 own-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/16808","forcingChainLong":{"len":8,"v2":true,"kind":"contradiction","elim":1},"forcingChainLong#rec":"grouped/null/31345"}
+#10 own-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/0","forcingChainLong":null,"forcingChainLong#rec":"grouped/null/0"}
+#11 own-stuck {"forcingChain":null,"forcingChain#rec":"grouped/null/12528","forcingChainLong":{"len":7,"v2":true,"kind":"contradiction","elim":1},"forcingChainLong#rec":"grouped/null/26727"}
+exit=0 seconds=0.609

@@ -1,0 +1,109 @@
+mutation 0 (F01 fallback after every stop (a window and a spent budget included)): DETECTED - 221 total, 220 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.2 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > runs nothing for an empty window, and nothing again after a completed negative or a window rejection
+mutation 1 (F02 fallback after a completed negative): DETECTED - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 6.0 s
+    FAIL tech-chain > forcingChain: cyclic link graphs > terminates on twin positions of the other models too
+mutation 2 (F03 fallback never): DETECTED - 100 total, 99 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.3 s
+    FAIL tech-chain > chain windows: the four registered ids on their own > keeps forcingChain unbounded where an accidental limit of 50000 would stop it, and bounds the long id
+mutation 3 (F04 forcingChainLong falls back too): DETECTED - 99 total, 98 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.5 s
+    FAIL tech-chain > chain windows: the four registered ids on their own > has the work policy of IR54: forcingChain and nishio unbounded, forcingChainLong and nishioDeep 50000
+mutation 4 (F05 forcingChain never falls back): DETECTED - 75 total, 74 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 7.1 s
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > reports a fresh record per call, with no limit and no cap for the registered finders
+mutation 5 (F06 no parent-budget check before the fallback): DETECTED - 224 total, 223 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.2 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the parent budget, cancellation and the record > does not recover from a spent parent budget: not in the construction, the search, before the fallback or in it
+mutation 6 (F07 the fallback has the grouped allowance as its limit): DETECTED - 100 total, 99 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.8 s
+    FAIL tech-chain > chain windows: the four registered ids on their own > keeps forcingChain unbounded where an accidental limit of 50000 would stop it, and bounds the long id
+mutation 7 (F08 the fallback ignores the window minimum): NOT DETECTED (exit 0) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 23.1 s
+mutation 8 (F09 the fallback outcome inverted): DETECTED - 216 total, 215 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > falls back on a local cap to the complete singleton search with no local limit, and records both phases
+mutation 9 (F10 the fallback entry never noted): DETECTED - 216 total, 215 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.0 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > falls back on a local cap to the complete singleton search with no local limit, and records both phases
+mutation 10 (F11 the domain of a fallback stays grouped): DETECTED - 216 total, 215 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.3 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > falls back on a local cap to the complete singleton search with no local limit, and records both phases
+mutation 11 (F12 a spent budget in the fallback overwrites the cap): DETECTED - 224 total, 223 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.2 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the parent budget, cancellation and the record > does not recover from a spent parent budget: not in the construction, the search, before the fallback or in it
+mutation 12 (F13 cancellation and other errors swallowed): DETECTED - 47 total, 46 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 6.0 s
+    FAIL tech-chain > chain group: budget > does not swallow any other error: a cancelled budget still throws
+mutation 13 (F14 the fallback runs on a fresh result of the window (min above 1)): DETECTED - 218 total, 217 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > falls back on a search cap too, under the same window, and certifies only the singleton minimum
+mutation 14 (A01 the search restarts the counter): DETECTED - 217 total, 216 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > is no fallback for forcingChainLong: a local cap is null, alone or after forcingChain, with its cap
+mutation 15 (A02 the search work includes the construction): DETECTED - 217 total, 216 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.0 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > is no fallback for forcingChainLong: a local cap is null, alone or after forcingChain, with its cap
+mutation 16 (A03 the record omits the construction): DETECTED - 216 total, 215 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 16.9 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > falls back on a local cap to the complete singleton search with no local limit, and records both phases
+mutation 17 (A04 the record omits the fallback): DETECTED - 100 total, 99 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.3 s
+    FAIL tech-chain > chain windows: the four registered ids on their own > keeps forcingChain unbounded where an accidental limit of 50000 would stop it, and bounds the long id
+mutation 18 (A05 the record omits the search): DETECTED - 217 total, 216 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.0 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > is no fallback for forcingChainLong: a local cap is null, alone or after forcingChain, with its cap
+mutation 19 (A06 a fresh allowance for the search): DETECTED - 217 total, 216 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > is no fallback for forcingChainLong: a local cap is null, alone or after forcingChain, with its cap
+mutation 20 (A07 the construction ignores the allowance of the call): DETECTED - 220 total, 219 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > shares one allowance between construction and search: the exact boundary, never reset
+mutation 21 (A08 the construction ignores the node quota of the call): DETECTED - 219 total, 218 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.2 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > falls back on the node quota, and a quota of exactly the nodes is no cap
+mutation 22 (A09 construction work cap named a node cap): DETECTED - 100 total, 99 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.4 s
+    FAIL tech-chain > chain windows: the four registered ids on their own > keeps forcingChain unbounded where an accidental limit of 50000 would stop it, and bounds the long id
+mutation 23 (A10 a spent budget of the construction named a work cap): DETECTED - 224 total, 223 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.2 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the parent budget, cancellation and the record > does not recover from a spent parent budget: not in the construction, the search, before the fallback or in it
+mutation 24 (A11 the search cap named a construction cap): DETECTED - 217 total, 216 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > is no fallback for forcingChainLong: a local cap is null, alone or after forcingChain, with its cap
+mutation 25 (A12 the cap of the no-fallback call always work): DETECTED - 219 total, 218 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.2 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > falls back on the node quota, and a quota of exactly the nodes is no cap
+mutation 26 (A13 the limit of the record always the allowance): DETECTED - 75 total, 74 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 7.1 s
+    FAIL tech-chain > chain search seam: work limit and pattern-work report > reports a fresh record per call, with no limit and no cap for the registered finders
+mutation 27 (A14 the cap of forcingChain published too): DETECTED - 100 total, 99 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.3 s
+    FAIL tech-chain > chain windows: the four registered ids on their own > keeps forcingChain unbounded where an accidental limit of 50000 would stop it, and bounds the long id
+mutation 28 (A15 no domain for a completed grouped call): NOT STARTED (elapsed 390.6 s)
+mutation 29 (A16 the minimum of a capped search recorded complete): NOT STARTED (elapsed 390.6 s)
+mutation 30 (A17 the additional nodes count the singletons): NOT STARTED (elapsed 390.6 s)
+mutation 31 (A18 a search that ends exactly at the allowance is a cap): NOT STARTED (elapsed 390.6 s)
+mutation 32 (A19 the construction allowance is one more): NOT STARTED (elapsed 390.6 s)
+mutation 33 (A20 the gate check of the search starts at zero): NOT STARTED (elapsed 390.6 s)
+mutation 34 (P01 the node cells shared with the graph): NOT STARTED (elapsed 390.6 s)
+mutation 35 (P02 the union cells unsorted): NOT STARTED (elapsed 390.6 s)
+mutation 36 (P03 a group proof keeps the singleton form): NOT STARTED (elapsed 390.6 s)
+mutation 37 (P04 every proof of version 2): NOT STARTED (elapsed 390.6 s)
+mutation 38 (P05 proof version 1): NOT STARTED (elapsed 390.6 s)
+mutation 39 (P06 the length one too many): NOT STARTED (elapsed 390.6 s)
+mutation 40 (P07 the second path of a polarity proof missing): NOT STARTED (elapsed 390.6 s)
+mutation 41 (P08 a forced start eliminated instead of placed): NOT STARTED (elapsed 390.6 s)
+mutation 42 (P09 the endpoint eliminations unsorted): NOT STARTED (elapsed 390.6 s)
+mutation 43 (P10 the truth of every step true): NOT STARTED (elapsed 390.6 s)
+mutation 44 (P11 the contradiction start not the first step): NOT STARTED (elapsed 390.6 s)
+mutation 45 (S01 every start a singleton): NOT STARTED (elapsed 390.6 s)
+mutation 46 (S02 a group has a true start): NOT STARTED (elapsed 390.6 s)
+mutation 47 (S03 polarity proofs from a group start): NOT STARTED (elapsed 390.6 s)
+mutation 48 (S04 contradiction and forced swapped): NOT STARTED (elapsed 390.6 s)
+mutation 49 (S05 endpoints from a true start): NOT STARTED (elapsed 390.6 s)
+mutation 50 (S06 an endpoint at the start node itself): NOT STARTED (elapsed 390.6 s)
+mutation 51 (S07 a start with no strong link searched): NOT STARTED (elapsed 390.6 s)
+mutation 52 (S08 the same-cell weak links after the peers): NOT STARTED (elapsed 390.6 s)
+mutation 53 (S09 the conjugate links by descending rank): NOT STARTED (elapsed 390.6 s)
+mutation 54 (S11 the scan order of the nodes reversed per truth): NOT STARTED (elapsed 390.6 s)
+mutation 55 (S12 the search never stops at a shorter bound): NOT STARTED (elapsed 390.6 s)
+mutation 56 (S13 a proof below the window not the answer): NOT STARTED (elapsed 390.6 s)
+mutation 57 (S14 the first proof wins (no shorter one sought)): NOT STARTED (elapsed 390.6 s)
+mutation 58 (E01 an endpoint target need not see the start): NOT STARTED (elapsed 390.6 s)
+mutation 59 (E02 the start marks nothing): NOT STARTED (elapsed 390.6 s)
+mutation 60 (E03 one convenient pair of two groups): NOT STARTED (elapsed 390.6 s)
+mutation 61 (E04 an extra occurrence accepted in a strong group): NOT STARTED (elapsed 390.6 s)
+mutation 62 (E05 one group beyond the quota): NOT STARTED (elapsed 390.6 s)
+mutation 63 (E06 overlapping nodes linked): NOT STARTED (elapsed 390.6 s)
+mutation 64 (E07 an intersection of one complete unit used): NOT STARTED (elapsed 390.6 s)
+mutation 65 (E08 a group target eliminated): NOT STARTED (elapsed 390.6 s)
+mutation 66 (E09 a start marks the group neighbours too): NOT STARTED (elapsed 390.6 s)
+mutation 67 (E10 the group weak link of one shared digit only): NOT STARTED (elapsed 390.6 s)
+mutation 68 (E11 a conjugate link without the cover): NOT STARTED (elapsed 390.6 s)
+mutation 69 (B01 a window with the minimum above the maximum searched): NOT STARTED (elapsed 390.6 s)
+mutation 70 (B02 no entry check of the search): NOT STARTED (elapsed 390.6 s)
+mutation 71 (B03 no check before a start): NOT STARTED (elapsed 390.6 s)
+mutation 72 (B04 no gate in the expansions): NOT STARTED (elapsed 390.6 s)
+mutation 73 (B05 pieces of 512 links): NOT STARTED (elapsed 390.6 s)
+mutation 74 (B06 the link that proves is not counted): NOT STARTED (elapsed 390.6 s)
+mutation 75 (B07 a negative limit accepted by the seam): NOT STARTED (elapsed 390.6 s)
+mutation 76 (B08 a fractional limit kept): NOT STARTED (elapsed 390.6 s)
+mutation 77 (B09 a non-boolean fallback accepted): NOT STARTED (elapsed 390.6 s)
+mutation 78 (B10 the caller maximum of forcingChain ignored): NOT STARTED (elapsed 390.6 s)
+mutation 79 (B11 the minimum of forcingChainLong is C): NOT STARTED (elapsed 390.6 s)
+mutation 80 (B12 the entry check of the construction missing): NOT STARTED (elapsed 390.6 s)
+detected 27 of 28, survivors 1, 53 not started, 390.6 s

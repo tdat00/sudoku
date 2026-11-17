@@ -1,0 +1,21 @@
+{
+ "engine": "tree",
+ "rows": [
+  {
+   "id": "G10",
+   "request": "killer nightmare 42",
+   "equalsSaved": false,
+   "equalsLedger": true,
+   "ledgerEqualsSaved": false,
+   "seconds": 10.1
+  },
+  {
+   "id": "G13",
+   "request": "samurai nightmare 42",
+   "equalsSaved": false,
+   "equalsLedger": true,
+   "ledgerEqualsSaved": false,
+   "seconds": 94.2
+  }
+ ]
+}

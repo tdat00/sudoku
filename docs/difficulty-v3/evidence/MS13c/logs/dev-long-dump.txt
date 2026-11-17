@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS13c\investigate-long.js dump tests\artifacts\difficulty-v3\MS13c\dump-long.json
+dumped 12
+exit=0 seconds=0.498

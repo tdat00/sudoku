@@ -982,8 +982,9 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    and decoder, grouping does not apply to the XY-chain, and no seam override widens the registered finder's 12 edges
    and 50,000 units. The proof, the equivalent mutant, the cost, the reach and the effect are in `generator/design.md`,
    "The XY-chain".
-   **The grouped chain graph** (`core/js/engine/tech-chain.js`, task MS13a; **inactive**: no registered finder, no seam
-   call and no rating reads it, so every Finding, observer record, hash and wire is unchanged).
+   **The grouped chain graph** (`core/js/engine/tech-chain.js`, task MS13a; **inactive at MS13a** (history): no registered
+   finder, no seam call and no rating read it, so every Finding, observer record, hash and wire was unchanged; since
+   MS13c `forcingChain` and `forcingChainLong` read it, see "Activation" below).
    `SG.chainGraph.build(model, state, ctx[, { groupLimit, workLimit }])` returns
    `{ nodes, weak, strong, complete, work, capHit }`; the frozen `SG.chainGraph.LIMITS` is
    `{ groups: 4096, work: 50000 }`. A node is `{ cells, digit }`: `cells` ascending and distinct, each an open cell that
@@ -1007,13 +1008,25 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    quota) or `null` (a spent parent budget); empty arrays never mean that no proof exists, only that no usable graph
    was built. Cancellation and errors propagate, and the builder publishes no observer record. The independent
    oracle is `SG.chainProofs` (`core/tests/fixtures/chain-proofs.js`), which recomputes the nodes, the edges, the
-   work and the proofs from the model and the state. The activation (MS13c) applies grouping to `forcingChain` and
-   `forcingChainLong` only, never to the XY-chain. The grouped attempt in MS13c shares one work allowance between
-   construction and search, starting at 50,000, without resetting it between stages. This does not decide the
-   whole-call policy for `forcingChain`: GC-01 still awaits the owner's choice of a singleton fallback with
-   unbounded local work or a cap on the whole call. No grouped finder or fallback is active yet; parent budgets and
-   cancellation remain in force.
-   **Reading and displaying version-2 group proofs** (task MS13b; the consumers only, no finder emits one yet). A chain
+   work and the proofs from the model and the state. **Activation (MS13c, owner decision GC-01 option A / S-OD11).**
+   `forcingChain` (1 to C links) and `forcingChainLong` (C + 1 to 12) now search this graph and publish the shortest
+   proof of **it**, never for the XY-chain, from a bounded attempt: 4,096 additional nodes and **one** work allowance
+   of 50,000 units shared by the construction and the search, which starts at the construction's units and is never
+   reset (R10 allowed one measured adjustment of these limits; the census led to none). Only `forcingChain`, after
+   a **local** cap of its attempt (`construction-work`, `construction-nodes` or `search-work`) and a passed
+   parent-budget check, falls back to the accepted complete singleton search, which has **no local work limit** (same
+   parent budget, same window); there is no fallback after a spent parent budget, cancellation, an error, a
+   completed negative or an empty window, and `forcingChainLong` has none (a cap is its null). A fallback result
+   certifies only the singleton-graph minimum; a complete grouped search the minimum of the grouped graph. A
+   contradiction or forced proof starts at a singleton (a true group is no permission to place a member), a group
+   starts only as a false end for the endpoint proof, whose eliminations conflict with every member of an end group;
+   a proof without a group is byte for byte the legacy Finding, one with a group is version 2 with the full sorted
+   union as `cells`. The seam is `SG.chainSearch.groupedForcing(model, state, ctx, { id, minLength, maxLength,
+   groupLimit, workLimit, fallback })`; the observer record keeps its five fields (`work` is now every stage) and adds
+   `domain`, `grouped { construction, search, additional, graph, minimum, stop }` and `fallback`, published only on a
+   normal return. The coverage is **bounded**, not an exhaustive Medusa, AIC or X-cycle search. Parent budgets and
+   cancellation remain in force. (At MS13a the graph was inactive and GC-01 open; those statements are history.)
+   **Reading and displaying version-2 group proofs** (task MS13b: the consumers; since MS13c the grouped forcing emits them). A chain
    Finding's `i18nArgs` may be `{ proofVersion: 2, kind, length, chains }` with steps `{ cells, digit, truth }`
    (`truth` 1 true, 0 false) beside the legacy triples `[cell, digit, truth]`; a pure singleton Finding keeps its
    triples and one path may mix both forms. `formatChains` of `generator/js/ui/i18n.js` and `player/js/ui/i18n.js`
@@ -1108,7 +1121,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (53 suites, 4,456 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (53 suites, 4,483 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (61 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -1120,7 +1133,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 53 suites,
-4,456 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+4,483 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -1177,7 +1190,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 61 suites, 53 of them quick (4,456 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 61 suites, 53 of them quick (4,483 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1585,7 +1598,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (30, 2,698 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (30, 2,722 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

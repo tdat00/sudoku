@@ -827,9 +827,12 @@
 
   // Real unique puzzles. The first two are the puzzles of the v2 chain fixtures; the next three are famous
   // puzzles of tests/fixtures/classic.js; the last three are minimal puzzles dug by SG.testkit.dig from the
-  // seeded stream 161 (fork 'minimal.<i>'): #24, #379 and #155, whose first long chains have 7, 8 and 7 links once
-  // forcingChain has exhausted every chain of up to 6 links (C = 6). Under the selected C = 4 the position where
-  // forcingChain is stuck still has chains of 5 and 6 links, which are the first proofs of forcingChainLong.
+  // seeded stream 161 (fork 'minimal.<i>'): #24, #730 and #155. Under the selected C = 4 the position where
+  // forcingChain (grouped since MS13c) is stuck has a first long chain of 5 (#24 and #155, the latter with
+  // groups) and 6 links (#730), which are the first proofs of forcingChainLong. #379 (8 links once forcingChain
+  // had exhausted every chain of up to 6 links, until MS13c) is solved by the grouped ladder before it is stuck:
+  // #730 is the lowest index of the stream whose stuck position has a 6-link proof of forcingChainLong with
+  // no group and no cap (`fixture-scan.js` of the MS13c evidence, indices 0 to 3999).
   var V2_PUZZLE_1 = '2.6...8.......357...59....1...2..41..5..8.3..1...4...6.2..157...8..........7...6.';
   var V2_PUZZLE_2 = '.6125...3..5.......9...81.....8...469....672.....3..8..7.3......5....6..6.....234';
   var ESCARGOT = '1....7.9..3..2...8..96..5....53..9...1..8...26....4...3......1..4......7..7...3..';
@@ -838,7 +841,7 @@
   var WORLDS_HARDEST = '8..........36......7..9.2...5...7.......457.....1...3...1....68..85...1..9....4..';
   var NUGGET = '.......39.....1..5..3.5.8....8.9...6.7...2...1..4.......9.8..5..2....6..4..7.....';
   var DUG_24 = '..7..1..6.8....1..5..6.78.3..65..7.......8..2.9..6....459........2...5......1..9.';
-  var DUG_379 = '......4..4..8...15.5...7....8...19....23.8.......64.7........8614.........9.2...3';
+  var DUG_730 = '.98....2......1.8..4..7.3..3.5.....8..98.3......2.45.........526..4...7..3....1..';
   var DUG_155 = '...284.....51..83.....53....9.........8.....6.6..351.437.....6....4.2..88.......7';
 
   // Real unique puzzles of the skyscraper fixtures (MS08a). SKY_ROWS is 'constructed-hard-1' of
@@ -1528,12 +1531,12 @@
         },
         {
           name: 'forcingChainLong contradiction of 6 links on a dug puzzle',
-          puzzle: DUG_379,
+          puzzle: DUG_730,
           after: THROUGH_SHORT_CHAIN,
           propagate: true,
           expect: {
             placements: [],
-            eliminations: [[10, 2]]
+            eliminations: [[77, 9]]
           }
         }
       ],
@@ -1638,8 +1641,10 @@
    * that is not in LADDER. MS07b (measured at C = 6): the random population never reaches a chain of 7 or more
    * links nor a guess inside a guess (0 firings in 120 states), so the two new chain IDs get three real
    * positions each. The dug puzzles are the stuck positions of forcingChain under the selected C = 4: the
-   * shortest chains of the first two have 5 and 6 links (7 and 8 once forcingChain had exhausted every chain of
-   * up to 6 links). MS08a: skyscraper is not rare (65 firings in the 300 random states), so its three real
+   * shortest chains of the first two have 5 and 6 links (MS13c: the second is #730 now, as #379 is solved by the
+   * grouped forcingChain; 7 and 8 links once forcingChain had exhausted every chain of up to 6 links, as the
+   * long-chain list of tech-chain.test.js has them). MS08a: skyscraper is not rare (65 firings in the 300
+   * random states), so its three real
    * positions, the two positive fixtures and 'constructed-hard-3', only add deterministic states on top of the
    * unchanged random population and its minimum of 3 firings. MS08b: twoStringKite is not rare either (114
    * firings in the 300 random states), so its three real positions, the two positive fixtures and a third
@@ -1748,7 +1753,7 @@
     ],
     forcingChainLong: [
       { name: 'a long chain of 5 links (dug puzzle)', puzzle: DUG_24, after: THROUGH_SHORT_CHAIN, propagate: true },
-      { name: 'a long chain of 6 links (dug puzzle)', puzzle: DUG_379, after: THROUGH_SHORT_CHAIN, propagate: true },
+      { name: 'a long chain of 6 links (dug puzzle)', puzzle: DUG_730, after: THROUGH_SHORT_CHAIN, propagate: true },
       { name: 'a second long chain (dug puzzle)', puzzle: DUG_155, after: THROUGH_SHORT_CHAIN, propagate: true }
     ],
     nishioDeep: [

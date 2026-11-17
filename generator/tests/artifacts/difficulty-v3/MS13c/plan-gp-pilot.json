@@ -1,0 +1,483 @@
+[
+  {
+    "label": "gp-pilot-classic9-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=classic9",
+      "--level=master",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (900 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-classic9-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=classic9",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (2500 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-classic9-hell1",
+    "args": [
+      "tests\\perf.js",
+      "--variant=classic9",
+      "--level=hell1",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (2500 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-diagonalX-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=diagonalX",
+      "--level=master",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (1200 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-diagonalX-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=diagonalX",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (3000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-diagonalX-hell1",
+    "args": [
+      "tests\\perf.js",
+      "--variant=diagonalX",
+      "--level=hell1",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (3000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-diagonalX-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=diagonalX",
+      "--level=hell2",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (3000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-hyper-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=hyper",
+      "--level=master",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (1200 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-hyper-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=hyper",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (3000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-hyper-hell1",
+    "args": [
+      "tests\\perf.js",
+      "--variant=hyper",
+      "--level=hell1",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (3000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-hyper-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=hyper",
+      "--level=hell2",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (5000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-jigsaw9-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=jigsaw9",
+      "--level=master",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (2000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-jigsaw9-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=jigsaw9",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (5000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-jigsaw9-hell1",
+    "args": [
+      "tests\\perf.js",
+      "--variant=jigsaw9",
+      "--level=hell1",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (5000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-jigsaw9-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=jigsaw9",
+      "--level=hell2",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (5000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-wordoku-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=wordoku",
+      "--level=master",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (1500 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-wordoku-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=wordoku",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (1500 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-wordoku-hell1",
+    "args": [
+      "tests\\perf.js",
+      "--variant=wordoku",
+      "--level=hell1",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (2500 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-killer-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=killer",
+      "--level=master",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (10000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-killer-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=killer",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (10000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-killer-hell1",
+    "args": [
+      "tests\\perf.js",
+      "--variant=killer",
+      "--level=hell1",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (10000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-killer-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=killer",
+      "--level=hell2",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (10000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-greaterThan-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=greaterThan",
+      "--level=master",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (10000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-greaterThan-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=greaterThan",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (10000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-greaterThan-hell1",
+    "args": [
+      "tests\\perf.js",
+      "--variant=greaterThan",
+      "--level=hell1",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (10000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-greaterThan-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=greaterThan",
+      "--level=hell2",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (10000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-mega12-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=mega12",
+      "--level=master",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (3000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-mega12-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=mega12",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (3000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-mega12-hell1",
+    "args": [
+      "tests\\perf.js",
+      "--variant=mega12",
+      "--level=hell1",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "two runs at the target of the cell (4500 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-mega12-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=mega12",
+      "--level=hell2",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (16000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-mega16-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=mega16",
+      "--level=master",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (10000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-mega16-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=mega16",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (10000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-mega16-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=mega16",
+      "--level=hell2",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (10000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-butterfly-master",
+    "args": [
+      "tests\\perf.js",
+      "--variant=butterfly",
+      "--level=master",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (8000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-butterfly-nightmare",
+    "args": [
+      "tests\\perf.js",
+      "--variant=butterfly",
+      "--level=nightmare",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (8000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-butterfly-hell1",
+    "args": [
+      "tests\\perf.js",
+      "--variant=butterfly",
+      "--level=hell1",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (8000 ms p95) at most: a stated bound"
+  },
+  {
+    "label": "gp-pilot-butterfly-hell2",
+    "args": [
+      "tests\\perf.js",
+      "--variant=butterfly",
+      "--level=hell2",
+      "--runs=2",
+      "--warmup=0",
+      "--seed=7000"
+    ],
+    "projectionSeconds": 60,
+    "projectionBasis": "two runs at the target of the cell (15000 ms p95) at most: a stated bound"
+  }
+]

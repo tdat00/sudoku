@@ -1,0 +1,37 @@
+== wires
+G09: unchanged; givens differ in 0 cells; clues 10 -> 10; score 809 -> 809; level expert -> expert; hardest finnedXWing -> finnedXWing; dig log 204 -> 204; attempts 8 -> 8; exact false -> false
+   technique counts: {"nakedSingle":46,"hiddenSingleBox":12,"hiddenSingleLine":4,"pointing":7,"cageCombo":22,"ruleOf45":9,"finnedXWing":2}  ->  {"nakedSingle":46,"hiddenSingleBox":12,"hiddenSingleLine":4,"pointing":7,"cageCombo":22,"ruleOf45":9,"finnedXWing":2}
+G10: SAME PUZZLE; givens differ in 0 cells; clues 24 -> 24; score 2199 -> 2199; level nightmare -> nightmare; hardest forcingChainLong -> forcingChainLong; dig log 231 -> 231; attempts 4 -> 4; exact true -> true
+   technique counts: {"nakedSingle":44,"hiddenSingleBox":5,"hiddenSingleLine":2,"pointing":5,"cageCombo":13,"boxLine":1,"nakedPair":2,"nakedTriple":1,"ruleOf45":2,"wxyzWing":1,"wWing":1,"forcingChainLong":1}  ->  {"nakedSingle":44,"hiddenSingleBox":5,"hiddenSingleLine":2,"pointing":5,"cageCombo":13,"boxLine":1,"nakedPair":2,"nakedTriple":1,"ruleOf45":2,"wxyzWing":1,"wWing":1,"forcingChainLong":1}
+G11: unchanged; givens differ in 0 cells; clues 23 -> 23; score 740 -> 740; level expert -> expert; hardest finnedXWing -> finnedXWing; dig log 122 -> 122; attempts 8 -> 8; exact false -> false
+   technique counts: {"nakedSingle":40,"hiddenSingleBox":12,"hiddenSingleLine":6,"pointing":2,"ineqChain":13,"nakedPair":1,"twoStringKite":1,"simpleColouring":1,"emptyRectangle":2,"finnedXWing":1}  ->  {"nakedSingle":40,"hiddenSingleBox":12,"hiddenSingleLine":6,"pointing":2,"ineqChain":13,"nakedPair":1,"twoStringKite":1,"simpleColouring":1,"emptyRectangle":2,"finnedXWing":1}
+G12: unchanged; givens differ in 0 cells; clues 28 -> 28; score 647 -> 647; level hard -> hard; hardest emptyRectangle -> emptyRectangle; dig log 165 -> 165; attempts 1 -> 1; exact true -> true
+   technique counts: {"nakedSingle":37,"hiddenSingleBox":15,"hiddenSingleLine":1,"pointing":1,"ineqChain":5,"boxLine":1,"nakedPair":1,"xWing":1,"simpleColouring":1,"emptyRectangle":1}  ->  {"nakedSingle":37,"hiddenSingleBox":15,"hiddenSingleLine":1,"pointing":1,"ineqChain":5,"boxLine":1,"nakedPair":1,"xWing":1,"simpleColouring":1,"emptyRectangle":1}
+G13: ANOTHER PUZZLE; givens differ in 210 cells; clues 118 -> 138; score 2347 -> 2363; level nightmare -> nightmare; hardest forcingChainLong -> forcingChainLong; dig log 333 -> 396; attempts 1 -> 2; exact true -> true
+   technique counts: {"nakedSingle":207,"hiddenSingleBox":34,"hiddenSingleLine":10,"pointing":5,"boxLine":2,"nakedTriple":1,"skyscraper":1,"xyWing":1,"wxyzWing":2,"wWing":1,"xyChain":1,"forcingChainLong":1}  ->  {"nakedSingle":223,"hiddenSingleBox":7,"hiddenSingleLine":1,"pointing":2,"skyscraper":1,"wxyzWing":2,"xyChain":1,"forcingChain":2,"forcingChainLong":1}
+== analyses
+G01: unchanged
+G02: unchanged
+G03: CHANGED classic9 nightmare 42; counts {"compact":6,"details":34} -> {"compact":6,"details":28}; last detail 2393 -> 2227; jumps 1 -> 1; compact rows 6 -> 6
+   row 2 score 43 -> 44; row 3 score 45 -> 47; row 4 score 2393 -> 2227; row 5 score 2393 -> 2227
+G04: CHANGED classic9 hell1 2400651925; counts {"compact":9,"details":32} -> {"compact":9,"details":32}; last detail 3071 -> 3530; jumps 1 -> 1; compact rows 9 -> 9
+   row 6 score 1948 -> 1875; row 7 score 3071 -> 3530; row 8 score 3071 -> 3530
+G05: unchanged
+G06: CHANGED jigsaw9 nightmare 42; counts {"compact":8,"details":33} -> {"compact":8,"details":34}; last detail 2331 -> 2369; jumps 1 -> 1; compact rows 8 -> 8
+   row 6 score 2331 -> 2369; row 7 score 2331 -> 2369
+G07: CHANGED jigsaw9 nightmare 3962167687; counts {"compact":7,"details":33} -> {"compact":8,"details":30}; last detail 2268 -> 2184; jumps 1 -> 1; compact rows 7 -> 8
+   row 3 hardest pointing -> hiddenSingleBox; row 4 score 141 -> 126; row 5 score 2268 -> 2175; row 6 score 2268 -> 2184; row 7 new
+G08: unchanged
+G09: unchanged
+G10: unchanged
+G11: unchanged
+G12: CHANGED greaterThan hard 3115968914; counts {"compact":7,"details":111} -> {"compact":7,"details":111}; last detail 647 -> 647; jumps 1 -> 1; compact rows 7 -> 7
+   (no compact row differs; the detail rows and the folds do)
+G13: CHANGED samurai nightmare 42; counts {"compact":7,"details":128} -> {"compact":7,"details":154}; last detail 2347 -> 2363; jumps 1 -> 1; compact rows 7 -> 7
+   row 3 score 72 -> 73; row 4 score 1014 -> 1011; row 5 score 2347 -> 2363; row 6 score 2347 -> 2363
+G14: CHANGED mega16 hell2 12; counts {"compact":7,"details":81} -> {"compact":7,"details":81}; last detail 6548 -> 6490; jumps 1 -> 1; compact rows 7 -> 7
+   row 4 score 3237 -> 3290; row 5 score 6548 -> 6490; row 6 score 6548 -> 6490
+== hashes
+classic9/nightmare: 9 of 20 changed (seeds 144, 1597, 21, 3, 377, 4181, 6765, 8, 89)
+diagonalX/nightmare: 17 of 20 changed (seeds 1, 10946, 13, 144, 1597, 2, 21, 233, 2584, 3, 4181, 5, 55, 610, 6765, 8, 987)
+cells with no change: 24 of 26; keys changed 26 of 520

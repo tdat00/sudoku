@@ -15,7 +15,8 @@
  * to exactly one ID and a longer or deeper technique called alone never relabels a proof that a shorter one
  * owns. The registered finders are thin wrappers of the parameterised seam described below.
  *
- * forcingChain: alternating inference chains over a strong / weak link graph.
+ * The singleton forcing search (the seam's `forcing`, and forcingChain's fallback): alternating inference
+ * chains over a strong / weak link graph.
  * A node is a candidate (cell, digit) of an open cell. Links, defined on the current state:
  *   weak link   "at most one of the two is true": same cell and different digits, or the same digit in two
  *               cells that share a unit (`model.peers`). Valid for every unit shape, partial units included.
@@ -48,6 +49,34 @@
  * the literals of one node have opposite polarity, and every edge changes the polarity).
  * i18nKey: 'technique.forcingChain.step.' + kind and 'technique.forcingChainLong.step.' + kind, with kind
  * 'endpoints' | 'contradiction' | 'forced'.
+ *
+ * Grouped forcing (difficulty v3, R16, MS13c, owner decision S-OD11 option A). The two registered forcing
+ * IDs first search the canonical grouped graph (below), whose nodes are the candidates and also groups of
+ * the cells of one box (or region) and one line that hold a digit. A group is a node of the proof, not a
+ * cell: a proof starts from a SINGLETON when it places or eliminates (a true group is no permission to
+ * place an arbitrary member), and an endpoint group eliminates only the candidates that conflict with EVERY
+ * member. The grouped attempt is bounded: GROUP_NODE_LIMIT (4096) additional nodes and ONE allowance of
+ * GRAPH_WORK_LIMIT (50000) units shared by the construction of the graph and the search of its minimum
+ * (the search gets what the construction left, on the same counter; nothing is reset or added between the
+ * stages). A Finding is published only from a COMPLETE graph with the minimum of the window PROVED in it,
+ * never from a truncated graph or from the best proof seen so far. A completed negative, a proof below the
+ * window, an empty window and a spent parent budget end the call with null and run nothing more. A local
+ * cap (the work allowance in the construction or in the search, or the node quota) ends the grouped
+ * attempt, and then:
+ *   forcingChain      if the caller's budget still passes `ctx.check()`, the call discards everything of
+ *                     the attempt and runs the accepted COMPLETE singleton search over the same window
+ *                     with no local work limit (IR54's policy: only the parent budget and cancellation
+ *                     apply). That Finding proves its minimum in the singleton graph only, not in the
+ *                     abandoned grouped graph. A spent budget at that check, cancellation or any error
+ *                     gives no fallback.
+ *   forcingChainLong  nothing: no fallback, no second allowance.
+ * The Finding of a proof whose every node is a singleton keeps the form above (triples, cells in the order
+ * of the chains). A proof with a group has proofVersion 2: `i18nArgs: { proofVersion: 2, kind, length,
+ * chains }` with chains of nodes { cells, digit, truth } (cells ascending, digit as in a Finding), `length`
+ * the largest number of edges of a chain and `cells` the ascending union of the cells of every node; every
+ * array is a copy. The grouped search is bounded coverage, not an exhaustive Medusa, AIC or X-cycle
+ * search. Which graph settled a call is its record's `domain` (below), from the control flow and not from
+ * the shape of the winning path.
  *
  * xyChain (difficulty v3, R15, MS12): the same search over a RESTRICTED graph, chosen by the explicit edge
  * filters of the shared builder (below), so that every step of its proof is a bivalue-only inference:
@@ -89,15 +118,28 @@
  * and 3, so Infinity reaches the ceiling and not the default 2 of nishioDeep); 0 or less, or a maximum
  * below the ID's minimum, is an empty window (null, never a raised maximum). C is read from
  * `SG.chainSearch.SHORT_MAX` at every call. Every registered finder hands the seam below its ID, both
- * bounds and its work limit explicitly: forcingChain and nishio none (their accepted unbounded work
- * policy; the parent budget and cancellation still apply), the three new IDs 50000 (R10's starting limit
- * of a new pattern finder, `NEW_FINDER_WORK_LIMIT`; for xyChain the unit is the edge expansion of the
- * restricted graph).
+ * bounds and its work limit explicitly: nishio none (its accepted unbounded work policy; the parent budget
+ * and cancellation still apply), nishioDeep and xyChain 50000 (R10's starting limit of a new pattern
+ * finder, `NEW_FINDER_WORK_LIMIT`; for xyChain the unit is the edge expansion of the restricted graph).
+ * forcingChain and forcingChainLong hand the grouped seam their windows, the two limits of the grouped
+ * attempt (4096 nodes, 50000 units for construction and search together) and whether a local cap falls back:
+ * forcingChain yes, with no local limit on the whole call (the singleton search of its fallback has none),
+ * forcingChainLong no.
  *
- * The seam. The two searches are also a parameterised, unregistered seam (difficulty v3, MS07a):
+ * The seam. The searches are also a parameterised, unregistered seam (difficulty v3, MS07a, MS13c):
  *
  *   SG.chainSearch.forcing(model, state, ctx, { id, minLength, maxLength, workLimit, edges })
+ *   SG.chainSearch.groupedForcing(model, state, ctx,
+ *     { id, minLength, maxLength, groupLimit, workLimit, fallback })
  *   SG.chainSearch.nishio(model, state, ctx, { id, minDepth, maxDepth, workLimit })
+ *
+ * `groupedForcing` is the grouped attempt described above under explicit limits, for the registered
+ * forcingChain and forcingChainLong and for tests: `groupLimit` and `workLimit` replace the two limits of
+ * the attempt (a finite number of at least 0, floored, else `solver.invalidOption`; no unbounded mode: that
+ * is the singleton search below, and what a fallback runs), `fallback` (default false, a boolean) lets a
+ * local cap fall back to the singleton search as forcingChain does, and the window and `id` are those of
+ * the other seam calls. `forcing` below is the accepted singleton search: it never reads the grouped graph,
+ * and it is also the oracle of the fallback and the legacy of the tests.
  *
  * `edges` (forcing only) is the explicit edge mode of the shared builder: 'general' (the default: the graph
  * and the three proofs described above, unchanged) or 'restricted' (the xyChain graph and its only proof);
@@ -127,11 +169,26 @@
  * a consumer checks its own budget after the call); cancellation and every other error propagate. An
  * optional `ctx.options.onPatternWork(record)` observes the call and never selects its result: record =
  * { id, work, limit (null = unbounded), capHit (null | 'work'), retained (null) }, a fresh object per call.
+ * The two grouped IDs add to it (same observer, one record per call, published once the call returns
+ * normally) `domain` ('grouped': a complete graph and a proved minimum in it settled the call, found or
+ * not; 'singleton': the fallback's complete singleton search settled it; null: nothing complete settled
+ * it), `grouped: { construction, search, additional, graph, minimum, stop }` and `fallback`. `work` is the
+ * work of every stage (construction + search + fallback), so a fallback never hides the grouped stages'
+ * cost; `grouped` keeps the units of the construction and of the search apart, the number of additional
+ * nodes of a complete graph, whether the graph and the minimum are 'complete', 'incomplete' or 'skipped'
+ * (an empty window runs nothing) and `stop`: null (both complete), 'empty' (an empty window),
+ * 'construction-work', 'construction-nodes', 'search-work' (the local caps) or 'parent-budget' (a spent
+ * budget, which neither falls back nor is a cap). `fallback` is null (no fallback considered) or
+ * `{ entered, work, outcome }` with outcome 'found', 'none' or 'parent-budget' (the check before entering, or
+ * the search itself, found the budget spent). Their `limit` and `capHit` are the call's: forcingChain has no
+ * local limit on the whole call (null) and never a cap, forcingChainLong the grouped allowance (50000) and
+ * the cap ('work' | 'nodes') of its attempt.
  *
- * The canonical grouped graph (difficulty v3, R16, MS13a). INACTIVE: no registered finder and no seam call
- * reads it; the finders above keep the singleton graph and its arithmetic nodes (cell * digits + digit).
- * It is the internal `SG.chainGraph.build(model, state, ctx[, { groupLimit, workLimit }])`, for tests and
- * for the later activation of grouped forcing chains (MS13c), and it returns
+ * The canonical grouped graph (difficulty v3, R16, MS13a; read by forcingChain and forcingChainLong since
+ * MS13c: it is no longer inactive, and no other finder reads it). The singleton search above keeps its own
+ * graph and its arithmetic nodes (cell * digits + digit); the grouped search reads nothing of that. The graph
+ * is the internal `SG.chainGraph.build(model, state, ctx[, { groupLimit, workLimit }])`, for the grouped
+ * attempt and for tests, and it returns
  *
  *   { nodes, weak, strong, complete, work, capHit }
  *
@@ -718,10 +775,10 @@
     return r.best === null ? null : findingOf(model, r, spec.id);
   }
 
-  // The search of a spec { id, min, max, limit, edges? }: the seam checks one from its options, the
-  // registered finders build theirs with their old defaults (the general edges unless they ask for others).
-  function forcingWith(model, state, ctx, spec) {
-    const r = {
+  // The state of one singleton search of a spec { id, min, max, limit, edges? }: the seam checks one from its
+  // options, xyChain and the fallback of forcingChain build theirs (the general edges unless told not to).
+  function newForcingRun(model, state, ctx, spec) {
+    return {
       model: model,
       s: null,
       n: model.cellCount,
@@ -744,7 +801,10 @@
       best: null,
       bestLength: Infinity
     };
-    return measured(model, state, ctx, spec, r, scanForcing);
+  }
+
+  function forcingWith(model, state, ctx, spec) {
+    return measured(model, state, ctx, spec, newForcingRun(model, state, ctx, spec), scanForcing);
   }
 
   function chainForcing(model, state, ctx, opts) {
@@ -765,25 +825,33 @@
     });
   }
 
-  // forcingChain: the shortest proof when it has 1 to C links; no work limit (its accepted policy, the parent
-  // budget and cancellation still apply). The caller's maxChainLength can only narrow the range of links.
+  // forcingChain (R16, MS13c, S-OD11 option A): the shortest proof of the canonical grouped graph when it has
+  // 1 to C links, from a bounded attempt; only a local cap of that attempt (and a passed parent-budget check)
+  // lets the call fall back to the complete singleton search, which has no local work limit (IR54's accepted
+  // policy; the parent budget and cancellation still apply). The caller's maxChainLength can only narrow the
+  // range of links.
   function findForcingChain(model, state, ctx) {
     const c = shortMax();
-    return forcingWith(model, state, ctx, {
+    return groupedForcing(model, state, ctx, {
       id: 'forcingChain',
       min: 1,
       max: Math.min(c, callerMax(ctx, 'maxChainLength', c)),
-      limit: NO_WORK_LIMIT
+      groupLimit: GROUP_NODE_LIMIT,
+      workLimit: GRAPH_WORK_LIMIT,
+      fallback: true
     });
   }
 
-  // forcingChainLong: the shortest proof when it has C + 1 to 12 links, R10's work limit of a new finder.
+  // forcingChainLong: the shortest proof of the canonical grouped graph when it has C + 1 to 12 links, from
+  // the same bounded attempt and with no fallback: an incomplete graph or search is nothing.
   function findForcingChainLong(model, state, ctx) {
-    return forcingWith(model, state, ctx, {
+    return groupedForcing(model, state, ctx, {
       id: 'forcingChainLong',
       min: shortMax() + 1,
       max: Math.min(LONG_MAX_CHAIN_LENGTH, callerMax(ctx, 'maxChainLength', LONG_MAX_CHAIN_LENGTH)),
-      limit: NEW_FINDER_WORK_LIMIT
+      groupLimit: GROUP_NODE_LIMIT,
+      workLimit: GRAPH_WORK_LIMIT,
+      fallback: false
     });
   }
 
@@ -1217,12 +1285,518 @@
     }
   }
 
+  // --------------------------------------------------------------------------------------------------------
+  // The grouped forcing search (R16, MS13c, S-OD11 option A). It reads the canonical graph above and nothing
+  // of the arithmetic node of the singleton search: a node is an index into `graph.nodes`, a literal is
+  // node * 2 + truth (1 = true), and the three proofs are those of the header, with groups as inner nodes
+  // and as ends:
+  //   endpoints      start "s is false" (a singleton or a group), reach "t is true" with t after s in the
+  //                  node order: every SINGLETON candidate weakly linked to both is eliminated (it
+  //                  conflicts with every member of each end);
+  //   contradiction  start "s is true" for a SINGLETON s, reach both polarities of one node (any node):
+  //                  s goes;
+  //   forced         start "s is false" for a SINGLETON s, reach both polarities of one node: s is placed.
+  // A true group is no permission to place an arbitrary member: a group start has no polarity proof at all.
+  // The scan goes over the nodes in the canonical order (the singletons by cell and digit, then the groups
+  // by key), "false" before "true"; the breadth first search expands the links of a literal in a fixed
+  // order and the shortest proof of the whole scan wins (ties: the first in scan order), as in the
+  // singleton search. That order is the singleton search's own where the graph has no group: the weak links
+  // of a candidate are the other candidates of its cell and then the peers, its strong links the bivalue
+  // partner and then the conjugate partners by unit; the group neighbours of a node follow, ascending. Its
+  // work unit is one edge expansion, as in the singleton search, on the one counter of the call: the
+  // construction has already spent its share.
+  // --------------------------------------------------------------------------------------------------------
+
+  // The position of the conjugate link of the singleton (cell a) and the singleton (cell b) of one digit in
+  // the singleton search's layout: after the bivalue link of the cell, by the first complete unit in which
+  // the two cells are exactly all the open holders of the digit, not yet placed there.
+  function conjugateRank(model, complete, occ, placed, digits, a, b, d0) {
+    if (a === b) return 0;
+    const us = model.cellUnits[a];
+    const bit = 1 << d0;
+    for (let k = 0; k < us.length; k++) {
+      const u = us[k];
+      if (complete[u] !== 1 || occ[u * digits + d0] !== 2 || (placed[u] & bit) !== 0) continue;
+      const others = model.cellUnits[b];
+      for (let j = 0; j < others.length; j++) if (others[j] === u) return u + 1;
+    }
+    return 0x7fffffff;
+  }
+
+  // The adjacency of the search over `graph` as compressed rows, in the order described above. Its scans are
+  // uncharged steps of the call and check the parent budget at every 256th, like the builder's.
+  function searchAdjacency(model, state, ctx, graph) {
+    const nodes = graph.nodes;
+    const count = nodes.length;
+    const digits = model.digits;
+    const cand = state.candidates;
+    const val = state.value;
+    const complete = ctx.completeUnits;
+    let ticks = 0;
+    let singles = 0;
+    while (singles < count && nodes[singles].cells.length === 1) singles++;
+
+    const unitCount = model.units.length;
+    const occ = new Uint8Array(unitCount * digits);
+    const placed = new Int32Array(unitCount);
+    for (let u = 0; u < unitCount; u++) {
+      if (complete[u] !== 1) continue;
+      const cells = model.units[u];
+      for (let i = 0; i < cells.length; i++) {
+        if (++ticks % WORK_CHECK_UNITS === 0) ctx.check();
+        const c = cells[i];
+        if (val[c] !== 0) {
+          placed[u] |= 1 << (val[c] - 1);
+          continue;
+        }
+        let rest = cand[c];
+        while (rest !== 0) {
+          const low = rest & -rest;
+          rest ^= low;
+          occ[u * digits + 31 - Math.clz32(low)]++;
+        }
+      }
+    }
+
+    const wStart = new Int32Array(count + 1);
+    const sStart = new Int32Array(count + 1);
+    let widest = 0;
+    for (let i = 0; i < count; i++) {
+      wStart[i + 1] = wStart[i] + graph.weak[i].length;
+      sStart[i + 1] = sStart[i] + graph.strong[i].length;
+      if (graph.strong[i].length > widest) widest = graph.strong[i].length;
+    }
+    const wTo = new Int32Array(wStart[count]);
+    const sTo = new Int32Array(sStart[count]);
+    const rankOf = new Int32Array(widest);
+    const nodeOf = new Int32Array(widest);
+    for (let i = 0; i < count; i++) {
+      if (++ticks % WORK_CHECK_UNITS === 0) ctx.check();
+      const weak = graph.weak[i];
+      const strong = graph.strong[i];
+      let at = wStart[i];
+      let k;
+      if (i < singles) {
+        const cell = nodes[i].cells[0];
+        for (k = 0; k < weak.length; k++) {
+          if (weak[k] < singles && nodes[weak[k]].cells[0] === cell) wTo[at++] = weak[k];
+        }
+        for (k = 0; k < weak.length; k++) {
+          if (weak[k] < singles && nodes[weak[k]].cells[0] !== cell) wTo[at++] = weak[k];
+        }
+        for (k = 0; k < weak.length; k++) if (weak[k] >= singles) wTo[at++] = weak[k];
+      } else {
+        for (k = 0; k < weak.length; k++) wTo[at++] = weak[k];
+      }
+      at = sStart[i];
+      if (i < singles) {
+        const cell = nodes[i].cells[0];
+        const d0 = nodes[i].digit - 1;
+        let n = 0;
+        for (k = 0; k < strong.length && strong[k] < singles; k++) {
+          const other = nodes[strong[k]].cells[0];
+          const rank = conjugateRank(model, complete, occ, placed, digits, cell, other, d0);
+          let p = n++;
+          while (p > 0 && (rankOf[p - 1] > rank || (rankOf[p - 1] === rank && nodeOf[p - 1] > strong[k]))) {
+            rankOf[p] = rankOf[p - 1];
+            nodeOf[p] = nodeOf[p - 1];
+            p--;
+          }
+          rankOf[p] = rank;
+          nodeOf[p] = strong[k];
+        }
+        for (let p = 0; p < n; p++) sTo[at++] = nodeOf[p];
+        for (; k < strong.length; k++) sTo[at++] = strong[k];
+      } else {
+        for (k = 0; k < strong.length; k++) sTo[at++] = strong[k];
+      }
+    }
+    return { singles: singles, wStart: wStart, wTo: wTo, sStart: sStart, sTo: sTo };
+  }
+
+  function groupedPath(parent, lit) {
+    const out = [];
+    for (let x = lit; x !== -1; x = parent[x]) out.push(x);
+    return out.reverse();
+  }
+
+  // Remembers a proof that is strictly shorter than the best one so far. Returns true (stop this search).
+  function groupedRecord(r, kind, endLit, length, eliminated) {
+    r.best = {
+      kind: kind,
+      length: length,
+      path: groupedPath(r.parent, endLit),
+      other: kind === KIND_ENDPOINTS ? null : groupedPath(r.parent, endLit ^ 1),
+      eliminated: eliminated
+    };
+    r.bestLength = length;
+    return true;
+  }
+
+  // The singleton candidates weakly linked to both ends of "start is false ... `node` is true"; null if none.
+  function commonTargets(r, node) {
+    let out = null;
+    for (let k = r.wStart[node]; k < r.wStart[node + 1]; k++) {
+      const j = r.wTo[k];
+      if (j < r.singles && r.mark[j] === r.stampId) {
+        if (out === null) out = [];
+        out.push(j);
+      }
+    }
+    return out;
+  }
+
+  // Visits a literal reached from `from` after `nd` links; true when this proves something. Both
+  // polarities of one node in a search from a SINGLETON are a contradiction of the start assumption; from a
+  // group they prove nothing that may be published, and the search goes on.
+  function groupedVisit(r, next, from, nd) {
+    const stamp = r.stamp;
+    if (stamp[next] === r.stampId) return false;
+    stamp[next] = r.stampId;
+    r.parent[next] = from;
+    r.dist[next] = nd;
+    if (r.startSingleton && stamp[next ^ 1] === r.stampId) {
+      return groupedRecord(r, r.startTruth === 1 ? KIND_CONTRADICTION : KIND_FORCED, next, nd, null);
+    }
+    const node = next >> 1;
+    if ((next & 1) === 1) {
+      if (r.startTruth === 0 && node > r.startNode) {
+        const eliminated = commonTargets(r, node);
+        if (eliminated !== null) return groupedRecord(r, KIND_ENDPOINTS, next, nd, eliminated);
+      }
+      r.queue[r.tail++] = next;
+    } else if (r.sStart[node + 1] > r.sStart[node]) {
+      r.queue[r.tail++] = next;
+    }
+    return false;
+  }
+
+  // One expansion: the first `count` links of `to` from `first`, as literals of polarity opposite to `lit`'s.
+  // Every visited link is counted once on the shared counter, also the one that proves something; a link
+  // beyond the shared limit is not visited (the search is capped) and the pieces are at most 256 links, each
+  // behind the parent-budget gate, as in the bounded singleton search.
+  function groupedExpand(r, lit, nd, to, first, count) {
+    let todo = count;
+    if (r.workLimit - r.work < count) todo = r.workLimit - r.work;
+    const tbit = (lit & 1) ^ 1;
+    let i = 0;
+    while (i < todo) {
+      const end = Math.min(todo, i + WORK_CHECK_UNITS);
+      gate(r, end - i);
+      const from = i;
+      for (; i < end; i++) {
+        if (groupedVisit(r, to[first + i] * 2 + tbit, lit, nd)) {
+          r.work += i - from + 1;
+          return true;
+        }
+      }
+      r.work += end - from;
+    }
+    if (todo < count) r.capped = true;
+    return false;
+  }
+
+  function groupedSearch(r, startNode, startTruth, limit) {
+    r.stampId++;
+    r.startNode = startNode;
+    r.startTruth = startTruth;
+    r.startSingleton = startNode < r.singles;
+    const startLit = startNode * 2 + startTruth;
+    r.stamp[startLit] = r.stampId;
+    r.parent[startLit] = -1;
+    r.dist[startLit] = 0;
+    if (startTruth === 0) {
+      for (let k = r.wStart[startNode]; k < r.wStart[startNode + 1]; k++) {
+        if (r.wTo[k] < r.singles) r.mark[r.wTo[k]] = r.stampId;
+      }
+    }
+    r.tail = 0;
+    r.queue[r.tail++] = startLit;
+    let head = 0;
+    while (head < r.tail) {
+      const lit = r.queue[head++];
+      const d = r.dist[lit];
+      if (d >= limit) return;
+      const node = lit >> 1;
+      // A true literal follows its weak links (to false ones), a false literal its strong links (to true).
+      if ((lit & 1) === 1) {
+        const first = r.wStart[node];
+        if (groupedExpand(r, lit, d + 1, r.wTo, first, r.wStart[node + 1] - first)) return;
+      } else {
+        const first = r.sStart[node];
+        if (groupedExpand(r, lit, d + 1, r.sTo, first, r.sStart[node + 1] - first)) return;
+      }
+      if (r.capped) return;
+    }
+  }
+
+  // A step of a proof of version 2: a copy of the node with its polarity.
+  function groupedStep(graph, lit) {
+    const node = graph.nodes[lit >> 1];
+    return { cells: node.cells.slice(), digit: node.digit, truth: lit & 1 };
+  }
+
+  // The Finding of the shortest proof `best` of the complete graph. A proof whose every node is a singleton
+  // keeps the representation of the singleton search (triples, the cells in the order of the chains, no
+  // proofVersion); one with a group is of version 2 ({ cells, digit, truth } steps, the cells the ascending
+  // union). Every array is a copy: the Finding owns its data and shares nothing with the graph or the
+  // buffers of the search.
+  function groupedFindingOf(graph, best, id) {
+    const paths = best.other === null ? [best.path] : [best.path, best.other];
+    const nodes = graph.nodes;
+    const chains = paths.map(function (path) {
+      return path.map(function (lit) { return groupedStep(graph, lit); });
+    });
+    const grouped = chains.some(function (chain) {
+      return chain.some(function (step) { return step.cells.length !== 1; });
+    });
+    const start = chains[0][0];
+    let placements = [];
+    let eliminations = [];
+    if (best.kind === KIND_ENDPOINTS) {
+      eliminations = best.eliminated.slice().sort(ascending).map(function (node) {
+        return [nodes[node].cells[0], nodes[node].digit];
+      });
+    } else if (best.kind === KIND_CONTRADICTION) {
+      eliminations = [[start.cells[0], start.digit]];
+    } else {
+      placements = [[start.cells[0], start.digit]];
+    }
+    const cells = [];
+    chains.forEach(function (chain) {
+      chain.forEach(function (step) {
+        step.cells.forEach(function (c) { if (cells.indexOf(c) === -1) cells.push(c); });
+      });
+    });
+    const finding = {
+      technique: id,
+      cells: grouped ? cells.sort(ascending) : cells,
+      placements: placements,
+      eliminations: eliminations,
+      i18nKey: 'technique.' + id + '.step.' + best.kind
+    };
+    if (grouped) {
+      finding.i18nArgs = { proofVersion: 2, kind: best.kind, length: best.length, chains: chains };
+    } else {
+      finding.i18nArgs = {
+        kind: best.kind,
+        length: best.length,
+        chains: chains.map(function (chain) {
+          return chain.map(function (step) { return [step.cells[0], step.digit, step.truth]; });
+        })
+      };
+    }
+    return finding;
+  }
+
+  // The minimum search of the complete graph `graph`, whose construction spent `g.construction` units of the
+  // shared allowance `spec.workLimit`: the search gets what remains, on the same counter. Returns the Finding
+  // or null; the counters and the end of the search are noted in `g` (`minimum`: 'complete', or 'incomplete'
+  // with `stop` the spent allowance), also when the parent budget ends the call by an exception.
+  function scanGrouped(model, state, ctx, spec, graph, g) {
+    let r = null;
+    try {
+      ctx.check();
+      const adjacency = searchAdjacency(model, state, ctx, graph);
+      const count = graph.nodes.length;
+      g.additional = count - adjacency.singles;
+      r = {
+        ctx: ctx,
+        singles: adjacency.singles,
+        wStart: adjacency.wStart,
+        wTo: adjacency.wTo,
+        sStart: adjacency.sStart,
+        sTo: adjacency.sTo,
+        stamp: new Int32Array(count * 2),
+        parent: new Int32Array(count * 2),
+        dist: new Int32Array(count * 2),
+        queue: new Int32Array(count * 2),
+        mark: new Int32Array(count),
+        work: g.construction,
+        workLimit: spec.workLimit,
+        checkedAt: g.construction,
+        capped: false,
+        stampId: 0,
+        startNode: 0,
+        startTruth: 0,
+        startSingleton: false,
+        tail: 0,
+        best: null,
+        bestLength: Infinity
+      };
+      for (let node = 0; node < count; node++) {
+        // A group has no polarity proof: only "false" starts, for the endpoint proof.
+        const lastTruth = node < r.singles ? 1 : 0;
+        for (let truth = 0; truth <= lastTruth; truth++) {
+          if (truth === 0 && r.sStart[node + 1] === r.sStart[node]) continue;
+          const limit = Math.min(spec.max, r.bestLength - 1);
+          if (limit < 1) {
+            g.minimum = 'complete';
+            return groupedFindingOf(graph, r.best, spec.id);
+          }
+          ctx.check();
+          r.checkedAt = r.work;
+          groupedSearch(r, node, truth, limit);
+          if (r.capped) {
+            g.stop = 'search-work';
+            return null;
+          }
+          // The minimum can only fall from here, so a proof below the window is the answer: nothing.
+          if (r.best !== null && r.bestLength < spec.min) {
+            g.minimum = 'complete';
+            return null;
+          }
+        }
+      }
+      g.minimum = 'complete';
+      return r.best === null ? null : groupedFindingOf(graph, r.best, spec.id);
+    } finally {
+      if (r !== null) g.search = r.work - g.construction;
+    }
+  }
+
+  // The bounded grouped attempt: the canonical graph, then its minimum, on one allowance. Returns the
+  // Finding, or null; `g.stop` says why there is none unless the search completed (null: a completed
+  // negative or a proof below the window): 'empty' (an empty window, nothing was spent), 'construction-work',
+  // 'construction-nodes', 'search-work' (the three local caps) or 'parent-budget' (a spent budget; set by
+  // the caller's handler when the exception comes from the search). An incomplete graph or search never
+  // gives a Finding.
+  function groupedAttempt(model, state, ctx, spec, g) {
+    if (spec.max < 1 || spec.max < spec.min) {
+      g.stop = 'empty';
+      return null;
+    }
+    const built = buildGraph(model, state, ctx, { groupLimit: spec.groupLimit, workLimit: spec.workLimit });
+    g.construction = built.work;
+    if (!built.complete) {
+      g.graph = 'incomplete';
+      g.stop = built.capHit === 'work' ? 'construction-work'
+        : built.capHit === 'nodes' ? 'construction-nodes' : 'parent-budget';
+      return null;
+    }
+    g.graph = 'complete';
+    g.minimum = 'incomplete';
+    return scanGrouped(model, state, ctx, spec, built, g);
+  }
+
+  // The complete singleton search of forcingChain's fallback: the singleton graph, the same window and no
+  // local work limit (the accepted unbounded policy of IR54), on its own counter `f.work`. It runs on the
+  // same parent budget and has no fallback of its own.
+  function singletonFallback(model, state, ctx, spec, f) {
+    const legacy = { id: spec.id, min: spec.min, max: spec.max, limit: NO_WORK_LIMIT };
+    const r = newForcingRun(model, state, ctx, legacy);
+    try {
+      return scanForcing(model, state, ctx, legacy, r);
+    } finally {
+      f.work = r.work;
+    }
+  }
+
+  const LOCAL_CAPS = ['construction-work', 'construction-nodes', 'search-work'];
+
+  // One call of a grouped forcing ID, spec { id, min, max, groupLimit, workLimit, fallback }: the bounded
+  // grouped attempt first; when it stops at a local cap (never for a parent budget, a completed negative,
+  // a window rejection, cancellation or any error) and `spec.fallback` is set, and the caller's budget
+  // still passes, the singleton search of `singletonFallback`. The record of the call, once it returns
+  // normally (a spent parent budget is "nothing found"; cancellation and every other error propagate and
+  // leave no record):
+  //   { id, work (every stage), limit (null: no local limit on the whole call), capHit, retained, domain,
+  //     grouped: { construction, search, additional, graph, minimum, stop }, fallback }
+  // `limit` and `capHit` are those of the call: with a fallback it has no local limit and no cap; without
+  // one the limit is the allowance and `capHit` the cap of the attempt. `domain` is the graph whose
+  // complete search settled the call ('grouped', 'singleton') or null; `fallback` is null, or
+  // { entered, work, outcome }.
+  function groupedForcing(model, state, ctx, spec) {
+    const g = {
+      construction: 0, search: 0, additional: null, graph: 'skipped', minimum: 'skipped', stop: null
+    };
+    let fallback = null;
+    let domain = null;
+    let found = null;
+    try {
+      found = groupedAttempt(model, state, ctx, spec, g);
+      const capped = LOCAL_CAPS.indexOf(g.stop) !== -1;
+      if (g.stop === null) domain = 'grouped';
+      if (spec.fallback && capped) {
+        fallback = { entered: false, work: 0, outcome: 'parent-budget' };
+        ctx.check();
+        fallback.entered = true;
+        found = singletonFallback(model, state, ctx, spec, fallback);
+        fallback.outcome = found === null ? 'none' : 'found';
+        domain = 'singleton';
+      }
+    } catch (err) {
+      if (!(err && err.code === 'budget.exceeded')) throw err;
+      found = null;
+      domain = null;
+      if (fallback === null) g.stop = 'parent-budget';
+    }
+    const observer = ctx.options ? ctx.options.onPatternWork : undefined;
+    if (typeof observer === 'function') {
+      let capHit = null;
+      if (!spec.fallback && LOCAL_CAPS.indexOf(g.stop) !== -1) {
+        capHit = g.stop === 'construction-nodes' ? 'nodes' : 'work';
+      }
+      observer({
+        id: spec.id,
+        work: g.construction + g.search + (fallback === null ? 0 : fallback.work),
+        limit: spec.fallback ? null : spec.workLimit,
+        capHit: capHit,
+        retained: null,
+        domain: domain,
+        grouped: g,
+        fallback: fallback
+      });
+    }
+    return found;
+  }
+
+  // The options of a grouped seam call: the window as for the other seams, finite limits that replace the
+  // two of the attempt (no unbounded mode), and whether a local cap falls back to the singleton search.
+  function groupedOptions(opts) {
+    const seam = 'groupedForcing';
+    if (opts === null || typeof opts !== 'object') throw invalidOption(seam, 'options', 'must be an object');
+    if (typeof opts.id !== 'string' || !ID_PATTERN.test(opts.id)) {
+      throw invalidOption(seam, 'id', 'must be a technique id');
+    }
+    const spec = {
+      id: opts.id,
+      min: Math.max(1, bound(seam, 'minLength', opts.minLength, 1)),
+      max: bound(seam, 'maxLength', opts.maxLength, SEAM_DEFAULT_MAX_CHAIN_LENGTH),
+      groupLimit: GROUP_NODE_LIMIT,
+      workLimit: GRAPH_WORK_LIMIT,
+      fallback: false
+    };
+    [['groupLimit', 'groupLimit'], ['workLimit', 'workLimit']].forEach(function (pair) {
+      const value = opts[pair[0]];
+      if (value === undefined) return;
+      if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) {
+        throw invalidOption(seam, pair[0], 'must be a number of at least 0');
+      }
+      spec[pair[1]] = Math.floor(value);
+    });
+    if (opts.fallback !== undefined) {
+      if (typeof opts.fallback !== 'boolean') throw invalidOption(seam, 'fallback', 'must be true or false');
+      spec.fallback = opts.fallback;
+    }
+    return spec;
+  }
+
+  function chainGroupedForcing(model, state, ctx, opts) {
+    return groupedForcing(model, state, ctx, groupedOptions(opts));
+  }
+
   SG.chainGraph = {
     build: buildGraph,
     LIMITS: Object.freeze({ groups: GROUP_NODE_LIMIT, work: GRAPH_WORK_LIMIT })
   };
 
-  SG.chainSearch = { forcing: chainForcing, nishio: chainNishio, SHORT_MAX: INITIAL_SHORT_MAX };
+  SG.chainSearch = {
+    forcing: chainForcing,
+    groupedForcing: chainGroupedForcing,
+    nishio: chainNishio,
+    SHORT_MAX: INITIAL_SHORT_MAX
+  };
 
   SG.techniques.register({
     id: 'xyChain',

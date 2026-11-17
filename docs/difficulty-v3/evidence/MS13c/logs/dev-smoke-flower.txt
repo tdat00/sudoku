@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS13c\smoke.js 6 flower
+flower {"states":6,"bothNull":7,"equal":4,"groupFinding":1,"groupShorter":0,"groupedOnly":0,"pureDiffers":0,"legacyOnly":0,"fallback":3,"fallbackFound":3,"capped":6,"bad":0}
+exit=0 seconds=0.297

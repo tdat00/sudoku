@@ -1,0 +1,53 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=jellyfish,xyChain,nishio --sources=tests\artifacts\difficulty-v3\MS13c\sources-catalogue.json --max-puzzles=64 --max-hints=400 --check
+selected 3 technique ID(s); mode check
+replaying 27 puzzle(s) for 3 ID(s) (--max-puzzles=64, --max-hints=400)
+puzzle 1/27 classic9 Easy 1 -> 47 hint(s), solved; wanted found: -
+puzzle 2/27 classic9 Nightmare 1156 -> 76 hint(s), solved; wanted found: -
+puzzle 3/27 classic9 Nightmare 75 -> 77 hint(s), solved; wanted found: -
+puzzle 4/27 classic9 Nightmare 44 -> 59 hint(s), solved; wanted found: -
+puzzle 5/27 killer Easy 11 -> 51 hint(s), solved; wanted found: -
+puzzle 6/27 greaterThan Normal 4 -> 67 hint(s), solved; wanted found: -
+puzzle 7/27 classic9 Hard 18 -> 62 hint(s), solved; wanted found: -
+puzzle 8/27 classic9 Nightmare 176 -> 68 hint(s), solved; wanted found: xyChain
+puzzle 9/27 classic9 Hard 55 -> 58 hint(s), solved; wanted found: -
+puzzle 10/27 classic9 Hell 2 escargot -> 112 hint(s), solved; wanted found: nishio
+puzzle 11/27 greaterThan Normal 8 -> 58 hint(s), solved; wanted found: -
+puzzle 12/27 classic9 Nightmare 692 -> 61 hint(s), solved; wanted found: -
+puzzle 13/27 killer Hard 16 -> 148 hint(s), solved; wanted found: -
+puzzle 14/27 classic9 Nightmare 989 -> 60 hint(s), solved; wanted found: -
+puzzle 15/27 hyper Nightmare 162 -> 93 hint(s), solved; wanted found: -
+puzzle 16/27 classic9 Hell 1 644 -> 88 hint(s), solved; wanted found: -
+puzzle 17/27 classic9 Hell 1 214 -> 70 hint(s), solved; wanted found: xyChain
+puzzle 18/27 classic9 Nightmare 648 -> 78 hint(s), solved; wanted found: xyChain
+puzzle 19/27 classic9 Nightmare 561 -> 58 hint(s), solved; wanted found: -
+puzzle 20/27 classic9 Nightmare 3 -> 60 hint(s), solved; wanted found: -
+puzzle 21/27 killer Master 54 -> 157 hint(s), solved; wanted found: -
+puzzle 22/27 classic9 - testkit-4242-5335 -> 77 hint(s), solved; wanted found: -
+puzzle 23/27 classic9 Nightmare 13 -> 73 hint(s), solved; wanted found: -
+puzzle 24/27 classic9 Nightmare 70 -> 71 hint(s), solved; wanted found: xyChain
+puzzle 25/27 classic9 Nightmare 11 -> 69 hint(s), solved; wanted found: -
+puzzle 26/27 classic9 - testkit-4242-14 -> 57 hint(s), solved; wanted found: -
+puzzle 27/27 classic9 Hell 1 8 -> 75 hint(s), solved; wanted found: -
+jellyfish: no example found in 27 puzzle(s) within 400 hint(s)
+xyChain: 45 field(s) differ from help-examples.js
+  givens: saved "..2.8..1..56..74......4..7.....38...3..1.9..6...76.....2..., fresh "......23.....6..411.7..2..69...24.....39.61.....51...38....
+  values: saved "47.......9...1.....3........6........87.5.24..9............, fresh "..4..1...............4..58..153...6.4......52......49..4...
+  notes.18: saved 129, fresh undefined
+  notes.27: saved 19, fresh undefined
+  notes.45: saved 3, fresh undefined
+  notes.50: saved 10, fresh undefined
+  notes.63: saved 144, fresh undefined
+  notes.68: saved 24, fresh undefined
+  ... and 37 more
+nishio: 13 field(s) differ from help-examples.js
+  givens: saved "..2.8..1..56..74......4..7.....38...3..1.9..6...76.....2..., fresh "1....7.9..3..2...8..96..5....53..9...1..8...26....4...3....
+  values: saved "47...........1.....3........6........87.5.24..9............, fresh ".........5........7...................3....................
+  notes.9: saved 384, fresh undefined
+  notes.28: saved undefined, fresh 66
+  hint.stepArgs.cell: saved 9, fresh 28
+  hint.stepArgs.label: saved "R2C1", fresh "R4C2"
+  hint.stepArgs.digit: saved 8, fresh 2
+  hint.cells[0]: saved 9, fresh 28
+  ... and 5 more
+help-examples.js differs or lacks an example for 3 of the 3 selected ID(s)
+exit=1 seconds=3.407

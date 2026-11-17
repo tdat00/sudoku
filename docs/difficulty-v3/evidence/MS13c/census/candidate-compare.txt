@@ -1,0 +1,29 @@
+model/population calls | default ms (both ids) | candidate ms | caps fc/long default | caps fc/long candidate | found fc/long default -> candidate
+butterfly/base-ladder 15 | 47 | 47 | 0/0 | 0/0 | 15/0 -> 15/0
+butterfly/activation-ladder 26 | 89 | 86 | 8/2 | 0/0 | 22/0 -> 24/2
+classic9/base-ladder 5 | 12 | 10 | 0/0 | 0/0 | 4/1 -> 4/1
+classic9/activation-ladder 11 | 14 | 14 | 0/0 | 0/0 | 6/4 -> 6/4
+classic9/fixtures 8 | 5 | 4 | 0/0 | 0/0 | 7/1 -> 7/1
+diagonalX/base-ladder 84 | 119 | 118 | 0/0 | 0/0 | 69/5 -> 69/5
+diagonalX/activation-ladder 90 | 152 | 150 | 0/3 | 0/0 | 32/22 -> 32/23
+flower/base-ladder 44 | 160 | 189 | 22/23 | 0/0 | 24/0 -> 44/0
+flower/activation-ladder 39 | 144 | 164 | 21/19 | 0/0 | 22/0 -> 38/1
+greaterThan/base-ladder 5 | 6 | 5 | 0/0 | 0/0 | 4/1 -> 4/1
+greaterThan/activation-ladder 11 | 14 | 14 | 0/0 | 0/0 | 6/4 -> 6/4
+hyper/base-ladder 67 | 103 | 102 | 0/0 | 0/0 | 61/0 -> 61/0
+hyper/activation-ladder 49 | 85 | 85 | 0/0 | 0/0 | 22/9 -> 22/9
+jigsaw9/base-ladder 26 | 26 | 26 | 0/0 | 0/0 | 21/1 -> 21/1
+jigsaw9/activation-ladder 18 | 23 | 23 | 0/0 | 0/0 | 11/2 -> 11/2
+killer/base-ladder 5 | 5 | 5 | 0/0 | 0/0 | 4/1 -> 4/1
+killer/activation-ladder 11 | 14 | 14 | 0/0 | 0/0 | 6/4 -> 6/4
+killer/wire 1 | 0 | 0 | 0/0 | 0/0 | 0/1 -> 0/1
+mega12/base-ladder 32 | 47 | 46 | 0/0 | 0/0 | 23/9 -> 23/9
+mega12/activation-ladder 61 | 103 | 103 | 0/2 | 0/0 | 27/32 -> 27/34
+mega16/base-ladder 321 | 1135 | 1219 | 186/204 | 0/0 | 69/24 -> 110/130
+mega16/activation-ladder 299 | 1052 | 1119 | 198/203 | 0/0 | 30/38 -> 72/157
+samurai/base-ladder 48 | 165 | 311 | 45/43 | 3/3 | 20/0 -> 45/0
+samurai/activation-ladder 55 | 175 | 269 | 46/46 | 2/1 | 24/0 -> 41/12
+samurai/wire 3 | 2 | 2 | 0/0 | 0/0 | 3/0 -> 3/0
+sohei/base-ladder 51 | 164 | 321 | 48/49 | 0/0 | 6/0 -> 49/2
+sohei/activation-ladder 40 | 125 | 265 | 37/38 | 0/0 | 5/0 -> 38/2
+TOTAL activation-ladder 710 | 1990 | 2305 | 310/313 | 2/1 | 213/115 -> 323/254

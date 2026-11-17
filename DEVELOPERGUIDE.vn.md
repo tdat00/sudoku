@@ -740,9 +740,10 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    cần cách biểu diễn nút và bộ giải mã riêng, việc gộp không áp dụng cho XY-chain, và không cấu hình nào của cổng chung
    mở rộng được 12 cạnh và 50.000 đơn vị của bộ tìm đã đăng ký. Phép chứng minh, biến thể tương đương, chi phí, tỷ lệ
    chạm tới và ảnh hưởng nằm trong `generator/design.md`, "The XY-chain".
-   **Đồ thị chuỗi gộp** (`core/js/engine/tech-chain.js`, nhiệm vụ MS13a; **chưa kích hoạt**: không bộ tìm đã đăng ký, không
-   lời gọi cổng chung và không phép chấm điểm nào đọc nó, nên mọi Finding, bản ghi bộ quan sát, mã băm và bản ghi
-   replay đều không đổi). `SG.chainGraph.build(model, state, ctx[, { groupLimit, workLimit }])` trả về
+   **Đồ thị chuỗi gộp** (`core/js/engine/tech-chain.js`, nhiệm vụ MS13a; **chưa kích hoạt ở MS13a** (lịch sử): không bộ tìm
+   đã đăng ký, không lời gọi cổng chung và không phép chấm điểm nào đọc nó, nên mọi Finding, bản ghi bộ quan sát, mã băm
+   và bản ghi replay đều không đổi; từ MS13c `forcingChain` và `forcingChainLong` đọc nó, xem "Kích hoạt" bên dưới).
+   `SG.chainGraph.build(model, state, ctx[, { groupLimit, workLimit }])` trả về
    `{ nodes, weak, strong, complete, work, capHit }`; `SG.chainGraph.LIMITS` (đã đóng băng) là
    `{ groups: 4096, work: 50000 }`. Một nút là `{ cells, digit }`: `cells` tăng dần và khác nhau, mỗi ô là một ô trống
    còn giữ chữ số `digit` (tính từ 1); nút đúng khi có ít nhất một ô trong danh sách chứa chữ số đó, nên một nhóm đúng
@@ -764,13 +765,25 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    hoặc `null` (ngân sách của bên gọi đã hết); mảng rỗng không bao giờ nghĩa là không có chứng minh, chỉ là chưa dựng
    được đồ thị dùng được. Việc hủy và lỗi được truyền đi, và bộ dựng không phát bản ghi nào cho bộ quan sát. Bộ kiểm
    tra độc lập là `SG.chainProofs` (`core/tests/fixtures/chain-proofs.js`), tính lại các nút, cạnh, công việc và chứng
-   minh từ mô hình và trạng thái. Lần kích hoạt (MS13c) chỉ áp dụng việc gộp cho `forcingChain` và `forcingChainLong`,
-   không bao giờ cho XY-chain. Lần thử đồ thị nhóm trong MS13c dùng chung một giới hạn công việc cho dựng đồ thị và tìm
-   kiếm, ban đầu là 50.000, không đặt lại giữa hai giai đoạn. Điều này không quyết định chính sách cho toàn bộ lần gọi
-   `forcingChain`: GC-01 vẫn chờ chủ sở hữu chọn đường dự phòng trên đồ thị ứng viên đơn không giới hạn công việc cục bộ
-   hoặc giới hạn cho toàn bộ lần gọi. Hiện chưa có bộ tìm chuỗi nhóm hay đường dự phòng này hoạt động; ngân sách của bên
-   gọi và việc hủy vẫn được giữ nguyên.
-   **Đọc và hiển thị chứng minh nhóm phiên bản 2** (nhiệm vụ MS13b; chỉ phía tiêu thụ, chưa có bộ tìm nào phát ra chúng).
+   minh từ mô hình và trạng thái. **Kích hoạt (MS13c, quyết định của chủ sở hữu GC-01 phương án A / S-OD11).**
+   `forcingChain` (1 đến C liên kết) và `forcingChainLong` (C + 1 đến 12) nay tìm trên đồ thị này và công bố chứng minh
+   ngắn nhất **của nó**, không bao giờ cho XY-chain, từ một lần thử có giới hạn: 4.096 nút bổ sung và **một** giới hạn
+   công việc 50.000 đơn vị dùng chung cho dựng đồ thị và tìm kiếm, bắt đầu từ số đơn vị phần dựng đã dùng và không bao
+   giờ đặt lại (R10 cho phép một điều chỉnh đo được; số liệu cho thấy không cần). Chỉ `forcingChain`, sau một giới hạn
+   **cục bộ** của lần thử (`construction-work`, `construction-nodes` hoặc `search-work`) và khi ngân sách của bên gọi
+   còn, rơi về phép tìm kiếm đầy đủ trên đồ thị ứng viên đơn, **không có giới hạn công việc cục bộ** (cùng ngân sách của
+   bên gọi, cùng cửa sổ); không có đường dự phòng sau khi ngân sách bên gọi hết, khi bị hủy, khi có lỗi, khi kết quả âm
+   đã hoàn tất hoặc cửa sổ rỗng, và `forcingChainLong` không có (đạt giới hạn là null). Kết quả của đường dự phòng chỉ
+   bảo đảm cực tiểu trên đồ thị ứng viên đơn; một lần tìm nhóm hoàn tất bảo đảm cực tiểu của đồ thị nhóm. Chứng minh mâu
+   thuẫn hoặc buộc điền bắt đầu từ một nút đơn (nhóm đúng không cho phép điền một thành viên), nhóm chỉ bắt đầu như đầu
+   "sai" của chứng minh đầu mút, và các loại trừ phải xung đột với mọi thành viên của nhóm ở đầu mút; chứng minh không có
+   nhóm giống từng byte Finding cũ, chứng minh có nhóm là phiên bản 2 với `cells` là hợp đã sắp xếp đầy đủ. Cổng chung là
+   `SG.chainSearch.groupedForcing(model, state, ctx, { id, minLength, maxLength, groupLimit, workLimit, fallback })`; bản
+   ghi bộ quan sát giữ năm trường (`work` nay là mọi giai đoạn) và thêm `domain`, `grouped { construction, search,
+   additional, graph, minimum, stop }` và `fallback`, chỉ phát khi trả về bình thường. Phạm vi là **có giới hạn**, không
+   phải tìm kiếm Medusa, chuỗi suy luận xen kẽ hay X-cycle đầy đủ. Ngân sách của bên gọi và việc hủy vẫn được giữ nguyên.
+   (Ở MS13a đồ thị chưa kích hoạt và GC-01 còn mở; các câu đó là lịch sử.)
+   **Đọc và hiển thị chứng minh nhóm phiên bản 2** (nhiệm vụ MS13b: phía tiêu thụ; từ MS13c bộ tìm chuỗi nhóm phát ra chúng).
    `i18nArgs` của một Finding chuỗi có thể là `{ proofVersion: 2, kind, length, chains }` với các bước
    `{ cells, digit, truth }` (`truth` 1 đúng, 0 sai) bên cạnh bộ ba cũ `[cell, digit, truth]`; Finding chỉ gồm nút đơn vẫn
    giữ bộ ba và một đường có thể trộn cả hai dạng. `formatChains` của `generator/js/ui/i18n.js` và `player/js/ui/i18n.js`
@@ -865,7 +878,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (53 suite, 4.456 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (53 suite, 4.483 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (61 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -876,7 +889,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.456 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.483 bài —
 37 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -932,7 +945,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.456 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.483 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -1331,7 +1344,7 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.698 bài); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.722 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

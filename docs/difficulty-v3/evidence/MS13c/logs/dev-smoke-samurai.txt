@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS13c\smoke.js 6 samurai
+samurai {"states":6,"bothNull":6,"equal":6,"groupFinding":0,"groupShorter":0,"groupedOnly":0,"pureDiffers":0,"legacyOnly":0,"fallback":5,"fallbackFound":5,"capped":10,"bad":0}
+exit=0 seconds=0.361

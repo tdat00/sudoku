@@ -41,6 +41,23 @@
     return SG.techniques.get(id).find(m, state, ctxFor(m, options));
   }
 
+  /**
+   * The accepted singleton finders that forcingChain and forcingChainLong were before MS13c (MS07b): the
+   * unregistered seam's singleton search over the window of the id (forcingChain 1 to C links, no work limit;
+   * forcingChainLong C + 1 to 12 links, 50000), narrowed by the caller's maxChainLength like the registered
+   * ones. It is also what the fallback of forcingChain runs, so a test of "what the singleton search says"
+   * reads it and not the grouped id.
+   */
+  function singleton(id, m, state, options) {
+    var c = SG.chainSearch.SHORT_MAX;
+    var short = id === 'forcingChain';
+    var ceiling = short ? c : 12;
+    var asked = options ? options.maxChainLength : undefined;
+    var max = typeof asked === 'number' && !Number.isNaN(asked) ? Math.min(ceiling, Math.floor(asked)) : ceiling;
+    return SG.chainSearch.forcing(m, state, ctxFor(m, options), { id: id, minLength: short ? 1 : c + 1,
+      maxLength: max, workLimit: short ? null : 50000 });
+  }
+
   function fixture(name) {
     var found = F.unique.filter(function (fx) { return fx.name === name; })[0];
     if (!found) throw new Error('no fixture puzzle named ' + name);
@@ -122,6 +139,9 @@
 
   /** Everything wrong with the chains of a forcingChain Finding (empty array = a valid proof). */
   function chainProblems(m, state, finding) {
+    // A proof with groups (proofVersion 2, MS13c) is read by the independent checker of the grouped graph, with
+    // canonical nodes; the triples of a singleton proof by the checker below, which shares nothing with it.
+    if (finding.i18nArgs.proofVersion === 2) return SG.chainProofs.pathProblems(m, state, finding, { canonical: true });
     var problems = [];
     var args = finding.i18nArgs;
     var chains = args.chains;
@@ -588,24 +608,28 @@
    * 'minimal.<i>', the index in the comment), found by scanning 3000 of them in MS07b. The stuck position is
    * the one reached with C = 6 (`longStuckItem`): below C = 4 chains of 5 and 6 links are still left in it. Under
    * C = 4 and C = 6 alike its shortest chain is a forcingChainLong's. Since the WXYZ-Wing (MS10b) is registered
-   * before the chains, three of the twelve (#379, #452 and #725) are solved or leave no chain of up to 12 links in
-   * their stuck position: they are replaced in place by #3329 (8 links, solved at exactly 8; it lies beyond the
-   * 3000 of MS07b, none of which is an 8-link puzzle that the solver solves at exactly 8 now, so the scan was
-   * extended to 12000), #1036 (7 links) and #2475 (8 links), the lowest indices that qualify under the registered
-   * ladder; the nine others are the same puzzles with the same shortest chains.
+   * before the chains, three of the twelve (#379, #452 and #725) were solved or left no chain of up to 12 links
+   * in their stuck position: they were replaced in place by #3329 (8 links, solved at exactly 8), #1036 and
+   * #2475 (8 links). Since the grouped forcing ids (MS13c) the shortest chain is the shortest of the canonical
+   * grouped graph, and the stuck position is that of the grouped forcingChain too: seven more (#29, #155, #1036,
+   * #521, #530, #713 and #1003) are solved before they are stuck, leave no chain of 7 or 8 links or exceed the
+   * grouped allowance, and are replaced in place by the lowest indices that qualify under the registered ladder
+   * (`long-chain-scan-0000-12000.txt` of the MS13c evidence, 12000 indices): #589 (8 links), #68 (7 links, the
+   * lowest that the solver solves at exactly 7, which position 2 needs), #1244, #1312, #1314, #1349 and #1375
+   * (7 links); the five others (#24, #192, #3329, #2475 and #1024) are the same puzzles with the same lengths.
    */
   var LONG_CHAIN_PUZZLES = [
     '..7..1..6.8....1..5..6.78.3..65..7.......8..2.9..6....459........2...5......1..9.', // #24: 7 links
-    '...5....94.....31....39.6....7.......6...35...8..6.9...4....86..1.28.......6.9.7.', // #29: 7 links
-    '...284.....51..83.....53....9.........8.....6.6..351.437.....6....4.2..88.......7', // #155: 7 links
+    '7...38..6..........532.4....94......1.......23...9.8.5....51.........3.7..29..56.', // #589: 8 links
+    '.6.4....2..1..7..93..5...8...........52....971...2.84.23.....56..61.9............', // #68: 7 links
     '.754.3...9.....1.....5....7.8..6....6.3.78..1..........3.......5.48...6.1....7.53', // #192: 7 links
     '7...8..3.13....4...2....198............9..67...74.8..15....6...91..5..8..4..2....', // #3329: 8 links
-    '.1...6.393.6............2.45.8.1....2.........7.6.4..89.....85.8.7.....2.3...29..', // #1036: 7 links
-    '.....5..3..7....16...23....2.....8....5.4....4...1...2.9..875..8..1..6.9...3.....', // #521: 7 links
-    '...5.94...4...2..82.71.....7.....26...3.....7.1.6...95...........92.5..1.36......', // #530: 7 links
-    '2.6..7..4....3..1.45.......6........8329...7..4..2.3.....4.9...1......6...8.1..9.', // #713: 7 links
+    '7..9..34..98.....151.....6.1.....8.....7...54..54.2.......9.....2..56...6..82....', // #1244: 7 links
+    '..1......7..4.......4231..5.......6.6..87.21...3.4..592.6...9......1.......5.9..6', // #1312: 7 links
+    '.6..57....5.3....44.......7..1.3.....7...51.39.....8...83.9.......2...95..2...7..', // #1314: 7 links
+    '....5.4.7.1..3...57..1..3.....5..8..9..2.8.....6.91.........96..31..7....2.....7.', // #1349: 7 links
     '..82....1.24.....7....5..3.4....5..37..48....186.9.......561..........1.2..7..6.9', // #2475: 8 links
-    '.2......6..892.7..1...8..3...6.74...2..5.6.........1..95......76..3..9...84.....5', // #1003: 7 links
+    '3.4....7.2..76...1....3.2...5..2.....6.8.9...8....1..2..7......1..3...84.4..1.5..', // #1375: 7 links
     '..41..98.5..4.........9..7.....1...9..7..52..49...2..8...2.3.1.........261....5..' // #1024: 7 links
   ];
 
@@ -959,6 +983,14 @@
       return fx.length <= SG.chainSearch.SHORT_MAX ? 'forcingChain' : 'forcingChainLong';
     }
 
+    // MS13c: the positions of CHAIN_FIXTURES on which a proof with groups is shorter than the typed-in singleton
+    // proof, with the Finding of the registered owner of that shorter length (read from the recorded run of
+    // `fixture-compare.js`, evidence MS13c): the typed-in proof is then the fallback's, not the registered ids'.
+    var GROUP_PROOFS = {
+      'contradiction chain of 6 links': { owner: 'forcingChain', expected: { eliminations: [[51, 7]],
+        cells: [39, 42, 43, 51, 66, 69], args: { kind: 'contradiction', length: 3 } } }
+    };
+
     CHAIN_FIXTURES.forEach(function (fx) {
       it('reports the ' + fx.name, function () {
         var state = fixtureState(fx);
@@ -967,10 +999,29 @@
         if (fx.eliminations) expected.eliminations = fx.eliminations;
         if (fx.placements) expected.placements = fx.placements;
         if (fx.chains) expected.args.chains = fx.chains;
-        var finding = H.expectFinding(SG.test, id, state, expected);
-        expect(finding.i18nKey).toBe('technique.' + id + '.step.' + fx.kind);
-        expect(chainProblems(model9, state, finding)).toEqual([]);
-        expect(run(id === 'forcingChain' ? 'forcingChainLong' : 'forcingChain', model9, state)).toBeNull();
+        var grouped = GROUP_PROOFS[fx.name];
+        if (grouped === undefined) {
+          var finding = H.expectFinding(SG.test, id, state, expected);
+          expect(finding.i18nKey).toBe('technique.' + id + '.step.' + fx.kind);
+          expect(chainProblems(model9, state, finding)).toEqual([]);
+          expect(run(id === 'forcingChain' ? 'forcingChainLong' : 'forcingChain', model9, state)).toBeNull();
+        } else {
+          // MS13c: the typed-in proof is still the singleton search's (the fallback's), exactly...
+          var typed = singleton(id, model9, state);
+          expect(typed.technique).toBe(id);
+          expect(typed.i18nKey).toBe('technique.' + id + '.step.' + fx.kind);
+          expect(typed.cells.slice().sort(function (a, b) { return a - b; }))
+            .toEqual(fx.cells.slice().sort(function (a, b) { return a - b; }));
+          expect([typed.i18nArgs.kind, typed.i18nArgs.length]).toEqual([fx.kind, fx.length]);
+          expect(typed.eliminations).toEqual(fx.eliminations);
+          expect(chainProblems(model9, state, typed)).toEqual([]);
+          // ...but a proof with groups is shorter, so the registered owner of the typed-in length finds nothing
+          // (that proof lies below its window) and the registered owner of the shorter one has another Finding
+          expect(run(id, model9, state)).toBeNull();
+          var found = H.expectFinding(SG.test, grouped.owner, state, grouped.expected);
+          expect(found.i18nArgs.proofVersion).toBe(2);
+          expect(chainProblems(model9, state, found)).toEqual([]);
+        }
       });
     });
 
@@ -984,8 +1035,23 @@
       var stuck = ['escargot', 'worlds-hardest-2012', 'hard-platinum', 'hard-nugget'];
       stuck.forEach(function (name) {
         var state = H.makeState(model9, fixture(name).puzzle);
-        H.expectNoFinding(SG.test, 'forcingChain', state);
-        expect(run('forcingChainLong', model9, state, { maxChainLength: 12 })).toBeNull();
+        // the accepted singleton search (the finders before MS13c, and the fallback of forcingChain): nothing
+        expect([name, singleton('forcingChain', model9, state)]).toEqual([name, null]);
+        expect([name, singleton('forcingChainLong', model9, state, { maxChainLength: 12 })]).toEqual([name, null]);
+        // the grouped ids (MS13c): the same, but on escargot a proof with groups of 4 links exists
+        expect([name, run('forcingChainLong', model9, state, { maxChainLength: 12 })]).toEqual([name, null]);
+        var short = run('forcingChain', model9, state);
+        if (name !== 'escargot') {
+          expect([name, short]).toEqual([name, null]);
+          return;
+        }
+        var solution = F.parse(fixture(name).solution);
+        expect(short.i18nArgs.proofVersion).toBe(2);
+        expect([short.i18nArgs.kind, short.i18nArgs.length, short.eliminations]).toEqual(['contradiction', 4,
+          [[57, 9]]]);
+        expect(chainProblems(model9, state, short)).toEqual([]);
+        expect(H.findingProblems(model9, state, short, { technique: 'forcingChain', solution: solution }))
+          .toEqual([]);
       });
     });
 
@@ -1037,6 +1103,11 @@
         var state = fixtureState(fx);
         // forcingChain's own fixtures; a longer chain is forcingChainLong's, whose window starts at C + 1
         var id = fx.length <= SG.chainSearch.SHORT_MAX ? 'forcingChain' : 'forcingChainLong';
+        // the accepted singleton search (MS13c: the fallback's), for every fixture
+        expect(singleton(id, model9, state, { maxChainLength: fx.length - 1 })).toBeNull();
+        expect(singleton(id, model9, state, { maxChainLength: fx.length }).i18nArgs.length).toBe(fx.length);
+        // the registered id, wherever no shorter proof with groups exists (GROUP_PROOFS: the one fixture)
+        if (fx.name === 'contradiction chain of 6 links') return;
         expect(run(id, model9, state, { maxChainLength: fx.length - 1 })).toBeNull();
         var at = run(id, model9, state, { maxChainLength: fx.length });
         expect(at.i18nArgs.length).toBe(fx.length);
@@ -1097,9 +1168,17 @@
     it('terminates on pure cycles of any length, finding a proof only where one exists', function () {
       [16, 30, 200].forEach(function (n) {
         var m = ringModel(n);
+        // the singleton search (the fallback): one search per literal at most, one root check each
+        var budget = SG.budget.create({});
+        var seam = SG.chainSearch.forcing(m, SG.model.initState(m), ctxFor(m, { budget: budget }),
+          { id: 'x', minLength: 1, maxLength: Infinity, workLimit: null });
+        expect(seam).toBeNull();
+        expect(budget.nodes).toBeLessThanOrEqual(2 * n * 2);
+        // the grouped id: the same bound for its own roots, the 256-unit cadence of its 50000 units, one more
+        // search of the singleton graph after a local cap, and a few checks of set-up
         var out = budgetedRun(m, SG.model.initState(m), { maxChainLength: Infinity });
         expect(out.finding).toBeNull();
-        expect(out.ticks).toBeLessThanOrEqual(2 * n * 2);
+        expect(out.ticks).toBeLessThanOrEqual(2 * (2 * n * 2) + Math.ceil(50000 / 256) + 16);
       });
       var odd = ringModel(201);
       var state = SG.model.initState(odd);
@@ -1434,12 +1513,13 @@
           return longStuckItem(text, idsBefore('forcingChainLong')).state;
         });
         var chains = {
-          forcingChain: { minLength: 1, maxLength: c, workLimit: null },
-          forcingChainLong: { minLength: c + 1, maxLength: 12, workLimit: 50000 }
+          forcingChain: { minLength: 1, maxLength: c, groupLimit: 4096, workLimit: 50000, fallback: true },
+          forcingChainLong: { minLength: c + 1, maxLength: 12, groupLimit: 4096, workLimit: 50000,
+            fallback: false }
         };
         Object.keys(chains).forEach(function (id) {
           positions().concat(long).forEach(function (state, i) {
-            var seam = forcing(model9, state, Object.assign({ id: id }, chains[id]));
+            var seam = CS.groupedForcing(model9, state, ctxFor(model9), Object.assign({ id: id }, chains[id]));
             if (!same(seam, run(id, model9, state))) fail(id + ' differs from the seam on state #' + i);
           });
         });
@@ -1700,7 +1780,9 @@
       expect(records[0].limit).toBeNull();
       expect(records[0].capHit).toBeNull();
       expect(records[0].retained).toBeNull();
-      expect(Object.keys(records[0]).sort()).toEqual(['capHit', 'id', 'limit', 'retained', 'work']);
+      // MS13c: forcingChain's record names the stages of its grouped attempt and its fallback besides the five
+      expect(Object.keys(records[0]).sort()).toEqual(['capHit', 'domain', 'fallback', 'grouped', 'id', 'limit',
+        'retained', 'work']);
 
       records[0].work = -1; // a copy: the next call is not affected
       run('forcingChain', model9, fixtureState(CHAIN_FIXTURES[0]),
@@ -1892,12 +1974,16 @@
         ctx = counting(model9);
         expect(CS.nishio(model9, solved, ctx, { id: 'x', workLimit: null })).toBeNull();
         expect(ctx.checks).toBe(0);
-        // the two ids with a limit check at entry, the two without do not, as before
-        [['forcingChain', 0], ['forcingChainLong', 1], ['nishio', 0], ['nishioDeep', 1]].forEach(function (row) {
-          var own = counting(model9);
-          SG.techniques.get(row[0]).find(model9, solved, own);
-          expect([row[0], own.checks]).toEqual([row[0], row[1]]);
-        });
+        // the two ids with a limit check at entry, the two without do not, as before; the two grouped ids (MS13c)
+        // check as the builder does: its entry, after its set-up and once per 256 uncharged scan steps, then the
+        // entry of the minimum search (the registered forcingChain no longer has the unbounded path's 0)
+        var grouped = 3 + Math.floor(CP.expectedTicks(model9) / 256);
+        [['forcingChain', grouped], ['forcingChainLong', grouped], ['nishio', 0], ['nishioDeep', 1]]
+          .forEach(function (row) {
+            var own = counting(model9);
+            SG.techniques.get(row[0]).find(model9, solved, own);
+            expect([row[0], own.checks]).toEqual([row[0], row[1]]);
+          });
       });
 
     it('lets no more than 256 work units pass between two checks, uneven expansions and tail included',
@@ -2206,13 +2292,23 @@
         CHAIN_FIXTURES.forEach(function (fx) { positions.push(fixtureState(fx)); });
         LONG_CHAIN_PUZZLES.forEach(function (text) { positions.push(longStuckItem(text, below).state); });
         var counts = { forcingChain: 0, forcingChainLong: 0, none: 0 };
+        var capped = 0;
         [4, 6].forEach(function (c) {
           withShortMax(c, function () {
             positions.forEach(function (state, i) {
-              var seam = shortest(model9, state);
+              // the shortest proof of the whole scan in the complete canonical grouped graph (MS13c), with the
+              // limits of the registered ids; a call that hits a local cap is not "the whole scan" and is counted
+              var records = [];
+              var seam = CS.groupedForcing(model9, state, ctxFor(model9, { onPatternWork: function (r) {
+                records.push(r);
+              } }), { id: 'x', minLength: 1, maxLength: MAX_LONG });
+              var at = 'C = ' + c + ', state #' + i;
+              if (records[0].grouped.stop !== null) {
+                capped++;
+                return;
+              }
               var short = run('forcingChain', model9, state);
               var long = run('forcingChainLong', model9, state);
-              var at = 'C = ' + c + ', state #' + i;
               if (seam === null) {
                 expect([at, short, long]).toEqual([at, null, null]);
                 counts.none++;
@@ -2228,6 +2324,7 @@
             });
           });
         });
+        expect(capped).toBeLessThan(10);
         expect(counts.forcingChain).toBeGreaterThan(50);
         expect(counts.forcingChainLong).toBeGreaterThan(20);
         expect(counts.none).toBeGreaterThan(0);
@@ -3505,7 +3602,8 @@
   });
 
   // ---------------------------------------------------------------------------------------------------------------
-  // The canonical grouped graph (R16, MS13a), INACTIVE: `SG.chainGraph.build` is read by no registered finder. Its
+  // The canonical grouped graph (R16, MS13a), read since MS13c by the grouped attempt of forcingChain and
+  // forcingChainLong and by no other finder. Its
   // independent checker is `SG.chainProofs` (core/tests/fixtures/chain-proofs.js): it recomputes candidate membership,
   // every cross pair of peers and the complete-unit coverage from the model and the state, and shares nothing with the
   // builder. The suites below compare the builder with it, and test the checker itself on malformed graphs and proofs.
@@ -3702,7 +3800,7 @@
     return rowFarms[tag];
   }
 
-  describe('grouped graph (R16, inactive): the API and the registered kernels', function () {
+  describe('grouped graph (R16): the API and the registered kernels', function () {
     it('exposes build and the two limits of R10 (4096 additional nodes, 50000 tested combinations) only', function () {
       expect(Object.keys(CG).sort()).toEqual(['LIMITS', 'build']);
       expect(CG.LIMITS).toEqual({ groups: 4096, work: 50000 });
@@ -3711,20 +3809,32 @@
       expect(Object.keys(graph)).toEqual(['nodes', 'weak', 'strong', 'complete', 'work', 'capHit']);
     });
 
-    it('is referenced by nothing but its own table: the registered finders and the seam keep the singleton graph',
+    it('is read by the grouped attempt of forcingChain and forcingChainLong and by no other finder (MS13c)',
       function () {
         if (!SG.test.node) SG.test.skip('needs the Node file system; skipped in the browser');
         var text = SG.test.node.fs.readFileSync(
           SG.test.node.path.join(SG.test.node.root, '../core/js/engine/tech-chain.js'), 'utf8')
           .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^[ \t]*\/\/.*$/gm, '');
         function count(pattern) { return (text.match(pattern) || []).length; }
-        expect(count(/\bbuildGraph\b/g)).toBe(2); // its declaration and the entry of SG.chainGraph
+        function body(name) {
+          var found = new RegExp('\\n  function ' + name + '\\([\\s\\S]*?\\n  }\\r?\\n').exec(text);
+          expect([name, found !== null]).toEqual([name, true]);
+          return found[0];
+        }
+        // its declaration, the entry of SG.chainGraph and the one call of the grouped attempt
+        expect(count(/\bbuildGraph\b/g)).toBe(3);
         expect(count(/\bconstructGraph\b/g)).toBe(2); // its declaration and the one call inside buildGraph
-        ['findXyChain', 'findForcingChain', 'findForcingChainLong', 'findNishio', 'findNishioDeep', 'forcingWith',
-          'scanForcing', 'chainForcing', 'chainNishio', 'buildStrongLinks', 'scratchFor'].forEach(function (name) {
-          var body = new RegExp('\\n  function ' + name + '\\([\\s\\S]*?\\n  }\\r?\\n').exec(text);
-          expect([name, body !== null]).toEqual([name, true]);
-          expect([name, /Graph|graph/.test(body[0])]).toEqual([name, false]);
+        expect(/\bbuildGraph\(/.test(body('groupedAttempt'))).toBe(true);
+        // the two grouped ids hand their spec to the grouped route, and no longer to the singleton search
+        ['findForcingChain', 'findForcingChainLong'].forEach(function (name) {
+          expect([name, /\bgroupedForcing\(/.test(body(name)), /\bforcingWith\(/.test(body(name))])
+            .toEqual([name, true, false]);
+        });
+        // every other finder and the singleton seam never mention the graph, the grouped search or its limits
+        ['findXyChain', 'findNishio', 'findNishioDeep', 'forcingWith', 'scanForcing', 'chainForcing',
+          'chainNishio', 'buildStrongLinks', 'scratchFor', 'singletonFallback'].forEach(function (name) {
+          expect([name, /Graph|graph|grouped|Grouped|GROUP_|searchAdjacency/.test(body(name))])
+            .toEqual([name, false]);
         });
       });
 
@@ -3757,7 +3867,7 @@
       });
   });
 
-  describe('grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time', function () {
+  describe('grouped graph (R16): the edge obligations of the brief, one vector at a time', function () {
     // Predicate vectors on boards where one digit stays in the listed cells only (every other digit is untouched).
     // They are synthetic unit tests of the obligations, never help examples of the product. Every vector is checked
     // with the independent predicates of SG.chainProofs and with the builder (where both nodes are canonical).
@@ -3961,7 +4071,7 @@
     });
   });
 
-  describe('grouped graph (R16, inactive): agreement with the independent checker', function () {
+  describe('grouped graph (R16): agreement with the independent checker', function () {
     var BIG = { workLimit: 100000000 };
     var samurai = SG.fixtures.models.samurai();
 
@@ -4114,7 +4224,7 @@
     });
   });
 
-  describe('grouped graph (R16, inactive): limits, budget and the incomplete-graph rule', function () {
+  describe('grouped graph (R16): limits, budget and the incomplete-graph rule', function () {
     // The blank classic9 board: 486 group candidates, 81 cells x 36 candidate pairs, and 9 digits x C(135, 2) = 81,405
     // pairs of nodes of one digit (every pair is charged, before the test that its first cells see each other)
     var BLANK_WORK = 84807;
@@ -4382,7 +4492,7 @@
     });
   });
 
-  describe('grouped graph (R16, inactive): ownership, determinism and state reuse', function () {
+  describe('grouped graph (R16): ownership, determinism and state reuse', function () {
     var BIG = { workLimit: 100000000 };
 
     function position() {
@@ -4490,7 +4600,7 @@
       });
   });
 
-  describe('grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs',
+  describe('grouped graph (R16): the independent checker on malformed nodes, graphs and proofs',
     function () {
       var FIVE = 5;
 
@@ -4850,7 +4960,9 @@
           var kinds = {};
           CHAIN_FIXTURES.forEach(function (fx) {
             var state = fixtureState(fx);
-            var finding = run('forcingChain', model9, state) || run('forcingChainLong', model9, state);
+            // the singleton search: its Findings are the legacy triples this test is about (the registered ids
+            // find a version 2 proof with groups on one of these positions, MS13c)
+            var finding = singleton('forcingChain', model9, state) || singleton('forcingChainLong', model9, state);
             expect(finding).not.toBeNull();
             expect([fx.name, chainProblems(model9, state, finding)]).toEqual([fx.name, []]);
             expect([fx.name, CP.pathProblems(model9, state, finding)]).toEqual([fx.name, []]);
@@ -4952,6 +5064,714 @@
         });
     });
 
+  // ---------------------------------------------------------------------------------------------------------------
+  // Grouped forcing (R16, MS13c, owner decision S-OD11 option A): forcingChain and forcingChainLong search the
+  // canonical grouped graph first, on a bounded attempt (4096 additional nodes and one 50000-unit allowance for the
+  // construction and the search together); only forcingChain falls back, on a local cap, to the complete singleton
+  // search without a local limit. The proofs are read by the independent checker `SG.chainProofs`, the legacy by
+  // `singleton` (the accepted singleton finders, which are also what the fallback runs).
+  // ---------------------------------------------------------------------------------------------------------------
+
+  var CS = SG.chainSearch;
+  // Real puzzle #530 of the seeded stream 161 (a replaced entry of LONG_CHAIN_PUZZLES): at its stuck position with
+  // C = 6 the shortest proof has 7 links, found by the singleton search (50000 units) but not by the grouped
+  // attempt, whose construction and search together reach 50000 units first.
+  var PUZZLE_530 = '...5.94...4...2..82.71.....7.....26...3.....7.1.6...95...........92.5..1.36......';
+  var PUZZLE_24 = '..7..1..6.8....1..5..6.78.3..65..7.......8..2.9..6....459........2...5......1..9.';
+
+  /** A grouped seam call (`opts` of the seam) or a registered id (`opts` the context options), with every record. */
+  function called(how, m, state, opts, ctxOptions) {
+    var records = [];
+    var observer = { onPatternWork: function (r) { records.push(r); } };
+    var finding;
+    if (how === 'seam') finding = CS.groupedForcing(m, state, ctxFor(m, Object.assign(observer, ctxOptions)), opts);
+    else finding = run(how, m, state, Object.assign(observer, opts, ctxOptions));
+    return { finding: finding, records: records, record: records[0] };
+  }
+
+  var SEEDED = { classic9: [5151, 900], classic6: [5151, 800], jigsaw9: [77003, 150], hyper: [77003, 150],
+    diagonalX: [77003, 150] };
+  var seededStates = {};
+  /** The seeded positions of a model (`H.randomStatesWithKnownSolution`), computed once per run. */
+  function seeded(modelId) {
+    if (!seededStates[modelId]) {
+      seededStates[modelId] = H.randomStatesWithKnownSolution(H.model(modelId),
+        SG.testkit.rng.create(SEEDED[modelId][0]), SEEDED[modelId][1]);
+    }
+    return seededStates[modelId];
+  }
+
+  /** The nodes of the first chain of a Finding of version 2, or null for the triples of a singleton proof. */
+  function nodesOf(finding, k) {
+    return finding.i18nArgs.proofVersion === 2 ? finding.i18nArgs.chains[k] : null;
+  }
+
+  describe('grouped forcing (R16, MS13c): proofs, ownership and the singleton rules', function () {
+    it('proves every deduction it publishes: independent checker, solution, singleton starts and exact targets',
+      function () {
+        var plan = ['classic9', 'classic6', 'jigsaw9', 'hyper', 'diagonalX'];
+        var seen = { found: 0, grouped: 0, endGroup: 0, innerGroup: 0, contradiction: 0, startGroup: 0 };
+        plan.forEach(function (modelId) {
+          var m = H.model(modelId);
+          seeded(modelId).forEach(function (item, i) {
+            ['forcingChain', 'forcingChainLong'].forEach(function (id) {
+              var f = run(id, m, item.state);
+              if (f === null) return;
+              var at = modelId + ' #' + i + ' ' + id;
+              seen.found++;
+              expect([at, chainProblems(m, item.state, f)]).toEqual([at, []]);
+              expect([at, H.findingProblems(m, item.state, f, { technique: id, solution: item.solution })])
+                .toEqual([at, []]);
+              var chains = nodesOf(f, 0);
+              if (chains === null) return;
+              seen.grouped++;
+              // a placement or an elimination of a candidate starts from a singleton, never from a group
+              var all = f.i18nArgs.chains;
+              if (f.i18nArgs.kind !== 'endpoints') expect([at, all[0][0].cells.length]).toEqual([at, 1]);
+              if (all[0][0].cells.length > 1) seen.startGroup++;
+              if (f.i18nArgs.kind === 'contradiction') seen.contradiction++;
+              var last = all[0][all[0].length - 1];
+              if (f.i18nArgs.kind === 'endpoints' && last.cells.length > 1) {
+                seen.endGroup++;
+                // every elimination conflicts with EVERY member of the end group, and no candidate that sees only
+                // some of its members is eliminated
+                expect([at, f.eliminations]).toEqual([at, CP.targets(m, item.state, all[0][0], last)
+                  .map(function (t) { return [t[0], t[1]]; })]);
+                f.eliminations.forEach(function (e) {
+                  last.cells.forEach(function (c) { expect([at, e[0] !== c && sees(m, e[0], c)]).toEqual([at, true]); });
+                });
+              }
+              if (all.some(function (chain) {
+                return chain.slice(1, f.i18nArgs.kind === 'endpoints' ? -1 : undefined).some(function (s) {
+                  return s.cells.length > 1;
+                });
+              })) seen.innerGroup++;
+            });
+          });
+        });
+        expect(seen.grouped).toBeGreaterThanOrEqual(30);
+        expect(seen.endGroup).toBeGreaterThanOrEqual(20);
+        expect(seen.innerGroup).toBeGreaterThanOrEqual(2);
+        expect(seen.contradiction).toBeGreaterThanOrEqual(1);
+      });
+
+    function sees(m, a, b) {
+      return m.peers[a].indexOf(b) !== -1;
+    }
+
+    it('is the singleton search wherever no group is in the proof: byte for byte, and never longer with one',
+      function () {
+        var plan = [['classic9', 300], ['classic6', 400], ['jigsaw9', 100], ['hyper', 100], ['diagonalX', 100]];
+        var seen = { same: 0, shorter: 0, sameLength: 0, nullBoth: 0 };
+        plan.forEach(function (row) {
+          var m = H.model(row[0]);
+          seeded(row[0]).slice(0, row[1]).forEach(function (item, i) {
+            ['forcingChain', 'forcingChainLong'].forEach(function (id) {
+              var at = row[0] + ' #' + i + ' ' + id;
+              var out = called(id, m, item.state);
+              var old = singleton(id, m, item.state);
+              var f = out.finding;
+              if (f === null && old === null) {
+                seen.nullBoth++;
+              } else if (f !== null && f.i18nArgs.proofVersion !== 2) {
+                // a singleton proof of a complete grouped search is the singleton search's own (order included);
+                // only the long id's singleton search, capped at 50000 units, can have none where the grouped has
+                if (old !== null) {
+                  expect([at, same(f, old)]).toEqual([at, true]);
+                  seen.same++;
+                } else {
+                  expect([at, id]).toEqual([at, 'forcingChainLong']);
+                }
+              } else if (f !== null) {
+                // a proof with groups is the shortest of the grouped graph: never longer than the singleton one
+                if (old !== null) expect([at, f.i18nArgs.length <= old.i18nArgs.length]).toEqual([at, true]);
+                if (old !== null && f.i18nArgs.length < old.i18nArgs.length) seen.shorter++;
+                else seen.sameLength++;
+              } else if (id === 'forcingChain') {
+                // the short id never loses a singleton proof: its graph holds every singleton proof
+                expect([at, old]).toEqual([at, null]);
+              }
+              if (out.record.domain === 'singleton') expect([at, same(f, old)]).toEqual([at, true]);
+            });
+          });
+        });
+        expect(seen.same).toBeGreaterThan(100);
+        expect(seen.sameLength + seen.shorter).toBeGreaterThanOrEqual(20);
+        expect(seen.nullBoth).toBeGreaterThan(100);
+      });
+
+    it('finds the real proofs with groups of seeded classic positions: an end group, an inner group and a contradiction',
+      function () {
+        var m = H.model('classic9');
+        var items = seeded('classic9');
+        // an endpoints proof of 3 links that ends in a group of the 3: the candidate R2C7... sees every member
+        var one = run('forcingChain', m, items[1].state);
+        expect([one.i18nArgs.kind, one.i18nArgs.length, one.i18nArgs.proofVersion, one.eliminations])
+          .toEqual(['endpoints', 3, 2, [[34, 3]]]);
+        expect(one.i18nArgs.chains[0][3].cells.length).toBeGreaterThan(1);
+        // a proof of 3 links with a group at its end and another inside, two eliminations
+        var two = run('forcingChain', m, items[880].state);
+        expect([two.i18nArgs.kind, two.i18nArgs.length, two.eliminations]).toEqual(['endpoints', 3,
+          [[21, 2], [22, 2]]]);
+        expect(two.i18nArgs.chains[0].filter(function (s) { return s.cells.length > 1; }).length)
+          .toBeGreaterThanOrEqual(2);
+        // a contradiction of two paths with a group inside, on a 6 x 6 board: the start is a singleton
+        var m6 = H.model('classic6');
+        var state6 = seeded('classic6')[121].state;
+        var three = run('forcingChain', m6, state6);
+        expect([three.i18nArgs.kind, three.i18nArgs.length, three.eliminations]).toEqual(['contradiction', 3,
+          [[1, 1]]]);
+        expect(three.i18nArgs.chains[0][0].cells).toEqual([1]);
+        expect(three.i18nArgs.chains.some(function (c) { return c.some(function (s) { return s.cells.length > 1; }); }))
+          .toBe(true);
+        [[m, items[1].state, one], [m, items[880].state, two], [m6, state6, three]]
+          .forEach(function (row) {
+            expect(chainProblems(row[0], row[1], row[2])).toEqual([]);
+            expect(row[2].cells).toEqual(row[2].cells.slice().sort(function (a, b) { return a - b; }));
+          });
+      });
+
+    it('never places an arbitrary member of a true group: a group that is forced to be true gives no placement',
+      function () {
+        // the 5 of row 1 can only be in R1C1 or R1C2 (a group of the box 1 and the row 1, true as a whole), and
+        // nowhere else on the board: the group is true, which places and eliminates nothing by itself
+        var state = digitOnly(model9, 5, [0, 1]);
+        ['forcingChain', 'forcingChainLong'].forEach(function (id) {
+          expect(run(id, model9, state, { maxChainLength: 12 })).toBeNull();
+        });
+        // the same with a candidate that would be eliminated if the group counted as its first member
+        var seen = digitOnly(model9, 5, [0, 1, 11]);
+        ['forcingChain', 'forcingChainLong'].forEach(function (id) {
+          var f = run(id, model9, seen, { maxChainLength: 12 });
+          if (f !== null) {
+            expect(chainProblems(model9, seen, f)).toEqual([]);
+            expect(f.placements.length === 0 || f.i18nArgs.chains[0][0].cells.length === 1).toBe(true);
+          }
+        });
+      });
+
+    it('does not use a group as a strong link once another occurrence is in the unit, and reads every cross peer',
+      function () {
+        // The vector of MS13b: the 5 only in the cells of the proof and R3C1-3. "(R1C1 or R1C2 is 5)" is a strong link
+        // to R1C5 only while row 1 holds the 5 in these three cells; an extra 5 in R1C6 breaks it.
+        var open = [0, 1, 4, 9, 13, 18, 19, 20];
+        var vector = digitOnly(model9, 5, open);
+        var proof = { technique: 'forcingChain', cells: [0, 1, 4, 9, 13], placements: [],
+          eliminations: [[18, 5], [19, 5], [20, 5]], i18nKey: 'technique.forcingChain.step.endpoints',
+          i18nArgs: { proofVersion: 2, kind: 'endpoints', length: 3, chains: [[
+            { cells: [0, 1], digit: 5, truth: 0 }, { cells: [4], digit: 5, truth: 1 },
+            { cells: [13], digit: 5, truth: 0 }, { cells: [9], digit: 5, truth: 1 }]] } };
+        expect(CP.pathProblems(model9, vector, proof, { canonical: true })).toEqual([]);
+        var extra = digitOnly(model9, 5, open.concat([5]));
+        expect(CP.pathProblems(model9, extra, proof).length).toBeGreaterThan(0);
+        ['forcingChain', 'forcingChainLong'].forEach(function (id) {
+          [vector, extra].forEach(function (state) {
+            var f = run(id, model9, state, { maxChainLength: 12 });
+            if (f !== null) expect(chainProblems(model9, state, f)).toEqual([]);
+          });
+        });
+      });
+
+    it('owns every Finding: arrays of its own, not the graph\'s or the search\'s, and none shared between calls',
+      function () {
+        var m = H.model('classic9');
+        var state = seeded('classic9')[880].state;
+        var before = snapshotOf(state);
+        var a = run('forcingChain', m, state);
+        var copy = JSON.parse(JSON.stringify(a));
+        expect(a.i18nArgs.proofVersion).toBe(2);
+        // every array of a second call is another object, whatever it holds
+        var b = run('forcingChain', m, state);
+        expect(b).toEqual(a);
+        expect(b.cells).not.toBe(a.cells);
+        expect(b.i18nArgs.chains).not.toBe(a.i18nArgs.chains);
+        a.i18nArgs.chains.forEach(function (chain, k) {
+          expect(b.i18nArgs.chains[k]).not.toBe(chain);
+          chain.forEach(function (node, i) {
+            expect(b.i18nArgs.chains[k][i]).not.toBe(node);
+            expect(b.i18nArgs.chains[k][i].cells).not.toBe(node.cells);
+          });
+        });
+        // writing into the first changes neither the second, nor a third call, nor the graph, nor the position
+        a.cells.push(-1);
+        a.eliminations.push([0, 0]);
+        a.i18nArgs.chains.forEach(function (chain) { chain.forEach(function (node) { node.cells.push(-1); }); });
+        expect(b).toEqual(copy);
+        expect(run('forcingChain', m, state)).toEqual(copy);
+        expect(snapshotOf(state)).toEqual(before);
+        expect(graphOf(m, state).complete).toBe(true);
+        // a Finding of singletons (the legacy triples) owns its arrays too
+        var legacy = run('forcingChain', model9, fixtureState(CHAIN_FIXTURES[0]));
+        var again = run('forcingChain', model9, fixtureState(CHAIN_FIXTURES[0]));
+        expect(legacy).toEqual(again);
+        legacy.i18nArgs.chains[0][0][1] = 99;
+        legacy.cells.length = 0;
+        expect(run('forcingChain', model9, fixtureState(CHAIN_FIXTURES[0]))).toEqual(again);
+      });
+
+    it('gives every step of a Finding an array of its own: also the start that both paths share', function () {
+      var m6 = H.model('classic6');
+      var f = run('forcingChain', m6, seeded('classic6')[121].state);
+      expect([f.i18nArgs.proofVersion, f.i18nArgs.kind, f.i18nArgs.chains.length]).toEqual([2, 'contradiction', 2]);
+      var arrays = [];
+      f.i18nArgs.chains.forEach(function (chain) { chain.forEach(function (node) { arrays.push(node.cells); }); });
+      // both paths begin with the same node; the Finding writes it twice, as two arrays
+      expect(f.i18nArgs.chains[0][0].cells).toEqual(f.i18nArgs.chains[1][0].cells);
+      arrays.forEach(function (a, i) {
+        arrays.forEach(function (b, j) { if (i !== j) expect([i, j, a === b]).toEqual([i, j, false]); });
+      });
+      f.i18nArgs.chains[0][0].cells.push(-1);
+      expect(f.i18nArgs.chains[1][0].cells).toEqual([1]);
+      expect(f.cells).not.toContain(-1);
+    });
+  });
+
+  describe('grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback',
+    function () {
+      var FAR = ringsModel([2001, 5]);
+      var FAR_STATE = SG.model.initState(FAR);
+
+      function stuck(text, c) {
+        return withCutoff(c, function () { return stuckItem(text, idsBefore('forcingChainLong')).state; });
+      }
+
+      it('falls back on a local cap to the complete singleton search with no local limit, and records both phases',
+        function () {
+          var out = called('forcingChain', FAR, FAR_STATE);
+          var old = singleton('forcingChain', FAR, FAR_STATE);
+          expect(old.i18nArgs.length).toBe(3);
+          expect(same(out.finding, old)).toBe(true);
+          var r = out.record;
+          expect(out.records.length).toBe(1);
+          // the grouped attempt stopped at its construction: the work cap of 50000, nothing left for a search
+          expect([r.grouped.stop, r.grouped.graph, r.grouped.minimum]).toEqual(['construction-work', 'incomplete',
+            'skipped']);
+          expect([r.grouped.construction, r.grouped.search, r.grouped.additional]).toEqual([50000, 0, null]);
+          // the fallback ran, found the proof and is no part of a grouped minimum
+          expect([r.fallback.entered, r.fallback.outcome, r.domain]).toEqual([true, 'found', 'singleton']);
+          // it has no local limit: more than the grouped 50000 on its own, and the whole call records every stage
+          var seam = called('seam', FAR, FAR_STATE, { id: 'x', minLength: 1, maxLength: 4, workLimit: 3 });
+          expect(seam.record.grouped.stop).toBe('construction-work');
+          var plain = [];
+          SG.chainSearch.forcing(FAR, FAR_STATE, ctxFor(FAR, { onPatternWork: function (x) { plain.push(x); } }),
+            { id: 'x', minLength: 1, maxLength: 4, workLimit: null });
+          expect(r.fallback.work).toBe(plain[0].work);
+          expect(r.fallback.work).toBeGreaterThan(50000);
+          expect(r.work).toBe(r.grouped.construction + r.grouped.search + r.fallback.work);
+          // the call has no limit and no cap of its own, as the accepted forcingChain
+          expect([r.limit, r.capHit, r.retained]).toEqual([null, null, null]);
+        });
+
+      it('is no fallback for forcingChainLong: a local cap is null, alone or after forcingChain, with its cap',
+        function () {
+          var out = called('forcingChainLong', FAR, FAR_STATE);
+          expect(out.finding).toBeNull();
+          var r = out.record;
+          expect([r.grouped.stop, r.fallback, r.domain, r.limit, r.capHit]).toEqual(['construction-work', null, null,
+            50000, 'work']);
+          expect(r.work).toBe(50000);
+          // the real position of the search cap: the singleton search finds a 7-link proof there, the long id does not
+          var item = stuck(PUZZLE_530, 6);
+          withCutoff(6, function () {
+            var long = called('forcingChainLong', model9, item);
+            expect(long.finding).toBeNull();
+            expect([long.record.grouped.graph, long.record.grouped.minimum, long.record.grouped.stop,
+              long.record.fallback, long.record.domain, long.record.capHit]).toEqual(['complete', 'incomplete',
+              'search-work', null, null, 'work']);
+            expect(long.record.grouped.construction + long.record.grouped.search).toBe(50000);
+            expect(long.record.work).toBe(50000);
+            var old = singleton('forcingChainLong', model9, item);
+            expect(old.i18nArgs.length).toBe(7);
+            // forcingChain asked first changes nothing (nothing to give a Long, no relabel of a short proof)
+            expect(run('forcingChain', model9, item)).toBeNull();
+            expect(run('forcingChainLong', model9, item)).toBeNull();
+          });
+        });
+
+      it('falls back on a search cap too, under the same window, and certifies only the singleton minimum',
+        function () {
+          var item = stuck(PUZZLE_530, 6);
+          var window = { id: 'x', minLength: 7, maxLength: 12 };
+          var fell = called('seam', model9, item, Object.assign({ fallback: true }, window));
+          var old = SG.chainSearch.forcing(model9, item, ctxFor(model9), Object.assign({ workLimit: null }, window));
+          expect(same(fell.finding, old)).toBe(true);
+          expect(old.i18nArgs.length).toBe(7);
+          expect([fell.record.grouped.stop, fell.record.fallback.entered, fell.record.fallback.outcome,
+            fell.record.domain]).toEqual(['search-work', true, 'found', 'singleton']);
+          expect(fell.record.work).toBe(50000 + fell.record.fallback.work);
+          // the same position without a fallback: nothing, and the stages of the attempt alone
+          var alone = called('seam', model9, item, Object.assign({ fallback: false }, window));
+          expect([alone.finding, alone.record.fallback, alone.record.work, alone.record.capHit]).toEqual([null, null,
+            50000, 'work']);
+          // a shorter proof with groups exists in a complete graph, which the fallback does not claim to know
+          var state = fixtureState(CHAIN_FIXTURES[5]);
+          var tiny = { id: 'x', minLength: 1, maxLength: 12, workLimit: 100, fallback: true };
+          var viaFallback = called('seam', model9, state, tiny);
+          expect(viaFallback.record.domain).toBe('singleton');
+          expect(viaFallback.finding.i18nArgs.length).toBe(6);
+          expect(viaFallback.finding.i18nArgs.proofVersion).toBeUndefined();
+          var complete = called('seam', model9, state, { id: 'x', minLength: 1, maxLength: 12 });
+          expect(complete.record.domain).toBe('grouped');
+          expect(complete.finding.i18nArgs.length).toBe(3);
+          expect(complete.finding.i18nArgs.proofVersion).toBe(2);
+        });
+
+      it('runs its fallback under the same window: a proof below the minimum is nothing there too', function () {
+        // FAR holds a proof of 3 links, which the fallback finds after the construction cap
+        var out = called('seam', FAR, FAR_STATE, { id: 'x', minLength: 4, maxLength: 12, fallback: true });
+        expect(out.finding).toBeNull();
+        expect([out.record.grouped.stop, out.record.fallback.entered, out.record.fallback.outcome, out.record.domain])
+          .toEqual(['construction-work', true, 'none', 'singleton']);
+        var held = called('seam', FAR, FAR_STATE, { id: 'x', minLength: 3, maxLength: 3, fallback: true });
+        expect([held.finding.i18nArgs.length, held.record.fallback.outcome]).toEqual([3, 'found']);
+        var above = called('seam', FAR, FAR_STATE, { id: 'x', minLength: 1, maxLength: 2, fallback: true });
+        expect([above.finding, above.record.fallback.outcome]).toEqual([null, 'none']);
+      });
+
+      it('falls back on the node quota, and a quota of exactly the nodes is no cap', function () {
+        var state = stuck(PUZZLE_24, 4);
+        var window5 = { id: 'forcingChainLong', minLength: 5, maxLength: 12 };
+        var all = called('seam', model9, state, window5);
+        var nodes = all.record.grouped.additional;
+        expect(nodes).toBeGreaterThan(0);
+        expect(all.record.grouped.stop).toBeNull();
+        [[nodes, null], [nodes + 5, null], [nodes - 1, 'construction-nodes'], [0, 'construction-nodes']]
+          .forEach(function (row) {
+            var out = called('seam', model9, state, Object.assign({ groupLimit: row[0] }, window5));
+            expect([row[0], out.record.grouped.stop]).toEqual([row[0], row[1]]);
+            if (row[1] === null) {
+              expect(same(out.finding, all.finding)).toBe(true);
+            } else {
+              // with no fallback a cap of the nodes is null with its own tag, and the graph is incomplete
+              expect([out.finding, out.record.capHit, out.record.grouped.graph, out.record.grouped.minimum])
+                .toEqual([null, 'nodes', 'incomplete', 'skipped']);
+              // the short ID falls back to the singleton search on it
+              var short = called('seam', model9, state, Object.assign({ groupLimit: row[0], fallback: true },
+                window5));
+              expect([short.record.domain, short.record.fallback.entered, short.record.capHit]).toEqual(['singleton',
+                true, null]);
+              expect(same(short.finding, singleton('forcingChainLong', model9, state))).toBe(true);
+            }
+          });
+      });
+
+      it('shares one allowance between construction and search: the exact boundary, never reset', function () {
+        var state = stuck(PUZZLE_24, 4);
+        var all = called('seam', model9, state, { id: 'x', minLength: 5, maxLength: 12 });
+        var W = all.record.grouped.construction;
+        var S = all.record.grouped.search;
+        expect(all.finding.i18nArgs.length).toBe(5);
+        expect(S).toBeGreaterThan(10);
+        [[W - 1, 'construction-work'], [W, 'search-work'], [W + 5, 'search-work'], [W + S - 1, 'search-work'],
+          [W + S, null], [W + S + 1000, null]].forEach(function (row) {
+          var out = called('seam', model9, state, { id: 'x', minLength: 5, maxLength: 12, workLimit: row[0] });
+          var r = out.record;
+          var at = 'limit ' + row[0] + ' (construction ' + W + ', search ' + S + ')';
+          expect([at, r.grouped.stop]).toEqual([at, row[1]]);
+          // one counter: the stages together never pass the limit, and the call's work is their sum
+          expect([at, r.work]).toEqual([at, r.grouped.construction + r.grouped.search]);
+          expect([at, r.work <= row[0]]).toEqual([at, true]);
+          if (row[1] === null) {
+            expect([at, same(out.finding, all.finding)]).toEqual([at, true]);
+          } else {
+            // never the best proof seen so far, never a partial graph
+            expect([at, out.finding]).toEqual([at, null]);
+            expect([at, r.capHit]).toEqual([at, 'work']);
+          }
+        });
+        // the search gets only what the construction left: five units after the construction, five at most
+        var tight = called('seam', model9, state, { id: 'x', minLength: 5, maxLength: 12, workLimit: W + 5 });
+        expect(tight.record.grouped.search).toBeLessThanOrEqual(5);
+        expect(tight.record.grouped.construction).toBe(W);
+      });
+
+      it('runs nothing for an empty window, and nothing again after a completed negative or a window rejection',
+        function () {
+          var state = fixtureState(CHAIN_FIXTURES[0]); // a proof of 3 links, forcingChain's
+          ['forcingChain', 'forcingChainLong'].forEach(function (id) {
+            var off = called(id, model9, state, { maxChainLength: 0 });
+            expect([off.finding, off.record.work, off.record.grouped.stop, off.record.grouped.graph,
+              off.record.fallback, off.record.domain]).toEqual([null, 0, 'empty', 'skipped', null, null]);
+          });
+          // forcingChainLong's window starts above the proof: a rejection, with no second search even if allowed to
+          var below = called('seam', model9, state, { id: 'x', minLength: 5, maxLength: 12, fallback: true });
+          expect([below.finding, below.record.grouped.stop, below.record.grouped.minimum, below.record.fallback,
+            below.record.domain]).toEqual([null, null, 'complete', null, 'grouped']);
+          expect(called('forcingChainLong', model9, state).record.fallback).toBeNull();
+          // a position with no proof in the window is a completed negative, not a cap
+          var none = called('forcingChain', model9, twinState(model9, [F.parse(fixture('wikipedia-example').solution),
+            relabel(F.parse(fixture('wikipedia-example').solution), [2, 3, 1, 5, 6, 4, 8, 9, 7])]),
+          { maxChainLength: 12 });
+          expect([none.finding, none.record.grouped.stop, none.record.fallback, none.record.domain])
+            .toEqual([null, null, null, 'grouped']);
+          // a narrowed window keeps the fallback's window: the singleton search finds nothing in 1 or 2 links either
+          var narrow = called('forcingChain', FAR, FAR_STATE, { maxChainLength: 2 });
+          expect([narrow.finding, narrow.record.fallback.outcome, narrow.record.domain]).toEqual([null, 'none',
+            'singleton']);
+          expect(called('forcingChain', FAR, FAR_STATE, { maxChainLength: 3 }).finding.i18nArgs.length).toBe(3);
+        });
+
+      it('hands the grouped seam the limits of R10: 4096 additional nodes and one allowance of 50000 units',
+        function () {
+          var out = called('seam', model9, fixtureState(CHAIN_FIXTURES[0]), { id: 'x' });
+          expect(out.record.limit).toBe(50000);
+          expect(called('seam', model9, fixtureState(CHAIN_FIXTURES[0]), { id: 'x', workLimit: 7000.9 }).record.limit)
+            .toBe(7000);
+          expect(called('seam', model9, fixtureState(CHAIN_FIXTURES[0]), { id: 'x', fallback: true }).record.limit)
+            .toBeNull();
+          [['workLimit', [NaN, -1, Infinity, null, '5', {}]], ['groupLimit', [NaN, -1, Infinity, null, '5']],
+            ['fallback', [1, 'yes', null]], ['id', ['', '1x', 'a b', 5, null]],
+            ['minLength', ['1', NaN]], ['maxLength', ['12', NaN]]].forEach(function (row) {
+            row[1].forEach(function (bad) {
+              var opts = { id: 'x' };
+              opts[row[0]] = bad;
+              var err = caught(function () { CS.groupedForcing(model9, fixtureState(CHAIN_FIXTURES[0]),
+                ctxFor(model9), opts); });
+              expect([row[0], String(bad), err && err.code]).toEqual([row[0], String(bad), 'solver.invalidOption']);
+            });
+          });
+          [null, 5, 'x'].forEach(function (bad) {
+            expect(caught(function () { CS.groupedForcing(model9, fixtureState(CHAIN_FIXTURES[0]), ctxFor(model9),
+              bad); }).code).toBe('solver.invalidOption');
+          });
+        });
+
+      it('is what forcingChain and forcingChainLong ask for, and no other registered id has a fallback',
+        function () {
+          var c = CS.SHORT_MAX;
+          var spec = {
+            forcingChain: { minLength: 1, maxLength: c, groupLimit: 4096, workLimit: 50000, fallback: true },
+            forcingChainLong: { minLength: c + 1, maxLength: 12, groupLimit: 4096, workLimit: 50000, fallback: false }
+          };
+          var states = [FAR_STATE, fixtureState(CHAIN_FIXTURES[2]), fixtureState(CHAIN_FIXTURES[4]),
+            stuck(PUZZLE_530, 4)];
+          var models = [FAR, model9, model9, model9];
+          Object.keys(spec).forEach(function (id) {
+            states.forEach(function (state, i) {
+              var want = called('seam', models[i], state, Object.assign({ id: id }, spec[id]));
+              var got = called(id, models[i], state);
+              expect([id, i, JSON.stringify(got.finding)]).toEqual([id, i, JSON.stringify(want.finding)]);
+              expect([id, i, JSON.stringify(got.records)]).toEqual([id, i, JSON.stringify(want.records)]);
+            });
+          });
+          // the other chain ids report the five fields of every other finder, and nothing of a grouped attempt
+          ['xyChain', 'nishio'].forEach(function (id) {
+            var rec = called(id, model9, fixtureState(CHAIN_FIXTURES[0])).record;
+            expect([id, Object.keys(rec).sort()]).toEqual([id, ['capHit', 'id', 'limit', 'retained', 'work']]);
+          });
+        });
+    });
+
+  describe('grouped forcing (R16, MS13c, S-OD11): the parent budget, cancellation and the record', function () {
+    var FAR = ringsModel([2001, 5]);
+    var FAR_STATE = SG.model.initState(FAR);
+    var capCache = null;
+    /** The stuck position of puzzle #530 with C = 6 (computed once): its long proof is out of the allowance. */
+    function capState() {
+      if (capCache === null) {
+        capCache = withCutoff(6, function () { return stuckItem(PUZZLE_530, idsBefore('forcingChainLong')).state; });
+      }
+      return capCache;
+    }
+    var WINDOW7 = { id: 'x', minLength: 7, maxLength: 12 };
+
+    /** A context whose k-th parent-budget check throws `failWith` (never for k = 0), counting every check. */
+    function failingAt(m, k, failWith, records) {
+      var ctx = Object.assign({}, ctxFor(m), { options: { onPatternWork: function (r) { records.push(r); } },
+        check: function () {
+          ctx.checks++;
+          if (ctx.checks === k) throw failWith;
+        } });
+      ctx.checks = 0;
+      return ctx;
+    }
+
+    function attempt(how, m, state, opts, k, failWith) {
+      var records = [];
+      var ctx = failingAt(m, k, failWith, records);
+      var error = null;
+      var finding = null;
+      try {
+        finding = how === 'seam' ? CS.groupedForcing(m, state, ctx, opts) : SG.techniques.get(how).find(m, state, ctx);
+      } catch (err) {
+        error = err;
+      }
+      return { finding: finding, error: error, records: records, checks: ctx.checks };
+    }
+
+    it('does not recover from a spent parent budget: not in the construction, the search, before the fallback or in it',
+      function () {
+        // the checks of the attempt alone (no fallback) and of the whole call, counted on a free run
+        var free = attempt('forcingChain', FAR, FAR_STATE, null, 0, null);
+        var alone = attempt('seam', FAR, FAR_STATE, { id: 'x', minLength: 1, maxLength: 4 }, 0, null);
+        var G = alone.checks;
+        expect(free.checks).toBeGreaterThan(G + 5);
+        // inside the construction: no Finding, no fallback, nothing after the failing check
+        [1, 2, 3, Math.floor(G / 2), G].forEach(function (k) {
+          var out = attempt('forcingChain', FAR, FAR_STATE, null, k, spentBudget());
+          expect([k, out.error, out.finding, out.checks]).toEqual([k, null, null, k]);
+          expect([k, out.records.length, out.records[0].grouped.stop, out.records[0].fallback, out.records[0].domain])
+            .toEqual([k, 1, 'parent-budget', null, null]);
+        });
+        // the check before entering the fallback: the cap stays recorded, the fallback is not entered
+        var before = attempt('forcingChain', FAR, FAR_STATE, null, G + 1, spentBudget());
+        expect([before.error, before.finding, before.checks]).toEqual([null, null, G + 1]);
+        var rb = before.records[0];
+        expect([rb.grouped.stop, rb.fallback, rb.domain, rb.work]).toEqual(['construction-work', {
+          entered: false, work: 0, outcome: 'parent-budget' }, null, 50000]);
+        // inside the fallback: entered, spent, no second try
+        var inside = attempt('forcingChain', FAR, FAR_STATE, null, G + 2, spentBudget());
+        expect([inside.error, inside.finding, inside.checks]).toEqual([null, null, G + 2]);
+        expect([inside.records[0].fallback.entered, inside.records[0].fallback.outcome, inside.records[0].domain])
+          .toEqual([true, 'parent-budget', null]);
+        // a budget that lasts to the end gives the Finding of the fallback
+        expect(attempt('forcingChain', FAR, FAR_STATE, null, free.checks + 10, spentBudget()).finding.i18nArgs.length)
+          .toBe(3);
+      });
+
+    it('stops at a spent parent budget in the search too, without a fallback even when one is allowed', function () {
+      withCutoff(6, function () {
+        var item = capState();
+        var opts = Object.assign({ fallback: true }, WINDOW7);
+        var grouped = attempt('seam', model9, item, opts, 0, null);
+        var G = grouped.checks;
+        expect(grouped.records[0].fallback.entered).toBe(true);
+        var attemptOnly = attempt('seam', model9, item, Object.assign({ fallback: false }, WINDOW7), 0, null);
+        var K = attemptOnly.checks;
+        expect(G).toBeGreaterThan(K);
+        // inside the search, and at the last check of the attempt: no fallback although one is allowed
+        [K - 40, K - 1, K].forEach(function (k) {
+          var out = attempt('seam', model9, item, opts, k, spentBudget());
+          expect([k, out.error, out.finding, out.checks]).toEqual([k, null, null, k]);
+          expect([k, out.records[0].grouped.stop, out.records[0].fallback, out.records[0].domain])
+            .toEqual([k, 'parent-budget', null, null]);
+          expect(out.records[0].grouped.graph).toBe('complete');
+          expect(out.records[0].grouped.minimum).toBe('incomplete');
+        });
+      });
+    });
+
+    it('lets cancellation and every other error through, with no record and no fallback', function () {
+      var cancelled = new SG.errors.GenerationError('budget.cancelled', { reason: 'cancelled' });
+      var boom = new Error('boom');
+      var alone = attempt('seam', FAR, FAR_STATE, { id: 'x', minLength: 1, maxLength: 4 }, 0, null);
+      var G = alone.checks;
+      [cancelled, boom].forEach(function (failWith) {
+        [1, Math.floor(G / 2), G, G + 1, G + 2].forEach(function (k) {
+          var out = attempt('forcingChain', FAR, FAR_STATE, null, k, failWith);
+          expect([k, out.error, out.finding, out.records.length, out.checks]).toEqual([k, failWith, null, 0, k]);
+        });
+        var long = attempt('forcingChainLong', FAR, FAR_STATE, null, 2, failWith);
+        expect([long.error, long.records.length]).toEqual([failWith, 0]);
+      });
+      // a real cancelled budget
+      var budget = SG.budget.create({});
+      budget.cancel();
+      var err = caught(function () { run('forcingChain', FAR, FAR_STATE, { budget: budget }); });
+      expect(err.code).toBe('budget.cancelled');
+    });
+
+    it('keeps one parent budget: no refund, no new budget, and the caller still finds it spent afterwards',
+      function () {
+        var budget = SG.budget.create({ nodes: 5 });
+        var out = called('forcingChain', FAR, FAR_STATE, null, { budget: budget });
+        expect([out.finding, out.record.grouped.stop]).toEqual([null, 'parent-budget']);
+        expect(budget.nodes).toBeGreaterThan(5);
+        expect(caught(function () { budget.check(); }).code).toBe('budget.exceeded');
+        // an ample budget changes nothing, and is ticked by every stage (more than the unbounded singleton path)
+        var ample = SG.budget.create({ nodes: 1e7 });
+        var rich = called('forcingChain', FAR, FAR_STATE, null, { budget: ample });
+        expect(same(rich.finding, called('forcingChain', FAR, FAR_STATE).finding)).toBe(true);
+        var singletonBudget = SG.budget.create({ nodes: 1e7 });
+        singleton('forcingChain', FAR, FAR_STATE, { budget: singletonBudget });
+        expect(ample.nodes).toBeGreaterThan(singletonBudget.nodes);
+      });
+
+    it('reports one fresh record per normal return, every stage in its work, and observes without selecting',
+      function () {
+        var out = called('forcingChain', FAR, FAR_STATE);
+        var again = called('forcingChain', FAR, FAR_STATE);
+        expect(out.records.length).toBe(1);
+        expect(out.record).not.toBe(again.record);
+        expect(out.record.grouped).not.toBe(again.record.grouped);
+        expect(out.record).toEqual(again.record);
+        var calls = 0;
+        var hostile = run('forcingChain', FAR, FAR_STATE, { onPatternWork: function (r) {
+          calls++;
+          r.work = -1;
+          r.domain = 'grouped';
+          r.grouped.stop = null;
+          return 'ignored';
+        } });
+        expect(calls).toBe(1);
+        expect(hostile).toEqual(out.finding);
+        expect(run('forcingChain', FAR, FAR_STATE, { onPatternWork: 'not a function' })).toEqual(out.finding);
+        // the domain is the control flow's: a singleton proof wins a complete grouped search (domain grouped, the
+        // Finding of the singleton form), and a fallback proof is the singleton graph's, whatever it contains
+        var pure = called('forcingChain', model9, fixtureState(CHAIN_FIXTURES[0]));
+        expect([pure.record.domain, pure.finding.i18nArgs.proofVersion, pure.record.fallback])
+          .toEqual(['grouped', undefined, null]);
+        var grouped = called('forcingChain', model9, seeded('classic9')[880].state);
+        expect([grouped.record.domain, grouped.finding.i18nArgs.proofVersion]).toEqual(['grouped', 2]);
+        expect(out.record.domain).toBe('singleton');
+      });
+
+    it('counts the stages of real positions exactly: the construction by the checker, the search and the checks recorded',
+      function () {
+        // [model, position, id, additional nodes, search units, parent-budget checks, links of the Finding or null]
+        var PINS = [
+          ['classic9', 1, 'forcingChain', 65, 3522, 220, 3],
+          ['classic9', 1, 'forcingChainLong', 65, 833, 37, null],
+          ['classic9', 880, 'forcingChain', 172, 8384, 433, 3],
+          ['classic9', 880, 'forcingChainLong', 172, 2725, 86, null],
+          ['classic6', 121, 'forcingChain', 14, 1332, 79, 3],
+          ['classic6', 121, 'forcingChainLong', 14, 61, 6, null]
+        ];
+        PINS.forEach(function (row) {
+          var m = H.model(row[0]);
+          var state = seeded(row[0])[row[1]].state;
+          var records = [];
+          var checks = 0;
+          var ctx = Object.assign({}, ctxFor(m, { onPatternWork: function (r) { records.push(r); } }),
+            { check: function () { checks++; } });
+          var finding = SG.techniques.get(row[2]).find(m, state, ctx);
+          var at = row[0] + ' #' + row[1] + ' ' + row[2];
+          var g = records[0].grouped;
+          // the construction and the nodes are the checker's; the search units and the checks are recorded values of
+          // the registered search (one unit per link visited, one check per start and per 256 units)
+          expect([at, g.construction]).toEqual([at, CP.expectedWork(m, state).total]);
+          expect([at, g.additional]).toEqual([at, CP.expectedNodes(m, state).nodes.filter(function (n) {
+            return n.cells.length > 1;
+          }).length]);
+          expect([at, g.additional, g.search, records[0].work, checks, finding === null ? null : finding.i18nArgs.length])
+            .toEqual([at, row[3], row[4], g.construction + row[4], row[5], row[6]]);
+          expect([at, g.stop, g.graph, g.minimum, records[0].domain]).toEqual([at, null, 'complete', 'complete',
+            'grouped']);
+        });
+      });
+
+    it('lets no more than 256 units pass between two parent-budget checks across both stages', function () {
+      // a hub of 300 spokes: its true literal has 301 weak links, so the search splits an expansion into pieces
+      var m = starModel(300);
+      var state = SG.model.initState(m);
+      var opts = { id: 'x', minLength: 1, maxLength: 12, workLimit: 95000 };
+      var free = attempt('seam', m, state, opts, 0, null);
+      var works = [];
+      for (var k = 1; k <= free.checks; k++) {
+        var spent = attempt('seam', m, state, opts, k, spentBudget());
+        works.push(spent.records[0].work);
+      }
+      expect(works[0]).toBe(0);
+      var gaps = works.map(function (w, i) { return w - (i === 0 ? 0 : works[i - 1]); });
+      gaps.push(free.records[0].work - works[works.length - 1]);
+      gaps.forEach(function (gap) { expect(gap).toBeLessThan(257); });
+      expect(Math.max.apply(null, gaps)).toBe(256);
+      // the search stage begins where the construction ended
+      expect(free.records[0].grouped.construction).toBeGreaterThan(256);
+      expect(free.records[0].grouped.search).toBeGreaterThan(0);
+    });
+  });
+
   // Acceptance: nightmare puzzles that the lower technique groups cannot finish
   describe('chain group: nightmare puzzles', function () {
     /** Applies the four chain ids (and the singles they unlock) until none finds anything. */
@@ -5048,8 +5868,8 @@
 
     it('honours maxChainLength given to the solver for the long window too: 7 and 8 links need that much',
       function () {
-        // Lower techniques and the two chain ids, no nishio: puzzle #155 of the long-chain list is solved
-        // with chains of 7 links, #3329 with chains of 8 (#379 until the WXYZ-Wing of MS10b); a smaller limit
+        // Lower techniques and the two chain ids, no nishio: puzzle #68 of the long-chain list is solved with
+        // chains of 7 links, #3329 with chains of 8 (#155 and #379 until MS13c and MS10b); a smaller limit
         // leaves both stuck, a larger one changes nothing (the solver's option only narrows the windows).
         var ids = lowerIds().concat(['forcingChain', 'forcingChainLong']);
         [[LONG_CHAIN_PUZZLES[2], 7], [LONG_CHAIN_PUZZLES[4], 8]].forEach(function (tc) {
