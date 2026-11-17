@@ -8,7 +8,7 @@
 | Owner / milestone | Shared ALS / both apps; M16 complete catalogue |
 | Authority | R10/R19/R20/R21; S-OD4, S-OD12/S0 and accepted MS15a/MS15b guard contracts |
 | Review | Orchestrator against MS08a/IR72 and generic soundness/order checks; no routine SA1 review |
-| Status | Not started; ready for serial dispatch from `8b26e83` |
+| Status | Pre-implementation Q1-Q5 settled below; resume only on the orchestrator's explicit relay |
 
 ## Goal & business context
 
@@ -127,9 +127,9 @@ charged when it receives the guard; a scope/geometry negative is not a cap.
 MS16 may measure and make the existing once-only **Sue-de-Coq-specific work-allowance**
 adjustment under R10, on before/after cap/latency evidence before final E. If selected, put
 one common finite value for every model into its single `createWork(ownLimit)` call;
-do not modify `LIMITS`, ALS-XZ's
-defaults/counter/order or the shared cell/record bounds. The two/three-cell form is R19's
-algorithm scope, not another tuning knob. MS15b's unused adjustment is not an extra allowance.
+do not modify `LIMITS`, ALS-XZ's defaults/counter/order or the shared cell/record bounds.
+The two/three-cell form is R19's algorithm scope, not another tuning knob.
+MS15b's unused adjustment is not an extra allowance.
 Unsettled policy or a change beyond that delegated envelope is a QUESTION.
 
 Preserve entry/256-unit parent checks and explicit phase/publication checks:
@@ -187,6 +187,164 @@ An isolated hand-vector success is not current normal-hint reachability. Earlier
 or another technique may take its deduction first; keep the registered order and earlier
 techniques enabled when acquiring/replaying real examples. Both Z forms still need their
 specified correctness coverage; one cannot be dropped because another technique pre-empts a specimen.
+
+### SA2 rulings — pre-implementation Q1-Q5, 2026-11-18
+
+The developer stopped before a tracked edit. Accept the five proposals with the precise
+definitions/corrections below; no owner escalation is needed for these choices.
+The R10 quantitative choice remains delegated within its existing envelope.
+Resume only on the orchestrator's explicit relay; these rulings do not waive later QUESTION gates.
+
+**Q1 — accept R1.** A line has `unitMeta.kind` **`row` or `col`**; the other unit has kind
+**`box` or `region`**. Do not substitute diagonals, windows, cages or arbitrary all-different
+units for either role. This is the named R19 form, not a claim that the broader R2 proof
+is unsound. Keep `variantScope:null`: Diagonal/Hyper/Killer boards still have eligible
+ordinary geometry, and Jigsaw's real regions are eligible.
+
+Do **not** copy `tech-fish`'s `completeUnits` guard. The reason is the local capacity proof,
+not an assumption that all future units with these kinds must be complete.
+Require actual membership in the selected genuine all-different units. Do not invent
+membership from displayed coordinates or impose a same-grid-label restriction on a real
+multi-grid intersection. The deduplicated ALS records have no discovery-unit owner:
+classify them by their cells, not by an assumed box/line origin.
+
+**Q2 — accept option 1.** For the open shared cells `S = U intersect V`, enumerate **every
+2-subset and 3-subset** as I, not only S itself when its length is two or three.
+A lies in `U minus V` and B in `V minus U`, not merely outside the selected I.
+Unselected shared cells are ordinary possible targets, subject to all R19 predicates and
+the exclusion of I/A/B. The proof still gives `|Z| = |I| - 2`: I must use one A digit,
+one B digit and every Z digit, so other intersection cells need no special exemption.
+Keep an explicit proper-subset positive and a wrong-role/membership negative.
+
+**Q3 — accept P3 as the production accounting, not the scratch scan's implementation.**
+Use one per-call guard. Spend **before** each of the following actual operations:
+
+1. **Box/region cell visited in geometry**, in ascending unit/cell order, including solved
+   cells and visits that do not yield an eligible pair. Discover the intersecting lines
+   from actual memberships (for example `cellUnits`) during these visits. Once geometry
+   finishes, a lack of pairs with at least two open shared cells is a normal negative:
+   no enumeration, retained zero, no local cap unless a spend really was refused.
+2. **Enumeration extension**, with the existing enumerator counter and the already-used
+   guard unchanged. No second allowance, refund or restart.
+3. **Retained record classified**, once per call, in record order. This unit includes
+   deriving all eligible line/box/region homes that contain every cell of that record.
+   Build their home lists in the original canonical record order.
+4. **Eligible (line, box) pair opened**, once, before rejecting empty side lists.
+   Its bounded unit-list preparation may build the sorted, distinct `U union V` cell list.
+5. **Home-list record tested** for being wholly outside the other unit, including a failed
+   membership test. Visit the line's home list first, then the box's, each in record order;
+   derive these two outside-side lists once for the unit pair.
+6. **I opened**, once per complete two/three-cell tuple, before computing/testing its
+   candidate union. This is a tuple unit, not an enumerator-style recursive-extension unit.
+   Stream the tuples; do not materialize/search every combination before the first spend.
+7. **Side candidate tested for `digits subset C`**, once per visited A/B record for this I,
+   including rejection. Filter the A side first, then B, once each for this I, in record
+   order; do not redo a B filter per A while claiming it was charged only once.
+8. **Remaining (A,B) pair tested**, before overlap/disjointness, cardinality or any other
+   capacity rejection. This unit includes those bounded predicates and computing Z.
+9. **Distinct cell of `U union V` visited for a capacity-valid witness's targets**, once,
+   in ascending cell order, before checking solved/proving-set/no-candidate exclusions.
+   The unit includes all relevant A/B/Z digit checks for that cell. No filtered target
+   prepass or double visit of an intersection cell charged as a single scan.
+
+Repeated visits in different unit pairs, I tuples or witnesses are new units. A fully
+scanned valid-capacity witness with zero targets is charged and skipped. Proven early
+pruning may avoid unvisited search work, but cannot move the same work to an uncharged pass.
+Unit-kind indexing is metadata setup; fixed-size tuple construction, mask predicates, local
+ordering and owned Finding copies are bookkeeping, not additional units. This is a
+documented logical-work counter, not a primitive-instruction or wall-time guarantee.
+
+In particular, the probe's `geometry` cross product and `recordScan` full-record filters
+are diagnostic implementations, **not** permitted production prepasses hidden behind
+P3's smaller counters. Classify once, then actually use the home/side lists. No unmetered
+all-pair/record/intersection/target scan, candidate-dependent cross-call cache or warm-call
+counter discount. Measure actual executed work, not the probe's post-hoc totals.
+
+Check the parent at entry before geometry, at most every 256 units, at phase boundaries
+(geometry, enumeration, classification) and before every handled publication, including
+an early geometry negative. Preserve remembered parent stops and local-cap precedence.
+A refused spend ends the call with no Finding; mere exact-limit completion is not a cap.
+A work/parent stop in target collection drops the **whole** partial Finding.
+
+The developer may retain 50,000 or make the existing single **SDC_WORK_LIMIT-only** adjustment
+on the registered finder's own before/after cap, parent-stop, latency and proof-yield evidence.
+Keep this counter definition fixed for the comparison and finish the decision before E.
+Do not infer production caps or a new limit from a lifted complete-scan projection, change
+shared `LIMITS`/ALS-XZ, or acquire a new corpus to make the decision.
+
+**Q4 — accept the first-witness order and Finding, with complete target collection.**
+Order unit pairs by **line index, then box/region index**. For each, I has size two before
+three, lexicographic ascending cell tuples; then A in retained record order, then B in
+retained record order. The first (I,A,B) with a nonempty **finished** target scan returns
+one Finding. Do not aggregate witnesses or select the largest elimination set.
+A record-quota prefix promises only the first witness in that prefix, not a global minimum.
+
+`technique:'sueDeCoq'`, `placements:[]`, sorted distinct I/A/B proof `cells`;
+owned/deduplicated `eliminations`, ordered by cell then digit, containing **all** current
+R19 targets for that witness: A digits elsewhere in U, B digits elsewhere in V, Z digits
+elsewhere in either, never from I/A/B. No general shared-peer extension outside `U union V`.
+Use sorted numeric digit lists in
+`{digits:A digits, partDigits:B digits, forced:Z, line, box}` and the selected units'
+actual `unitMeta.label` strings. Keep `technique.sueDeCoq.step` for empty Z and
+`technique.sueDeCoq.step.extra` otherwise.
+
+**Q5 — accept `SG.alsPatterns.findSueDeCoq(model,state,ctx[,opts])`**, with the documented
+`{workLimit,limits}` diagnostic seam and no opts from the registered entry.
+Use **`SDC_WORK_LIMIT` when `opts.workLimit` is undefined or opts is omitted**; an explicit
+diagnostic value goes through the existing finite/nonnegative/flooring/zero validation.
+Do not accidentally select `LIMITS.work` if the private SDC default is later adjusted.
+Create exactly one guard; production forwards no `limits` override and never takes one
+from `ctx.options`. Diagnostic ALS overrides do not change R19's I sizes or unit roles.
+
+Undefined opts means no options; otherwise require a non-null, non-array object.
+**Narrow coupled correction:** the current private `xzSeam` lacks the array rejection
+already required by MS15b Q3. Reuse that private validator and add the missing array check,
+with a focused regression for both finder entry points. This restores the recorded
+diagnostic contract; no valid-input ALS-XZ behavior, limit, counter or order changes.
+Validate an explicit `limits` value under the existing `resolveLimits` contract even
+when geometry would return early; do not let an invalid option succeed only on a
+no-geometry board. Keep all existing exports and add only `findSueDeCoq` to the exact API pin.
+
+Publish exactly one fresh `{id:'sueDeCoq',work:guard.used,limit:guard.limit,capHit,retained}`
+on a handled return, including capped/parent-declined null; `retained` is zero if no
+enumeration ran, otherwise its actual retained count. Precedence remains
+`guard.capped ? 'work' : recordQuotaHit ? 'records' : null`. A parent-only stop is null
+and cannot erase an earlier local cap. A record-cap witness may return with that cap visible.
+Final parent recheck precedes publication; the observer is **outside** the budget handler.
+Cancellation/unhandled errors propagate without a later record; an observer exception,
+including one named `budget.exceeded`, propagates unchanged with no retry/second record.
+
+Keep focused boundary coverage in the existing ALS suite: geometry with no enum versus
+a geometry work/parent stop; membership and proper I subsets; rejected-operation charges;
+exact-limit versus one-short target completion; record-cap witness; sticky one-shot parent
+stop and coincident local cap; invalid options before an early negative; observer errors,
+purity/repetition and unchanged valid ALS-XZ behavior. Ordinary IR72 proof/oracle/mutation,
+fixture and integration gates remain; these probes do not replace them.
+
+**Evidence qualifications and corrections — retain the raw P0 records.**
+P0.2 A has P3 **min 1,669, median 2,172, p90 2,810, max 3,103**; 2,172 is not its minimum.
+The script deduplicates strings *before* recording `total:86`; **85 pass its unique-solution
+check, one is skipped**, and sixteen remain unsolved after the preparatory prefix.
+Do not conflate distinct strings with solution uniqueness or call this a census.
+The three seeded complete-scan P3 totals above 50,000 use lifted records (up to 9,221,
+versus production's 4,096) and continue past first witnesses: **not three demonstrated
+production cap hits**. The first-witness figures also remain diagnostic.
+The oracle/record scans compare structural pattern keys and share their geometry/target
+helpers; the zero count means no removal of a supplied known solution. In particular seeded
+positions need not have unique solutions. This is not a completed independent target-oracle/
+exact-solver proof or GH reachability. Correct that prose; do not rewrite raw ledgers.
+Keep the failed first-run transcript and the disclosed P0.2 extra pair-open-counter change,
+which was absent from its pre-run plan; no retrospective claim that it was planned.
+
+**GH heads-up — risk, not an owner/corpus request yet.** Zero hits at the first sixteen
+order-196 fixture positions does not prove that later normal-hint positions of those or
+other already-owned real puzzles lack Sue de Coq. The existing bounded known-source/
+ordinary B route remains authorized, not a cached/test-kit corpus scan. Require real
+fixture provenance and current normal-hint GH replay with all earlier techniques enabled;
+seeded candidate states and an isolated direct-finder success are not GH sources.
+If that route is exhausted or cannot run safely, pause with the actual attempted sources,
+batch accounting and a concrete bounded acquisition proposal for the owner. Do not silently
+substitute synthetic evidence, change priorities, broaden R1 or begin the proposed scan.
 
 ### Predecessor specimens: narrow MS16-only permission
 

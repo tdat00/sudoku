@@ -184,9 +184,15 @@ No intermediate pruning. Parent milestones are not additional waves or commits.
 **Current serial handoff, 2026-11-18.** MS15b is accepted and committed at **`8b26e83`**,
 after orchestrator template review and rechecks. MS15a (`b958a58`, SA1 accepted), MS14c
 (`6a9fbf6`; M14 complete), MS14b (`0e3a0c4`), MS13c (`9d58d86`) and resolved JF-02/S-OD12
-(A + S0) remain prior boundaries. **MS16 is ready to dispatch**, then MS17a -> MS17b and
-the unchanged remainder. Its brief supplies the shared-ALS handoff, task-local predecessor
-specimen permission, exact-value golden-pin ruling gate and before-run plan requirements.
+(A + S0) remain prior boundaries. **MS16's pre-implementation Q1-Q5 are settled in its brief**;
+the developer stopped before a tracked edit and resumes only on the orchestrator's explicit
+relay. The order remains MS16 -> MS17a -> MS17b and the unchanged remainder.
+The rulings fix R1 geometry, all two/three-cell intersection subsets, P3's actual charge
+points, canonical witness/target order and the diagnostic API/observer contract, including
+the missing opts-array validation already required by MS15b Q3. No broader scope, shared-limit
+retuning or corpus exception follows. Its brief also supplies the shared-ALS handoff,
+task-local predecessor specimen permission, exact-value golden-pin ruling gate and
+before-run plan requirements.
 Keep the existing pre-ALS recipes unchanged; current-ladder integration remains current.
 Keep the assigned
 MS14a/MS13c wave numbers 34/35; do not renumber IDs, change Done marks or rewrite historical
