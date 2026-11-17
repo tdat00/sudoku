@@ -1,0 +1,4 @@
+$ node tests\node-runner.js --list-tests=..\docs\difficulty-v3\evidence\MS15b\inventory-generator.json
+Inventory: 4682 tests in 55 suites (0 skipped, 30 benchmarks), registration 0.6 s
+Written: docs/difficulty-v3/evidence/MS15b/inventory-generator.json
+exit=0 seconds=0.725

@@ -1,0 +1,20 @@
+'use strict';
+// Scratch (MS15b): smoke test of findXz on the brief's witness vector and the registry position (short, no generation).
+const SG = require('./load.js');
+const H = SG.techHelper;
+const model = H.model('classic9');
+const blank = '.'.repeat(81);
+const specs = new Array(81).fill(null);
+const at = (r, c) => (r - 1) * 9 + (c - 1);
+specs[at(1, 1)] = '12';
+specs[at(1, 2)] = '23';
+specs[at(1, 4)] = '14';
+specs[at(2, 4)] = '34';
+const state = H.makeState(model, blank, { candidates: specs, propagate: false });
+const ctx = SG.techniques.createContext(model, { onPatternWork: (r) => console.log('record', JSON.stringify(r)) });
+const found = SG.alsPatterns.findXz(model, state, ctx);
+console.log(JSON.stringify(found));
+const t = SG.techniques.get('alsXz');
+console.log(JSON.stringify([t.id, t.group, t.order, t.baseCost, t.variantScope, t.assumesUniqueness]));
+console.log(SG.techniques.list().filter((x) => x.order >= 186 && x.order <= 202).map((x) => x.id + ':' + x.order).join(' '));
+console.log(JSON.stringify(Object.keys(SG.alsPatterns)));

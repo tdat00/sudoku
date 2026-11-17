@@ -1091,8 +1091,8 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    `.github/scripts/generator-quick.json` owns it. The evidence is in `docs/difficulty-v3/evidence/MS14c/evidence.md`.
 
    **The bounded almost-locked-set enumerator** (`core/js/engine/tech-als.js`, `SG.alsPatterns`; task MS15a, rating
-   v3, R18; **inactive**: no technique, weight, hint, help example or rating reads it yet, so no output changed; its
-   first readers are MS15b and MS16). An almost-locked set (ALS) is *k* open cells (1 to 4) of one all-different unit
+   v3, R18; **inactive when it was written**: no technique, weight, hint, help example or rating read it, so no
+   output changed; MS15b registers `alsXz` on it, next). An almost-locked set (ALS) is *k* open cells (1 to 4) of one all-different unit
    whose candidates are exactly *k* + 1 digits; the unit may be partial (a Killer cage), a diagonal, a window or a
    region. `SG.alsPatterns.enumerate(model, state, ctx, work[, limits])` returns `{ records, complete, capHit }`:
    plain records `{ cells, digits, occurrences }` (ascending cells and digits, the cells that hold each digit), one
@@ -1111,6 +1111,33 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    re-implements the engine's walk, on 84 seeded positions of every unit shape, and the record limit, the guard, the
    budget and cancellation, and ownership; both `tests.html` pages list it, and the `core-shared` shard of
    `.github/scripts/generator-quick.json` owns it. The evidence is in `docs/difficulty-v3/evidence/MS15a/evidence.md`.
+
+   **ALS-XZ** (`alsXz`, task MS15b, rating v3, R18; **active**: the first reader of the enumerator; Sue de Coq is
+   MS16). The technique is registered in `core/js/engine/tech-als.js`: group `chain`, `order` 194 (after
+   `forcingChain` 190, before `forcingChainLong` 198), base cost 106, weight 1,250 (a Nightmare-tier technique),
+   unscoped, no uniqueness assumption; `find` takes no options. Take two ALSs A and B of the retained records that
+   share no cell and a digit x that both hold and that is *restricted common* (every cell of A holding x sees every
+   cell of B holding x): one of the two sets holds no x, so a set of *k* cells with *k* + 1 digits that holds no x
+   holds each of its other *k* digits exactly once, and for every other common digit z a candidate z of any other
+   open cell that sees **every** cell of A and B holding z is removed. The first witness in the canonical order wins
+   (records A before B; x ascending among the restricted-common digits, then z ascending; the pivot is the first z
+   cell of A, its peers are visited ascending); the Finding is `technique: 'alsXz'`, key `technique.alsXz.step`, the
+   cells of A and B ascending, the eliminations `[target, z]` ascending, `i18nArgs { digitX, digitY, cells }`.
+   **Work and caps:** one guard per call, the enumeration's, never reset; one unit before each pair of records,
+   before each (x, z) scan that is opened and before every visited peer of the pivot (rejected ones too). A unit that
+   the guard refuses, or a stop of the parent budget, gives no Finding, and after a work cut a consumer reads a cap,
+   never "nothing found". One `onPatternWork` record `{ id: 'alsXz', work, limit, capHit, retained }` is published
+   for each call that returns (`capHit` `'work'`, else `'records'` when the quota cut the enumeration, else `null`;
+   a parent-only stop is `null`). `SG.alsPatterns.findXz(model, state, ctx, { workLimit, limits })` is the seam of the
+   tests; production passes no options and runs with `LIMITS` (4 cells, 4,096 records, 50,000 units), which MS15b
+   **retained** after measuring whole calls (no deduction lost at any measured cap; three work caps, all in one
+   real help-example solve, with no Finding even when lifted; S-AV39). The help catalogue is now **39** examples (the
+   ALS-XZ example is a real
+   Classic 9 x 9 Hell 1 puzzle). The core suite `tech-als.test.js` is 111 tests (MS15a's 58 and 53 new: the proof by
+   hand, an independent oracle and the exact solver on seeded positions of every layout, the guard, the caps, the
+   budget and the observer record, ownership); 73 mutants of the finder were run (72 detected, 1 equivalent) and
+   MS15a's 131 re-run (130 detected, 1 equivalent). The activation changed 2 wires, 7 analysis goldens and 24
+   regression hashes, each explained (evidence). The evidence is in `docs/difficulty-v3/evidence/MS15b/evidence.md`.
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
    `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
@@ -1164,7 +1191,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (55 suites, 4,618 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (55 suites, 4,682 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (63 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -1176,7 +1203,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 55 suites,
-4,618 tests — the 37 suites of `tests/suites/` and the 18 of `../core/tests/suites/` that the
+4,682 tests — the 37 suites of `tests/suites/` and the 18 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -1233,7 +1260,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 63 suites, 55 of them quick (4,618 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 63 suites, 55 of them quick (4,682 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1641,7 +1668,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (32, 2,844 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (32, 2,906 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

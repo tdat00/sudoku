@@ -1,0 +1,28 @@
+$ node tests\node-runner.js --suite=tech-als,help,help-example-tools,play,i18n,techniques,ui-contract
+Sudoku Player tests  (node v26.13.0)
+Sources: 40 loaded, 0 listed but not present (--verbose lists them)
+
+ok   tech-als: 111 passed  (8.39 s)
+ok   techniques: 276 passed  (6.62 s)
+ok   help-example-tools: 51 passed  (5.43 s)
+FAIL help: 26 passed, 2 failed  (6.02 s)
+ok   i18n: 76 passed  (213 ms)
+ok   play: 75 passed  (494 ms)
+ok   ui-contract: 63 passed  (161 ms)
+
+Failures:
+  FAIL help > help: the sections of the guide > every technique has a translated name and description, and so has its group
+       AssertionError: expected 39 to be 38
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:95:27)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:296:19)
+  FAIL help > help: what the user guide claims > its numbers are the numbers of the code: 38 techniques, 100 + 100 puzzles, 8 MB files
+       AssertionError: expected 39 to be 38
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help.test.js:573:43)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:296:19)
+
+Suites: 7
+Tests:  680 total, 678 passed, 2 failed, 0 skipped
+Time:   27.33 s running tests, 27.42 s total
+exit=1 seconds=27.538

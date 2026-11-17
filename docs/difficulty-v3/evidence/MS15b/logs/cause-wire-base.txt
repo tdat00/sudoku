@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS15b\cause.js --kind=wire --ledgers=..\docs\difficulty-v3\evidence\MS15b\wire --only=G10,G13 --json=..\docs\difficulty-v3\evidence\MS15b\cause-wire-base.json
+{"id":"G10","request":"killer nightmare 42","equalsSaved":true,"equalsLedger":false,"ledgerEqualsSaved":false,"seconds":10.2}
+{"id":"G13","request":"samurai nightmare 42","equalsSaved":true,"equalsLedger":false,"ledgerEqualsSaved":false,"seconds":95.1}
+wires examined 2 (engine git:b958a58, 105.3 s); equal to the saved output 2, equal to the ledger 0, ledger differs from the saved 2
+exit=0 seconds=112.206

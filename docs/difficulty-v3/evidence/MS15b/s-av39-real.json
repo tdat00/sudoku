@@ -1,0 +1,546 @@
+{
+ "part": "real",
+ "node": "v26.13.0",
+ "source": "tree, production limits {\"cells\":4,\"records\":4096,\"work\":50000}",
+ "liftedDiagnostic": {
+  "workLimit": 20000000,
+  "limits": {
+   "records": 100000
+  }
+ },
+ "puzzles": 58,
+ "puzzlesRun": 58,
+ "stopped": null,
+ "withCalls": 15,
+ "summary": {
+  "calls": 254,
+  "caps": {
+   "none": 251,
+   "records": 0,
+   "work": 3
+  },
+  "found": 20,
+  "work": {
+   "min": 1586,
+   "median": 4447,
+   "p95": 30122,
+   "max": 50000
+  },
+  "retained": {
+   "min": 14,
+   "median": 58,
+   "p95": 177,
+   "max": 229
+  },
+  "ms": {
+   "min": 0.042,
+   "median": 0.32,
+   "p95": 3.122,
+   "max": 5.161
+  },
+  "cappedWithNoFindingButLiftedFinds": 0,
+  "lifted": {
+   "cappedStill": 0,
+   "findingDiffers": 0,
+   "ms": {
+    "min": 0.042,
+    "median": 0.325,
+    "p95": 2.781,
+    "max": 5.804
+   },
+   "work": {
+    "min": 1586,
+    "median": 4447,
+    "p95": 30122,
+    "max": 63271
+   }
+  },
+  "w100k": {
+   "capped": 0,
+   "findingDiffers": 0,
+   "ms": {
+    "min": 0.041,
+    "median": 0.326,
+    "p95": 2.988,
+    "max": 5.345
+   }
+  },
+  "w200k": {
+   "capped": 0,
+   "findingDiffers": 0,
+   "ms": {
+    "min": 0.039,
+    "median": 0.317,
+    "p95": 2.979,
+    "max": 5.76
+   }
+  }
+ },
+ "perPuzzle": [
+  {
+   "source": "help example nakedSingle",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 1.619,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example hiddenSingleBox",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 41.816,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example hiddenSingleLine",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 43.682,
+   "alsXzCalls": 1,
+   "found": 1
+  },
+  {
+   "source": "help example pointing",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.346,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example boxLine",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.34,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example nakedPair",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 8.369,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example hiddenPair",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.335,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example nakedTriple",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 254.041,
+   "alsXzCalls": 24,
+   "found": 1
+  },
+  {
+   "source": "help example hiddenTriple",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 1.693,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example nakedQuad",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 1.118,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example hiddenQuad",
+   "variant": "hyper",
+   "solveStatus": "solved",
+   "solveMs": 6.904,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example xWing",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 204.354,
+   "alsXzCalls": 10,
+   "found": 4
+  },
+  {
+   "source": "help example twoStringKite",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 17.502,
+   "alsXzCalls": 1,
+   "found": 0
+  },
+  {
+   "source": "help example simpleColouring",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 9.999,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example swordfish",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 1.273,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example finnedSwordfish",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 3.438,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example jellyfish",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 3.726,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example xyWing",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 6.871,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example xyzWing",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 8.797,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example wWing",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 8.453,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "help example bugPlusOne",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.669,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture wikipedia-example",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.059,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture classic-easy",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.044,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture classic-easy-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.035,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture classic-medium",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.042,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture worlds-hardest-2012",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 172.961,
+   "alsXzCalls": 28,
+   "found": 1
+  },
+  {
+   "source": "rated fixture platinum-blonde",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 314.192,
+   "alsXzCalls": 30,
+   "found": 1
+  },
+  {
+   "source": "rated fixture golden-nugget",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 192.472,
+   "alsXzCalls": 34,
+   "found": 2
+  },
+  {
+   "source": "rated fixture constructed-veryEasy-1",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.086,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-veryEasy-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.036,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-veryEasy-3",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.033,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-easy-1",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.032,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-easy-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.069,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-easy-3",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.037,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-normal-1",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.074,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-normal-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.09,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-normal-3",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.061,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-hard-1",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.105,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-hard-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.149,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-hard-3",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.174,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-expert-1",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.505,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-expert-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.75,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-expert-3",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.256,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-nightmare-1",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 28.038,
+   "alsXzCalls": 1,
+   "found": 0
+  },
+  {
+   "source": "rated fixture constructed-nightmare-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 95.166,
+   "alsXzCalls": 5,
+   "found": 1
+  },
+  {
+   "source": "rated fixture constructed-nightmare-3",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 44.738,
+   "alsXzCalls": 3,
+   "found": 0
+  },
+  {
+   "source": "classic fixture wikipedia-example",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.104,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "classic fixture worlds-hardest-2012",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 165.71,
+   "alsXzCalls": 28,
+   "found": 1
+  },
+  {
+   "source": "classic fixture classic-easy",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.097,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "classic fixture classic-medium",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.08,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "classic fixture classic-easy-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.042,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "classic fixture hard-17-clues",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.053,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "classic fixture hard-17-clues-b",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.065,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "classic fixture hard-platinum",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 300.43,
+   "alsXzCalls": 30,
+   "found": 1
+  },
+  {
+   "source": "classic fixture hard-nugget",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 193.699,
+   "alsXzCalls": 34,
+   "found": 2
+  },
+  {
+   "source": "classic fixture hard-a",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.137,
+   "alsXzCalls": 0,
+   "found": 0
+  },
+  {
+   "source": "classic fixture hard-b",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 201.849,
+   "alsXzCalls": 21,
+   "found": 5
+  },
+  {
+   "source": "classic fixture hard-c",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 25.514,
+   "alsXzCalls": 4,
+   "found": 0
+  }
+ ],
+ "liftedSkipped": 0
+}

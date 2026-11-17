@@ -1,0 +1,17 @@
+$ node tests\artifacts\difficulty-v3\MS15b\explore-16.js
+16 keep 0.3-0.6 seed 7: n 1874/2491/1929/165 firing 1111
+16 keep 0.3-0.6 seed 8: n 2457/916/137/75 firing 1111
+16 keep 0.3-0.6 seed 9: n 295/1168/789/157 firing 1111
+16 keep 0.4-0.7 seed 7: n 883/1697/865/72 firing 1111
+16 keep 0.4-0.7 seed 8: n 1329/416/26/18 firing 1110
+16 keep 0.4-0.7 seed 9: n 91/926/457/58 firing 1111
+16 keep 0.5-0.8 seed 7: n 505/1035/381/34 firing 1111
+16 keep 0.5-0.8 seed 8: n 764/223/5/8 firing 1100
+16 keep 0.5-0.8 seed 9: n 34/654/280/5 firing 1110
+16 keep 0.6-0.9 seed 7: n 237/649/246/14 firing 1111
+16 keep 0.6-0.9 seed 8: n 371/76/0/1 firing 1100
+16 keep 0.6-0.9 seed 9: n 10/444/203/3 firing 0110
+16 keep 0.7-0.95 seed 7: n 134/435/143/14 firing 1111
+16 keep 0.7-0.95 seed 8: n 214/38/0/1 firing 1100
+16 keep 0.7-0.95 seed 9: n 6/375/157/1 firing 0110
+exit=0 seconds=0.372

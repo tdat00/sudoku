@@ -1,0 +1,26 @@
+$ node tests\artifacts\difficulty-v3\MS15b\mechanism.js --kind=hash --only=classic9/nightmare#2,classic9/nightmare#8,classic9/nightmare#21,classic9/nightmare#89,classic9/nightmare#987,classic9/nightmare#4181,classic9/nightmare#6765,diagonalX/nightmare#1,diagonalX/nightmare#2,diagonalX/nightmare#3,diagonalX/nightmare#5,diagonalX/nightmare#8,diagonalX/nightmare#13,diagonalX/nightmare#21,diagonalX/nightmare#34,diagonalX/nightmare#55,diagonalX/nightmare#144,diagonalX/nightmare#610,diagonalX/nightmare#987,diagonalX/nightmare#1597,diagonalX/nightmare#2584,diagonalX/nightmare#4181,diagonalX/nightmare#6765,diagonalX/nightmare#10946 --out=..\docs\difficulty-v3\evidence\MS15b\mechanism-hash-tree.json --cross=..\docs\difficulty-v3\evidence\MS15b\mechanism-hash-base.json
+classic9/nightmare#2: engine tree clues 28, own rating nightmare/2200 alsXz x1; the puzzle of git:b958a58 (clues 29, same regions true, same puzzle false) rated here nightmare/2072 alsXz x2
+classic9/nightmare#8: engine tree clues 26, own rating nightmare/2375 alsXz x3; the puzzle of git:b958a58 (clues 28, same regions true, same puzzle false) rated here nightmare/2369
+classic9/nightmare#21: engine tree clues 28, own rating nightmare/2266 alsXz x1; the puzzle of git:b958a58 (clues 28, same regions true, same puzzle false) rated here nightmare/2307
+classic9/nightmare#89: engine tree clues 27, own rating nightmare/2319 alsXz x1; the puzzle of git:b958a58 (clues 28, same regions true, same puzzle false) rated here nightmare/2093 alsXz x1
+classic9/nightmare#987: engine tree clues 32, own rating nightmare/2105; the puzzle of git:b958a58 (clues 34, same regions true, same puzzle false) rated here nightmare/1897
+classic9/nightmare#4181: engine tree clues 28, own rating nightmare/2331 alsXz x2; the puzzle of git:b958a58 (clues 29, same regions true, same puzzle false) rated here nightmare/2102 alsXz x1
+classic9/nightmare#6765: engine tree clues 29, own rating nightmare/2281 alsXz x2; the puzzle of git:b958a58 (clues 30, same regions true, same puzzle false) rated here nightmare/2314 alsXz x1
+diagonalX/nightmare#1: engine tree clues 34, own rating nightmare/2389 alsXz x2; the puzzle of git:b958a58 (clues 32, same regions true, same puzzle false) rated here nightmare/2390 alsXz x2
+diagonalX/nightmare#2: engine tree clues 22, own rating nightmare/2379 alsXz x2; the puzzle of git:b958a58 (clues 28, same regions true, same puzzle false) rated here nightmare/2137 alsXz x1
+diagonalX/nightmare#3: engine tree clues 28, own rating nightmare/2226 alsXz x1; the puzzle of git:b958a58 (clues 24, same regions true, same puzzle false) rated here nightmare/2166 alsXz x3
+diagonalX/nightmare#5: engine tree clues 26, own rating nightmare/2301 alsXz x2; the puzzle of git:b958a58 (clues 24, same regions true, same puzzle false) rated here nightmare/2285
+diagonalX/nightmare#8: engine tree clues 26, own rating nightmare/2388 alsXz x1; the puzzle of git:b958a58 (clues 30, same regions true, same puzzle false) rated here nightmare/2109
+diagonalX/nightmare#13: engine tree clues 22, own rating nightmare/2348 alsXz x1; the puzzle of git:b958a58 (clues 31, same regions true, same puzzle false) rated here nightmare/1900 alsXz x1
+diagonalX/nightmare#21: engine tree clues 24, own rating nightmare/2279 alsXz x1; the puzzle of git:b958a58 (clues 24, same regions true, same puzzle false) rated here nightmare/2125 alsXz x1
+diagonalX/nightmare#34: engine tree clues 26, own rating nightmare/2391 alsXz x2; the puzzle of git:b958a58 (clues 26, same regions true, same puzzle false) rated here nightmare/2351 alsXz x1
+diagonalX/nightmare#55: engine tree clues 22, own rating nightmare/2392 alsXz x1; the puzzle of git:b958a58 (clues 24, same regions true, same puzzle false) rated here nightmare/2279
+diagonalX/nightmare#144: engine tree clues 26, own rating nightmare/2337 alsXz x3; the puzzle of git:b958a58 (clues 22, same regions true, same puzzle false) rated here nightmare/2354
+diagonalX/nightmare#610: engine tree clues 26, own rating nightmare/2233 alsXz x3; the puzzle of git:b958a58 (clues 26, same regions true, same puzzle false) rated here nightmare/1979
+diagonalX/nightmare#987: engine tree clues 34, own rating nightmare/2067 alsXz x2; the puzzle of git:b958a58 (clues 24, same regions true, same puzzle false) rated here nightmare/2283
+diagonalX/nightmare#1597: engine tree clues 33, own rating nightmare/2399 alsXz x2; the puzzle of git:b958a58 (clues 24, same regions true, same puzzle false) rated here nightmare/2345 alsXz x2
+diagonalX/nightmare#2584: engine tree clues 22, own rating nightmare/2257 alsXz x1; the puzzle of git:b958a58 (clues 33, same regions true, same puzzle false) rated here nightmare/2387
+diagonalX/nightmare#4181: engine tree clues 22, own rating nightmare/2064 alsXz x1; the puzzle of git:b958a58 (clues 24, same regions true, same puzzle false) rated here nightmare/2180 alsXz x2
+diagonalX/nightmare#6765: engine tree clues 24, own rating nightmare/2170 alsXz x1; the puzzle of git:b958a58 (clues 24, same regions true, same puzzle false) rated here nightmare/2210 alsXz x1
+diagonalX/nightmare#10946: engine tree clues 24, own rating nightmare/2392 alsXz x1; the puzzle of git:b958a58 (clues 26, same regions true, same puzzle false) rated here nightmare/2167 alsXz x1
+exit=0 seconds=35.075

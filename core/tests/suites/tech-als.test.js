@@ -1,9 +1,11 @@
 // Almost-locked sets: the bounded enumerator SG.alsPatterns.enumerate of ../core/js/engine/tech-als.js
-// (difficulty v3, R18, MS15a). The helper is INACTIVE: no technique is registered, so these suites are all
-// that reads it.
+// (difficulty v3, R18, MS15a) and ALS-XZ (MS15b), the registered technique alsXz that reads it through
+// SG.alsPatterns.findXz. The enumerator is a helper with no observer of its own; ALS-XZ is the only ALS
+// technique registered, Sue de Coq (MS16) is not active yet.
 //
 // Layout of this suite:
-//   scope        the API, the limits, nothing registered, no observer record
+//   scope        the API, the limits, ALS-XZ registered and no other ALS technique, no observer record of the
+//                helper
 //   vectors      what is an ALS and what is not (cardinality, units, fixed cells, partial units), by hand
 //   order        the canonical order, deduplication, independence of the order of units and cells
 //   agreement    every record and the work, against an independent enumeration, on seeded positions of every
@@ -12,6 +14,9 @@
 //   work         the shared guard, the work limit and the prefix that a cut leaves
 //   budget       the parent budget at entry and every 256 units, cancellation, other errors
 //   ownership    arrays of the caller, nothing read twice, nothing cached, no interference with the finders
+//   als-xz       the registered technique: its seam, the proof by hand (the brief's witness and its near
+//                misses), the Finding against an independent search, the one guard (work, caps, record quota),
+//                the parent budget, the observer record, ownership
 //
 // The enumeration of the RECORDS (`oracle`) is independent: it is written from model.units, the state and
 // sorted digit lists only (all subsets of the open cells of each unit, the union of their digits, a table by
@@ -384,24 +389,27 @@
   // ---------------------------------------------------------------------------------------------------------
 
   describe('als enumerator: scope', function () {
-    it('offers enumerate, createWork, spend and the limits 4 cells, ' +
+    it('offers enumerate, createWork, spend, findXz and the limits 4 cells, ' +
       '4096 records and 50000 units', function () {
       expect(typeof A.enumerate).toBe('function');
       expect(typeof A.createWork).toBe('function');
       expect(typeof A.spend).toBe('function');
+      expect(typeof A.findXz).toBe('function');
       expect(A.LIMITS).toEqual(DEFAULT);
       expect(Object.isFrozen(A.LIMITS)).toBe(true);
-      expect(Object.keys(A).sort()).toEqual(['LIMITS', 'createWork', 'enumerate', 'spend']);
+      expect(Object.keys(A).sort()).toEqual(['LIMITS', 'createWork', 'enumerate', 'findXz', 'spend']);
     });
 
-    it('is inactive: no ALS technique is registered, so no solve, rating or hint can reach it', function () {
-      ['alsXz', 'sueDeCoq', 'als', 'alsEnumerate', 'alsXyWing', 'deathBlossom'].forEach(function (id) {
-        expect(SG.techniques.has(id)).toBe(false);
+    it('registers ALS-XZ only: alsXz is active, Sue de Coq and every other ALS technique are absent',
+      function () {
+        expect(SG.techniques.has('alsXz')).toBe(true);
+        ['sueDeCoq', 'als', 'alsEnumerate', 'alsXyWing', 'deathBlossom'].forEach(function (id) {
+          expect(SG.techniques.has(id)).toBe(false);
+        });
+        SG.techniques.list().forEach(function (def) {
+          if (def.id !== 'alsXz') expect(/^als/i.test(def.id) || /sueDeCoq/.test(def.id)).toBe(false);
+        });
       });
-      SG.techniques.list().forEach(function (def) {
-        expect(/^als/i.test(def.id) || /sueDeCoq/.test(def.id)).toBe(false);
-      });
-    });
 
     it('returns exactly records, complete and capHit, ' +
       'and records of exactly cells, digits and occurrences', function () {
@@ -1252,5 +1260,1010 @@
       });
       expect(fired).toBeGreaterThan(20);
     });
+  });
+
+  // =========================================================================================================
+  // ALS-XZ (R18, MS15b): the registered technique alsXz and `SG.alsPatterns.findXz`
+
+  // The brief's witness: A = {R1C1 {1,2}, R1C2 {2,3}}, B = {R1C4 {1,4}, R2C4 {3,4}}, x = 1 (R1C1 sees R1C4 in
+  // row 1), z = 3 (R1C2 and R2C4), and R2C2 sees both. The other cells keep all their candidates.
+  var XZ_BASE = { R1C1: '12', R1C2: '23', R1C4: '14', R2C4: '34' };
+  // The same without the 3 in the other cells that see R1C2 and R2C4, so that R2C2 is the one target.
+  var XZ_ONE_TARGET = Object.assign({
+    R1C5: '12456789', R1C6: '12456789', R2C1: '12456789', R2C3: '12456789'
+  }, XZ_BASE);
+  // Two bivalue cells with the same pair: x = 1 or 2 are both restricted common digits of the pair.
+  var XZ_PAIR = { R1C1: '12', R1C2: '12' };
+  // Near misses found by a search (scratch `search-vectors.js`) that separate the rule from a looser one; each has
+  // no witness, the looser rule would make one.
+  // overlapping sets only (the three-cell sets of box 1 share R1C1 and R2C2)
+  var XZ_OVERLAP = { R1C1: '123', R1C3: '134', R2C1: '124', R2C2: '123' };
+  // a restricted common digit missing one cross-peer: the 1 of R1C5 sees R1C2 but not R2C1
+  var XZ_CROSS = { R1C2: '124', R1C5: '13', R2C1: '134', R2C2: '234' };
+  // a target that sees only some of the cells that hold z: the 3 of R1C3, R1C5, R2C3 and R2C5 have no common peer
+  var XZ_TARGET = { R1C3: '234', R1C5: '23', R2C3: '134', R2C5: '13' };
+
+  var seeTables = new WeakMap();
+
+  /** Two different cells that share a unit, read from model.units and never from model.peers. */
+  function shareUnit(model, a, b) {
+    if (a === b) return false;
+    var table = seeTables.get(model);
+    if (!table) {
+      table = {};
+      seeTables.set(model, table);
+    }
+    var key = a * model.cellCount + b;
+    if (table[key] === undefined) {
+      table[key] = model.units.some(function (u) { return u.indexOf(a) !== -1 && u.indexOf(b) !== -1; });
+    }
+    return table[key];
+  }
+
+  function peerCount(model, cell) {
+    var n = 0;
+    for (var c = 0; c < model.cellCount; c++) if (shareUnit(model, cell, c)) n++;
+    return n;
+  }
+
+  /**
+   * Every ALS-XZ witness of the records, in the canonical order (A before B by record index, x ascending, z
+   * ascending): { i, j, a, b, x, z, targets }. It is written from the definition: disjoint sets, a restricted
+   * common x (every x cell of A sees every x cell of B), another common digit z, and as targets EVERY open cell
+   * (not a pivot's peers) that holds z, is outside both sets and sees every z cell of both.
+   */
+  function xzWitnesses(model, state, records, firstOnly) {
+    var out = [];
+    for (var i = 0; i < records.length && !(firstOnly && out.length > 0); i++) {
+      for (var j = i + 1; j < records.length && !(firstOnly && out.length > 0); j++) {
+        var a = records[i];
+        var b = records[j];
+        if (a.cells.some(function (c) { return b.cells.indexOf(c) !== -1; })) continue;
+        var common = a.digits.filter(function (d) { return b.digits.indexOf(d) !== -1; });
+        common.forEach(function (x) {
+          var restricted = a.occurrences[x].every(function (p) {
+            return b.occurrences[x].every(function (q) { return shareUnit(model, p, q); });
+          });
+          if (!restricted) return;
+          common.forEach(function (z) {
+            if (z === x) return;
+            var zCells = a.occurrences[z].concat(b.occurrences[z]);
+            var targets = [];
+            for (var c = 0; c < model.cellCount; c++) {
+              if (state.value[c] !== 0 || (state.candidates[c] & (1 << (z - 1))) === 0) continue;
+              if (a.cells.indexOf(c) !== -1 || b.cells.indexOf(c) !== -1) continue;
+              if (zCells.every(function (q) { return shareUnit(model, c, q); })) targets.push(c);
+            }
+            if (targets.length > 0) out.push({ i: i, j: j, a: a, b: b, x: x, z: z, targets: targets });
+          });
+        });
+      }
+    }
+    return out;
+  }
+
+  function xzFindingOf(model, w) {
+    var cells = w.a.cells.concat(w.b.cells).sort(numeric);
+    return {
+      technique: 'alsXz',
+      cells: cells,
+      placements: [],
+      eliminations: w.targets.map(function (c) { return [c, w.z]; }),
+      i18nKey: 'technique.alsXz.step',
+      i18nArgs: {
+        digitX: w.x,
+        digitY: w.z,
+        cells: cells.map(function (c) { return SG.model.cellLabel(model, c); })
+      }
+    };
+  }
+
+  /**
+   * The units the stated rule charges after the enumeration, up to the witness w (null: every pair): one per
+   * pair of records tested, one per opened (x, z) scan and one per cell of the pivot's peer list, the pivot being
+   * the first cell of A that holds z. NOT independent: it re-implements the count of the rule from its words,
+   * so it pins the stated count rather than discovers it.
+   */
+  function xzPairUnits(model, records, w) {
+    var units = 0;
+    for (var i = 0; i < records.length; i++) {
+      for (var j = i + 1; j < records.length; j++) {
+        units++;
+        var a = records[i];
+        var b = records[j];
+        if (a.cells.some(function (c) { return b.cells.indexOf(c) !== -1; })) continue;
+        var common = a.digits.filter(function (d) { return b.digits.indexOf(d) !== -1; });
+        for (var p = 0; p < common.length; p++) {
+          var x = common[p];
+          var restricted = a.occurrences[x].every(function (s) {
+            return b.occurrences[x].every(function (q) { return shareUnit(model, s, q); });
+          });
+          if (!restricted) continue;
+          for (var k = 0; k < common.length; k++) {
+            if (common[k] === x) continue;
+            units += 1 + peerCount(model, a.occurrences[common[k]][0]);
+            if (w !== null && w.i === i && w.j === j && w.x === x && w.z === common[k]) return units;
+          }
+        }
+      }
+    }
+    return units;
+  }
+
+  /** A call of findXz with a context that collects the observer records: { finding, seen }. */
+  function xzRun(model, state, opts, ctxOptions) {
+    var seen = [];
+    var options = Object.assign({ onPatternWork: function (r) { seen.push(r); } }, ctxOptions || {});
+    var finding = A.findXz(model, state, SG.techniques.createContext(model, options), opts);
+    return { finding: finding, seen: seen };
+  }
+
+  /** The enumeration the finder starts with, for the same limits: its records and its work. */
+  function xzEnumeration(model, state, limits) {
+    var out = run(model, state, limits, undefined);
+    return { records: out.result.records, work: out.work.used, capHit: out.result.capHit };
+  }
+
+  describe('als-xz: the registered technique and the seam', function () {
+    it('is registered as alsXz: chain group, order 194, base cost 106, unscoped, no uniqueness, ' +
+      'between forcingChain (190) and forcingChainLong (198)', function () {
+      var def = SG.techniques.get('alsXz');
+      expect(SG.techniques.list().filter(function (t) { return t.id === 'alsXz'; })).toHaveLength(1);
+      expect(def.group).toBe('chain');
+      expect(def.order).toBe(194);
+      expect(def.baseCost).toBe(106);
+      expect(def.i18nKey).toBe('technique.alsXz');
+      expect(def.variantScope).toBeNull();
+      expect(def.assumesUniqueness).toBe(false);
+      expect(typeof def.find).toBe('function');
+      var long = SG.techniques.get('forcingChainLong');
+      var short = SG.techniques.get('forcingChain');
+      expect(short.order).toBe(190);
+      expect(long.order).toBe(198);
+      expect(short.order).toBeLessThan(def.order);
+      expect(def.order).toBeLessThan(long.order);
+      expect(short.baseCost).toBeLessThan(def.baseCost);
+      expect(def.baseCost).toBeLessThan(long.baseCost);
+      var ids = SG.techniques.list().map(function (t) { return t.id; });
+      expect(ids.indexOf('alsXz')).toBe(ids.indexOf('forcingChain') + 1);
+      expect(ids.indexOf('alsXz')).toBe(ids.indexOf('forcingChainLong') - 1);
+      // no other technique has its order
+      expect(SG.techniques.list().filter(function (t) { return t.order === 194; })).toHaveLength(1);
+    });
+
+    it('is registered once even when the file is loaded again: the registry keeps its first definition',
+      function () {
+        var source = SG.test.node && SG.test.node.fs.readFileSync(
+          SG.test.node.path.join(SG.test.node.root, '../core/js/engine/tech-als.js'), 'utf8');
+        if (!source) SG.test.skip('needs the Node runner to reload the source');
+        var def = SG.techniques.get('alsXz');
+        var count = SG.techniques.list().length;
+        SG.test.node.vm.runInThisContext(source, { filename: '../core/js/engine/tech-als.js' });
+        expect(SG.techniques.get('alsXz')).toBe(def);
+        expect(SG.techniques.list().length).toBe(count);
+        expect(SG.alsPatterns.LIMITS).toEqual(DEFAULT);
+      });
+
+    it('runs with the production limits: the registered finder takes no options, whatever it is given',
+      function () {
+        var def = SG.techniques.get('alsXz');
+        var state = position(m9, XZ_BASE);
+        var seen = [];
+        var ctx = SG.techniques.createContext(m9, { onPatternWork: function (r) { seen.push(r); } });
+        var plain = def.find(m9, state, ctx);
+        var extra = def.find(m9, state, ctx, { workLimit: 5, limits: { cells: 1, records: 1 } });
+        expect(extra).toEqual(plain);
+        expect(seen).toHaveLength(2);
+        expect(seen[0]).toEqual(seen[1]);
+        expect(seen[0].limit).toBe(50000);
+        expect(plain).toEqual(A.findXz(m9, state, SG.techniques.createContext(m9, {})));
+      });
+
+    it('takes opts = { workLimit, limits } as the seam of the tests and refuses anything else, ' +
+      'before any work', function () {
+        var state = position(m9, XZ_PAIR);
+        var bad = [null, 5, 'x', true, { workLimit: -1 }, { workLimit: NaN }, { workLimit: Infinity },
+          { workLimit: '5' }, { workLimit: null }, { limits: null }, { limits: 5 }, { limits: { cells: -1 } },
+          { limits: { records: NaN } }, { limits: { cells: Infinity } }];
+        bad.forEach(function (opts) {
+          var seen = [];
+          var checks = 0;
+          var ctx = Object.assign({}, SG.techniques.createContext(m9, {}), {
+            options: { onPatternWork: function (r) { seen.push(r); } },
+            check: function () { checks++; }
+          });
+          var err = caught(function () { A.findXz(m9, state, ctx, opts); });
+          expect([JSON.stringify(opts), err && err.code]).toEqual([JSON.stringify(opts), 'solver.invalidOption']);
+          expect([JSON.stringify(opts), seen.length, checks]).toEqual([JSON.stringify(opts), 0, 0]);
+        });
+        // a whole number of at least 0 is accepted and floored
+        var out = xzRun(m9, state, { workLimit: 2.9, limits: { cells: 1.7, records: 100 } });
+        expect(out.seen).toHaveLength(1);
+        expect(out.seen[0].limit).toBe(2);
+        expect(xzRun(m9, state, {}).finding).not.toBeNull();
+        expect(xzRun(m9, state, { workLimit: undefined, limits: undefined }).finding).not.toBeNull();
+      });
+
+    it('offers no other ALS technique: Sue de Coq and the rest stay absent', function () {
+      ['sueDeCoq', 'als', 'alsEnumerate', 'alsXyWing', 'deathBlossom', 'alsXy'].forEach(function (id) {
+        expect(SG.techniques.has(id)).toBe(false);
+      });
+      var ids = SG.techniques.list().filter(function (def) {
+        return /^als/i.test(def.id) || /sueDeCoq/.test(def.id);
+      }).map(function (def) { return def.id; });
+      expect(ids).toEqual(['alsXz']);
+    });
+  });
+
+  describe('als-xz: the proof by hand', function () {
+    function everyWitness(model, state, maxCells) {
+      var records = oracle(model, state, maxCells).records;
+      return { records: records, all: xzWitnesses(model, state, records, false) };
+    }
+
+    /** A complete negative: the independent search finds nothing and neither does the finder. */
+    function expectNone(model, state, label) {
+      var expected = everyWitness(model, state, 4);
+      expect([label, expected.all.length]).toEqual([label, 0]);
+      var out = xzRun(model, state);
+      expect([label, out.finding]).toEqual([label, null]);
+      var enumeration = xzEnumeration(model, state);
+      expect(out.seen).toEqual([{
+        id: 'alsXz', work: enumeration.work + xzPairUnits(model, enumeration.records, null), limit: 50000,
+        capHit: null, retained: expected.records.length
+      }]);
+      return expected;
+    }
+
+    it('finds the brief\'s witness: A = {R1C1, R1C2}, B = {R1C4, R2C4}, x = 1 on row 1, z = 3, and ' +
+      'R2C2 loses the 3', function () {
+        var state = position(m9, XZ_ONE_TARGET);
+        var limits = { cells: 2 };
+        var expected = everyWitness(m9, state, 2);
+        // with sets of at most two cells it is the only witness of the position
+        expect(expected.all).toHaveLength(1);
+        var w = expected.all[0];
+        expect([w.a.cells, w.b.cells, w.x, w.z, w.targets]).toEqual([[0, 1], [3, 12], 1, 3, [10]]);
+        var out = xzRun(m9, state, { limits: limits });
+        expect(out.finding).toEqual({
+          technique: 'alsXz',
+          cells: [0, 1, 3, 12],
+          placements: [],
+          eliminations: [[10, 3]],
+          i18nKey: 'technique.alsXz.step',
+          i18nArgs: { digitX: 1, digitY: 3, cells: ['R1C1', 'R1C2', 'R1C4', 'R2C4'] }
+        });
+        expect(Object.keys(out.finding)).toEqual(['technique', 'cells', 'placements', 'eliminations', 'i18nKey',
+          'i18nArgs']);
+        expect(Object.keys(out.finding.i18nArgs)).toEqual(['digitX', 'digitY', 'cells']);
+        expect(out.finding).toEqual(xzFindingOf(m9, w));
+        // the work: the enumeration, one pair, one (x, z) scan and the twenty peers of the pivot R1C2
+        var enumeration = xzEnumeration(m9, state, limits);
+        expect(enumeration.records).toHaveLength(7);
+        expect(out.seen).toEqual([{
+          id: 'alsXz', work: enumeration.work + xzPairUnits(m9, enumeration.records, w), limit: 50000,
+          capHit: null, retained: 7
+        }]);
+      });
+
+    it('returns the first witness of the canonical order with the default limits, and the brief\'s witness is ' +
+      'one of the position\'s witnesses', function () {
+        var state = position(m9, XZ_ONE_TARGET);
+        var expected = everyWitness(m9, state, 4);
+        expect(expected.records).toHaveLength(8);
+        var brief = expected.all.filter(function (w) {
+          return w.a.cells.join() === '0,1' && w.b.cells.join() === '3,12' && w.x === 1 && w.z === 3;
+        });
+        expect(brief).toHaveLength(1);
+        expect(brief[0].targets).toEqual([10]);
+        expect(expected.all.length).toBeGreaterThan(1);
+        // the three-cell set of row 1 comes after the one-cell sets: R2C4 (record 3) is A, with x = 4
+        var first = expected.all[0];
+        expect([first.i, first.j, first.a.cells, first.b.cells, first.x, first.z]).toEqual([3, 7, [12], [0, 1, 3], 4,
+          3]);
+        var out = xzRun(m9, state);
+        expect(out.finding).toEqual(xzFindingOf(m9, first));
+        expect(out.finding.i18nArgs.digitX).toBe(4);
+        expect(out.finding.cells).toEqual([0, 1, 3, 12]);
+      });
+
+    it('removes only the cells that see EVERY cell holding z in both sets, and only the digit z', function () {
+      var state = position(m9, XZ_BASE);
+      var out = xzRun(m9, state, { limits: { cells: 2 } });
+      // R1C5, R1C6 (row 1 and box 2), R2C1, R2C2, R2C3 (row 2 and box 1) see both R1C2 and R2C4
+      expect(out.finding.eliminations).toEqual([[4, 3], [5, 3], [9, 3], [10, 3], [11, 3]]);
+      // R1C3 sees R1C2 only, R2C5 sees R2C4 only: they keep the 3, and nothing loses the 1
+      var removed = out.finding.eliminations.map(function (e) { return e[0]; });
+      expect(removed).not.toContain(2);
+      expect(removed).not.toContain(13);
+      out.finding.eliminations.forEach(function (e) { expect(e[1]).toBe(3); });
+    });
+
+    it('never removes a candidate from a solved cell, even in a position that was not propagated', function () {
+      // R2C2 holds the 3 and has no other candidate: it would be the one target, but a solved cell is none
+      var state = position(m9, XZ_ONE_TARGET);
+      state.value[10] = 3;
+      state.candidates[10] = 1 << 2;
+      var limits = { cells: 2 };
+      expect(everyWitness(m9, state, 2).all).toHaveLength(0);
+      expect(xzRun(m9, state, { limits: limits }).finding).toBeNull();
+      expect(xzRun(m9, state).finding).toBeNull();
+    });
+
+    it('finds nothing when the only sets overlap, when a restricted common digit lacks a cross-peer, ' +
+      'when no cell sees all the cells holding z, or when a set has one digit too many', function () {
+        expectNone(m9, position(m9, XZ_OVERLAP), 'overlapping sets');
+        expectNone(m9, position(m9, XZ_CROSS), 'a missing cross-peer');
+        expectNone(m9, position(m9, XZ_TARGET), 'a target that sees some z only');
+        // R1C2 {2,3,5}: {R1C1, R1C2} has four digits, so it is not an ALS and the brief's witness is gone
+        var card = Object.assign({}, XZ_BASE, { R1C2: '235' });
+        expectNone(m9, position(m9, card), 'one digit too many');
+        expectNone(m9, position(m9, Object.assign({}, XZ_ONE_TARGET, { R1C2: '235' })),
+          'one digit too many, one target');
+      });
+
+    it('takes another restricted common digit as z: two bivalue cells {1,2} give x = 1 and z = 2 first', function () {
+      var state = position(m9, XZ_PAIR);
+      var expected = everyWitness(m9, state, 4);
+      expect(expected.records.map(function (r) { return r.cells.join(); })).toEqual(['0', '1']);
+      expect(expected.all.map(function (w) { return [w.x, w.z]; })).toEqual([[1, 2], [2, 1]]);
+      var out = xzRun(m9, state);
+      // R1C3 to R1C9 (the row) and R2C1 to R3C3 (the box): thirteen cells, all losing the 2
+      expect(out.finding.eliminations).toEqual([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 18, 19, 20].map(function (c) {
+        return [c, 2];
+      }));
+      expect(out.finding.i18nArgs).toEqual({ digitX: 1, digitY: 2, cells: ['R1C1', 'R1C2'] });
+      expect(out.finding.cells).toEqual([0, 1]);
+      // the unit of the pair phase is stated: one pair, one (x, z) scan and the twenty peers of the pivot = 22
+      var enumeration = xzEnumeration(m9, state);
+      expect(out.seen[0].work - enumeration.work).toBe(1 + 1 + 20);
+      expect(out.seen[0].work).toBe(enumeration.work + 22);
+    });
+
+    it('reads a partial unit as an all-different unit: a set of two cells that only a cage joins', function () {
+      var spec = { R1C1: '12', R5C5: '23', R1C5: '14', R2C5: '34' };
+      var caged = position(cageModel, spec);
+      var plain = position(m9, spec);
+      var withCage = everyWitness(cageModel, caged, 2);
+      var withoutCage = everyWitness(m9, plain, 2);
+      expect(withCage.records.map(function (r) { return r.cells.join(); })).toContain('0,40');
+      expect(withoutCage.records.map(function (r) { return r.cells.join(); })).not.toContain('0,40');
+      // x = 1 (R1C1 sees R1C5 in row 1), z = 3 (R5C5 and R2C5 in column 5)
+      var cage = withCage.all.filter(function (w) {
+        return w.a.cells.join() === '0,40' && w.b.cells.join() === '4,13' && w.x === 1 && w.z === 3;
+      });
+      expect(cage).toHaveLength(1);
+      expect(cage[0].targets).toEqual([22, 31, 49, 58, 67, 76]);
+      withoutCage.all.forEach(function (w) {
+        expect(w.a.cells.join() === '0,40' || w.b.cells.join() === '0,40').toBe(false);
+      });
+      var limits = { cells: 2 };
+      expect(xzRun(cageModel, caged, { limits: limits }).finding).toEqual(xzFindingOf(cageModel, withCage.all[0]));
+      expect(xzRun(m9, plain, { limits: limits }).finding).toEqual(xzFindingOf(m9, withoutCage.all[0]));
+    });
+
+    it('visits the peers of the pivot, the first cell of A that holds z: here R1C1, which the cage gives ' +
+      'two more peers than R2C2 or R1C4', function () {
+        var spec = { R1C1: '124', R1C2: '34', R1C4: '124', R1C5: '124', R2C2: '12' };
+        var state = position(cageModel, spec);
+        var limits = { cells: 3 };
+        var expected = everyWitness(cageModel, state, 3);
+        var first = expected.all[0];
+        expect([first.a.cells, first.b.cells, first.x, first.z]).toEqual([[0, 10], [3, 4], 4, 1]);
+        expect(first.a.occurrences[1]).toEqual([0, 10]);
+        expect(first.b.occurrences[1]).toEqual([3, 4]);
+        expect([peerCount(cageModel, 0), peerCount(cageModel, 10), peerCount(cageModel, 3)]).toEqual([22, 20, 20]);
+        var out = xzRun(cageModel, state, { limits: limits });
+        expect(out.finding).toEqual(xzFindingOf(cageModel, first));
+        var enumeration = xzEnumeration(cageModel, state, limits);
+        var pairs = xzPairUnits(cageModel, enumeration.records, first);
+        expect(out.seen[0].work).toBe(enumeration.work + pairs);
+        // one unit less ends inside the last peer scan: the 22nd peer of R1C1 is refused and the scan is discarded
+        var again = xzRun(cageModel, state, { limits: limits, workLimit: enumeration.work + pairs - 1 });
+        expect(again.finding).toBeNull();
+        expect(again.seen[0].capHit).toBe('work');
+      });
+  });
+
+  describe('als-xz: agreement with the independent search, and exactness', function () {
+    var F = SG.fixtures.techniques;
+
+    /** The seeded positions of `seededStates`, with the solution that every candidate set contains. */
+    function seededWithSolution(model, solve, seed, count, keepRange) {
+      var rng = SG.testkit.rng.create(seed);
+      var out = [];
+      for (var i = 0; i < count; i++) {
+        var solution = solve(model, rng.fork('grid' + i));
+        var pick = rng.fork('pick' + i);
+        var placedShare = 0.03 + 0.25 * pick.next();
+        var keep = keepRange[0] + (keepRange[1] - keepRange[0]) * pick.next();
+        var state = SG.model.initState(model);
+        var c;
+        var v;
+        for (c = 0; c < model.cellCount; c++) {
+          if (pick.next() < placedShare) SG.constraints.assign(model, state, c, solution[c]);
+        }
+        for (c = 0; c < model.cellCount; c++) {
+          if (state.value[c] !== 0) continue;
+          for (v = 1; v <= model.digits; v++) {
+            if (v !== solution[c] && (state.candidates[c] & (1 << (v - 1))) !== 0 && pick.next() >= keep) {
+              SG.constraints.eliminate(model, state, c, v);
+            }
+          }
+        }
+        out.push({ state: state, solution: solution });
+      }
+      return out;
+    }
+
+    /** The real classic 9 x 9 puzzles of the technique fixtures, each at the position where alsXz is reached. */
+    function realPositions() {
+      var ids = SG.techniques.list().filter(function (t) { return t.variantScope === null && t.order < 194; })
+        .map(function (t) { return t.id; });
+      var seen = {};
+      var out = [];
+      function add(fixture) {
+        if (!fixture || typeof fixture.puzzle !== 'string' || fixture.puzzle.length !== 81 || seen[fixture.puzzle]) {
+          return;
+        }
+        seen[fixture.puzzle] = true;
+        var givens = H.parsePuzzle(m9, fixture.puzzle);
+        if (SG.dfs.countSolutions(m9, givens, 2) !== 1) return;
+        var state = H.stateAfter(m9, fixture.puzzle, ids);
+        if (state.unsolvedCount === 0) return;
+        out.push({ state: state, solution: SG.dfs.solve(m9, givens) });
+      }
+      Object.keys(F.byId).forEach(function (id) {
+        F.byId[id].positive.forEach(add);
+        F.byId[id].negative.forEach(add);
+      });
+      Object.keys(F.supplements).forEach(function (id) { F.supplements[id].forEach(add); });
+      return out;
+    }
+
+    /** Forcing the eliminated digit leaves no completion at all: the exact search finds none. */
+    function expectImpossible(model, state, cell, digit, label) {
+      var forced = SG.model.cloneState(state);
+      if (!SG.constraints.assign(model, forced, cell, digit) || !SG.constraints.propagate(model, forced)) return;
+      var result = SG.dfs.searchFrom(model, forced, { maxBacktracks: 300000 });
+      expect([label, result.aborted, result.found]).toEqual([label, false, 0]);
+    }
+
+    var POPULATIONS = [
+      { name: 'the real classic 9 x 9 fixture positions', model: m9, exact: true, positions: realPositions },
+      { name: 'classic9 seeded', model: m9, exact: true, seed: 1901, count: 6, keep: [0.3, 0.6] },
+      { name: 'classic9 sweep states', model: m9, exact: true, sweep: 20 },
+      { name: 'classic6', model: m6, exact: true, seed: 1902, count: 6, keep: [0.3, 0.6] },
+      { name: 'classic4', model: m4, exact: true, seed: 1903, count: 6, keep: [0.3, 0.6] },
+      { name: '12 digits', model: m12, exact: true, seed: 1904, count: 3, keep: [0.3, 0.6] },
+      { name: '16 digits', model: m16, exact: false, seed: 7, count: 4, keep: [0.3, 0.6] },
+      { name: 'diagonal', model: diagonalModel, exact: true, seed: 1906, count: 4, keep: [0.3, 0.6] },
+      { name: 'windows', model: hyperModel, exact: true, seed: 1907, count: 4, keep: [0.3, 0.6] },
+      { name: 'partial cage', model: cageModel, exact: true, seed: 1908, count: 4, keep: [0.3, 0.6] },
+      { name: 'samurai', model: samuraiModel, exact: false, seed: 7, count: 2, keep: [0.7, 0.95] }
+    ];
+    ['staggered', 'wavy', 'mixed', 'crossed'].forEach(function (name, i) {
+      [false, true].forEach(function (flip) {
+        var layout = J.parse(J.LAYOUTS[name]);
+        POPULATIONS.push({
+          name: 'jigsaw ' + name + (flip ? ' (transposed)' : ''),
+          model: J.build(flip ? J.transpose(layout) : layout), solve: J.solve, exact: true,
+          seed: 1910 + 2 * i + (flip ? 1 : 0), count: 2, keep: [0.3, 0.6]
+        });
+      });
+    });
+
+    var tally = { positions: 0, fired: 0, byPopulation: {}, eliminations: 0, notTheMost: 0, anotherRestricted: 0,
+      oneCellSets: 0, bigSets: 0, exact: 0, multipleTargets: 0 };
+
+    function checkPosition(pop, item, i) {
+      var model = pop.model;
+      var state = item.state;
+      var label = pop.name + ' #' + i;
+      var records = oracle(model, state, 4).records;
+      if (pop.maxRecords && records.length > pop.maxRecords) return false;
+      expect(records.length).toBeLessThan(DEFAULT.records);
+      var witnesses = xzWitnesses(model, state, records, false);
+      var out = xzRun(model, state);
+      var enumeration = xzEnumeration(model, state);
+      var first = witnesses.length > 0 ? witnesses[0] : null;
+      var total = enumeration.work + xzPairUnits(model, records, first);
+      // the default guard is not reached on these positions, so the call is complete
+      expect([label, total < DEFAULT.work]).toEqual([label, true]);
+      if (first === null) expect([label, out.finding]).toEqual([label, null]);
+      else same(label, out.finding, xzFindingOf(model, first));
+      expect([label, out.seen]).toEqual([label, [{
+        id: 'alsXz', work: total, limit: DEFAULT.work, capHit: null, retained: records.length
+      }]]);
+      tally.positions++;
+      tally.byPopulation[pop.name] = (tally.byPopulation[pop.name] || 0) + (first === null ? 0 : 1);
+      if (first === null) return true;
+      tally.fired++;
+      tally.eliminations += out.finding.eliminations.length;
+      if (first.targets.length > 1) tally.multipleTargets++;
+      if (witnesses.some(function (w) { return w.targets.length > first.targets.length; })) tally.notTheMost++;
+      if (witnesses.some(function (w) { return w.i === first.i && w.j === first.j && w.x === first.z; })) {
+        tally.anotherRestricted++;
+      }
+      if (first.a.cells.length === 1 || first.b.cells.length === 1) tally.oneCellSets++;
+      if (first.a.cells.length + first.b.cells.length >= 6) tally.bigSets++;
+      // sound against the position's own solution, and every removal checked by the exact search
+      out.finding.eliminations.forEach(function (e, k) {
+        expect([label, e, item.solution[e[0]] === e[1]]).toEqual([label, e, false]);
+        if (pop.exact && k < 2) {
+          expectImpossible(model, state, e[0], e[1], label);
+          tally.exact++;
+        }
+      });
+      return true;
+    }
+
+    POPULATIONS.forEach(function (pop) {
+      it('gives the independent search\'s first witness, its work and its record on ' + pop.name, function () {
+        var items;
+        if (pop.positions) {
+          items = pop.positions();
+        } else if (pop.sweep) {
+          items = H.randomStatesWithKnownSolution(pop.model, SG.testkit.rng.create(20260101), pop.sweep);
+        } else {
+          items = seededWithSolution(pop.model, pop.solve || randomSolution, pop.seed, pop.count, pop.keep);
+        }
+        var used = 0;
+        items.forEach(function (item, i) { if (checkPosition(pop, item, i)) used++; });
+        expect([pop.name, used > 0]).toEqual([pop.name, true]);
+      });
+    });
+
+    it('exercises the rule on those positions: firings in every kind of board, several targets, a first ' +
+      'witness that is not the largest, another restricted common digit as z, small and large sets, ' +
+      'and the exact search', function () {
+        expect(tally.positions).toBeGreaterThan(70);
+        expect(tally.fired).toBeGreaterThan(50);
+        POPULATIONS.forEach(function (pop) {
+          expect([pop.name, tally.byPopulation[pop.name] > 0]).toEqual([pop.name, true]);
+        });
+        expect(tally.eliminations).toBeGreaterThan(100);
+        expect(tally.multipleTargets).toBeGreaterThan(10);
+        expect(tally.notTheMost).toBeGreaterThan(3);
+        expect(tally.anotherRestricted).toBeGreaterThan(3);
+        expect(tally.oneCellSets).toBeGreaterThan(10);
+        expect(tally.bigSets).toBeGreaterThan(2);
+        expect(tally.exact).toBeGreaterThan(50);
+      });
+  });
+
+  describe('als-xz: the one guard, the work limit and the record quota', function () {
+    var PAIR = position(m9, XZ_PAIR);
+
+    it('charges the enumeration and the pair phase to one guard: a limit L gives the Finding from the whole ' +
+      'count on, and a cut call has spent exactly L, with no Finding and capHit work', function () {
+        var E = xzEnumeration(m9, PAIR).work;
+        var T = E + 22;
+        for (var limit = 0; limit <= T + 2; limit++) {
+          var out = xzRun(m9, PAIR, { workLimit: limit });
+          var label = 'limit ' + limit;
+          expect(out.seen).toHaveLength(1);
+          var record = out.seen[0];
+          expect([label, record.id, record.limit]).toEqual([label, 'alsXz', limit]);
+          if (limit >= T) {
+            expect([label, record.capHit, record.work, out.finding === null]).toEqual([label, null, T, false]);
+          } else {
+            // a refused unit leaves used === limit; a partial scan of the pivot's peers is discarded
+            expect([label, record.capHit, record.work, out.finding]).toEqual([label, 'work', limit, null]);
+          }
+          if (limit >= E) expect([label, record.retained]).toEqual([label, 2]);
+        }
+        expect(T).toBeGreaterThan(E);
+      });
+
+    it('does not go on to the pair phase once the enumeration was cut, although the kept sizes hold a ' +
+      'witness', function () {
+        var E = xzEnumeration(m9, PAIR).work;
+        var cut = xzRun(m9, PAIR, { workLimit: E - 1 });
+        expect(cut.finding).toBeNull();
+        expect(cut.seen[0]).toEqual({ id: 'alsXz', work: E - 1, limit: E - 1, capHit: 'work', retained: 2 });
+        var kept = run(m9, PAIR, undefined, E - 1).result;
+        expect(kept.capHit).toBe('work');
+        expect(xzWitnesses(m9, PAIR, kept.records, false).length).toBeGreaterThan(0);
+        // the same limit plus the 22 units of the pair phase finds it
+        expect(xzRun(m9, PAIR, { workLimit: E + 22 }).finding).not.toBeNull();
+      });
+
+    it('has no work limit of its own for the pair phase: the guard is the one the enumeration used, never ' +
+      'refilled', function () {
+        var state = position(m9, XZ_OVERLAP);
+        var E = xzEnumeration(m9, state).work;
+        var pairs = xzPairUnits(m9, xzEnumeration(m9, state).records, null);
+        expect(pairs).toBeGreaterThan(0);
+        var whole = xzRun(m9, state, { workLimit: E + pairs });
+        // one two-cell set {R1C1, R2C2} and the four three-cell sets of box 1: five records, all in box 1
+        expect(whole.seen[0]).toEqual({ id: 'alsXz', work: E + pairs, limit: E + pairs, capHit: null, retained: 5 });
+        var short = xzRun(m9, state, { workLimit: E + pairs - 1 });
+        expect(short.finding).toBeNull();
+        expect(short.seen[0].capHit).toBe('work');
+        expect(short.seen[0].work).toBe(E + pairs - 1);
+        // a complete scan with no witness is a complete negative: capHit null, never a work cap
+        expect(xzRun(m9, state, { workLimit: E + pairs + 1000 }).seen[0].capHit).toBeNull();
+      });
+
+    it('keeps a prefix of the records when the quota cuts and still searches its pairs: the Finding of a ' +
+      'prefix is a proof, the cap stays visible', function () {
+        var state = position(m9, XZ_ONE_TARGET);
+        // the eight records: four of one cell, three of two cells and the three-cell set of row 1
+        var all = oracle(m9, state, 4).records;
+        expect(all).toHaveLength(8);
+        // seven records hold the brief's pair ([R1C1, R1C2], [R1C4, R2C4]) and not the three-cell set
+        var seven = xzRun(m9, state, { limits: { records: 7 } });
+        expect(seven.finding).toEqual(xzFindingOf(m9, xzWitnesses(m9, state, all.slice(0, 7), true)[0]));
+        expect(seven.finding.i18nArgs).toEqual({ digitX: 1, digitY: 3, cells: ['R1C1', 'R1C2', 'R1C4', 'R2C4'] });
+        expect(seven.seen[0].capHit).toBe('records');
+        expect(seven.seen[0].retained).toBe(7);
+        var enumeration = xzEnumeration(m9, state, { records: 7 });
+        expect(enumeration.capHit).toBe('records');
+        expect(seven.seen[0].work).toBe(enumeration.work + xzPairUnits(m9, all.slice(0, 7),
+          xzWitnesses(m9, state, all.slice(0, 7), true)[0]));
+        // six records hold no witness: no Finding, and no claim of absence: capHit stays records
+        var six = xzRun(m9, state, { limits: { records: 6 } });
+        expect(xzWitnesses(m9, state, all.slice(0, 6), false)).toHaveLength(0);
+        expect(six.finding).toBeNull();
+        expect(six.seen[0].capHit).toBe('records');
+        expect(six.seen[0].retained).toBe(6);
+        // exactly the quota is allowed: with sets of at most two cells there are seven records and no cap
+        var exact = xzRun(m9, state, { limits: { cells: 2, records: 7 } });
+        expect(exact.seen[0].capHit).toBeNull();
+        expect(exact.finding).not.toBeNull();
+        expect(xzRun(m9, state, { limits: { cells: 2, records: 6 } }).seen[0].capHit).toBe('records');
+      });
+
+    it('reports the work cap before the record quota when both happened', function () {
+      var state = position(m9, XZ_ONE_TARGET);
+      var all = oracle(m9, state, 4).records;
+      var witness = xzWitnesses(m9, state, all.slice(0, 7), true)[0];
+      var enumeration = xzEnumeration(m9, state, { records: 7 });
+      var pairs = xzPairUnits(m9, all.slice(0, 7), witness);
+      var cut = xzRun(m9, state, { limits: { records: 7 }, workLimit: enumeration.work + pairs - 1 });
+      expect(cut.finding).toBeNull();
+      expect(cut.seen[0]).toEqual({ id: 'alsXz', work: enumeration.work + pairs - 1,
+        limit: enumeration.work + pairs - 1, capHit: 'work', retained: 7 });
+      // a cut inside the enumeration after the quota was reached (the probe of the next size)
+      var probe = xzRun(m9, state, { limits: { records: 7 }, workLimit: enumeration.work - 1 });
+      expect(probe.finding).toBeNull();
+      expect(probe.seen[0].capHit).toBe('work');
+    });
+
+    it('lets the default 50,000 cut a call and reports it, while a lifted limit finds the proof', function () {
+      var state = position(m16, {});
+      for (var c = 0; c < m16.cellCount; c++) state.candidates[c] = 3;
+      // every cell {1,2} of a 16 x 16 board: the enumeration alone costs 154,032 units
+      var out = xzRun(m16, state);
+      expect(out.finding).toBeNull();
+      expect(out.seen).toEqual([{ id: 'alsXz', work: 50000, limit: 50000, capHit: 'work', retained: 256 }]);
+    });
+  });
+
+  describe('als-xz: the parent budget, errors and the observer record', function () {
+    var PAIR = position(m9, XZ_PAIR);
+
+    function exceeded() { return new SG.errors.GenerationError('budget.exceeded', { reason: 'nodes' }); }
+
+    /** A context whose check counts its calls and calls hook(n), n from 1, which may throw. */
+    function counting(model, observer, hook) {
+      var counter = { calls: 0 };
+      var ctx = Object.assign({}, SG.techniques.createContext(model, { onPatternWork: observer }), {
+        check: function () {
+          counter.calls++;
+          if (hook) hook(counter.calls);
+        }
+      });
+      return { ctx: ctx, counter: counter };
+    }
+
+    // the real classic 9 x 9 position where the registry reaches alsXz and no pair removes anything: a
+    // complete negative of some 14,000 units, so that the pair phase has many checks of its own
+    var DUG_24 = '..7..1..6.8....1..5..6.78.3..65..7.......8..2.9..6....459........2...5......1..9.';
+
+    function negative() {
+      var ids = SG.techniques.list().filter(function (t) { return t.variantScope === null && t.order < 194; })
+        .map(function (t) { return t.id; });
+      return H.stateAfter(m9, DUG_24, ids);
+    }
+
+    function layout(model, state) {
+      var enumeration = xzEnumeration(model, state);
+      var witness = xzWitnesses(model, state, enumeration.records, true);
+      var T = enumeration.work + xzPairUnits(model, enumeration.records, witness.length > 0 ? witness[0] : null);
+      var cE = Math.floor((enumeration.work - 1) / 256);
+      var cT = Math.floor((T - 1) / 256);
+      return { E: enumeration.work, T: T, cE: cE, cT: cT, N: 3 + cT, retained: enumeration.records.length,
+        found: witness.length > 0 };
+    }
+
+    /** What the guard has spent when the k-th check is made (see the rule: entry, cadence, recheck, cadence, final). */
+    function spentAt(k, p) {
+      if (k === 1) return 0;
+      if (k <= 1 + p.cE) return 256 * (k - 1);
+      if (k === 2 + p.cE) return p.E;
+      if (k < p.N) return 256 * (k - 2);
+      return p.T;
+    }
+
+    it('asks the parent budget at entry, every 256 units, after the enumeration and after the pair phase',
+      function () {
+        [[m9, PAIR], [m9, negative()], [m9, position(m9, XZ_ONE_TARGET)]].forEach(function (item, n) {
+          var p = layout(item[0], item[1]);
+          var seen = [];
+          var c = counting(item[0], function (r) { seen.push(r); });
+          A.findXz(item[0], item[1], c.ctx);
+          expect([n, c.counter.calls]).toEqual([n, p.N]);
+          expect([n, seen.length, seen[0].work]).toEqual([n, 1, p.T]);
+        });
+        // the cadence of the negative position has many checks of the pair phase
+        var big = layout(m9, negative());
+        expect(big.cT - big.cE).toBeGreaterThan(30);
+      });
+
+    it('asks nothing more of the parent once the guard refused a unit: no recheck after a cut enumeration, ' +
+      'no final check after a cut pair phase', function () {
+        var p = layout(m9, PAIR);
+        // a cut inside the enumeration: the entry and the cadence checks before the refused unit, nothing else
+        var cutEnumeration = counting(m9, null);
+        A.findXz(m9, PAIR, cutEnumeration.ctx, { workLimit: p.E - 1 });
+        expect(cutEnumeration.counter.calls).toBe(1 + Math.floor((p.E - 2) / 256));
+        // a cut inside the pair phase: those, the recheck after the enumeration, and no final check
+        var cutPairs = counting(m9, null);
+        A.findXz(m9, PAIR, cutPairs.ctx, { workLimit: p.T - 1 });
+        expect(cutPairs.counter.calls).toBe(1 + Math.floor((p.T - 2) / 256) + 1);
+        // a complete call asks once more, after the pair phase
+        var whole = counting(m9, null);
+        A.findXz(m9, PAIR, whole.ctx, { workLimit: p.T });
+        expect(whole.counter.calls).toBe(p.N);
+      });
+
+    it('answers a stop of the parent at any one of those checks with no Finding and no error, and the one ' +
+      'record says what the guard had spent', function () {
+        [[PAIR, 'a position with a Finding'], [negative(), 'a complete negative']].forEach(function (item) {
+          var state = item[0];
+          var p = layout(m9, state);
+          var ks = [];
+          for (var k = 1; k <= p.N; k++) {
+            if (p.N <= 12 || k <= 4 || k >= p.N - 3 || k === 2 + p.cE || k === 3 + p.cE || k === p.cE ||
+                k === 1 + p.cE || k % 11 === 0) ks.push(k);
+          }
+          ks.forEach(function (stop) {
+            var seen = [];
+            var c = counting(m9, function (r) { seen.push(r); }, function (n) {
+              if (n === stop) throw exceeded();
+            });
+            var label = item[1] + ', stop at check ' + stop + ' of ' + p.N;
+            var finding = A.findXz(m9, state, c.ctx);
+            expect([label, finding]).toEqual([label, null]);
+            expect([label, seen.length]).toEqual([label, 1]);
+            expect([label, seen[0].work, seen[0].capHit, seen[0].limit]).toEqual([label, spentAt(stop, p), null,
+              50000]);
+            // a stop in the enumeration is remembered: the call asks once more, it passes, and nothing is searched
+            var inEnumeration = stop === 1 || (stop >= 2 && stop <= 1 + p.cE);
+            expect([label, c.counter.calls]).toEqual([label, inEnumeration ? stop + 1 : stop]);
+            if (stop >= 2 + p.cE) expect([label, seen[0].retained]).toEqual([label, p.retained]);
+          });
+        });
+      });
+
+    it('remembers a stop of the parent seen once: even when the budget answers again the prefix is not ' +
+      'used', function () {
+        var seen = [];
+        var c = counting(m9, function (r) { seen.push(r); }, function (n) { if (n === 1) throw exceeded(); });
+        expect(A.findXz(m9, PAIR, c.ctx)).toBeNull();
+        expect(c.counter.calls).toBe(2);
+        expect(seen).toEqual([{ id: 'alsXz', work: 0, limit: 50000, capHit: null, retained: 0 }]);
+        // the same call without the stop finds the witness
+        expect(A.findXz(m9, PAIR, SG.techniques.createContext(m9, {}))).not.toBeNull();
+      });
+
+    it('does not erase a cap already reported: the record quota stays after a stop of the parent', function () {
+      var state = position(m9, XZ_ONE_TARGET);
+      var recheck = 2 + Math.floor((xzEnumeration(m9, state, { records: 7 }).work - 1) / 256);
+      var seen = [];
+      var c = counting(m9, function (r) { seen.push(r); }, function (n) { if (n === recheck) throw exceeded(); });
+      expect(A.findXz(m9, state, c.ctx, { limits: { records: 7 } })).toBeNull();
+      expect(seen).toHaveLength(1);
+      expect([seen[0].capHit, seen[0].retained]).toEqual(['records', 7]);
+      // the same in the pair phase of the negative position, cut to 100 of its records
+      var big = negative();
+      var enumeration = xzEnumeration(m9, big, { records: 100 });
+      expect(enumeration.capHit).toBe('records');
+      var after = 2 + Math.floor((enumeration.work - 1) / 256) + 3;
+      var again = [];
+      var d = counting(m9, function (r) { again.push(r); }, function (n) { if (n === after) throw exceeded(); });
+      expect(A.findXz(m9, big, d.ctx, { limits: { records: 100 } })).toBeNull();
+      expect(d.counter.calls).toBe(after);
+      expect([again[0].capHit, again[0].retained]).toEqual(['records', 100]);
+    });
+
+    it('answers a real spent budget as no Finding, and the budget stays spent for the caller', function () {
+      var parent = SG.budget.create({ nodes: 3 });
+      var seen = [];
+      var ctx = SG.techniques.createContext(m9, { budget: parent, onPatternWork: function (r) { seen.push(r); } });
+      expect(A.findXz(m9, negative(), ctx)).toBeNull();
+      expect(seen).toHaveLength(1);
+      expect(seen[0].capHit).toBeNull();
+      expect(caught(function () { parent.check(); }).code).toBe('budget.exceeded');
+      var gone = SG.budget.create({ nodes: 0 });
+      var first = [];
+      expect(A.findXz(m9, PAIR, SG.techniques.createContext(m9, {
+        budget: gone, onPatternWork: function (r) { first.push(r); }
+      }))).toBeNull();
+      expect(first).toEqual([{ id: 'alsXz', work: 0, limit: 50000, capHit: null, retained: 0 }]);
+    });
+
+    it('lets cancellation and every other error through from every check, with nothing published', function () {
+      var kinds = [
+        ['a cancellation of the parent', new SG.errors.GenerationError('budget.cancelled', { reason: 'cancelled' })],
+        ['an error that is not a budget error', new Error('boom')],
+        ['a plain sentinel object', Object.freeze({ sentinel: 'parent cancellation' })],
+        ['an object with a code that is not a budget code', { code: 'other.code' }],
+        ['a thrown null', null],
+        ['a thrown undefined', undefined],
+        ['a thrown zero', 0]
+      ];
+      [[PAIR, 'a position with a Finding'], [negative(), 'a complete negative']].forEach(function (item) {
+        var p = layout(m9, item[0]);
+        [1, 2, 2 + p.cE, 3 + p.cE, p.N - 1, p.N].forEach(function (stop) {
+          kinds.forEach(function (kind) {
+            var seen = [];
+            var c = counting(m9, function (r) { seen.push(r); }, function (n) {
+              if (n === stop) throw kind[1];
+            });
+            var threw = false;
+            var thrown = null;
+            var returned = null;
+            try {
+              returned = A.findXz(m9, item[0], c.ctx);
+            } catch (e) {
+              threw = true;
+              thrown = e;
+            }
+            var label = item[1] + ', ' + kind[0] + ', check ' + stop;
+            expect([label, threw, thrown === kind[1], returned, seen.length]).toEqual([label, true, true, null, 0]);
+            expect([label, c.counter.calls]).toEqual([label, stop]);
+          });
+        });
+      });
+    });
+
+    it('drops a Finding when the budget fails after the pair phase: the last check is before publishing',
+      function () {
+        var p = layout(m9, PAIR);
+        expect(p.found).toBe(true);
+        var seen = [];
+        var c = counting(m9, function (r) { seen.push(r); }, function (n) { if (n === p.N) throw exceeded(); });
+        expect(A.findXz(m9, PAIR, c.ctx)).toBeNull();
+        expect(seen).toEqual([{ id: 'alsXz', work: p.T, limit: 50000, capHit: null, retained: 2 }]);
+      });
+
+    it('publishes one record per call that returns, after the search and outside the error handling: an ' +
+      'observer that throws is not swallowed', function () {
+        var calls = 0;
+        var boom = new Error('observer');
+        var err = caught(function () {
+          A.findXz(m9, PAIR, SG.techniques.createContext(m9, {
+            onPatternWork: function () { calls++; throw boom; }
+          }));
+        });
+        expect([calls, err === boom]).toEqual([1, true]);
+        // an observer that throws a budget error is not taken for a stop of the parent
+        var stop = exceeded();
+        var other = caught(function () {
+          A.findXz(m9, PAIR, SG.techniques.createContext(m9, { onPatternWork: function () { throw stop; } }));
+        });
+        expect(other === stop).toBe(true);
+        // on a call that was cut by the guard or by the parent the record is published as well
+        var records = [];
+        var observer = function (r) { records.push(r); };
+        A.findXz(m9, PAIR, SG.techniques.createContext(m9, { onPatternWork: observer }), { workLimit: 5 });
+        A.findXz(m9, PAIR, SG.techniques.createContext(m9, {
+          budget: SG.budget.create({ nodes: 0 }), onPatternWork: observer
+        }));
+        expect(records.map(function (r) { return [r.capHit, r.work]; })).toEqual([['work', 5], [null, 0]]);
+      });
+
+    it('gives exactly id, work, limit, capHit and retained, a new object for each call, and reads a context ' +
+      'without options or with a hostile observer the same way', function () {
+        var a = xzRun(m9, PAIR).seen[0];
+        var b = xzRun(m9, PAIR).seen[0];
+        expect(Object.keys(a)).toEqual(['id', 'work', 'limit', 'capHit', 'retained']);
+        expect(a).toEqual(b);
+        expect(a).not.toBe(b);
+        var base = SG.techniques.createContext(m9, {});
+        var calls = 0;
+        [undefined, null, { onPatternWork: 'no' }, { onPatternWork: 5 }].forEach(function (options) {
+          var ctx = Object.assign({}, base, { options: options });
+          expect(A.findXz(m9, PAIR, ctx)).toEqual(A.findXz(m9, PAIR, base));
+        });
+        var counting2 = Object.assign({}, base, { options: { onPatternWork: function () { calls++; } } });
+        A.findXz(m9, PAIR, counting2);
+        expect(calls).toBe(1);
+      });
+  });
+
+  describe('als-xz: ownership, immutability and no cache', function () {
+    it('returns arrays of its own: writing to the Finding changes nothing in the next call', function () {
+      var state = position(m9, XZ_BASE);
+      var ctx = SG.techniques.createContext(m9, {});
+      var first = A.findXz(m9, state, ctx);
+      var snapshot = JSON.stringify(first);
+      first.cells.push(999);
+      first.cells.reverse();
+      first.eliminations.forEach(function (e) { e.push(1); e[0] = -1; });
+      first.eliminations.length = 0;
+      first.placements.push([1, 1]);
+      first.i18nArgs.cells.push('R0C0');
+      first.i18nArgs.digitX = 0;
+      var second = A.findXz(m9, state, ctx);
+      expect(JSON.stringify(second)).toBe(snapshot);
+      var arrays = [second.cells, second.placements, second.eliminations, second.i18nArgs.cells];
+      second.eliminations.forEach(function (e) { arrays.push(e); });
+      arrays.forEach(function (a, i) {
+        arrays.forEach(function (b, j) { if (i !== j) expect(a === b).toBe(false); });
+      });
+      expect(JSON.parse(JSON.stringify(second))).toEqual(second);
+    });
+
+    it('reads the model, the state and the context only, with the debug checks on', function () {
+      var before = SG.DEBUG;
+      SG.setDebug(true);
+      try {
+        [m9, m6, cageModel].forEach(function (model, k) {
+          seededStates(model, randomSolution, 1950 + k, 4, [0.3, 0.6]).forEach(function (state, i) {
+            var snapshot = snapshotOf(model, state);
+            var ctx = Object.freeze(Object.assign({}, SG.techniques.createContext(model, {})));
+            var first = A.findXz(model, state, ctx);
+            var second = A.findXz(model, state, ctx);
+            expect([k, i, second]).toEqual([k, i, first]);
+            expect([k, i, snapshotOf(model, state)]).toEqual([k, i, snapshot]);
+          });
+        });
+      } finally {
+        SG.setDebug(before);
+      }
+    });
+
+    it('keeps no candidate list: the same state object, changed between calls, is read again every time',
+      function () {
+        var model = m9;
+        var state = seededStates(model, randomSolution, 1960, 1, [0.3, 0.6])[0];
+        var rng = SG.testkit.rng.create(78);
+        var changes = 0;
+        var fired = 0;
+        for (var round = 0; round < 40; round++) {
+          var cell = rng.int(model.cellCount);
+          if (state.value[cell] === 0) {
+            var digit = 1 + rng.int(model.digits);
+            if (rng.next() < 0.7) state.candidates[cell] &= ~(1 << (digit - 1));
+            else state.candidates[cell] |= 1 << (digit - 1);
+            changes++;
+          }
+          var records = oracle(model, state, 4).records;
+          var first = xzWitnesses(model, state, records, true);
+          var got = A.findXz(model, state, SG.techniques.createContext(model, {}));
+          same('round ' + round, got, first.length > 0 ? xzFindingOf(model, first[0]) : null);
+          if (got !== null) fired++;
+        }
+        expect(changes).toBeGreaterThan(20);
+        expect(fired).toBeGreaterThan(5);
+      });
+
+    it('shares nothing with the enumerator or the other finders: calls interleaved give the same answers',
+      function () {
+        var items = H.randomStatesWithKnownSolution(m9, SG.testkit.rng.create(1970), 6);
+        items.forEach(function (item, n) {
+          var ctx = SG.techniques.createContext(m9, {});
+          var plain = JSON.stringify(A.findXz(m9, item.state, ctx));
+          A.enumerate(m9, item.state, ctx, A.createWork());
+          SG.techniques.get('xyChain').find(m9, item.state, ctx);
+          SG.techniques.get('forcingChain').find(m9, item.state, ctx);
+          expect([n, JSON.stringify(A.findXz(m9, item.state, ctx))]).toEqual([n, plain]);
+          expect([n, JSON.stringify(SG.techniques.get('alsXz').find(m9, item.state, ctx))]).toEqual([n, plain]);
+        });
+      });
   });
 })();

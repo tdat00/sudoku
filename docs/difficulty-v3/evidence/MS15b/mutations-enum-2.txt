@@ -1,0 +1,89 @@
+mutation 44 (R08 occurrences keep the first cell only): DETECTED by run 0 (generator tech-als) - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes two cells of one unit with the candidates {1,2} and {2,3} as a 2-cell ALS
+mutation 45 (R09 the result has no complete flag): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 46 (R10 the result carries the guard): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 47 (R11 records without occurrences): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 48 (L01 one record more than the limit): DETECTED by run 0 (generator tech-als) - 37 total, 36 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.4 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > keeps the first records of the order and says so: every lowered limit is a prefix of the whole
+mutation 49 (L02 the copy loop keeps one more): DETECTED by run 0 (generator tech-als) - 37 total, 36 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.4 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > keeps the first records of the order and says so: every lowered limit is a prefix of the whole
+mutation 50 (L03 the copy loop ignores the room): DETECTED by run 0 (generator tech-als) - 37 total, 36 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.3 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > keeps the first records of the order and says so: every lowered limit is a prefix of the whole
+mutation 51 (L04 the cap is hit at exactly the limit): DETECTED by run 0 (generator tech-als) - 37 total, 36 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.3 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > keeps the first records of the order and says so: every lowered limit is a prefix of the whole
+mutation 52 (L05 the cap needs two more sets): DETECTED by run 0 (generator tech-als) - 37 total, 36 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.3 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > keeps the first records of the order and says so: every lowered limit is a prefix of the whole
+mutation 53 (L06 the cap is named work): DETECTED by run 0 (generator tech-als) - 37 total, 36 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.3 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > keeps the first records of the order and says so: every lowered limit is a prefix of the whole
+mutation 54 (L07 no probe at an exact limit): DETECTED by run 0 (generator tech-als) - 39 total, 38 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.3 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > probes the later sizes for one more set when a size ends exactly at the limit, and stops at the first
+mutation 55 (L08 probe one set early): DETECTED by run 0 (generator tech-als) - 37 total, 36 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.3 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > keeps the first records of the order and says so: every lowered limit is a prefix of the whole
+mutation 56 (L09 never a probe): DETECTED by run 0 (generator tech-als) - 39 total, 38 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.4 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > probes the later sizes for one more set when a size ends exactly at the limit, and stops at the first
+mutation 57 (L10 always a probe): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 58 (L11 the probe does not stop at the first set): DETECTED by run 0 (generator tech-als) - 39 total, 38 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.3 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > probes the later sizes for one more set when a size ends exactly at the limit, and stops at the first
+mutation 59 (L12 the probe stops the unit, not the level): DETECTED by run 0 (generator tech-als) - 39 total, 38 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.4 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > probes the later sizes for one more set when a size ends exactly at the limit, and stops at the first
+mutation 60 (L13 the loop goes on after a cap): DETECTED by run 0 (generator tech-als) - 39 total, 38 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.3 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > probes the later sizes for one more set when a size ends exactly at the limit, and stops at the first
+mutation 61 (L14 always complete): DETECTED by run 0 (generator tech-als) - 37 total, 36 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.3 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > keeps the first records of the order and says so: every lowered limit is a prefix of the whole
+mutation 62 (L15 never complete): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 63 (L16 limit of cells 5): DETECTED by run 0 (generator tech-als) - 1 total, 0 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > offers enumerate, createWork, spend, findXz and the limits 4 cells, 4096 records and 50000 units
+mutation 64 (L17 limit of records 4097): DETECTED by run 0 (generator tech-als) - 1 total, 0 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > offers enumerate, createWork, spend, findXz and the limits 4 cells, 4096 records and 50000 units
+mutation 65 (L18 limit of work 50001): DETECTED by run 0 (generator tech-als) - 1 total, 0 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > offers enumerate, createWork, spend, findXz and the limits 4 cells, 4096 records and 50000 units
+mutation 66 (L19 the limits are not frozen): DETECTED by run 0 (generator tech-als) - 1 total, 0 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > offers enumerate, createWork, spend, findXz and the limits 4 cells, 4096 records and 50000 units
+mutation 67 (L20 the default record limit is the work limit): DETECTED by run 0 (generator tech-als) - 40 total, 39 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > reaches the real limit of 4096 on a 16 x 16 board with two candidates per cell, within the work limit
+mutation 68 (W01 the limit allows one more unit): DETECTED by run 0 (generator tech-als) - 45 total, 44 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > is one counter for the whole call: it continues from what is spent and is never reset
+mutation 69 (W02 the limit refuses one unit early): DETECTED by run 0 (generator tech-als) - 45 total, 44 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > is one counter for the whole call: it continues from what is spent and is never reset
+mutation 70 (W03 a refusal does not mark the guard): DETECTED by run 0 (generator tech-als) - 45 total, 44 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > is one counter for the whole call: it continues from what is spent and is never reset
+mutation 71 (W04 a unit is not counted): DETECTED by run 0 (generator tech-als) - 19 total, 18 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.4 s
+    FAIL tech-als > als enumerator: agreement with the independent enumeration > gives the oracle's records, order and work on 12 seeded positions of classic9
+mutation 72 (W05 a unit counts twice): DETECTED by run 0 (generator tech-als) - 19 total, 18 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.4 s
+    FAIL tech-als > als enumerator: agreement with the independent enumeration > gives the oracle's records, order and work on 12 seeded positions of classic9
+mutation 73 (W06 a refused unit says it was charged): DETECTED by run 0 (generator tech-als) - 45 total, 44 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > is one counter for the whole call: it continues from what is spent and is never reset
+mutation 74 (W07 the refusal does not stop the search): DETECTED by run 0 (generator tech-als) - 45 total, 44 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > is one counter for the whole call: it continues from what is spent and is never reset
+mutation 75 (W08 the refusal ends the call quietly): DETECTED by run 0 (generator tech-als) - 45 total, 44 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > is one counter for the whole call: it continues from what is spent and is never reset
+mutation 76 (W09 the cadence checks at 256 units, not 257th): DETECTED by run 0 (generator tech-als) - 48 total, 47 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 3.1 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > is cut by the default limit of 50000 on a flood, and keeps the sizes it finished
+mutation 77 (W10 the cadence is one unit late): DETECTED by run 0 (generator tech-als) - 48 total, 47 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 3.1 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > is cut by the default limit of 50000 on a flood, and keeps the sizes it finished
+mutation 78 (W11 the cadence is two units late): DETECTED by run 0 (generator tech-als) - 48 total, 47 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 3.2 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > is cut by the default limit of 50000 on a flood, and keeps the sizes it finished
+mutation 79 (W12 the cadence is 128): DETECTED by run 0 (generator tech-als) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > needs a guard made by createWork: a missing, wrong or hand-made invalid one is solver.invalidOption
+mutation 80 (W13 the cadence is 512): DETECTED by run 0 (generator tech-als) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > needs a guard made by createWork: a missing, wrong or hand-made invalid one is solver.invalidOption
+mutation 81 (W14 the last check is not remembered): DETECTED by run 0 (generator tech-als) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > needs a guard made by createWork: a missing, wrong or hand-made invalid one is solver.invalidOption
+mutation 82 (W15 the check is not made in the cadence): DETECTED by run 0 (generator tech-als) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > needs a guard made by createWork: a missing, wrong or hand-made invalid one is solver.invalidOption
+mutation 83 (W16 no check at entry): DETECTED by run 0 (generator tech-als) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > needs a guard made by createWork: a missing, wrong or hand-made invalid one is solver.invalidOption
+mutation 84 (W17 the entry check is not remembered): DETECTED by run 0 (generator tech-als) - 50 total, 49 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 3.1 s
+    FAIL tech-als > als enumerator: the parent budget, cancellation and other errors > keeps the cadence of a guard that arrives partly spent: the entry check is its first check
+mutation 85 (W18 the guard is reset at entry): DETECTED by run 0 (generator tech-als) - 45 total, 44 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > is one counter for the whole call: it continues from what is spent and is never reset
+mutation 86 (W19 the refusal flag is cleared at entry): DETECTED by run 0 (generator tech-als) - 45 total, 44 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > is one counter for the whole call: it continues from what is spent and is never reset
+mutation 87 (W20 a refusal is read as the budget): DETECTED by run 0 (generator tech-als) - 45 total, 44 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > is one counter for the whole call: it continues from what is spent and is never reset
+detected 44 of 44, survivors 0, 87.9 s

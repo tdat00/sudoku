@@ -196,7 +196,7 @@
             'finnedSwordfish', 'jellyfish'],
           expert: ['xyWing', 'xyzWing'],
           master: ['wxyzWing', 'wWing', 'bugPlusOne', 'xyChain', 'forcingChain'],
-          nightmare: ['forcingChainLong', 'nishio'], hell1: ['nishioDeep'] };
+          nightmare: ['alsXz', 'forcingChainLong', 'nishio'], hell1: ['nishioDeep'] };
         Object.keys(firsts).forEach(function (level) {
           var i = idx(level);
           firsts[level].forEach(function (id) {
@@ -633,7 +633,7 @@
         xWing: 320, skyscraper: 330, twoStringKite: 340, remotePairs: 350, simpleColouring: 360, emptyRectangle: 380,
         finnedXWing: 400, swordfish: 420, finnedSwordfish: 480,
         jellyfish: 520, xyWing: 650, xyzWing: 750, wxyzWing: 800, wWing: 850, uniqueRectangle: 900,
-        bugPlusOne: 920, xyChain: 1000, forcingChain: 1100,
+        bugPlusOne: 920, xyChain: 1000, forcingChain: 1100, alsXz: 1250,
         forcingChainLong: 1400, nishio: 1700, nishioDeep: 2600, cageCombo: 40, ruleOf45: 260, cageSplit: 520,
         ineqChain: 40, minMaxForcing: 180
       });

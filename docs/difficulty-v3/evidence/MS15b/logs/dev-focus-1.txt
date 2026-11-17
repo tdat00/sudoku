@@ -1,0 +1,41 @@
+$ node tests\node-runner.js --suite=tech-als,techniques,technique-weights,difficulty-floor
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-floor: 48 passed  (30.91 s)
+FAIL tech-als: 56 passed, 2 failed  (4.38 s)
+ok   technique-weights: 16 passed  (10 ms)
+FAIL techniques: 266 passed, 3 failed  (6.30 s)
+
+Failures:
+  FAIL tech-als > als enumerator: scope > offers enumerate, createWork, spend and the limits 4 cells, 4096 records and 50000 units
+       AssertionError: expected Array(5)["LIMITS", "createWork", "enumerate", "findXz", "spend"] to equal Array(4)["LIMITS", "createWork", "enumerate", "spend"]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:394:37)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL tech-als > als enumerator: scope > is inactive: no ALS technique is registered, so no solve, rating or hint can reach it
+       AssertionError: expected true to be false
+       at Q:\git\sudoku\core\tests\suites\tech-als.test.js:399:39
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:398:81)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL techniques > techniques: registry > has the 32 techniques of the classic ladder registered, in the current registry order
+       AssertionError: expected 33 to be 32
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:79:38)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL techniques > techniques: registry > keeps the v2 ladder as history: the old ids keep their relative order in the expanded registry, jellyfish apart
+       AssertionError: expected Array(12)["skyscraper", "twoStringKite", "remotePairs", "emptyRectangle", "finnedXWing", "finnedSwordfish", "wxyzWing", "bugPlusOne", "xyChain", "alsXz", "forcingChainLong", "nishioDeep"] to equal Array(11)["skyscraper", "twoStringKite", "remotePairs", "emptyRectangle", "finnedXWing", "finnedSwordfish", "wxyzWing", "bugPlusOne", "xyChain", "forcingChainLong", "nishioDeep"]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:93:95)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL techniques > techniques: fixtures (fixtures/techniques.js) > has fixtures for exactly the techniques of the classic ladder (add them for a new one)
+       AssertionError: expected Array(1)["alsXz"] to equal Array(0)[]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:140:23)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+
+Suites: 4
+Tests:  391 total, 386 passed, 5 failed, 0 skipped
+Time:   41.60 s running tests, 41.73 s total
+exit=1 seconds=41.864

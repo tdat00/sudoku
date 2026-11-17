@@ -1,0 +1,25 @@
+MS15b: unlocked, aborted and non-final runs, and every command that did not go through Invoke-Dv3Node (disclosure list; times are +07:00, 2026-11-17 and 2026-11-18).
+
+Every command that generates a puzzle or can run longer than 10 seconds ran through Invoke-Dv3Node (generator/tests/artifacts/difficulty-v3/MS15b/run-locked.ps1, which dot-sources the verbatim helper invoke-dv3node.ps1, SHA-256 FC7298D3...951D) and has a row in docs/difficulty-v3/evidence/MS15b/lock-log.jsonl (111 rows). No lock was removed, no stale lock was met, no run was aborted by the 540-second ceiling, and no compound exceeded its 450-second admission.
+
+Unlocked commands (all under 10 seconds, none generating a puzzle; the first node commands that read the registry or the catalogue were inline `node -` snippets):
+- check-format.cjs (several runs, 0.2 to 2 s; reads files), check-mutations.cjs of MS15a and of MS15b (0.1 s; checks that each fragment occurs once), make-plans.cjs (wrote plan-wire.json, plan-analysis.json, plan-hashes.json; 0.1 s), smoke.js (0.29 s, the first load of the tree), golden-jumps.js (0.2 s; reads the saved goldens at HEAD and in the tree).
+- inline `node -` snippets, each under 2 s: the 38 technique ids of the registry; the saved catalogue's source puzzles and the ids they serve; the first derivation of the cells that admit alsXz (affected-cells.js repeated it under the lock); aggregates of s-av39-*.json, of mechanism-hash-*.json and of the cause records; the comparison of the registration-only inventories of MS15a and MS15b; the first-use effects and guided choices of the 15 jumps of the goldens (saved data only).
+- git reads (status, diff, show of HEAD files), file reads (Get-Content, Select-String, Get-ChildItem), and one Get-Date.
+
+Commands that wrote something other than through the edit and create tools:
+- Copy-Item copies (not edits) of the verbatim helper invoke-dv3node.ps1 and of MS15a's tooling (check-format.cjs, freeze-hashes.cjs, make-plans.cjs, run-e.ps1, run-shards.cjs, run-quick.ps1, ci-check.cjs, fingerprint-now.js, run-locked.ps1, tee-run.cjs, load.js and the mutation scripts) into generator/tests/artifacts/difficulty-v3/MS15b/; their names and usage lines were then adapted with the edit tool.
+- one Add-Content of a blank line to evidence.md (undone at once by an edit); two scratch files written with Set-Content (a list of the 38 earlier technique ids, and a list of 24 hash keys, both in a scratch or temp folder and deleted at once); New-Item -ItemType Directory for generator/tests/artifacts/difficulty-v3/MS15b and player/tests/artifacts/difficulty-v3/MS15b; Remove-Item of the two scratch files.
+- no tracked file was written by PowerShell.
+
+Locked runs that failed or are not final results (exit 1 in lock-log.jsonl; kept):
+- development: "MS15b dev focused 1" (23:34:58), "dev tech-als 3" to "dev tech-als 6" (23:47 to 23:50), "dev focused generator 1" (23:52:25; the five tech-chain failures that SA2's ruling A repaired), "I2 steps+player 1" (03:40:39; one steps test, the G10 / 37 pin of SA2's Q6 ruling).
+- "premise-proof tree" and "premise-proof base" (00:40:06 and 00:40:23): a script error, repaired and run again at 00:40:45 and 00:41:01 (exit 0).
+- "F1a player focused" (01:00:52) and "F3 player focused after GH" (02:10:49): the help and help-example-tools pins that need the 39th example, and later the 38 to 39 pins.
+- the merge-checks that showed the explained differences: wires (01:21:11), analyses (01:34:05), hashes (01:53:14); the GH checks before each write: the 38 earlier ids (02:05:52) and forcingChainLong from the catalogue sources (02:08:54).
+- quick pass 1: "quick quick-pass-1 shared-small" (02:12:16) and "replay-player" (02:20:46), superseded by quick-final.
+- lock wait: one 105.3 s wait (replay-facts, 02:25:33) while another session held the shared slot; all other waits are 0.1 s or less.
+
+Plans recorded late (marked in evidence.md with their true times, not pre-run artifacts): the E3 hash cause-and-mechanism plan (recorded about 01:56:10, after the base-engine cause run of 01:53:30 to 01:55:58) and the GH plan (recorded about 02:10:30, after the GH runs of 02:05:52 to 02:10:10).
+
+Premature edit: the steps.test.js witness pin was changed from G10 / details / 37 to G13 / details / 129 before the question was asked (SA2's ruling Q7 approved it and confirmed that its own Q6 pin was wrong).

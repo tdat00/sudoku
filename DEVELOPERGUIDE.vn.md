@@ -847,8 +847,8 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    của `.github/scripts/generator-quick.json` sở hữu nó. Bằng chứng nằm trong `docs/difficulty-v3/evidence/MS14c/evidence.md`.
 
    **Bộ liệt kê tập gần-khóa có chặn** (`core/js/engine/tech-als.js`, `SG.alsPatterns`; nhiệm vụ MS15a, rating v3, R18;
-   **chưa kích hoạt**: chưa có kỹ thuật, trọng số, gợi ý, ví dụ trợ giúp hay xếp hạng nào đọc nó, nên không đầu ra nào
-   đổi; người đọc đầu tiên là MS15b và MS16). Tập gần-khóa (ALS) là *k* ô trống (1 đến 4) của cùng một đơn vị đôi một
+   **chưa kích hoạt khi viết**: chưa có kỹ thuật, trọng số, gợi ý, ví dụ trợ giúp hay xếp hạng nào đọc nó, nên không đầu ra nào
+   đổi; MS15b đăng ký `alsXz` trên nó, ngay dưới). Tập gần-khóa (ALS) là *k* ô trống (1 đến 4) của cùng một đơn vị đôi một
    khác nhau mà các ứng viên gộp lại đúng *k* + 1 chữ số; đơn vị có thể là đơn vị một phần (lồng Killer), đường chéo,
    cửa sổ hoặc vùng. `SG.alsPatterns.enumerate(model, state, ctx, work[, limits])` trả về `{ records, complete, capHit }`:
    các bản ghi dữ liệu thuần `{ cells, digits, occurrences }` (ô và chữ số tăng dần, các ô chứa từng chữ số), mỗi tập ô
@@ -867,6 +867,33 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    duyệt của bộ liệt kê, trên 84 thế cờ gieo hạt của mọi dạng đơn vị; ngoài ra kiểm thử giới hạn số bản ghi, thanh chắn,
    ngân sách và việc hủy, và quyền sở hữu; cả hai trang `tests.html` đều liệt kê nó, và đợt `core-shared` của
    `.github/scripts/generator-quick.json` sở hữu nó. Bằng chứng nằm trong `docs/difficulty-v3/evidence/MS15a/evidence.md`.
+
+   **ALS-XZ** (`alsXz`, nhiệm vụ MS15b, rating v3, R18; **đã kích hoạt**: người đọc đầu tiên của bộ liệt kê; Sue de Coq
+   là MS16). Kỹ thuật được đăng ký trong `core/js/engine/tech-als.js`: nhóm `chain`, `order` 194 (sau `forcingChain` 190,
+   trước `forcingChainLong` 198), chi phí gốc 106, trọng số 1.250 (kỹ thuật thuộc bậc Nightmare), không giới hạn biến
+   thể, không giả định đề có nghiệm duy nhất; `find` không nhận tùy chọn. Lấy hai ALS A và B trong các bản ghi được giữ,
+   không chung ô nào, và một chữ số x mà cả hai cùng chứa và là *chung bị hạn chế* (mọi ô của A chứa x đều thấy mọi ô
+   của B chứa x): một trong hai tập không chứa x, nên tập *k* ô có *k* + 1 chữ số mà không chứa x chứa mỗi chữ số còn
+   lại đúng một lần, và với mọi chữ số z chung khác, ứng viên z của mọi ô trống khác thấy **mọi** ô của A và B chứa z
+   bị loại. Chứng cứ đầu tiên theo thứ tự chuẩn thắng (bản ghi A trước B; x tăng dần trong các chữ số chung bị hạn chế,
+   rồi z tăng dần; trục là ô z đầu tiên của A, các ô đồng cấp của nó được duyệt tăng dần); Finding là
+   `technique: 'alsXz'`, khóa `technique.alsXz.step`, các ô của A và B tăng dần, các loại bỏ `[đích, z]` tăng dần,
+   `i18nArgs { digitX, digitY, cells }`. **Công việc và các điểm cắt:** một thanh chắn cho mỗi lần gọi, của phép liệt
+   kê, không bao giờ đặt lại; một đơn vị trước mỗi cặp bản ghi, trước mỗi phép quét (x, z) được mở và trước **mọi** ô
+   đồng cấp của trục được ghé thăm (cả ô bị loại). Đơn vị bị thanh chắn từ chối, hoặc ngân sách cha dừng, không cho
+   Finding, và sau một điểm cắt vì công việc thì bên dùng đọc ra một điểm cắt, không bao giờ đọc ra "không tìm thấy".
+   Mỗi lần gọi có trả về phát một bản ghi `onPatternWork` `{ id: 'alsXz', work, limit, capHit, retained }` (`capHit` là
+   `'work'`, hoặc `'records'` khi hạn ngạch bản ghi đã cắt phép liệt kê, hoặc `null`; chỉ ngân sách cha dừng thì là
+   `null`). `SG.alsPatterns.findXz(model, state, ctx, { workLimit, limits })` là khe kiểm thử; bản chạy thật không truyền
+   tùy chọn và dùng `LIMITS` (4 ô, 4.096 bản ghi, 50.000 đơn vị), mà MS15b **giữ nguyên** sau khi đo cả lần gọi (không
+   mất suy luận nào tại điểm cắt đã đo; ba điểm cắt công việc, đều trong một lần giải của một ví dụ trợ giúp thật, và
+   không có Finding ngay cả khi nới giới hạn; S-AV39). Danh mục trợ giúp nay có **39** ví dụ (ví dụ ALS-XZ là một đề
+   Cổ điển 9x9 Hell 1 thật). Suite lõi `tech-als.test.js` nay có 111 bài kiểm thử (58 của MS15a và 53 mới: chứng minh
+   viết tay, một oracle độc lập và bộ giải chính xác trên các thế cờ gieo hạt của mọi bố cục, thanh chắn, các điểm cắt,
+   ngân sách và bản ghi quan sát, quyền sở hữu); đã chạy 73 đột biến của bộ tìm kiếm (72 bị phát hiện, 1 tương đương)
+   và chạy lại 131 đột biến của MS15a (130 bị phát hiện, 1 tương đương). Việc kích hoạt làm đổi 2 wire, 7 golden phân
+   tích và 24 hash hồi quy, mỗi thay đổi đều được giải thích (bằng chứng). Bằng chứng nằm trong
+   `docs/difficulty-v3/evidence/MS15b/evidence.md`.
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
    [Cách hoạt động](#cách-hoạt-động) — và trong các danh sách script của trình chơi (`index.html`, `help.html`,
    `tests.html`, `tests/node-runner.js`), vì kỹ thuật nằm trong bộ máy dùng chung (`core/js/engine/`) và gợi ý
@@ -920,7 +947,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (55 suite, 4.618 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (55 suite, 4.682 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (63 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -931,7 +958,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 55 suite, 4.618 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 55 suite, 4.682 bài —
 37 suite ở `tests/suites/` và 18 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -987,7 +1014,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 63 suite, trong đó 55 suite nhanh (4.618 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 63 suite, trong đó 55 suite nhanh (4.682 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -1386,7 +1413,7 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (32 bộ, 2.844 bài); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (32 bộ, 2.906 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

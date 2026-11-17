@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "e1278c0b4e6966996ac79648b2210dd87acf714de8c08f485e6aab680f11ed26",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "585c82a73a30b0c917e365f25dea1839cb31c8e8",
+  "dirty": true,
+  "generatedAt": "2026-11-17T18:31:58.879Z",
+  "argv": ["--ids=G06","--record=..\\docs\\difficulty-v3\\evidence\\MS15b\\analysis\\G06.json"],
+  "records": [
+    {"key":"G06","request":{"variantId":"jigsaw9","difficulty":"nightmare","seed":"42"},"value":{"id":"G06","request":{"variantId":"jigsaw9","difficulty":"nightmare","seed":"42"},"today":{"steps":16,"missing":2},"counts":{"compact":8,"details":33},"board":{"cells":81,"cages":0,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,8,"D/Dig",16,25,25,"nakedSingle","—","—","F"],[3,22,"D/Dig",43,44,19,"hiddenSingleBox","—","—","N"],[4,27,"G/Choose",53,49,5,"hiddenSingleLine","—","—","N"],[5,28,"G/Choose",55,140,91,"boxLine","—","—","N"],[6,29,"G/Choose",57,672,532,"finnedXWing","Y","R4C7","—"],[7,31,"G/Choose",61,2258,1586,"alsXz","Y","—","—"],[8,31,"F/Final",61,2258,0,"alsXz","—","—","—"]],"details":[0,5,9,12,15,18,20,23,25,27,29,31,32,34,35,37,38,39,40,41,43,44,44,45,46,47,48,49,140,672,2292,2258,2258],"alive":null,"folds":[{"step":7,"peak":2292,"end":2258,"removed":4,"restored":0,"signs":0,"opening":false}],"jumps":[{"step":6,"from":140,"to":672,"before":{"P":50,"W":521.25,"R":43.926528,"V":46.315789,"E":55,"level":"easy"},"after":{"P":400,"W":1501.75,"R":224.92557,"V":47.010309,"E":57,"level":"hard"},"choice":{"chosen":672,"others":5,"nulls":0,"max":151,"at":121,"rated":8,"refused":2},"singles":[{"op":"remove","cell":"R4C7","score":668},{"op":"remove","cell":"R6C3","score":143}],"cause":"single-culprit","frame":"R4C7","firstUse":{"k":36,"n":75,"technique":"finnedXWing"},"key":"technique.finnedXWing.step","effects":"remove candidate 3@R4C7"},{"step":7,"from":672,"to":2258,"before":{"P":400,"W":1501.75,"R":224.92557,"V":47.010309,"E":57,"level":"hard"},"after":{"P":1250,"W":9251.75,"R":959.571799,"V":48.316832,"E":61,"level":"nightmare"},"choice":null,"singles":[],"cause":"multi-move","frame":null,"firstUse":{"k":32,"n":92,"technique":"alsXz"},"key":"technique.alsXz.step","effects":"remove candidate 9@R6C8, 9@R7C7"}]},"ms":1644,"overrides":[]}
+  ]
+}

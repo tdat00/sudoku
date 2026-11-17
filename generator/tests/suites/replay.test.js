@@ -565,7 +565,7 @@
       expect(Object.keys(out.counts).length).toBeGreaterThan(0);
       var rated = R.rateBoard(result.model, result.givens, { forceCount: true });
       expect(rated.status).toBe('rated');
-      expect(rated.score).toBe(2374);
+      expect(rated.score).toBe(2258);
     });
 
     slow('reports the progress of prepare once per position, then after every probe and optional solve', function () {
@@ -1194,8 +1194,9 @@
       });
     });
 
-    slow('has the same end position as a jump in one view and not in the other (G10, G12, G01)', function () {
-      [['G10', 49, [145, 2199], [2210, 2199]], ['G12', 107, [133, 513], [2605, 513]]].forEach(function (c) {
+    slow('has the same end position as a jump in one view and not in the other (G06, G12, G13, G01)', function () {
+      [['G06', 31, [672, 2258], [2292, 2258]], ['G12', 107, [133, 513], [2367, 513]],
+        ['G13', 143, [394, 1876], [2004, 1876]]].forEach(function (c) {
         var analysis = analysisOf(c[0]);
         var compact = toPosition(analysis, 'compact', c[1]);
         var details = toPosition(analysis, 'details', c[1]);
@@ -1204,14 +1205,15 @@
         expect(details.tier).not.toBe('jump');
         expect(details.ratio).toBeNull();
       });
-      expect(toPosition(analysisOf('G10'), 'details', 49).change).toBe(-11);
-      expect(toPosition(analysisOf('G12'), 'details', 107).change).toBe(-2092);
+      expect(toPosition(analysisOf('G06'), 'details', 31).change).toBe(-34);
+      expect(toPosition(analysisOf('G12'), 'details', 107).change).toBe(-1854);
+      expect(toPosition(analysisOf('G13'), 'details', 143).change).toBe(-128);
       var g01 = analysisOf('G01');
       expect(toPosition(g01, 'compact', 27).before.W).toBeCloseTo(1518.75, 6);
       expect(toPosition(g01, 'details', 27).before.W).toBeCloseTo(1518.75, 6);
     });
 
-    slow('has 12 compact, 12 details and 14 distinct jump transitions in the 14 goldens', function () {
+    slow('has 15 compact, 15 details and 18 distinct jump transitions in the 14 goldens', function () {
       var count = { compact: 0, details: 0 };
       var distinctJumps = {};
       GOLDENS.forEach(function (g) {
@@ -1221,8 +1223,8 @@
           distinctJumps[g.id + ':' + t.from + '>' + t.to + ':' + t.before.total + '>' + t.after.total] = true;
         });
       });
-      expect(count).toEqual({ compact: 12, details: 12 });
-      expect(Object.keys(distinctJumps)).toHaveLength(14);
+      expect(count).toEqual({ compact: 15, details: 15 });
+      expect(Object.keys(distinctJumps)).toHaveLength(18);
     });
 
     // Since the WXYZ-Wing (MS10b) no golden has a flat position with a new hardest technique: G13 (Samurai) took
@@ -1230,8 +1232,8 @@
     // read from that real position with its hardest technique set to Hidden Single (which the position before has
     // not used) and the transitions rebuilt. Since the grouped chains (MS13c) no golden has a falling position
     // with a new hardest technique either (the 14 goldens hold none in either view): the falling case is G12's
-    // position 103 (2,977 to 2,169, Nishio to Forcing Chain), whose position before is set to have no Forcing
-    // Chain, with the transitions rebuilt in the same way.
+    // position 103 (3,035 to 2,169, Nishio to Forcing Chain; it was 2,977 to 2,169 before ALS-XZ, MS15b),
+    // whose position before is set to have no Forcing Chain, with the transitions rebuilt in the same way.
     slow('labels a new hardest technique also at a flat or lower score (details: G13 and G12 with a set rating)',
       function () {
         function withCount(analysis, index, technique, count) {
@@ -1252,11 +1254,11 @@
         var g12 = analysisOf('G12');
         var real12 = toPosition(g12, 'details', 103);
         expect([real12.before.total, real12.after.total, real12.after.hardest, real12.before.hardest, real12.tier,
-          real12.newHardest]).toEqual([2977, 2169, 'forcingChain', 'nishio', null, false]);
+          real12.newHardest]).toEqual([3035, 2169, 'forcingChain', 'nishio', null, false]);
         var fall = Object.assign({}, g12, { transitions: R.buildViews(Object.assign({}, g12, {
           ratings: withCount(g12, 102, 'forcingChain', 0) })).transitions });
         [[set, 101, 70, 70, 'hiddenSingleBox', 'nakedSingle'],
-          [fall, 103, 2977, 2169, 'forcingChain', 'nishio']
+          [fall, 103, 3035, 2169, 'forcingChain', 'nishio']
         ].forEach(function (c) {
           var t = toPosition(c[0], 'details', c[1]);
           expect([t.before.total, t.after.total, t.change]).toEqual([c[2], c[3], c[3] - c[2]]);
@@ -1279,8 +1281,8 @@
   describe('replay: explaining the jumps', function () {
     var NONE = '\u2014';
     // The goldens whose jump has no candidates recorded by the generator, with the kind that says so.
-    var UNRECORDED = { 'G03:5': 'combined', 'G07:6': 'combined', 'G10:7': 'combined', 'G11:5': 'checked',
-      'G12:5': 'combined' };
+    var UNRECORDED = { 'G03:5': 'combined', 'G06:7': 'combined', 'G07:6': 'combined', 'G11:5': 'checked',
+      'G12:5': 'combined', 'G13:7': 'combined' };
 
     function labeller(id) {
       return function (cell) { return SG.model.cellLabel(entry(id).result.model, cell); };
@@ -1438,12 +1440,14 @@
       var m = analysisOf('G14').moves[70];
       expect(m.at).toBe(95);
       expect([m.span.rated, m.span.refused, m.span.others, m.span.nulls]).toEqual([10, 5, 0, 4]);
-      // G13 had the second witness until the WXYZ-Wing (MS10b) changed its dig path; G10 has one (its move 36); G14 had
+      // G13 had the second witness until the WXYZ-Wing (MS10b) changed its dig path; G10 has three (its moves
+      // 37 to 39, the first with 5 candidates and none rejected; it had a single one, at move 36, until ALS-XZ
+      // (MS15b) changed its dig path); G14 had
       // its witness at move 76 (16 candidates, 13 rejected, 2 unscored) until the hidden Unique Rectangle (MS11b)
       // changed its dig path, and has the eight moves 70 to 75, 77 and 78 now
       var chosen = analysisOf('G10');
-      expect(chosen.moves[36].span.chosen).toBeNull();
-      expect([chosen.moves[36].span.rated, chosen.moves[36].span.refused]).toEqual([5, 0]);
+      expect(chosen.moves[37].span.chosen).toBeNull();
+      expect([chosen.moves[37].span.rated, chosen.moves[37].span.refused]).toEqual([5, 0]);
     });
 
     it('classifies the shares of a move: one culprit, together, or mixed (two shares of 0.9 or more)', function () {
@@ -1574,7 +1578,7 @@
       expect(guarded.ratings.every(function (r) { return r.status !== 'capped'; })).toBe(true);
     });
 
-    slow('has a cause, a choice and a proof for every jump of the goldens: 12 compact and 12 details', function () {
+    slow('has a cause, a choice and a proof for every jump of the goldens: 15 compact and 15 details', function () {
       var count = { compact: 0, details: 0 };
       GOLDENS.forEach(function (g) {
         var analysis = analysisOf(g.id);
@@ -1597,23 +1601,23 @@
         });
         expect(Object.keys(analysis.proofs).map(Number)).toEqual(Object.keys(ends).map(Number));
       });
-      expect(count).toEqual({ compact: 12, details: 12 });
+      expect(count).toEqual({ compact: 15, details: 15 });
     });
 
-    slow('frames the details jumps too: G06 R2C4 and the sign jumps of G11 and G12', function () {
+    slow('frames the details jumps too: G06 R4C7 and the sign jumps of G11 and G12', function () {
       var g06 = analysisOf('G06');
-      var t = toPosition(g06, 'details', 27);
-      expect([t.before.total, t.after.total, t.cause.class]).toEqual([109, 538, 'single-culprit']);
-      expect(frameLabel('G06', t.cause.frame)).toBe('R2C4');
-      expect(t.cause.culprit.otherScore).toBe(112);
+      var t = toPosition(g06, 'details', 29);
+      expect([t.before.total, t.after.total, t.cause.class]).toEqual([140, 672, 'single-culprit']);
+      expect(frameLabel('G06', t.cause.frame)).toBe('R4C7');
+      expect(t.cause.culprit.otherScore).toBe(143);
       var signs = jumpsOf(analysisOf('G11'), 'details').concat(jumpsOf(analysisOf('G12'), 'details'));
       expect(signs.map(function (x) { return x.cause.frame; })).toEqual([
         { kind: 'sign', sign: 98 }, { kind: 'sign', sign: 34 }]);
       expect(signs.every(function (x) { return x.cause.changes.length === 0 && x.cause.sign !== null; })).toBe(true);
     });
 
-    slow('describes a jump over several moves by its first move with the new technique (G10, G12)', function () {
-      [['G10', 6], ['G12', 4]].forEach(function (c) {
+    slow('describes a jump over several moves by its first move with the new technique (G06, G12, G13)', function () {
+      [['G06', 6], ['G12', 4], ['G13', 6]].forEach(function (c) {
         var analysis = analysisOf(c[0]);
         var t = into(analysis, 'compact', c[1]);
         var step = analysis.views.compact.steps[c[1]];

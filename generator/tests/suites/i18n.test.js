@@ -1334,6 +1334,39 @@
         }
       });
 
+    it('renders the ALS-XZ step in both languages from its real fixtures, with both digits and the cells of the ' +
+      'two sets', function () {
+        packsReady();
+        if (!F || !H) SG.test.skip('the technique fixtures are not loaded');
+        var model = H.model('classic9');
+        var ctx = SG.techniques.createContext(model);
+        I.setCellLabeler(function (i) { return SG.model.cellLabel(model, i); });
+        try {
+          expect(F.byId.alsXz.positive).toHaveLength(2);
+          F.byId.alsXz.positive.forEach(function (fixture) {
+            var finding = SG.techniques.get('alsXz').find(model, stateOf(model, fixture), ctx);
+            if (finding === null) throw new Error('fixture "' + fixture.name + '" found nothing');
+            expect(finding.i18nKey).toBe('technique.alsXz.step');
+            expect(Object.keys(finding.i18nArgs)).toEqual(['digitX', 'digitY', 'cells']);
+            finding.i18nArgs.cells.forEach(function (label) { expect(typeof label).toBe('string'); });
+            LOCALES.forEach(function (code) {
+              var text = inLocale(code, function () { return I.t(finding.i18nKey, finding.i18nArgs); });
+              if (/[{}]|undefined|NaN|\[object/.test(text) || text === finding.i18nKey) {
+                throw new Error(finding.i18nKey + ' renders as "' + text + '" in ' + code);
+              }
+              expect([code, text.indexOf(finding.i18nArgs.cells.join(', ')) !== -1]).toEqual([code, true]);
+              expect(text).toContain(String(finding.i18nArgs.digitX));
+              expect(text).toContain(String(finding.i18nArgs.digitY));
+              placeholders(SG.locales[code][finding.i18nKey]).forEach(function (name) {
+                expect(hasOwn(finding.i18nArgs, name)).toBe(true);
+              });
+            });
+          });
+        } finally {
+          I.setCellLabeler(null);
+        }
+      });
+
     it('picks the colouring text that matches args.rule', function () {
       packsReady();
       var args = { digit: 4, colour1: ['R1C1'], colour2: ['R2C2'], falseColour: 1,

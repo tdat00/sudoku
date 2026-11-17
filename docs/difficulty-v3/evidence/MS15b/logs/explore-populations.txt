@@ -1,0 +1,30 @@
+$ node tests\artifacts\difficulty-v3\MS15b\explore-populations.js
+classic9 sweep initial: 30 positions, records min/med/max 59/109/258, work med/max 1601/1864, firing 30
+classic9 sweep propagated: 30 positions, records min/med/max 0/81/137, work med/max 926/2972, firing 16
+classic9 sweep pruned: 60 positions, records min/med/max 0/101/226, work med/max 1011/3172, firing 32
+classic9 keep 0.05-0.4 placed<=0.28: 6 positions, records min/med/max 544/1226/1945, work med/max 6460/8518, firing 6
+classic9 keep 0.3-0.6 placed<=0.28: 6 positions, records min/med/max 94/153/362, work med/max 3076/4745, firing 6
+classic9 keep 0.5-0.8 placed<=0.28: 6 positions, records min/med/max 6/41/123, work med/max 1831/2155, firing 4
+classic9 keep 0.3-0.6 placed<=0.63: 6 positions, records min/med/max 73/297/335, work med/max 2760/4166, firing 6
+classic9 keep 0.5-0.8 placed<=0.63: 6 positions, records min/med/max 7/152/230, work med/max 1884/2321, firing 4
+classic6 keep 0.05-0.4 placed<=0.28: 6 positions, records min/med/max 196/214/314, work med/max 1383/4173, firing 6
+classic6 keep 0.3-0.6 placed<=0.28: 6 positions, records min/med/max 164/200/212, work med/max 1201/1472, firing 6
+classic6 keep 0.5-0.8 placed<=0.28: 6 positions, records min/med/max 47/134/143, work med/max 939/1002, firing 6
+classic6 keep 0.3-0.6 placed<=0.63: 6 positions, records min/med/max 49/189/201, work med/max 909/1108, firing 6
+classic6 keep 0.5-0.8 placed<=0.63: 6 positions, records min/med/max 52/94/149, work med/max 812/1283, firing 6
+classic4 keep 0.05-0.4 placed<=0.28: 6 positions, records min/med/max 8/31/67, work med/max 424/4136, firing 2
+classic4 keep 0.3-0.6 placed<=0.28: 6 positions, records min/med/max 12/50/67, work med/max 254/340, firing 5
+classic4 keep 0.5-0.8 placed<=0.28: 6 positions, records min/med/max 14/52/61, work med/max 292/461, firing 5
+classic4 keep 0.3-0.6 placed<=0.63: 6 positions, records min/med/max 3/32/51, work med/max 222/254, firing 5
+classic4 keep 0.5-0.8 placed<=0.63: 6 positions, records min/med/max 3/50/52, work med/max 237/321, firing 5
+12 keep 0.05-0.4 placed<=0.28: 6 positions, records min/med/max 497/2118/5308, work med/max 20454/24552, firing 6
+12 keep 0.3-0.6 placed<=0.28: 6 positions, records min/med/max 37/97/245, work med/max 5034/6910, firing 6
+12 keep 0.5-0.8 placed<=0.28: 6 positions, records min/med/max 0/3/31, work med/max 2477/3087, firing 1
+12 keep 0.3-0.6 placed<=0.63: 6 positions, records min/med/max 55/343/1108, work med/max 5560/8193, firing 6
+12 keep 0.5-0.8 placed<=0.63: 6 positions, records min/med/max 2/105/628, work med/max 3512/4215, firing 5
+16 keep 0.05-0.4 placed<=0.28: 6 positions, records min/med/max 118/4296/11398, work med/max 36909/68720, firing 6
+16 keep 0.3-0.6 placed<=0.28: 6 positions, records min/med/max 1/14/78, work med/max 6700/10913, firing 2
+16 keep 0.5-0.8 placed<=0.28: 6 positions, records min/med/max 0/1/7, work med/max 3333/4206, firing 0
+16 keep 0.3-0.6 placed<=0.63: 6 positions, records min/med/max 20/431/2103, work med/max 11918/13833, firing 5
+16 keep 0.5-0.8 placed<=0.63: 6 positions, records min/med/max 0/52/908, work med/max 6027/9555, firing 4
+exit=0 seconds=0.459

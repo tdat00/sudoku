@@ -1,0 +1,2 @@
+$ node tests\artifacts\difficulty-v3\MS15a\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS15b\mutations-enum-2.txt 44 87
+exit=0 seconds=87.983

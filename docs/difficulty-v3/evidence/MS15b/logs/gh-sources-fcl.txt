@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS15b\make-sources.cjs --ids=forcingChainLong --out=tests\artifacts\difficulty-v3\MS15b\sources-fcl.json
+wrote tests\artifacts\difficulty-v3\MS15b\sources-fcl.json: 1 id(s), 27 distinct saved source(s)
+exit=0 seconds=0.096

@@ -1,0 +1,26 @@
+$ node tests\artifacts\difficulty-v3\MS15b\mechanism.js --kind=hash --only=classic9/nightmare#2,classic9/nightmare#8,classic9/nightmare#21,classic9/nightmare#89,classic9/nightmare#987,classic9/nightmare#4181,classic9/nightmare#6765,diagonalX/nightmare#1,diagonalX/nightmare#2,diagonalX/nightmare#3,diagonalX/nightmare#5,diagonalX/nightmare#8,diagonalX/nightmare#13,diagonalX/nightmare#21,diagonalX/nightmare#34,diagonalX/nightmare#55,diagonalX/nightmare#144,diagonalX/nightmare#610,diagonalX/nightmare#987,diagonalX/nightmare#1597,diagonalX/nightmare#2584,diagonalX/nightmare#4181,diagonalX/nightmare#6765,diagonalX/nightmare#10946 --out=..\docs\difficulty-v3\evidence\MS15b\mechanism-hash-base.json
+classic9/nightmare#2: engine git:b958a58 clues 29, own rating nightmare/2349
+classic9/nightmare#8: engine git:b958a58 clues 28, own rating nightmare/2369
+classic9/nightmare#21: engine git:b958a58 clues 28, own rating nightmare/2307
+classic9/nightmare#89: engine git:b958a58 clues 28, own rating nightmare/2301
+classic9/nightmare#987: engine git:b958a58 clues 34, own rating nightmare/1897
+classic9/nightmare#4181: engine git:b958a58 clues 29, own rating nightmare/2379
+classic9/nightmare#6765: engine git:b958a58 clues 30, own rating nightmare/2323
+diagonalX/nightmare#1: engine git:b958a58 clues 32, own rating nightmare/2287
+diagonalX/nightmare#2: engine git:b958a58 clues 28, own rating nightmare/2349
+diagonalX/nightmare#3: engine git:b958a58 clues 24, own rating nightmare/2246
+diagonalX/nightmare#5: engine git:b958a58 clues 24, own rating nightmare/2285
+diagonalX/nightmare#8: engine git:b958a58 clues 30, own rating nightmare/2109
+diagonalX/nightmare#13: engine git:b958a58 clues 31, own rating nightmare/2189
+diagonalX/nightmare#21: engine git:b958a58 clues 24, own rating nightmare/2023
+diagonalX/nightmare#34: engine git:b958a58 clues 26, own rating nightmare/2270
+diagonalX/nightmare#55: engine git:b958a58 clues 24, own rating nightmare/2279
+diagonalX/nightmare#144: engine git:b958a58 clues 22, own rating nightmare/2354
+diagonalX/nightmare#610: engine git:b958a58 clues 26, own rating nightmare/1979
+diagonalX/nightmare#987: engine git:b958a58 clues 24, own rating nightmare/2283
+diagonalX/nightmare#1597: engine git:b958a58 clues 24, own rating nightmare/2367
+diagonalX/nightmare#2584: engine git:b958a58 clues 33, own rating nightmare/2387
+diagonalX/nightmare#4181: engine git:b958a58 clues 24, own rating nightmare/2344
+diagonalX/nightmare#6765: engine git:b958a58 clues 24, own rating nightmare/2343
+diagonalX/nightmare#10946: engine git:b958a58 clues 26, own rating nightmare/2381
+exit=0 seconds=138.294

@@ -281,6 +281,40 @@
           .toBe(D.spec('master', model).allowedTechniques.indexOf('bugPlusOne') + 1);
       });
 
+    it('places alsXz between forcingChain and forcingChainLong: order 194, weight 1250, a Nightmare-tier chain ' +
+      'technique of its own group (R18)', function () {
+        var model = SG.techHelper.model('classic9');
+        var als = SG.techniques.get('alsXz');
+        expect([als.order, D.WEIGHTS.alsXz]).toEqual([194, 1250]);
+        expect([als.group, als.baseCost, als.variantScope, als.assumesUniqueness])
+          .toEqual(['chain', 106, null, false]);
+        expect(position('alsXz')).toBe(position('forcingChain') + 1);
+        expect(position('alsXz')).toBe(position('forcingChainLong') - 1);
+        // the order follows the weight and the base cost: the neighbours are 190 / 1100 / 90 and 198 / 1400 / 118
+        var short = SG.techniques.get('forcingChain');
+        var long = SG.techniques.get('forcingChainLong');
+        expect([short.order, D.WEIGHTS.forcingChain, short.baseCost]).toEqual([190, 1100, 90]);
+        expect([long.order, D.WEIGHTS.forcingChainLong, long.baseCost]).toEqual([198, 1400, 118]);
+        expect(short.order).toBeLessThan(als.order);
+        expect(als.order).toBeLessThan(long.order);
+        expect(D.WEIGHTS.forcingChain).toBeLessThan(D.WEIGHTS.alsXz);
+        expect(D.WEIGHTS.alsXz).toBeLessThan(D.WEIGHTS.forcingChainLong);
+        // its own weight decides the hardest technique, no tie is needed
+        expect(D.breakdown({ forcingChain: 1, alsXz: 1 }, 10).hardest).toBe('alsXz');
+        expect(D.breakdown({ alsXz: 1, forcingChainLong: 1 }, 10).hardest).toBe('forcingChainLong');
+        // 1.25 x 1250 = 1562.5 is above Master's maximum (1500) and below Nightmare's (2400): Nightmare's tier
+        expect(1.25 * D.WEIGHTS.alsXz).toBeGreaterThan(D.spec('master', model).max);
+        expect(1.25 * D.WEIGHTS.alsXz).toBeLessThan(D.spec('nightmare', model).max);
+        expect(D.spec('master', model).allowedTechniques).not.toContain('alsXz');
+        expect(D.spec('nightmare', model).allowedTechniques).toContain('alsXz');
+        expect(D.spec('nightmare', model).tierTechniques).toContain('alsXz');
+        expect(D.spec('nightmare', model).floorTechniques).not.toContain('alsXz');
+        expect(D.spec('hell1', model).floorTechniques).toContain('alsXz');
+        // allowed right after forcingChain
+        expect(D.spec('nightmare', model).allowedTechniques.indexOf('alsXz'))
+          .toBe(D.spec('nightmare', model).allowedTechniques.indexOf('forcingChain') + 1);
+      });
+
     it('places finnedSwordfish between swordfish and jellyfish: order 134, weight 480, a Hard-tier technique ' +
       '(R12)', function () {
         var model = SG.techHelper.model('classic9');

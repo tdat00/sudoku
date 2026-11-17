@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "49a56a7e7212d126ea8f6cd2a7b9955283c0474b560933464ba6e7c3a4689234",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "585c82a73a30b0c917e365f25dea1839cb31c8e8",
+  "dirty": true,
+  "generatedAt": "2026-11-17T18:47:37.793Z",
+  "argv": ["--hash-key=mega16/easy","--hash-from=0","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS15b\\hashes\\mega16-easy-00.json"],
+  "records": [
+    {"key":"mega16/easy#1","variant":"mega16","level":"easy","seed":1,"hash":"1213daa9241eb755","ms":41,"overrides":[]},
+    {"key":"mega16/easy#2","variant":"mega16","level":"easy","seed":2,"hash":"f17b3972b5078be6","ms":20,"overrides":[]},
+    {"key":"mega16/easy#3","variant":"mega16","level":"easy","seed":3,"hash":"fc5b478d924ead49","ms":15,"overrides":[]},
+    {"key":"mega16/easy#5","variant":"mega16","level":"easy","seed":5,"hash":"2c105509e5b5df75","ms":11,"overrides":[]},
+    {"key":"mega16/easy#8","variant":"mega16","level":"easy","seed":8,"hash":"b09a26da9b2f3c86","ms":11,"overrides":[]}
+  ]
+}

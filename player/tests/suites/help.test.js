@@ -92,7 +92,7 @@
     it('every technique has a translated name and description, and so has its group', function () {
       ready();
       var list = SG.techniques.list();
-      expect(list.length).toBe(38);
+      expect(list.length).toBe(39);
       list.forEach(function (tech) {
         bothLanguages('technique.' + tech.id);
         bothLanguages('technique.' + tech.id + '.desc');
@@ -564,13 +564,13 @@
       expect(Object.keys(SG.importer.VARIANTS).length).toBe(15);
     });
 
-    it('its numbers are the numbers of the code: 38 techniques, 100 + 100 puzzles, 8 MB files', function () {
+    it('its numbers are the numbers of the code: 39 techniques, 100 + 100 puzzles, 8 MB files', function () {
       ready();
       var en = playerPart('../USERGUIDE.md');
       var vi = playerPart('../USERGUIDE.vn.md');
-      expect(en).toContain('one of 38 techniques');
-      expect(vi).toContain('một trong 38 kỹ thuật');
-      expect(SG.techniques.list().length).toBe(38);
+      expect(en).toContain('one of 39 techniques');
+      expect(vi).toContain('một trong 39 kỹ thuật');
+      expect(SG.techniques.list().length).toBe(39);
       expect(en).toContain('the last 100 puzzles');
       expect(en).toContain('the last 100 imported puzzles');
       expect(vi).toContain('100 đề gần nhất');

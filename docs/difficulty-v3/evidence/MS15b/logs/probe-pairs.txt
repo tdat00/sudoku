@@ -1,0 +1,30 @@
+$ node tests\artifacts\difficulty-v3\MS15b\probe-pairs.js
+{"n":131,"capHit":null,"enumWork":1726,"pairs":8515,"disjoint":7013,"share2":4039,"rcc":329,"combos":0,"eliminations":0,"unsound":0,"firstPair":-1,"firstUnits":-1,"totalUnits":17461,"ms":9,"open":53,"tag":"xyWing-"}
+{"n":156,"capHit":null,"enumWork":1272,"pairs":12090,"disjoint":10099,"share2":7171,"rcc":406,"combos":6,"eliminations":10,"unsound":0,"firstPair":7534,"firstUnits":14548,"totalUnits":26391,"ms":12,"open":44,"tag":"uniqueRectangle+"}
+{"n":127,"capHit":null,"enumWork":1384,"pairs":8001,"disjoint":6724,"share2":4661,"rcc":211,"combos":1,"eliminations":1,"unsound":0,"firstPair":89,"firstUnits":194,"totalUnits":14721,"ms":3,"open":48,"tag":"forcingChain+"}
+{"n":51,"capHit":null,"enumWork":1630,"pairs":1275,"disjoint":939,"share2":739,"rcc":26,"combos":0,"eliminations":0,"unsound":0,"firstPair":-1,"firstUnits":-1,"totalUnits":1905,"ms":1,"open":56,"tag":"forcingChain+"}
+{"n":116,"capHit":null,"enumWork":1053,"pairs":6670,"disjoint":5512,"share2":4939,"rcc":166,"combos":0,"eliminations":0,"unsound":0,"firstPair":-1,"firstUnits":-1,"totalUnits":12886,"ms":2,"open":43,"tag":"forcingChain-"}
+{"n":27,"capHit":null,"enumWork":1332,"pairs":351,"disjoint":266,"share2":191,"rcc":5,"combos":0,"eliminations":0,"unsound":0,"firstPair":-1,"firstUnits":-1,"totalUnits":456,"ms":1,"open":59,"tag":"nishio-"}
+{"n":183,"capHit":null,"enumWork":1606,"pairs":16653,"disjoint":14231,"share2":7686,"rcc":649,"combos":4,"eliminations":6,"unsound":0,"firstPair":8591,"firstUnits":15584,"totalUnits":34629,"ms":7,"open":47,"tag":"xyChain-"}
+{"n":39,"capHit":null,"enumWork":1687,"pairs":741,"disjoint":563,"share2":424,"rcc":4,"combos":0,"eliminations":0,"unsound":0,"firstPair":-1,"firstUnits":-1,"totalUnits":825,"ms":0,"open":57,"tag":"twoStringKite-"}
+{"n":155,"capHit":null,"enumWork":1516,"pairs":11935,"disjoint":9908,"share2":7753,"rcc":353,"combos":1,"eliminations":1,"unsound":0,"firstPair":5145,"firstUnits":9954,"totalUnits":24598,"ms":7,"open":48,"tag":"emptyRectangle+"}
+{"n":152,"capHit":null,"enumWork":901,"pairs":11476,"disjoint":9641,"share2":7871,"rcc":548,"combos":0,"eliminations":0,"unsound":0,"firstPair":-1,"firstUnits":-1,"totalUnits":29221,"ms":5,"open":37,"tag":"finnedXWing+"}
+{"n":107,"capHit":null,"enumWork":1428,"pairs":5671,"disjoint":4589,"share2":3060,"rcc":134,"combos":0,"eliminations":0,"unsound":0,"firstPair":-1,"firstUnits":-1,"totalUnits":9409,"ms":2,"open":46,"tag":"finnedXWing+"}
+{"n":129,"capHit":null,"enumWork":1420,"pairs":8256,"disjoint":6841,"share2":5589,"rcc":191,"combos":0,"eliminations":0,"unsound":0,"firstPair":-1,"firstUnits":-1,"totalUnits":15249,"ms":4,"open":47,"tag":"forcingChainLong+"}
+{"n":20,"capHit":null,"enumWork":1354,"pairs":190,"disjoint":145,"share2":133,"rcc":2,"combos":0,"eliminations":0,"unsound":0,"firstPair":-1,"firstUnits":-1,"totalUnits":232,"ms":0,"open":60,"tag":"nishioDeep+"}
+{"n":154,"capHit":null,"enumWork":1593,"pairs":11781,"disjoint":9913,"share2":5022,"rcc":535,"combos":2,"eliminations":2,"unsound":0,"firstPair":4628,"firstUnits":9899,"totalUnits":24759,"ms":2,"open":48,"tag":"xyChains"}
+{"n":137,"capHit":null,"enumWork":990,"pairs":9316,"disjoint":7621,"share2":5839,"rcc":340,"combos":0,"eliminations":0,"unsound":0,"firstPair":-1,"firstUnits":-1,"totalUnits":19039,"ms":3,"open":43,"tag":"xyChains"}
+{"n":178,"capHit":null,"enumWork":1140,"pairs":15753,"disjoint":13080,"share2":8586,"rcc":953,"combos":3,"eliminations":4,"unsound":0,"firstPair":7004,"firstUnits":18554,"totalUnits":44901,"ms":5,"open":39,"tag":"uniqueRectangles"}
+{"n":142,"capHit":null,"enumWork":1259,"pairs":10011,"disjoint":8421,"share2":5749,"rcc":493,"combos":0,"eliminations":0,"unsound":0,"firstPair":-1,"firstUnits":-1,"totalUnits":25026,"ms":4,"open":45,"tag":"uniqueRectangles"}
+{"n":144,"capHit":null,"enumWork":1281,"pairs":10296,"disjoint":8729,"share2":6399,"rcc":409,"combos":0,"eliminations":0,"unsound":0,"firstPair":-1,"firstUnits":-1,"totalUnits":23190,"ms":5,"open":44,"tag":"forcingChainLongs"}
+{"n":14,"capHit":null,"enumWork":1518,"pairs":91,"disjoint":60,"share2":58,"rcc":0,"combos":0,"eliminations":0,"unsound":0,"firstPair":-1,"firstUnits":-1,"totalUnits":91,"ms":0,"open":60,"tag":"nishioDeeps"}
+positions with open cells at order 194: 19 of 86 unique puzzles
+n: min 14 median 131 p90 178 max 183
+enumWork: min 901 median 1384 p90 1687 max 1726
+pairs: min 91 median 8515 p90 15753 max 16653
+share2: min 58 median 5022 p90 7871 max 8586
+rcc: min 0 median 329 p90 649 max 953
+combos: min 0 median 0 p90 4 max 6
+totalUnits: min 91 median 17461 p90 34629 max 44901
+positions with a Finding: 6; unsound eliminations: 0
+exit=0 seconds=0.721

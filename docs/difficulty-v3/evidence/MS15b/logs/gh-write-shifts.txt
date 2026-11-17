@@ -1,0 +1,7 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=xWing,remotePairs,xyChain --max-puzzles=64 --max-hints=400 --write
+selected 3 technique ID(s); mode write
+replaying 2 puzzle(s) for 3 ID(s) (--max-puzzles=64, --max-hints=400)
+puzzle 1/2 classic9 - - -> 89 hint(s), solved; wanted found: xWing, remotePairs
+puzzle 2/2 classic9 - - -> 72 hint(s), solved; wanted found: xyChain
+wrote player/js/ui/help-examples.js (39 examples; 3 selected: xWing, remotePairs, xyChain; the others kept)
+exit=0 seconds=1.238

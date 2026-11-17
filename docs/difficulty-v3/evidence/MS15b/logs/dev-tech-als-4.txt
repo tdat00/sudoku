@@ -1,0 +1,18 @@
+$ node tests\node-runner.js --suite=tech-als --filter=als-xz
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-als: 32 passed, 1 failed  (3.08 s)
+
+Failures:
+  FAIL tech-als > als-xz: agreement with the independent search, and exactness > exercises the rule on those positions: firings in every kind of board, several targets, a first witness that is not the largest, another restricted common digit as z, small and large sets, and the exact search
+       AssertionError: expected Array(2)["samurai", false] to equal Array(2)["samurai", true]
+       at Q:\git\sudoku\core\tests\suites\tech-als.test.js:1812:64
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:1811:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  33 total, 32 passed, 1 failed, 0 skipped
+Time:   3.08 s running tests, 3.20 s total
+exit=1 seconds=3.312

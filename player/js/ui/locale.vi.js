@@ -274,6 +274,13 @@
       'nào của nhóm chứa nó, viết (R1C1\u22605 \u2227 R1C2\u22605); nhóm đúng không cho biết ô nào chứa ' +
       'chữ số. Ứng viên bị loại theo quy tắc hai đầu phải xung đột với từng ứng viên được biểu diễn ở mỗi ' +
       'đầu. Chuỗi chỉ được tìm đến một độ dài giới hạn, nên gợi ý không cam kết tìm ra mọi chuỗi.',
+    'technique.alsXz': 'ALS-XZ (tập gần khóa)',
+    'technique.alsXz.desc': 'Tập gần khóa là một số ô của cùng một vùng mà tổng số chữ số ứng viên của ' +
+      'chúng nhiều hơn số ô đúng một, nên chúng chứa đủ các chữ số đó trừ một chữ số. Lấy hai tập như vậy ' +
+      'không có ô chung và một chữ số X mà cả hai tập đều có thể chứa, sao cho mọi ô chứa X của tập này ' +
+      'đều nhìn thấy mọi ô chứa X của tập kia. Hai tập không thể cùng chứa X, nên một trong hai tập thiếu ' +
+      'X và chứa đủ mọi chữ số còn lại. Chữ số Z mà cả hai tập đều có thể chứa vì thế nằm trong một trong ' +
+      'hai tập, và ô nhìn thấy mọi ô chứa Z của cả hai tập không thể chứa Z.',
     'technique.forcingChainLong': 'Chuỗi suy luận dài (Long Forcing Chain)',
     'technique.forcingChainLong.desc': 'Cùng loại chuỗi với Chuỗi suy luận nhưng quá dài so với nó: chuỗi ' +
       'ngắn nhất dùng được có nhiều liên kết hơn mức Chuỗi suy luận thường cho phép (tối đa 12 liên kết). ' +
@@ -421,6 +428,11 @@
     'technique.forcingChain.step.forced': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu ứng viên ' +
       'đầu tiên sai thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, điều không thể xảy ra. Vậy ' +
       'ứng viên đầu tiên đúng và được điền vào.',
+    'technique.alsXz.step': 'ALS-XZ với chữ số {digitX} và {digitY}: các ô {cells} tạo thành hai tập gần ' +
+      'khóa không có ô chung, và cả hai tập đều có thể chứa {digitX} và {digitY}. Mọi ô chứa {digitX} của ' +
+      'tập này đều nhìn thấy mọi ô chứa {digitX} của tập kia, nên nhiều nhất một tập chứa {digitX}. Tập ' +
+      'còn lại khi đó chứa đủ mọi chữ số khác của nó, nên một trong hai tập chứa {digitY}. Ứng viên ' +
+      '{digitY} nhìn thấy mọi ô chứa {digitY} của cả hai tập bị loại.',
     'technique.nishio.step': 'Thử–sai (độ sâu {depth}): nếu {label} là {digit} thì các suy luận đơn giản ' +
       'sẽ dẫn đến mâu thuẫn. Vậy {digit} bị loại khỏi {label}.',
     'technique.forcingChainLong.step.endpoints': 'Chuỗi suy luận dài hơn thường, {length} liên kết: ' +

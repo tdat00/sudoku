@@ -1,0 +1,55 @@
+mutation 46 (F01 cells not sorted): DETECTED by run 0 (generator tech-als) - 65 total, 64 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.9 s
+    FAIL tech-als > als-xz: the proof by hand > returns the first witness of the canonical order with the default limits, and the brief's witness is one of the position's witnesses
+mutation 47 (F02 cells of A only): DETECTED by run 0 (generator tech-als) - 64 total, 63 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.8 s
+    FAIL tech-als > als-xz: the proof by hand > finds the brief's witness: A = {R1C1, R1C2}, B = {R1C4, R2C4}, x = 1 on row 1, z = 3, and R2C2 loses the 3
+mutation 48 (F03 another technique id): DETECTED by run 0 (generator tech-als) - 64 total, 63 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.0 s
+    FAIL tech-als > als-xz: the proof by hand > finds the brief's witness: A = {R1C1, R1C2}, B = {R1C4, R2C4}, x = 1 on row 1, z = 3, and R2C2 loses the 3
+mutation 49 (F04 another step key): DETECTED by run 0 (generator tech-als) - 64 total, 63 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.8 s
+    FAIL tech-als > als-xz: the proof by hand > finds the brief's witness: A = {R1C1, R1C2}, B = {R1C4, R2C4}, x = 1 on row 1, z = 3, and R2C2 loses the 3
+mutation 50 (F05 the labels are the cell numbers, and the array of the Finding): DETECTED by run 0 (generator tech-als) - 64 total, 63 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.0 s
+    FAIL tech-als > als-xz: the proof by hand > finds the brief's witness: A = {R1C1, R1C2}, B = {R1C4, R2C4}, x = 1 on row 1, z = 3, and R2C2 loses the 3
+mutation 51 (W01 a pair of records is not charged): DETECTED by run 0 (generator tech-als) - 64 total, 63 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.9 s
+    FAIL tech-als > als-xz: the proof by hand > finds the brief's witness: A = {R1C1, R1C2}, B = {R1C4, R2C4}, x = 1 on row 1, z = 3, and R2C2 loses the 3
+mutation 52 (W02 an opened (x, z) scan is not charged): DETECTED by run 0 (generator tech-als) - 64 total, 63 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.9 s
+    FAIL tech-als > als-xz: the proof by hand > finds the brief's witness: A = {R1C1, R1C2}, B = {R1C4, R2C4}, x = 1 on row 1, z = 3, and R2C2 loses the 3
+mutation 53 (W03 the visited peers are not charged): DETECTED by run 0 (generator tech-als) - 64 total, 63 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.9 s
+    FAIL tech-als > als-xz: the proof by hand > finds the brief's witness: A = {R1C1, R1C2}, B = {R1C4, R2C4}, x = 1 on row 1, z = 3, and R2C2 loses the 3
+mutation 54 (W04 only the peers that hold the candidate are charged): DETECTED by run 0 (generator tech-als) - 64 total, 63 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.8 s
+    FAIL tech-als > als-xz: the proof by hand > finds the brief's witness: A = {R1C1, R1C2}, B = {R1C4, R2C4}, x = 1 on row 1, z = 3, and R2C2 loses the 3
+mutation 55 (W05 the pair phase has a guard of its own): DETECTED by run 0 (generator tech-als) - 64 total, 63 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.9 s
+    FAIL tech-als > als-xz: the proof by hand > finds the brief's witness: A = {R1C1, R1C2}, B = {R1C4, R2C4}, x = 1 on row 1, z = 3, and R2C2 loses the 3
+mutation 56 (W06 a refused unit does not end the phase): DETECTED by run 0 (generator tech-als) - 71 total, 70 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.9 s
+    FAIL tech-als > als-xz: the proof by hand > visits the peers of the pivot, the first cell of A that holds z: here R1C1, which the cage gives two more peers than R2C2 or R1C4
+mutation 57 (W07 the record quota is reported before the work cap): DETECTED by run 0 (generator tech-als) - 96 total, 95 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.2 s
+    FAIL tech-als > als-xz: the one guard, the work limit and the record quota > reports the work cap before the record quota when both happened
+mutation 58 (W08 the record quota is never reported): DETECTED by run 0 (generator tech-als) - 95 total, 94 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.1 s
+    FAIL tech-als > als-xz: the one guard, the work limit and the record quota > keeps a prefix of the records when the quota cuts and still searches its pairs: the Finding of a prefix is a proof, the cap stays visible
+mutation 59 (W09 any incomplete enumeration is read as the record quota): DETECTED by run 0 (generator tech-als) - 100 total, 99 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.4 s
+    FAIL tech-als > als-xz: the parent budget, errors and the observer record > answers a stop of the parent at any one of those checks with no Finding and no error, and the one record says what the guard had spent
+mutation 60 (W10 retained is always 0): DETECTED by run 0 (generator tech-als) - 64 total, 63 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.9 s
+    FAIL tech-als > als-xz: the proof by hand > finds the brief's witness: A = {R1C1, R1C2}, B = {R1C4, R2C4}, x = 1 on row 1, z = 3, and R2C2 loses the 3
+mutation 61 (W11 the reported limit is the production one): DETECTED by run 0 (generator tech-als) - 62 total, 61 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.9 s
+    FAIL tech-als > als-xz: the registered technique and the seam > takes opts = { workLimit, limits } as the seam of the tests and refuses anything else, before any work
+mutation 62 (W12 the reported work is the limit): DETECTED by run 0 (generator tech-als) - 64 total, 63 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.9 s
+    FAIL tech-als > als-xz: the proof by hand > finds the brief's witness: A = {R1C1, R1C2}, B = {R1C4, R2C4}, x = 1 on row 1, z = 3, and R2C2 loses the 3
+mutation 63 (B01 no recheck of the budget after the enumeration): DETECTED by run 0 (generator tech-als) - 98 total, 97 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.2 s
+    FAIL tech-als > als-xz: the parent budget, errors and the observer record > asks the parent budget at entry, every 256 units, after the enumeration and after the pair phase
+mutation 64 (B02 no final recheck of the budget): DETECTED by run 0 (generator tech-als) - 98 total, 97 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.2 s
+    FAIL tech-als > als-xz: the parent budget, errors and the observer record > asks the parent budget at entry, every 256 units, after the enumeration and after the pair phase
+mutation 65 (B03 a stop of the parent in the enumeration is not remembered): DETECTED by run 0 (generator tech-als) - 100 total, 99 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.3 s
+    FAIL tech-als > als-xz: the parent budget, errors and the observer record > answers a stop of the parent at any one of those checks with no Finding and no error, and the one record says what the guard had spent
+mutation 66 (B04 the remembered stop asks the budget no more): DETECTED by run 0 (generator tech-als) - 100 total, 99 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.3 s
+    FAIL tech-als > als-xz: the parent budget, errors and the observer record > answers a stop of the parent at any one of those checks with no Finding and no error, and the one record says what the guard had spent
+mutation 67 (B05 every error is swallowed): DETECTED by run 0 (generator tech-als) - 62 total, 61 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.8 s
+    FAIL tech-als > als-xz: the registered technique and the seam > takes opts = { workLimit, limits } as the seam of the tests and refuses anything else, before any work
+mutation 68 (B06 cancellation is swallowed): DETECTED by run 0 (generator tech-als) - 104 total, 103 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.2 s
+    FAIL tech-als > als-xz: the parent budget, errors and the observer record > lets cancellation and every other error through from every check, with nothing published
+mutation 69 (B07 a Finding survives a failed final check): DETECTED by run 0 (generator tech-als) - 100 total, 99 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.2 s
+    FAIL tech-als > als-xz: the parent budget, errors and the observer record > answers a stop of the parent at any one of those checks with no Finding and no error, and the one record says what the guard had spent
+mutation 70 (B08 an observer that throws is swallowed): DETECTED by run 0 (generator tech-als) - 106 total, 105 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.3 s
+    FAIL tech-als > als-xz: the parent budget, errors and the observer record > publishes one record per call that returns, after the search and outside the error handling: an observer that throws is not swallowed
+mutation 71 (B09 the record is published twice): DETECTED by run 0 (generator tech-als) - 61 total, 60 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.9 s
+    FAIL tech-als > als-xz: the registered technique and the seam > runs with the production limits: the registered finder takes no options, whatever it is given
+mutation 72 (B10 the budget is asked again after a cut enumeration): DETECTED by run 0 (generator tech-als) - 99 total, 98 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.3 s
+    FAIL tech-als > als-xz: the parent budget, errors and the observer record > asks nothing more of the parent once the guard refused a unit: no recheck after a cut enumeration, no final check after a cut pair phase
+detected 27 of 27, survivors 0, 168.8 s

@@ -1,0 +1,17 @@
+$ node tests\node-runner.js --suite=tech-als --filter=als-xz
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-als: 32 passed, 1 failed  (3.40 s)
+
+Failures:
+  FAIL tech-als > als-xz: agreement with the independent search, and exactness > exercises the rule on those positions: firings in every kind of board, several targets, a first witness that is not the largest, another restricted common digit as z, small and large sets, and the exact search
+       AssertionError: expected 4 to be > 5
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:1819:31)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+
+Suites: 1
+Tests:  33 total, 32 passed, 1 failed, 0 skipped
+Time:   3.40 s running tests, 3.52 s total
+exit=1 seconds=3.630

@@ -1,0 +1,1466 @@
+{
+ "part": "seeded",
+ "node": "v26.13.0",
+ "source": "tree, production limits {\"cells\":4,\"records\":4096,\"work\":50000}",
+ "liftedDiagnostic": {
+  "workLimit": 20000000,
+  "limits": {
+   "records": 100000
+  }
+ },
+ "groups": [
+  {
+   "population": "classic9 keep 0.05-0.4 placed<=0.28 seed 4001",
+   "positions": 24,
+   "calls": 24,
+   "caps": {
+    "none": 24,
+    "records": 0,
+    "work": 0
+   },
+   "found": 24,
+   "work": {
+    "min": 2984,
+    "median": 5707,
+    "p95": 8261,
+    "max": 13893
+   },
+   "retained": {
+    "min": 270,
+    "median": 698,
+    "p95": 1956,
+    "max": 2118
+   },
+   "ms": {
+    "min": 0.231,
+    "median": 0.588,
+    "p95": 2.6,
+    "max": 3.471
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.194,
+     "median": 0.87,
+     "p95": 2.101,
+     "max": 2.556
+    },
+    "work": {
+     "min": 2984,
+     "median": 5707,
+     "p95": 8261,
+     "max": 13893
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.186,
+     "median": 0.624,
+     "p95": 1.801,
+     "max": 3.667
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.193,
+     "median": 0.633,
+     "p95": 1.868,
+     "max": 2.48
+    }
+   }
+  },
+  {
+   "population": "classic9 keep 0.3-0.6 placed<=0.28 seed 4001",
+   "positions": 24,
+   "calls": 24,
+   "caps": {
+    "none": 24,
+    "records": 0,
+    "work": 0
+   },
+   "found": 22,
+   "work": {
+    "min": 1783,
+    "median": 2547,
+    "p95": 4253,
+    "max": 4385
+   },
+   "retained": {
+    "min": 1,
+    "median": 127,
+    "p95": 419,
+    "max": 425
+   },
+   "ms": {
+    "min": 0.031,
+    "median": 0.142,
+    "p95": 0.239,
+    "max": 0.266
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.027,
+     "median": 0.113,
+     "p95": 0.228,
+     "max": 0.232
+    },
+    "work": {
+     "min": 1783,
+     "median": 2547,
+     "p95": 4253,
+     "max": 4385
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.025,
+     "median": 0.124,
+     "p95": 0.419,
+     "max": 0.583
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.025,
+     "median": 0.12,
+     "p95": 0.242,
+     "max": 0.791
+    }
+   }
+  },
+  {
+   "population": "classic9 keep 0.5-0.8 placed<=0.28 seed 4001",
+   "positions": 24,
+   "calls": 24,
+   "caps": {
+    "none": 24,
+    "records": 0,
+    "work": 0
+   },
+   "found": 12,
+   "work": {
+    "min": 1052,
+    "median": 1714,
+    "p95": 2299,
+    "max": 2496
+   },
+   "retained": {
+    "min": 0,
+    "median": 22,
+    "p95": 199,
+    "max": 279
+   },
+   "ms": {
+    "min": 0.022,
+    "median": 0.064,
+    "p95": 0.184,
+    "max": 0.195
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.022,
+     "median": 0.053,
+     "p95": 0.236,
+     "max": 0.238
+    },
+    "work": {
+     "min": 1052,
+     "median": 1714,
+     "p95": 2299,
+     "max": 2496
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.021,
+     "median": 0.044,
+     "p95": 0.177,
+     "max": 0.197
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.019,
+     "median": 0.056,
+     "p95": 0.183,
+     "max": 0.421
+    }
+   }
+  },
+  {
+   "population": "classic6 keep 0.05-0.4 placed<=0.28 seed 4002",
+   "positions": 12,
+   "calls": 12,
+   "caps": {
+    "none": 12,
+    "records": 0,
+    "work": 0
+   },
+   "found": 12,
+   "work": {
+    "min": 736,
+    "median": 1527,
+    "p95": 4144,
+    "max": 4144
+   },
+   "retained": {
+    "min": 143,
+    "median": 183,
+    "p95": 293,
+    "max": 293
+   },
+   "ms": {
+    "min": 0.102,
+    "median": 0.13,
+    "p95": 0.212,
+    "max": 0.212
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.092,
+     "median": 0.118,
+     "p95": 0.208,
+     "max": 0.208
+    },
+    "work": {
+     "min": 736,
+     "median": 1527,
+     "p95": 4144,
+     "max": 4144
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.083,
+     "median": 0.155,
+     "p95": 0.692,
+     "max": 0.692
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.08,
+     "median": 0.123,
+     "p95": 0.259,
+     "max": 0.259
+    }
+   }
+  },
+  {
+   "population": "classic6 keep 0.3-0.6 placed<=0.28 seed 4002",
+   "positions": 12,
+   "calls": 12,
+   "caps": {
+    "none": 12,
+    "records": 0,
+    "work": 0
+   },
+   "found": 12,
+   "work": {
+    "min": 712,
+    "median": 1044,
+    "p95": 1196,
+    "max": 1196
+   },
+   "retained": {
+    "min": 56,
+    "median": 177,
+    "p95": 219,
+    "max": 219
+   },
+   "ms": {
+    "min": 0.063,
+    "median": 0.121,
+    "p95": 0.189,
+    "max": 0.189
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.047,
+     "median": 0.109,
+     "p95": 0.188,
+     "max": 0.188
+    },
+    "work": {
+     "min": 712,
+     "median": 1044,
+     "p95": 1196,
+     "max": 1196
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.043,
+     "median": 0.091,
+     "p95": 0.175,
+     "max": 0.175
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.04,
+     "median": 0.088,
+     "p95": 0.147,
+     "max": 0.147
+    }
+   }
+  },
+  {
+   "population": "classic6 keep 0.5-0.8 placed<=0.28 seed 4002",
+   "positions": 12,
+   "calls": 12,
+   "caps": {
+    "none": 12,
+    "records": 0,
+    "work": 0
+   },
+   "found": 9,
+   "work": {
+    "min": 598,
+    "median": 864,
+    "p95": 2047,
+    "max": 2047
+   },
+   "retained": {
+    "min": 21,
+    "median": 121,
+    "p95": 151,
+    "max": 151
+   },
+   "ms": {
+    "min": 0.027,
+    "median": 0.101,
+    "p95": 0.223,
+    "max": 0.223
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.034,
+     "median": 0.086,
+     "p95": 0.215,
+     "max": 0.215
+    },
+    "work": {
+     "min": 598,
+     "median": 864,
+     "p95": 2047,
+     "max": 2047
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.031,
+     "median": 0.086,
+     "p95": 0.6,
+     "max": 0.6
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.036,
+     "median": 0.07,
+     "p95": 0.342,
+     "max": 0.342
+    }
+   }
+  },
+  {
+   "population": "classic4 keep 0.05-0.4 placed<=0.28 seed 4003",
+   "positions": 12,
+   "calls": 12,
+   "caps": {
+    "none": 12,
+    "records": 0,
+    "work": 0
+   },
+   "found": 9,
+   "work": {
+    "min": 153,
+    "median": 288,
+    "p95": 831,
+    "max": 831
+   },
+   "retained": {
+    "min": 7,
+    "median": 50,
+    "p95": 65,
+    "max": 65
+   },
+   "ms": {
+    "min": 0.011,
+    "median": 0.034,
+    "p95": 0.059,
+    "max": 0.059
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.009,
+     "median": 0.033,
+     "p95": 0.111,
+     "max": 0.111
+    },
+    "work": {
+     "min": 153,
+     "median": 288,
+     "p95": 831,
+     "max": 831
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.008,
+     "median": 0.032,
+     "p95": 0.053,
+     "max": 0.053
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.008,
+     "median": 0.03,
+     "p95": 0.05,
+     "max": 0.05
+    }
+   }
+  },
+  {
+   "population": "classic4 keep 0.3-0.6 placed<=0.28 seed 4003",
+   "positions": 12,
+   "calls": 12,
+   "caps": {
+    "none": 12,
+    "records": 0,
+    "work": 0
+   },
+   "found": 12,
+   "work": {
+    "min": 193,
+    "median": 254,
+    "p95": 926,
+    "max": 926
+   },
+   "retained": {
+    "min": 17,
+    "median": 57,
+    "p95": 79,
+    "max": 79
+   },
+   "ms": {
+    "min": 0.025,
+    "median": 0.037,
+    "p95": 0.084,
+    "max": 0.084
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.024,
+     "median": 0.034,
+     "p95": 0.091,
+     "max": 0.091
+    },
+    "work": {
+     "min": 193,
+     "median": 254,
+     "p95": 926,
+     "max": 926
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.021,
+     "median": 0.033,
+     "p95": 0.9,
+     "max": 0.9
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.018,
+     "median": 0.041,
+     "p95": 0.108,
+     "max": 0.108
+    }
+   }
+  },
+  {
+   "population": "12 digits keep 0.05-0.4 placed<=0.28 seed 4004",
+   "positions": 8,
+   "calls": 8,
+   "caps": {
+    "none": 7,
+    "records": 1,
+    "work": 0
+   },
+   "found": 8,
+   "work": {
+    "min": 7971,
+    "median": 13802,
+    "p95": 34877,
+    "max": 34877
+   },
+   "retained": {
+    "min": 495,
+    "median": 2131,
+    "p95": 4096,
+    "max": 4096
+   },
+   "ms": {
+    "min": 0.673,
+    "median": 1.188,
+    "p95": 4.38,
+    "max": 4.38
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.396,
+     "median": 1.285,
+     "p95": 8.551,
+     "max": 8.551
+    },
+    "work": {
+     "min": 7971,
+     "median": 13802,
+     "p95": 34877,
+     "max": 34877
+    }
+   },
+   "w100k": {
+    "capped": 1,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.341,
+     "median": 1.32,
+     "p95": 4.946,
+     "max": 4.946
+    }
+   },
+   "w200k": {
+    "capped": 1,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.337,
+     "median": 1.151,
+     "p95": 4.986,
+     "max": 4.986
+    }
+   }
+  },
+  {
+   "population": "12 digits keep 0.3-0.6 placed<=0.28 seed 4004",
+   "positions": 8,
+   "calls": 8,
+   "caps": {
+    "none": 8,
+    "records": 0,
+    "work": 0
+   },
+   "found": 6,
+   "work": {
+    "min": 4039,
+    "median": 5348,
+    "p95": 6798,
+    "max": 6798
+   },
+   "retained": {
+    "min": 22,
+    "median": 62,
+    "p95": 483,
+    "max": 483
+   },
+   "ms": {
+    "min": 0.084,
+    "median": 0.116,
+    "p95": 0.376,
+    "max": 0.376
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.073,
+     "median": 0.124,
+     "p95": 0.411,
+     "max": 0.411
+    },
+    "work": {
+     "min": 4039,
+     "median": 5348,
+     "p95": 6798,
+     "max": 6798
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.066,
+     "median": 0.099,
+     "p95": 0.391,
+     "max": 0.391
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.064,
+     "median": 0.099,
+     "p95": 0.377,
+     "max": 0.377
+    }
+   }
+  },
+  {
+   "population": "12 digits keep 0.5-0.8 placed<=0.28 seed 4004",
+   "positions": 8,
+   "calls": 8,
+   "caps": {
+    "none": 8,
+    "records": 0,
+    "work": 0
+   },
+   "found": 3,
+   "work": {
+    "min": 1928,
+    "median": 2418,
+    "p95": 4101,
+    "max": 4101
+   },
+   "retained": {
+    "min": 0,
+    "median": 6,
+    "p95": 77,
+    "max": 77
+   },
+   "ms": {
+    "min": 0.03,
+    "median": 0.052,
+    "p95": 0.146,
+    "max": 0.146
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.033,
+     "median": 0.065,
+     "p95": 0.19,
+     "max": 0.19
+    },
+    "work": {
+     "min": 1928,
+     "median": 2418,
+     "p95": 4101,
+     "max": 4101
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.029,
+     "median": 0.06,
+     "p95": 0.137,
+     "max": 0.137
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.033,
+     "median": 0.054,
+     "p95": 0.145,
+     "max": 0.145
+    }
+   }
+  },
+  {
+   "population": "16 digits keep 0.05-0.4 placed<=0.28 seed 4005",
+   "positions": 8,
+   "calls": 8,
+   "caps": {
+    "none": 8,
+    "records": 0,
+    "work": 0
+   },
+   "found": 5,
+   "work": {
+    "min": 6494,
+    "median": 15486,
+    "p95": 38049,
+    "max": 38049
+   },
+   "retained": {
+    "min": 5,
+    "median": 229,
+    "p95": 3491,
+    "max": 3491
+   },
+   "ms": {
+    "min": 0.075,
+    "median": 0.386,
+    "p95": 4.389,
+    "max": 4.389
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.07,
+     "median": 0.344,
+     "p95": 4.964,
+     "max": 4.964
+    },
+    "work": {
+     "min": 6494,
+     "median": 15486,
+     "p95": 38049,
+     "max": 38049
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.066,
+     "median": 0.335,
+     "p95": 3.263,
+     "max": 3.263
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.065,
+     "median": 0.329,
+     "p95": 2.17,
+     "max": 2.17
+    }
+   }
+  },
+  {
+   "population": "16 digits keep 0.3-0.6 placed<=0.28 seed 4005",
+   "positions": 8,
+   "calls": 8,
+   "caps": {
+    "none": 8,
+    "records": 0,
+    "work": 0
+   },
+   "found": 1,
+   "work": {
+    "min": 2887,
+    "median": 4640,
+    "p95": 8494,
+    "max": 8494
+   },
+   "retained": {
+    "min": 0,
+    "median": 2,
+    "p95": 38,
+    "max": 38
+   },
+   "ms": {
+    "min": 0.036,
+    "median": 0.084,
+    "p95": 0.127,
+    "max": 0.127
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.035,
+     "median": 0.065,
+     "p95": 0.137,
+     "max": 0.137
+    },
+    "work": {
+     "min": 2887,
+     "median": 4640,
+     "p95": 8494,
+     "max": 8494
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.034,
+     "median": 0.055,
+     "p95": 0.129,
+     "max": 0.129
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.034,
+     "median": 0.051,
+     "p95": 0.66,
+     "max": 0.66
+    }
+   }
+  },
+  {
+   "population": "16 digits keep 0.5-0.8 placed<=0.28 seed 4005",
+   "positions": 8,
+   "calls": 8,
+   "caps": {
+    "none": 8,
+    "records": 0,
+    "work": 0
+   },
+   "found": 0,
+   "work": {
+    "min": 2557,
+    "median": 2777,
+    "p95": 3569,
+    "max": 3569
+   },
+   "retained": {
+    "min": 0,
+    "median": 0,
+    "p95": 2,
+    "max": 2
+   },
+   "ms": {
+    "min": 0.034,
+    "median": 0.042,
+    "p95": 0.054,
+    "max": 0.054
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.033,
+     "median": 0.035,
+     "p95": 0.045,
+     "max": 0.045
+    },
+    "work": {
+     "min": 2557,
+     "median": 2777,
+     "p95": 3569,
+     "max": 3569
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.032,
+     "median": 0.033,
+     "p95": 0.041,
+     "max": 0.041
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.032,
+     "median": 0.033,
+     "p95": 0.053,
+     "max": 0.053
+    }
+   }
+  },
+  {
+   "population": "samurai keep 0.05-0.4 placed<=0.28 seed 4006",
+   "positions": 4,
+   "calls": 4,
+   "caps": {
+    "none": 1,
+    "records": 3,
+    "work": 0
+   },
+   "found": 4,
+   "work": {
+    "min": 19167,
+    "median": 25966,
+    "p95": 48572,
+    "max": 48572
+   },
+   "retained": {
+    "min": 1107,
+    "median": 4096,
+    "p95": 4096,
+    "max": 4096
+   },
+   "ms": {
+    "min": 0.902,
+    "median": 4.18,
+    "p95": 6.394,
+    "max": 6.394
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.851,
+     "median": 7.445,
+     "p95": 9.085,
+     "max": 9.085
+    },
+    "work": {
+     "min": 19167,
+     "median": 41419,
+     "p95": 55064,
+     "max": 55064
+    }
+   },
+   "w100k": {
+    "capped": 3,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.861,
+     "median": 2.735,
+     "p95": 3.832,
+     "max": 3.832
+    }
+   },
+   "w200k": {
+    "capped": 3,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.812,
+     "median": 3.126,
+     "p95": 5.264,
+     "max": 5.264
+    }
+   }
+  },
+  {
+   "population": "samurai keep 0.3-0.6 placed<=0.28 seed 4006",
+   "positions": 4,
+   "calls": 4,
+   "caps": {
+    "none": 4,
+    "records": 0,
+    "work": 0
+   },
+   "found": 4,
+   "work": {
+    "min": 11201,
+    "median": 16298,
+    "p95": 16655,
+    "max": 16655
+   },
+   "retained": {
+    "min": 132,
+    "median": 467,
+    "p95": 1121,
+    "max": 1121
+   },
+   "ms": {
+    "min": 0.346,
+    "median": 0.489,
+    "p95": 0.904,
+    "max": 0.904
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.316,
+     "median": 0.475,
+     "p95": 0.927,
+     "max": 0.927
+    },
+    "work": {
+     "min": 11201,
+     "median": 16298,
+     "p95": 16655,
+     "max": 16655
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.286,
+     "median": 0.466,
+     "p95": 0.882,
+     "max": 0.882
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.28,
+     "median": 0.522,
+     "p95": 0.917,
+     "max": 0.917
+    }
+   }
+  },
+  {
+   "population": "samurai keep 0.7-0.95 placed<=0.28 seed 4006",
+   "positions": 4,
+   "calls": 4,
+   "caps": {
+    "none": 4,
+    "records": 0,
+    "work": 0
+   },
+   "found": 1,
+   "work": {
+    "min": 4131,
+    "median": 5020,
+    "p95": 7297,
+    "max": 7297
+   },
+   "retained": {
+    "min": 0,
+    "median": 1,
+    "p95": 99,
+    "max": 99
+   },
+   "ms": {
+    "min": 0.071,
+    "median": 0.091,
+    "p95": 0.179,
+    "max": 0.179
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.066,
+     "median": 0.085,
+     "p95": 0.167,
+     "max": 0.167
+    },
+    "work": {
+     "min": 4131,
+     "median": 5020,
+     "p95": 7297,
+     "max": 7297
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.064,
+     "median": 0.071,
+     "p95": 0.166,
+     "max": 0.166
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.062,
+     "median": 0.072,
+     "p95": 0.157,
+     "max": 0.157
+    }
+   }
+  },
+  {
+   "population": "diagonalX keep 0.05-0.4 placed<=0.28 seed 4007",
+   "positions": 8,
+   "calls": 8,
+   "caps": {
+    "none": 8,
+    "records": 0,
+    "work": 0
+   },
+   "found": 8,
+   "work": {
+    "min": 3299,
+    "median": 4812,
+    "p95": 7705,
+    "max": 7705
+   },
+   "retained": {
+    "min": 137,
+    "median": 584,
+    "p95": 1246,
+    "max": 1246
+   },
+   "ms": {
+    "min": 0.13,
+    "median": 0.38,
+    "p95": 1.13,
+    "max": 1.13
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.116,
+     "median": 0.497,
+     "p95": 0.811,
+     "max": 0.811
+    },
+    "work": {
+     "min": 3299,
+     "median": 4812,
+     "p95": 7705,
+     "max": 7705
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.108,
+     "median": 0.481,
+     "p95": 0.957,
+     "max": 0.957
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.103,
+     "median": 0.502,
+     "p95": 1.612,
+     "max": 1.612
+    }
+   }
+  },
+  {
+   "population": "diagonalX keep 0.3-0.6 placed<=0.28 seed 4007",
+   "positions": 8,
+   "calls": 8,
+   "caps": {
+    "none": 8,
+    "records": 0,
+    "work": 0
+   },
+   "found": 6,
+   "work": {
+    "min": 2079,
+    "median": 3052,
+    "p95": 4200,
+    "max": 4200
+   },
+   "retained": {
+    "min": 5,
+    "median": 190,
+    "p95": 637,
+    "max": 637
+   },
+   "ms": {
+    "min": 0.037,
+    "median": 0.137,
+    "p95": 0.387,
+    "max": 0.387
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.029,
+     "median": 0.125,
+     "p95": 0.353,
+     "max": 0.353
+    },
+    "work": {
+     "min": 2079,
+     "median": 3052,
+     "p95": 4200,
+     "max": 4200
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.025,
+     "median": 0.117,
+     "p95": 0.369,
+     "max": 0.369
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.025,
+     "median": 0.114,
+     "p95": 0.353,
+     "max": 0.353
+    }
+   }
+  },
+  {
+   "population": "hyper keep 0.05-0.4 placed<=0.28 seed 4007",
+   "positions": 8,
+   "calls": 8,
+   "caps": {
+    "none": 8,
+    "records": 0,
+    "work": 0
+   },
+   "found": 8,
+   "work": {
+    "min": 3901,
+    "median": 5133,
+    "p95": 11331,
+    "max": 11331
+   },
+   "retained": {
+    "min": 139,
+    "median": 506,
+    "p95": 1395,
+    "max": 1395
+   },
+   "ms": {
+    "min": 0.138,
+    "median": 0.319,
+    "p95": 1.53,
+    "max": 1.53
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.118,
+     "median": 0.305,
+     "p95": 0.797,
+     "max": 0.797
+    },
+    "work": {
+     "min": 3901,
+     "median": 5133,
+     "p95": 11331,
+     "max": 11331
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.109,
+     "median": 0.299,
+     "p95": 0.79,
+     "max": 0.79
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.104,
+     "median": 0.299,
+     "p95": 0.744,
+     "max": 0.744
+    }
+   }
+  },
+  {
+   "population": "hyper keep 0.3-0.6 placed<=0.28 seed 4007",
+   "positions": 8,
+   "calls": 8,
+   "caps": {
+    "none": 8,
+    "records": 0,
+    "work": 0
+   },
+   "found": 7,
+   "work": {
+    "min": 2190,
+    "median": 3005,
+    "p95": 5026,
+    "max": 5026
+   },
+   "retained": {
+    "min": 4,
+    "median": 129,
+    "p95": 708,
+    "max": 708
+   },
+   "ms": {
+    "min": 0.037,
+    "median": 0.116,
+    "p95": 0.415,
+    "max": 0.415
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.031,
+     "median": 0.104,
+     "p95": 1.24,
+     "max": 1.24
+    },
+    "work": {
+     "min": 2190,
+     "median": 3005,
+     "p95": 5026,
+     "max": 5026
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.029,
+     "median": 0.121,
+     "p95": 0.482,
+     "max": 0.482
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.028,
+     "median": 0.096,
+     "p95": 0.407,
+     "max": 0.407
+    }
+   }
+  },
+  {
+   "population": "classic9 techniques-sweep states (120: initial, propagated, pruned; seed 20260101)",
+   "positions": 120,
+   "calls": 120,
+   "caps": {
+    "none": 120,
+    "records": 0,
+    "work": 0
+   },
+   "found": 78,
+   "work": {
+    "min": 0,
+    "median": 1432,
+    "p95": 2309,
+    "max": 3172
+   },
+   "retained": {
+    "min": 0,
+    "median": 101,
+    "p95": 195,
+    "max": 258
+   },
+   "ms": {
+    "min": 0.002,
+    "median": 0.082,
+    "p95": 0.162,
+    "max": 0.763
+   },
+   "cappedWithNoFindingButLiftedFinds": 0,
+   "lifted": {
+    "cappedStill": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.002,
+     "median": 0.073,
+     "p95": 0.16,
+     "max": 0.206
+    },
+    "work": {
+     "min": 0,
+     "median": 1432,
+     "p95": 2309,
+     "max": 3172
+    }
+   },
+   "w100k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.002,
+     "median": 0.069,
+     "p95": 0.153,
+     "max": 0.515
+    }
+   },
+   "w200k": {
+    "capped": 0,
+    "findingDiffers": 0,
+    "ms": {
+     "min": 0.002,
+     "median": 0.068,
+     "p95": 0.155,
+     "max": 0.926
+    }
+   }
+  }
+ ],
+ "liftedSkipped": 0
+}

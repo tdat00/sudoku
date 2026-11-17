@@ -413,6 +413,13 @@
       '(R1C1\u22605 \u2227 R1C2\u22605); a true group never says which of its cells holds the digit. ' +
       'Any candidate removed by the endpoint rule must conflict with every candidate represented by each ' +
       'end. Chains are searched up to a limited length, so a hint does not promise to find every chain.',
+    'technique.alsXz': 'ALS-XZ (almost locked sets)',
+    'technique.alsXz.desc': 'An almost locked set is some cells of one unit that have exactly one more ' +
+      'candidate digit between them than they have cells, so they hold all of those digits but one. Take two ' +
+      'such sets that share no cell, and a digit X that both can hold and where every X of one set sees ' +
+      'every X of the other. The two sets cannot both hold X, so one of them lacks X and holds all of its ' +
+      'other digits. A digit Z that both sets can hold is therefore in one of them, and a cell that sees ' +
+      'every Z of both sets cannot hold Z.',
     'technique.forcingChainLong': 'Long Forcing Chain',
     'technique.forcingChainLong.desc': 'The same kind of chain as the Forcing Chain, but one that is too ' +
       'long for it: the shortest chain that works has more links than the plain Forcing Chain allows (up ' +
@@ -574,6 +581,11 @@
     'technique.forcingChain.step.forced': 'Forcing chain of {length} links: {chains}. If the first ' +
       'candidate were false, a statement about a candidate or group would be both true and false, which is ' +
       'impossible. So the first candidate is true and is placed.',
+    'technique.alsXz.step': 'ALS-XZ on {digitX} and {digitY}: the cells {cells} form two almost locked ' +
+      'sets that share no cell, and both sets can hold {digitX} and {digitY}. Every {digitX} of one set sees ' +
+      'every {digitX} of the other, so at most one of the sets holds {digitX}. The other set then holds all ' +
+      'of its other digits, so one of the two sets holds {digitY}. A candidate {digitY} that sees every ' +
+      '{digitY} of both sets is removed.',
     'technique.nishio.step': 'Trial and error (depth {depth}): if {label} were {digit}, simple deductions ' +
       'would end in a contradiction. So {digit} is removed from {label}.',
     'technique.forcingChainLong.step.endpoints': 'Long forcing chain of {length} links: {chains}. If the ' +

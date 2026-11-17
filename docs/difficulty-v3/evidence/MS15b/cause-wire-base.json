@@ -1,0 +1,21 @@
+{
+ "engine": "git:b958a58",
+ "rows": [
+  {
+   "id": "G10",
+   "request": "killer nightmare 42",
+   "equalsSaved": true,
+   "equalsLedger": false,
+   "ledgerEqualsSaved": false,
+   "seconds": 10.2
+  },
+  {
+   "id": "G13",
+   "request": "samurai nightmare 42",
+   "equalsSaved": true,
+   "equalsLedger": false,
+   "ledgerEqualsSaved": false,
+   "seconds": 95.1
+  }
+ ]
+}

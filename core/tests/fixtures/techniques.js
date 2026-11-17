@@ -30,7 +30,7 @@
  * built from explicit `after` lists or an initial real puzzle state. MS07b replaces the four chain IDs
  * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way; MS08a adds skyscraper,
  * MS08b twoStringKite, MS08c emptyRectangle, MS09a finnedXWing, MS09b finnedSwordfish, MS10a remotePairs, MS10b
- * wxyzWing, MS11c bugPlusOne and MS12 xyChain (MS11a and MS11b replace the uniqueRectangle entry).
+ * wxyzWing, MS11c bugPlusOne, MS12 xyChain and MS15b alsXz (MS11a and MS11b replace the uniqueRectangle entry).
  */
 (function () {
   'use strict';
@@ -47,18 +47,18 @@
   ];
 
   /**
-   * The 32 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
-   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the eleven
+   * The 33 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
+   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the twelve
    * techniques added since: skyscraper (MS08a), twoStringKite (MS08b), emptyRectangle (MS08c), finnedXWing
-   * (MS09a), remotePairs (MS10a), finnedSwordfish (MS09b), wxyzWing (MS10b), bugPlusOne (MS11c), xyChain (MS12) and
-   * the two chain windows forcingChainLong and nishioDeep (MS07b).
+   * (MS09a), remotePairs (MS10a), finnedSwordfish (MS09b), wxyzWing (MS10b), bugPlusOne (MS11c), xyChain (MS12),
+   * alsXz (MS15b) and the two chain windows forcingChainLong and nishioDeep (MS07b).
    */
   var REGISTRY_ORDER = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite', 'remotePairs',
     'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'finnedSwordfish', 'jellyfish', 'xyWing',
-    'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle', 'bugPlusOne', 'xyChain', 'forcingChain', 'forcingChainLong',
-    'nishio', 'nishioDeep'
+    'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle', 'bugPlusOne', 'xyChain', 'forcingChain', 'alsXz',
+    'forcingChainLong', 'nishio', 'nishioDeep'
   ];
 
   /** The techniques the ladder tries before `id`: the position after them is where `id` is reached. */
@@ -754,9 +754,9 @@
   /**
    * Explicit positions of the chain IDs under rating v3 (MS07b). The arrays are copied lists of registered ids,
    * so that a technique registered later cannot move a position: the techniques below the chain group (in the
-   * order of the registry) and xyChain (MS12, order 186), then forcingChain, forcingChainLong and nishio, one after
-   * the other. Each position is where the solver, allowed only the ids of its list, gets stuck, which is where the
-   * next ID is reached.
+   * order of the registry) and xyChain (MS12, order 186), then forcingChain, alsXz (MS15b, order 194),
+   * forcingChainLong and nishio, one after the other. Each position is where the solver, allowed only the ids of
+   * its list, gets stuck, which is where the next ID is reached.
    */
   var BELOW_CHAINS = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
@@ -765,7 +765,8 @@
     'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle', 'bugPlusOne', 'xyChain'
   ];
   var THROUGH_SHORT_CHAIN = BELOW_CHAINS.concat(['forcingChain']);
-  var THROUGH_LONG_CHAIN = THROUGH_SHORT_CHAIN.concat(['forcingChainLong']);
+  var THROUGH_ALS = THROUGH_SHORT_CHAIN.concat(['alsXz']);
+  var THROUGH_LONG_CHAIN = THROUGH_ALS.concat(['forcingChainLong']);
   var THROUGH_NISHIO = THROUGH_LONG_CHAIN.concat(['nishio']);
 
   // Where skyscraper is reached under rating v3 (MS08a): the techniques before it in the registry, and the same
@@ -1030,6 +1031,47 @@
    * highest candidate of the trivalue cell, and two negatives.
    */
   var CURRENT = {
+    alsXz: {
+      positive: [
+        {
+          name: 'alsXz on the 9 and the 7, two almost locked sets, R2C8 loses the 7 (the puzzle of the ' +
+            'forcingChain fixture)',
+          puzzle: V2_PUZZLE_2,
+          after: THROUGH_SHORT_CHAIN,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[16, 7]]
+          }
+        },
+        {
+          name: 'alsXz on the 8 and the 2, two almost locked sets, R5C8 and R8C7 lose the 2 (a puzzle of the ' +
+            'hidden rectangle fixtures)',
+          puzzle: UR_HIDDEN,
+          after: THROUGH_SHORT_CHAIN,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[43, 2], [69, 2]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'alsXz has nothing left to do once the techniques through it are exhausted',
+          puzzle: PLATINUM,
+          after: THROUGH_ALS,
+          propagate: true
+        },
+        {
+          name: 'alsXz leaves a chain of 5 links to forcingChainLong (116 almost locked sets, no pair removes ' +
+            'anything)',
+          puzzle: DUG_24,
+          after: THROUGH_SHORT_CHAIN,
+          propagate: true
+        }
+      ]
+    },
     xyChain: {
       positive: [
         {
@@ -1522,7 +1564,7 @@
         {
           name: 'forcingChainLong contradiction of 5 links on a dug puzzle',
           puzzle: DUG_24,
-          after: THROUGH_SHORT_CHAIN,
+          after: THROUGH_ALS,
           propagate: true,
           expect: {
             placements: [],
@@ -1532,7 +1574,7 @@
         {
           name: 'forcingChainLong contradiction of 6 links on a dug puzzle',
           puzzle: DUG_730,
-          after: THROUGH_SHORT_CHAIN,
+          after: THROUGH_ALS,
           propagate: true,
           expect: {
             placements: [],
@@ -1544,7 +1586,7 @@
         {
           name: 'forcingChainLong finds nothing on the stuck position of hard-platinum (no chain at all)',
           puzzle: PLATINUM,
-          after: THROUGH_SHORT_CHAIN,
+          after: THROUGH_ALS,
           propagate: true
         },
         {
@@ -1667,6 +1709,16 @@
    * position with 42 open cells.
    */
   var SUPPLEMENTS = {
+    alsXz: [
+      { name: 'alsXz on a real position (the open puzzle of the wxyzWing fixtures)',
+        puzzle: WX_OPEN, after: THROUGH_SHORT_CHAIN, propagate: true },
+      { name: 'alsXz on a real position (a puzzle of the emptyRectangle fixtures)',
+        puzzle: ER_RATED, after: THROUGH_SHORT_CHAIN, propagate: true },
+      { name: 'alsXz on a real position (a third seeded dug puzzle of the xyChain fixtures)',
+        puzzle: XY_THIRD, after: THROUGH_SHORT_CHAIN, propagate: true },
+      { name: 'alsXz on a real position (a puzzle of the unique rectangle fixtures)',
+        puzzle: UR_COLUMN, after: THROUGH_SHORT_CHAIN, propagate: true }
+    ],
     xyChain: [
       { name: 'xyChain on the 8, a chain of 9 edges (a third seeded dug puzzle)', puzzle: XY_THIRD,
         after: BELOW_XY, propagate: true },
@@ -1752,9 +1804,9 @@
         propagate: true }
     ],
     forcingChainLong: [
-      { name: 'a long chain of 5 links (dug puzzle)', puzzle: DUG_24, after: THROUGH_SHORT_CHAIN, propagate: true },
-      { name: 'a long chain of 6 links (dug puzzle)', puzzle: DUG_730, after: THROUGH_SHORT_CHAIN, propagate: true },
-      { name: 'a second long chain (dug puzzle)', puzzle: DUG_155, after: THROUGH_SHORT_CHAIN, propagate: true }
+      { name: 'a long chain of 5 links (dug puzzle)', puzzle: DUG_24, after: THROUGH_ALS, propagate: true },
+      { name: 'a long chain of 6 links (dug puzzle)', puzzle: DUG_730, after: THROUGH_ALS, propagate: true },
+      { name: 'a second long chain (dug puzzle)', puzzle: DUG_155, after: THROUGH_ALS, propagate: true }
     ],
     nishioDeep: [
       { name: 'depth 2 on hard-platinum', puzzle: PLATINUM, after: THROUGH_NISHIO, propagate: true },

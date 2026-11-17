@@ -705,8 +705,8 @@
           });
         });
         var g12 = compactOf(goldenResult('G12'));
-        expect(g12[4].parts[g12[4].parts.length - 1].args.peak).toBe(3226);
-        inLocale('en', function () { expect(P.describeStep(g12[4])).toContain('the score reached 3,226'); });
+        expect(g12[4].parts[g12[4].parts.length - 1].args.peak).toBe(3221);
+        inLocale('en', function () { expect(P.describeStep(g12[4])).toContain('the score reached 3,221'); });
         var plain = g12[2];
         expect(plain.parts[plain.parts.length - 1].key).toBe('replay.folded.peak');
         expect(plain.parts[plain.parts.length - 1].args.peak).toBe(133);
@@ -1002,7 +1002,7 @@
           });
         });
       });
-      expect(jumps).toBe(24);
+      expect(jumps).toBe(30);
       expect(framed).toBeGreaterThan(8);
       expect(framed).toBeLessThan(jumps);
     }, 120000);

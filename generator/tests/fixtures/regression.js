@@ -84,11 +84,11 @@
         '6f7e2103146cb837', 'be23ed7644f34a2a', '5fe9990500fc7509', '0653c5d7dc8f5133'
       ],
       'classic9/nightmare': [
-        'af8cc1903dae114c', 'b607c41a92e66e56', 'd23f88fe192fe8d2', 'f67df36b1786e6ef',
-        'fe091a72bfcef38e', 'cf4094aa622bddb6', '235a80d67f5dc78a', '7a18532b7b9079ef',
-        'bd6893f3ae7f6b17', '66aefec9259ec7d5', '3d6abd4b2619bf9f', 'dad4670a797b4826',
-        'fc9704b7e5afa893', '5808eca53f2e9399', '6b3b299bd3abd8af', '9ca8b356c180f9da',
-        '2d5076ab2613714f', 'ac42ef5c747325f0', '8e46c4a506ec5d09', '7e5d71552b14f449'
+        'af8cc1903dae114c', '2949b47af2812146', 'd23f88fe192fe8d2', 'f67df36b1786e6ef',
+        '991c93a9ab3e9cd5', 'cf4094aa622bddb6', '740e20025a9a6bde', '7a18532b7b9079ef',
+        'bd6893f3ae7f6b17', '6ea21caad52089e6', '3d6abd4b2619bf9f', 'dad4670a797b4826',
+        'fc9704b7e5afa893', '5808eca53f2e9399', '1fd2381198a16dcd', '9ca8b356c180f9da',
+        '2d5076ab2613714f', '85a58ec6cb319b6a', '6746789f2cd65f2b', '7e5d71552b14f449'
       ],
       'mega12/normal': [
         '97897abcb3ad1978', '880378cbd0717e4f', '8db24fe4df2928a0', 'f7a01ff67ea68312',
@@ -112,11 +112,11 @@
         '69ce6a82fd52539e', 'e9142c88dff360d4', 'd5f4aeb7c4373de3', '21d0e09cd4e738d0'
       ],
       'diagonalX/nightmare': [
-        '2d50e89ca97f0310', '083c9fd649906d0a', 'fa416f96c949db5a', 'c8551a66f1a2a85a',
-        '260adf0349b1b0d7', '2e65208de779e4e1', 'b582ed3d61b8f841', '428e5ba3fe5a73e7',
-        '47fbe548faed3e94', '51ff0ce01d01701c', '550c3b498fdfcfc5', 'b9b6e97f78e5f17b',
-        '25c3288490a539a8', 'd518194cfc529680', 'b31380ece23c62f0', '121e7e377ca919e3',
-        '3f6e2d96879e677a', '03b74046b0af2c4a', '369fafcc41d65530', '2853448c74d3d390'
+        'abbc240d07061241', 'd5c182afdb25e61b', '8695b729132c2205', '6ed179affa21228b',
+        'a19a1c08295cd104', '3afe23ce3a3e7c92', '8162cabfd80db08b', 'd3b88366b7c46bea',
+        '9cff99a6874ee2aa', '51ff0ce01d01701c', 'eb28f042d221dfce', 'b9b6e97f78e5f17b',
+        '25c3288490a539a8', '032926b269e75f4e', '3b8471e29785086e', 'dd42b4c612e8a8fa',
+        '96b9b4e506c6c599', '4290b5f97019d775', 'e472e10cec72b7f0', 'ed857f56f02271ea'
       ],
       'hyper/hard': [
         'beb9f19e5f68c822', '42067bc4514f7148', '16f0b5ba0fa996c6', '45d21808d3065904',

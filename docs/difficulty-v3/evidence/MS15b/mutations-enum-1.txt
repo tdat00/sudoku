@@ -1,0 +1,89 @@
+mutation 0 (C01 exactly k digits instead of k + 1): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 1 (C02 at most k + 1 digits): DETECTED by run 0 (generator tech-als) - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes a bivalue cell as a 1-cell ALS, and no cell with one, three or more candidates
+mutation 2 (C03 exactly k + 2 digits): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 3 (C04 prune when the union exceeds k): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 4 (C05 prune only above k + 2): DETECTED by run 0 (generator tech-als) - 19 total, 18 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.4 s
+    FAIL tech-als > als enumerator: agreement with the independent enumeration > gives the oracle's records, order and work on 12 seeded positions of classic9
+mutation 5 (C06 no union bound while searching): DETECTED by run 0 (generator tech-als) - 19 total, 18 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.4 s
+    FAIL tech-als > als enumerator: agreement with the independent enumeration > gives the oracle's records, order and work on 12 seeded positions of classic9
+mutation 6 (C07 prune at k + 1 digits too): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 7 (C08 solved cells count as open): DETECTED by run 0 (generator tech-als) - 11 total, 10 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.4 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > counts only open cells: a solved cell is never in a record and its digit joins nothing
+mutation 8 (C09 only solved cells count as open): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 9 (C10 open cells without candidates are skipped): DETECTED by run 0 (generator tech-als) - 13 total, 12 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes an open cell without candidates as adding no digit (an inconsistent position, a vacuous set)
+mutation 10 (C11 the cells of a unit are not sorted): DETECTED by run 0 (generator tech-als) - 17 total, 16 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: order and duplicates > does not depend on the order of the units or on the order of the cells inside a unit
+mutation 11 (C12 the cells of a unit are sorted descending): DETECTED by run 0 (generator tech-als) - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes two cells of one unit with the candidates {1,2} and {2,3} as a 2-cell ALS
+mutation 12 (C13 numeric compares the other way): DETECTED by run 0 (generator tech-als) - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes two cells of one unit with the candidates {1,2} and {2,3} as a 2-cell ALS
+mutation 13 (C14 one more start index than can complete): DETECTED by run 0 (generator tech-als) - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes a bivalue cell as a 1-cell ALS, and no cell with one, three or more candidates
+mutation 14 (C15 the last index is too small at depth): DETECTED by run 0 (generator tech-als) - 9 total, 8 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes four cells with five digits, and stops at four cells: five cells with six digits are not enumerated
+mutation 15 (C16 no completion bound on the start): DETECTED by run 0 (generator tech-als) - 19 total, 18 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.4 s
+    FAIL tech-als > als enumerator: agreement with the independent enumeration > gives the oracle's records, order and work on 12 seeded positions of classic9
+mutation 16 (C17 a cell may be reused in a combination): DETECTED by run 0 (generator tech-als) - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes a bivalue cell as a 1-cell ALS, and no cell with one, three or more candidates
+mutation 17 (C18 the next cell skips its neighbour): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 18 (C19 the union is an intersection): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 19 (C20 the found list shares the picked array): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 20 (C21 the picked array has one slot too many): DETECTED by run 0 (generator tech-als) - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes a bivalue cell as a 1-cell ALS, and no cell with one, three or more candidates
+mutation 21 (C22 the picked slot holds the index, not the cell): DETECTED by run 0 (generator tech-als) - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes a bivalue cell as a 1-cell ALS, and no cell with one, three or more candidates
+mutation 22 (C23 the masks are the values, not the candidates): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 23 (C24 sizes start at 2): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 24 (C25 sizes stop one short): DETECTED by run 0 (generator tech-als) - 9 total, 8 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes four cells with five digits, and stops at four cells: five cells with six digits are not enumerated
+mutation 25 (C26 sizes go one beyond the limit): DETECTED by run 0 (generator tech-als) - 9 total, 8 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes four cells with five digits, and stops at four cells: five cells with six digits are not enumerated
+mutation 26 (C27 the sets are not sorted): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 27 (C28 the sets are not deduplicated): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 28 (C29 the first set is dropped): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 29 (C30 compare looks at the first cell only): DETECTED by run 0 (generator tech-als) - 19 total, 18 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: agreement with the independent enumeration > gives the oracle's records, order and work on 12 seeded positions of classic9
+mutation 30 (C31 compare goes descending): DETECTED by run 0 (generator tech-als) - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes two cells of one unit with the candidates {1,2} and {2,3} as a 2-cell ALS
+mutation 31 (C32 compare says equal for different sets): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 32 (C33 popcount of the low byte only): DETECTED by run 0 (generator tech-als) - 9 total, 8 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.7 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes four cells with five digits, and stops at four cells: five cells with six digits are not enumerated
+mutation 33 (C34 sizes ignore the digits of the board): DETECTED by run 0 (generator tech-als) - 9 total, 8 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes four cells with five digits, and stops at four cells: five cells with six digits are not enumerated
+mutation 34 (C35 one size too many for the digits of the board): DETECTED by run 0 (generator tech-als) - 9 total, 8 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes four cells with five digits, and stops at four cells: five cells with six digits are not enumerated
+mutation 35 (C36 one size too few for the digits of the board): DETECTED by run 0 (generator tech-als) - 9 total, 8 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes four cells with five digits, and stops at four cells: five cells with six digits are not enumerated
+mutation 36 (C37 the size bound is the digits alone): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 37 (R01 digits descending): DETECTED by run 0 (generator tech-als) - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes a bivalue cell as a 1-cell ALS, and no cell with one, three or more candidates
+mutation 38 (R02 digits 0-based): DETECTED by run 0 (generator tech-als) - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes a bivalue cell as a 1-cell ALS, and no cell with one, three or more candidates
+mutation 39 (R03 the union misses the last cell): DETECTED by run 0 (generator tech-als) - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes a bivalue cell as a 1-cell ALS, and no cell with one, three or more candidates
+mutation 40 (R04 the bit of a digit is shifted): DETECTED by run 0 (generator tech-als) - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes a bivalue cell as a 1-cell ALS, and no cell with one, three or more candidates
+mutation 41 (R05 occurrences list the cells without the digit): DETECTED by run 0 (generator tech-als) - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes a bivalue cell as a 1-cell ALS, and no cell with one, three or more candidates
+mutation 42 (R06 occurrences list every cell): DETECTED by run 0 (generator tech-als) - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes two cells of one unit with the candidates {1,2} and {2,3} as a 2-cell ALS
+mutation 43 (R07 cells of a record descending): DETECTED by run 0 (generator tech-als) - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes two cells of one unit with the candidates {1,2} and {2,3} as a 2-cell ALS
+detected 44 of 44, survivors 0, 14.5 s

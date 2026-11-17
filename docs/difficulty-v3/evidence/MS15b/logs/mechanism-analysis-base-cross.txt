@@ -1,0 +1,9 @@
+$ node tests\artifacts\difficulty-v3\MS15b\mechanism.js --kind=analysis --only=G05,G06,G07,G10,G12,G13,G14 --out=..\docs\difficulty-v3\evidence\MS15b\mechanism-analysis-base-cross.json --cross=..\docs\difficulty-v3\evidence\MS15b\mechanism-analysis-tree.json
+G05 classic9 hell1 2299986211: engine git:b958a58 clues 24, own rating hell1/2536; the puzzle of tree (clues 28, same regions true, same puzzle false) rated here hell1/2433
+G06 jigsaw9 nightmare 42: engine git:b958a58 clues 22, own rating nightmare/2374; the puzzle of tree (clues 20, same regions true, same puzzle false) rated here hell1/2745
+G07 jigsaw9 nightmare 3962167687: engine git:b958a58 clues 26, own rating nightmare/2184; the puzzle of tree (clues 24, same regions true, same puzzle false) rated here hell1/2437
+G10 killer nightmare 42: engine git:b958a58 clues 24, own rating nightmare/2199; the puzzle of tree (clues 9, same regions true, same puzzle false) rated here hell1/2703
+G12 greaterThan hard 3115968914: engine git:b958a58 clues 28, own rating hard/647; the puzzle of tree (clues 28, same regions true, same puzzle true) rated here hard/647
+G13 samurai nightmare 42: engine git:b958a58 clues 138, own rating nightmare/2363; the puzzle of tree (clues 120, same regions true, same puzzle false) rated here hell1/2455
+G14 mega16 hell2 12: engine git:b958a58 clues 98, own rating hell2/6490; the puzzle of tree (clues 98, same regions true, same puzzle true) rated here hell2/6490
+exit=0 seconds=143.908

@@ -1,12 +1,12 @@
 /**
- * Almost-locked sets (difficulty v3, R18, MS15a): the bounded enumerator `SG.alsPatterns.enumerate`. It is an
- * INACTIVE helper: no technique, weight or help text is registered here, nothing in the solver, the rating or
- * the hints reads it, and the registered finders share no state with it. MS15b (alsXz) and MS16 (sueDeCoq)
- * are its first readers.
+ * Almost-locked sets (difficulty v3, R18): the bounded enumerator `SG.alsPatterns.enumerate` (MS15a), a
+ * helper that has no observer of its own, and ALS-XZ (MS15b), the registered technique `alsXz`, which
+ * reads it through `SG.alsPatterns.findXz`. ALS-XZ is the only technique registered here; Sue de Coq
+ * (MS16) is not active yet, and every other registered finder shares no state with this module.
  *
- * An almost-locked set (ALS) is k open cells (1 <= k <= LIMITS.cells = 4) of ONE all-different unit whose
- * candidates together are exactly k + 1 digits. The k cells hold k different digits (they all see each
- * other through the unit), and every one of them is among the k + 1 candidates, so exactly one of those
+ * An almost-locked set (ALS) is k open cells of ONE all-different unit whose candidates together are
+ * exactly k + 1 digits. The k cells hold k different digits (they all see each other through the unit),
+ * and every one of them is among the k + 1 candidates, so exactly one of those
  * digits is missing from the set. Nothing else is needed: the unit does not have to be complete (a partial
  * unit such as a Killer cage is an all-different unit too, so are diagonals, windows and regions, in any
  * grid of a multi-grid board). A bivalue cell is a 1-cell ALS. Solved cells are not part of any ALS; a cell
@@ -16,7 +16,8 @@
  *   SG.alsPatterns.enumerate(model, state, ctx, work[, limits]) -> { records, complete, capHit }
  *   SG.alsPatterns.createWork([limit]) -> work
  *   SG.alsPatterns.spend(work, ctx) -> boolean
- *   SG.alsPatterns.LIMITS = { cells: 4, records: 4096, work: 50000 } (frozen)
+ *   SG.alsPatterns.findXz(model, state, ctx[, opts]) -> Finding | null  (opts: the tests' seam, see ALS-XZ)
+ *   SG.alsPatterns.LIMITS = { cells: 4, records: 4096, work: 50000 } (frozen): the production defaults
  *
  * A record is plain data, one per distinct cell set:
  *
@@ -32,9 +33,15 @@
  * Order: by cell count (1 cell first), then lexicographically by the ascending cell indexes. The records
  * kept are always a prefix of that order, the first `LIMITS.records` = 4096 at most.
  *
- * The result. `complete` is true when every ALS of at most `LIMITS.cells` cells of the supplied state was
- * enumerated and kept (a set of more cells is outside the definition, not missing). Otherwise `capHit` says
- * why the enumeration stopped, and NO case asserts that another ALS does not exist:
+ * The cell bound. The enumerator searches within the call's effective cell bound: `LIMITS.cells` (4) in
+ * production, or the test-only `limits.cells` of the call, clipped by `model.digits - 1` (k cells need
+ * k + 1 different digits, so a 4 x 4 board stops at 3 cells). The bound belongs to the search, not to the
+ * concept: a set of five cells is an ALS too, it is just not searched at four.
+ *
+ * The result. `complete: true` means every eligible structural ALS within the effective bound was
+ * enumerated and retained. It does not certify that the position is feasible, that no larger ALS exists or
+ * that the later pair/target search is complete. `complete: false` is not an exhaustion proof: `capHit`
+ * says why the enumeration stopped, and NO case asserts that another ALS does not exist:
  *   'records'  4096 records were kept and a further one exists. The records are the first 4096 of the
  *              order, each valid: a consumer may build a constructive witness from them, with work left in
  *              its guard, but never reads "no ALS" or "no pattern" from the prefix. Exactly 4096 sets
@@ -44,12 +51,13 @@
  *              was cut is dropped whole, because a part of it is not a prefix. The guard has no unit left,
  *              so an enclosing finder has no allowance for a pair scan it did not count.
  *   null       with `complete` false: the parent budget was spent (a 'budget.exceeded' error of the
- *              context, answered as "nothing found" as the registered finders do, with the same prefix
- *              of finished sizes). The caller checks its own budget after the call. Cancellation
- *              ('budget.cancelled') and every other error propagate and nothing is returned.
- * `enumerate` publishes no `ctx.options.onPatternWork` record: the enclosing finder is the one call of the
- * solver and publishes one record for the whole of it (its guard's `used` and `limit`, its own `capHit`,
- * `retained` the number of records).
+ *              context, answered with no Finding as the registered finders do, with the same prefix of
+ *              finished sizes, which is no exhaustion proof). The caller checks its own budget after the
+ *              call. Cancellation ('budget.cancelled') and every other error propagate and nothing is
+ *              returned.
+ * `enumerate` publishes no `ctx.options.onPatternWork` record: the enclosing finder (`findXz`, below) is
+ * the one call of the solver and publishes one record for the whole of it (its guard's `used` and
+ * `limit`, its own `capHit`, `retained` the number of records).
  *
  * Work (R10). The guard `work = { limit, used, checkedAt, capped }`, made by `createWork`, is the one counter
  * of an enclosing finder's call: the enumeration and the later pair scan spend from it and nothing resets it
@@ -73,13 +81,59 @@
  * so that a cut leaves a prefix; the probe that tells whether a record beyond the limit exists stops at the
  * first one.
  *
- * The seam of the tests: `limits = { cells, records }` replaces either limit with a whole number of at least
- * 0 (floored, else `solver.invalidOption`). Nothing in the solver passes it.
+ * The seam of the tests: `limits = { cells, records }` replaces either limit with a whole number of at
+ * least 0 (floored, else `solver.invalidOption`). Nothing in the solver passes it (`findXz` forwards
+ * `opts.limits`).
+ *
+ * ALS-XZ (R18, MS15b). Take two ALSs A and B of the retained records that share no cell, and a digit x
+ * that both hold and that is RESTRICTED COMMON: every cell of A that holds x sees every cell of B that
+ * holds x (a `model.peers` relation, tested for every pair of cells; disjointness is no shortcut). Two
+ * cells that see each other cannot both hold x, so one of the two sets holds no x, and a set of k cells
+ * with k + 1 digits that holds no x holds each of its other k digits exactly once. So for every other
+ * digit z that both sets hold, at least one cell of A or B holds z, and a candidate z of any other open
+ * cell that sees EVERY cell of A and B that holds z is removed. The sets may lie in different units,
+ * grids or partial units (a Killer cage): the proof needs only that each set lies in one all-different
+ * unit and that the sets are disjoint. No uniqueness is assumed, and the technique is not scoped to a
+ * variant.
+ *
+ * Order. The retained records in their order, A before B by record index (A < B); for a pair, x ascending
+ * (restricted common only), then z ascending over the other common digits (another restricted common digit
+ * may be z). The first (A, B, x, z) that has a target gives the Finding, whatever a later one would remove.
+ * The pivot is the first cell of A that holds z (`A.occurrences[z][0]`): its peers are visited in ascending
+ * order, and an open cell of them that holds z and sees every cell of A and B that holds z is a target (a
+ * cell of A or B never is: it does not see itself). The scan of one (x, z) is finished before its Finding
+ * is made, and a stop discards it.
+ *
+ * Finding: technique 'alsXz', key technique.alsXz.step, no placements; `cells` the cells of A and B,
+ * ascending; `eliminations` [target, z] ascending by cell; i18nArgs { digitX: x, digitY: z, cells } with
+ * the labels of `cells` in the same order. Every array is the caller's own.
+ *
+ * Work. The call has ONE guard, the enumeration's: one unit is charged before each pair of records tested
+ * (disjointness, the common digits and the restricted-common test of every x are inside it), before each
+ * (x, z) whose target scan is opened and before each cell of the pivot's peers that is visited, rejected or
+ * not. Nothing else is charged and nothing is free: no prefilter, no rejection scan outside the guard. The
+ * parent budget is checked as for the enumeration (every 256 units), after the enumeration before its
+ * records are used, and after the pair phase before anything is published: a spent budget there drops the
+ * Finding.
+ *
+ * Stops. A unit the guard refuses gives no Finding, in the enumeration or in the pair phase, and the work
+ * is not continued. A stop of the parent budget gives no Finding either, even if it was seen once only and
+ * the budget answers again. One observer record { id: 'alsXz', work, limit, capHit, retained } is published
+ * for each call that returns (none for an error or a cancellation, which propagate), after the search and
+ * outside its error handling. `capHit` is 'work' when the guard refused a unit, otherwise 'records' when
+ * the record quota really cut the enumeration (the pairs of the retained prefix are still searched: a
+ * Finding is a constructive proof, and no absence is claimed), otherwise null. A parent-only stop is null, as
+ * for every registered finder (the caller's budget stays spent), and it never erases a cap reported
+ * before it. `retained` is the number of records the enumeration kept.
+ *
+ * The seam of the tests: `findXz(model, state, ctx, opts)` with `opts = { workLimit, limits }` (a whole
+ * number of at least 0 each, `limits` as for `enumerate`, anything else is `solver.invalidOption`). The
+ * registered finder passes no `opts`, so production runs with `LIMITS`.
  *
  * Ownership. Every call allocates its own tables and its records are the caller's: the model, the state and
  * the context are only read, nothing is shared between calls or kept after one, and no candidate-dependent
  * list is cached, so a state object that was changed between two calls is simply read again. There is no
- * cache at all, so no geometry can go stale either.
+ * cache at all, so no geometry can go stale either. A Finding is built from copies.
  */
 (function (root) {
   'use strict';
@@ -92,6 +146,9 @@
   const CHECK_UNITS = 256;
   // Thrown inside a call when the guard refuses a unit; it never leaves enumerate.
   const WORK_CAP = Object.freeze({ capHit: 'work' });
+  // The same inside findXz, in the pair phase; it never leaves findXz.
+  const XZ_CAP = Object.freeze({ capHit: 'work' });
+  const XZ_ID = 'alsXz';
 
   function numeric(a, b) { return a - b; }
 
@@ -261,10 +318,175 @@
     return { records: records, complete: complete, capHit: capHit };
   }
 
+  // One unit of the pair phase, from the call's own guard; a refused unit ends the phase.
+  function chargeUnit(work, ctx) {
+    if (!spend(work, ctx)) throw XZ_CAP;
+  }
+
+  // The digits that both ascending lists hold, ascending.
+  function commonDigits(a, b) {
+    const out = [];
+    let i = 0;
+    let j = 0;
+    while (i < a.length && j < b.length) {
+      if (a[i] === b[j]) {
+        out.push(a[i]);
+        i++;
+        j++;
+      } else if (a[i] < b[j]) {
+        i++;
+      } else {
+        j++;
+      }
+    }
+    return out;
+  }
+
+  function sharesCell(a, b) {
+    for (let k = 0; k < a.length; k++) {
+      if (b.indexOf(a[k]) !== -1) return true;
+    }
+    return false;
+  }
+
+  function sees(model, a, b) { return model.peers[a].indexOf(b) !== -1; }
+
+  // Restricted common: every cell of A that holds x sees every cell of B that holds x.
+  function restrictedCommon(model, a, b, x) {
+    const inA = a.occurrences[x];
+    const inB = b.occurrences[x];
+    for (let i = 0; i < inA.length; i++) {
+      for (let j = 0; j < inB.length; j++) {
+        if (!sees(model, inA[i], inB[j])) return false;
+      }
+    }
+    return true;
+  }
+
+  // The targets of z: the open cells of the pivot's peers (ascending) that hold z and see every cell of A
+  // and B that holds z. Every visited peer is charged, rejected or not; a refused unit discards the list.
+  function xzTargets(model, state, ctx, work, a, b, z) {
+    const zCells = a.occurrences[z].concat(b.occurrences[z]);
+    const bit = 1 << (z - 1);
+    const pivot = model.peers[a.occurrences[z][0]];
+    const targets = [];
+    for (let i = 0; i < pivot.length; i++) {
+      chargeUnit(work, ctx);
+      const c = pivot[i];
+      if (state.value[c] !== 0 || (state.candidates[c] & bit) === 0) continue;
+      let all = true;
+      for (let q = 0; q < zCells.length && all; q++) all = sees(model, c, zCells[q]);
+      if (all) targets.push(c);
+    }
+    return targets;
+  }
+
+  function xzFinding(model, a, b, x, z, targets) {
+    const cells = a.cells.concat(b.cells).sort(numeric);
+    return {
+      technique: XZ_ID,
+      cells: cells,
+      placements: [],
+      eliminations: targets.map(function (c) { return [c, z]; }),
+      i18nKey: 'technique.' + XZ_ID + '.step',
+      i18nArgs: {
+        digitX: x,
+        digitY: z,
+        cells: cells.map(function (c) { return SG.model.cellLabel(model, c); })
+      }
+    };
+  }
+
+  // The first Finding of the pair (A, B): x ascending among the restricted common digits, z ascending among
+  // the other common digits.
+  function xzOfPair(model, state, ctx, work, a, b) {
+    if (sharesCell(a.cells, b.cells)) return null;
+    const common = commonDigits(a.digits, b.digits);
+    if (common.length < 2) return null;
+    for (let i = 0; i < common.length; i++) {
+      if (!restrictedCommon(model, a, b, common[i])) continue;
+      for (let k = 0; k < common.length; k++) {
+        if (k === i) continue;
+        chargeUnit(work, ctx);
+        const targets = xzTargets(model, state, ctx, work, a, b, common[k]);
+        if (targets.length > 0) return xzFinding(model, a, b, common[i], common[k], targets);
+      }
+    }
+    return null;
+  }
+
+  // Every pair of records, A before B by record index; one unit is charged before each pair.
+  function xzSearch(model, state, ctx, work, records) {
+    for (let i = 0; i < records.length; i++) {
+      for (let j = i + 1; j < records.length; j++) {
+        chargeUnit(work, ctx);
+        const found = xzOfPair(model, state, ctx, work, records[i], records[j]);
+        if (found !== null) return found;
+      }
+    }
+    return null;
+  }
+
+  function xzSeam(opts) {
+    if (opts === undefined) return {};
+    if (opts === null || typeof opts !== 'object') throw invalidOption('opts', 'must be an object');
+    return opts;
+  }
+
+  function findXz(model, state, ctx, opts) {
+    const seam = xzSeam(opts);
+    const work = createWork(seam.workLimit);
+    let found = null;
+    let retained = 0;
+    let recordsCut = false;
+    try {
+      const enumerated = enumerate(model, state, ctx, work, seam.limits);
+      retained = enumerated.records.length;
+      recordsCut = enumerated.capHit === 'records';
+      if (enumerated.capHit === null && !enumerated.complete) {
+        // The parent budget ended the enumeration: no Finding, even if a recheck now passes.
+        ctx.check();
+      } else if (enumerated.capHit !== 'work') {
+        ctx.check();
+        found = xzSearch(model, state, ctx, work, enumerated.records);
+        ctx.check();
+      }
+    } catch (err) {
+      found = null;
+      if (err !== XZ_CAP && !(err && err.code === 'budget.exceeded')) throw err;
+    }
+    const observer = ctx.options ? ctx.options.onPatternWork : undefined;
+    if (typeof observer === 'function') {
+      observer({
+        id: XZ_ID,
+        work: work.used,
+        limit: work.limit,
+        capHit: work.capped ? 'work' : recordsCut ? 'records' : null,
+        retained: retained
+      });
+    }
+    return found;
+  }
+
   SG.alsPatterns = {
     enumerate: enumerate,
     createWork: createWork,
     spend: spend,
+    findXz: findXz,
     LIMITS: LIMITS
   };
+
+  // The registered finder takes no options: it always runs with the production limits.
+  if (!SG.techniques.has(XZ_ID)) {
+    SG.techniques.register({
+      id: XZ_ID,
+      group: 'chain',
+      baseCost: 106,
+      order: 194,
+      i18nKey: 'technique.' + XZ_ID,
+      variantScope: null,
+      assumesUniqueness: false,
+      find: function (model, state, ctx) { return findXz(model, state, ctx); }
+    });
+  }
 })(typeof self !== 'undefined' ? self : globalThis);

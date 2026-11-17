@@ -665,6 +665,23 @@
     return below;
   }
 
+  /**
+   * The ids tried before forcingChainLong as the registry stood at b958a58 (MS15a), before alsXz (MS15b, order
+   * 194) was registered: a LITERAL list, not a live filter of the registry. Isolated specimens of the grouped
+   * finders (puzzle #530, whose stuck position is the real position where the grouped search hits its allowance,
+   * and the stuck positions of LONG_CHAIN_PUZZLES in the windows test) were found on the stuck positions of that
+   * ladder. Under the registry of MS15b alsXz fires on some of them (one step solves #530), so those tests keep
+   * the positions of the historical ladder and assert exactly what they asserted before: they test the finders
+   * on states, not the ladder, and nothing about the registered ladder, hints, ratings or generation is read
+   * from them.
+   */
+  var PRE_ALS_BEFORE_LONG = [
+    'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
+    'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite', 'remotePairs',
+    'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'finnedSwordfish', 'jellyfish', 'xyWing',
+    'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle', 'bugPlusOne', 'xyChain', 'forcingChain'
+  ];
+
   describe('chain group: registration', function () {
     // R9 and R15 (difficulty v3): id, order, baseCost; the weights (1000, 1100, 1400, 1700, 2600) are those of the
     // Generator's technique-weights suite.
@@ -673,7 +690,8 @@
       ['nishioDeep', 202, 210]
     ];
 
-    it('registers the five chain ids with the values of design.md 6.6 (R9, R15)', function () {
+    it('registers the five chain ids with the values of design.md 6.6 (R9, R15), and alsXz (MS15b) between ' +
+      'forcingChain and forcingChainLong', function () {
       TABLE.forEach(function (row) {
         var t = SG.techniques.get(row[0]);
         expect([row[0], t.group, t.order, t.baseCost, t.i18nKey]).toEqual([row[0], 'chain', row[1], row[2],
@@ -681,7 +699,7 @@
       });
       expect(SG.techniques.list().filter(function (t) { return t.group === 'chain'; }).map(function (t) {
         return t.id;
-      })).toEqual(['xyChain', 'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep']);
+      })).toEqual(['xyChain', 'forcingChain', 'alsXz', 'forcingChainLong', 'nishio', 'nishioDeep']);
     });
 
     it('applies to every variant and does not rely on a unique solution', function () {
@@ -2286,7 +2304,8 @@
 
     it('owns every shortest proof exactly once, for C = 4 and C = 6: the windows partition the scan',
       function () {
-        var below = idsBefore('forcingChainLong');
+        // the positions of the ladder of b958a58, before alsXz (see PRE_ALS_BEFORE_LONG)
+        var below = PRE_ALS_BEFORE_LONG;
         var positions = prunedStates(model9, SG.testkit.rng.create(171), 60,
           function (r) { return 0.03 + 0.3 * r.next(); }).map(function (item) { return item.state; });
         CHAIN_FIXTURES.forEach(function (fx) { positions.push(fixtureState(fx)); });
@@ -5332,7 +5351,8 @@
       var FAR_STATE = SG.model.initState(FAR);
 
       function stuck(text, c) {
-        return withCutoff(c, function () { return stuckItem(text, idsBefore('forcingChainLong')).state; });
+        // the position of the ladder of b958a58, before alsXz (see PRE_ALS_BEFORE_LONG)
+        return withCutoff(c, function () { return stuckItem(text, PRE_ALS_BEFORE_LONG).state; });
       }
 
       it('falls back on a local cap to the complete singleton search with no local limit, and records both phases',
@@ -5566,10 +5586,13 @@
     var FAR = ringsModel([2001, 5]);
     var FAR_STATE = SG.model.initState(FAR);
     var capCache = null;
-    /** The stuck position of puzzle #530 with C = 6 (computed once): its long proof is out of the allowance. */
+    /**
+     * The stuck position of puzzle #530 with C = 6 (computed once) on the ladder of b958a58 (PRE_ALS_BEFORE_LONG):
+     * its long proof is out of the allowance.
+     */
     function capState() {
       if (capCache === null) {
-        capCache = withCutoff(6, function () { return stuckItem(PUZZLE_530, idsBefore('forcingChainLong')).state; });
+        capCache = withCutoff(6, function () { return stuckItem(PUZZLE_530, PRE_ALS_BEFORE_LONG).state; });
       }
       return capCache;
     }

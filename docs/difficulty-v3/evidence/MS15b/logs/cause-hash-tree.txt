@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS15b\cause.js --kind=hash --ledgers=..\docs\difficulty-v3\evidence\MS15b\hashes --only=classic9/nightmare,diagonalX/nightmare --json=..\docs\difficulty-v3\evidence\MS15b\cause-hash-tree.json
+classic9/nightmare: 7 of 20 differ in the ledger (seeds 2, 8, 21, 89, 987, 4181, 6765); equal to the saved 13, to the ledger 20 (13.9 s)
+diagonalX/nightmare: 17 of 20 differ in the ledger (seeds 1, 2, 3, 5, 8, 13, 21, 34, 55, 144, 610, 987, 1597, 2584, 4181, 6765, 10946); equal to the saved 3, to the ledger 20 (31.7 s)
+hashes examined 40 (engine tree, 45.7 s); equal to the saved output 16, equal to the ledger 40, ledger differs from the saved 24
+exit=0 seconds=45.890

@@ -1,0 +1,43 @@
+$ node tests\artifacts\difficulty-v3\MS15b\affected-cells.js
+cells in the performance table: 118
+cells whose level admits alsXz: 37 (levels: nightmare, hell1, hell2)
+  classic9/nightmare target 2500 ms
+  classic9/hell1 target 2500 ms
+  diagonalX/nightmare target 3000 ms
+  diagonalX/hell1 target 3000 ms
+  diagonalX/hell2 target 3000 ms
+  hyper/nightmare target 3000 ms
+  hyper/hell1 target 3000 ms
+  hyper/hell2 target 5000 ms
+  jigsaw9/nightmare target 5000 ms
+  jigsaw9/hell1 target 5000 ms
+  jigsaw9/hell2 target 5000 ms
+  wordoku/nightmare target 1500 ms
+  wordoku/hell1 target 2500 ms
+  killer/nightmare target 10000 ms
+  killer/hell1 target 10000 ms
+  killer/hell2 target 10000 ms
+  greaterThan/nightmare target 10000 ms
+  greaterThan/hell1 target 10000 ms
+  greaterThan/hell2 target 10000 ms
+  mega12/nightmare target 3000 ms
+  mega12/hell1 target 4500 ms
+  mega12/hell2 target 16000 ms
+  mega16/nightmare target 10000 ms
+  mega16/hell1 target 10000 ms
+  mega16/hell2 target 10000 ms
+  butterfly/nightmare target 8000 ms
+  butterfly/hell1 target 8000 ms
+  butterfly/hell2 target 15000 ms
+  samurai/nightmare target 20000 ms
+  samurai/hell1 target 20000 ms
+  samurai/hell2 target 30000 ms
+  flower/nightmare target 20000 ms
+  flower/hell1 target 20000 ms
+  flower/hell2 target 20000 ms
+  sohei/nightmare target 20000 ms
+  sohei/hell1 target 20000 ms
+  sohei/hell2 target 20000 ms
+cells that do not admit it: 81 (levels: veryEasy, hard, easy, normal, expert, master)
+alsXz weight 1250, 1.25 x weight 1562.5; master band max 1500
+exit=0 seconds=0.240
