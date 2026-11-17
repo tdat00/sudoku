@@ -1,0 +1,19 @@
+$ node tests\artifacts\difficulty-v3\MS14c\search-fits.js fits 3000
+mode fits cage R4C2 R4C3 R4C4 R4C5 sum 25 digits 5938
+  cands R4C2=125 R4C3=4689 R4C4=237 R4C5=89
+  with  : 27:9,32:9,33:9,34:9,35:9
+  w/o   :
+mode fits cage R7C2 R7C3 R7C4 sum 19 digits 289
+  cands R7C2=267 R7C3=34689 R7C4=39
+  with  : 54:9,58:9,59:9,60:9,61:9,62:9
+  w/o   :
+mode fits cage R1C5 R1C6 R1C7 R1C8 sum 17 digits 1286
+  cands R1C5=18 R1C6=12 R1C7=3568 R1C8=14568
+  with  : 0:8,1:8,2:8,3:8,8:8
+  w/o   :
+mode fits cage R8C5 R8C6 R8C7 sum 18 digits 639
+  cands R8C5=345679 R8C6=2349 R8C7=69
+  with  : 63:9,64:9,65:9,66:9,70:9,71:9
+  w/o   :
+found 4
+exit=0 seconds=0.286

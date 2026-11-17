@@ -1,0 +1,43 @@
+$ node tests\node-runner.js --results=..\docs\difficulty-v3\evidence\MS14c\quick-final-2\player-quick.json
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+ok   bits: 32 passed  (73 ms)
+ok   board-view: 37 passed  (68 ms)
+ok   constraints: 43 passed  (78 ms)
+ok   exchange: 20 passed  (238 ms)
+ok   harness: 25 passed  (2.01 s)
+ok   logical-solver: 100 passed  (311 ms)
+ok   model: 49 passed  (36 ms)
+ok   solver: 50 passed  (2.67 s)
+ok   symbols: 12 passed  (2 ms)
+ok   tech-basic: 167 passed  (1.86 s)
+ok   tech-cage: 33 passed  (29 ms)
+ok   tech-chain: 239 passed  (26.12 s)
+ok   tech-fish: 483 passed  (24.22 s)
+ok   tech-subset: 167 passed  (8.95 s)
+ok   tech-wing: 496 passed  (11.37 s)
+ok   techniques: 268 passed  (6.66 s)
+ok   wordbook: 7 passed  (9 ms)
+ok   a11y: 24 passed  (19 ms)
+ok   app: 15 passed  (15 ms)
+ok   fixtures: 21 passed  (14 ms)
+ok   help-example-tools: 51 passed  (5.82 s)
+ok   help: 28 passed  (4.71 s)
+ok   i18n: 75 passed  (166 ms)
+ok   importer: 88 passed  (334 ms)
+ok   model-aids: 7 passed  (2 ms)
+ok   play: 75 passed  (413 ms)
+ok   progress: 26 passed  (49 ms)
+ok   store: 17 passed  (3 ms)
+ok   text-boards: 14 passed  (14 ms)
+ok   theme: 54 passed  (43 ms)
+ok   ui-contract: 63 passed  (168 ms)
+
+Suites: 31
+Tests:  2786 total, 2786 passed, 0 failed, 0 skipped
+Time:   96.47 s running tests, 96.79 s total
+Results: docs/difficulty-v3/evidence/MS14c/quick-final-2/player-quick.json
+(node:14064) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+exit=0 seconds=97.063

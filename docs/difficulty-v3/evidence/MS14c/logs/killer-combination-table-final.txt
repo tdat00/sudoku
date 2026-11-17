@@ -1,0 +1,10 @@
+$ node tests\node-runner.js --suite=killer --filter=killer: combination table (P4)
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   killer: 10 passed  (27 ms)
+
+Suites: 1
+Tests:  10 total, 10 passed, 0 failed, 0 skipped
+Time:   27 ms running tests, 132 ms total
+exit=0 seconds=0.227

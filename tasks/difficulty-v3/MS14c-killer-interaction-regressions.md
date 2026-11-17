@@ -233,14 +233,14 @@ No new slow-cell evidence/tooling class. Return the inherited/new item list and 
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted after orchestrator review (S-OD4: applicable MS08a/IR72 template; not in the SA1 set). Test-only task, no `QUESTION:` raised; no production file, fixture or pin changed; E check-only |
+| Start | 2026-11-17 18:17:42 (+07:00), base `abf87d0` (implementation base `0e3a0c4`, MS14b) |
+| End | 19:19:27 final report; orchestrator review and re-check 19:20-19:21; commit 19:21 |
+| Duration | About 1 h 02 min developer (including one superseded quick pair after a header-comment fix, about 15 min); about 2 min orchestrator review; locked commands in `docs/difficulty-v3/evidence/MS14c/lock-log.jsonl` (32 rows, all exit 0) |
+| Model | claude-sonnet-5.5 (developer); claude-opus-5.5 (orchestrator review) |
+| Token usage | Developer: 192 model calls; 69,298,519 input tokens (68,736,843 cache reads); 253,414 output tokens |
+| AI credits | about 1,081 (developer) |
+| Verification | New `core/tests/suites/tech-cage.test.js` (33 tests per app, added to `core-shared` and both `tests.html`): core-built Killer boards (27 units plus one explicit cage); required-digit-locked-to-unit positives (row and box, row only, box only, survivors filter, L-shaped cage, placed cage cell, typed-in marks, singles-only state), two-cell pair positives (row only, box only, row and box, typed-in), four near misses, each also transposed; every position checked by hand-written eliminations, an independent brute-force oracle from `model.units` and the exact solver; registration pin: the `cage` group is exactly `cageCombo`, `cageSplit`, `ruleOf45`, no `cageLocked`, `cageCombo` scoped to Killer. Mutants of `tech-cage.js`: 36, first run 32 detected (kept), final 35 detected + 1 equivalent (P12, argued from `constraints.js` placement invariants). E: no E source identity touched (16 E-input files and two tree hashes equal MS14b `engine-final-2.txt`); MS14b E-2 ledgers merge-checked check-only (5 wires, 14 analyses, 520 hashes), no writes. GH `--check` 38/38, no discovery or writes. Quick sets: Generator 4,559/4,559 (54 suites, 500.9 s), Player 2,786/2,786 (31 suites, 97.1 s); no projection changes; fingerprints Generator `e587fe7e...`, Player `cb4f326e...`; CI check passes. Orchestrator: diff confined to tests, docs, suite lists and CI manifest; locked Generator `tech-cage,techniques,tech-subset,ui-contract,purity,help` 607/607 (19.6 s), Player `tech-cage,techniques,ui-contract,help,help-example-tools` 443/443 (16.4 s), CI shard check 4,559 of 4,559 |
+| Acceptance | MS14c-B01, B02, T01-T03 met (developer evidence in `docs/difficulty-v3/evidence/MS14c/evidence.md` section 10); orchestrator review: accept |
+| Issues & resolutions | The suite header said "two hand-made" positions where three exist; fixed and the affected gates, quick sets and CI re-run on the final bytes (first pair kept as superseded). The first mutation record labels S02 "equivalent" from an unchecked draft; the label is withdrawn in the evidence and S02 is killed. One locked row waited 45.2 s for a slot held by an unidentified process. Gaps: finder enumeration order not pinned (sets compared), no neighbouring-technique boundary test, constructed 9x9 cages only, in-cage elimination loop/placement branch/budget cadence/ruleOf45/cageSplit not mutated. Not run: manual suites beyond the P4 selector, GD, qualification, soak, GP, corpus scan |
+| Handoff | To MS15a: accepted source unchanged in production code; quick totals Generator 4,559 (500.9 s) and Player 2,786 (97.1 s); fingerprints Generator `e587fe7e...`, Player `cb4f326e...`; projections core-shared 130, steps 70, replay 70, mega 40, own-fast 320, digger-target 30, pipeline 80, Generator player shard 90, Player job 150; help catalogue 38; MS14b E-2 ledgers remain current; S-AV36/S-AV37/S-AV38 carried; S-OD12/S0; M14 complete; MS15a is in the SA1 review set |

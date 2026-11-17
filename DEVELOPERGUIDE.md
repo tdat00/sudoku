@@ -535,7 +535,7 @@ sudoku/                     the repository (see "Layout" in the overview for the
 │   ├── js/ui/              exchange · wordbook · symbols · board-view
 │   ├── css/                tokens.css · tokens-board.css · base.css · board.css
 │   ├── assets/wordbook/    words.en.js · words.vi.js   spelling, part of speech and meaning of each key word
-│   └── tests/              harness.js · node-evidence.js · fixtures/ · suites/   the suites of the shared code (16 suites)
+│   └── tests/              harness.js · node-evidence.js · fixtures/ · suites/   the suites of the shared code (17 suites)
 ├── player/                 the player
 └── generator/              this app
     ├── index.html          the page: every <script> tag, in dependency order; the sg-player-url meta tag
@@ -1074,6 +1074,21 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    negatives, each with its own region map, which the cost tool `generator/tests/pattern-cost.js` also reads through
    its scoped adapter; both `tests.html` pages list the file); a scoped technique's help example is a Jigsaw
    snapshot with its own `cellRegion`. The proof, the equivalent mutant and the evidence are in `generator/design.md` §6.6.
+   **The Killer cage interactions** (`core/js/engine/tech-cage.js`; task MS14c added tests only: no technique, ID,
+   weight or engine change). The ordinary required digit locked to a unit and the two-cell Killer pair already are
+   the pointing step of `cageCombo` (`pointOutOfCage`), so there is **no `cageLocked` technique** (R17). For one cage
+   `cageCombo` keeps the digit sets of the combination table that fit the open cells: the size and sum left after
+   the placed cells, no placed digit, inside the candidates of the open cells, every open cell holding a digit of the
+   set (the surviving combinations; there is no assignment matching). A digit that every surviving set contains and
+   that two or more open cells can still hold is removed from the other unsolved cells that can hold it in **every**
+   unit that holds all those cells (a row, a column and a box can each apply); a two-cell cage with one surviving
+   pair is the same rule with both digits. A set without the digit, a place outside the units of the others or a
+   target outside the common units gives no elimination. The core suite `tech-cage.test.js` (33 tests, run by both
+   apps) builds its boards with `SG.model.create` from the row, column and box units and one explicit cage (the cage
+   propagation switched on for its own variant id), never from a Generator variant, and checks 12 positions and 4
+   near misses, each as given and transposed, against the eliminations written out by hand, a brute-force oracle
+   and the exact solver. Both `tests.html` pages list it, and the `core-shared` shard of
+   `.github/scripts/generator-quick.json` owns it. The evidence is in `docs/difficulty-v3/evidence/MS14c/evidence.md`.
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
    `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
@@ -1127,9 +1142,9 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (53 suites, 4,526 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (54 suites, 4,559 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
-node tests/node-runner.js --all                    # quick + manual (61 suites)
+node tests/node-runner.js --all                    # quick + manual (62 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --suite=help --exact="<full name>"   # only the tests of exactly this full name
@@ -1138,8 +1153,8 @@ node tests/node-runner.js --suite=help --results=<file.json>    # run, and write
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
-**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 53 suites,
-4,526 tests — the 37 suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the
+**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 54 suites,
+4,559 tests — the 37 suites of `tests/suites/` and the 17 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -1196,7 +1211,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 61 suites, 53 of them quick (4,526 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 62 suites, 54 of them quick (4,559 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1604,7 +1619,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (30, 2,753 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (31, 2,786 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 
@@ -1615,7 +1630,7 @@ measured cost of each app is in [docs/difficulty-v3/recovery-quick-cost.md](docs
 
 These Node tests are quick and are the default set: developers and coding agents run `node tests/node-runner.js`
 (or a few suites with `--suite=`) while developing, and the deployment workflow runs all of them. They are the 14
-suites of `tests/suites/` and the 16 of `../core/tests/suites/` that the generator runs too (the engine, the technique
+suites of `tests/suites/` and the 17 of `../core/tests/suites/` that the generator runs too (the engine, the technique
 ladder, the exchange format, the board view). `tests.html` runs the same suites in a browser (the ones that read the
 fixtures need `http://`). The fixtures in `tests/fixtures/puzzles/` are real documents made by Sudoku Generator
 ([fixtures](docs/puzzle-exchange/fixtures.md)).

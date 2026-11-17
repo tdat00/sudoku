@@ -831,6 +831,20 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    âm, mỗi ca có bản đồ vùng riêng; công cụ chi phí `generator/tests/pattern-cost.js` cũng đọc chúng qua bộ nối có phạm
    vi, và cả hai trang `tests.html` đều liệt kê tệp này); ví dụ trợ giúp của một kỹ thuật có phạm vi là một ảnh chụp
    Jigsaw kèm `cellRegion` riêng. Phép chứng minh, biến thể tương đương và bằng chứng nằm trong `generator/design.md` §6.6.
+   **Hai tương tác của lồng Killer** (`core/js/engine/tech-cage.js`; nhiệm vụ MS14c chỉ thêm kiểm thử: không thêm kỹ
+   thuật, ID, trọng số hay sửa bộ máy). Chữ số bắt buộc bị khóa vào một đơn vị và cặp Killer hai ô vốn đã là bước chỉ
+   hướng của `cageCombo` (`pointOutOfCage`), nên **không có kỹ thuật `cageLocked`** (R17). Với một lồng, `cageCombo` giữ
+   các tập chữ số của bảng tổ hợp còn vừa với các ô trống: cỡ và tổng còn lại sau các ô đã điền, không có chữ số đã
+   điền, nằm trong các ứng viên của các ô trống, mỗi ô trống có một chữ số của tập (các tổ hợp còn sống sót; không
+   ghép cặp theo phép gán). Chữ số mà mọi tập còn sống sót đều chứa và từ hai ô trống trở lên còn có thể chứa bị loại
+   khỏi các ô chưa giải khác còn chứa được nó trong **mọi** đơn vị chứa tất cả các ô ấy (hàng, cột và hộp có thể cùng áp
+   dụng); lồng hai ô chỉ còn một cặp là cùng quy tắc với cả hai chữ số. Tập thiếu chữ số, một vị trí nằm ngoài các đơn
+   vị của những vị trí kia hay một ô đích ngoài các đơn vị chung thì không cho phép loại nào. Suite lõi
+   `tech-cage.test.js` (33 bài kiểm thử, cả hai ứng dụng cùng chạy) dựng bàn bằng `SG.model.create` từ các đơn vị hàng,
+   cột, hộp và một lồng tường minh (bật lan truyền lồng cho một mã biến thể riêng), không bao giờ dùng biến thể của
+   Generator, và kiểm tra 12 thế cờ và 4 ca suýt đúng, mỗi ca theo hướng gốc và chuyển vị, đối chiếu với các phép loại
+   viết tay, một bộ oracle vét cạn và bộ giải chính xác. Cả hai trang `tests.html` đều liệt kê nó, và đợt `core-shared`
+   của `.github/scripts/generator-quick.json` sở hữu nó. Bằng chứng nằm trong `docs/difficulty-v3/evidence/MS14c/evidence.md`.
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
    [Cách hoạt động](#cách-hoạt-động) — và trong các danh sách script của trình chơi (`index.html`, `help.html`,
    `tests.html`, `tests/node-runner.js`), vì kỹ thuật nằm trong bộ máy dùng chung (`core/js/engine/`) và gợi ý
@@ -884,9 +898,9 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (53 suite, 4.526 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (54 suite, 4.559 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
-node tests/node-runner.js --all                    # nhanh + thủ công (61 suite)
+node tests/node-runner.js --all                    # nhanh + thủ công (62 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --suite=help --exact="<tên đầy đủ>"   # chỉ các bài có đúng tên đầy đủ này
@@ -895,8 +909,8 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 53 suite, 4.526 bài —
-37 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 54 suite, 4.559 bài —
+37 suite ở `tests/suites/` và 17 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
 `variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw` — không thuộc lần chạy mặc định: chạy bằng `--manual` (chỉ các suite này) hoặc
@@ -951,7 +965,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 61 suite, trong đó 53 suite nhanh (4.526 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 62 suite, trong đó 54 suite nhanh (4.559 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -1350,7 +1364,7 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (30 bộ, 2.753 bài); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (31 bộ, 2.786 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 
@@ -1362,7 +1376,7 @@ không vừa một lệnh có giới hạn, hãy phủ nó như bộ nhanh của
 
 Các kiểm thử Node này chạy nhanh và là bộ mặc định: lập trình viên và các tác tử lập trình chạy
 `node tests/node-runner.js` (hoặc vài bộ với `--suite=`) trong lúc phát triển, còn workflow triển khai chạy tất cả. Đó là 14
-bộ ở `tests/suites/` và 16 bộ ở `../core/tests/suites/` mà trình sinh đề cũng chạy (bộ máy giải, bậc thang kỹ thuật, định
+bộ ở `tests/suites/` và 17 bộ ở `../core/tests/suites/` mà trình sinh đề cũng chạy (bộ máy giải, bậc thang kỹ thuật, định
 dạng trao đổi, hiển thị bàn cờ). `tests.html` chạy cùng các bộ kiểm thử trong trình duyệt (những bộ đọc tệp mẫu cần
 `http://`). Các tệp mẫu trong `tests/fixtures/puzzles/` là tài liệu thật do Trình sinh đề Sudoku tạo ra
 ([tệp mẫu](docs/puzzle-exchange/fixtures.md)).
