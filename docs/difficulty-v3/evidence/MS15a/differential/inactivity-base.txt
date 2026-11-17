@@ -1,0 +1,7 @@
+$ node tests\artifacts\difficulty-v3\MS15a\inactivity-diff.js
+engine: git:8bd2487, states 242 (48 jigsaw), registered techniques 38, finder calls 7532 (with a Finding 2487), states unchanged true
+registry sha256 25cc089a6a5f7b11f865727a885b294bc25222336822886b480cdfcc84c59310, weights/tiers sha256 fd35856d025d4111ddf6dc33f4e8330ecf45fef7ad8009c82dda3fb123e00ec9, ALS technique registered none
+SG keys (67): DEBUG MAX_DIGITS VERSION a11y app bits boardView budget cache chainGraph chainProofs chainSearch classicModel comboTable constraints controls dfs difficulty digger errors events exchange explain explainCard exportUi extraRegions fishSearch fixtures fullGrid greaterThan help history i18n ineq jigsaw killer leftoverPatterns localeFragments locales logicalSolver mega model modelAids multigrid pipeline player replay resultView rng setDebug stepView store symbols symmetry techHelper techniques test testResults testkit theme variants wingSearch wordbook wordbookData wordlists wordoku workerClient
+plain sha256 c93fdd7ae6261b830896f1fbfa29a44c583eca7d370ad63b4e0e247d90d48de1
+interleaved: none (no enumerator in this source)
+exit=0 seconds=7.824

@@ -1,0 +1,52 @@
+[
+  {
+    "label": "g-wire-G09",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS15a\\wire\\G09.json"
+    ],
+    "projectionSeconds": 64,
+    "projectionBasis": "MS14b final E-2 g-wire-G09 26.842 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-wire-G10",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS15a\\wire\\G10.json"
+    ],
+    "projectionSeconds": 32,
+    "projectionBasis": "MS14b final E-2 g-wire-G10 10.594 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-wire-G11",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS15a\\wire\\G11.json"
+    ],
+    "projectionSeconds": 45,
+    "projectionBasis": "MS14b final E-2 g-wire-G11 17.157 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-wire-G12",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS15a\\wire\\G12.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS14b final E-2 g-wire-G12 1.087 s (same shard); 2 x + 10 s"
+  },
+  {
+    "label": "g-wire-G13",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS15a\\wire\\G13.json"
+    ],
+    "projectionSeconds": 202,
+    "projectionBasis": "MS14b final E-2 g-wire-G13 95.643 s (same shard); 2 x + 10 s"
+  }
+]

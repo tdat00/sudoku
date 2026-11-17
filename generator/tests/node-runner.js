@@ -53,6 +53,7 @@ const SOURCE_FILES = [
   '../core/js/engine/tech-fish.js',
   '../core/js/engine/tech-wing.js',
   '../core/js/engine/tech-chain.js',
+  '../core/js/engine/tech-als.js',
   '../core/js/engine/tech-cage.js',
   '../core/js/engine/tech-ineq.js',
   '../core/js/engine/classic-model.js',

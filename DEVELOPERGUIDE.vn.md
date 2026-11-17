@@ -845,6 +845,28 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    Generator, và kiểm tra 12 thế cờ và 4 ca suýt đúng, mỗi ca theo hướng gốc và chuyển vị, đối chiếu với các phép loại
    viết tay, một bộ oracle vét cạn và bộ giải chính xác. Cả hai trang `tests.html` đều liệt kê nó, và đợt `core-shared`
    của `.github/scripts/generator-quick.json` sở hữu nó. Bằng chứng nằm trong `docs/difficulty-v3/evidence/MS14c/evidence.md`.
+
+   **Bộ liệt kê tập gần-khóa có chặn** (`core/js/engine/tech-als.js`, `SG.alsPatterns`; nhiệm vụ MS15a, rating v3, R18;
+   **chưa kích hoạt**: chưa có kỹ thuật, trọng số, gợi ý, ví dụ trợ giúp hay xếp hạng nào đọc nó, nên không đầu ra nào
+   đổi; người đọc đầu tiên là MS15b và MS16). Tập gần-khóa (ALS) là *k* ô trống (1 đến 4) của cùng một đơn vị đôi một
+   khác nhau mà các ứng viên gộp lại đúng *k* + 1 chữ số; đơn vị có thể là đơn vị một phần (lồng Killer), đường chéo,
+   cửa sổ hoặc vùng. `SG.alsPatterns.enumerate(model, state, ctx, work[, limits])` trả về `{ records, complete, capHit }`:
+   các bản ghi dữ liệu thuần `{ cells, digits, occurrences }` (ô và chữ số tăng dần, các ô chứa từng chữ số), mỗi tập ô
+   một bản, xếp theo số ô rồi theo các ô, và luôn là một tiền tố của thứ tự ấy (tối đa 4.096). `complete` đúng khi mọi
+   ALS có tối đa `LIMITS.cells` ô (giới hạn số ô hiệu lực, mặc định 4) đã được liệt kê: ALS lớn hơn có thể tồn tại và
+   không bao giờ bị khẳng định là vắng, và nó không bao trùm các phép tìm cặp hay đích về sau của bộ tìm kiếm; nếu không
+   thì `capHit` là `'records'` (đã giữ 4.096 và còn một tập nữa), `'work'` (thanh chắn từ chối một đơn vị công việc; chỉ
+   giữ các cỡ đã xong trước điểm cắt) hoặc `null` (ngân sách cha đã hết), và **không trường hợp nào khẳng định rằng
+   không còn ALS khác**. Thanh chắn công việc của mỗi lần gọi
+   `work = { limit, used, checkedAt, capped }` đến từ `SG.alsPatterns.createWork([limit])` (50.000 đơn vị) và được chia
+   sẻ với phép quét cặp về sau qua `SG.alsPatterns.spend(work, ctx)`: không gì đặt lại nó khi đổi giai đoạn, một đơn vị
+   là một lần thử mở rộng một tổ hợp, và ngân sách cha được kiểm tra lúc vào và sao cho giữa hai lần kiểm tra qua tối
+   đa 256 đơn vị. Bộ liệt kê không phát bản ghi `onPatternWork` (bộ tìm kiếm bao ngoài làm việc đó), không lưu đệm gì và
+   chỉ đọc đầu vào. Suite lõi `tech-als.test.js` (58 bài kiểm thử, cả hai ứng dụng cùng chạy) đối chiếu các bản ghi với
+   một phép liệt kê độc lập (mọi tập con, không cắt tỉa) và số đơn vị công việc với một phép đếm lại cài đặt lại đường
+   duyệt của bộ liệt kê, trên 84 thế cờ gieo hạt của mọi dạng đơn vị; ngoài ra kiểm thử giới hạn số bản ghi, thanh chắn,
+   ngân sách và việc hủy, và quyền sở hữu; cả hai trang `tests.html` đều liệt kê nó, và đợt `core-shared` của
+   `.github/scripts/generator-quick.json` sở hữu nó. Bằng chứng nằm trong `docs/difficulty-v3/evidence/MS15a/evidence.md`.
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
    [Cách hoạt động](#cách-hoạt-động) — và trong các danh sách script của trình chơi (`index.html`, `help.html`,
    `tests.html`, `tests/node-runner.js`), vì kỹ thuật nằm trong bộ máy dùng chung (`core/js/engine/`) và gợi ý
@@ -898,9 +920,9 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (54 suite, 4.559 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (55 suite, 4.618 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
-node tests/node-runner.js --all                    # nhanh + thủ công (62 suite)
+node tests/node-runner.js --all                    # nhanh + thủ công (63 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
 node tests/node-runner.js --suite=help --exact="<tên đầy đủ>"   # chỉ các bài có đúng tên đầy đủ này
@@ -909,8 +931,8 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 54 suite, 4.559 bài —
-37 suite ở `tests/suites/` và 17 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 55 suite, 4.618 bài —
+37 suite ở `tests/suites/` và 18 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
 `variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw` — không thuộc lần chạy mặc định: chạy bằng `--manual` (chỉ các suite này) hoặc
@@ -965,7 +987,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 62 suite, trong đó 54 suite nhanh (4.559 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 63 suite, trong đó 55 suite nhanh (4.618 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -1364,7 +1386,7 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (31 bộ, 2.786 bài); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (32 bộ, 2.844 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 
@@ -1376,7 +1398,7 @@ không vừa một lệnh có giới hạn, hãy phủ nó như bộ nhanh của
 
 Các kiểm thử Node này chạy nhanh và là bộ mặc định: lập trình viên và các tác tử lập trình chạy
 `node tests/node-runner.js` (hoặc vài bộ với `--suite=`) trong lúc phát triển, còn workflow triển khai chạy tất cả. Đó là 14
-bộ ở `tests/suites/` và 17 bộ ở `../core/tests/suites/` mà trình sinh đề cũng chạy (bộ máy giải, bậc thang kỹ thuật, định
+bộ ở `tests/suites/` và 18 bộ ở `../core/tests/suites/` mà trình sinh đề cũng chạy (bộ máy giải, bậc thang kỹ thuật, định
 dạng trao đổi, hiển thị bàn cờ). `tests.html` chạy cùng các bộ kiểm thử trong trình duyệt (những bộ đọc tệp mẫu cần
 `http://`). Các tệp mẫu trong `tests/fixtures/puzzles/` là tài liệu thật do Trình sinh đề Sudoku tạo ra
 ([tệp mẫu](docs/puzzle-exchange/fixtures.md)).

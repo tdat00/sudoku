@@ -1089,6 +1089,28 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
    near misses, each as given and transposed, against the eliminations written out by hand, a brute-force oracle
    and the exact solver. Both `tests.html` pages list it, and the `core-shared` shard of
    `.github/scripts/generator-quick.json` owns it. The evidence is in `docs/difficulty-v3/evidence/MS14c/evidence.md`.
+
+   **The bounded almost-locked-set enumerator** (`core/js/engine/tech-als.js`, `SG.alsPatterns`; task MS15a, rating
+   v3, R18; **inactive**: no technique, weight, hint, help example or rating reads it yet, so no output changed; its
+   first readers are MS15b and MS16). An almost-locked set (ALS) is *k* open cells (1 to 4) of one all-different unit
+   whose candidates are exactly *k* + 1 digits; the unit may be partial (a Killer cage), a diagonal, a window or a
+   region. `SG.alsPatterns.enumerate(model, state, ctx, work[, limits])` returns `{ records, complete, capHit }`:
+   plain records `{ cells, digits, occurrences }` (ascending cells and digits, the cells that hold each digit), one
+   per distinct cell set, ordered by cell count and then by cells, and always a prefix of that order (at most 4,096).
+   `complete` is true when every ALS of at most `LIMITS.cells` cells (the effective cell bound, default 4) was listed:
+   larger ALSs may exist and are never claimed absent, and it does not cover the later pair or target searches of a
+   finder. Otherwise `capHit` is `'records'` (4,096 kept and a further set exists), `'work'` (the guard refused a
+   unit; only the sizes finished before the cut are kept) or `null` (the parent budget was spent), and **no case
+   claims that another ALS does not exist**. The per-call work guard
+   `work = { limit, used, checkedAt, capped }` comes from `SG.alsPatterns.createWork([limit])` (50,000 units) and is
+   shared with the later pair scan through `SG.alsPatterns.spend(work, ctx)`: nothing resets it at a change of phase,
+   one unit is one tested extension of a combination, and the parent budget is checked at entry and so that at most
+   256 units pass between two checks. The enumerator publishes no `onPatternWork` record (the enclosing finder does),
+   caches nothing and reads its inputs only. The core suite `tech-als.test.js` (58 tests, run by both apps) checks the
+   records against an independent enumeration (all subsets, no pruning) and the work counts against a recount that
+   re-implements the engine's walk, on 84 seeded positions of every unit shape, and the record limit, the guard, the
+   budget and cancellation, and ownership; both `tests.html` pages list it, and the `core-shared` shard of
+   `.github/scripts/generator-quick.json` owns it. The evidence is in `docs/difficulty-v3/evidence/MS15a/evidence.md`.
 2. **Load it** by adding the file next to the other `tech-*.js` files in the four script lists of
    [How it works](#how-it-works) — and in the script lists of the player (`index.html`, `help.html`, `tests.html`,
    `tests/node-runner.js`), because a technique lives in the shared engine (`core/js/engine/`) and the player's hints use it too.
@@ -1142,9 +1164,9 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (54 suites, 4,559 tests), whole or in disjoint shards
+node tests/node-runner.js                          # the quick set (55 suites, 4,618 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
-node tests/node-runner.js --all                    # quick + manual (62 suites)
+node tests/node-runner.js --all                    # quick + manual (63 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
 node tests/node-runner.js --filter=xWing --verbose # only tests whose name contains the text
 node tests/node-runner.js --suite=help --exact="<full name>"   # only the tests of exactly this full name
@@ -1153,8 +1175,8 @@ node tests/node-runner.js --suite=help --results=<file.json>    # run, and write
 node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
-**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 54 suites,
-4,559 tests — the 37 suites of `tests/suites/` and the 17 of `../core/tests/suites/` that the
+**Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 55 suites,
+4,618 tests — the 37 suites of `tests/suites/` and the 18 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -1211,7 +1233,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 62 suites, 54 of them quick (4,559 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 63 suites, 55 of them quick (4,618 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1619,7 +1641,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (31, 2,786 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (32, 2,844 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 
@@ -1630,7 +1652,7 @@ measured cost of each app is in [docs/difficulty-v3/recovery-quick-cost.md](docs
 
 These Node tests are quick and are the default set: developers and coding agents run `node tests/node-runner.js`
 (or a few suites with `--suite=`) while developing, and the deployment workflow runs all of them. They are the 14
-suites of `tests/suites/` and the 17 of `../core/tests/suites/` that the generator runs too (the engine, the technique
+suites of `tests/suites/` and the 18 of `../core/tests/suites/` that the generator runs too (the engine, the technique
 ladder, the exchange format, the board view). `tests.html` runs the same suites in a browser (the ones that read the
 fixtures need `http://`). The fixtures in `tests/fixtures/puzzles/` are real documents made by Sudoku Generator
 ([fixtures](docs/puzzle-exchange/fixtures.md)).

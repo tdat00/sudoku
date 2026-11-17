@@ -1,0 +1,26 @@
+MS15a: runs that were not under Invoke-Dv3Node, or were stopped (kept for the evidence disclosure)
+
+1. UNLOCKED, ABOVE 10 s (my error). About 19:46 (+07:00): `node tests\node-runner.js --suite=tech-als` from generator\, the first draft of
+   the new suite, run directly in the shell (piped to Select-Object -First 120). It took 25.65 s of tests (25.9 s wall) and 11 of 58 tests failed
+   (draft errors in my own expectations). Nothing was published from it. No generation of puzzles: only the new suite's own seeded positions and its
+   independent enumeration. The timing-slot files dv3-timing.lock and dv3-sudoku.lock were both absent when last looked at (about 19:42, before the
+   script was created); not re-checked at the moment of the run, so overlap with another task's timing run cannot be excluded. The time is not a
+   protected measurement. From here every run of the suite goes through the locked wrapper until it is measured under 10 s.
+
+2. ABORTED, LOCKED (the 540-s limit). 2026-11-17T20:05:08 to 20:14:08 (+07:00), lock-log.jsonl row "MS15a mutations 1a": the first mutation compound
+   (run-mutations.cjs, mutations 0-130). Mutations 0-32 were DETECTED (each in 0.3-0.4 s, the console transcript above the abort is the only record: the
+   transcript file and the result file are written only when the process ends). Mutation 33 (C34, `top = limit.cells`: sizes ignore the digits of the
+   board) makes the test of a limit of 10^12 cells run without end, so the compound ran into the helper's 540-second limit, which stopped the whole
+   process tree and removed my lock (both lock files absent afterwards, only the orchestrator's discord.cjs poll left). The lock-log row's `exit` 0 is a
+   stale $LASTEXITCODE of the previous command (nodeSeconds null, error "540-second limit reached"): the real exit is unknown. Classified aborted/incomplete;
+   nothing is used from it as the first mutation run: the runner now has a 30-second kill per mutant (a runaway is detected by non-termination, said so) and
+   the compounds are rerun from mutation 0. The first complete run of the final tests is `mutations-1a.txt` onwards.
+
+3. UNLOCKED, SHORT (each well under 10 s; none was measured one by one, the IR07 clarification allows measured-short commands; they are listed so that none is hidden):
+   - `node tests\artifacts\difficulty-v3\MS15a\smoke.js` (two enumerations of a 9 x 9 board, under 1 s) and `probe-cap.js` (24 enumerations of 16 x 16 positions, the script prints 0 to 54 ms for each, under 1 s in all), 19:4x. Scratch looks, nothing published. The density probe that followed (`probe-density.js`, **33** enumerations: 3 + 12 + 15 + 3 seeded positions, each with the diagnostic guard `work = 1e9` and the diagnostic `records = 1e7`, so these are not default-cap measurements) ran locked (row "MS15a scratch probe-density 1", 0.58 s).
+   - `node tests\node-runner.js --help` (under 1 s); `--list-tests` of both apps (0.7 s and 0.4 s wall, registration only); `check-mutations.cjs` (several times, reads two files); `check-format.cjs` (several times, reads the changed files); `freeze-hashes.cjs` (three times: a dry look, the freeze before E, the re-hash after E); `make-plans.cjs`; `fingerprint-now.js` (once after the final quick sets, once inside the CI-check command block after it returned); one JSON parse of `generator-quick.json`; `Get-FileHash`, directory listings, `git status` and `git --no-pager diff --stat`; the evidence statistics scripts (lock-log, shard-runs).
+   - The three merge-checks of the fresh families (`replay-fixtures.js --merge ... --check` 0.56 s measured; `replay-goldens.js --merge ... --check` and `perf.js --hash-merge ... --check-hashes`, which only read ledgers and fixtures and generate nothing, about 1 s each by MS14a/MS14b's measurements of the same commands, not timed one by one here). Transcripts: `logs/merge-check-*.txt`.
+
+4. LOCKED RUNS THAT FAILED OR WERE SUPERSEDED (all have a row in lock-log.jsonl): development runs 1 and 5 of the suite (exit 1: draft expectations of mine, 73.6 s and 4.8 s), and the first mutation compound above. Every other row is exit 0.
+
+I know of no other run of a command that can pass 10 s outside the lock, and no lock file that I removed or left behind (both lock files were absent after the aborted compound; I deleted nothing by hand).

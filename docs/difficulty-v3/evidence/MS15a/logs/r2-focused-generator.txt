@@ -1,0 +1,19 @@
+$ node tests\node-runner.js --suite=tech-als,tech-subset,tech-cage,techniques,ui-contract,purity,tech-chain,i18n,digger-target,help
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   digger-target: 75 passed  (2.12 s)
+ok   help: 30 passed  (5.35 s)
+ok   i18n: 95 passed  (215 ms)
+ok   purity: 42 passed  (29 ms)
+ok   tech-als: 58 passed  (4.35 s)
+ok   tech-cage: 33 passed  (35 ms)
+ok   tech-chain: 239 passed  (22.54 s)
+ok   tech-subset: 167 passed  (7.80 s)
+ok   techniques: 268 passed  (5.52 s)
+ok   ui-contract: 68 passed  (417 ms)
+
+Suites: 10
+Tests:  1075 total, 1075 passed, 0 failed, 0 skipped
+Time:   48.37 s running tests, 48.53 s total
+exit=0 seconds=48.682

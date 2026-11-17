@@ -1,0 +1,35 @@
+$ node tests\artifacts\difficulty-v3\MS15a\probe-density.js
+classic9 keep 0.05,0.4 #0 (keep 0.10, placed 0.06): records 1959 work 8161 6 ms
+classic9 keep 0.05,0.4 #1 (keep 0.18, placed 0.09): records 1388 work 6827 2 ms
+classic9 keep 0.05,0.4 #2 (keep 0.08, placed 0.11): records 1925 work 7200 4 ms
+12 keep 0.03,0.25 #0 (keep 0.06, placed 0.06): records 8318 work 29367 13 ms
+12 keep 0.03,0.25 #1 (keep 0.11, placed 0.09): records 4532 work 24347 9 ms
+12 keep 0.03,0.25 #2 (keep 0.05, placed 0.11): records 7697 work 25454 15 ms
+12 keep 0.1,0.3 #0 (keep 0.13, placed 0.06): records 3641 work 21913 2 ms
+12 keep 0.1,0.3 #1 (keep 0.17, placed 0.09): records 1522 work 16346 1 ms
+12 keep 0.1,0.3 #2 (keep 0.12, placed 0.11): records 4370 work 20309 2 ms
+12 keep 0.15,0.4 #0 (keep 0.18, placed 0.06): records 1283 work 15729 1 ms
+12 keep 0.15,0.4 #1 (keep 0.24, placed 0.09): records 445 work 11143 0 ms
+12 keep 0.15,0.4 #2 (keep 0.17, placed 0.11): records 2190 work 15728 2 ms
+12 keep 0.2,0.5 #0 (keep 0.24, placed 0.06): records 488 work 11927 0 ms
+12 keep 0.2,0.5 #1 (keep 0.31, placed 0.09): records 104 work 7105 1 ms
+12 keep 0.2,0.5 #2 (keep 0.22, placed 0.11): records 1067 work 12040 0 ms
+16 keep 0.02,0.15 #0 (keep 0.04, placed 0.06): records 32121 work 111494 54 ms
+16 keep 0.02,0.15 #1 (keep 0.07, placed 0.09): records 18410 work 92642 16 ms
+16 keep 0.02,0.15 #2 (keep 0.03, placed 0.11): records 33557 work 104301 43 ms
+16 keep 0.1,0.3 #0 (keep 0.13, placed 0.06): records 5157 work 54626 3 ms
+16 keep 0.1,0.3 #1 (keep 0.17, placed 0.09): records 551 work 28921 1 ms
+16 keep 0.1,0.3 #2 (keep 0.12, placed 0.11): records 6200 work 58465 19 ms
+16 keep 0.15,0.4 #0 (keep 0.18, placed 0.06): records 801 work 28677 1 ms
+16 keep 0.15,0.4 #1 (keep 0.24, placed 0.09): records 125 work 15154 1 ms
+16 keep 0.15,0.4 #2 (keep 0.17, placed 0.11): records 1706 work 32685 1 ms
+16 keep 0.2,0.5 #0 (keep 0.24, placed 0.06): records 184 work 17488 0 ms
+16 keep 0.2,0.5 #1 (keep 0.31, placed 0.09): records 23 work 9336 0 ms
+16 keep 0.2,0.5 #2 (keep 0.22, placed 0.11): records 405 work 20402 0 ms
+16 keep 0.3,0.6 #0 (keep 0.34, placed 0.06): records 16 work 7307 0 ms
+16 keep 0.3,0.6 #1 (keep 0.41, placed 0.09): records 4 work 5319 0 ms
+16 keep 0.3,0.6 #2 (keep 0.32, placed 0.11): records 33 work 9431 1 ms
+samurai keep 0.05,0.35 #0 (keep 0.09, placed 0.06): records 8962 work 37521 11 ms
+samurai keep 0.05,0.35 #1 (keep 0.16, placed 0.09): records 5997 work 34420 10 ms
+samurai keep 0.05,0.35 #2 (keep 0.07, placed 0.11): records 7961 work 34419 9 ms
+exit=0 seconds=0.483

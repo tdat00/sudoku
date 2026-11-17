@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=tech-als --results=tests\artifacts\difficulty-v3\MS15a\dev-results-3.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   tech-als: 58 passed  (4.49 s)
+
+Suites: 1
+Tests:  58 total, 58 passed, 0 failed, 0 skipped
+Time:   4.49 s running tests, 4.73 s total
+Results: generator/tests/artifacts/difficulty-v3/MS15a/dev-results-3.json
+exit=0 seconds=4.947

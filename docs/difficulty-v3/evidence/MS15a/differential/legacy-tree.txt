@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS15a\legacy-diff.js
+engine: tree, calls 6370, with a Finding 2306, ratings 135 (6109 steps), has alsPatterns true, sha256 bc0d73d2e75497541343fc02456c3ea3278a76830d6f10175522ba2635862c2a
+exit=0 seconds=1.711
