@@ -8,7 +8,7 @@
 | Owner / milestone | Shared subset / both apps; M14b |
 | Authority | R10/R17/R20/R21; SA2-Q-S09/S11; S-OD11 and S-OD12/S0 handoff |
 | Review | Orchestrator against MS08a/IR72 and generic soundness/order checks; no routine SA1 review |
-| Status | Not started; ready for serial dispatch from `9d58d86` |
+| Status | In progress; formatting/E question ruled A below; awaiting orchestrator resumption |
 
 ## Goal & business context
 
@@ -85,6 +85,52 @@ its existing hint/time/lock bounds. Do not reset those counts after a failed bat
 If that route cannot supply the required real data, raise `QUESTION:` and stop for the
 orchestrator/owner, not an unapproved broader scan. The existing soundness tests and S-AV37
 measurements on already-owned fixture/B/GH positions are not a new acquisition campaign.
+
+### SA2 ruling — formatting/E question and process disclosures, 2026-11-17
+
+**Choose A.** The 113-character registration comment in `core/js/engine/tech-subset.js`
+must be wrapped to at most 110 characters through the edit tool. The current file hash is
+`6C184FED651461FBAD4A297FD815509ECF8100DFF87B661A20D2494F27386744`.
+The freeze is a provenance boundary, not permission to retain a convention violation:
+comments participate in the required source identities. No owner decision or exception is
+needed to apply the existing fresh-record rule. The orchestrator may explicitly resume A.
+
+1. Finish all remaining E-included edits and the format checks before freezing again.
+   Preserve the earlier freeze, ledgers and results as superseded evidence; record the
+   exact wrapping diff and full old/new hashes. Do not retag records or change hash inputs.
+2. Record complete fresh E in separate directories: five G09-G13 wires, then fourteen
+   G01-G14 analyses against the checked/current published wires, then all 520 hashes.
+   Apply the existing family merge-check/publication rules; never mix the two freezes.
+   Compare activation effects with accepted implementation `9d58d86`, not merely the
+   already-written candidate fixtures. Wrapping alone should not change canonical outputs;
+   investigate any unexpected difference before publication, not by refreshing extra pins.
+3. Rerun the proposed cause, mechanism, S-AV37 and rated-effect scripts on the final source,
+   plus scoped pattern-cost and current GH checks. Keep both earlier pattern-cost records
+   and identify the new final one. Reuse the owned real sources; no fresh discovery/corpus
+   scan or reset of B's acquisition counts is authorized or needed for this correction.
+4. Rerun the focused gates. Finalize pins, counts, fingerprinted docs and the CI manifest
+   before both final complete quick sets and CI verification. Keep the failed development
+   runs and their actual exit codes; they are not final passes. Report final inventories,
+   fingerprints and measured projections rather than assuming the provisional totals.
+   The existing locked scheduling, admission, process-ceiling and gap rules remain binding.
+
+**PowerShell edits:** disclose the guide number replacements and scratch-script copies,
+including their paths and what was changed/copied. Verify the intended diffs and the required
+encoding/line endings; fix any accidental change through the edit tool before the relevant
+freeze. No revert/reapply ritual or additional test run is required solely to replace the
+historical editing method. Future hand-authored edits use the edit tool. This records a
+process deviation, not retroactive permission or a standing exception.
+
+**Aborted compound/stale lock:** retain the hand-entered abort row and disclose that the lock
+was removed before reporting it to the orchestrator, contrary to the protocol. Keep unknown durations/
+exit codes unknown; do not describe the aborted compound as passing. Verify the stopped
+process tree is gone, retain the successful item records and link the replacement of
+`g-hash-greaterThan-normal-05` (item 77); no incomplete/duplicate record may enter a merge.
+On the reported facts (own label, dead holder and no surviving owned process), this requires
+disclosure and integrity checks, not another rerun solely for the lock incident or recreating
+the lock. Fresh E above is required independently by the source edit. If another holder,
+overlap affecting timing validity or evidence corruption is found, report it before using
+that evidence. Future apparently stale locks are reported before cleanup, even when owned.
 
 ## Inputs & context
 
