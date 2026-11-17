@@ -181,54 +181,55 @@ MS14a/MS15a kernels likewise precede their registrations. Final GQ is MS18c,
 after all S3, MS17b and final rechecks MS18b.
 No intermediate pruning. Parent milestones are not additional waves or commits.
 
-**Current serial handoff, 2026-11-18.** MS15a is accepted and committed at **`b958a58`**,
-after SA1 acceptance, SA2's `01e06629` rulings, the developer's fix round and orchestrator
-rechecks. MS14c (`6a9fbf6`; M14 complete), MS14b (`0e3a0c4`), MS13c (`9d58d86`) and resolved
-JF-02/S-OD12 (A + S0) remain prior boundaries. **MS15b is uncommitted; E and all-39 GH are
-reported complete, and Q7 corrects SA2's Q6 G10 witness-selector error.** Keep G13/details/129
-and G14/compact/69 as the real guided-jump Why specimens; preserve G10's separate raw-span
-coverage. The premature edit is disclosed, not a standing exception. Final quick/cost/GP/CI
-closure remains; the final CI manifest must be written before its final CI check.
-Q5 remains restricted to isolated predecessor-finder specimens, not live golden consumers.
-Resume only on the orchestrator's explicit relay. The next order remains MS16 -> MS17a -> MS17b and the unchanged
-remainder. Keep the assigned
+**Current serial handoff, 2026-11-18.** MS15b is accepted and committed at **`8b26e83`**,
+after orchestrator template review and rechecks. MS15a (`b958a58`, SA1 accepted), MS14c
+(`6a9fbf6`; M14 complete), MS14b (`0e3a0c4`), MS13c (`9d58d86`) and resolved JF-02/S-OD12
+(A + S0) remain prior boundaries. **MS16 is ready to dispatch**, then MS17a -> MS17b and
+the unchanged remainder. Its brief supplies the shared-ALS handoff, task-local predecessor
+specimen permission, exact-value golden-pin ruling gate and before-run plan requirements.
+Keep the existing pre-ALS recipes unchanged; current-ladder integration remains current.
+Keep the assigned
 MS14a/MS13c wave numbers 34/35; do not renumber IDs, change Done marks or rewrite historical
 logs. MS14a requires MS13b, MS13c also waits for accepted MS14a, and MS14b explicitly requires
 both MS14a and MS13c. The parent MS14 dependency governs activation/closure, not this inactive
 preparation. No further later task may run ahead. Preserve the completed task logs; never park
 a dirty task or run a second developer. The owner questions/answers remain in the archive.
-MS14b and MS14c received the orchestrator's MS08a/IR72 template and generic soundness/order
-review, not routine SA1 review. **MS15a's SA1 prerequisite is satisfied. MS15b/MS16 receive
+MS14b, MS14c and MS15b received the orchestrator's MS08a/IR72 template and generic soundness/order
+review, not routine SA1 review. **MS15a's SA1 prerequisite is satisfied. MS16 receives
 orchestrator template/generic review, MS17a orchestrator review; the next SA1 task is MS17b.**
 A specific unresolved question is routed by the orchestrator.
 
-MS15a completed fresh inactive **5-wire -> 14-analysis -> 520-hash** E with unchanged
-canonical outputs, all-38 GH and final quick/CI closure. Its own ledgers now supply the
-accepted comparison baseline (replay `9f91a305...`, hashes `e91fff8a...`), not MS14b's older
-identities. **MS15b activates ALS-XZ**: it owns fresh complete E, explained intentional
-publication/pins and full B/GH/cost/affected-GP work. Publish/check the complete wire family
-before analysing against it; no inactive reuse/check-only substitute or unexplained refresh.
-MS15b also owns the deferred `tech-als.js` header correction (SA1 finding 1 / D8): effective
-cell-bound completeness, not a mathematical four-cell definition/global absence claim.
-Fix it and the now-stale inactive descriptions before E; format-check before every freeze.
+MS15b completed fresh activation **5-wire -> 14-analysis -> 520-hash** E, explained publication,
+all-39 GH and final quick/CI closure. Its ledgers supply the accepted comparison baseline
+(replay `e1278c0b...`, hashes `49a56a7e...`), not MS15a's inactive identities.
+**MS16 activates Sue de Coq** and owns fresh complete E, full B/GH and GP-cost.
+Publish/check complete wires before recording analyses; no inactive/check-only substitute,
+mixed-source records or unexplained pin refresh. The MS15b header correction is complete:
+effective-cell-bound completeness, not a mathematical four-cell definition/global absence.
+Preserve that contract and finish the newly stale inactive descriptions before E.
+Format-check before every freeze; save and verify the bounded plan before each phase.
 
-The accepted baseline is **4,618 Generator tests (505.4 s) / 2,844 Player tests (100.5 s)**,
-55/32 suites and catalogue 38. Projections are core-shared 140, steps 70, replay 70,
-pipeline 80, Generator player shard 90 and Player job 160; mega 40, own-fast 320 and
-digger-target 30 remain. MS15b's brief records the full accepted fingerprints (Generator
-`fc00c83f...`, Player `d323c615...`). Keep the ALS and cage suites and all predecessors;
-retarget the explicit inactive-only assertions superseded by ALS-XZ registration and any
-default-limit pins justified by the permitted R10 selection, without losing their coverage.
-The valid catalogue becomes 39. Preserve MS14b's active leftovers and MS13c's chain policy,
-consumers and round trip.
+The accepted baseline is **4,682 Generator tests (520.4 s) / 2,906 Player tests (107.7 s)**,
+55/32 suites and catalogue 39. Projections are **core-shared 150, steps 70, replay 70,
+mega 50, own-fast 320, digger-target 30, pipeline 80, Generator player shard 90, Player job 170**.
+MS16's brief records the full accepted fingerprints (Generator `6fd07026...`, Player
+`0f53bb31...`). Keep the ALS/cage suites and predecessors; retarget only the explicit
+Sue-de-Coq-absent assertions superseded by the new registration, without losing coverage.
+The valid catalogue becomes 40. Preserve active ALS-XZ, MS14b's leftovers and MS13c's chain
+policy, consumers and round trip. Golden-consumer pin changes need the exact-value ruling
+specified in MS16; a raw move span is not a guided-jump choice. The accepted Q6/Q7 coverage
+and process disclosures remain in MS15b's records, not an exception to the QUESTION pause.
 Derive final inventories/fingerprints after owned changes; do not restore older counts,
 projections, examples or source files. MS14b retained 2/4/50,000 and measured S-AV37 on its
-blank/seeded/real populations; later tasks carry those results unchanged. MS15b owns
-**S-AV39** whole-call activation measurements and the existing once-only own-limit decision;
-MS16 inherits the selected shared ALS defaults. Carry **S-AV36/S-AV37/S-AV38** and their
-source-qualified gaps; they are not permission to retune chains/leftovers
-or widen measurement/acquisition scope. S-OD12/S0 grants no standing corpus scan. Full S3
-scope, activation order, owner policies and the S-OD4 review matrix are unchanged.
+blank/seeded/real populations. MS15b retained **4/4,096/50,000**, measured S-AV39 whole-call
+and did not use its adjustment. MS16 inherits the shared selection; only its own new
+Sue-de-Coq-specific work allowance has the existing R10 once-only measured adjustment.
+Carry **S-AV36/S-AV37/S-AV38/S-AV39, MS15b-Q6, MS15b-GP-J and MS15b-GP-U**, with their
+source-qualified populations/gaps. MS15b's 37-cell GP is incomplete: one full record, one
+pilot-only cell and 35 unmeasured; no full-matrix pass. MS16 owns GP-cost, not a new generation
+GP campaign; section 7's final matrix stays with MS18d. No automatic retry of the unadmitted
+jigsaw job, limit retuning or broader acquisition follows. S-OD12/S0 grants no standing
+corpus scan. Full S3 scope, activation order, owner policies and the S-OD4 review matrix stay.
 
 **Preservation:** no reset/discard of b1, provisional allowance, off-by-default switch, seed
 substitution, browser-budget raise or further checkpoint branch commit. G13 persistence and
@@ -480,13 +481,18 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | S-AV36 grouped-graph construction cost/cap exposure | MS13a final inactive engine SHA-256 `501481B415F1AD9B49D3BE355767C8922C5475FF2D93200A41DA1338705B9AEE`; SA1's locked review, relayed 2026-11-17 01:52 (+07:00), and corrected `docs/difficulty-v3/evidence/MS13a/census-all/table.md`/per-model JSONs. **Construction only**, default 50,000/4,096: seeded ladder chain-group positions over the work cap are Samurai **38/48** (median/max full-build 85,352/138,529), Sohei **43/51** (109,951/124,066), Flower **17/44** (44,057/70,583), mega16 **20/321** (23,349/57,089); classic9/mega12/Butterfly have none (max 6,117/13,644/31,008). Constructed blank maxima reach 1,715,391 (Samurai) and 1,209,344 (mega16), with no measured blank exceeding 4,096 groups. SA1's real G13 observations cost 6,764/1,708 and G10 660; keep them separate from seeded/synthetic/blank cohorts. These are not active-finder cap rates, demonstrated lost-deduction counts or GQ/GP failures. MS13c retains the full table, measures construction plus search, short fallback and whole-call cost, and uses the data in its once-only own-new-limit decision; no automatic increase or board-specific limit. **GC-01 policy resolved by S-OD11:** owner, Discord, 2026-11-17 04:30 (+07:00), "GC-01: chọn A." Short-only uncapped singleton fallback on a local grouped cap, same parent/window, singleton minimum domain; long remains bounded. The numerical item stays open for source-qualified activation/final cost and audit, not an unanswered policy choice. | MS13c cost/limit records; MS18d final cost; MS18e audit; MS18c for measured availability consequences |
 | S-AV37 leftover kernel cost/caps on irregular Jigsaw layouts | **Active MS14b accepted at `0e3a0c4`**; `docs/difficulty-v3/evidence/MS14b/evidence.md` section 6 and `s-av37.json`. Limits stay **2 units/side, 4 difference cells/side, 50,000 work units/call**; the R10 adjustment was not used. Blank stress: **2/5 layouts cap**, `staggered` and `wavy`; origin `ea14798` / MS14a C4 full blank counts remain 98,530, 81,664, 33,784 (`mixed`), 6,469 (`crossed`), 3,436 (`boxes` control), with only the first two above the default. **60 seeded positions** (five layouts x two orientations x seeds 1-6): **0 caps, max 5,842**. **14 real puzzles** (twelve Jigsaw Hard discovery requests and two existing help sources), **38 calls: 0 caps, max 3,845**. Keep blank stress, seeded positions, real calls and MS14a's 480 agreement cases distinct; these are not a universal cap/availability claim, demonstrated lost-deduction count or GP verdict. Generated-layout cap rates, real positions beyond those fourteen puzzles and whole-generation cost remain unmeasured. No automatic limit increase, layout-specific bound, fallback, wider discovery/corpus campaign or new gate follows. MS14c carries only and remains corpus-free Killer regression; the item stays open, not an owner stop or gate waiver. | MS14b measured disposition complete; MS14c M14 handoff only; MS18c measured availability; MS18d cost; MS18e audit |
 | S-AV38 grouped-activation generation cost and incomplete GP | **MS13c accepted at `9d58d86`**, measurements from its engine SHA-256 `5EBA1AE580D5F63AD0A1B2DA0FCC4CAD0C515C297C9391C691D4CB58626AC9D1`, accepted chain comparator `4aa3d11`/`ea14798`, not `main`; `docs/difficulty-v3/evidence/MS13c/evidence.md` section 11, GP table/ledgers/logs and SA1 review. **50 affected cells:** 21 complete 50-run records (15 meet, six miss); 16 with complete two-run pilots only (including the separate greaterThan/nightmare 50-run timeout); 13 with no complete pilot (12 unpiloted multi-grid cells and mega16/hell1's two aborted pilots). Mega16/easy is a separate successful control. Five paired 50-run p95s, ms base -> candidate: classic9/nightmare **3,061 -> 4,902**, diagonalX/nightmare **7,693 -> 16,534**, wordoku/nightmare **1,624 -> 3,371**, mega12/nightmare **5,485 -> 8,396**, killer/hell2 **8,806 -> 14,528** (only Killer crosses from meeting to missing among these five). Butterfly/nightmare **24,335 vs 8,000** is a current miss without a paired base-50 record. Two-run **observed maxima**, not population p95/GP verdicts: hyper/nightmare **658 -> 19,543**, jigsaw9/nightmare **4,272 -> 22,283**, greaterThan/nightmare **6,931 -> 11,450**. G13's single-request increase is S-AV04. Keep each cell's population/source/status/projection basis explicit; no copied Samurai timing as a bound for other models/levels, no pilot pass ticks or full-matrix aggregate. The item permits honest intermediate deferral of unsafe/unmeasured cells under S-OD4, not a complete GP/release claim, target/guard relaxation or new timing campaign. Inform the owner of the magnitude now; performance alone does not require a new policy decision. | MS13c corrected cell-qualified record/handoff; MS18c availability; MS18d full final GP/cost; MS18e audit |
-| S-AV39 ALS cost/cap exposure | **Inactive MS15a accepted at `b958a58`**; `docs/difficulty-v3/evidence/MS15a/evidence.md` sections 3/12/14, `logs/probe-density-1.txt` and the ALS suite. Accepted module `FCE57E99F98EA739A136A38BB85CD87C21D20D1BE8B2664B174E92DCD1656042`; section 14 records SA1's final-source rerun matching every earlier probe row. Defaults **4 cells / 4,096 records / 50,000 work** stay. Blank 9 x 9: **810** units. Constructed 16 x 16 `{1,2}` flood: **154,032** full units; the default work guard cuts at 50,000. The density probe has **33 calls** (3 classic9, 12 twelve-digit, 15 sixteen-digit, 3 Samurai), seed 1504 reused across density ranges, with diagnostic **work `1e9`, records `1e7`, cells 4**. Observed maxima include 8,318 records on 12 digits; 33,557 records / 111,494 work on 16 digits; 8,962 records / 37,521 work on Samurai. These demonstrate limit exposure on constructed/seeded states, not a default cap-rate census, lost-deduction count, universal structural maximum, generation-cost or GQ/GP verdict. MS15b measures active enumeration plus pairs/targets, real proof yield, caps/parent stops and latency within its existing gates before retaining or once adjusting its shared defaults. No automatic limit increase, model-specific bound, fallback, new census/acquisition or extra gate; numerical item, not an owner stop. | MS15b existing activation coverage/cost and once-only own-limit decision; MS16 inherits shared limits; MS18c measured availability; MS18d cost; MS18e audit |
+| S-AV39 ALS cost/cap exposure | **Origin: inactive MS15a at `b958a58`**; its evidence sections 3/12/14 and `logs/probe-density-1.txt`, module `FCE57E99F98EA739A136A38BB85CD87C21D20D1BE8B2664B174E92DCD1656042`, with SA1's final-source rerun. Enumerator-only blank 9 x 9: 810 units; 16 x 16 `{1,2}` flood: 154,032. The 33-call seeded density probe (3 classic9, 12 twelve-digit, 15 sixteen-digit, 3 Samurai; seed 1504 reused; diagnostic work `1e9`, records `1e7`, cells 4) reaches 8,318 records on 12 digits, 33,557 records / 111,494 work on 16 digits and 8,962 records / 37,521 work on Samurai. **Active MS15b accepted at `8b26e83`**; `docs/difficulty-v3/evidence/MS15b/evidence.md` section 5 and `s-av39-*.json`. Shared **4 cells / 4,096 records / 50,000 work** retained; no adjustment used. Whole-call constructed stress: eighteen states, the 16 x 16 flood caps at 50,000, lifted work 154,073 with a Finding. Seeded/sweep: **344 calls / 22 groups, 251 Findings, zero work caps, four record caps** with identical lifted Findings. Repository sources: **58 input rows / 254 calls / 20 Findings**; fifteen rows reaching ALS-XZ are twelve distinct puzzles; three work caps in the xWing help puzzle yield no Finding when lifted either; maximum observed latency 7.9 ms. Keep these populations and enumerator-only/whole-call counters separate; not a generated-layout cap census, universal limit-sufficiency claim or GQ/GP verdict. Generated-position and whole-generation gaps remain. MS16 preserves shared limits/ALS-XZ; only its own new R19 work allowance has its existing measured once-only adjustment. No model-specific bound, fallback, wider acquisition or new gate follows. | MS15b measured disposition complete; MS16 inherited contract and own scoped coverage/cost; MS18c measured availability; MS18d cost; MS18e audit |
+| MS15b-GP-J jigsaw9/nightmare unadmitted GP | **Accepted source `8b26e83`**, `docs/difficulty-v3/evidence/MS15b/evidence.md` section 20, `logs/gp-pilot-jigsaw9-nightmare.txt`. Only the two-run pilot (seeds 7000/7001): 9.065 s command wall, observed maximum 6,854 ms. The prescribed 50-run command was **not launched**: projected 227 s expected, **680 s conservative >450 s admission**. The two-run maximum is not a qualifying p95 or verdict; no timeout of a 50-run job occurred. Do not retry unchanged, use the expected value alone as a bound or copy another cell/source timing. No interim target/guard/run-count change or new evidence class. MS16 carries it, not a new GP campaign. | MS18c availability consequences; MS18d current-source admission and final GP; MS18e audit |
+| MS15b-GP-U unmeasured affected cells | **Accepted source `8b26e83`**, MS15b evidence section 20 and `logs/affected-cells.txt`: **37** performance cells admit ALS-XZ. Classic9/nightmare alone has a full 50-run record (p95 2,312 ms / 2.5 s, meets); jigsaw9/nightmare is the pilot-only item above; **35** listed cells have no GP measurement or pilot. Their admission/cost is unknown, not proved unsafe and not a pass/fail verdict. No subset aggregate or comparison with MS13c's different-source 50-cell denominator; no paired base-50 record for the one complete cell. MS16 carries these gaps without silently assuming or acquiring fresh generation coverage. | MS18c availability consequences; MS18d entire final offered matrix; MS18e audit |
 
-**MS15b-Q6 — consumer coverage disposition; MS15b implementation/record, MS18e audit.**
-The candidate replay identity `e1278c0b4e6966996ac79648b2210dd87acf714de8c08f485e6aab680f11ed26`
-has fifteen compact golden jump first uses, all with removal effects. Q6 requires a
-placement-only controlled rating/first-use/Why regression while keeping the existing mixed
-case and all real-golden checks refreshed to current effects (including G10 and G13).
+**MS15b-Q6 — accepted consumer coverage disposition; carry to MS18e audit.**
+At accepted `8b26e83`, replay identity
+`e1278c0b4e6966996ac79648b2210dd87acf714de8c08f485e6aab680f11ed26`
+has fifteen compact golden jump first uses, all with removal effects. Q6's controlled
+placement-only rating/first-use/Why regression is implemented, with the mixed case and
+real-golden checks retained/current (including G10 and G13). Q7 corrected SA2's erroneous
+G10/details/37 selector: G13/details/129 and G14/compact/69 are the accepted unfinished
+guided-jump specimens; G10's raw-span witnesses are a separate premise.
 Record constructed coverage honestly, not a real current-golden placement claim or a
 new level-availability failure. Both views have fifteen jump occurrences, eighteen distinct
 transitions overall; the compact inventory is not an all-view absence proof. No new source
@@ -1046,7 +1052,7 @@ It does not broaden output-change, finder-activation or fixture-update authority
 | Full quick manifest | MS05r5 tooling; r6b execution; later accepting owners reuse | Registration-only no-options inventory per app; disjoint <=450-second-projected suite/full-name shards, <=540 s/process. Machine-readable results reconcile every key once, same source/Node/factor, zero omissions/new skips. Listing is not executed coverage. |
 | Standing quick cost / FS30 | MS05r6b | Per-app measured process-wall sum/max and shard/test counts, fixed source/Node/factor and actual final coverage. Correct AGENTS/guides before freeze; fill report afterwards. If Generator stays above about 5 minutes, MS07e proposes named generation-heavy quick-to-manual moves; no automatic move. |
 | CI tiers | MS05r6c; later suite owners; MS18e final | Both workflows run the bounded quick manifest in jobs <=30 minutes, with deep evidence explicitly replaced by the reviewed offline records. No SG_TIME_FACTOR or timeout raise; no silent manual/deep catch-all. |
-| GP-cost | MS07c, MS08a/b/c, MS09a/b, MS10a/b, MS11a/b/c, MS12, MS13c, MS14b, MS15b, MS16 | `node tests\pattern-cost.js --ids=<owned-ids> --runs=20 --json=<owned-evidence>`; real positive/negative cases, work/cap/latency records, no timing assertion in quick tests. MS07c owns the split-ID recording moved from MS07b. |
+| GP-cost | MS07c, MS08a/b/c, MS09a/b, MS10a/b, MS11a/b/c, MS12, MS13c, MS14b, MS15b, MS16 | `node tests\pattern-cost.js --ids=<owned-ids> --runs=20 --json=<owned-evidence>`; real positive/negative cases, work/cap/latency records, no timing assertion in quick tests. MS07c owns the split-ID recording moved from MS07b. MS16 owns this cost gate, not a new whole-generation GP campaign; carry MS15b-GP-J/GP-U to the final owners below. |
 | GP | MS13c and MS15b affected cells; MS18d entire final offered matrix | `node tests\perf.js --variant=<id> --level=<level> --runs=50 --warmup=0 --seed=7000 --gate`; final aggregate >=90%, all misses visible. Project before launch. Unsafe commands become named cost items, not automatic new tooling tasks; continue other cells without claiming an incomplete matrix passed. |
 | GS cap | MS05r4 (absorbed MS05d), repeated MS18b | Six cells x 64/128/256/none, 12 requests each, seed 20260101: 288 primary requests. r4 selected 256; the final changed winner needs the recorded owner decision. Closure diagnostics never become selecting cells. |
 | Mega hell1 / final deep | MS07b extends r5m; MS18e final-source closure | MS07b preserves fourteen additional hell1 occurrences/relations under the same quick/deep rule. Final current-source inventory: 28 Nightmare/hell1 occurrences, one per locked request. MS18e's offered mega CV3 cells run live, one locked cell at a time as in B1, with deep occurrence ids only as cross-references; no CV3 record-provider/reuse route, deep generation in CI or blanket per-technique deep rerun. |

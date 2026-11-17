@@ -3,10 +3,12 @@
 | Header | Value |
 |---|---|
 | Depends on | MS15b accepted |
+| Accepted implementation base | `8b26e83` (MS15b); later pack-only commits do not replace this runtime baseline |
 | Size / active time | Medium; 50-60 minutes plus gates |
 | Owner / milestone | Shared ALS / both apps; M16 complete catalogue |
-| Authority | R10/R19/R20/R21 |
-| Status | Not started |
+| Authority | R10/R19/R20/R21; S-OD4, S-OD12/S0 and accepted MS15a/MS15b guard contracts |
+| Review | Orchestrator against MS08a/IR72 and generic soundness/order checks; no routine SA1 review |
+| Status | Not started; ready for serial dispatch from `8b26e83` |
 
 ## Goal & business context
 
@@ -16,6 +18,73 @@ Finish the named catalogue with a bounded line/box capacity proof, not an unrest
 
 In: the specified two/three-cell intersection form and full B. Out: other ALS families, retuning
 MS15b's enumerator limits or earlier weights. AGENTS/checklist; no Git/pack/log edits.
+
+### Accepted baseline — 2026-11-18
+
+MS15b is accepted at **`8b26e83`**. Read its final evidence sections 19-24, not the
+superseded quick-pass/pin-question states. The accepted complete pair is `quick-final/`.
+The serial order is **MS16 -> MS17a -> MS17b**; one task/writer at a time.
+
+| App | Accepted tests / suites | Accepted quick time | Accepted fingerprint |
+|---|---|---|---|
+| Generator | **4,682 / 55** | **520.4 s** | `6fd07026f0546e127d073584fd2b19ebe91aba4e2bad1a3794f69f05d8474eb3` |
+| Player | **2,906 / 32** | **107.7 s** | `0f53bb31168bfd866ca7e434762503a5e8ee45989849b09fb4b20558b41fe427` |
+
+Preserve CI projections (seconds): **core-shared 150, steps 70, replay 70, mega 50,
+own-fast 320, digger-target 30, pipeline 80, Generator player shard 90, Player job 170**.
+The ALS/cage suites already belong to `core-shared`. Derive new inventories/fingerprints
+after additions; keep every predecessor test and maintain projections under the measured
+rule. Use the four bounded Generator groups, not an unbounded whole Generator command.
+
+The accepted catalogue is **39**. `alsXz` is active at **194 / 1250 / 106** (order / weight /
+base cost); the shared ALS defaults remain **4 / 4,096 / 50,000**. The current E families are
+MS15b's complete `wire/`, `analysis/` and `hashes/` records:
+
+- replay identity: `e1278c0b4e6966996ac79648b2210dd87acf714de8c08f485e6aab680f11ed26`;
+- hash identity: `49a56a7e7212d126ea8f6cd2a7b9955283c0474b560933464ba6e7c3a4689234`.
+
+Use the accepted MS15b canonical outputs/reference labels as the comparison baseline, not
+MS15a's inactive outputs. This activation requires fresh E; the identities above are not
+reusable final-source identities after another finder is added.
+
+### Process: unresolved points, plans and source freezes
+
+**Any unresolved point is a `QUESTION:` before the first dependent edit or run**, regardless
+of whether it is called an assumption, default, D1-Dn or "for review". Return the evidence,
+options and proposed choice, then wait for the orchestrator's answer and explicit resumption.
+Once paused, do not continue independent edits/runs, acquisition or E. Do not make a
+provisional specimen substitution first, even when a supplied pin/ruling turns out wrong.
+Routine implementation within the settled contract and an evidenced, delegated R10 choice
+remain developer work; a still-unsettled geometry/work-unit/order/API interpretation does not.
+
+**Save and verify the plan before each bounded phase.** Include exact commands/cases,
+source-qualified projections, expected statuses and output paths; IR12 compounds also need
+finite per-item projections and admission checks. An edit-anchor/write failure blocks the
+dependent launch until repaired and verified. Do not run a plan write and its dependent
+payload in parallel, backdate a late plan or treat later disclosure as prior planning.
+Announce the plan/slot to the orchestrator; use the existing shared-machine protocol.
+
+**Format-check before every E freeze**, including new/touched comments and test code:
+110-character code convention, CRLF/no BOM, final newline and trailing whitespace.
+Finish included-source edits, the owned limit decision and living module contracts before
+recording. Preserve exact source/diffs and identities; a later included-source byte change
+requires fresh affected-family records, even for a comment. Finish fingerprinted guides,
+designs, test-count wording, fixtures and tests before the final complete quick sets.
+
+The CI manifest is outside both app fingerprints, but it is a separate CI input. Keep
+selections/grouping fixed for the tested runs; finalize allowed counts/timing/projection/
+provenance metadata **before the final CI check**, then verify actual workflow budgets and
+the current fingerprints against all results. A later manifest edit needs another CI check.
+No membership/tier/timeout/factor change is authorized by timing-metadata maintenance.
+
+**S-OD12/S0:** no new corpus source-acquisition scan, cached or newly generated, without
+prior owner authorization. Earlier Jellyfish permissions and unused quotas are not inherited.
+Ordinary B remains: existing real sources/known unique fixtures first, then at most four
+distinct discovery batches of twelve attempted requests **total for this task**, including
+any old examples displaced by Sue de Coq, within the existing hint/time/lock bounds.
+A failed batch or source edit does not reset that allowance. If it is insufficient, raise
+QUESTION; no altered priority, disabled predecessor, synthetic production example or extra scan.
+S0 does not prohibit the fixed E manifest or other measurements expressly owned here.
 
 ## Inputs & context
 
@@ -36,6 +105,74 @@ does not assume a digit must appear elsewhere in an incomplete unit. No suitable
 Reuse complete ALS records/current MS15b limits; own total work starts at 50000 and includes enumeration/
 pair extensions, never an uncounted second scan. Only this finder's own new work allowance may adjust once.
 
+### Shared ALS handoff and this finder's own guard
+
+Reuse `SG.alsPatterns.enumerate`, `createWork` and `spend`. Records contain only
+`cells`, `digits`, `occurrences`, **not a unit id**: compute the needed actual membership
+of every cell in I/A/B against the chosen line and box/region. An ALS's discovery unit
+is not an ownership certificate for this pattern. Use the real model geometry/peers, not
+visual-coordinate shortcuts or masks of all board cells.
+
+The accepted shared cell/record bounds **4 / 4,096**, `SG.alsPatterns.LIMITS` and ALS-XZ's
+50,000-unit default/behavior remain unchanged. Production supplies no `limits` override
+to enumeration. The default effective cell bound is still clipped by `model.digits - 1`;
+`complete` is not a feasibility, larger-ALS or later-search completeness certificate.
+
+Sue de Coq gets **one fresh per-call guard**, initially 50,000, shared by all its charged
+preparation, enumeration, intersection/partner and target work. It reuses the guard API,
+not the spent guard of an earlier ALS-XZ call. Conversely, do not grant fresh work after
+Sue de Coq's enumeration or per unit/intersection/phase. Any work before enumeration stays
+charged when it receives the guard; a scope/geometry negative is not a cap.
+
+MS16 may measure and make the existing once-only **Sue-de-Coq-specific work-allowance**
+adjustment under R10, on before/after cap/latency evidence before final E. If selected, put
+one common finite value for every model into its single `createWork(ownLimit)` call;
+do not modify `LIMITS`, ALS-XZ's
+defaults/counter/order or the shared cell/record bounds. The two/three-cell form is R19's
+algorithm scope, not another tuning knob. MS15b's unused adjustment is not an extra allowance.
+Unsettled policy or a change beyond that delegated envelope is a QUESTION.
+
+Preserve entry/256-unit parent checks and explicit phase/publication checks:
+
+- Work refusal means no Finding and an actual work cap; no fallback or uncounted continuation.
+  Exactly consuming the allowance without a refused operation is not itself a cap.
+- `complete:false, capHit:null` from enumeration is a parent stop, remembered even if a
+  diagnostic context subsequently passes. Do not use the prefix or restart the budget.
+- A record-quota prefix may supply a fully proved constructive witness with work/parent
+  allowance left; no absence claim from omitted records or incomplete support.
+- Publish one whole-call R10 record for `sueDeCoq`, not an extra record from the enumerator.
+  Actual work refusal takes precedence over actual record-quota truncation; a parent-only
+  stop leaves `capHit:null`, and a later parent stop does not erase an earlier local cap.
+  Recheck before publication, discard a Finding on a final parent stop, and publish the
+  observer outside the budget-exceeded handler. Observer/cancellation/other errors propagate.
+
+Keep the inherited enumerator/ALS-XZ proofs, work definitions, purity and deterministic
+repeat behavior. Update only the now-obsolete "Sue de Coq is absent" / "only ALS-XZ is active"
+module, guide and API/registration pins, without deleting their remaining absence assertions.
+The current chain-group membership becomes seven; do not put ALS-XZ/Sue de Coq into the
+chain-proof-only `CHAIN_IDS` lists. No new module or duplicate entry in the eight loaders.
+
+### S-AV39 and the inherited measurement gaps
+
+Carry S-AV39 from accepted `8b26e83`, MS15b evidence section 5 and its named JSON records.
+Its **ALS-XZ whole-call** results are not Sue de Coq measurements:
+
+- Constructed stress: eighteen states; the 16 x 16 `{1,2}` flood hits the production work
+  cap; the lifted whole-call count is 154,073 (not the older enumerator-only 154,032).
+- Seeded/sweep population: 344 calls in 22 groups, 251 Findings, zero work caps and four
+  record caps; the four capped Findings equal the lifted ones. This is not a generated-layout census.
+- Repository-source population: 58 input rows, 254 calls, 20 Findings; fifteen source rows
+  reaching ALS-XZ represent twelve distinct puzzles. Three work caps in the xWing help
+  puzzle have no Finding even when lifted; repeat/duplicate rows are not independent puzzles.
+  Maximum observed call latency 7.9 ms. Limits were retained, not proven universally sufficient.
+
+Use this task's already-owned correctness/fixture/B/GH/cost cases to record its own
+whole-call work, caps/parent stops, latency and proof yield, retaining the population and
+source distinctions. Do not close S-AV39 merely because this second consumer passes; its
+broader generated-position/whole-generation gaps go to MS18c/MS18d/MS18e.
+Carry S-AV36, S-AV37, S-AV38 and all other inherited items without retuning their finders.
+Also retain the explicit MS15b-Q6 constructed-placement coverage note for MS18e.
+
 R10 Finding; args `{digits:A digits,partDigits:B digits,forced:Z,line:string,box:string}`;
 key `technique.sueDeCoq.step` for Z empty, `.step.extra` when Z nonempty. These numeric list names
 already localize correctly. Sorted owned eliminations, no placements.
@@ -46,16 +183,69 @@ in row 1 or box 1. Reject overlapping A/B digits, wrong C size, wrong spatial me
 Baseline orientation: core model all-different units and MS15a/b ALS module; final chain orders
 must be 190/194/196/198/200/202, not a later deferred repair.
 
+An isolated hand-vector success is not current normal-hint reachability. Earlier ALS-XZ
+or another technique may take its deduction first; keep the registered order and earlier
+techniques enabled when acquiring/replaying real examples. Both Z forms still need their
+specified correctness coverage; one cannot be dropped because another technique pre-empts a specimen.
+
+### Predecessor specimens: narrow MS16-only permission
+
+Preserve the accepted literal **pre-ALS** recipe added under MS15b Q5, including its
+`b958a58` provenance. Do not resnapshot it to include ALS-XZ or Sue de Coq. Those already-frozen
+inputs are not a promise about the current full ladder.
+
+For another **isolated predecessor-finder** quick specimen newly displaced solely by a
+valid earlier Sue-de-Coq deduction, MS16 may apply the analogous scoped repair without
+another ruling: capture the exact accepted **pre-Sue-de-Coq (`8b26e83`)** preparatory ID
+sequence as a new explicit local list, prove the same baseline input/premise is recovered,
+and record every affected test/helper caller and the causal evidence.
+Keep puzzle strings, seeds, populations, C/window/limit settings and substantive assertions;
+audit shared-helper callers and make a historical use opt-in where another caller is live.
+Do not change the live `idsBefore`, registry, implementation under test, existing frozen
+`LADDER`/`after`/v2 data, or manually alter candidates to force a premise.
+
+This permission is **not** for current hints/GH, golden/replay/UI integration, ratings,
+generation, qualification, GP or availability claims. It also cannot hide a shared-enumerator/
+ALS-XZ regression, mutation or changed limit as "pre-emption". Mixed/unclear intent or an
+unproved condition requires QUESTION before editing. This is MS16-local, not an acquisition
+exception or automatic permission for later tasks.
+
+### Golden-consumer pins: exact ruling before edits
+
+After current E is recorded/explained, inventory every affected hard-coded golden/replay/
+steps/Generator-player assertion and submit **one exact-value proposal for a ruling before
+editing those pins**. Include file/full test name, expression and predicate being tested,
+old/new value, golden ID, view, state position versus array/visual index, and the supporting
+record/current-source transcript. The orchestrator routes the ruling as necessary.
+No "refresh whatever fails" permission, silent alternative specimen or provisional edit.
+
+Check the layer actually consumed by the test. In particular a raw move's `span.chosen:null`
+does not imply a jump transition has `choice` at all; for a Why specimen establish a jump,
+a non-null guided choice and `choice.chosen:null`, plus the required lines. Count compact
+and details occurrences separately from distinct transitions. Preserve relational predicates,
+not just numeric literals. Keep MS15b-Q6's explicitly controlled placement-only test, not
+a claim that the current real goldens contain that case.
+If a premise disappears, propose current in-manifest replacements or a clearly scoped
+controlled case and wait for the ruling; do not lower counts, skip it or start a source scan.
+This pin gate does not revoke the already-owned, deliberately explained E recorder writes
+or routine registration/count updates for the one approved new ID.
+
 ## Files to create/modify
 
 - `core/js/engine/tech-als.js`, ALS suite; full B/E; both designs/guides and v3 notes.
+- Current chain-group membership pin and the narrowly authorized predecessor specimen
+  derivations above; golden consumer tests only after the exact-value pin ruling.
+- `.github/scripts/generator-quick.json` for owned counts/timing/projection metadata.
+  The existing ALS/cage suite membership and all eight source entries stay; no duplicate.
 
 ## Implementation steps
 
 1. Enumerate I and compatible disjoint A/B records under the shared guard.
 2. Prove the capacity/cardinality conditions before constructing target removals.
 3. Add two real exact-Finding positives/negative, both subtype messages and real help.
-4. Confirm 40 total IDs/34 unscoped, current references and complete cost/E/GH/quick evidence.
+4. Record the own-work decision, complete formatting and freeze; finish E/GH/cost and obtain
+   the exact-value golden-pin ruling before consumer assertion edits.
+5. Confirm 40 total IDs/34 unscoped, current references and complete final quick/CI evidence.
 
 ## Acceptance criteria — Business
 
@@ -69,17 +259,30 @@ must be 190/194/196/198/200/202, not a later deferred repair.
 | ID | Criterion |
 |---|---|
 | MS16-T01 | Two/three-cell, Z, disjoint/cardinality/membership and proving-set exclusion tests pass |
-| MS16-T02 | Current ALS bounds, work/cancellation/state purity and final order/counts hold |
-| MS16-T03 | Full B/E/GH/cost and both quick sets pass |
+| MS16-T02 | Inherited ALS bounds/behavior, one own-call guard, truthful cap/parent-stop handling, purity and final order/counts hold |
+| MS16-T03 | Full B/E/GH/GP-cost and both final quick sets/CI pass; inherited whole-generation GP gaps remain explicit, not relabelled passing |
 
 ## Test plan and gates
 
-Generator `node tests\node-runner.js --suite=tech-als,techniques,technique-weights,difficulty-floor`;
-Player `--suite=tech-als,play,i18n,help`; both quick sets. Complete E MS16:
+Generator `node tests\node-runner.js --suite=tech-als,tech-chain,techniques,technique-weights,difficulty-floor,pattern-cost-tools,ui-contract,purity,i18n,help`;
+Player `--suite=tech-als,tech-chain,techniques,play,i18n,help,help-example-tools,ui-contract`; both complete quick sets.
+
+**Activation E:** finish the implementation, included-source docs/header and permitted own-work
+selection, then format-check/freeze. Record **all five G09-G13 wires -> all fourteen G01-G14
+analyses -> all 520 hashes** under the existing E/IR12 recipe. Merge/check the complete wire
+family, explain differences from `8b26e83`, and publish/check intended wire updates **before**
+recording analyses. Explain each subsequent changed record/key/reference effect before owned
+publication. An unchanged family still gets current-source records/checks, without gratuitous writes.
+Keep every request/seed and G13's 120000 ms recorder guard. No mixed-source/partial publication,
+retagged MS15b ledger, guessed golden pin or pre-ALS comparator.
+Any later included-source byte change invokes fresh affected-family records.
+
+Individual shard/tool examples below are not the complete manifest or an execution script:
 
 ```powershell
-node tests\perf.js --hash-key=classic4/veryEasy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS16\hashes\classic4-veryEasy-00.json
+node tests\replay-fixtures.js --ids=G09 --record=..\docs\difficulty-v3\evidence\MS16\wire\G09.json
 node tests\replay-goldens.js --ids=G01 --record=..\docs\difficulty-v3\evidence\MS16\analysis\G01.json
+node tests\perf.js --hash-key=classic4/veryEasy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS16\hashes\classic4-veryEasy-00.json
 node tests\pattern-cost.js --ids=sueDeCoq --runs=20 --json=..\docs\difficulty-v3\evidence\MS16\pattern-cost.json
 ```
 
@@ -88,23 +291,59 @@ Player:
 ```powershell
 node tests\tools\make-technique-examples.js ..\generator --ids=sueDeCoq --sources=tests\artifacts\difficulty-v3\MS16\sources.json --max-puzzles=8 --max-hints=400 --write
 node tests\tools\make-technique-examples.js ..\generator --ids=sueDeCoq --sources=tests\artifacts\difficulty-v3\MS16\sources.json --max-puzzles=8 --max-hints=400 --check
+node tests\tools\make-technique-examples.js ..\generator --max-puzzles=64 --max-hints=400 --check
 ```
 
+Check all 39 predecessor examples for displacement and refresh any affected ID through
+ordinary B/current sources. Final GH must match **all 40 IDs**, not just Sue de Coq.
 B sources: existing chains/ALS, then bounded classic9 nightmare/hell1. Jobs 1/no --jobs;
 E 10-90 minutes, cost 1-60 seconds, curated GH 1-120 seconds/discovery<=8 minutes.
-**Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
+These historical planning ranges are not launch bounds for the changed source.
+**Write/verify/announce the bounded plan before starting.** Pentomino is complete, but the
+shared slot/locks, IR12 admission, <=540 s process-tree ceiling and >=15 s gaps remain.
+Report apparently stale locks before cleanup. Unknown/possibly >10-second work starts locked.
 One own-limit adjustment maximum, not earlier ALS limits. 540-second process ceiling (check-list section 7).
+
+### GP scope and the inherited jigsaw/unmeasured cells
+
+**MS16 owns GP-cost (`pattern-cost.js`, 20 runs per owned fixture), not a new whole-generation
+50-run GP matrix.** Checklist section 7 assigns intermediate generation GP to MS13c/MS15b
+and the final offered matrix to MS18d. Activation alone does not silently add that campaign.
+Report this scope honestly; no claim that MS16's generation GP passed.
+
+Carry the accepted `8b26e83` observations, with their original source, not as MS16 measurements:
+
+- **MS15b-GP-J:** jigsaw9/nightmare has only a two-run pilot (seeds 7000/7001): 9.065 s
+  command wall, observed maximum 6,854 ms. The 50-run job was **not launched**: expected
+  227 s, conservative 680 s above the 450 s admission basis. A two-run maximum is not a
+  qualifying p95/verdict and the expected value is not a safe bound.
+- **MS15b-GP-U:** 35 of MS15b's 37 admitted-technique cells have no GP measurement.
+  The other full cell, classic9/nightmare, met at 50 runs (p95 2,312 ms / 2.5 s target).
+  One full cell plus a pilot is not a complete/passing matrix. Do not combine these
+  denominators with MS13c's different-source 50-cell evidence.
+
+Route these gaps to MS18c for availability consequences and MS18d for final generation cost;
+MS18e audits their disposition. No automatic retry of jigsaw9/nightmare, new pilot campaign
+or work to fill the 35 cells belongs to MS16. If the orchestrator separately assigns a
+generation measurement, obtain a credible current-source plan under the existing bounds
+first; the changed source, an old mean or the per-puzzle target is not itself an admissible
+50-run projection. Do not reduce the run count, split/merge a new evidence form, raise
+guards/targets or call unmeasured cells passed. This is scope/admission discipline, not
+a claim that S0 prohibits expressly authorized generation measurements.
 
 ## Definition of done & handoff
 
 Give MS17 the complete catalogue and every final limit/source record. No missing ID/example waits
-for the version task.
+for the version task. Include the predecessor-specimen inventory, exact pin-ruling trace,
+MS15b-Q6 and all inherited/new numerical items, explicitly including MS15b-GP-J/GP-U.
 
 ## Resume rules — S-OD4
 
 Review: orchestrator against MS08a's template and generic soundness/order-invariant suites,
-not routine analyst cross-review. Correctness/evidence corruption or changing a decision stops;
+**not routine SA1 review**. MS17a is orchestrator-reviewed; **MS17b is the next SA1 task**.
+Correctness/evidence corruption or changing a decision stops;
 time/availability is a named numerical item for MS18c/MS18d and work continues within the bounds.
+Unresolved choices and golden-pin proposals use the explicit QUESTION/ruling gates above.
 Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, and the current bounded quick
 manifest. Any added suite owns its r6c CI group. No new slow-cell evidence/tooling class.
 Return the inherited/new item list, actual gates and CI membership; all six S3 groups still remain.
