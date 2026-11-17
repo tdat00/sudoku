@@ -15,6 +15,9 @@ option A, a one-off bounded Jellyfish GH-source acquisition exception for MS12; 
 GC-01 is archived with the owner's direct Discord answer on 2026-11-17 at 04:30 (+07:00), S-OD11:
 option A, bounded grouped reasoning first and a short-only, uncapped singleton fallback on a local cap,
 under the same parent budget/window; IR54 is preserved and the long ID remains bounded.
+JF-02 is archived with the owner's direct Discord answer on 2026-11-17 at 13:46 (+07:00),
+S-OD12: A + S0, retroactive approval for MS13c's completed Jellyfish acquisition only;
+the lack of authorization at execution time remains explicit, and no standing S1 rule is approved.
 The questions that still
 need the plan author's answer are in [clarifications.md](clarifications.md); when one is answered, it moves here.
 
@@ -2435,6 +2438,90 @@ disposition, MS18e's audit and MS18c's measured availability consequences.
 
 ---
 
+## JF-02 / S-OD12 — MS13c Jellyfish acquisition, A + S0
+
+The original pack question below is preserved unchanged from
+`a4262fb:tasks/difficulty-v3/MS13c-activate-grouped-chains.md`. The owner's exact answer
+follows it. The historical proposal for S1 is not an approved standing rule.
+
+### JF-02 — owner question: MS13c Jellyfish acquisition and a future standing rule
+
+**Decision needed; no answer assumed.** S-OD10 authorized the corpus route for **MS12 only**
+and explicitly said no other task inherits it. MS13c nevertheless used that route without
+stopping for approval or running ordinary Generator discovery first.
+
+**Evidence.** After the saved/catalogue sources failed, MS13c materialized **10,000**
+classic9 seed-4242 puzzles (40,000 test-kit states) once, then replayed indices **0-8,703**
+in **136 chunks of 64** through the normal Player tool. The first successful chunk supplied
+`testkit-4242-8657`; the updated catalogue passes **37/37**. The replay/hint/time/lock
+bounds and complete ledger were kept; acquisition authority was not. Evidence is under
+`docs/difficulty-v3/evidence/MS13c/`: `logs/gh-corpus-materialize.txt`, `jellyfish-scan-chunks.jsonl`,
+`logs/gh-jellyfish-scan-1.txt`, `logs/gh-write-jellyfish.txt` and the final GH check.
+No more corpus acquisition is authorized while this question is pending.
+
+**Question 1 — this completed MS13c use:**
+
+- **A — approve it retroactively, for this task only.** Permit retention of the verified
+  source `testkit-4242-8657` and the completed acquisition record. Preserve the disclosure
+  that S-OD10 did not authorize it at execution time. No further scan, budget reset, changed
+  finder/prior/target, fabricated example or GH/quick/release waiver follows.
+- **B — refuse.** Restore only the old Jellyfish catalogue entry and use the ordinary
+  authorized source/discovery route, accounting for attempts already made. If that cannot
+  supply a current normal-hint example, GH is 36/37 and the task remains blocked for the
+  owner. Do not discard the unauthorized-run evidence or weaken the replay test.
+
+**Question 2 — independently and optionally, later active tasks:**
+
+- **S0 — retain case-by-case approval** (the current/default rule). An answer A alone
+  approves only MS13c; it creates no standing exception.
+- **S1 — authorize a narrow standing fallback for Jellyfish only.** In a later active task
+  whose change invalidates that existing example, first exhaust its own source, other
+  catalogue/known unique fixture sources and the ordinary bounded B discovery route.
+  Only then may that task use classic9 test-kit seed **4242**, original givens, level null,
+  `testkit-4242-<index>` provenance, indices **0-19,999 ascending**, at most **20,000**
+  attempted candidates across all its fix rounds. Reuse/materialize the prefix once and
+  account for construction; never regenerate it per chunk or reset the task allowance
+  after a source edit; repeated candidate replays consume the same allowance. Use the
+  existing Player replay, chunks <=64, <=400 hints/puzzle,
+  the eight-minute tool deadline, credible <=450 s admission, 540 s process ceiling and
+  existing lock/15 s gaps. Stop acquisition after the first completed chunk supplies a
+  verified source. At exhaustion, incomplete/unsafe execution or failure of ordinary
+  acquisition before that precondition can be met, stop for the owner rather than enlarge
+  a bound. Finish normal GH and final quick/CI gates. This covers neither another ID,
+  initial acquisition of a new ID nor another variant, and adds no new tooling class.
+  S1 begins with tasks after MS13c; it does not overturn a B refusal for the current task.
+
+**Recommendation:** A for the completed, bounded, verified MS13c source; S1 if the owner
+wants to prevent repeat Jellyfish-only interruptions while retaining explicit limits.
+Choose A/B and S0/S1 separately (for example **"JF-02: A + S1"**). Neither is inferred here.
+An answer to question 1 alone resolves the current use and retains S0; do not hold this task
+for an optional standing-rule answer or infer S1 from a bare A.
+The performance update is information under S-OD4, not bundled approval of the slowdown or
+permission to change S-OD11. All other acceptance requirements remain.
+
+**Owner confirmation (2026-11-17 13:46 +07:00, Discord): "tôi chọn A và S0", recorded as
+S-OD12.** The owner chooses **A + S0**: retroactive approval for this completed MS13c use,
+and continued case-by-case permission. **S1 is not approved.**
+
+Keep the verified Jellyfish source `testkit-4242-8657`, the snapshot and all acquisition
+records (10,000 puzzles materialized, indices 0-8,703 replayed in 136 chunks). State explicitly
+that the scan **lacked authorization when performed**; this approval does not backdate
+permission under S-OD10, erase the incident or imply that the ordinary route was exhausted.
+No example revert or ordinary-route retry is required by option A.
+
+This authorizes no further corpus scan, unused acquisition quota, budget reset or gate waiver.
+Normal GH validation, the reviewed fixes, final fingerprinted quick/CI closure and acceptance
+remain mandatory. S0 preserves the ordinary B/IR72 source route; any future exception or
+expansion needs separate prior owner authorization. Neither MS12's S-OD10 nor MS13c's S-OD12
+creates a standing corpus-search permission for another task or ID.
+
+The JF-02 owner-authorization hold is resolved. MS13c still must finish its reviewed fixes
+and final verification before acceptance/commit and the next serial dispatch. S-OD11's chain
+policy and S-OD4's numerical-item treatment remain unchanged; S-OD12 does not waive S-AV38's
+cost/coverage gaps, final qualification or final performance requirements.
+
+---
+
 ## Owner decisions — current resume register
 
 This register is a navigation aid, not a rewrite of the questions or answers above. The later decision governs
@@ -2458,6 +2545,7 @@ where an earlier recovery/process rule conflicts. The pause commit is a historic
 | S-OD9 | Owner, 2026-11-16 06:23 (+07:00), on the command line ("Sudoku - xác nhận đổi remote pairs"); RP-01. Confirms Fable's answer (A) with a corrected prior: `remotePairs` at order 116, weight 350, base cost 35 (R13's 132/440/44 superseded, kept as history); group wing, Hard tier, unscoped, no uniqueness assumption. R13 and the R10 cost row are amended; GH, IR72 H1, bundle B, the discovery ceiling and SA2-Q-S11 are unchanged. MS10a runs the seed-4242 reachability gate (30,000 positions after the prefix below 116, 20,000 complete solves) before E; a failed gate stops before E and goes to the owner ((B) or removing the ID), not to Fable. S-AV32 stays open for MS18e. MS10b-MS18e stay behind MS10a. |
 | S-OD10 | Owner, 2026-11-16 22:20 (+07:00), Discord: "Chọn A."; JF-01. One-off MS12/Jellyfish acquisition exception: classic9 test-kit seed 4242, indices 0-19,999 (at most 20,000), ascending; unchanged original givens, level null and non-numeric `testkit-4242-<index>` provenance. Reuse givens or materialize the prefix once, accounting for construction; never regenerate it per chunk. Existing Player replay tool, chunks <=64, <=400 hints/puzzle, eight-minute tool deadline, credible <=450 s admission, 540 s process ceiling, locking/15 s gaps. Stop acquisition after the first chunk supplies a verified source, publish/check it, then require all 37 GH checks and final quick/CI gates. At exhaustion or inability to remain within bounds, report completed/incomplete ranges and stop. No automatic corpus/Generator expansion, no option B, no discovery-budget reset or permission for another ID/task. GH's real normal-hint contract, finders, priors, availability and tests remain unchanged. S-AV35: MS12 completion and MS18e audit. |
 | S-OD11 | Owner, 2026-11-17 04:30 (+07:00), Discord: "GC-01: chọn A."; GC-01. Option A is binding: bounded grouped attempt first, initially 4,096 additional nodes and 50,000 shared construction/search units. Only a local work/node cap permits `forcingChain` to discard grouped scratch and run the complete singleton search with no local work cap, under the same caller-clamped short window and parent budget; no budget reset or fallback for parent exhaustion, cancellation/errors, completed negatives or window rejection. Its minimum is certified in the complete singleton graph, not the abandoned grouped graph. `forcingChainLong` stays on the bounded grouped route, with no fallback/second allowance; incomplete construction/minimum returns null. IR54 is preserved. Record both phases and total cost; R10's once-only own-new-limit adjustment and all proof/E/GH/quick/CI/qualification gates remain. No numeric adjustment or availability guarantee is made by this answer. Finish accepted/committed MS14a before MS13c, then MS14b/MS14c; no change to MS14a. S-AV36: policy resolved, measurements/cost/audit still open. |
+| S-OD12 | Owner, 2026-11-17 13:46 (+07:00), Discord: "tôi chọn A và S0"; JF-02. **A + S0:** approve retention of MS13c's verified Jellyfish source `testkit-4242-8657`, snapshot and complete acquisition records retroactively for MS13c only, explicitly preserving that the scan lacked authorization when performed. No further scan, acquisition-budget reset, unused quota, finder/prior/target change or GH/quick/release waiver. Case-by-case permission remains; S1 is not approved. Ordinary B/IR72 source acquisition remains available, but any future exception/expansion needs separate prior owner authorization; neither S-OD10 nor S-OD12 is inherited by another task/ID. Resolve the authorization hold, then finish the reviewed fixes and final GH/both quick sets/CI before MS13c acceptance/commit. S-OD11, S-OD4 and the final qualification/performance obligations remain unchanged. |
 
 **Q-MS07e-2 — pack-author ruling (SA2, 2026-11-15), not another owner decision:** no change to
 the projection rule and no speculative one-off launch of the six unexecuted cells. Route

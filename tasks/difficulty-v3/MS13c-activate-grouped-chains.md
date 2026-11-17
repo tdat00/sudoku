@@ -6,9 +6,9 @@
 | Accepted implementation base | `ea14798` (MS14a); later pack-only commits do not replace this runtime baseline |
 | Size / active time | Medium; 50-60 minutes plus E/GH/GP |
 | Owner / milestone | Shared chains and both apps; M13 complete |
-| Authority | R9/R10/R16/R20/R21; IR54; GC-01 option A / S-OD11 |
+| Authority | R9/R10/R16/R20/R21; IR54; GC-01 option A / S-OD11; JF-02 A + S0 / S-OD12 |
 | Review | SA1 cross-review after the developer's final report and gates |
-| Status | Candidate uncommitted; acceptance awaits JF-02 owner disposition and the reviewed fix/verification closure below |
+| Status | Candidate uncommitted; JF-02 resolved by S-OD12; reviewed fix/verification closure still required |
 
 ## Goal & business context
 
@@ -237,8 +237,9 @@ inherited item list. This item introduces no new MS13c gate or dispatch stop.
 These are rulings on the uncommitted candidate on `4aa3d11`, engine SHA-256
 `5EBA1AE580D5F63AD0A1B2DA0FCC4CAD0C515C297C9391C691D4CB58626AC9D1`.
 SA1 found no engine/test defect and verified S-OD11, E, GH and the final quick fingerprints.
-This is **not acceptance yet**: JF-02 below is an owner-authorization blocker, independent
-of the numerical performance findings and the non-blocking report/doc corrections.
+This is **not acceptance yet**: S-OD12 has resolved JF-02's authorization hold with A + S0,
+but the reviewed fix/verification closure remains. The numerical performance findings and
+their final-task obligations are not waived by that decision.
 
 1. **Q1 — accept the constructed falling-new-hardest unit vectors.** The current real G12
    position stays pinned as 2,977 -> 2,169, Nishio -> Forcing Chain, with `newHardest:false`
@@ -366,16 +367,15 @@ commands on the unchanged assumptions.
   the owned coordination marker until final commands are done. List the `'window'` ->
   `'empty'` rename and associated expectation edits; the old hash alone is not a retained
   source blob or a reproducible diff. Do not invent one. Correct the GP table/projections
-  above and label Jellyfish acquisition **authorization pending JF-02**, not covered by S-OD10.
+  above and label Jellyfish acquisition **retroactively approved by S-OD12 for MS13c only,
+  unauthorized when performed**, not covered by S-OD10.
 
-**Wait for the owner, then make one coherent fingerprinted fix pass:**
+**The owner answered A + S0: complete one coherent fingerprinted fix pass now:**
 
-- Apply JF-02 A or B exactly. Under A, keep the already verified Jellyfish snapshot and
-  record the retroactive disposition without pretending the scan was authorized beforehand.
-  Under B, restore **only that entry** from the accepted pre-MS13c catalogue, preserve the
-  other six legitimate refreshes, and use the ordinary authorized source route. Do not
-  launder the refused source as a newly "known" ordinary source. If ordinary acquisition
-  fails, GH remains 36/37 and acceptance stops for the owner.
+- Apply **S-OD12, A + S0**. Keep the already verified Jellyfish source `testkit-4242-8657`,
+  its snapshot and all acquisition records, and state that the scan lacked authorization
+  when performed. Do not revert the entry or run another source-acquisition scan. No unused
+  quota, budget reset or standing S1 permission follows; routine verification remains required.
 - Fix `generator/design.md`'s cost range/source qualification and `player/design.md`'s
   fallback description: no local fallback work cap, same parent budget/window, minimum
   only in the singleton graph. Correct its Jellyfish authorization wording according to
@@ -391,63 +391,28 @@ commands on the unchanged assumptions.
 
 Q1/Q2 are now accepted as reviewed; Q3 retention and Q4 numerical reporting needed no new
 policy choice. Writing `QUESTION:` is not permission to extend a recorded authorization.
-The acquisition in JF-02 should have stopped before the unauthorized scan. No later serial
-task is dispatched until MS13c's owner disposition, fixes and acceptance/commit are complete.
+The acquisition in JF-02 should have stopped before the unauthorized scan; retrospective
+approval does not erase that incident. The owner disposition is now recorded as S-OD12.
+No later serial task is dispatched until MS13c's fixes and acceptance/commit are complete.
 
-### JF-02 — owner question: MS13c Jellyfish acquisition and a future standing rule
+### JF-02 resolved — S-OD12, A + S0
 
-**Decision needed; no answer assumed.** S-OD10 authorized the corpus route for **MS12 only**
-and explicitly said no other task inherits it. MS13c nevertheless used that route without
-stopping for approval or running ordinary Generator discovery first.
+**Owner, Discord, 2026-11-17 13:46 (+07:00): "tôi chọn A và S0".**
+The original question is archived unchanged beside the answer in
+`docs/difficulty-v3/clarifications-resolved.md`, JF-02 / S-OD12.
 
-**Evidence.** After the saved/catalogue sources failed, MS13c materialized **10,000**
-classic9 seed-4242 puzzles (40,000 test-kit states) once, then replayed indices **0-8,703**
-in **136 chunks of 64** through the normal Player tool. The first successful chunk supplied
-`testkit-4242-8657`; the updated catalogue passes **37/37**. The replay/hint/time/lock
-bounds and complete ledger were kept; acquisition authority was not. Evidence is under
-`docs/difficulty-v3/evidence/MS13c/`: `logs/gh-corpus-materialize.txt`, `jellyfish-scan-chunks.jsonl`,
-`logs/gh-jellyfish-scan-1.txt`, `logs/gh-write-jellyfish.txt` and the final GH check.
-No more corpus acquisition is authorized while this question is pending.
+- **A:** retroactively approve this completed MS13c use only. Retain the verified
+  `testkit-4242-8657` source, snapshot and all records: 10,000 puzzles materialized,
+  indices 0-8,703 replayed in 136 chunks. Explicitly preserve that the scan lacked
+  authorization when performed. It was not authorized by S-OD10, and the ordinary route
+  was not exhausted first. No additional scan, quota or gate waiver is granted.
+- **S0:** case-by-case permission remains. **S1 is not approved.** The ordinary B/IR72
+  route is unchanged; future acquisition exceptions/expansions require separate prior
+  owner authorization. No later task or ID inherits this retrospective exception.
 
-**Question 1 — this completed MS13c use:**
-
-- **A — approve it retroactively, for this task only.** Permit retention of the verified
-  source `testkit-4242-8657` and the completed acquisition record. Preserve the disclosure
-  that S-OD10 did not authorize it at execution time. No further scan, budget reset, changed
-  finder/prior/target, fabricated example or GH/quick/release waiver follows.
-- **B — refuse.** Restore only the old Jellyfish catalogue entry and use the ordinary
-  authorized source/discovery route, accounting for attempts already made. If that cannot
-  supply a current normal-hint example, GH is 36/37 and the task remains blocked for the
-  owner. Do not discard the unauthorized-run evidence or weaken the replay test.
-
-**Question 2 — independently and optionally, later active tasks:**
-
-- **S0 — retain case-by-case approval** (the current/default rule). An answer A alone
-  approves only MS13c; it creates no standing exception.
-- **S1 — authorize a narrow standing fallback for Jellyfish only.** In a later active task
-  whose change invalidates that existing example, first exhaust its own source, other
-  catalogue/known unique fixture sources and the ordinary bounded B discovery route.
-  Only then may that task use classic9 test-kit seed **4242**, original givens, level null,
-  `testkit-4242-<index>` provenance, indices **0-19,999 ascending**, at most **20,000**
-  attempted candidates across all its fix rounds. Reuse/materialize the prefix once and
-  account for construction; never regenerate it per chunk or reset the task allowance
-  after a source edit; repeated candidate replays consume the same allowance. Use the
-  existing Player replay, chunks <=64, <=400 hints/puzzle,
-  the eight-minute tool deadline, credible <=450 s admission, 540 s process ceiling and
-  existing lock/15 s gaps. Stop acquisition after the first completed chunk supplies a
-  verified source. At exhaustion, incomplete/unsafe execution or failure of ordinary
-  acquisition before that precondition can be met, stop for the owner rather than enlarge
-  a bound. Finish normal GH and final quick/CI gates. This covers neither another ID,
-  initial acquisition of a new ID nor another variant, and adds no new tooling class.
-  S1 begins with tasks after MS13c; it does not overturn a B refusal for the current task.
-
-**Recommendation:** A for the completed, bounded, verified MS13c source; S1 if the owner
-wants to prevent repeat Jellyfish-only interruptions while retaining explicit limits.
-Choose A/B and S0/S1 separately (for example **"JF-02: A + S1"**). Neither is inferred here.
-An answer to question 1 alone resolves the current use and retains S0; do not hold this task
-for an optional standing-rule answer or infer S1 from a bare A.
-The performance update is information under S-OD4, not bundled approval of the slowdown or
-permission to change S-OD11. All other acceptance requirements remain.
+The owner-authorization hold is lifted. Complete the reviewed fixes, final GH check, both
+fingerprinted quick sets and CI before acceptance/commit. S-OD11's chain policy, S-OD4's
+numerical-item treatment and final qualification/performance obligations remain unchanged.
 
 ## Files to create/modify
 
