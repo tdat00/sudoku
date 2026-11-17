@@ -8,7 +8,7 @@
 | Owner / milestone | Shared ALS / both apps; M15 complete |
 | Authority | R10/R18/R20/R21; SA2-Q-S05/S08; S-OD4, S-OD12/S0 and accepted MS15a D1-D8 |
 | Review | Orchestrator against MS08a/IR72 and generic soundness/order checks; no routine SA1 review |
-| Status | Implementation in progress; Q5 ruled below; awaiting explicit orchestrator resumption |
+| Status | E/GH reported complete; Q6 ruled below; pin/coverage fixes and final closure pending |
 
 ## Goal & business context
 
@@ -304,6 +304,93 @@ ledgers for the changed production source.
 They do change both quick fingerprints: settle the test changes and formatting before the
 final complete quick sets/CI. No new evidence class, acquisition allowance or assertion waiver.
 
+### SA2 ruling — Q6 placement-only first use and remaining I2 pins, 2026-11-18
+
+**Choose B, minimally: preserve the placement-only branch with one controlled case, not
+another copy of the existing mixed-effects example.** The current synthetic
+"groups the effects of the first use..." case has both eliminations and placements. It
+would not catch a consumer/producer that drops placements only when eliminations are empty.
+Do not simply delete the old real placement assertion and declare that mixed case equivalent.
+No new generation, corpus scan or owner permission is needed for this test repair.
+
+- Keep the existing mixed-effects assertions. Extend that test or add one adjacent,
+  explicitly constructed **placement-only** case: a solved rating trace whose selected
+  first-use step has `eliminations:[]` and a nonempty `placements` array.
+- Exercise the real `SG.replay.firstUse` extraction and the existing `jumpModel` / `whyOf`
+  (`SG.stepView.explain`) rendering path, not just a newly hand-written formatting function.
+  A scoped `SG.difficulty.rate` stub supplying that controlled solved trace is authorized;
+  prepare any model/fixture first, restore the original function in `try/finally`, and never
+  generate/analyse/cache a real golden while the stub is installed.
+- Assert the returned first-use effects contain the actual nonempty placement(s), no
+  eliminations, and that the **effect lines** contain exactly the expected placement
+  wording and no candidate-removal effect. For example, with the existing `c` labeler,
+  `placements:[[8,6]]` yields `In that deduction, 6 is placed in c8.`
+  This is constructed branch coverage, not a new current-golden or normal-hint specimen.
+- Keep all three real-golden checks, refreshed to their actual current effects, and rename
+  their test/comment so it no longer claims a real G10 placement. In particular **G13's
+  old candidate-7 effect is also obsolete**, not just G10's assertion.
+
+The current recorded compact effects (E replay source identity
+`e1278c0b4e6966996ac79648b2210dd87acf714de8c08f485e6aab680f11ed26`) require:
+
+| Golden / compact position | Real first-use effect and expected English line |
+|---|---|
+| G09 / 35 | unchanged: `In that deduction, candidate 7 is removed from R9C1.` |
+| G10 / 32 | `In that deduction, candidate 1 is removed from R1C8 and R1C9.` |
+| G13 / 127 | `In that deduction, candidates 8 and 9 are removed from G3-R1C3.` |
+
+G10's **cause frame** is R8C7; it is not the first deduction's target. Keep cause, first-use
+effect and clue-change explanations distinct. Do not edit the golden requests/fixtures to
+manufacture a placement, import an old G10 as today's result, or apply Q5's historical-prefix
+permission to these live consumer tests.
+
+**The other proposed I2 refreshes are approved**, with the original predicates and
+coverage retained. Use state positions, not visual row numbers, in `stepAt(...)`:
+
+| Pin / selector | Approved current value and invariant |
+|---|---|
+| `steps` jump totals | `{ compact:15, details:15 }`; keep both views and all fourteen goldens |
+| Generator `player` jump total | **30** occurrences, not the **18 distinct transitions**; preserve the frame/cause tests and both framing-count inequalities |
+| G12 constructed falling-new-hardest case, details position 103 | before **3,035**, after **2,169**, so drop **866** and text `2,169 (−866)`. Update the old 808 literals/comment too. Keep the real step's `tier:null` / `newHardest:false` checks and the explicitly constructed override, with its no-badge/no-highlight and Forcing Chain assertions |
+| G12 folded peak, compact array index 4 | **3,221** in both numeric and text pins; keep `replay.folded.reveal`, restored-clue/above-level meaning and the separate plain/no-fold cases |
+| G05 cause sentence | compact **position 23**, `together`: `Removing each clue alone gives 44 and 45; removing the whole group gives 550.` |
+| G13 cause sentence | compact **position 127** is now **mixed**, not single-culprit: largest isolated removal is G4-R3C1, **153**, versus whole group **296**, with no unique-cause frame. Use the existing mixed-class wording and correct the stale "like G13" comment; retain single-culprit coverage on G09 and the all-class synthetic checks |
+| G10 unfinished chosen-removal witness | details **position 37**, not 36; retain `choice.chosen === null` and the limited-check/log-accounting assertions. G14 / 69 stays |
+| Multi-move cases | compact **G06 / 31, G12 / 107, G13 / 143**, replacing the vanished G10 / 49 case. Preserve `class:'multi-move'`, `verifiedOnly:false`, null frame, the k/n/whole-change explanation and the clue/sign branches |
+
+The existing recorded ledger facts and the updated replay-suite predicates support those
+refreshes; they do not authorize a weaker inequality, arbitrary replacement output or a
+missing-premise rewrite elsewhere. If another premise fails, raise a new QUESTION.
+
+**Coverage disposition `MS15b-Q6` — carry to MS18e's audit.** The fifteen **compact**
+golden first-use effect records contain no placement. The placement-only extraction/wording
+will be covered by the controlled case above, not claimed as live real-golden placement
+coverage. There are also fifteen details-view jump occurrences (eighteen distinct
+transitions overall); do not call the fifteen compact records an all-view census without
+checking those extra transitions. This is a test-data coverage/provenance note, not a
+new level-availability/GP miss, source-acquisition task or permission to waive a gate.
+
+**Close on final bytes.** Run the affected Generator `steps`/`player` suites (and the
+planned focused checks) after the edits. Finish remaining measurements, fingerprinted
+designs/guides, test-count wording and formatting **before** the final complete quick pair.
+Registration-only inventories can supply counts before that pair. A "second pass" followed
+by fingerprinted doc edits is still superseded and needs the affected complete set again.
+Measured CI metadata and evidence-only reports may follow under the existing identity rule.
+These consumer-test edits do not change E inputs: retain/recheck the current E families;
+no fresh E solely for these pins/cases. Any actual included-source change still requires
+ordinary affected-family replacement. Current all-39 GH remains mandatory.
+
+**Report-only corrections, not a new limit decision or incident-only rerun:**
+retain the late-plan disclosures with their true times; an anchor/write failure is not
+permission to launch dependent work as though the plan had been saved. Verify the actual
+lock/admission/source records and do not backdate the plans or call them pre-run artifacts.
+Future plan writes must succeed and be checked before dependent launches.
+Also correct S-AV39's retention reason (3): S0 forbids unapproved corpus acquisition, not the
+already-owned generated-puzzle/GP measurements or the R10 decision delegated to MS15b.
+MS16 inherits the selection; neither a future pin change nor a fictional measurement ban
+is the reason to retain a limit. The reported measured grounds for retaining the defaults
+remain; no reopening/tuning is directed by Q6.
+
 ## Inputs & context
 
 R18, verbatim:
@@ -428,6 +515,10 @@ before/after justification; keep the boundary, prefix, cadence and soundness cov
   fixed-specimen derivations. The task-local standing permission above owns only equivalent
   derivation/label edits in other existing quick predecessor-finder tests, with its inventory
   and exclusions; it grants no additional production or current-ladder integration scope.
+- `generator/tests/suites/steps.test.js` and `generator/tests/suites/player.test.js`:
+  the recorded I2 consumer pins
+  and Q6's controlled placement-only regression; no producer/view-engine change is needed
+  merely because the current golden data changed.
 - Existing unscoped technique fixtures/cost route for `alsXz`; no new cost-tool family.
 - `.github/scripts/generator-quick.json`: current inventories/measured projections and any
   owned selector coupling, preserving `core-shared` membership and every predecessor test.
