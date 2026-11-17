@@ -8,7 +8,7 @@
 | Owner / milestone | New shared engine module; M15a |
 | Authority | R10/R18; S-OD4, S-OD12/S0 and IR72 source-aware inactive closure |
 | Review | SA1 cross-review before acceptance, plus orchestrator gates; not template-only |
-| Status | Not started; ready for serial dispatch from `6a9fbf6` |
+| Status | Implementation submitted; D1-D8 ruled below; awaiting SA1, fixes and acceptance |
 
 ## Goal & business context
 
@@ -82,6 +82,82 @@ and complete identities, not only a remembered wrap or truncated hash.
 Any later included-source byte change invokes fresh-record rules for the affected complete
 families. Never retag old ledgers. Finish all fingerprinted docs, counts, fixtures and list
 changes before the final quick-set freeze too; a comment is not exempt from its fingerprint.
+
+### SA2 rulings — D1-D8 and closure disclosures, 2026-11-17
+
+These are rulings on the submitted implementation on `8bd2487`, not task acceptance or a
+waiver of SA1's independent review. **None requires an owner decision.** The default limits
+and the inactive/no-output-change contract are unchanged.
+
+| Point | Ruling | Binding interpretation / action |
+|---|---|---|
+| D1 shared guard | **Accept** | Keep `{ limit, used, checkedAt, capped }`, `createWork` and `spend`. A missing/invalid guard must fail, never silently create a replacement. One guard belongs to the enclosing finder call; enumeration and later search share it without refund/reset. Updating `checkedAt` after a real entry budget check is not a work-allowance reset. |
+| D2 observer | **Accept** | The unregistered enumerator emits none. MS15b's enclosing registered finder owns the one whole-call work record, including enumeration and pair/target work. Do not invent an enumerator technique ID or double-count by emitting both inner and outer records. |
+| D3 work-cut prefix | **Accept** | Keep completed sizes and discard the interrupted size. That conservative prefix satisfies the canonical-order contract; a partial traversal of a size need not be its canonical prefix. A spent work guard provides no free pair/target scan, and a parent-budget stop provides no permission to consume the retained records as a Finding. |
+| D4 exact record quota | **Accept** | Exactly 4,096 retained records is allowed. Set `capHit:'records'` only after a further distinct record is established; charge the probe to the same guard and parent budget. If work runs out while probing, report the work stop/incompleteness, not an invented overflow proof or a fresh allowance. |
+| D5 zero-candidate open cell | **Accept the literal structural enumeration** | The helper reads candidate masks and applies the stated cell-count/union predicate; it does not validate feasibility or propagate constraints. Clarify the evidence: **"A returned record certifies the structural ALS predicate and complete occurrence data, not that the position has a completion. An open cell with no candidates is inconsistent; its literal record is not a feasible-puzzle example or a deduction on such a position."** Consistency handling remains with the caller; no new invalid-position solving behavior is authorized. |
+| D6 sizes beyond the digit count | **Accept** | `k + 1 <= model.digits` is a necessary mathematical condition. Skipping impossible sizes, including stopping at three cells on a four-digit model, is not a production-limit adjustment or missing eligible coverage. |
+| D7 optional test seam | **Accept** | Keep the fifth `{ cells, records }` argument and the guard's diagnostic work limit. Lowered limits and the existing finite raised-limit stress/diagnostic calls are test-only, with their actual values recorded. Production callers pass no seam overrides; defaults stay 4/4,096/50,000. A diagnostic override neither changes production scope nor consumes/grants a tuning allowance. |
+| D8 completeness | **Accept implementation; clarify the evidence and consumer contract** | Use: **"`complete:true` means every eligible structural ALS within the effective cell bound `1 <= k <= min(cells, model.digits - 1)` was returned; `cells` defaults to 4. It does not claim feasibility, larger-set completeness or completeness of a later pair/target search. `complete:false` makes no exhaustion claim."** A parent-budget stop (`complete:false`, `capHit:null`) is not a completed negative; the enclosing finder rechecks its budget before using records and before publication. |
+
+**Process record.** Replace "for SA1 to settle" / "no QUESTION is open" as the disposition of
+these points with the dated rulings above and the fact that they were implemented before
+this ruling. Do not imply prior authorization or independent acceptance. Routine implementation
+choices within a settled brief do not each need a permission request, but an unresolved
+contract/permission/default must be raised as `QUESTION:` and paused before acting, not
+implemented for a later reviewer to approve. No retrospective revert/replay is required
+merely to manufacture that earlier pause. SA1 still owns implementation review, including
+the reported IR72 coverage/mutation gaps; these rulings do not mark those gaps resolved.
+
+**New item: S-AV39 — ALS cost/cap exposure.** Replace the unnumbered candidate in the evidence,
+notes and final reply with this ID. Preserve the submitted observations: blank 9 x 9 costs
+810 units; sparse 16-digit/Samurai-shaped test positions expose the record/work bounds;
+the constructed 16 x 16 `{1,2}` flood costs 154,032 units with a sufficiently raised guard,
+while the production guard stops at 50,000. Keep defaults 4/4,096/50,000.
+These are constructed/seeded positions, not a real/generated-puzzle census, a lost-deduction
+count, a universal structural maximum or a whole-generation/GP verdict.
+
+The density transcript is **33 probe calls**, not 30: three classic9, twelve 12-digit,
+fifteen 16-digit and three Samurai; seed 1504 is reused across density ranges. Its script
+uses **work limit `1e9`, record limit `1e7`, cells 4**, so counts above 4,096/50,000 are
+diagnostic totals, not production-cap breaches or a measured default cap rate. Keep those
+limits, populations and the probe's actual source identity separate from the final default
+tests; do not assign a final-source identity to an earlier development run without proof.
+If that identity is unavailable, retain the probe honestly as development evidence.
+
+Route S-AV39 to **MS15b** for the already-owned whole-call coverage/cost measurements and
+once-only own-limit decision; **MS16** inherits the selected shared limits without retuning;
+**MS18c** receives measured availability consequences, **MS18d** cost and **MS18e** the audit.
+No automatic increase to 154,032, model-specific allowance, fallback, wider acquisition,
+new census or extra gate follows from the item.
+
+**The 87 overlong test lines need fixing.** AGENTS/checklist explicitly mention engines,
+but do not exempt tests from the full conventions they reference:
+`DEVELOPERGUIDE.md` "Conventions" and `generator/design.md` section 12.2 state the
+110-character limit without that qualification. Rewrap only this task's new suite through
+the edit tool, preserving test names, strings, vectors, assertions and behavior. Do not
+weaken the convention or mass-format unrelated existing suites.
+
+Batch the formatting/report fixes with SA1's review fixes before the final runs. Test-only
+wrapping does **not** invalidate E: keep its current ledgers and verify the three final-source
+merge-checks, with no regeneration solely for that edit. It **does** change both quick
+fingerprints: rerun the focused gates and both complete quick sets, reconcile current
+fingerprints/projections and finish CI on the final files. Preserve the prior results as
+superseded, not failed. Retain behavioral evidence only with its actual source/test provenance;
+an assertion/behavior change needs its affected verification, not a "format-only" label.
+If any E input changes during the fix round, even an engine comment, apply the normal
+complete affected-family recording rule. No source-identity exemption is being granted.
+
+**Unlocked 25.9 s draft run:** disclosure suffices on the reported facts. It failed 11/58
+draft expectations, published nothing, and later final-source focused/quick coverage ran
+under the lock. Preserve the failure, approximate time, unprotected timing status and
+**overlap not excluded**. Do not rerun merely to erase the incident, or use its duration
+as a protected measurement; replace only evidence that actually depended on that run.
+The short recorded lock waits do not prove nobody else held the slot during the unlocked
+window: change that claim to "no contention observed at the recorded acquisitions".
+The separate 540 s mutation abort remains aborted/incomplete; its stale `exit:0` is not a
+pass or a known real exit. Retain that explanation and the later complete run. None of
+this permits an unknown/possibly >10-second command to start unlocked in future.
 
 ## Inputs & context
 

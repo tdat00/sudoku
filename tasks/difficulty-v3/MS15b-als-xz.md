@@ -34,6 +34,25 @@ complete ALS records can give a constructive proof; never use truncation as an a
 R10 Finding; key `technique.alsXz.step`;
 args `{digitX:x,digitY:z,cells:string[]}`, copied sorted proof cells/eliminations, no placements.
 
+**MS15a D1-D8 consumer handoff (SA2, 2026-11-17; dispatch still waits for acceptance).**
+Create one `SG.alsPatterns.createWork()` guard for the whole call and use its `spend` for
+enumeration plus pairs/targets; no replacement, refund or phase reset. The helper emits no
+observer record: this registered finder owns one whole-call record. Do not pass the
+test-only `limits` seam in production. `complete` covers only the configured enumeration
+domain (default at most four cells), not feasibility, larger ALS or the pair/target scan.
+Recheck the parent budget after enumeration/before using records and before publication.
+A record-cap prefix can supply a constructive witness while allowance remains; work/parent
+exhaustion cannot fund an uncounted continuation. A zero-candidate cell is inconsistent,
+not made feasible by a structural ALS record. See MS15a's dated ruling for the exact contract.
+
+**S-AV39 — ALS cost/cap exposure:** own the first activation measurements and the already
+permitted once-only limit decision within this task's existing B/GH/cost/affected-GP scope.
+Keep MS15a's blank/seeded/raised-limit diagnostics separate from real positions and default
+whole-call outcomes. The 154,032-unit flood is not a reason for an automatic increase,
+model-specific allowance or fallback. Defaults remain 4/4,096/50,000 unless the existing
+measured R10 route selects otherwise before final E; MS16 inherits that shared selection.
+Carry remaining gaps to MS18c/MS18d/MS18e, without a new acquisition/census/tooling allowance.
+
 Witness vector: A={R1C1{1,2},R1C2{2,3}}, B={R1C4{1,4},R2C4{3,4}};
 x=1 cross-peers on row 1, z=3 at R1C2/R2C4; remove 3 at R2C2.
 Negative: overlapping sets, one missing x cross-peer, target missing one z occurrence, or wrong
