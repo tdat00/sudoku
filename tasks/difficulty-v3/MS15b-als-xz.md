@@ -8,7 +8,7 @@
 | Owner / milestone | Shared ALS / both apps; M15 complete |
 | Authority | R10/R18/R20/R21; SA2-Q-S05/S08; S-OD4, S-OD12/S0 and accepted MS15a D1-D8 |
 | Review | Orchestrator against MS08a/IR72 and generic soundness/order checks; no routine SA1 review |
-| Status | E/GH reported complete; Q6 ruled below; pin/coverage fixes and final closure pending |
+| Status | E/GH reported complete; Q7 corrects the Q6 witness selector; final closure pending |
 
 ## Goal & business context
 
@@ -355,7 +355,8 @@ coverage retained. Use state positions, not visual row numbers, in `stepAt(...)`
 | G12 folded peak, compact array index 4 | **3,221** in both numeric and text pins; keep `replay.folded.reveal`, restored-clue/above-level meaning and the separate plain/no-fold cases |
 | G05 cause sentence | compact **position 23**, `together`: `Removing each clue alone gives 44 and 45; removing the whole group gives 550.` |
 | G13 cause sentence | compact **position 127** is now **mixed**, not single-culprit: largest isolated removal is G4-R3C1, **153**, versus whole group **296**, with no unique-cause frame. Use the existing mixed-class wording and correct the stale "like G13" comment; retain single-culprit coverage on G09 and the all-class synthetic checks |
-| G10 unfinished chosen-removal witness | details **position 37**, not 36; retain `choice.chosen === null` and the limited-check/log-accounting assertions. G14 / 69 stays |
+| G10 raw unfinished-removal records | **Corrected by Q7:** moves **37-39** retain their raw `span.chosen === null` witness coverage in `replay.test.js`; they are not jump-Why specimens |
+| `steps` unfinished chosen-removal Why specimens | **Q7:** **G13 / details / position 129** and **G14 / compact / position 69**. Require a jump with a guided choice object and `choice.chosen === null`; keep both limited-check/log-accounting assertions |
 | Multi-move cases | compact **G06 / 31, G12 / 107, G13 / 143**, replacing the vanished G10 / 49 case. Preserve `class:'multi-move'`, `verifiedOnly:false`, null frame, the k/n/whole-change explanation and the clue/sign branches |
 
 The existing recorded ledger facts and the updated replay-suite predicates support those
@@ -371,8 +372,10 @@ checking those extra transitions. This is a test-data coverage/provenance note, 
 new level-availability/GP miss, source-acquisition task or permission to waive a gate.
 
 **Close on final bytes.** Run the affected Generator `steps`/`player` suites (and the
-planned focused checks) after the edits. Finish remaining measurements, fingerprinted
-designs/guides, test-count wording and formatting **before** the final complete quick pair.
+planned focused checks) after the edits. Finish fingerprinted designs/guides, test-count
+wording and formatting **before** the final complete quick pair. Completing remaining
+measurements first avoids a repeat if they require source/doc fixes; Q7 below distinguishes
+that recommendation from the mandatory source-identity and final-CI ordering.
 Registration-only inventories can supply counts before that pair. A "second pass" followed
 by fingerprinted doc edits is still superseded and needs the affected complete set again.
 Measured CI metadata and evidence-only reports may follow under the existing identity rule.
@@ -390,6 +393,76 @@ already-owned generated-puzzle/GP measurements or the R10 decision delegated to 
 MS16 inherits the selection; neither a future pin change nor a fictional measurement ban
 is the reason to retain a limit. The reported measured grounds for retaining the defaults
 remain; no reopening/tuning is directed by Q6.
+
+### SA2 ruling — Q7 Why specimen and CI-manifest ordering, 2026-11-18
+
+**Choose A. My Q6 G10/37 instruction was wrong.** It confused a raw move's
+`span.chosen === null` with a jump transition having a non-null `choice` object whose
+`chosen` is null. The producer's choice/cause annotations and the Why callout exist only
+on jumps; G10/37 is not one. The corrected rows above supersede that Q6 selector, not
+the other Q6 pin/placement-coverage rulings.
+
+Keep the two current real specimens:
+
+- **G13, details, position 129:** jump 128->129, 394->3,610, guided choice, chosen null,
+  rated 7 / refused 1 / others 5, single-culprit frame G1-R5C9.
+- **G14, compact, position 69:** the unchanged guided jump with chosen null. The same
+  G14 transition also appears in details; these are two distinct qualifying transitions,
+  not a claim that only two qualifying view occurrences exist.
+
+Both preserve this test's generic guided-choice/unfinished-check explanation contract.
+Killer was the former specimen, not a required variant-specific branch of that renderer.
+Keep the Samurai/Mega test name/comment, the two real cases and all existing Why assertions.
+Make the premises explicit before dereferencing `choice`: transition `tier === 'jump'`,
+choice present with `kind === 'guided'`, then `chosen === null`. Do not fill a missing
+choice from a raw span, manufacture a jump or weaken the assertion to tolerate null choice.
+Keep G10's three raw witnesses in the replay coverage and the other current Killer-golden
+checks; this ruling does not remove Killer coverage elsewhere or change any golden/producer.
+No new source, generation, scan or owner question is needed.
+
+**Process record:** record both SA2's incorrect Q6 instruction and that the developer's
+substitution preceded this approval. The valid substitution may stay now; no ritual
+revert/reapply or incident-only rerun is required. The pause breach is not approved as a
+future practice: a failed instruction/premise calls for QUESTION before a replacement,
+not an unapproved provisional implementation. This is a specific Q7 correction, not a
+standing permission to replace any failing golden premise.
+
+**Yes: `.github/scripts/generator-quick.json` is outside both app quick fingerprints.**
+Checked against the current `EVIDENCE_INPUTS` in both Node runners and
+`core/tests/node-evidence.js::collect/fingerprint`: only their declared files/trees are
+hashed, and neither includes `.github`. The task's evidence/artifact outputs and
+`docs/difficulty-v3/notes.md` are also outside those inputs. The designs and root guides
+are explicitly included and still must precede final quick runs.
+
+That exclusion is **not** a CI-validation exemption. The current
+`.github/scripts/generator-quick.js::check` reads the live manifest to validate coverage
+and calculate job budgets; `shardArgs` derives the executed selections from it.
+
+1. Finalize all fingerprinted files and the suite/shard/group selections before the final
+   quick pair. Use credible launch projections and apply already-known required raises
+   proactively under the existing measured rule; do not defer an admission problem.
+2. After the measured runs, finalise **counts, measured seconds, projection seconds and
+   provenance only**. Those metadata-only edits do not invalidate already-complete quick
+   results for unchanged selections/source. They do not authorize membership/command/tier/
+   factor/overhead/timeout changes or silently re-grouping the executed tests.
+3. **Write that final manifest before the final CI check**, then run the existing check
+   and actual-workflow arithmetic (Generator 1,800 s; Player 900 s). Reconcile all intended
+   coverage and verify the current app fingerprints against the eight Generator results
+   and the Player result. A later manifest edit requires a fresh CI check, not an assertion
+   that the earlier check certified different manifest bytes.
+4. Notes, unlocked-run disclosures and the final evidence report may be completed afterwards
+   in their excluded paths. A metadata-only projection revision does not require repeating
+   sound quick runs; a changed hashed input requires the affected complete set, and a changed
+   selection/grouping requires its authorized CI-equivalent coverage, not just a hash match.
+
+Pattern-cost/GP runs after the quick pair are technically compatible with the fingerprints
+**only if** they write solely excluded evidence/artifact outputs and cause no included-file
+change. Prefer doing them first when they may expose a needed fix. Any source/doc edit they
+cause invokes the normal recheck rules (including E when an E input changes).
+The two named GP commands still do not replace the required affected-cell inventory and
+honest accounting of unmeasured/unsafe cells; Q7 narrows none of that scope.
+The developer's proposed order must therefore move the `generator-quick.json` write
+**ahead of the CI check**, not after it.
 
 ## Inputs & context
 

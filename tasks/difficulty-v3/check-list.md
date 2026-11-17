@@ -185,10 +185,11 @@ No intermediate pruning. Parent milestones are not additional waves or commits.
 after SA1 acceptance, SA2's `01e06629` rulings, the developer's fix round and orchestrator
 rechecks. MS14c (`6a9fbf6`; M14 complete), MS14b (`0e3a0c4`), MS13c (`9d58d86`) and resolved
 JF-02/S-OD12 (A + S0) remain prior boundaries. **MS15b is uncommitted; E and all-39 GH are
-reported complete, and it paused on Q6 before the remaining consumer pin edits.** Its brief
-preserves placement-only first-use coverage with a controlled case and explicitly approves
-the recorded steps/player pin updates. Q5 remains restricted to isolated predecessor-finder
-specimens; it does not freeze these live golden consumers. No new corpus scan is authorized.
+reported complete, and Q7 corrects SA2's Q6 G10 witness-selector error.** Keep G13/details/129
+and G14/compact/69 as the real guided-jump Why specimens; preserve G10's separate raw-span
+coverage. The premature edit is disclosed, not a standing exception. Final quick/cost/GP/CI
+closure remains; the final CI manifest must be written before its final CI check.
+Q5 remains restricted to isolated predecessor-finder specimens, not live golden consumers.
 Resume only on the orchestrator's explicit relay. The next order remains MS16 -> MS17a -> MS17b and the unchanged
 remainder. Keep the assigned
 MS14a/MS13c wave numbers 34/35; do not renumber IDs, change Done marks or rewrite historical
@@ -377,6 +378,15 @@ as well: **both Player jobs are 15 minutes, so `180 + 3 * player.projectionSecon
 The helper currently prints/checks the Player against the generic 1800 s manifest ceiling;
 that is not permission to use 30 minutes for the Player. Preserve all smaller workflow limits.
 Run the existing registration/group CI check and record the additional actual-workflow arithmetic.
+
+**Fingerprint versus CI ordering — MS15b Q7, 2026-11-18.** The current app fingerprints
+exclude `.github/scripts/generator-quick.json`; this does not make CI evidence independent
+of that file. Keep selections/grouping fixed for the tested runs. Counts, measured seconds,
+permitted projection raises and provenance may be finalized after the quick measurements,
+but **before** the final manifest/coverage/job-budget check. If the manifest changes again,
+repeat that check; a metadata-only edit does not by itself require another quick run.
+Continue to verify actual workflow limits, all intended coverage and matching current app
+fingerprints. This grants no extra membership/tier/timeout or CI-tooling changes.
 
 If the formula would exceed a shard or actual job ceiling, do not clamp it, lower the margin,
 write an invalid manifest or raise a ceiling. Report the measured/proposed values and the
