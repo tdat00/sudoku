@@ -1,0 +1,42 @@
+PASS held-then-admitted: exactly one launch, attempt 2
+PASS the wait is 60 s after the recorded release and elapsed time counts
+PASS the re-ask is asked at least 60 s after the release
+PASS the sleep happens with no lock held
+PASS attempt 2 has its distinct id and the entry mapping
+PASS attempt 1 is untouched
+PASS the entry is done and the status complete
+PASS a second call never reruns a completed payload
+PASS elapsed time beyond 60 s needs no sleep
+PASS twice held: two attempts, then the next entry is launched
+PASS the second launch of the entry is at least 60 s after the first release
+PASS the entry is a named gap with its unexecuted requests
+PASS INCOMPLETE and exit 4 even though the later entry completed
+PASS no ledger is invented for the gap
+PASS a restart makes no launch for an exhausted entry
+PASS a revised plan does not renew the quota
+PASS a row under another name for the same span still counts and stops the driver
+PASS a payload failure (exit 1, payload started): stops, launches nothing after it
+PASS a timeout at the 540 s ceiling: stops, launches nothing after it
+PASS a claimed hold after the payload started: stops, launches nothing after it
+PASS a hold with a mixed reason: stops, launches nothing after it
+PASS a hold for a foreign lock only: stops, launches nothing after it
+PASS a hold for a wrong host: stops, launches nothing after it
+PASS invalid aggregate counters: stops, launches nothing after it
+PASS a consumer below the limit (inconsistent hold): stops, launches nothing after it
+PASS the host itself named as the consumer: stops, launches nothing after it
+PASS a host not verified in both snapshots: stops, launches nothing after it
+PASS a dirty lock recheck: stops, launches nothing after it
+PASS a ledger present after an exit 3: stops, launches nothing after it
+PASS a lock-log row without a readiness record: stops, launches nothing after it
+PASS attempt 2 failing after a hold stops (no third attempt, no next entry)
+PASS a ledger without any attempt record stops and launches nothing
+PASS a third row for the span stops
+PASS a lock held before the wait stops
+PASS an unknown entry stops
+PASS an entry already completed by its second attempt is done and never relaunched
+PASS a completed entry (the 14 earlier commands) is never relaunched
+PASS the payload key ignores the id and reads --from/--count
+PASS run-entry.ps1 maps attempt 2 to <entry>-admission2 and refuses an existing ledger or record
+PASS drive.cjs starts attempts only through run-entry.ps1 with -Attempt
+
+40 cases, 40 pass, 0 fail

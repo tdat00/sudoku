@@ -1,0 +1,68 @@
+$ node tests\soak.js --variant=killer --level=expert --count=3 --from=6 --total-count=12 --seed=20260101 --no-gate --json=..\docs\difficulty-v3\evidence\MS18a\shards\killer-expert-6-3.json
+TASK MS18a killer-expert-6-3
+STRICT SCREEN NOT READY: mean 0.784, max 1.154 busy cores of 16 (killer-expert-6-3.json)
+POLICY MS18a-Q1-host-active ADMITTED: every admission condition of MS18a-Q1-host-active holds; the strict screen FAILED and is recorded unchanged
+LABEL shared-slot, CLI-host-active; not strict-quiet-machine timing
+START 2026-11-18T18:12:37.766+07:00
+Sudoku Generator soak test  (node v26.13.0, seed 20260101, 3 puzzles in 42.4 s)
+
+Calibration in force (score bands, lower bound of each level, the same on every board):
+  veryEasy 0 | easy 45 | normal 180 | hard 400 | expert 700 | master 1000 | nightmare 1500 | hell1 2400 | hell2 3600
+Technique weights: nakedSingle 1, hiddenSingleBox 1.25, hiddenSingleLine 1.5, pointing 40, boxLine 50, nakedPair 120, hiddenPair 145, nakedTriple 180, lawOfLeftovers 200, hiddenTriple 220, nakedQuad 260, hiddenQuad 300, xWing 320, skyscraper 330, twoStringKite 340, remotePairs 350, simpleColouring 360, emptyRectangle 380, finnedXWing 400, swordfish 420, finnedSwordfish 480, jellyfish 520, xyWing 650, xyzWing 750, wxyzWing 800, wWing 850, uniqueRectangle 900, bugPlusOne 920, xyChain 1000, forcingChain 1100, alsXz 1250, sueDeCoq 1300, forcingChainLong 1400, nishio 1700, nishioDeep 2600, cageCombo 40, ruleOf45 260, cageSplit 520, ineqChain 40, minMaxForcing 180
+Shard of killer/expert: requests 6 to 8 of a logical cell of 12
+
+== killer (81 cells) ==
+requested     veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2    n    hit  samples  ms p50     p95     max  budget
+expert               .          .          .          .          3          .          .          .          .    3     0%      8.0   12967   21186   2118610000 SLOW
+exact: 0 of 3 (0.0%)
+
+group of the hardest technique per requested level (share of puzzles):
+  expert     fish 100%
+
+Score histogram (the bands of every board), all puzzles, by requested level:
+bin            veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2   all
+0-45                  .          .          .          .          .          .          .          .          .      0
+45-180                .          .          .          .          .          .          .          .          .      0
+180-400               .          .          .          .          .          .          .          .          .      0
+400-700               .          .          .          .          .          .          .          .          .      0
+700-1000              .          .          .          .          3          .          .          .          .      3 ##############################
+1000-1500             .          .          .          .          .          .          .          .          .      0
+1500-2400             .          .          .          .          .          .          .          .          .      0
+2400-3600             .          .          .          .          .          .          .          .          .      0
+3600-5400             .          .          .          .          .          .          .          .          .      0
+5400+                 .          .          .          .          .          .          .          .          .      0
+
+Invariants over 3 puzzles:
+  I1 ok
+  I2 ok
+  I3 ok
+  I4 ok
+  I5 ok
+  I6 ok
+  I7 ok
+
+NOTE levels that were never hit: killer/expert
+other variants: lowest hit rate 0% (killer/expert), required at least 80%
+RESULT: FAIL (below 80%: killer/expert)
+
+Difficulty diagnostics (docs/difficulty-v3/evidence/MS18a/shards/killer-expert-6-3.json): 3 of 3 requests recorded; the diagnostic solves took 0.0 s after the generation and the checks
+
+== killer/expert: 3 requests, 0 errors, 0 unrated, 3 solved in band ==
+  old hits 0/3 (0%), qualified hits 0/3 (0%), shallow 3/3 (100%; 3 with a derived verdict); exact flag against the derived verdict: 0 disagreements
+  sampled reference: ok 0, vacuous 0, error 0, skipped 0, notSelected 3, notRun 0; final path: ok 3, mismatch 0, error 0, notRun 0
+  work: ok 3, mismatch 0, unavailable 0; local searches ended by shallow 0, ratings 0, proposals 24
+    full ratings (n=3): min 1939, p10 1939, p50 1957, p90 2332, max 2332, upper median 1957
+  cohort exact (old hits): 0 puzzles, peak -
+    raw position: no value
+    adjusted position: no value
+    adjusted undefined: -
+  cohort all in band: 3 puzzles, peak simpleColouring 2, xWing 1
+    raw position (n=3): min 0.11, p10 0.11, p50 0.14, p90 0.277, max 0.277, upper median 0.14
+    adjusted position (n=3): min -0.966, p10 -0.966, p50 -0.9, p90 -0.62, max -0.62, upper median -0.9
+    adjusted undefined: -
+  forcing-chain steps (0 of 3 rated paths): length -; per-puzzle maximum -
+  nishio steps (0 of 3 rated paths): depth -; per-puzzle maximum -
+
+DIAGNOSTICS: PASS (request errors 0, invariant violations 0, check errors 0, reference errors 0, final-path errors 0, final-path mismatches 0, work unavailable 0)
+END 2026-11-18T18:13:20.799+07:00
+exit=0 seconds=43.033

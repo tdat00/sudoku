@@ -1,0 +1,1838 @@
+[
+  {
+    "variant": "classic9",
+    "level": "normal",
+    "index": 0,
+    "tag": "classic9:normal:0",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "2d8334ee693c8fb8"
+  },
+  {
+    "variant": "classic9",
+    "level": "normal",
+    "index": 1,
+    "tag": "classic9:normal:1",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "4c8d0b9df0730d15"
+  },
+  {
+    "variant": "classic9",
+    "level": "normal",
+    "index": 2,
+    "tag": "classic9:normal:2",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "ff15a55177dafd28"
+  },
+  {
+    "variant": "classic9",
+    "level": "normal",
+    "index": 3,
+    "tag": "classic9:normal:3",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "09215586909cf60d"
+  },
+  {
+    "variant": "classic9",
+    "level": "normal",
+    "index": 4,
+    "tag": "classic9:normal:4",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "1130513004831684"
+  },
+  {
+    "variant": "classic9",
+    "level": "normal",
+    "index": 5,
+    "tag": "classic9:normal:5",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "efbe7a9fdfe0cffd"
+  },
+  {
+    "variant": "classic9",
+    "level": "normal",
+    "index": 6,
+    "tag": "classic9:normal:6",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "1de4a857980ffb86"
+  },
+  {
+    "variant": "classic9",
+    "level": "normal",
+    "index": 7,
+    "tag": "classic9:normal:7",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "65c5b123d96eda9d"
+  },
+  {
+    "variant": "classic9",
+    "level": "normal",
+    "index": 8,
+    "tag": "classic9:normal:8",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "4ecbd23101752de9"
+  },
+  {
+    "variant": "classic9",
+    "level": "normal",
+    "index": 9,
+    "tag": "classic9:normal:9",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "6ab62446cf52678e"
+  },
+  {
+    "variant": "classic9",
+    "level": "normal",
+    "index": 10,
+    "tag": "classic9:normal:10",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "efb0d5d2a10f2bb8"
+  },
+  {
+    "variant": "classic9",
+    "level": "normal",
+    "index": 11,
+    "tag": "classic9:normal:11",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "3ecad7700f6a252a"
+  },
+  {
+    "variant": "classic9",
+    "level": "hard",
+    "index": 0,
+    "tag": "classic9:hard:0",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "87b5c4a74c549e4a"
+  },
+  {
+    "variant": "classic9",
+    "level": "hard",
+    "index": 1,
+    "tag": "classic9:hard:1",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "4fb5c6f958303d3b"
+  },
+  {
+    "variant": "classic9",
+    "level": "hard",
+    "index": 2,
+    "tag": "classic9:hard:2",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "381e1182aa9345d8"
+  },
+  {
+    "variant": "classic9",
+    "level": "hard",
+    "index": 3,
+    "tag": "classic9:hard:3",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "2dad2b767ba71594"
+  },
+  {
+    "variant": "classic9",
+    "level": "hard",
+    "index": 4,
+    "tag": "classic9:hard:4",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "16a681ebb9609b7f"
+  },
+  {
+    "variant": "classic9",
+    "level": "hard",
+    "index": 5,
+    "tag": "classic9:hard:5",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "6c5e46b81242ba6e"
+  },
+  {
+    "variant": "classic9",
+    "level": "hard",
+    "index": 6,
+    "tag": "classic9:hard:6",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "099c1fec9a7556f0"
+  },
+  {
+    "variant": "classic9",
+    "level": "hard",
+    "index": 7,
+    "tag": "classic9:hard:7",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "4fd3c7d41cadad8e"
+  },
+  {
+    "variant": "classic9",
+    "level": "hard",
+    "index": 8,
+    "tag": "classic9:hard:8",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "4376aec390e67b09"
+  },
+  {
+    "variant": "classic9",
+    "level": "hard",
+    "index": 9,
+    "tag": "classic9:hard:9",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "d3bbc682f0aad9ee"
+  },
+  {
+    "variant": "classic9",
+    "level": "hard",
+    "index": 10,
+    "tag": "classic9:hard:10",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "5d2b04cbac9e14a3"
+  },
+  {
+    "variant": "classic9",
+    "level": "hard",
+    "index": 11,
+    "tag": "classic9:hard:11",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "05390bb86ba83c37"
+  },
+  {
+    "variant": "classic9",
+    "level": "expert",
+    "index": 0,
+    "tag": "classic9:expert:0",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "fde2a515d63e2965"
+  },
+  {
+    "variant": "classic9",
+    "level": "expert",
+    "index": 1,
+    "tag": "classic9:expert:1",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "87110ff3ce5443b4"
+  },
+  {
+    "variant": "classic9",
+    "level": "expert",
+    "index": 2,
+    "tag": "classic9:expert:2",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "c4cd351bbfd787a7"
+  },
+  {
+    "variant": "classic9",
+    "level": "expert",
+    "index": 3,
+    "tag": "classic9:expert:3",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "38d9e4e7a8cb61e0"
+  },
+  {
+    "variant": "classic9",
+    "level": "expert",
+    "index": 4,
+    "tag": "classic9:expert:4",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "faf3cf82079ae603"
+  },
+  {
+    "variant": "classic9",
+    "level": "expert",
+    "index": 5,
+    "tag": "classic9:expert:5",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "e4c8079dfa36b845"
+  },
+  {
+    "variant": "classic9",
+    "level": "expert",
+    "index": 6,
+    "tag": "classic9:expert:6",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "1a03d0646df15c07"
+  },
+  {
+    "variant": "classic9",
+    "level": "expert",
+    "index": 7,
+    "tag": "classic9:expert:7",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "56416264e5b9b51d"
+  },
+  {
+    "variant": "classic9",
+    "level": "expert",
+    "index": 8,
+    "tag": "classic9:expert:8",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "236f24352ac21a9b"
+  },
+  {
+    "variant": "classic9",
+    "level": "expert",
+    "index": 9,
+    "tag": "classic9:expert:9",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "83541c4930e4bd84"
+  },
+  {
+    "variant": "classic9",
+    "level": "expert",
+    "index": 10,
+    "tag": "classic9:expert:10",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "61e1d3a93c714772"
+  },
+  {
+    "variant": "classic9",
+    "level": "expert",
+    "index": 11,
+    "tag": "classic9:expert:11",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "cb99fb87996815d2"
+  },
+  {
+    "variant": "classic9",
+    "level": "master",
+    "index": 0,
+    "tag": "classic9:master:0",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "c59354c1de243a68"
+  },
+  {
+    "variant": "classic9",
+    "level": "master",
+    "index": 1,
+    "tag": "classic9:master:1",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "f4b570b4aead2e0f"
+  },
+  {
+    "variant": "classic9",
+    "level": "master",
+    "index": 2,
+    "tag": "classic9:master:2",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "a2b10413682dc3be"
+  },
+  {
+    "variant": "classic9",
+    "level": "master",
+    "index": 3,
+    "tag": "classic9:master:3",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "46e6583171eb9733"
+  },
+  {
+    "variant": "classic9",
+    "level": "master",
+    "index": 4,
+    "tag": "classic9:master:4",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "c11a8268fdd1ecce"
+  },
+  {
+    "variant": "classic9",
+    "level": "master",
+    "index": 5,
+    "tag": "classic9:master:5",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "8f6ba860df8c540e"
+  },
+  {
+    "variant": "classic9",
+    "level": "master",
+    "index": 6,
+    "tag": "classic9:master:6",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "c75f1fd93a58355e"
+  },
+  {
+    "variant": "classic9",
+    "level": "master",
+    "index": 7,
+    "tag": "classic9:master:7",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "b696cad6db5088da"
+  },
+  {
+    "variant": "classic9",
+    "level": "master",
+    "index": 8,
+    "tag": "classic9:master:8",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "0a5f9c48aee2cb5d"
+  },
+  {
+    "variant": "classic9",
+    "level": "master",
+    "index": 9,
+    "tag": "classic9:master:9",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "eedb2e6f134916f6"
+  },
+  {
+    "variant": "classic9",
+    "level": "master",
+    "index": 10,
+    "tag": "classic9:master:10",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "5ddd84063e5f9715"
+  },
+  {
+    "variant": "classic9",
+    "level": "master",
+    "index": 11,
+    "tag": "classic9:master:11",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "d3f8d1556860fe0e"
+  },
+  {
+    "variant": "classic9",
+    "level": "nightmare",
+    "index": 0,
+    "tag": "classic9:nightmare:0",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "f3345f4d9200ed4c"
+  },
+  {
+    "variant": "classic9",
+    "level": "nightmare",
+    "index": 1,
+    "tag": "classic9:nightmare:1",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "b986e77753ef641b"
+  },
+  {
+    "variant": "classic9",
+    "level": "nightmare",
+    "index": 2,
+    "tag": "classic9:nightmare:2",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "bd8cd1a8ea5eb4d6"
+  },
+  {
+    "variant": "classic9",
+    "level": "nightmare",
+    "index": 3,
+    "tag": "classic9:nightmare:3",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "f9f0a9b850e8f1b7"
+  },
+  {
+    "variant": "classic9",
+    "level": "nightmare",
+    "index": 4,
+    "tag": "classic9:nightmare:4",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "78c6d6700963fb0d"
+  },
+  {
+    "variant": "classic9",
+    "level": "nightmare",
+    "index": 5,
+    "tag": "classic9:nightmare:5",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "b2884b99bbfabdef"
+  },
+  {
+    "variant": "classic9",
+    "level": "nightmare",
+    "index": 6,
+    "tag": "classic9:nightmare:6",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "4f8a6eddd40659c4"
+  },
+  {
+    "variant": "classic9",
+    "level": "nightmare",
+    "index": 7,
+    "tag": "classic9:nightmare:7",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "f799b64c649ee2b6"
+  },
+  {
+    "variant": "classic9",
+    "level": "nightmare",
+    "index": 8,
+    "tag": "classic9:nightmare:8",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "78cb24dce39f68fe"
+  },
+  {
+    "variant": "classic9",
+    "level": "nightmare",
+    "index": 9,
+    "tag": "classic9:nightmare:9",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "b43ae4e831f5d2c1"
+  },
+  {
+    "variant": "classic9",
+    "level": "nightmare",
+    "index": 10,
+    "tag": "classic9:nightmare:10",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "ca8c1d13fe188043"
+  },
+  {
+    "variant": "classic9",
+    "level": "nightmare",
+    "index": 11,
+    "tag": "classic9:nightmare:11",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "635734fea4077379"
+  },
+  {
+    "variant": "classic9",
+    "level": "hell1",
+    "index": 0,
+    "tag": "classic9:hell1:0",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "d271cfc507464239"
+  },
+  {
+    "variant": "classic9",
+    "level": "hell1",
+    "index": 1,
+    "tag": "classic9:hell1:1",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "3b0da0298445228c"
+  },
+  {
+    "variant": "classic9",
+    "level": "hell1",
+    "index": 2,
+    "tag": "classic9:hell1:2",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "f197e7e8becc23b5"
+  },
+  {
+    "variant": "classic9",
+    "level": "hell1",
+    "index": 3,
+    "tag": "classic9:hell1:3",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "212ff348d421c13f"
+  },
+  {
+    "variant": "classic9",
+    "level": "hell1",
+    "index": 4,
+    "tag": "classic9:hell1:4",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "0190c106dc2c1bfa"
+  },
+  {
+    "variant": "classic9",
+    "level": "hell1",
+    "index": 5,
+    "tag": "classic9:hell1:5",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "6cc1e2160693c27c"
+  },
+  {
+    "variant": "classic9",
+    "level": "hell1",
+    "index": 6,
+    "tag": "classic9:hell1:6",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "2651dd6fa29a660b"
+  },
+  {
+    "variant": "classic9",
+    "level": "hell1",
+    "index": 7,
+    "tag": "classic9:hell1:7",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "35735c03690c211e"
+  },
+  {
+    "variant": "classic9",
+    "level": "hell1",
+    "index": 8,
+    "tag": "classic9:hell1:8",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "2ef2acf2dce3c3f1"
+  },
+  {
+    "variant": "classic9",
+    "level": "hell1",
+    "index": 9,
+    "tag": "classic9:hell1:9",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "8111fe8c2f01393a"
+  },
+  {
+    "variant": "classic9",
+    "level": "hell1",
+    "index": 10,
+    "tag": "classic9:hell1:10",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "44b0bd475ede500f"
+  },
+  {
+    "variant": "classic9",
+    "level": "hell1",
+    "index": 11,
+    "tag": "classic9:hell1:11",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "3709012e031ee901"
+  },
+  {
+    "variant": "killer",
+    "level": "normal",
+    "index": 0,
+    "tag": "killer:normal:0",
+    "route": "pipeline",
+    "pipelineSeed": 2544201114,
+    "puzzleHash": "3fa4bc368bc990cb"
+  },
+  {
+    "variant": "killer",
+    "level": "normal",
+    "index": 1,
+    "tag": "killer:normal:1",
+    "route": "pipeline",
+    "pipelineSeed": 2560978733,
+    "puzzleHash": "9703639dd8f0c59c"
+  },
+  {
+    "variant": "killer",
+    "level": "normal",
+    "index": 2,
+    "tag": "killer:normal:2",
+    "route": "pipeline",
+    "pipelineSeed": 2510645876,
+    "puzzleHash": "77828ae72659909d"
+  },
+  {
+    "variant": "killer",
+    "level": "normal",
+    "index": 3,
+    "tag": "killer:normal:3",
+    "route": "pipeline",
+    "pipelineSeed": 2527423495,
+    "puzzleHash": "cfe99c7a76ab9bae"
+  },
+  {
+    "variant": "killer",
+    "level": "normal",
+    "index": 4,
+    "tag": "killer:normal:4",
+    "route": "pipeline",
+    "pipelineSeed": 2477090638,
+    "puzzleHash": "398efbfc426d7c05"
+  },
+  {
+    "variant": "killer",
+    "level": "normal",
+    "index": 5,
+    "tag": "killer:normal:5",
+    "route": "pipeline",
+    "pipelineSeed": 2493868257,
+    "puzzleHash": "096f66740605f4e8"
+  },
+  {
+    "variant": "killer",
+    "level": "normal",
+    "index": 6,
+    "tag": "killer:normal:6",
+    "route": "pipeline",
+    "pipelineSeed": 2443535400,
+    "puzzleHash": "03f3c3042d8b5feb"
+  },
+  {
+    "variant": "killer",
+    "level": "normal",
+    "index": 7,
+    "tag": "killer:normal:7",
+    "route": "pipeline",
+    "pipelineSeed": 2460313019,
+    "puzzleHash": "9e872a04b69a0d23"
+  },
+  {
+    "variant": "killer",
+    "level": "normal",
+    "index": 8,
+    "tag": "killer:normal:8",
+    "route": "pipeline",
+    "pipelineSeed": 2409980162,
+    "puzzleHash": "e240447a6914aed9"
+  },
+  {
+    "variant": "killer",
+    "level": "normal",
+    "index": 9,
+    "tag": "killer:normal:9",
+    "route": "pipeline",
+    "pipelineSeed": 2426757781,
+    "puzzleHash": "b9e79ae2331520cc"
+  },
+  {
+    "variant": "killer",
+    "level": "normal",
+    "index": 10,
+    "tag": "killer:normal:10",
+    "route": "pipeline",
+    "pipelineSeed": 1768811175,
+    "puzzleHash": "5e9f7b3a560a96f4"
+  },
+  {
+    "variant": "killer",
+    "level": "normal",
+    "index": 11,
+    "tag": "killer:normal:11",
+    "route": "pipeline",
+    "pipelineSeed": 1752033556,
+    "puzzleHash": "d60c77e81e47f714"
+  },
+  {
+    "variant": "killer",
+    "level": "hard",
+    "index": 0,
+    "tag": "killer:hard:0",
+    "route": "pipeline",
+    "pipelineSeed": 2442150552,
+    "puzzleHash": "148efe43e934a916"
+  },
+  {
+    "variant": "killer",
+    "level": "hard",
+    "index": 1,
+    "tag": "killer:hard:1",
+    "route": "pipeline",
+    "pipelineSeed": 2458928171,
+    "puzzleHash": "0ab1b69f23325a44"
+  },
+  {
+    "variant": "killer",
+    "level": "hard",
+    "index": 2,
+    "tag": "killer:hard:2",
+    "route": "pipeline",
+    "pipelineSeed": 2475705790,
+    "puzzleHash": "c1723eabf70db6d4"
+  },
+  {
+    "variant": "killer",
+    "level": "hard",
+    "index": 3,
+    "tag": "killer:hard:3",
+    "route": "pipeline",
+    "pipelineSeed": 2492483409,
+    "puzzleHash": "90bcf54c130846c6"
+  },
+  {
+    "variant": "killer",
+    "level": "hard",
+    "index": 4,
+    "tag": "killer:hard:4",
+    "route": "pipeline",
+    "pipelineSeed": 2509261028,
+    "puzzleHash": "ab3e0c0502f7b872"
+  },
+  {
+    "variant": "killer",
+    "level": "hard",
+    "index": 5,
+    "tag": "killer:hard:5",
+    "route": "pipeline",
+    "pipelineSeed": 2526038647,
+    "puzzleHash": "ccb6ad9585618455"
+  },
+  {
+    "variant": "killer",
+    "level": "hard",
+    "index": 6,
+    "tag": "killer:hard:6",
+    "route": "pipeline",
+    "pipelineSeed": 2542816266,
+    "puzzleHash": "3c99bfd72af26db2"
+  },
+  {
+    "variant": "killer",
+    "level": "hard",
+    "index": 7,
+    "tag": "killer:hard:7",
+    "route": "pipeline",
+    "pipelineSeed": 2559593885,
+    "puzzleHash": "fad7f73c9c6c2e15"
+  },
+  {
+    "variant": "killer",
+    "level": "hard",
+    "index": 8,
+    "tag": "killer:hard:8",
+    "route": "pipeline",
+    "pipelineSeed": 2307929600,
+    "puzzleHash": "b2edbbc944e9b81b"
+  },
+  {
+    "variant": "killer",
+    "level": "hard",
+    "index": 9,
+    "tag": "killer:hard:9",
+    "route": "pipeline",
+    "pipelineSeed": 2324707219,
+    "puzzleHash": "49ffb7591baa3bf0"
+  },
+  {
+    "variant": "killer",
+    "level": "hard",
+    "index": 10,
+    "tag": "killer:hard:10",
+    "route": "pipeline",
+    "pipelineSeed": 3558553217,
+    "puzzleHash": "53015bdedc314e8c"
+  },
+  {
+    "variant": "killer",
+    "level": "hard",
+    "index": 11,
+    "tag": "killer:hard:11",
+    "route": "pipeline",
+    "pipelineSeed": 3541775598,
+    "puzzleHash": "4084a37b88ca2949"
+  },
+  {
+    "variant": "killer",
+    "level": "expert",
+    "index": 0,
+    "tag": "killer:expert:0",
+    "route": "pipeline",
+    "pipelineSeed": 605397093,
+    "puzzleHash": "a781537919469547"
+  },
+  {
+    "variant": "killer",
+    "level": "expert",
+    "index": 1,
+    "tag": "killer:expert:1",
+    "route": "pipeline",
+    "pipelineSeed": 588619474,
+    "puzzleHash": "92ffe1865e4d5692"
+  },
+  {
+    "variant": "killer",
+    "level": "expert",
+    "index": 2,
+    "tag": "killer:expert:2",
+    "route": "pipeline",
+    "pipelineSeed": 571841855,
+    "puzzleHash": "c4c22551b61ffd25"
+  },
+  {
+    "variant": "killer",
+    "level": "expert",
+    "index": 3,
+    "tag": "killer:expert:3",
+    "route": "pipeline",
+    "pipelineSeed": 555064236,
+    "puzzleHash": "ea4fb034eda058b1"
+  },
+  {
+    "variant": "killer",
+    "level": "expert",
+    "index": 4,
+    "tag": "killer:expert:4",
+    "route": "pipeline",
+    "pipelineSeed": 538286617,
+    "puzzleHash": "cb4374ae5bee4093"
+  },
+  {
+    "variant": "killer",
+    "level": "expert",
+    "index": 5,
+    "tag": "killer:expert:5",
+    "route": "pipeline",
+    "pipelineSeed": 521508998,
+    "puzzleHash": "6e8828ef35aca297"
+  },
+  {
+    "variant": "killer",
+    "level": "expert",
+    "index": 6,
+    "tag": "killer:expert:6",
+    "route": "pipeline",
+    "pipelineSeed": 504731379,
+    "puzzleHash": "fef2758ca7c633f0"
+  },
+  {
+    "variant": "killer",
+    "level": "expert",
+    "index": 7,
+    "tag": "killer:expert:7",
+    "route": "pipeline",
+    "pipelineSeed": 487953760,
+    "puzzleHash": "f9cdbedc6d9950be"
+  },
+  {
+    "variant": "killer",
+    "level": "expert",
+    "index": 8,
+    "tag": "killer:expert:8",
+    "route": "pipeline",
+    "pipelineSeed": 739618045,
+    "puzzleHash": "09c8767f54e53971"
+  },
+  {
+    "variant": "killer",
+    "level": "expert",
+    "index": 9,
+    "tag": "killer:expert:9",
+    "route": "pipeline",
+    "pipelineSeed": 722840426,
+    "puzzleHash": "f374d996dab4f9a7"
+  },
+  {
+    "variant": "killer",
+    "level": "expert",
+    "index": 10,
+    "tag": "killer:expert:10",
+    "route": "pipeline",
+    "pipelineSeed": 487136710,
+    "puzzleHash": "e92806dcca3dc29a"
+  },
+  {
+    "variant": "killer",
+    "level": "expert",
+    "index": 11,
+    "tag": "killer:expert:11",
+    "route": "pipeline",
+    "pipelineSeed": 503914329,
+    "puzzleHash": "c2d62f26a2ea5739"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "normal",
+    "index": 0,
+    "tag": "jigsaw9:normal:0",
+    "route": "pipeline",
+    "pipelineSeed": 2250488673,
+    "puzzleHash": "89d59c059a76b945"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "normal",
+    "index": 1,
+    "tag": "jigsaw9:normal:1",
+    "route": "pipeline",
+    "pipelineSeed": 2233711054,
+    "puzzleHash": "cd7921f3feeb772f"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "normal",
+    "index": 2,
+    "tag": "jigsaw9:normal:2",
+    "route": "pipeline",
+    "pipelineSeed": 2216933435,
+    "puzzleHash": "ee3523814fb66c0a"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "normal",
+    "index": 3,
+    "tag": "jigsaw9:normal:3",
+    "route": "pipeline",
+    "pipelineSeed": 2200155816,
+    "puzzleHash": "06e0c9d67292aada"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "normal",
+    "index": 4,
+    "tag": "jigsaw9:normal:4",
+    "route": "pipeline",
+    "pipelineSeed": 2317599149,
+    "puzzleHash": "baba904cdccc583a"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "normal",
+    "index": 5,
+    "tag": "jigsaw9:normal:5",
+    "route": "pipeline",
+    "pipelineSeed": 2300821530,
+    "puzzleHash": "60db690e41f743d3"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "normal",
+    "index": 6,
+    "tag": "jigsaw9:normal:6",
+    "route": "pipeline",
+    "pipelineSeed": 2284043911,
+    "puzzleHash": "f1b846a3e0c49674"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "normal",
+    "index": 7,
+    "tag": "jigsaw9:normal:7",
+    "route": "pipeline",
+    "pipelineSeed": 2267266292,
+    "puzzleHash": "0b9a39b44a4479c3"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "normal",
+    "index": 8,
+    "tag": "jigsaw9:normal:8",
+    "route": "pipeline",
+    "pipelineSeed": 2116267721,
+    "puzzleHash": "2cc7a7c7b8ddfe13"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "normal",
+    "index": 9,
+    "tag": "jigsaw9:normal:9",
+    "route": "pipeline",
+    "pipelineSeed": 2099490102,
+    "puzzleHash": "68cebc9014e490a1"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "normal",
+    "index": 10,
+    "tag": "jigsaw9:normal:10",
+    "route": "pipeline",
+    "pipelineSeed": 2503854810,
+    "puzzleHash": "d0927f5998ebe06e"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "normal",
+    "index": 11,
+    "tag": "jigsaw9:normal:11",
+    "route": "pipeline",
+    "pipelineSeed": 2520632429,
+    "puzzleHash": "73f7659d8a3ca812"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hard",
+    "index": 0,
+    "tag": "jigsaw9:hard:0",
+    "route": "pipeline",
+    "pipelineSeed": 3234640447,
+    "puzzleHash": "76565542cab9c2f8"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hard",
+    "index": 1,
+    "tag": "jigsaw9:hard:1",
+    "route": "pipeline",
+    "pipelineSeed": 3217862828,
+    "puzzleHash": "3bc1b016a4dab06d"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hard",
+    "index": 2,
+    "tag": "jigsaw9:hard:2",
+    "route": "pipeline",
+    "pipelineSeed": 3268195685,
+    "puzzleHash": "68a01a4803c4e314"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hard",
+    "index": 3,
+    "tag": "jigsaw9:hard:3",
+    "route": "pipeline",
+    "pipelineSeed": 3251418066,
+    "puzzleHash": "4844cf59e62a0588"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hard",
+    "index": 4,
+    "tag": "jigsaw9:hard:4",
+    "route": "pipeline",
+    "pipelineSeed": 3167529971,
+    "puzzleHash": "11561fbd456074df"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hard",
+    "index": 5,
+    "tag": "jigsaw9:hard:5",
+    "route": "pipeline",
+    "pipelineSeed": 3150752352,
+    "puzzleHash": "fd1463fda65a0567"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hard",
+    "index": 6,
+    "tag": "jigsaw9:hard:6",
+    "route": "pipeline",
+    "pipelineSeed": 3201085209,
+    "puzzleHash": "3ceed0ecdae2cd5f"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hard",
+    "index": 7,
+    "tag": "jigsaw9:hard:7",
+    "route": "pipeline",
+    "pipelineSeed": 3184307590,
+    "puzzleHash": "d401c3be6508f60c"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hard",
+    "index": 8,
+    "tag": "jigsaw9:hard:8",
+    "route": "pipeline",
+    "pipelineSeed": 3368861399,
+    "puzzleHash": "045d633904b5e193"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hard",
+    "index": 9,
+    "tag": "jigsaw9:hard:9",
+    "route": "pipeline",
+    "pipelineSeed": 3352083780,
+    "puzzleHash": "5fc4163918c73d78"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hard",
+    "index": 10,
+    "tag": "jigsaw9:hard:10",
+    "route": "pipeline",
+    "pipelineSeed": 2335835540,
+    "puzzleHash": "a675f93bf5266ff4"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hard",
+    "index": 11,
+    "tag": "jigsaw9:hard:11",
+    "route": "pipeline",
+    "pipelineSeed": 2352613159,
+    "puzzleHash": "487b5cc1c07d203c"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "expert",
+    "index": 0,
+    "tag": "jigsaw9:expert:0",
+    "route": "pipeline",
+    "pipelineSeed": 1222646138,
+    "puzzleHash": "210b3a0d786f16c7"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "expert",
+    "index": 1,
+    "tag": "jigsaw9:expert:1",
+    "route": "pipeline",
+    "pipelineSeed": 1239423757,
+    "puzzleHash": "036e4c0bd1ada938"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "expert",
+    "index": 2,
+    "tag": "jigsaw9:expert:2",
+    "route": "pipeline",
+    "pipelineSeed": 1189090900,
+    "puzzleHash": "971ed8f5f8332153"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "expert",
+    "index": 3,
+    "tag": "jigsaw9:expert:3",
+    "route": "pipeline",
+    "pipelineSeed": 1205868519,
+    "puzzleHash": "a2c15157c531fbd4"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "expert",
+    "index": 4,
+    "tag": "jigsaw9:expert:4",
+    "route": "pipeline",
+    "pipelineSeed": 1155535662,
+    "puzzleHash": "65f4549314f88eb2"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "expert",
+    "index": 5,
+    "tag": "jigsaw9:expert:5",
+    "route": "pipeline",
+    "pipelineSeed": 1172313281,
+    "puzzleHash": "e2b50819dfe7c062"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "expert",
+    "index": 6,
+    "tag": "jigsaw9:expert:6",
+    "route": "pipeline",
+    "pipelineSeed": 1121980424,
+    "puzzleHash": "2f42943137debc6e"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "expert",
+    "index": 7,
+    "tag": "jigsaw9:expert:7",
+    "route": "pipeline",
+    "pipelineSeed": 1138758043,
+    "puzzleHash": "61335f38d274aa5e"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "expert",
+    "index": 8,
+    "tag": "jigsaw9:expert:8",
+    "route": "pipeline",
+    "pipelineSeed": 1088425186,
+    "puzzleHash": "014a1074ef546bc0"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "expert",
+    "index": 9,
+    "tag": "jigsaw9:expert:9",
+    "route": "pipeline",
+    "pipelineSeed": 1105202805,
+    "puzzleHash": "da6770c983e0beb3"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "expert",
+    "index": 10,
+    "tag": "jigsaw9:expert:10",
+    "route": "pipeline",
+    "pipelineSeed": 2294997255,
+    "puzzleHash": "b85a4aef22189cfb"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "expert",
+    "index": 11,
+    "tag": "jigsaw9:expert:11",
+    "route": "pipeline",
+    "pipelineSeed": 2278219636,
+    "puzzleHash": "4eb37b3aad462c7b"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "nightmare",
+    "index": 0,
+    "tag": "jigsaw9:nightmare:0",
+    "route": "pipeline",
+    "pipelineSeed": 717788219,
+    "puzzleHash": "851043e34a1bcbd6"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "nightmare",
+    "index": 1,
+    "tag": "jigsaw9:nightmare:1",
+    "route": "pipeline",
+    "pipelineSeed": 701010600,
+    "puzzleHash": "103aef15b5e0f45d"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "nightmare",
+    "index": 2,
+    "tag": "jigsaw9:nightmare:2",
+    "route": "pipeline",
+    "pipelineSeed": 751343457,
+    "puzzleHash": "6470e1659d5f0c5e"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "nightmare",
+    "index": 3,
+    "tag": "jigsaw9:nightmare:3",
+    "route": "pipeline",
+    "pipelineSeed": 734565838,
+    "puzzleHash": "0713ec55c0a0da59"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "nightmare",
+    "index": 4,
+    "tag": "jigsaw9:nightmare:4",
+    "route": "pipeline",
+    "pipelineSeed": 784898695,
+    "puzzleHash": "e61584f1e70a404d"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "nightmare",
+    "index": 5,
+    "tag": "jigsaw9:nightmare:5",
+    "route": "pipeline",
+    "pipelineSeed": 768121076,
+    "puzzleHash": "7cd4fe5e8795adf9"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "nightmare",
+    "index": 6,
+    "tag": "jigsaw9:nightmare:6",
+    "route": "pipeline",
+    "pipelineSeed": 818453933,
+    "puzzleHash": "8c556c6a7d349b55"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "nightmare",
+    "index": 7,
+    "tag": "jigsaw9:nightmare:7",
+    "route": "pipeline",
+    "pipelineSeed": 801676314,
+    "puzzleHash": "371815d2889888c4"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "nightmare",
+    "index": 8,
+    "tag": "jigsaw9:nightmare:8",
+    "route": "pipeline",
+    "pipelineSeed": 583567267,
+    "puzzleHash": "58748ad6d4907c0c"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "nightmare",
+    "index": 9,
+    "tag": "jigsaw9:nightmare:9",
+    "route": "pipeline",
+    "pipelineSeed": 566789648,
+    "puzzleHash": "11e5e8f98f88f168"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "nightmare",
+    "index": 10,
+    "tag": "jigsaw9:nightmare:10",
+    "route": "pipeline",
+    "pipelineSeed": 1589560648,
+    "puzzleHash": "cc82af9ff9d1b95e"
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "nightmare",
+    "index": 11,
+    "tag": "jigsaw9:nightmare:11",
+    "route": "pipeline",
+    "pipelineSeed": 1606338267,
+    "puzzleHash": "e189bb4f3d1af472"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "normal",
+    "index": 0,
+    "tag": "greaterThan:normal:0",
+    "route": "pipeline",
+    "pipelineSeed": 1652573624,
+    "puzzleHash": "972480e7faa2d926"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "normal",
+    "index": 1,
+    "tag": "greaterThan:normal:1",
+    "route": "pipeline",
+    "pipelineSeed": 1669351243,
+    "puzzleHash": "ace28b8e90ff566a"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "normal",
+    "index": 2,
+    "tag": "greaterThan:normal:2",
+    "route": "pipeline",
+    "pipelineSeed": 1686128862,
+    "puzzleHash": "453085f79acdf538"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "normal",
+    "index": 3,
+    "tag": "greaterThan:normal:3",
+    "route": "pipeline",
+    "pipelineSeed": 1702906481,
+    "puzzleHash": "27bb255b2a5a57e9"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "normal",
+    "index": 4,
+    "tag": "greaterThan:normal:4",
+    "route": "pipeline",
+    "pipelineSeed": 1719684100,
+    "puzzleHash": "db5b9d2d916a6b37"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "normal",
+    "index": 5,
+    "tag": "greaterThan:normal:5",
+    "route": "pipeline",
+    "pipelineSeed": 1736461719,
+    "puzzleHash": "8b9b39a3d243cb9f"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "normal",
+    "index": 6,
+    "tag": "greaterThan:normal:6",
+    "route": "pipeline",
+    "pipelineSeed": 1753239338,
+    "puzzleHash": "b0d4c59eac284189"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "normal",
+    "index": 7,
+    "tag": "greaterThan:normal:7",
+    "route": "pipeline",
+    "pipelineSeed": 1770016957,
+    "puzzleHash": "b5f87f3d33d9f91f"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "normal",
+    "index": 8,
+    "tag": "greaterThan:normal:8",
+    "route": "pipeline",
+    "pipelineSeed": 1518352672,
+    "puzzleHash": "00dfeaf2d775df60"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "normal",
+    "index": 9,
+    "tag": "greaterThan:normal:9",
+    "route": "pipeline",
+    "pipelineSeed": 1535130291,
+    "puzzleHash": "1e23fbd2c85d720b"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "normal",
+    "index": 10,
+    "tag": "greaterThan:normal:10",
+    "route": "pipeline",
+    "pipelineSeed": 502302369,
+    "puzzleHash": "0b779ce4fe94b03f"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "normal",
+    "index": 11,
+    "tag": "greaterThan:normal:11",
+    "route": "pipeline",
+    "pipelineSeed": 485524750,
+    "puzzleHash": "d6a7437f8cc1d71a"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hard",
+    "index": 0,
+    "tag": "greaterThan:hard:0",
+    "route": "pipeline",
+    "pipelineSeed": 2623512742,
+    "puzzleHash": "cf500d11a5e91c10"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hard",
+    "index": 1,
+    "tag": "greaterThan:hard:1",
+    "route": "pipeline",
+    "pipelineSeed": 2640290361,
+    "puzzleHash": "74b7a53819eb45a1"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hard",
+    "index": 2,
+    "tag": "greaterThan:hard:2",
+    "route": "pipeline",
+    "pipelineSeed": 2589957504,
+    "puzzleHash": "323acddcff0d15a6"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hard",
+    "index": 3,
+    "tag": "greaterThan:hard:3",
+    "route": "pipeline",
+    "pipelineSeed": 2606735123,
+    "puzzleHash": "90859b4172ee0956"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hard",
+    "index": 4,
+    "tag": "greaterThan:hard:4",
+    "route": "pipeline",
+    "pipelineSeed": 2690623218,
+    "puzzleHash": "ffe157e00a0a8a7d"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hard",
+    "index": 5,
+    "tag": "greaterThan:hard:5",
+    "route": "pipeline",
+    "pipelineSeed": 2707400837,
+    "puzzleHash": "b442e09c3728208a"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hard",
+    "index": 6,
+    "tag": "greaterThan:hard:6",
+    "route": "pipeline",
+    "pipelineSeed": 2657067980,
+    "puzzleHash": "72233e44a9ce5e19"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hard",
+    "index": 7,
+    "tag": "greaterThan:hard:7",
+    "route": "pipeline",
+    "pipelineSeed": 2673845599,
+    "puzzleHash": "f7f16dfd559f08a3"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hard",
+    "index": 8,
+    "tag": "greaterThan:hard:8",
+    "route": "pipeline",
+    "pipelineSeed": 2757733694,
+    "puzzleHash": "c753a6ad3c64a9bc"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hard",
+    "index": 9,
+    "tag": "greaterThan:hard:9",
+    "route": "pipeline",
+    "pipelineSeed": 2774511313,
+    "puzzleHash": "1cc1f8302452a559"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hard",
+    "index": 10,
+    "tag": "greaterThan:hard:10",
+    "route": "pipeline",
+    "pipelineSeed": 3331068971,
+    "puzzleHash": "9d6ea66e9d5e85d4"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hard",
+    "index": 11,
+    "tag": "greaterThan:hard:11",
+    "route": "pipeline",
+    "pipelineSeed": 3314291352,
+    "puzzleHash": "20016d5dcffb72ac"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "expert",
+    "index": 0,
+    "tag": "greaterThan:expert:0",
+    "route": "pipeline",
+    "pipelineSeed": 2729069843,
+    "puzzleHash": "3e257bc6b3ac383c"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "expert",
+    "index": 1,
+    "tag": "greaterThan:expert:1",
+    "route": "pipeline",
+    "pipelineSeed": 2712292224,
+    "puzzleHash": "bd28279fa8da0245"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "expert",
+    "index": 2,
+    "tag": "greaterThan:expert:2",
+    "route": "pipeline",
+    "pipelineSeed": 2762625081,
+    "puzzleHash": "27be245ad3a56b96"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "expert",
+    "index": 3,
+    "tag": "greaterThan:expert:3",
+    "route": "pipeline",
+    "pipelineSeed": 2745847462,
+    "puzzleHash": "7dd95cfd719b142c"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "expert",
+    "index": 4,
+    "tag": "greaterThan:expert:4",
+    "route": "pipeline",
+    "pipelineSeed": 2796180319,
+    "puzzleHash": "2ad1e4ad63d38d9c"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "expert",
+    "index": 5,
+    "tag": "greaterThan:expert:5",
+    "route": "pipeline",
+    "pipelineSeed": 2779402700,
+    "puzzleHash": "55b1f8409ea77c8c"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "expert",
+    "index": 6,
+    "tag": "greaterThan:expert:6",
+    "route": "pipeline",
+    "pipelineSeed": 2829735557,
+    "puzzleHash": "18af6560e4c3f84d"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "expert",
+    "index": 7,
+    "tag": "greaterThan:expert:7",
+    "route": "pipeline",
+    "pipelineSeed": 2812957938,
+    "puzzleHash": "89957e57674b6adb"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "expert",
+    "index": 8,
+    "tag": "greaterThan:expert:8",
+    "route": "pipeline",
+    "pipelineSeed": 2863290795,
+    "puzzleHash": "4b36dae056fba4ae"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "expert",
+    "index": 9,
+    "tag": "greaterThan:expert:9",
+    "route": "pipeline",
+    "pipelineSeed": 2846513176,
+    "puzzleHash": "ffe27191d5efc02c"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "expert",
+    "index": 10,
+    "tag": "greaterThan:expert:10",
+    "route": "pipeline",
+    "pipelineSeed": 789915152,
+    "puzzleHash": "a9283cf4fa609e85"
+  },
+  {
+    "variant": "greaterThan",
+    "level": "expert",
+    "index": 11,
+    "tag": "greaterThan:expert:11",
+    "route": "pipeline",
+    "pipelineSeed": 806692771,
+    "puzzleHash": "b3f7245f147d60c6"
+  },
+  {
+    "variant": "diagonalX",
+    "level": "nightmare",
+    "index": 0,
+    "tag": "diagonalX:nightmare:0",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "c055ccc111cbdc58"
+  },
+  {
+    "variant": "diagonalX",
+    "level": "nightmare",
+    "index": 1,
+    "tag": "diagonalX:nightmare:1",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "93195300947a5905"
+  },
+  {
+    "variant": "diagonalX",
+    "level": "nightmare",
+    "index": 2,
+    "tag": "diagonalX:nightmare:2",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "6c0159161b77a3db"
+  },
+  {
+    "variant": "diagonalX",
+    "level": "nightmare",
+    "index": 3,
+    "tag": "diagonalX:nightmare:3",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "d7a38c398cf4e657"
+  },
+  {
+    "variant": "diagonalX",
+    "level": "nightmare",
+    "index": 4,
+    "tag": "diagonalX:nightmare:4",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "010e5819b8686d6b"
+  },
+  {
+    "variant": "diagonalX",
+    "level": "nightmare",
+    "index": 5,
+    "tag": "diagonalX:nightmare:5",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "b1192c1ff35ed207"
+  },
+  {
+    "variant": "diagonalX",
+    "level": "nightmare",
+    "index": 6,
+    "tag": "diagonalX:nightmare:6",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "2ffa131a27292a45"
+  },
+  {
+    "variant": "diagonalX",
+    "level": "nightmare",
+    "index": 7,
+    "tag": "diagonalX:nightmare:7",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "b628a92d5bbcb0fd"
+  },
+  {
+    "variant": "diagonalX",
+    "level": "nightmare",
+    "index": 8,
+    "tag": "diagonalX:nightmare:8",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "eac8ace152208b64"
+  },
+  {
+    "variant": "diagonalX",
+    "level": "nightmare",
+    "index": 9,
+    "tag": "diagonalX:nightmare:9",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "29ae89d68847882f"
+  },
+  {
+    "variant": "diagonalX",
+    "level": "nightmare",
+    "index": 10,
+    "tag": "diagonalX:nightmare:10",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "e175c5698bb156e8"
+  },
+  {
+    "variant": "diagonalX",
+    "level": "nightmare",
+    "index": 11,
+    "tag": "diagonalX:nightmare:11",
+    "route": "direct",
+    "pipelineSeed": null,
+    "puzzleHash": "e3716a0ceabeac95"
+  }
+]

@@ -1,0 +1,4 @@
+$ node --version
+TASK MS18a selftest
+READINESS NOT READY: mean 1.050, max 1.426 busy cores of 16 (selftest.json)
+NOT STARTED: mean 1.050 busy cores is above 0.5; maximum 1.426 busy cores is above 1

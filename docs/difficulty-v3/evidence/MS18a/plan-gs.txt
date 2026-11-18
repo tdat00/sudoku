@@ -1,0 +1,54 @@
+cell                       route     MS06d slowest s  later-source slowest   b s/request  commands
+classic9/normal            direct              0.921  1.175 s x20 runs                 5.5  1
+classic9/hard              direct              0.054  0.132 s x20 runs                 0.3  1
+classic9/expert            direct              0.137  0.647 s x20 runs                 1.3  1
+classic9/master            direct              0.107  0.408 s x20 runs                 0.8  1
+classic9/nightmare         direct              5.382  5.443 s x50 runs                32.3  2
+classic9/hell1             direct              1.273  10.494 s x2 runs                  42  2
+killer/normal              pipeline             1.07  none                             6.4  1
+killer/hard                pipeline            6.047  7.406 s x20 runs                36.3  2
+killer/expert              pipeline           15.793  none                            94.8  4
+jigsaw9/normal             pipeline              0.2  0.149 s x20 runs                 1.2  1
+jigsaw9/hard               pipeline            0.096  none                             0.6  1
+jigsaw9/expert             pipeline            2.621  none                            15.7  1
+jigsaw9/nightmare          pipeline            3.436  22.283 s x2 runs                89.1  4
+greaterThan/normal         pipeline            7.492  10.005 s x20 runs               44.9  2
+greaterThan/hard           pipeline            4.139  4.925 s x20 runs                24.8  1
+greaterThan/expert         pipeline           15.228  none                            91.4  4
+diagonalX/nightmare        direct             11.752  25.639 s x50 runs               70.5  3
+
+entry                              requests     units  bound s  json
+classic9-normal                   0-11           15      143  classic9-normal.json
+classic9-hard                     0-11           15       65  classic9-hard.json
+classic9-expert                   0-11           15       80  classic9-expert.json
+classic9-master                   0-11           15       73  classic9-master.json
+classic9-nightmare-0-6            0-5             8      319  shards\classic9-nightmare-0-6.json
+classic9-nightmare-6-6            6-11            7      287  shards\classic9-nightmare-6-6.json
+classic9-hell1-0-6                0-5             8      396  shards\classic9-hell1-0-6.json
+classic9-hell1-6-6                6-11            7      354  shards\classic9-hell1-6-6.json
+killer-normal                     0-11           15      157  killer-normal.json
+killer-hard-0-6                   0-5             8      351  shards\killer-hard-0-6.json
+killer-hard-6-6                   6-11            7      314  shards\killer-hard-6-6.json
+killer-expert-0-3                 0-2             4      440  shards\killer-expert-0-3.json
+killer-expert-3-3                 3-5             4      440  shards\killer-expert-3-3.json
+killer-expert-6-3                 6-8             3      345  shards\killer-expert-6-3.json
+killer-expert-9-3                 9-11            4      440  shards\killer-expert-9-3.json
+jigsaw9-normal                    0-11           15       78  jigsaw9-normal.json
+jigsaw9-hard                      0-11           15       69  jigsaw9-hard.json
+jigsaw9-expert                    0-11           15      296  jigsaw9-expert.json
+jigsaw9-nightmare-0-3             0-2             4      417  shards\jigsaw9-nightmare-0-3.json
+jigsaw9-nightmare-3-3             3-5             4      417  shards\jigsaw9-nightmare-3-3.json
+jigsaw9-nightmare-6-3             6-8             3      328  shards\jigsaw9-nightmare-6-3.json
+jigsaw9-nightmare-9-3             9-11            4      417  shards\jigsaw9-nightmare-9-3.json
+greaterThan-normal-0-6            0-5             8      420  shards\greaterThan-normal-0-6.json
+greaterThan-normal-6-6            6-11            7      375  shards\greaterThan-normal-6-6.json
+greaterThan-hard                  0-11           15      433  greaterThan-hard.json
+greaterThan-expert-0-3            0-2             4      426  shards\greaterThan-expert-0-3.json
+greaterThan-expert-3-3            3-5             4      426  shards\greaterThan-expert-3-3.json
+greaterThan-expert-6-3            6-8             3      335  shards\greaterThan-expert-6-3.json
+greaterThan-expert-9-3            9-11            4      426  shards\greaterThan-expert-9-3.json
+diagonalX-nightmare-0-4           0-3             5      413  shards\diagonalX-nightmare-0-4.json
+diagonalX-nightmare-4-4           4-7             5      413  shards\diagonalX-nightmare-4-4.json
+diagonalX-nightmare-8-4           8-11            5      413  shards\diagonalX-nightmare-8-4.json
+
+32 commands for 17 cells (9 whole cells, 23 shards); sum of the bounds 10306 s; largest 440 s (admission 450 s, process ceiling 540 s)

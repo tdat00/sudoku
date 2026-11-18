@@ -1,0 +1,66 @@
+$ node tests\soak.js --variant=classic9 --level=expert --count=12 --seed=20260101 --no-gate --json=..\docs\difficulty-v3\evidence\MS18a\classic9-expert.json
+TASK MS18a classic9-expert
+STRICT SCREEN ready: mean 0.494, max 0.872 busy cores of 16 (classic9-expert.json)
+POLICY MS18a-Q1-host-active ADMITTED: every admission condition of MS18a-Q1-host-active holds; the strict screen passed and is recorded unchanged
+LABEL shared-slot, CLI-host-active; not strict-quiet-machine timing
+START 2026-11-18T18:00:52.430+07:00
+Sudoku Generator soak test  (node v26.13.0, seed 20260101, 12 puzzles in 1.1 s)
+
+Calibration in force (score bands, lower bound of each level, the same on every board):
+  veryEasy 0 | easy 45 | normal 180 | hard 400 | expert 700 | master 1000 | nightmare 1500 | hell1 2400 | hell2 3600
+Technique weights: nakedSingle 1, hiddenSingleBox 1.25, hiddenSingleLine 1.5, pointing 40, boxLine 50, nakedPair 120, hiddenPair 145, nakedTriple 180, lawOfLeftovers 200, hiddenTriple 220, nakedQuad 260, hiddenQuad 300, xWing 320, skyscraper 330, twoStringKite 340, remotePairs 350, simpleColouring 360, emptyRectangle 380, finnedXWing 400, swordfish 420, finnedSwordfish 480, jellyfish 520, xyWing 650, xyzWing 750, wxyzWing 800, wWing 850, uniqueRectangle 900, bugPlusOne 920, xyChain 1000, forcingChain 1100, alsXz 1250, sueDeCoq 1300, forcingChainLong 1400, nishio 1700, nishioDeep 2600, cageCombo 40, ruleOf45 260, cageSplit 520, ineqChain 40, minMaxForcing 180
+
+== classic9 (81 cells) ==
+requested     veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2    n    hit  samples  ms p50     p95     max  budget
+expert               .          .          .          .         12          .          .          .          .   12   100%      6.3    30.1     329     329  400 ok
+exact: 12 of 12 (100.0%)
+
+group of the hardest technique per requested level (share of puzzles):
+  expert     wing 100%
+
+Score histogram (the bands of every board), all puzzles, by requested level:
+bin            veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2   all
+0-45                  .          .          .          .          .          .          .          .          .      0
+45-180                .          .          .          .          .          .          .          .          .      0
+180-400               .          .          .          .          .          .          .          .          .      0
+400-700               .          .          .          .          .          .          .          .          .      0
+700-1000              .          .          .          .         12          .          .          .          .     12 ##############################
+1000-1500             .          .          .          .          .          .          .          .          .      0
+1500-2400             .          .          .          .          .          .          .          .          .      0
+2400-3600             .          .          .          .          .          .          .          .          .      0
+3600-5400             .          .          .          .          .          .          .          .          .      0
+5400+                 .          .          .          .          .          .          .          .          .      0
+
+Invariants over 12 puzzles:
+  I1 ok
+  I2 ok
+  I3 ok
+  I4 ok
+  I5 ok
+  I6 ok
+  I7 ok
+
+classic9 hit rate per level: expert 100%
+RESULT: PASS
+
+Difficulty diagnostics (docs/difficulty-v3/evidence/MS18a/classic9-expert.json): 12 of 12 requests recorded; the diagnostic solves took 0.0 s after the generation and the checks
+
+== classic9/expert: 12 requests, 0 errors, 0 unrated, 12 solved in band ==
+  old hits 12/12 (100%), qualified hits 12/12 (100%), shallow 0/12 (0%; 12 with a derived verdict); exact flag against the derived verdict: 0 disagreements
+  sampled reference: ok 2, vacuous 0, error 0, skipped 0, notSelected 10, notRun 0; final path: ok 12, mismatch 0, error 0, notRun 0
+  work: ok 12, mismatch 0, unavailable 0; local searches ended by shallow 0, ratings 0, proposals 3
+    full ratings (n=12): min 1, p10 1, p50 3, p90 128, max 384, upper median 3
+  cohort exact (old hits): 12 puzzles, peak xyWing 12
+    raw position (n=12): min 0.567, p10 0.623, p50 0.787, p90 0.94, max 0.94, upper median 0.787
+    adjusted position (n=12): min 0.104, p10 0.208, p50 0.551, p90 0.873, max 0.875, upper median 0.551
+    adjusted undefined: -
+  cohort all in band: 12 puzzles, peak xyWing 12
+    raw position (n=12): min 0.567, p10 0.623, p50 0.787, p90 0.94, max 0.94, upper median 0.787
+    adjusted position (n=12): min 0.104, p10 0.208, p50 0.551, p90 0.873, max 0.875, upper median 0.551
+    adjusted undefined: -
+  forcing-chain steps (0 of 12 rated paths): length -; per-puzzle maximum -
+  nishio steps (0 of 12 rated paths): depth -; per-puzzle maximum -
+
+DIAGNOSTICS: PASS (request errors 0, invariant violations 0, check errors 0, reference errors 0, final-path errors 0, final-path mismatches 0, work unavailable 0)
+END 2026-11-18T18:00:54.110+07:00
+exit=0 seconds=1.680

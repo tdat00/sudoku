@@ -1,0 +1,21 @@
+classic9-normal          direct    rows 12, in band 12, old hits 12, qualified 3, shallow 9, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+classic9-hard            direct    rows 12, in band 12, old hits 12, qualified 12, shallow 0, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+classic9-expert          direct    rows 12, in band 12, old hits 12, qualified 12, shallow 0, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+classic9-master          direct    rows 12, in band 12, old hits 12, qualified 10, shallow 2, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+classic9-nightmare       direct    rows 12, in band 12, old hits 12, qualified 0, shallow 12, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+classic9-hell1           direct    rows 12, in band 12, old hits 12, qualified 12, shallow 0, reference ok/vacuous 0/12, checks PASS, rating 2, source 43848f9c
+killer-normal            pipeline  rows 12, in band 12, old hits 12, qualified 5, shallow 7, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+killer-hard              pipeline  rows 12, in band 12, old hits 12, qualified 0, shallow 12, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+killer-expert            pipeline  rows 12, in band 12, old hits 12, qualified 0, shallow 12, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+jigsaw9-normal           pipeline  rows 12, in band 12, old hits 12, qualified 3, shallow 9, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+jigsaw9-hard             pipeline  rows 12, in band 12, old hits 12, qualified 12, shallow 0, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+jigsaw9-expert           pipeline  rows 12, in band 12, old hits 12, qualified 2, shallow 10, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+jigsaw9-nightmare        pipeline  rows 12, in band 12, old hits 12, qualified 0, shallow 12, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+greaterThan-normal       pipeline  rows 12, in band 12, old hits 12, qualified 1, shallow 11, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+greaterThan-hard         pipeline  rows 12, in band 12, old hits 12, qualified 11, shallow 1, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+greaterThan-expert       pipeline  rows 12, in band 10, old hits 10, qualified 8, shallow 2, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+diagonalX-nightmare      direct    rows 12, in band 12, old hits 12, qualified 0, shallow 12, reference ok/vacuous 12/0, checks PASS, rating 2, source 43848f9c
+
+totals: {"rows":204,"inBand":202,"oldHits":202,"qualified":91,"shallow":111,"shallowOf":202,"refOk":192,"refVacuous":12}; requests per variant {"classic9":72,"killer":36,"jigsaw9":48,"greaterThan":36,"diagonalX":12}
+204 keys written; every pipeline seed recomputed with seedFor over the tag (base 20260101), every direct row has none
+RESULT: all baseline checks hold

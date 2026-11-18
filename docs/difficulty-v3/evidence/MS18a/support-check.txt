@@ -1,0 +1,8 @@
+SOURCE_FILES loaded: 64 of 64 listed
+rating version 3, shallow allowance 256, short-chain cutoff C 4, default attempts of an 81-cell board 8, of 82-144 cells 4, above 144 2
+classic9: normal offered, hard offered, expert offered, master offered, nightmare offered, hell1 offered  (difficultySupport: veryEasy easy normal hard expert master nightmare hell1)
+killer: normal offered, hard offered, expert offered  (difficultySupport: veryEasy easy normal hard expert master nightmare hell1 hell2)
+jigsaw9: normal offered, hard offered, expert offered, nightmare offered  (difficultySupport: veryEasy easy normal hard expert master nightmare hell1 hell2)
+greaterThan: normal offered, hard offered, expert offered  (difficultySupport: veryEasy easy normal hard expert master nightmare hell1 hell2)
+diagonalX: nightmare offered  (difficultySupport: veryEasy easy normal hard expert master nightmare hell1 hell2)
+manifest levels not offered at this source: 0 (no `--include-unsupported` is needed)

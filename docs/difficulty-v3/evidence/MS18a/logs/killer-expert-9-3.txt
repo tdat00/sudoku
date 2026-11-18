@@ -1,0 +1,6 @@
+$ node tests\soak.js --variant=killer --level=expert --count=3 --from=9 --total-count=12 --seed=20260101 --no-gate --json=..\docs\difficulty-v3\evidence\MS18a\shards\killer-expert-9-3.json
+TASK MS18a killer-expert-9-3
+STRICT SCREEN NOT READY: mean 1.855, max 2.618 busy cores of 16 (killer-expert-9-3.json)
+POLICY MS18a-Q1-host-active HOLD: another process (svchost.exe, PID 10948) gained 3.78 CPU-s in 5.71 s (0.66 per second, limit 0.5)
+LABEL shared-slot, CLI-host-active; not strict-quiet-machine timing
+NOT STARTED: another process (svchost.exe, PID 10948) gained 3.78 CPU-s in 5.71 s (0.66 per second, limit 0.5)
