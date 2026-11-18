@@ -114,7 +114,7 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [ ] | MS18 | MS18a-MS18e | Final evidence (parent) | MS17b | split | Evidence/release | M18 | 43-47 |
 | [x] | MS18a | [MS18a](MS18a-final-matched-soak.md) | Matched final soak | MS17b | S, 25-35 min | Evidence | M18a | 43 |
 | [x] | MS18b | [MS18b](MS18b-recheck-cap-and-window.md) | Cap/window final rechecks | MS18a | S, 25-40 min | Evidence | M18b | 44 |
-| [ ] | MS18c | [MS18c](MS18c-qualify-and-publish-offers.md) | Qualify and publish offers | MS18b + owner actions | M, 35-50 min | Qualification | M18c | 45 |
+| [ ] | MS18c | [MS18c](MS18c-qualify-and-publish-offers.md) | Qualify and publish offers | MS18b; resolve MS18c-Q1/Q2 before dispatch | M, 35-50 min | Qualification | M18c | 45 |
 | [ ] | MS18d | [MS18d](MS18d-performance-and-final-hashes.md) | Final GP preflight/performance/hashes | MS18c | M, 40-55 min + GP/GG | Evidence | M18d | 46 |
 | [ ] | MS18e | [MS18e](MS18e-release-evidence-closure.md) | Final correctness/items/workflows and PR CI | MS18d | M, 40-60 min + GD/deep/CI | Release evidence/CI | M18 | 47 |
 
@@ -181,14 +181,20 @@ MS14a/MS15a kernels likewise precede their registrations. Final GQ is MS18c,
 after all S3, MS17b and final rechecks MS18b.
 No intermediate pruning. Parent milestones are not additional waves or commits.
 
-**Current serial handoff, 2026-11-18.** MS18a is accepted and committed at **`484b8a52`**
-after orchestrator template review, independent recount, 24 reproduced Normal rows and
-the passing 4,784-test CI inventory check. Its runtime/soak remain the accepted MS17b
-candidate **`57c1b10`**; the new commit also contains evidence, helpers and notes, not
-only pack files. M17 remains complete. MS17a (`5b94904`), MS16
+**Current serial handoff, 2026-11-18.** MS18b is accepted and committed at **`14d8c903`**
+after orchestrator template review, independent derivation of both rules, 24 reproduced
+decisive rows and the passing CI check. **360/360** outcomes, 44 commands, all DIAGNOSTICS
+PASS, 145 reporter checks; R5 **256** reconfirmed (Jigsaw Expert median **1215 -> 1104**),
+C **4** reconfirmed (**36/36 vs 20/36**). **No R5/C owner action or change task is open.**
+MS18a (`484b8a52`) remains accepted. Runtime/soak remain MS17b's **`57c1b10`** candidate;
+these commits also contain evidence, helpers and notes, not only pack files.
+M17 remains complete. MS17a (`5b94904`), MS16
 (`d41a6dd`), MS15b (`8b26e83`), MS15a (`b958a58`, SA1 accepted), MS14c (`6a9fbf6`),
 MS14b (`0e3a0c4`), MS13c (`9d58d86`) and resolved JF-02/S-OD12 (A + S0) remain prior
-boundaries. Next: **MS18b -> MS18c -> MS18d -> MS18e**, one developer at a time.
+boundaries. Next: **MS18c -> MS18d -> MS18e**, one developer at a time, but **MS18c's
+full dispatch is held for its explicitly listed Q1/Q2 decisions**. The brief is
+prepared, not a permission for the developer to choose a measurement policy or run
+an unbounded qualifier. SA1 is the cross-reviewer.
 **MS18a and MS18b receive orchestrator template/contract review; SA1 cross-review is
 at MS18c.** No extra analyst review gate is added. A specific unresolved question still
 goes through the orchestrator and the QUESTION pause.
@@ -247,7 +253,7 @@ Its old qualified cohort is not the old score-only 202/204. Keep the separate MS
 target comparison and historical timing caveats. Use the final Q3 reporter/freeze;
 its successful-attempt transcript and multi-commit display fixes changed no ledger.
 
-**MS18b fixed scope and decision boundary:** 288 fresh R5 outcomes at 64/128/256/none
+**MS18b completed scope and decision boundary:** 288 fresh R5 outcomes at 64/128/256/none
 with C4 fixed, plus 72 fresh C4/C6 outcomes with R5 256 fixed. No combined provisional
 pair, 8/4/2 experiment or re-use/retagging of MS18a as comparison rows. Complete both
 independent bounded experiments and the read-only packet under current defaults.
@@ -256,7 +262,8 @@ full-rating reduction somewhere, else none on complete evidence; C selects more 
 hits, **6 on a tie**. A different winner stops before default edits and GQ/MS18c for
 the owner's keep-current or separately implemented/refreshed change decision. Missing
 data means undetermined, not the measured winner none or a reconfirmation.
-The leaf gives the exact evidence tables and a Vietnamese Discord question template.
+Both rules reconfirmed their current values, so that stop branch was not taken.
+The leaf/evidence retain the tables and decision mechanism as history.
 
 MS18a's zero-exact cells are **classic9 Hell 1, Killer Hard and Killer Expert (0/12,
 12/12 shallow, eight attempts each)**. Killer Hard/Expert remain in every fixed R5
@@ -306,6 +313,40 @@ MS18a's helper key omits the overrides and cannot be copied unchanged. Same-span
 different-setting entries are distinct; aliases cannot reset the same entry's quota.
 Use the accepted Q2 driver and Q3 reporting fixes, not superseded helper copies.
 No automatic readiness waiver is granted to MS18c/MS18d.
+
+**MS18b's new handoff items:** **MS18b-HOST-ACTIVE** records 40/44 strict-screen
+failures, four passes and **zero holds/re-asks/gaps**; attribution is incomplete and
+there is no GQ/GP waiver. **MS18b-R5-C result** records reconfirmation, not another
+owner question. Killer Hard/Expert stayed **0/12 at all four caps** (the same twelve
+keys, not 48 independent seeds); S-OD7 and final GQ remain. R5 six-cell generation
+totals **371.4/388.6/410.9/423.1 s** and C6 **526.1 vs C4 139.3 s (3.8x)** are
+descriptive GS cost observations, not GQ/GP verdicts or command bounds. Keep all
+MS18a and older items in MS18c's complete handoff.
+
+**MS18c pre-dispatch questions at `14d8c903`:**
+
+- **MS18c-Q1 (open):** approve a uniform final qualification environment. Proposed
+  host-active GQ keeps actual raw p95/budgets/jobs/seeds/guard unchanged; alternatively
+  arrange the whole matrix outside the active CLI on an approved quiet environment.
+  The host cannot be quiesced here; 4/44 strict passes do not prove mathematical
+  impossibility, but neither do lucky windows establish a uniform quiet regime.
+  MS18a/b's descriptive exception is not inherited.
+- **MS18c-Q2 (open):** decide the complete execution route. One cell is indivisible in
+  the current CLI, its possible 60-request second round is serial, and a valid
+  100-request cell at 8 s/request can need **560 s plus overhead**. Old six-cell
+  projections were 556-4032 s; current-source generation-only indicators also warn
+  against a blanket <=450 s claim. Options in the leaf: retain 450/540 with honest
+  partial evidence/publication blocked; authorize Fable to specify a GQ-only longer
+  bounded route with numeric ceilings and SA1 review; or authorize a separate reviewed
+  bounded qualification tooling/protocol task if 540 must remain absolute.
+
+The leaf contains Vietnamese owner/Fable questions, code anchors, numerical evidence
+and the post-decision bounded plan. **Neither proposal is approved here.** No GQ,
+publication or silent scheduler/sharding/ceiling edit before recorded answers and the
+corresponding pack amendment/prerequisite. S-OD7 and (c1) already settle the zero-exact
+cells' offer rules; CV6-05 is a conditional later Fable decision, not a present budget
+choice. The old "1-12 h" allowance is not a verified full-matrix bound, and waiting on
+the same process does not reset its 540 s deadline.
 
 Write/read back bounded plans before phases and format owned helpers before their
 freeze; no post-freeze source adjustment disguised as housekeeping. **S-OD12/S0**
@@ -620,6 +661,12 @@ credit. No scheduler fix, jobs change, new evidence class or new tooling task is
 If a complete bounded route is still unavailable, report the final gap and leave publication/
 release unsatisfied; any later proposal to change the recorded rule goes through the orchestrator,
 not an implementer's exception. No request to Fable is initiated by this ruling.
+
+**Final-dispatch follow-up, 2026-11-18 (`14d8c903`):** MS18c-Q1/Q2 now explicitly
+request readiness/execution decisions on the current evidence before full dispatch.
+They do not retroactively alter this historical ruling, relabel the old six cells,
+authorize a higher ceiling or make an incomplete matrix publishable. The pending
+questions and proposed choices are in the MS18c brief; the orchestrator routes them.
 
 **CV6-05: S-AV01's three fixed endings.** Nobody now edits, skips or wraps the Normal CV6
 assertion. It is manual, outside the quick set and CI, and its honest red outcome blocks no
@@ -996,6 +1043,12 @@ not retroactive extension of MS18a's ruling. Read the MS18b leaf before running;
 raw numerical screen below remains recorded, not silently turned into a quiet pass.
 The later GQ/GP readiness contract still needs its own dispatch disposition.
 
+**MS18c preparation at `14d8c903`:** its Q1/Q2 are open. The old strict screen is not
+silently replaced for GQ and no host-active/long-command option is approved by this
+checklist. Resolve the uniform measurement condition and executable bounded route
+before dispatch, then bind the recorded answer into the brief. The shared helper below
+remains unchanged until any explicitly approved task-specific alternative exists.
+
 - Obtain the normal shared slot/mutex and establish that no foreign timing-lock holder or
   known foreign CPU-heavy job is active. Never delete another lock, kill another session's
   process or infer permission to ignore an occupied/stale lock from the owner statement.
@@ -1237,7 +1290,7 @@ It does not broaden output-change, finder-activation or fixture-update authority
 | GS window | MS07c, repeated MS18b | Three Nightmare cells x C4/C6, 12 requests each; more exact hits, tie 6. |
 | GS Hell 1 pilot | MS07b; MS07c repeats only if default C changes | `node tests\soak.js --variant=classic9 --level=hell1 --from=0 --count=2 --total-count=2 --seed=20260101 --no-gate --json=..\docs\difficulty-v3\evidence\<task>\hell1-pilot.json`; exact two-request shard (bare --count=2 runs at least five at HEAD). Jobs 1/no --jobs; 540 s ceiling. Project unchanged 20-request GD/40-request GQ cost; pilot is not selection evidence. |
 | GS-after | MS18a | All 17 original cells; current vs old reference-qualified cohorts, not old score-only exactness. |
-| GQ-final | MS18c after MS18b reconfirmation/owner action | Same Q135/jobs 4 protocol; archive v2 then publish live table/support arrays together; no tuning. |
+| GQ-final | MS18c after MS18b reconfirmation (done) and recorded MS18c-Q1/Q2 disposition | Q135/jobs 4 protocol; bounded route/measurement contract explicitly approved first; archive v2 then publish complete live table/support arrays together; no tuning or implicit waiver. |
 
 GD: per-puzzle I5 and `digLevel` correctness contracts must pass; performance/availability failures
 are recorded and routed under S-OD4, not repaired by lowering assertions. GQ worker errors or missing replies fail the run; hidden verdicts
