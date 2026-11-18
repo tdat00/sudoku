@@ -181,77 +181,77 @@ MS14a/MS15a kernels likewise precede their registrations. Final GQ is MS18c,
 after all S3, MS17b and final rechecks MS18b.
 No intermediate pruning. Parent milestones are not additional waves or commits.
 
-**Current serial handoff, 2026-11-18.** MS17a is accepted and committed at **`5b94904`**,
-after orchestrator template review and rechecks. MS16 (`d41a6dd`), MS15b (`8b26e83`),
-MS15a (`b958a58`, SA1 accepted), MS14c (`6a9fbf6`), MS14b (`0e3a0c4`), MS13c (`9d58d86`)
-and resolved JF-02/S-OD12 (A + S0) remain prior boundaries.
-**MS17b is active, with implementation/E reported complete; #15 is repaired and #16-#20
-pass. GD #21's witness failure now has Q8-Q11 rulings in the brief.**
-Only its classic9 Nightmare cap-3 refinement caller may use a 24-seed ceiling; the helper
-default/other callers stay at 12 and every accounting assertion remains. #22/#23 may run
-first under their existing bounded plans; #21 needs a distinct locked 5/5 repair record.
-MS17b-GD21-PROCESS preserves the 36.5 s unlocked diagnosis and the locked bisect driver's
-IR12 limitations for audit. The task-local standing pin rule covers only already-proved
-literal current-output repairs with unchanged specimens/predicates, not new windows,
-corpus routes or blanket continue-on-error.
-Final gates and **SA1 cross-review before acceptance** remain; mutant equivalences are
-not accepted by these pin rulings. Resume only on the orchestrator's explicit relay, then
-MS18a -> MS18b -> MS18c and the unchanged final remainder.
-The named S3 catalogue is complete; no new technique, weight, limit selection or corpus
-campaign is assigned to this version/cache step.
-MS17a preserves history envelope 1 and actual producer markers. Its explanatory title
-belongs only to an earlier entry's open button; no second note-span title is needed.
-Rating/cache are still 2 and become 3 atomically in MS17b; worker wire stays 1 and grouped
-proofVersion stays 2. Old positive imports, history recipes and historical v2 certificates
-remain their own evidence. MS16-Q6's provenance/pause/count disclosures stay in the audit.
-Keep the existing pre-ALS recipes unchanged; current-ladder integration remains current.
-Keep the assigned
-MS14a/MS13c wave numbers 34/35; do not renumber IDs, change Done marks or rewrite historical
-logs. MS14a requires MS13b, MS13c also waits for accepted MS14a, and MS14b explicitly requires
-both MS14a and MS13c. The parent MS14 dependency governs activation/closure, not this inactive
-preparation. No further later task may run ahead. Preserve the completed task logs; never park
-a dirty task or run a second developer. The owner questions/answers remain in the archive.
-MS14b, MS14c, MS15b, MS16 and MS17a received orchestrator template/contract review.
-**MS17b is the current SA1 cross-review task.**
-A specific unresolved question is routed by the orchestrator.
+**Current serial handoff, 2026-11-18.** MS17b is accepted and committed at **`57c1b10`**
+(16:29:15 +07:00) after two SA1 rounds; M17 is complete. MS17a (`5b94904`), MS16
+(`d41a6dd`), MS15b (`8b26e83`), MS15a (`b958a58`, SA1 accepted), MS14c (`6a9fbf6`),
+MS14b (`0e3a0c4`), MS13c (`9d58d86`) and resolved JF-02/S-OD12 (A + S0) remain prior
+boundaries. Next: **MS18a -> MS18b -> MS18c -> MS18d -> MS18e**, one developer at a time.
+**MS18a and MS18b receive orchestrator template/contract review; SA1 cross-review is
+at MS18c.** No extra analyst review gate is added. A specific unresolved question still
+goes through the orchestrator and the QUESTION pause.
 
-MS17a recorded fresh five-wire/fourteen-analysis E at replay identity `9023f9eb...`,
-retained and merge-checked MS16's 520 hashes at `8740fd9e...`, and kept all canonical values
-and 40 GH examples. **MS17b's producer-version edit invalidates both source identities.**
-It owns fresh **5 wires -> 14 analyses -> 520 hashes**. The expected canonical change is
-the five wires' `rating.ratingVersion` **2 -> 3**, not worker `v:1`: merge-check, explain
-the exact path/value deltas, publish from the complete wire family and recheck before
-analysis recording. `goldenOf` does not project the version, and `perf-helper.serialize`
-does not hash it: analyses and puzzle hashes are expected unchanged, not automatically
-rewritten. No retained/retagged old-identity ledger substitutes for fresh records.
-All-40 GH is check-only; unexpected non-metadata differences or missing examples require
-QUESTION before writes/refreshes. Format included-source comments/code before freezing
-and verify each bounded plan before launching.
+MS17b's final records are `docs/difficulty-v3/evidence/MS17b/evidence.md`, especially
+sections 12, 18 and 20. The accepted Generator run is **`quick-final-2/`**; the accepted
+Player run remains **`quick-final/player-quick.json`**. The superseded Generator first
+pair is history, not the current fingerprint. Baseline: **4,784 Generator tests (542.0 s) /
+2,981 Player tests (117.2 s)**, **55/32** suites, catalogue **40 / 34 unscoped**.
+Fingerprints are Generator **`274067a0...`**, Player **`5e55cec6...`** (full values in
+MS18a). Projections remain **core-shared 170, steps 70, replay 70, mega 50, own-fast 330,
+digger-target 30, pipeline 80, Generator player shard 90, Player job 180**. Preserve the
+four bounded Generator groups, suite membership, assertions, tiers, factors and workflow
+limits. Final CI metadata was saved before its passing check.
 
-The accepted baseline is **4,769 Generator tests (543.9 s) / 2,978 Player tests (118.9 s)**,
-55/32 suites, catalogue **40 / 34 unscoped**. Projections are **core-shared 170, steps 70,
-replay 70, mega 50, own-fast 320, digger-target 30, pipeline 80, Generator player shard 90,
-Player job 180**. MS17b records the full fingerprints (Generator `bae8cc89...`, Player
-`1dfe66ea...`). Use the four bounded Generator groups and derive final counts/fingerprints;
-preserve suites, membership, assertions and prior coverage. Final CI metadata precedes its
-final check; no tier/factor/workflow-limit changes follow.
+MS17b freshly recorded all **5 wires / 14 analyses / 520 hashes**. Replay identity is
+**`ff55cbce...`**, hash identity **`b1c78ecb...`**. Only the five wires'
+`rating.ratingVersion` changed **2 -> 3**; analyses and hashes were unchanged, and all
+**40** GH examples match. Rating/cache are now **3**, history/worker wire stay **1**,
+grouped `proofVersion` stays **2**. MS17a's explanation belongs only to an earlier
+history entry's open button. Old positive imports, recipes and v2 certificates remain
+their own evidence; keep the pre-ALS specimens unchanged. Evidence-only MS18a/b verify
+unchanged source/fingerprints, not needless fresh E/GH/quick runs or CI metadata edits.
 
-MS17b's leaf inventories every selected finder/pass default and owner decision for
-`limits-v3.md`, including the independent fish/wing counters, UR's two separate 50,000
-passes (no three-real-cell cap), nishioDeep/XY, grouped **4,096/50,000** plus S-OD11's
-short-only locally uncapped fallback, leftovers **2/4/50,000**, shared ALS **4/4,096/50,000**
-and Sue de Coq's own **50,000**. C is **4** (short 1..4 / long 5..12), not the report's
-initial 6. Record R5 **256**, attempts **8/4/2** and the restored first-allowed sign pass
-separately; MS18b's planned comparisons do not license silent tuning.
-No unused introducing-task adjustment rolls forward. Carry **S-AV36-S-AV39, MS15b-Q6,
-MS15b-GP-J, MS15b-GP-U and MS16-Q6**, their distinct populations and all other inherited
-items. MS15b's 37-cell GP remains one full record, one pilot-only cell and 35 unmeasured;
-MS16/MS17a added no generation-GP campaign and MS17b adds none. Scoped GD is the complete
-current manual `difficulty` inventory under FS09, unchanged per-level 100/20 counts and
-all non-batch groups, with credible <=450 s command projections. Unsafe/unexecuted groups
-and real availability/time failures remain explicit items, not a partial-GD pass.
-Final variant I5/CV3/deep and qualification/cost/audit ownership stay with MS18c/d/e.
-S-OD12/S0 grants no standing scan or new-ID discovery quota. Full scope/review rules stay.
+`limits-v3.md` freezes **only section 1's new-pattern limits with the version**, not
+every production constant. Its dispatch inventory retains the independent fish/wing
+counters, UR's separate 50,000 passes (no three-real-cell cap), nishioDeep/XY, grouped
+**4,096/50,000** and S-OD11's short-only uncapped singleton fallback, leftovers
+**2/4/50,000**, shared ALS **4/4,096/50,000**, and Sue de Coq's own **50,000**.
+Section 3 records C **4** (short 1..4 / long 5..12), R5 **256**, attempts **8/4/2**, dig
+bounds and the restored first-allowed sign pass separately. MS18b rechecks only R5/C;
+a changed winner requires the owner's keep/change decision before GQ. No silent tuning,
+new attempt-count experiment or unused introducing-task adjustment follows.
+
+**GD handoff:** of the current manual `difficulty` inventory's **154 tests**, **145 were
+executed: 144 passed, one failed**, Normal's **83/100** aggregate (**S-AV14**).
+Hell 1's **8 tests / 20-request batch** and the confusion matrix's **1 test** were not
+started: stated bounds **919 s / 1,544 s**, not current-source measurements or passes.
+Keep them named with S-AV25/S-AV15 for MS18c/d handoff and MS18e's GD/audit. Nightmare
+passed 8/8 in 96.2 s; do not inherit an older source's bound without a current plan.
+The ruled Samurai and one-call cap-witness repairs passed on their new paths; both
+original failures remain. MS17b's task-local standing pin rule does not roll forward.
+**MS17b-GD21-PROCESS** retains the 36.5 s unlocked diagnosis, unknown overlap/unsaved raw
+output, locked bisect IR12 defects and mislabelled footers for MS18e, not protected timing.
+
+Carry **S-AV36-S-AV39, MS15b-Q6, MS15b-GP-J, MS15b-GP-U and MS16-Q6**, their distinct
+populations and all earlier items under their recorded dispositions. MS15b's **37-cell**
+GP remains one full record, one pilot-only cell and **35 unmeasured**, not S-AV38's
+**50-cell** population. MS16/MS17a/MS17b added no generation-GP campaign. MS18a's
+**17-cell/204-request** GS is a matched comparison, not a substitute for GD/GQ/GP.
+Its old MS02 qualified cohort is **91/204**, not the old score-only **202/204**;
+preserve the separate MS06 target comparison and historical timing caveats.
+
+**Machine availability, owner at 16:42 (+07:00), relayed at 16:44:**
+"Các task pentomino đã dừng hoàn toàn, hãy tùy ý sử dụng resource của máy."
+Pentomino tasks have fully stopped; no further owner pause question is needed.
+Before each MS18a-MS18d timed cell/shard, use section 7's quiet-machine precondition.
+MS17b's 470.8/385.6/550.7 s lock waits remain wait metadata, not request timings.
+The shared slot, locks, >=15 s gaps and <=450 s admission/540 s ceiling remain.
+
+Write/read back bounded plans before phases and format owned helpers before their
+freeze; no post-freeze source adjustment disguised as housekeeping. **S-OD12/S0**
+grants no standing scan, source-acquisition exception or new-ID discovery quota.
+Full scope and final I5/CV3/deep/qualification/cost/audit obligations remain.
+Preserve completed logs, IDs/waves and owner archives; never park a dirty task,
+change Done marks in a pack amendment or start a second developer.
 
 **Preservation:** no reset/discard of b1, provisional allowance, off-by-default switch, seed
 substitution, browser-budget raise or further checkpoint branch commit. G13 persistence and
@@ -903,10 +903,55 @@ The first three groups keep production generation, scoring, orders, support list
 
 ### Scheduling and recording
 
-**Never two heavy/timing runs at once on this machine.** Pentomino is developed in parallel.
+**Never two heavy/timing runs at once on this machine.** Pentomino's separate session
+formerly overlapped this project; the owner confirmed it fully stopped at 16:42 (+07:00)
+on 2026-11-18 (section 2). Resource availability does not waive this protocol.
 Before a heavy gate, announce to the orchestrator: task/gate, exact shard/cases, expected duration and
 output paths. Wait for the shared-machine slot before starting. Release the slot on completion/failure.
 No overlapping quick runs inside this checkout either.
+
+### Final-gate quiet-machine precondition — MS18a-MS18d
+
+GS, the R5/C rechecks, GQ and GP are timed measurements. The owner's resource-release
+statement resolves the known Pentomino contention; **do not ask the owner to pause it again**.
+Still check readiness before **each timed cell or authorized shard**, not once per matrix:
+
+- Obtain the normal shared slot/mutex and establish that no foreign timing-lock holder or
+  known foreign CPU-heavy job is active. Never delete another lock, kill another session's
+  process or infer permission to ignore an occupied/stale lock from the owner statement.
+- If a foreign timed job has just released its lock, allow at least **15 s** after the
+  observed release before sampling. Record any such release/wait; unknown historical
+  release times remain unknown, not invented timestamps.
+- Immediately before the payload, **while our lock is held**, take **five one-second host
+  CPU intervals** from real cumulative CPU counters (not Windows `os.loadavg`). Record CPU
+  count, interval busy-core equivalents, mean/max and timestamps. Busy cores = logical
+  CPU count times the interval's aggregate non-idle fraction. The readiness screen is
+  **mean <=0.5 busy logical cores and max <=1.0**, with no known foreign heavy job.
+  This is an operational noise screen, not a puzzle/performance budget or proof of isolation.
+  Record unavailable/invalid counters as not ready, never as idle. Do not change the screen
+  after inspecting a cell's result.
+- A task-owned bounded read-only launch wrapper may make these observations under
+  `Invoke-Dv3Node` before launching the original CLI payload. The shared helper/cleanup
+  contract stays unchanged. No generation warmup, probe, scheduler change, process-priority
+  change or permanent measurement-tool edit is assigned. Include wrapper/readiness time
+  in the whole-command/per-item projection and 540 s ceiling when it is inside that command.
+  Preserve the 15 s gap between lock acquisitions and the tool's original request clocks.
+- If readiness fails, **do not start the timed payload**; record the reason, release our
+  slot and inform the orchestrator. It is an environmental hold/unstarted command, not a
+  slow puzzle, availability miss or owner policy question. Continue permitted non-timed
+  work; obtain a new planned slot/check rather than polling indefinitely under our mutex.
+  A check taken before a lock wait is stale and must be repeated after acquisition.
+- Keep readiness/lock waits separately from generation, diagnostics and process time.
+  If foreign contention is actually observed during a measurement, retain the entire raw
+  run and mark its timing compromised; report the evidence defect for an assigned repeat
+  of the affected whole cell/shard. Do not silently drop slow requests, normalize times,
+  retry until fast, or replace a legitimate performance miss without evidence of contention.
+
+Use the existing task evidence/transcripts for these observations; they are execution
+metadata, not a new slow-cell evidence class or an excuse to alter counts, seeds, guards,
+cold/warm semantics or GQ jobs 4 / GP jobs 1. Historical evidence gets no retroactive
+quiet label: MS02 recorded concurrent Pentomino quick tests, and MS17b's lock waits alone
+neither prove nor disprove interference during its payloads.
 
 ### Shared-machine lock protocol (possibly >10-second work, including unknown generation projections)
 

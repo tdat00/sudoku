@@ -5,7 +5,7 @@
 | Depends on | MS18b accepted, including any owner-directed replacement task/evidence |
 | Size / active time | Medium; 35-50 minutes plus GQ |
 | Owner / milestone | Qualification/publication; M18c |
-| Authority / review | R24/R21, AUTH-S1, SA1-Q-S5, S-OD4 (c1), S-OD7/S-OD8, CV6-05; analyst cross-review |
+| Authority / review | R24/R21, AUTH-S1, SA1-Q-S5, S-OD4 (c1), S-OD7/S-OD8, CV6-05; SA1 cross-review |
 | Status | Not started |
 
 ## Goal & business context
@@ -37,6 +37,14 @@ hits and original p95 budgets. No diagnostic overrides or --probe. MS07d merge r
 mixed records. Captured request errors/timeouts remain misses; worker/IPC loss is a failed run.
 Only after complete validation derive offered arrays, preserving global level order and S-OD7.
 Use r5p's **board-default attempts**, never an explicit eight-attempt qualifier override.
+
+**Timed-run readiness:** the owner confirmed all Pentomino tasks stopped at 16:42 (+07:00)
+on 2026-11-18; no new pause request is needed. Before each timed GQ cell (and a conditional
+CV6 timing run), apply check-list section 7's quiet-machine precondition under the normal
+shared slot/locks. Keep its observations and waits separate from raw request times.
+No new qualification sharding, scheduler change or altered jobs/40-100 protocol follows.
+Plans precede phases, owned helpers are formatted before freezing, and S-OD12/S0 plus
+the QUESTION pause remain binding.
 
 **S-OD4 (c1), required for every offer:** at least 36 exact hits of 40 or 90 of 100 and p95 within
 2/10/30 seconds for <=36/<=81/>81 cells. A bounded fallback, shallow result or timeout is a miss;
@@ -235,8 +243,9 @@ not acceptance. No whole Greater-Than corpus or other CV6/I5 selector is added h
 Hand this record and its identity to MS18e for coverage reconciliation; any later changed
 contract/fingerprint requires the normal compatibility/replacement handling.
 
-GQ jobs 4; estimate 10-540 seconds/cell, 1-12 hours total planning allowance.
-**Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
+GQ jobs 4; use credible per-cell <=450 s whole-command projections, including any
+in-command readiness check; 1-12 hours remains only a total planning allowance.
+Announce the plan, obtain the shared slot and record each cell's quiet-machine precondition.
 Stop an invocation at 540 seconds. A slow cell without an existing bounded route is a named
 availability item; continue safe cells and independent audit work, never invent a hidden verdict
 or a new tooling class. **Do not publish an incomplete matrix.** The final record must say if
@@ -260,7 +269,7 @@ for an assigned compatibility fix; never invent a qualified level.
 
 ## Resume rules — S-OD4
 
-Review: analyst cross-review. Correctness/evidence corruption or changing a recorded decision
+Review: SA1 cross-review. Correctness/evidence corruption or changing a recorded decision
 stops; time/availability is a named numerical item, not an owner stop or offer waiver.
 Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s; preserve GQ jobs 4 and the
 current bounded quick manifest. Any authorized new suite owns its r6c CI group/manifest entry.

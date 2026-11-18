@@ -6,6 +6,7 @@
 | Size / active time | Small; 25-40 minutes plus GS |
 | Owner / milestone | Evidence; M18b defaults reconfirmed or escalated |
 | Authority | R5/R9/R24 |
+| Review | Orchestrator template/contract review; SA1 cross-review at MS18c |
 | Status | Not started |
 
 ## Goal & business context
@@ -34,10 +35,21 @@ Window: classic9/diagonalX/jigsaw9 nightmare, 12 requests each for C4 and C6 => 
 More total exact hits wins; tie 6. Total 360 requests. Same base 20260101/routes/budgets/configuration
 as original experiments, changing only the dimension being measured. All failures are misses.
 Use the other default currently in force; never run both overrides in one comparison request.
-Resume anchors at `c9935cd`: `generator/tests/soak.js:378` (`seedFor`), `:388-403` (`generateOne`),
-`:484` (generation timer). Find symbols after later changes; overrides come from r3/MS07c.
-The R5 default in force is 256 unless a later recorded decision changed it; r5p did not reselect it.
+Anchors verified at `57c1b10`: `generator/tests/soak.js:428` (`seedFor`), `:439` (`generateOne`),
+`:537` (generation timer), `:875` (`metaOf`); overrides come from r3/MS07c.
+At accepted MS17b, R5 is **256** and C is **4**. Verify MS18a's unchanged-source handoff
+and retain its full baseline/item register. `limits-v3.md` freezes only section 1's
+new-pattern limits with the version; section 3 records R5/C/attempts separately.
+These rechecks neither silently select a new production value nor add an 8/4/2 experiment.
 Keep size-dependent attempt defaults and the unchanged six-cell/three-cell populations.
+
+The owner confirmed Pentomino tasks fully stopped on 2026-11-18 at 16:42 (+07:00);
+no further owner pause request is needed. Apply check-list section 7's **quiet-machine
+precondition before every timed cell/shard**, retaining observations separately from the
+tool's timings. The shared slot, locks, admission, process ceiling and gaps still apply.
+Write/read back each bounded phase plan first; format owned helpers before freezing.
+S-OD12/S0 grants no new acquisition route. Any unresolved choice triggers the existing
+QUESTION pause before acting, not a post-run decision for the reviewer.
 
 ## Files to create/modify
 
@@ -79,9 +91,12 @@ node tests\soak.js --variant=classic9 --level=normal --count=12 --seed=20260101 
 node tests\soak.js --variant=classic9 --level=nightmare --count=12 --seed=20260101 --no-gate --chain-window=4 --json=..\docs\difficulty-v3\evidence\MS18b\window-4\classic9-nightmare.json
 ```
 
-Repeat all cap cells/settings and window cells/settings. Jobs 1/no --jobs. Estimate 10-540
-seconds/cell, approximately 1-5 hours total; 540-second process ceiling.
-**Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
+Repeat all cap cells/settings and window cells/settings. Jobs 1/no --jobs. The historical
+1-5-hour total is planning context, not a launch bound. Each complete command, including
+any in-command readiness check, needs a credible <=450 s projection and retains the
+540-second process-tree ceiling. Use existing absolute-index shards where necessary,
+keeping `--total-count=12`, distinct setting identities, original routes and reference endpoints.
+Announce the plan, obtain the shared slot and record the per-cell/shard quiet precondition.
 Evidence-only; no new application test or blanket hash rewrite. Incomplete evidence blocks the milestone.
 
 ## Definition of done & handoff
@@ -92,7 +107,8 @@ before qualification rather than mixing source identities.
 
 ## Resume rules — S-OD4
 
-Review: orchestrator only. A changed selected cap/window needs the recorded owner decision before
+Review: orchestrator template/contract review, not routine analyst cross-review.
+A changed selected cap/window needs the recorded owner decision before
 GQ-final; correctness/evidence corruption also stops. Mere time/availability findings are named
 numerical MS18c/MS18d items and other bounded work continues, not an automatic tooling task.
 Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s, with existing exact-index shards.

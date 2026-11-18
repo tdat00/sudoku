@@ -17,7 +17,8 @@ puzzle hashes after publication. A hash-only pass is not a timing gate.
 
 In: published qualification-derived target rule, full GP, full GG check and evidence.
 Out: performance-driven algorithm tuning, arbitrary target relaxation, canonical hash rewriting.
-AGENTS/checklist; no Git/pack/log edits; timing runs serialized with Pentomino.
+AGENTS/checklist; no Git/pack/log edits; shared-machine slot/locks and timed-run readiness
+follow check-list section 7.
 
 ## Inputs & context
 
@@ -33,6 +34,13 @@ Aggregate success requires >=90% of these cells meeting their target, not 90% of
 Individual misses remain visible. A crash/missing result is not merely a slow cell.
 The existing perf CLI uses strict `p95 < target`; qualification uses `p95 <= budget`. Preserve that
 distinction rather than silently making a boundary miss pass.
+
+**Timed-run readiness:** the owner confirmed all Pentomino tasks stopped at 16:42 (+07:00)
+on 2026-11-18; no new pause request is needed. Before each timed cell, including the
+separately owned S-AV11 profile, apply check-list section 7's quiet-machine precondition.
+Keep its observations/waits outside the tool's request times; no warmup, timing correction,
+new split or retry-to-pass follows. Plans precede phases, owned helpers are formatted before
+freezing, and S-OD12/S0 plus the QUESTION pause remain binding.
 
 Allowed target rule from perf-helper: keep an existing target while qualification p95 meets it;
 for a new/outgrown target use ceil(3*qualification p95), never below the preceding applicable target
@@ -181,8 +189,9 @@ node tests\perf.js --hash-merge=..\docs\difficulty-v3\evidence\MS18d\hashes --ch
 Persist each command's transcript under evidence/MS18d with its exit code. Complete all E hash
 identities before merge; no --update-hashes. Jobs 1/no --jobs. Use the recorded per-cell preflight
 projections, not an assumed 1-540-second allowance; summed projections give the GP planning total.
-GG is approximately 10-90 minutes. **Announce to the orchestrator before starting (pentomino runs
-in parallel on the same machine).** Enforce the 540-second process ceiling; do not silently split runs
+GG is approximately 10-90 minutes. **Announce the plan, obtain the shared slot and record
+each timed cell's quiet-machine precondition.** Include any in-command readiness work in
+the admission projection. Enforce the 540-second process ceiling; do not silently split runs
 with changed cold/warm timing semantics. If no authorized safe route exists, retain a named
 unmeasured-cost item and the incomplete aggregate rather than create another tooling task.
 If files changed: Generator `--suite=perf-tooling,smoke,help` and both quick sets.
