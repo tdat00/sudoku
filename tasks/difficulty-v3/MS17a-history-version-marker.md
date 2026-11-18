@@ -8,7 +8,7 @@
 | Owner / milestone | Generator history; M17a |
 | Authority | R22; SA1-Q-S6, SA2-Q-S07; S-OD4 and S-OD12/S0 |
 | Review | Orchestrator template/contract review; MS17b is the next SA1 task |
-| Status | Not started; ready for serial dispatch from `d41a6dd` |
+| Status | Pre-implementation Q1-Q5 settled below; resume only on the orchestrator's explicit relay |
 
 ## Goal & business context
 
@@ -137,6 +137,86 @@ Make the visible note and explanatory text truthful about recipes/current-model 
 (a compatible cache may serve the result). Correct the unqualified "same seed, same puzzle"
 header/living history wording; do not promise the same or a necessarily different grid across
 versions. Preserve the existing same-engine deterministic-recipe test rather than weakening it.
+
+### SA2 rulings — pre-implementation Q1-Q5, 2026-11-18
+
+The developer stopped correctly before editing or starting a phase. These choices need
+no owner escalation. Resume only on the orchestrator's explicit answer/resumption;
+the remaining pause, planning, formatting and gate rules still apply.
+
+**Q1 — modified A: visible regeneration notice, supplementary title.**
+Use the two proposed keys below. For an earlier/unknown entry, add a visible note span
+inside its existing open button, reusing `history-item__meta`; replace that button's
+`title` with the second string. Keep the existing level/score/seed line and open behavior.
+Current/future entries retain `history.open.title` and get no new note.
+The essential regeneration statement is visible, not available only on hover.
+`components.css` already gives the open button a column layout and the metadata text
+`overflow-wrap:anywhere`; no CSS edit is needed.
+
+The **exact rendered texts** are:
+
+| Key | Language | Text |
+|---|---|---|
+| `history.item.earlier` | EN | Made by an earlier version; selecting this entry regenerates the puzzle using the current rating model. |
+| `history.item.earlier` | VI | Do phiên bản cũ hơn tạo; chọn mục này sẽ tạo lại đề bằng mô hình tính điểm hiện tại. |
+| `history.item.earlier.title` | EN | History stores the seed and settings, not the puzzle. Regeneration uses the current rating model, so the puzzle, difficulty level or score may change. A compatible cached result may be reused. |
+| `history.item.earlier.title` | VI | Lịch sử lưu seed và các tùy chọn, không lưu đề. Khi tạo lại, đề, mức độ khó hoặc điểm có thể thay đổi theo mô hình tính điểm hiện tại. Có thể dùng lại kết quả trong bộ nhớ đệm nếu còn phù hợp. |
+
+No `{version}` or other new placeholder is wanted: unmarked entries have no proven
+numeric producer. Preserve the existing placeholder/EN-VI parity checks, and test the
+new visible text and conditional title through the controller in both languages and
+after a locale change. Wrap long JS literals by concatenation while keeping these exact
+rendered spaces/punctuation; complete formatting before the replay freeze.
+The word "regenerates" describes the existing recipe action, not a promise of a different
+grid or fresh computation when a compatible cached result can be served.
+
+**Q2 — accept the rendering/persistence cases, but keep the predicate private.**
+A valid marker is `Number.isInteger(v) && v > 0`; invalid/missing values follow the
+unmarked branch and are omitted on persistence without dropping the recipe.
+Validate the current `SG.difficulty.RATING_VERSION` the same way: if the namespace or
+current value is unavailable/invalid, do not invent a current version or compare a valid
+numeric marker to it. An unmarked entry still gets the generic legacy note.
+With a valid current value, a smaller positive marker gets the note; equal/future markers
+do not. Do not label a future marker as current or earlier, coerce strings, or add a new
+"future version" message.
+
+This display is **history-panel only**, not a new export/print-picker UI.
+Do **not** export `SG.history.isEarlier` or add a new public signature to the developer
+guide. A private helper is fine; controller-level tests can exercise every branch with
+isolated SG/DOM state, so no public test seam or global-version mutation is necessary.
+Explain the marker/display contract in the existing guide prose instead.
+
+**Q3 — accept A, reject B.** Keep whole-entry replacement and `touch:false` behavior.
+If the new result has no valid producer marker, the replacement has none. Do not inherit
+the old stamp or manufacture today's: either would attribute a producer the new result
+does not establish. A supplied valid positive marker is copied as supplied, not upgraded.
+Use a controlled/cloned result to test this missing-marker replacement at the same
+recipe ID and list position; no change to the production generator is required.
+
+**Q4 — confirm the stated E/GH scope, with the record/fixture distinction explicit.**
+Write fresh **MS17a evidence ledgers** for all five wires, merge-check, then all fourteen
+analyses and merge-check. The **canonical fixtures**, not those evidence ledgers, remain
+unwritten. Read-only merge-check the retained complete MS16 520-key ledgers under the
+unchanged hash identity; no new hash generation or writes. Run the existing all-40 GH
+check with `--max-puzzles=64 --max-hints=400`, no discovery or write.
+These are all the E/GH requirements intended here; the focused gates, both complete
+quick sets, final CI check/fingerprints and unexpected-change QUESTION gate still apply.
+Keep the original requests and G13's 120000 ms recorder guard.
+
+**Q5 — accept the proposed directly related documentation scope.**
+The history paragraph in `generator/design.md` around line 1360, the history-regeneration
+part of its print/export paragraph around 1463 and the section 14.3 row around 2021
+are all owned. Reword recipes/current-model regeneration and conditional cache reuse;
+replace unsupported "before rating v2" claims with the truthful marker/unknown-producer
+description. Do not imply that old stored levels/scores are re-rated on read.
+Update the history passages of both user guides (EN/VN), the corresponding developer-guide
+prose, Generator section 15.1 test totals, both developer-guide totals and the MS17a notes.
+Preserve qualified same-engine recipe determinism and all unrelated documentation.
+
+This grants no export/print, store/cache or Player production edit and no public predicate
+API. History envelope stays 1; rating/cache stay 2 until MS17b. Finish fingerprinted
+documentation/count changes before the final quick pair; the manifest's final metadata
+must precede its CI check.
 
 ### Anchors verified at d41a6dd
 

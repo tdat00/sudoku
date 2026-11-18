@@ -185,7 +185,10 @@ No intermediate pruning. Parent milestones are not additional waves or commits.
 after orchestrator template review, rechecks and Q6's evidence corrections. MS15b (`8b26e83`),
 MS15a (`b958a58`, SA1 accepted), MS14c (`6a9fbf6`; M14 complete), MS14b (`0e3a0c4`),
 MS13c (`9d58d86`) and resolved JF-02/S-OD12 (A + S0) remain prior boundaries.
-**MS17a is ready to dispatch**, then MS17b -> MS18a and the unchanged remainder.
+**MS17a's pre-implementation Q1-Q5 are settled in its brief** after a correct pause before
+any edit: exact bilingual visible note/title, private comparison logic, actual-producer
+replacement, source-aware E/GH and directly related doc scope. Resume only on the
+orchestrator's explicit relay, then MS17b -> MS18a and the unchanged remainder.
 The named S3 catalogue is complete: no extra technique cleanup or limit selection is
 assigned to the history step. MS16-Q6's fixed-source lineage, missing QUESTION pause and
 G3 candidate-count disclosure remain audit history, not a standing source/count exception.
