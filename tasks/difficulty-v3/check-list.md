@@ -185,8 +185,11 @@ No intermediate pruning. Parent milestones are not additional waves or commits.
 after orchestrator template review and rechecks. MS16 (`d41a6dd`), MS15b (`8b26e83`),
 MS15a (`b958a58`, SA1 accepted), MS14c (`6a9fbf6`), MS14b (`0e3a0c4`), MS13c (`9d58d86`)
 and resolved JF-02/S-OD12 (A + S0) remain prior boundaries.
-**MS17b is ready to dispatch**, then MS18a -> MS18b -> MS18c and the unchanged final
-remainder. It receives **SA1 cross-review before acceptance**, not template-only review.
+**MS17b's pre-implementation Q1-Q5 are settled in its brief** after a correct pause:
+strict rating/flag boundaries, full canonical rating comparison, the conservative model
+projection, current-vs-historical pins and source-qualified phase ordering. Resume only
+on the orchestrator's explicit relay, then MS18a -> MS18b -> MS18c and the unchanged
+final remainder. It receives **SA1 cross-review before acceptance**, not template-only review.
 The named S3 catalogue is complete; no new technique, weight, limit selection or corpus
 campaign is assigned to this version/cache step.
 MS17a preserves history envelope 1 and actual producer markers. Its explanatory title

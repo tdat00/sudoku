@@ -8,7 +8,7 @@
 | Owner / milestone | Generator integration; M17 release candidate frozen |
 | Authority | R20/R22; SA2-Q-S05/S07/S10 |
 | Review | SA1 cross-review before orchestrator acceptance; not template-only |
-| Status | Not started; ready for serial dispatch from `5b94904` |
+| Status | Pre-implementation Q1-Q5 settled below; resume only on the orchestrator's explicit relay |
 
 ## Goal & business context
 
@@ -154,6 +154,143 @@ Retain the target/work compatibility tests and shallow-result warning assertions
 Exercise classification/model mismatch through the controller's real regeneration/stale
 path as well as deserialization. Keep the existing comparator private; do not add a public
 test-only comparison API.
+
+### SA2 rulings — pre-implementation Q1-Q5, 2026-11-18
+
+The developer stopped correctly before implementation or phase execution. These choices
+need no owner escalation. The two short metadata commands belong in the disclosed run
+record; they are not generation or completed validation gates. Resume only on the
+orchestrator's explicit relay/resumption.
+
+**Q1 — accept strict validation, with these precise bounds and local consistency checks.**
+The rating must be a non-null, non-array record with all ten named fields present as own
+properties; missing/undefined is not a nullable field. Extra fields are ignored.
+
+| Field | Cache admission rule |
+|---|---|
+| `level` | String member of `SG.difficulty.LEVELS`; not a requirement that the achieved fallback level is offered by the variant |
+| `score`, `rawScore` | Numeric finite integer `score >= 0`; `rawScore === score`, without coercion |
+| `confidence` | Numeric finite value in `[0,1]` |
+| `hardestTechnique`, `hardestGroup` | Both null, or a registered technique id with `hardestGroup` exactly equal to that technique's registered group. An arbitrary string group is not sufficient |
+| `solved` | Exactly `true` for own-cache admission |
+| `empties` | Integer in `[0, model.cellCount]`; model/cell-count shape must be usable, not guessed |
+| `techniqueCounts` | The valid map defined in Q3, with no manufactured empty-map default |
+| `ratingVersion` | Exactly the valid numeric current `SG.difficulty.RATING_VERSION` (3 after this task), not a parsed/coerced value or an inferred stamp |
+
+This is shape/local-consistency validation, **not** a new rating proof. Do not recompute the
+score/confidence, choose the hardest technique from the counts, derive exactness, recount
+solutions or run a solver. The direct registered-id/group check is intentional and cheap.
+Do not treat matching metadata as proof of canonical origin; the existing producer/model/
+givens preconditions remain. No guessed version, count, score or boolean repairs an invalid entry.
+
+`solved:true` is this cache's admission rule, **not** a claim that every Generator rating
+is solved. Canonical unrated ratings with null score/level exist and remain outside the
+cache, without changing how the generator/app handles them.
+
+**Q2 — accept validation in `serialize` and before `fromWire`.**
+Require an **own** `exact` property whose type is boolean, plus the Q1 rating, on both
+the result-side write boundary and the raw decoded wire. Throw the existing
+`GenerationError('unexpected')` via the cache's invalid-data path on failure.
+`putResult`/public `put` keep their existing catch-and-false behavior.
+Share the validator with `verify`; a check only after `fromWire` is insufficient.
+
+The earlier write refusal of an unrated result is accepted: do not store something the
+cache already refuses to serve. Do **not** describe unrated production states as
+unreachable or change generator handling to make them disappear. Cover this cache-only
+refusal with a controlled canonical-unrated result. Do not harden the generic low-level
+store adapter into a different API, change `pipeline.toWire/fromWire`, or remove their
+legacy worker compatibility. An explicit valid false flag still survives unchanged.
+
+**Q3 — accept the count normalization and conservative model policy; expand rating equality.**
+Both sides must have explicit boolean exactness and a Q1-valid rating. Missing/malformed
+comparison input is **not equal**, using the existing stale/regeneration path, never a
+match through defaults or a swallowed metadata error.
+
+Compare givens/solution, exact, and the complete standardized rating tuple:
+**level, score, rawScore, confidence, hardestTechnique, hardestGroup, solved, empties,
+ratingVersion, normalized techniqueCounts**. Q1 already makes rawScore equal to score
+and binds group to technique, so redundant physical checks need not be duplicated.
+The other rating fields are not timing diagnostics: a changed stored rating must not
+silently match just because score/level/counts happened to match. No re-rating is needed.
+Ignore extra rating fields and, as proposed, warnings, attempts, work, timings, target,
+config and trace for this equality; preserve their existing validity, key/identity,
+transport, retrace and controller rules rather than removing those checks.
+
+A count map is an ordinary/null-prototype dictionary, not an array or other collection.
+Validate **every own enumerable key**, even one whose value is zero: a current registered
+id and a non-negative safe integer value are required. Drop valid zeros and sort keys on
+an owned projection for equality; never mutate the original map. `{}` is valid, missing
+is invalid. Do not relax unknown ids or coerce strings/fractions.
+
+The proposed model field set is accepted for current canonical `SG.model.create` outputs:
+variantId/cellCount/digits, fixedCells, layout rows/cols/cellRow/cellCol/cellRegion, overlays
+(kind and cell membership), subGrids, index-aligned units with kind/gridIndex/partial,
+cages with cells/sum/distinct, and directed inequalities.
+Exclude unitMeta.label, symbols mode/labels and derived cellUnits/peers.
+At this base `model.create` normalizes unit metadata to those three non-display fields
+plus label; partial absence is the canonical false case.
+
+Keep the **outer** order of units/cages/signs/overlays/subGrids strict. Sort copies of
+unordered membership cell lists, retaining lengths/multiplicity; do not deduplicate bad
+data, sort the board-indexed vectors, or reverse inequality endpoints. Preserve input
+purity and compare element values, not object/typed-array identity. A representation
+permutation can conservatively be non-equal; that is not a claim that it proves a
+different mathematical puzzle. No graph-isomorphism/import-normalization framework is
+assigned. Structurally malformed compared model data cannot match.
+
+Add focused coverage of the tightened group/empties bounds and a changed otherwise
+well-typed rating field, as well as the proposed classification/model/count cases.
+Exercise the controller stale path and preserve the no-new-solve and purity premises.
+
+**Q4 — accept the listed header/pin/legacy-stub choices, with precise gate staging.**
+Both `difficulty.js` current-producer headers (line 2 and the rating shape around 513)
+become v3. The current producer assertions at manual lines 783, 786-791 and 1396 become 3.
+Also rename the current-classifier group `difficulty: the score of rating v2` to
+`difficulty: the score of rating v3`; record the rename and derive GD selectors from
+the new inventory. This does not rename historical v2 reference/certificate material.
+
+Keep the listed fake-worker version at manual 399, rendering/reference stubs at replay
+1711 and diagnostics 171, and diagnostics' deliberately differing manifest versions
+3/4 at 827/886. They are controlled inputs, not assertions about today's producer.
+Keep dynamic uses dynamic and retain old imports/history/worker/proof-version cases.
+List the before/after changes and unchanged-intent cases; no global 2-to-3 replacement.
+
+It is acceptable to schedule the **replay suite after the complete wire publication**
+as a fixture consumer; mark it as scheduled/not yet run, not as a fabricated version-only
+failure or a pre-freeze pass. Do **not** defer pipeline or worker speculatively:
+they have no identified saved-wire dependency at this base, and their fresh-producer/
+wire-compatibility checks belong in the pre-freeze focused work.
+Any further deferred case must have its exact name and actual old-wire dependency
+identified in the plan. No blanket expected-red suite/exception allowance follows.
+After wire publication, run every deferred consumer and all final required coverage.
+Any other/unexplained failure uses QUESTION before a pin or source repair.
+
+**Q5 — accept the overall sequence with source-qualified mutation/format ordering.**
+
+1. Plan D, implement code/current producer pins and source headers, and perform focused
+   validation (with Q4's explicit replay staging). Finish the documentation/count
+   premises before running tests that read them.
+2. Format the **target source and tests before the mutation run**, retain its first run,
+   and identify its bytes/selectors. Do not leave source-comment/code rewraps until after
+   claiming final-source mutation coverage. If a target or relevant test changes, keep
+   the old result and rerun the affected set on the final bytes. A timeout, script error
+   or absent result is not a detected mutant.
+3. Confirm the limit-inventory audit and source-affecting documentation are complete,
+   resolve every outstanding interpretation, then format-check/freeze. Ordinary guide/notes edits
+   outside E inputs can be finalized later, before their quick fingerprints.
+4. E stays **five wires -> merge-check (declared version-only exit 1) -> exact explanation
+   -> complete write -> check -> deferred consumers -> fourteen analyses -> 520 hashes**.
+   The latter two families are expected check-only against canonical values.
+   Apply IR12 per-item projections/admission to compounds; "under 450 seconds" alone
+   is not a plan. The 540-second process ceiling stays.
+5. GH, bounded GD, then all final fingerprinted docs/counts before the complete quick
+   pair. Finish projections/manifest metadata **before** the final CI check.
+   Final fingerprint/E-identity reads and evidence-only completion follow that check.
+
+SA1 cross-review remains required before acceptance. A review, mutant or gate fix that
+changes included bytes invalidates the affected E families and quick-source coverage
+under the existing rules; no review exemption or retagging. None of these rulings grants
+new source acquisition, finder tuning, version-independent schema changes or extra scope.
 
 Keep exports' existing positive ratingVersion field and no external floor/target/work certificate.
 Do not blindly replace literal 2 in legacy/stub/import tests or old help source text.
