@@ -181,21 +181,19 @@ MS14a/MS15a kernels likewise precede their registrations. Final GQ is MS18c,
 after all S3, MS17b and final rechecks MS18b.
 No intermediate pruning. Parent milestones are not additional waves or commits.
 
-**Current serial handoff, 2026-11-18.** MS16 is accepted and committed at **`d41a6dd`**,
-after orchestrator template review, rechecks and Q6's evidence corrections. MS15b (`8b26e83`),
-MS15a (`b958a58`, SA1 accepted), MS14c (`6a9fbf6`; M14 complete), MS14b (`0e3a0c4`),
-MS13c (`9d58d86`) and resolved JF-02/S-OD12 (A + S0) remain prior boundaries.
-**MS17a's pre-implementation Q1-Q5 are settled in its brief** after a correct pause before
-any edit: exact bilingual visible note/title, private comparison logic, actual-producer
-replacement, source-aware E/GH and directly related doc scope. Resume only on the
-orchestrator's explicit relay, then MS17b -> MS18a and the unchanged remainder.
-The named S3 catalogue is complete: no extra technique cleanup or limit selection is
-assigned to the history step. MS16-Q6's fixed-source lineage, missing QUESTION pause and
-G3 candidate-count disclosure remain audit history, not a standing source/count exception.
-MS17a preserves history envelope 1 and actual producer versions; rating/cache remain 2
-until MS17b. Its leaf explicitly owns fresh replay records for the Generator-UI identity
-change, retained hash-ledger checks, all-40 GH check-only and final quick/CI closure.
-Read that source-aware gate before treating the UI-only task as "no E".
+**Current serial handoff, 2026-11-18.** MS17a is accepted and committed at **`5b94904`**,
+after orchestrator template review and rechecks. MS16 (`d41a6dd`), MS15b (`8b26e83`),
+MS15a (`b958a58`, SA1 accepted), MS14c (`6a9fbf6`), MS14b (`0e3a0c4`), MS13c (`9d58d86`)
+and resolved JF-02/S-OD12 (A + S0) remain prior boundaries.
+**MS17b is ready to dispatch**, then MS18a -> MS18b -> MS18c and the unchanged final
+remainder. It receives **SA1 cross-review before acceptance**, not template-only review.
+The named S3 catalogue is complete; no new technique, weight, limit selection or corpus
+campaign is assigned to this version/cache step.
+MS17a preserves history envelope 1 and actual producer markers. Its explanatory title
+belongs only to an earlier entry's open button; no second note-span title is needed.
+Rating/cache are still 2 and become 3 atomically in MS17b; worker wire stays 1 and grouped
+proofVersion stays 2. Old positive imports, history recipes and historical v2 certificates
+remain their own evidence. MS16-Q6's provenance/pause/count disclosures stay in the audit.
 Keep the existing pre-ALS recipes unchanged; current-ladder integration remains current.
 Keep the assigned
 MS14a/MS13c wave numbers 34/35; do not renumber IDs, change Done marks or rewrite historical
@@ -203,40 +201,47 @@ logs. MS14a requires MS13b, MS13c also waits for accepted MS14a, and MS14b expli
 both MS14a and MS13c. The parent MS14 dependency governs activation/closure, not this inactive
 preparation. No further later task may run ahead. Preserve the completed task logs; never park
 a dirty task or run a second developer. The owner questions/answers remain in the archive.
-MS14b, MS14c, MS15b and MS16 received the orchestrator's MS08a/IR72 template and generic
-soundness/order review, not routine SA1 review. **MS17a receives orchestrator
-template/contract review; the next SA1 task is MS17b.**
+MS14b, MS14c, MS15b, MS16 and MS17a received orchestrator template/contract review.
+**MS17b is the current SA1 cross-review task.**
 A specific unresolved question is routed by the orchestrator.
 
-MS16 completed fresh **5-wire -> 14-analysis -> 520-hash** E, all-40 GH and quick/CI closure.
-Its accepted replay identity is `20d5873d...`, hash identity `8740fd9e...`: canonical wires
-and analyses were unchanged; only `classic9/nightmare#377` changed among the hashes.
-**MS17a's history edit changes both replay-family identities** because the replay recorders
-hash the Generator's whole source list, UI included. Record five fresh wires, merge-check,
-then fourteen fresh analyses and merge-check, with no canonical writes expected.
-The hash recorder excludes Generator `js/ui` and `js/worker`: retain MS16's complete 520
-ledgers only with the current identity/complete merge-check. Do not retag replay records,
-generate hashes unnecessarily or change the identity rules. MS13b is the source-aware precedent.
-Format-check history comments/strings/code before every replay freeze and verify each plan
-before launch; an unexpected identity/value/GH change is a QUESTION before any refresh.
+MS17a recorded fresh five-wire/fourteen-analysis E at replay identity `9023f9eb...`,
+retained and merge-checked MS16's 520 hashes at `8740fd9e...`, and kept all canonical values
+and 40 GH examples. **MS17b's producer-version edit invalidates both source identities.**
+It owns fresh **5 wires -> 14 analyses -> 520 hashes**. The expected canonical change is
+the five wires' `rating.ratingVersion` **2 -> 3**, not worker `v:1`: merge-check, explain
+the exact path/value deltas, publish from the complete wire family and recheck before
+analysis recording. `goldenOf` does not project the version, and `perf-helper.serialize`
+does not hash it: analyses and puzzle hashes are expected unchanged, not automatically
+rewritten. No retained/retagged old-identity ledger substitutes for fresh records.
+All-40 GH is check-only; unexpected non-metadata differences or missing examples require
+QUESTION before writes/refreshes. Format included-source comments/code before freezing
+and verify each bounded plan before launching.
 
-The accepted baseline is **4,755 Generator tests (549.4 s) / 2,978 Player tests (116.8 s)**,
+The accepted baseline is **4,769 Generator tests (543.9 s) / 2,978 Player tests (118.9 s)**,
 55/32 suites, catalogue **40 / 34 unscoped**. Projections are **core-shared 170, steps 70,
 replay 70, mega 50, own-fast 320, digger-target 30, pipeline 80, Generator player shard 90,
-Player job 180**. MS17a records the full fingerprints (Generator `c72462e8...`, Player
-`437d759f...`). Use the four bounded Generator groups and derive final counts/fingerprints;
+Player job 180**. MS17b records the full fingerprints (Generator `bae8cc89...`, Player
+`1dfe66ea...`). Use the four bounded Generator groups and derive final counts/fingerprints;
 preserve suites, membership, assertions and prior coverage. Final CI metadata precedes its
 final check; no tier/factor/workflow-limit changes follow.
 
-Preserve active ALS-XZ, Sue de Coq (196 / 1300, own work 50,000), leftovers and the grouped
-chain policy/consumers. MS14b retained 2/4/50,000; MS15b retained shared **4/4,096/50,000**;
-MS16 retained its separate **50,000** and recorded one lost Finding at a seeded work cap.
-No unused R10 adjustment rolls forward to MS17a/b. Carry **S-AV36-S-AV39, MS15b-Q6,
+MS17b's leaf inventories every selected finder/pass default and owner decision for
+`limits-v3.md`, including the independent fish/wing counters, UR's two separate 50,000
+passes (no three-real-cell cap), nishioDeep/XY, grouped **4,096/50,000** plus S-OD11's
+short-only locally uncapped fallback, leftovers **2/4/50,000**, shared ALS **4/4,096/50,000**
+and Sue de Coq's own **50,000**. C is **4** (short 1..4 / long 5..12), not the report's
+initial 6. Record R5 **256**, attempts **8/4/2** and the restored first-allowed sign pass
+separately; MS18b's planned comparisons do not license silent tuning.
+No unused introducing-task adjustment rolls forward. Carry **S-AV36-S-AV39, MS15b-Q6,
 MS15b-GP-J, MS15b-GP-U and MS16-Q6**, their distinct populations and all other inherited
 items. MS15b's 37-cell GP remains one full record, one pilot-only cell and 35 unmeasured;
-MS16 added no generation-GP campaign. MS17a adds none; final qualification/cost/audit stay
-with MS18c/MS18d/MS18e. S-OD12/S0 grants no standing source scan, and the history task
-inherits no new-ID discovery quota. Full scope and the S-OD4 review matrix are unchanged.
+MS16/MS17a added no generation-GP campaign and MS17b adds none. Scoped GD is the complete
+current manual `difficulty` inventory under FS09, unchanged per-level 100/20 counts and
+all non-batch groups, with credible <=450 s command projections. Unsafe/unexecuted groups
+and real availability/time failures remain explicit items, not a partial-GD pass.
+Final variant I5/CV3/deep and qualification/cost/audit ownership stay with MS18c/d/e.
+S-OD12/S0 grants no standing scan or new-ID discovery quota. Full scope/review rules stay.
 
 **Preservation:** no reset/discard of b1, provisional allowance, off-by-default switch, seed
 substitution, browser-budget raise or further checkpoint branch commit. G13 persistence and
@@ -1068,9 +1073,9 @@ It does not broaden output-change, finder-activation or fixture-update authority
 | Gate | Owner | Required command / result |
 |---|---|---|
 | GS-before | MS02 | `node tests\soak.js --variant=<id> --level=<level> --count=12 --seed=20260101 --no-gate --json=..\docs\difficulty-v3\evidence\MS02\<id>-<level>.json`; all 17 cells below |
-| GG | MS04, MS05r6a, MS06c2, MS07b/c, MS08a/b/c, MS09a/b, MS10a/b, MS11a/b/c, MS12, MS13c, MS14b, MS15b, MS16; source-changed inactive tasks under the rule above | Complete E 520-key recording; inspect intended differences before write/check. Inactive closure (MS13a now): fresh ledgers/check-only, no canonical updates. Recovery always records final-source E; b1/r3/r4 has no independent GG acceptance. Later selectors refresh if the default changes. Check-only: MS05r6b, MS06c1, MS07e, MS17a (retained current-identity MS16 ledgers; no new generation), MS18d. |
-| GR | Same behavior owners, plus MS05a, MS06c1, MS17a and MS17b; source-changed inactive tasks under the rule above | After r6a: complete E five-wire/fourteen-analysis record/merge/write/check; G09-G13 wires, G01-G14 analyses. Inactive closure records/checks affected complete families without canonical updates. MS17a's Generator-UI source edit requires fresh 5+14 replay records/checks, expected unchanged canonical values, no write. Earlier four-wire evidence stays historical. r6b checks current merges. MS06c1 permits only target metadata, not changed puzzles/ratings/old operations. |
-| GH | MS04 if affected; MS07b/c, all introducing/enhanced-proof tasks through MS16; inactive check-only closure under IR72; MS17a all-40 check-only | B bounded real sources, E write/check for every affected ID. Inactive kernels/tests-only tasks run complete GH --check, with no discovery or write; MS14c changes no finder. MS17a retains the catalogue and owns only its current all-ID check, no source acquisition or refresh. |
+| GG | MS04, MS05r6a, MS06c2, MS07b/c, MS08a/b/c, MS09a/b, MS10a/b, MS11a/b/c, MS12, MS13c, MS14b, MS15b, MS16, MS17b; source-changed inactive tasks under the rule above | Complete E 520-key recording; inspect intended differences before write/check. Inactive closure: fresh ledgers/check-only, no canonical updates. MS17b also needs fresh 520-key ledgers because the version literal changes the source identity; serialized puzzle hashes exclude the rating/version, so values are expected unchanged and no hash write is authorized merely by the bump. Recovery always records final-source E; b1/r3/r4 has no independent GG acceptance. Later selectors refresh if the default changes. Check-only reuse: MS05r6b, MS06c1, MS07e, MS17a (current-identity MS16 ledgers); MS18d owns final-source closure. |
+| GR | Same behavior owners, plus MS05a, MS06c1, MS17a and MS17b; source-changed inactive tasks under the rule above | After r6a: complete E five-wire/fourteen-analysis record/merge/write/check; G09-G13 wires, G01-G14 analyses. Inactive closure records/checks affected complete families without canonical updates. MS17a's UI edit needed fresh 5+14 records, values unchanged. MS17b expects five wire producer-version changes 2 -> 3: explain/publish/check the complete family before analyses. Analyses are freshly recorded but expected unchanged; no version field is projected. Earlier four-wire evidence stays historical. r6b checks current merges. MS06c1 permits only target metadata, not changed puzzles/ratings/old operations. |
+| GH | MS04 if affected; MS07b/c, all introducing/enhanced-proof tasks through MS16; inactive check-only closure under IR72; MS17a/MS17b all-40 check-only | B bounded real sources, E write/check for every affected ID. Inactive kernels/tests-only tasks run complete GH --check, with no discovery or write; MS14c changes no finder. MS17a/MS17b retain the catalogue and own only their current all-ID checks, no acquisition or refresh. |
 | GQ-first | MS07e, merger prepared in MS07d | All Q135 cells, `--jobs=4`, per-cell JSON/markdown, checked complete merge; checkpoint-only report, no support changes. |
 | GD | MS04; MS05r6b; MS07e; MS17b; MS18e | Bounded difficulty coverage below; historical MS04 also ran killer/greater-than. MS05r2/MS07d use only fast fake-worker `--filter="qualification:"`. Post-selection b3 owns early I5/CV3/refusals; r6b closes its named outstanding CV3 list. MS18e owns full final GD; MS14c is corpus-free. MS05e's GD-CV6 experiment is closed/set aside; MS18c's conditional Normal CV6 below supplies the CV6-05 decision before GP. |
 | GD-I5/CV3 early | MS05b3 after r5p/r5/r5m; r6b reconciliation | Per-level I5 with `> <level>: <count> puzzles > I5:` (extra-regions includes variant); `> variants: <id> > CV3 <level>:` plus `> variants: <id> > CV3 unsupported:`. Selected total 1, same seeds/counts, jobs 1, locked <=540 s. B1 requires live mega Nightmare CV3, one locked command per cell, with deep occurrence-id references; >240 s is a named availability item. |

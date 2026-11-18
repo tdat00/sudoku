@@ -3,10 +3,12 @@
 | Header | Value |
 |---|---|
 | Depends on | MS17a accepted |
-| Size / active time | Medium; 50-60 minutes plus GR/GD |
+| Accepted implementation base | `5b94904` (MS17a); later pack-only commits do not replace this runtime baseline |
+| Size / active time | Medium; 50-60 minutes of code plus limit-record reconciliation and bounded E/GD/quick gates |
 | Owner / milestone | Generator integration; M17 release candidate frozen |
 | Authority | R20/R22; SA2-Q-S05/S07/S10 |
-| Status | Not started |
+| Review | SA1 cross-review before orchestrator acceptance; not template-only |
+| Status | Not started; ready for serial dispatch from `5b94904` |
 
 ## Goal & business context
 
@@ -16,12 +18,72 @@ Player imports and historical evidence. Freeze all measured new-pattern limits.
 ## Scope
 
 In: rating/cache 3, classification-aware cache validation/comparison, current references/docs,
-frozen limit record. Out: retuning, history envelope change, export floor certificate or offers.
+frozen limit record, full source-aware E and bounded GD as specified below.
+Out: retuning, new techniques, history envelope change, external floor certificate, offers,
+cache scheduler/cost-table changes or source acquisition.
 
 ## Repository rules
 
 AGENTS/checklist; no Git/pack/log edits. No deployment before final evidence. Old positive-version
 external claims remain imports, never fresh requiredness certificates.
+
+### Accepted baseline — 2026-11-18
+
+MS17a is accepted at **`5b94904`** after orchestrator template review and rechecks.
+Use its **`quick-final/`** results and its fresh replay ledgers; the current hash ledgers
+remain MS16's complete retained family. The order is **MS17b -> MS18a -> MS18b -> MS18c**,
+with the unchanged final remainder and one writer. SA1 reviews this task before acceptance.
+
+| App | Accepted tests / suites | Accepted quick time | Accepted fingerprint |
+|---|---|---|---|
+| Generator | **4,769 / 55** | **543.9 s** | `bae8cc894b398fb6b3f6ba868c37dedd90a6b219da2703d7d2e0aab110596d8f` |
+| Player | **2,978 / 32** | **118.9 s** | `1dfe66ea5a761c58e10859d7aea226869cb58f35c15c14c4803e77179e1eb6d7` |
+
+Preserve CI projections (seconds): **core-shared 170, steps 70, replay 70, mega 50,
+own-fast 320, digger-target 30, pipeline 80, Generator player shard 90, Player job 180**.
+Keep the four bounded Generator groups, suite membership, tiers, factors and workflow limits.
+Derive final counts/fingerprints after the changes; maintain projections by the existing rule.
+Final manifest metadata precedes its final CI check; a later metadata edit needs another check.
+
+Accepted E identities:
+
+- replay, both families: `9023f9eb3308b66cc84f3e0654e2785c33db5a50cf252e41c141f07344ffc99e`;
+- hashes: `8740fd9e8ed34fe1d80fada564b59b5467d75f8f61be0d2c14abae92320dfb4e`.
+
+All **40** GH examples match; the registry has **34 unscoped IDs**.
+At this base rating/cache are **2**, history/worker wire are **1**, grouped `proofVersion`
+is **2**. Only the first two become 3. MS17a correctly puts its explanatory title on the
+earlier entry's **open button only**; no second note-span title is required or assigned here.
+
+### Process: no implicit decisions, late plans or late source edits
+
+**QUESTION before acting** on any unresolved contract/permission/evidence choice, including
+an assumption, proposed default or judgment left for the reviewer. Report evidence/options,
+then await an explicit answer and resumption. Once paused, no independent edits/runs or
+acquisition. SA1 review at the end is not prior authorization for an unresolved choice.
+Routine implementation inside the settled contract remains developer work.
+
+**Write and verify each bounded plan before its phase**: commands, exact cases/requests,
+source-qualified projections, expected statuses and output paths. A failed plan write or
+edit anchor blocks dependent execution until fixed and verified. IR12 compounds need finite
+per-item projections and actual elapsed-time admission; no unmetered retries or inferred
+success from a timeout. Preserve the first failed/incomplete run and its true status.
+
+Announce the plan and use the shared slot/locks, <=540 s process-tree ceiling and >=15 s
+gaps; possibly >10-second/unknown generation work starts locked. Pentomino's completion
+does not retire that protocol. Reuse the helper, not the old unlocked-trial path.
+
+**Format before every E freeze**, including the `difficulty.js` rating-version header,
+cache comments/validation code and tests: 110-character code convention, CRLF/no BOM, final
+newline and trailing whitespace. Finish included-source edits before recording. A later
+included byte change, even a comment, invalidates the affected families. Finish all
+fingerprinted documentation/counts/tests before the final complete quick pair.
+
+**S-OD12/S0:** no corpus scan or new source-acquisition campaign without prior owner permission.
+This is not a new-ID task; no discovery quota, predecessor-specimen substitution permission
+or unused own-limit adjustment transfers from an earlier task. The fixed E manifest,
+scoped GD and existing all-40 GH check are authorized validation, not acquisition.
+Unexpected lost examples/premises require QUESTION, not a seed scan or a silent pin refresh.
 
 ## Inputs & context
 
@@ -44,6 +106,55 @@ already coerces an absent/non-boolean flag to false, so checking only the recons
 cannot distinguish a valid shallow entry from missing classification. Preserve r3's internal work
 and MS06 target transport while ignoring them for puzzle equality as specified.
 
+### Cache boundary and compatibility details
+
+- Keep `sg.cache.v1` as the storage key; the stored envelope becomes schema **3** and a
+  schema-2 envelope is purged, not migrated or stamped as current. History's key/envelope,
+  worker `v:1` and grouped `proofVersion:2` remain unchanged.
+- Validate the result-side classification/explicit boolean before the normal cache write
+  path can lose it through `pipeline.toWire`'s coercion, and validate the raw decoded wire
+  before `fromWire`. Do not launder a missing/non-boolean exact flag into a valid false one.
+  Valid **`exact:false`** solved fallbacks remain cacheable; never upgrade them from matching
+  level names or derive a replacement flag.
+- Require the complete documented current producer rating, not a version tag alone:
+  current numeric `ratingVersion`, explicit `solved`, typed score/level/empties/counts and
+  the other fields emitted by `difficulty.classify`. Preserve the existing exclusion of
+  canonical unrated results (null score/level); do not broaden cache admission to them.
+  No missing classification field is supplied by a default or a fresh solve.
+- For equality, normalize valid technique-count maps by numeric counts/key order and
+  omitted zero entries. Missing/non-object/array maps, unknown technique IDs, negative,
+  fractional or non-finite counts and coerced strings are not an empty valid map.
+  An explicitly empty valid map is different from missing counts.
+  Missing/malformed incoming classification cannot compare equal; keep the existing
+  stale/regeneration path rather than attaching a trace through defaulted metadata.
+- Compare semantic model data as values: variant/digit/cell identity, canonical units and
+  their relevant metadata, layout/region mapping, fixed cells, cage cell sets/sums/
+  `distinct`, and directed inequalities. Changed constraints must not pass because a
+  stored solution happens to satisfy both models. Ignore symbol display mode/labels;
+  do not compare whole mutable model objects or object identity. This is a comparator
+  for current canonical producer models, not a new arbitrary-import equivalence API.
+- Ignore timing, attempts/work diagnostics, trace verbosity and target for puzzle equality,
+  while preserving their existing transport/retrace behavior. Missing/malformed work stays
+  unavailable, and absent/invalid target stays null, not zero or a band midpoint.
+  Do not make optional diagnostic metadata a new classification-admission requirement.
+- Preserve `configKey`, recorded/default attempt intent, cache capacities/pool scheduling,
+  `COSTS`, pre-generation guards, cancellation and trace-regeneration fallback behavior.
+  Keep the existing checksum/model/solution checks. Add no logical solve, floor solve,
+  solution-count or generation work to validation/comparison.
+- Current canonical origin remains a caller/producer precondition; this is not a
+  cryptographic origin certificate. Preserve the existing imported-result exclusion
+  from the cache, and never broaden `requiredOf` to arbitrary imported summaries.
+
+**Coupled test update explicitly owned:** cache suite `MS05a-T01` currently accepts a cache
+wire with missing exact as false (lines 505-514). Schema 3 deliberately replaces that
+cache-only expectation with rejection of missing/non-boolean exact, keeping the valid
+true/false round trips. Do **not** make the same change to the shared pipeline/worker
+backward-compatibility tests: `fromWire` still defaults a legacy absent flag to false.
+Retain the target/work compatibility tests and shallow-result warning assertions.
+Exercise classification/model mismatch through the controller's real regeneration/stale
+path as well as deserialization. Keep the existing comparator private; do not add a public
+test-only comparison API.
+
 Keep exports' existing positive ratingVersion field and no external floor/target/work certificate.
 Do not blindly replace literal 2 in legacy/stub/import tests or old help source text.
 Current reference fields are `v3Expected:{level,required}`; unrated null/null. Historical labels,
@@ -59,24 +170,110 @@ consumed there) and selected C separately from new-pattern limits. MS05e's rejec
 belongs to historical evidence, not the frozen production configuration. Do not copy obsolete
 global-eight or Infinity-default descriptions from the pause evidence.
 
-### Anchors verified at c9935cd (find symbols after later tasks)
+### Limit-freeze inventory checked at 5b94904
+
+`limits-v3.md` must name each production value, symbol, scope, counter, stop/fallback
+semantics, selecting/retaining owner and source-qualified evidence. The following is the
+dispatch inventory, not permission to reselect. Evidence paths below are under
+`docs/difficulty-v3/evidence/<task>/`; follow their cost/decision links and preserve
+distinctions between constructed, seeded, real-finder and whole-generation observations.
+An introducing task's unused adjustment does not survive into MS17.
+MS13b's consumers, MS14c's regressions and MS17a's history marker made no new limit selection.
+For each owner, record the retained/changed decision and rationale, not just its starting
+literal. Lifted diagnostic limits, recorder timeouts and test/command ceilings are not
+selected production pattern bounds; no fresh measurement campaign is needed to compile them.
+
+| Finder / scope | Selected production setting and counter | Decision/evidence to preserve |
+|---|---|---|
+| Skyscraper | `tech-fish.js` `SKYSCRAPER_WORK_LIMIT = 50000`; tested base-line pairs | MS08a `evidence.md`, Work/Pattern cost; retained |
+| Two-string kite | `KITE_WORK_LIMIT = 50000`; tested row/column pair of a digit, bridges inside that unit | MS08b final `evidence.md` and retained `pass-1/evidence.md`; retained |
+| Empty rectangle | `EMPTY_RECTANGLE_WORK_LIMIT = 50000`; tested box/conjugate-unit pair of a digit, at most eight internal trials | MS08c `evidence.md`, Work/structural maximum/cost; retained |
+| Finned X-Wing | `FINNED_X_WING_WORK_LIMIT = 50000`; tested complete two-base combination, cover work inside it | MS09a `evidence.md`; retained |
+| Finned Swordfish | `FINNED_SWORDFISH_WORK_LIMIT = 50000`; three-base combination; independent from the X-Wing allowance | MS09b `evidence.md`, cost/census and S-AV31; retained |
+| Remote Pairs | `tech-wing.js` `REMOTE_PAIRS_WORK_LIMIT = 50000`; same-pair edge extensions and tested endpoint pairs | MS10a `evidence.md`; retained. S-OD9's prior correction is not a work-limit adjustment |
+| WXYZ-Wing | `WXYZ_WORK_LIMIT = 50000`; tested partial-quartet cell extensions, including rejected extensions | MS10b `evidence.md`, S-AV33; retained |
+| UR types 3/4, second pass | `UNIQUE_RECTANGLE_WORK_LIMIT = 50000`; Type 3 real-cell extensions / Type 4 conjugacy tests | MS11a `evidence.md`, S-AV34. The proposed three-real-cell cap was removed, not frozen: k reaches the eligible unit cells / digits minus one |
+| Hidden UR, third pass | `UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT = 50000`; tested eligible target/link-digit pairs, separate counter | MS11b `evidence.md` section 8/C4; retained. Preserve buffered per-pass records |
+| BUG+1 | `BUG_PLUS_ONE_WORK_LIMIT = 50000`; a unit's cell tallied for one proposed extra digit | MS11c `evidence.md` section 8/C4; retained |
+| New singleton-chain kernels | `tech-chain.js` `NEW_FINDER_WORK_LIMIT = 50000`; BFS edge expansions or Nishio assumption trials | MS07a/MS07b integration and MS07c split-ID cost. `nishioDeep` retains this; the long forcing ID's production path is now the grouped row below |
+| Restricted XY-chain | `NEW_FINDER_WORK_LIMIT = 50000`; restricted-graph BFS expansions; ceiling 12 edges (actual endpoint proofs odd, 3..11), caller may narrow | MS12 `evidence.md` section 8/C4; retained |
+| Grouped forcing attempt, both forcing IDs | `GROUP_NODE_LIMIT = 4096` additional groups and `GRAPH_WORK_LIMIT = 50000`, construction plus search on one guard; construction charges group candidates, cell-candidate pairs and every same-digit node pair, then search expansions | MS13a preparation, S-OD11 option A and MS13c `evidence.md` section 5; both numerical limits retained, S-AV36 open |
+| Law of Leftovers | `tech-subset.js` `LEFTOVER_LIMITS = { units:2, cells:4, work:50000 }`; per-side selected units/difference cells, and one whole-call unit/assignment-extension guard | MS14a preparation and MS14b `evidence.md` section 6; retained, S-AV37 open. MS14c introduced no new cage limit/ID |
+| ALS enumeration / ALS-XZ | `tech-als.js` `LIMITS = { cells:4, records:4096, work:50000 }`; effective cells clipped to digits minus one; one ALS-XZ guard across enumeration extensions, pair visits, opened x/z scans and peer-cell visits | MS15a D1-D8/SA1 handoff and MS15b `evidence.md` section 5; retained, S-AV39 open |
+| Sue de Coq | `SDC_WORK_LIMIT = 50000`, separate per-call guard using the shared 4/4096 enumeration bounds; MS16's nine-point P3 counter | MS16 `evidence.md` section 5 and final-byte rechecks; retained, S-AV39 open |
+
+Do not collapse these into "every call has a 50,000 limit":
+
+- UR's legacy first pass has no new local work cap. The second and hidden third passes
+  have **independent** 50,000 counters. A second-pass local cap can continue into the
+  hidden pass; a parent stop cannot. They are not a single 50,000 whole-call allowance.
+- S-OD11: short forcing first makes the bounded grouped attempt. **Only a local work/node
+  cap**, with the parent still available, allows the complete singleton fallback with
+  **no local work cap**, same parent/window. The minimum then belongs to the singleton
+  domain. Long forcing has no fallback/second allowance; incomplete graph/minimum yields
+  no Finding. Preserve IR54 and the phase/whole-call observer distinctions.
+- The legacy `nishio` is depth **1**, no local work cap, parent budget/cancellation intact.
+  `nishioDeep` has minimum/default depth **2**, an explicit caller ceiling **3**, nested
+  candidates at most **3**, and its 50,000 trial allowance. Do not label its default as 3.
+  The shared seam's `DEFAULT_WORK_LIMIT = 50000` is not a new local limit on those legacy
+  unbounded production paths; registered callers supply their policies explicitly.
+- Per-call/per-pass counters, entry and <=256-unit checks, truthful local caps/parent stops,
+  complete-proof requirements and the existing diagnostic seams stay. An ALS record-quota
+  prefix can prove a constructive witness; it cannot prove absence. A spent shared work
+  guard is not renewed. Record fixed technique forms separately from tunable work bounds.
+- Freezing is a versioned **policy/record**, not removal of diagnostic overrides or
+  `Object.freeze` of mutable diagnostic namespaces needed by the owned MS18b comparisons.
+  No new census, candidate-bound trial, counter redefinition or finder refactor belongs here.
+
+Record these **separate generation/window policies**, not as newly selected pattern limits:
+
+| Policy | Accepted value / authority |
+|---|---|
+| R9 selected C | **4**, `INITIAL_SHORT_MAX` / `SG.chainSearch.SHORT_MAX`, MS07c: 36/36 exact at C4 versus 24/36 at C6. Short 1..4, long 5..12; ceiling 12 unchanged. Do not copy the report's initial C6 or tests' historical C6 specimen recipes |
+| R5 shallow allowance | **256**, `SHALLOW_SEARCH_DEFAULT` / `SG.digger.SHALLOW_SEARCH_RATINGS`, MS05r4 and recovery closure. Full ratings of one local search after its first shallow state; not a per-request, layout/dig/sample or attempt-count cap |
+| Size attempts | **8 / 4 / 2** for <=81 / 82..144 / >144 cells, MS05r5p / S-OD4(c2); explicit settings and recorded-recipe intent remain. Pipeline's exported small-board 8 is not a global-eight policy |
+| Other existing dig bounds | `CAP_RATINGS=1024`, `CAP_PROPOSALS=32768`, `REFINE_RATINGS=64`, `UNIQUE_NODES=200000`, `OBJECTIVE_STEPS=100000`, dig tries 12 / coarse 30: unchanged existing guards, not new MS17 selections |
+| Greater-Than | CV6-05 restored first-allowed sign pass; no guided sign-pool constant. The target is transported, not consumed there |
+
+MS18b owns the already-planned final R5/C comparisons. A changed winner requires the
+recorded owner disposition before final qualification; it is not permission for MS17b
+or MS18 to silently retune a frozen finder.
+
+Carry **S-AV36-S-AV39** with the selection/counter/source distinctions above, **S-AV33/34**
+and other earlier open coverage items, **MS15b-Q6, MS15b-GP-J, MS15b-GP-U and MS16-Q6**.
+In particular S-AV38's earlier 50-cell GP population and MS15b's 37-cell population are
+not interchangeable; pilot-only/unmeasured cells do not become passes when limits freeze.
+S-AV39 includes MS16's 2 work caps in 488 seeded calls, one hiding a Finding needing
+101,791 units, versus 301 reached real calls with no cap. Do not call 50,000 exhaustive
+or a universally loss-free selection. Availability/cost/audit stay with MS18c/d/e.
+
+### Anchors verified at 5b94904
 
 | File:line / quote | Change |
 |---|---|
+| `generator/js/engine/difficulty.js:68`, `RATING_VERSION = 2`; `:513`, rating header; `:530`, `classify` | Bump actual producer and current header, not weights/counts/scoring logic |
 | `generator/js/ui/cache.js:47`, `const SCHEMA_VERSION = 2` | Purge old cache |
-| `generator/js/ui/cache.js:228-284`, `function verify` | Current classification and comparison |
-| `generator/tests/manual/difficulty.test.js:765-773`, `ratingVersion` | Current-only assertions |
-| `generator/tests/manual/difficulty.test.js:1374`, `p.rating.ratingVersion` | Generated version |
-| `generator/tests/suites/replay.test.js:1600`, `techniqueCounts: report.spec.counts, ratingVersion: 2` | Inspect historical/stub intent, not blind replacement |
+| `generator/js/ui/cache.js:208`, `serialize`; `:228`, `verify`; `:258`, `deserialize`; `:277`, `sameResult`; `:996`, regeneration comparison | Enforce the cache boundary and actual stale/replay path |
+| `generator/js/engine/pipeline.js:323`, `toWire`; `:354-366`, `fromWire` | Both coerce exact; preserve their worker-v1 compatibility, validate at cache boundaries |
+| `generator/tests/suites/cache.test.js:505-514` | Replace only the superseded own-cache missing-exact acceptance |
+| `generator/tests/manual/difficulty.test.js:783,786-791,1396` | Current producer-version assertions; fake-worker version at 399 is a separate intent |
+| `generator/tests/manual/difficulty.test.js:1220-1252` | Offered classic9 groups; seeds 7000+i, 100 requests / top-level 20, lazy per-level cache |
+| `generator/tests/suites/replay.test.js:1711`, stub `ratingVersion: 2` | Inspect stub intent, not blind replacement |
+| `player/tests/suites/importer.test.js:207-219,267`; `player/js/ui/importer.js:632-633` | Keep legacy positive v2 claims; add current positive v3 compatibility, not a new import trust rule |
 
 ## Files to create/modify
 
 - `generator/js/engine/difficulty.js`, `generator/js/ui/cache.js`; cache/export/history/pipeline/
-  replay current-version tests, manual difficulty reference/version assertions.
-- E's affected GR data; Player importer/fixtures tests only for positive-version compatibility,
+  worker/replay current-version tests, manual difficulty reference/version assertions.
+- E's explained version-bearing wire data; fresh full E evidence. Analysis/hash canonical
+  fixtures are expected unchanged; no unexplained rewrite permission.
+- Player importer/fixtures tests only for positive-version compatibility,
   never rewrite old puzzle/export fixture claims.
 - Limits-v3, notes, `docs/README.md`; Generator design 6.6/6.7/6.8/13.7/14.3 and limitations;
   Player design 6.2/8.3/9/10; both user/developer guides.
+- `.github/scripts/generator-quick.json`: owned counts/timing/projection metadata.
+  Finder files, history behavior, pipeline/wire format, source-identity tools, offered tables,
+  historical references and old imported fixtures are not new production-edit surfaces.
 
 ## Implementation steps
 
@@ -84,7 +281,8 @@ global-eight or Infinity-default descriptions from the pause evidence.
 2. Bump rating/cache atomically, validate current classification and preserve history/imports.
 3. Add comparator/corruption/legacy vectors; update only current-version assertions.
 4. Freeze real limit values and consolidate current references, counts, limitations and docs links.
-5. Refresh version-bearing GR data, run GD and both quick sets.
+5. Explain/publish only the version-bearing wire delta; close every E family and GH as below.
+6. Run/reconcile bounded GD and both quick sets, final CI and source identities; obtain SA1 review.
 
 ## Acceptance criteria — Business
 
@@ -100,32 +298,134 @@ global-eight or Infinity-default descriptions from the pause evidence.
 | MS17b-T01 | Rating/cache 3, history/wire 1, cache 2 purge and explicit exactness enforced |
 | MS17b-T02 | Same-grid different classification/model rejected; timing/display differences ignored |
 | MS17b-T03 | Current references, 40/34 catalogue, selected limit record and old imports pass |
-| MS17b-T04 | GR and both quick sets pass; complete GD coverage with any requiredness-related availability/median-time misses explicitly recorded under section 7, never waived silently |
+| MS17b-T04 | Full source-aware E/GH, both quick sets and CI pass; complete GD inventory/results with any unsafe/unexecuted population or availability/median-time miss explicit under section 7, never labelled passed |
 
 ## Test plan and gates
 
-Generator `node tests\node-runner.js --suite=cache,history,export,pipeline,technique-weights,difficulty-floor`;
-Player `node tests\node-runner.js --suite=importer,fixtures,help`; both quick sets.
+Generator focused set: `cache,history,export,pipeline,worker,replay,technique-weights,difficulty-floor`
+plus affected `i18n,help,ui-contract`; project/shard it rather than assuming one command fits.
+Player focused: `importer,fixtures,help,i18n,ui-contract`; both complete quick sets and final CI.
 Test schema 2 purge, schema 3 missing exact/counts/version, exact/shallow same score/grid, changed cages,
-Wordoku display-only change and old positive ratingVersion 2 import. Complete E GR under MS17b:
+Wordoku display-only change and old positive ratingVersion 2 import. Add current version 3 and
+history old/missing/future-marker compatibility without replacing the legacy cases.
+Counts key order / explicit zero must compare equally; changed counts or semantic constraints
+must exercise rejection through the real cache-controller regeneration path.
+
+### E: both identities change; canonical values do not all change
+
+The version literal in `difficulty.js` belongs to **both** source hashes; cache.js additionally
+belongs to replay's whole Generator source list. Thus the retained MS17a replay and MS16 hash
+ledgers are comparison history, **not current-source ledgers after the bump**.
+Do not alter identity filters or retag old records.
+
+| Family | Actual value contract at this base | Required closure |
+|---|---|---|
+| Five G09-G13 wires | `pipeline.toWire` / `replay.toPlainWire` preserve the producer rating. Each accepted wire currently has exactly one `rating.ratingVersion:2`; expect that field to become 3. Worker `v:1`, puzzle/model/solution, score/level/counts, exactness, target, warnings and log remain otherwise unchanged | Fresh full family; merge-check, explain the exact per-record path/value diff, then publish the intended wire change from the complete ledgers and check again **before analyses** |
+| Fourteen G01-G14 analyses | `replayRecording.goldenOf` projects scores, counts, boards, folds/jumps and historical `today`; it does **not** store ratingVersion. Accepted projections have no such field | Fresh full family/current identity; expected unchanged values and merge-check only. Do not write merely because the source hash changed |
+| 520 regression hashes | `perf-helper.serialize` hashes givens, solution, regions, cages, inequalities and symbol labels, **not the rating/version** | Fresh bounded 520-key ledgers/current identity and complete merge-check, expected unchanged values. No `regression.js` rewrite is expected or authorized just for a version bump |
+
+The old "full GG check belongs to final evidence" sentence is superseded for **record
+identity closure now**: full fresh hash records/checks belong to MS17b too. MS18d's final
+obligation remains. Recording unchanged values is not authority to write a changed hash.
+
+Before E, finish the version/cache implementation, relevant current-producer test/header edits,
+format check, and source freeze. Save/verify per-item plans and bounds. Record **5 wires ->
+14 analyses -> 520 hashes**, preserving every request/seed and G13's 120000 ms recorder guard.
+Declare the expected version-only wire merge-check exit 1 in advance, keep its transcript,
+and verify the actual differences before the explicit write; recheck after writing.
+No producer/publication step is compounded with its dependent analysis.
+
+List every current-version pin changed with intent and before/after values. Current producer
+assertions and the declared wire version fields may become 3; old imports/claims, worker/history
+version 1, grouped proofVersion 2, historical v2 certificates/recipes and unrelated numeric 2s
+must not. No blanket replacement in fixtures or in-memory comparison erases the evidence.
+Any changed puzzle/rating/requiredness/proof/golden/hash beyond the explained metadata is a
+QUESTION before publication or consumer-pin repair, not an automatic fixture refresh.
+
+Example individual shards and complete merges (not the whole execution plan):
 
 ```powershell
 node tests\replay-fixtures.js --ids=G09 --record=..\docs\difficulty-v3\evidence\MS17b\wire\G09.json
+node tests\replay-fixtures.js --merge=..\docs\difficulty-v3\evidence\MS17b\wire --check
+# Only after the complete version-only difference is explained:
+node tests\replay-fixtures.js --merge=..\docs\difficulty-v3\evidence\MS17b\wire --write
+node tests\replay-fixtures.js --merge=..\docs\difficulty-v3\evidence\MS17b\wire --check
 node tests\replay-goldens.js --ids=G01 --record=..\docs\difficulty-v3\evidence\MS17b\analysis\G01.json
-Invoke-Dv3Node -Task MS17b -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=difficulty','--filter=time) > nightmare >')
+node tests\replay-goldens.js --merge=..\docs\difficulty-v3\evidence\MS17b\analysis --check
+node tests\perf.js --hash-key=classic4/veryEasy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS17b\hashes\classic4-veryEasy-00.json
+node tests\perf.js --hash-merge=..\docs\difficulty-v3\evidence\MS17b\hashes --check-hashes
 ```
 
-Jobs 1/no --jobs; GR 5-35 minutes. Complete GD using checklist section 7's retained level/group
-shards, with actual timing projections, not an unbounded whole-suite run. Hit/median-time findings
-at affected levels remain failed assertions and go to MS18d; correctness and coverage still block.
-Use the shared lock for all commands expected over 10 seconds. **Announce to the orchestrator
-before starting (pentomino runs in parallel on the same machine).** 540-second process ceiling (check-list section 7).
-Version-only changes do not authorize a hash rewrite; full GG check belongs to final evidence.
+Final GH is **all-40 check-only**, from Player, with existing sources:
+
+```powershell
+node tests\tools\make-technique-examples.js ..\generator --max-puzzles=64 --max-hints=400 --check
+```
+
+No example displacement is expected from producer/cache version metadata. A missing/moved
+example requires QUESTION; no write, discovery or corpus route is granted here.
+Recheck final E identities against the records after all gates/review fixes. Any included-source
+byte change requires fresh affected-family records before acceptance.
+
+### GD: complete inventory, bounded execution, honest outcomes
+
+MS17b's GD is the **current manual `difficulty` suite** under checklist section 7 / FS09.
+Do not turn this into `--manual`, `--all`, a whole-variant run or a new variant-I5/CV3/deep
+campaign. Final variant correctness, live CV3 and the 28-occurrence mega cohort remain
+with MS18e; a version bump is not a blanket deep rerun or proof that older deep hashes match.
+
+**Plan before the first GD generation:**
+
+1. Capture the registration-only final-source `--suite=difficulty --list-tests` inventory,
+   actual offered classic9 levels and exact top-level group names. Preserve a rename map
+   for current-version headings; the historical FS09 group list is a locator, not a
+   substitute for the current inventory.
+2. Plan one full retained level group per offered level, Nightmare first and Hell 1 early
+   when offered. `batch(level)` is per process/level: retain its **100 requests**, or **20
+   for Hell 1/Hell 2**, seeds **7000+i**, options, all I1-I7/requiredness/warning assertions
+   and existing timing thresholds/factor. Never replace the group with a small pilot.
+3. Plan every non-batch top-level group once, with its exact `difficulty > <name>` prefix,
+   including fake-worker qualification, reference/scoring and digger correctness/safety
+   groups. They are not a new real qualification run. Do not rerun the entire suite afterwards.
+4. Every command needs a credible current-source **<=450 s** projection including setup,
+   generated requests and its assertions. Identify older-source estimates as such; old
+   pre-S3 pilot means, a per-puzzle target or missing data are not current bounds.
+   Never start an unknown/unsafe group as an unlocked timing trial.
+5. Preflight each exact selector's nonzero selected names/counts; inventory all keys once
+   across the planned selections. Use results/transcripts and preserve actual exit codes.
+   No bail/skip, reduced request count, changed seed, timeout/factor raise or new request
+   splitter/merger. Keep the existing per-level batch reuse within a group.
+
+Examples (each needs its own preflight/plan; repeat for the actual inventory):
+
+```powershell
+Invoke-Dv3Node -Task MS17b -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=difficulty','--filter=time) > nightmare >')
+Invoke-Dv3Node -Task MS17b -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=difficulty','--filter=difficulty > digger.generate: guarantees')
+```
+
+Use `-AllowExit1` only for a per-item declared expected failure, not every possible exception.
+An aggregate exact-hit/median-time miss stays a failed assertion with counts, timing, source
+and S-OD4 item; continue independent bounded work. Invalid/non-unique puzzles, unsound
+deductions, wrong exact/warning data or corrupt evidence block and are escalated.
+If a group cannot be admitted or completes only partially, keep its precise unexecuted
+tests/requests, projection/unknown basis and next owner as a named item. Do not call partial
+GD green or transfer an unexecuted group as a pass. MS18c/d/e must reconcile it.
+No new slow-cell evidence/tooling class or automatic retry follows.
+
+E is jobs 1/no --jobs. MS17a measured its two replay compounds at the same algorithmic
+boundary; use its per-item records as a labelled planning basis. The last fresh 520-key
+hash family is MS16's (380.8 s process wall), not a 520-generation run in MS17a.
+These are not guaranteed bounds: apply IR12 to every item, release the lock between
+compounds, and stop at 540 s. No GS, GQ, generation-GP or fresh pattern-cost selection
+campaign is assigned to this version/cache step.
 
 ## Definition of done & handoff
 
 Give MS18 the immutable release-candidate identity, actual frozen settings, reference catalogue and
-all compatibility results. No support publication or claim of final qualification yet.
+all compatibility results. Include the explained wire metadata publication, fresh three-family E
+identities/checks, all-40 GH, bounded GD inventory/results including gaps, actual quick/CI
+fingerprints, the complete limit-decision ledger and every inherited/new item.
+No support publication or claim of final qualification/performance/deep closure yet.
 
 ## Resume rules — S-OD4
 
