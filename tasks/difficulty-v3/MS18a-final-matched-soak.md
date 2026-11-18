@@ -8,7 +8,7 @@
 | Owner / milestone | Evidence; M18a matched final data |
 | Authority | R7/R23/R24; AC01; S-OD4/S-OD12 |
 | Review | Orchestrator template/contract review; MS18b likewise; SA1 cross-review at MS18c |
-| Status | MS18a-Q1 settled below; zero timed cells at the ruling; resume after explicit relay/slot and revised self-test |
+| Status | MS18a-Q2 settled below; 14/32 commands complete at the ruling; bounded admission re-asks, not payload reruns |
 
 ## Goal & business context
 
@@ -153,6 +153,79 @@ neither a host-only diagnosis nor an adjusted "quiet" result has been proved.
     **MS18e audit**. This exception does **not** roll forward to MS18b/MS18c/MS18d,
     waive final timing budgets, alter offers or authorize another measurement class.
 
+### MS18a-Q2 — bounded fresh-slot re-asks, SA2 ruling, 2026-11-18
+
+**Choose (a), then (c) if the single re-ask also holds.** This is standing permission
+for ordinary additional-CPU-consumer holds of this kind during the remaining MS18a GS
+plan; it is not permission to rerun a measured payload or to change Q1's admission rule.
+An OS service consumes CPU even though it is not another session's job. **No exemption
+for `InventorySvc`, `svchost.exe` or other maintenance services**, no threshold change,
+and no stopping, reprioritizing or disabling another process/service.
+
+At the ruling, fourteen command ledgers are complete with PASS diagnostics, covering
+**105 of 204** requests. `killer-expert-9-3` (absolute requests 9..11) has one admission
+hold, exit **3**, payload unstarted and no puzzle ledger. Its 18:13:35-43 record retains
+raw mean/max **1.854858/2.618434** busy cores; the blocking consumer is PID **10948**,
+reported as `InventorySvc`, **3.78 CPU-s / 5.71 s = 0.66**, above Q1's **0.5**.
+The host instance was verified. This is an environmental hold, not a failed puzzle.
+
+1. **One re-ask per fixed logical plan entry; at most two admission attempts total.**
+   The existing hold is attempt 1 for `killer-expert-9-3`; it may receive attempt 2.
+   The same rule covers a later entry's first eligible hold without another QUESTION.
+   Account from retained attempt records across driver calls/restarts; renaming an
+   attempt, restarting a batch or writing a revised plan does not renew the quota.
+   The fourteen completed payloads are not candidates for this rule. There are at most
+   **18 additional re-asks** for the current remaining population.
+2. Before a re-ask, release the lock and wait until **at least 60 s after that attempt's
+   recorded release**, outside all timing locks. Time already elapsed counts. Then use
+   a fresh planned/granted shared slot and the unchanged complete Q1 admission check.
+   Keep the ordinary >=15 s inter-lock gap and any foreign-release settling condition.
+   No repeated samples inside one held lock, automatic third attempt or retry-until-green.
+3. This permission requires a **fresh, matching exit-3 record, `admitted:false`,
+   payload unstarted, no puzzle ledger**, and verified hold reasons limited to the
+   ordinary additional-consumer CPU predicate. Only that expected hold may continue
+   through the new driver branch. Missing/corrupt/stale or contradictory records,
+   host/identity changes, invalid required counters, unexpected exits, a purported hold
+   after payload start, payload failures/timeouts or correctness failures keep their
+   existing stop/QUESTION rules.
+   Do not match one consumer message and ignore another non-eligible hold reason.
+4. Preserve attempt 1's readiness, transcript and lock-log row unchanged. Use distinct
+   attempt-2 paths, for example `killer-expert-9-3-admission2`, with an explicit mapping
+   to logical entry `killer-expert-9-3` and ordinal 2. Keep the original payload, request
+   span, seed, settings and canonical puzzle-ledger path; require that ledger to be
+   absent before launch. The new attempt name is **not** another cell/request/shard.
+5. If attempt 2 admits, run the payload once and retain its actual result. If it also
+   holds on the eligible CPU condition, record **environment-held / unexecuted after
+   two admission attempts**, release the slot and continue the other independent plan
+   entries. **Do not return for each recurrence.** Keep a per-entry table under
+   **MS18a-Q2-ADMISSION**, including both attempts, consumer numbers, statuses, paths
+   and missing absolute indexes. Other failures still stop as above.
+6. The batch/driver must expose an explicit incomplete/held status and list if an
+   entry exhausts its quota, even if a later child exits 0. Other bounded batches may
+   continue under this ruling. The final report distinguishes intended **204**, actual
+   recorded outcomes and unexecuted indexes. Do not fabricate error/miss rows, zero
+   timings, a complete twelve-request cell distribution or a complete-matrix pass.
+   If any gap remains, MS18a-T01 is unsatisfied: report the incomplete milestone once
+   at handoff for an orchestrator disposition, not automatic acceptance/next-task dispatch.
+7. Append/read back the Q2 plan before changing task-owned sequencing/report helpers;
+   preserve `plan-gs.json`, the Q1 admission predicate/thresholds, all earlier freezes
+   and all completed/held records. Only attempt bookkeeping, narrowly classified
+   continuation and honest reporting change. A structured reason/attempt field is
+   allowed in owned helpers; it may not alter who is admitted.
+8. Test the changed control flow **without generation**: held-then-admitted starts one
+   payload, twice-held starts none and permits the next entry, an unexpected failure
+   or claimed hold after payload start stops, and restart/aliasing cannot reset the
+   quota or overwrite records. Format/refreeze to new paths and recheck unchanged
+   payload bounds with any new overhead. Do not add live no-op checks to seek a passing
+   window. No E/GH/quick run, production/measurement-tool edit or regeneration of the
+   completed fourteen is needed.
+
+After the orchestrator relays this ruling and confirms the slot, the developer may
+resume the above preparation and then the one re-ask for `killer-expert-9-3`. Carry
+**MS18a-Q2-ADMISSION** with Q1-HOST to MS18b readiness preparation and MS18e audit,
+including resolved holds as history. This permission is MS18a-only and does not
+reselect a performance budget, waive full coverage or roll forward to another task.
+
 ### Process: plans first, QUESTION before acting, no acquisition
 
 Write and verify each phase's plan **before** its first dependent action: exact request
@@ -244,6 +317,7 @@ GS's twelve-request cells neither replace GD's populations nor decide GQ/GP.
 | MS17b GD confusion matrix / S-AV15 | **1 test unexecuted**, stated bound **1,544 s**, not a pass | MS18c/d handoff; MS18e GD |
 | MS17b-GD21-PROCESS | Unlocked **36.5 s** diagnosis, unknown overlap/raw output not saved, locked bisect's IR12 defects and mislabelled footers; accepted disclosure, not protected timing | MS18e audit; do not reuse that driver unchanged |
 | MS18a-Q1-HOST | Failed original absolute-CPU screen; named session host active; raw CPU attribution incomplete; MS18a-only admission with descriptive host-active timing | MS18b readiness preparation; MS18e audit |
+| MS18a-Q2-ADMISSION | One fresh-slot re-ask per eligible held logical GS entry; two total attempts, >=60 s after release; exhausted entries remain unexecuted, not puzzle misses or complete evidence | MS18b readiness preparation; MS18e audit |
 | S-AV36-S-AV39 | Construction, seeded/synthetic, repository-source and whole-generation populations remain distinct; retain MS16's S-AV39 extension and unchanged limits | MS18c availability, MS18d cost, MS18e audit |
 | MS15b-GP-J / MS15b-GP-U | Of **37** cells, one full 50-run record, Jigsaw Nightmare pilot only (**680 s** 50-run projection), **35 unmeasured**; not S-AV38's 50-cell population | MS18d; MS18e audit |
 | MS15b-Q6 / MS16-Q6 | Controlled placement coverage and fixed seed-377 GH lineage/pause disclosure, not availability failures or acquisition permission | MS18e audit |
@@ -337,8 +411,9 @@ Correctness/evidence corruption or changing a recorded decision stops;
 time/availability is a named numerical MS18c/MS18d item and independent work continues.
 Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s, with existing absolute-index
 shards; do not invent another slow-cell evidence/tooling class or report incomplete data as complete.
-The QUESTION pause and final-gate precondition, with Q1's MS18a-only disposition, still apply.
-Return the inherited/new item list, including MS18a-Q1-HOST; verify the unchanged quick
+The QUESTION pause and final-gate precondition, with Q1's MS18a-only disposition and
+Q2's bounded re-ask/continue rule for eligible CPU holds, still apply. Return the inherited/new
+item list, including MS18a-Q1-HOST and MS18a-Q2-ADMISSION; verify the unchanged quick
 baseline, with no suite/CI changes.
 
 ## Execution log

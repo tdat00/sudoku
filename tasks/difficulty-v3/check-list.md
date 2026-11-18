@@ -257,6 +257,16 @@ run one new locked no-generation self-test before GS. Carry **MS18a-Q1-HOST** to
 MS18b's dispatch preparation and MS18e audit. The exception does not roll forward
 to MS18b/c/d or waive any final timing/offer gate. The original records stay unchanged.
 
+**MS18a-Q2, same day:** after 14/32 commands (105/204 request rows), an additional
+OS-service CPU consumer held `killer-expert-9-3` before its payload. The leaf now permits
+**one fresh-slot re-ask per eligible logical GS entry**, >=60 s after releasing the
+first slot, two admission attempts total across restarts. Q1's host/consumer rules and
+thresholds stay; no OS-service exemption. Preserve distinct attempt records. A second
+eligible hold becomes a named unexecuted gap and independent entries continue without
+another QUESTION for that recurrence. Unknown/evidence/identity/payload failures still
+stop. **MS18a-Q2-ADMISSION** carries every attempt/gap to the final report, MS18b
+readiness preparation and MS18e; missing outcomes never become a complete-matrix pass.
+
 Write/read back bounded plans before phases and format owned helpers before their
 freeze; no post-freeze source adjustment disguised as housekeeping. **S-OD12/S0**
 grants no standing scan, source-acquisition exception or new-ID discovery quota.
@@ -934,6 +944,10 @@ Keep strict-screen `ready` and policy-specific `admitted` separate; no whole-hos
 exclusion or CPU subtraction. Timings are explicitly **not strict-quiet-machine**.
 This is not a permanent replacement of the readiness contract for MS18b/c/d; settle
 MS18a-Q1-HOST in the next dispatch preparation rather than inheriting a waiver.
+**MS18a-Q2** adds only the leaf's bounded fresh-slot re-ask and continuation for an
+unstarted additional-consumer CPU hold: one re-ask, >=60 s after release, distinct
+records, no third attempt. A second hold stays an unexecuted gap; no service exemption,
+relaxed predicate, repeated payload or complete-matrix claim follows.
 
 - Obtain the normal shared slot/mutex and establish that no foreign timing-lock holder or
   known foreign CPU-heavy job is active. Never delete another lock, kill another session's
