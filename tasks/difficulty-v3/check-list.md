@@ -246,6 +246,17 @@ Before each MS18a-MS18d timed cell/shard, use section 7's quiet-machine precondi
 MS17b's 470.8/385.6/550.7 s lock waits remain wait metadata, not request timings.
 The shared slot, locks, >=15 s gaps and <=450 s admission/540 s ceiling remain.
 
+**MS18a-Q1, 2026-11-18, before any timed cell:** the absolute-CPU self-test failed
+(mean 1.049779 / max 1.425585 busy cores of 16; exit 3, payload unstarted). The
+orchestrator confirms this session's persistent Copilot host PID 1968 is active and
+other known jobs are idle; the available counters do not prove host-only attribution.
+SA2 authorizes **option (c) for MS18a only**, under the leaf's exact named-host admission
+rules: retain the raw failed screen, no CPU subtraction or whole-tree exemption, label
+all GS timings shared-slot/CLI-host-active and descriptive, refreeze owned helpers and
+run one new locked no-generation self-test before GS. Carry **MS18a-Q1-HOST** to
+MS18b's dispatch preparation and MS18e audit. The exception does not roll forward
+to MS18b/c/d or waive any final timing/offer gate. The original records stay unchanged.
+
 Write/read back bounded plans before phases and format owned helpers before their
 freeze; no post-freeze source adjustment disguised as housekeeping. **S-OD12/S0**
 grants no standing scan, source-acquisition exception or new-ID discovery quota.
@@ -916,6 +927,14 @@ GS, the R5/C rechecks, GQ and GP are timed measurements. The owner's resource-re
 statement resolves the known Pentomino contention; **do not ask the owner to pause it again**.
 Still check readiness before **each timed cell or authorized shard**, not once per matrix:
 
+**MS18a-only amendment, Q1 (2026-11-18):** follow the detailed ruling in
+`MS18a-final-matched-soak.md`. The raw numerical screen below is still recorded, but
+its failure alone does not block GS when the named-host admission conditions hold.
+Keep strict-screen `ready` and policy-specific `admitted` separate; no whole-host-tree
+exclusion or CPU subtraction. Timings are explicitly **not strict-quiet-machine**.
+This is not a permanent replacement of the readiness contract for MS18b/c/d; settle
+MS18a-Q1-HOST in the next dispatch preparation rather than inheriting a waiver.
+
 - Obtain the normal shared slot/mutex and establish that no foreign timing-lock holder or
   known foreign CPU-heavy job is active. Never delete another lock, kill another session's
   process or infer permission to ignore an occupied/stale lock from the owner statement.
@@ -936,7 +955,8 @@ Still check readiness before **each timed cell or authorized shard**, not once p
   change or permanent measurement-tool edit is assigned. Include wrapper/readiness time
   in the whole-command/per-item projection and 540 s ceiling when it is inside that command.
   Preserve the 15 s gap between lock acquisitions and the tool's original request clocks.
-- If readiness fails, **do not start the timed payload**; record the reason, release our
+- If admission fails (for MS18a, Q1's explicit admission rather than the raw numerical
+  screen alone), **do not start the timed payload**; record the reason, release our
   slot and inform the orchestrator. It is an environmental hold/unstarted command, not a
   slow puzzle, availability miss or owner policy question. Continue permitted non-timed
   work; obtain a new planned slot/check rather than polling indefinitely under our mutex.

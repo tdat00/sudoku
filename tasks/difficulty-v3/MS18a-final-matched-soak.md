@@ -8,7 +8,7 @@
 | Owner / milestone | Evidence; M18a matched final data |
 | Authority | R7/R23/R24; AC01; S-OD4/S-OD12 |
 | Review | Orchestrator template/contract review; MS18b likewise; SA1 cross-review at MS18c |
-| Status | Ready for dispatch on accepted MS17b; not started |
+| Status | MS18a-Q1 settled below; zero timed cells at the ruling; resume after explicit relay/slot and revised self-test |
 
 ## Goal & business context
 
@@ -61,9 +61,97 @@ Owner, Discord, **2026-11-18 16:42 (+07:00)**, relayed by the orchestrator at 16
 Pentomino tasks have fully stopped; the machine's resources are available. **No further
 owner question about pausing that session is needed.** This does not retire the shared
 slot, either mutex, the 15-second gap or the process ceiling. Before each timed cell or
-authorized shard, apply check-list section 7's **final-gate quiet-machine precondition**;
-record the observations alongside its transcript, not as puzzle outcomes.
+authorized shard, apply check-list section 7's **final-gate quiet-machine precondition**,
+with **MS18a-Q1's task-only host-active disposition below**. Record the observations
+alongside its transcript, not as puzzle outcomes.
 MS17b's waits of 470.8, 385.6 and 550.7 s are lock waits, not generation measurements.
+
+### MS18a-Q1 — host-active GS, SA2 ruling, 2026-11-18
+
+**Choose (c), narrowly for MS18a.** Do not retry until the numerical screen happens to
+pass, exclude the whole Copilot process tree, or subtract CPU use to manufacture a quiet
+result. The original 0.5/1.0 screen was an unvalidated operational assumption introduced
+by SA2, not an R24 product budget. GS is a matched correctness/work/position comparison
+whose timing differences are descriptive; this disposition does **not** make its timings
+strict-quiet measurements or satisfy a later GQ/GP gate.
+
+**Facts and limits of attribution.** Preserve `readiness/selftest.json` and
+`logs/selftest.txt`: 17:35:41, five intervals, mean **1.049779** and max **1.425585**
+busy cores of 16, exit **3**, payload unstarted, own lock released. The developer's
+17:36:16-24 passive recheck (no saved raw record) remains a reported observation, not a
+new protected measurement. The orchestrator identified **PID 1968** as this session's
+Copilot host (started 2026-11-13 about 19:26), with **5.25 CPU-s in a separate 10 s
+window** at 17:40-17:41; other Copilot PID **17588** was idle and no foreign job/lock
+was present. The host cannot be quieted while this session operates.
+
+Accept that known-workload inventory, **not an exact CPU attribution claim**: the
+self-test's PID-1968 delta was only **0.734 CPU-s over roughly 6 s**, which does not
+account for about one busy core in its five-second aggregate window. Those windows
+are not synchronized, protected/system/transient work is not fully attributed, and a
+different ten-second sample cannot be subtracted from them. Keep that uncertainty;
+neither a host-only diagnosis nor an adjusted "quiet" result has been proved.
+
+**Binding implementation/resumption instructions:**
+
+1. The orchestrator's relay explicitly confirms the current shared-machine slot and
+   resumption. The developer's earlier dispatch-as-slot assumption stays disclosed;
+   no generation ran, and nothing is rerun merely to erase it. No further owner
+   question about pausing Pentomino is needed.
+2. Before editing, append/read back the Q1 plan. Preserve the original helper bytes
+   and `helpers-sha256.txt` as the pre-Q1 freeze. Only task-owned launch/report helpers
+   and this task's evidence/report/notes may change. The developer does not edit this
+   pack, production, measurement tools, fixtures or Git state.
+3. Keep the **raw five one-second CPU intervals, original thresholds and strict-screen
+   verdict**, even when they fail. Record an explicit policy identifier
+   **`MS18a-Q1-host-active`** and a separate **`admitted`** result/reason. Keep `ready`
+   as the original strict-screen result; do not turn it true to launch or make the
+   reporter pass. The launcher and reporter must use the named admission policy
+   explicitly, not infer that a failed screen is acceptable from a payload exit 0.
+4. Admission under this policy still requires the confirmed slot, matching own lock,
+   no foreign timing lock, valid aggregate counters and usable process observations.
+   Record PID 1968's name, actual full creation time and CPU observations; verify the
+   same instance is the orchestrator-confirmed host. PID reuse, a missing/unverifiable
+   host or missing process observations is a hold, never an assumed exception.
+   The allowance concerns **that host process only**, not every `copilot` process or
+   its descendant tree. No concurrent generation, tests or other heavy agent work is
+   allowed merely because it shares that ancestor.
+5. Keep before/after process snapshot times and available per-instance CPU deltas.
+   A known foreign computational job is a hold even if caught idle. As a concrete
+   screen for an additional observed consumer, **>=0.5 CPU-s per elapsed second**
+   over that actual snapshot window in any other process is a hold; the identified
+   launch/sampler processes are instrumentation, not a foreign job. PID 17588 has no
+   exemption. Do not treat unavailable counters as zero or claim that this inventory
+   explains all host CPU; retain inaccessible/transient observations as limitations.
+   Recheck the foreign/own lock state immediately before the payload. Unknown or
+   contradicted admission facts require a hold and report, not another guessed default.
+6. With those admission facts satisfied, the aggregate 0.5/1.0 threshold failure
+   **does not block this task's payload**. All MS18a runs carry the same environment
+   label: **"shared-slot, CLI-host-active; not strict-quiet-machine timing"**, even if
+   an individual raw screen happens to pass. Preserve raw request/diagnostic/process
+   times unchanged: no CPU subtraction, normalization or faster-repeat selection.
+7. Test the task-owned admission/report logic without generation: raw-screen failure
+   with the confirmed host and no other work admits under Q1; a foreign lock/consumer,
+   wrong host instance or invalid required counters does not. The original strict
+   verdict must remain visible in both cases. Format and freeze the changed helpers
+   to a **new** hash record; preserve the first freeze and failed self-test.
+8. Run **one** new locked no-generation self-test (`node --version`) to distinct
+   `selftest-q1` paths under a written finite bound. Exit 0 means admission under
+   Q1 and successful payload, **not** a strict-quiet pass; exit 3 remains an unstarted
+   environmental hold. If it succeeds, proceed directly to the admitted GS plan
+   after the ordinary gap; no further QUESTION is needed solely because raw CPU
+   exceeds 0.5/1.0. No automatic three-check/60-second retry loop is authorized.
+9. Recheck the existing **32-command/204-request** plan against actual revised
+   launcher overhead before generation. The <=450 s admission, 540 s process-tree
+   ceiling, >=15 s gaps, jobs 1, exact keys/shards and all diagnostic assertions stay.
+   This ruling is not blanket approval of an otherwise unsupported projection or
+   the reporter's historical **111/112** dry-run as a complete current-source pass.
+   No E/GH/quick repetition follows from an artifact-only helper change.
+10. Carry **MS18a-Q1-HOST** in the report/final reply: failed original screen, actual
+    process evidence and attribution limits, changed helper identities, new self-test,
+    admission observations and the descriptive-timing label. Route it to **MS18b
+    dispatch preparation** to settle the next timed task's readiness contract and
+    **MS18e audit**. This exception does **not** roll forward to MS18b/MS18c/MS18d,
+    waive final timing budgets, alter offers or authorize another measurement class.
 
 ### Process: plans first, QUESTION before acting, no acquisition
 
@@ -155,6 +243,7 @@ GS's twelve-request cells neither replace GD's populations nor decide GQ/GP.
 | MS17b GD Hell 1 / S-AV25 | **8 tests, 20-request batch unexecuted**; stated bound **919 s**, no current-source measurement or verdict | MS18c/d handoff; MS18e GD |
 | MS17b GD confusion matrix / S-AV15 | **1 test unexecuted**, stated bound **1,544 s**, not a pass | MS18c/d handoff; MS18e GD |
 | MS17b-GD21-PROCESS | Unlocked **36.5 s** diagnosis, unknown overlap/raw output not saved, locked bisect's IR12 defects and mislabelled footers; accepted disclosure, not protected timing | MS18e audit; do not reuse that driver unchanged |
+| MS18a-Q1-HOST | Failed original absolute-CPU screen; named session host active; raw CPU attribution incomplete; MS18a-only admission with descriptive host-active timing | MS18b readiness preparation; MS18e audit |
 | S-AV36-S-AV39 | Construction, seeded/synthetic, repository-source and whole-generation populations remain distinct; retain MS16's S-AV39 extension and unchanged limits | MS18c availability, MS18d cost, MS18e audit |
 | MS15b-GP-J / MS15b-GP-U | Of **37** cells, one full 50-run record, Jigsaw Nightmare pilot only (**680 s** 50-run projection), **35 unmeasured**; not S-AV38's 50-cell population | MS18d; MS18e audit |
 | MS15b-Q6 / MS16-Q6 | Controlled placement coverage and fixed seed-377 GH lineage/pause disclosure, not availability failures or acquisition permission | MS18e audit |
@@ -176,7 +265,8 @@ item list belongs in the report **and final reply**; a small GS sample closes no
 
 1. Read the accepted records; verify source/fingerprints/defaults and all 204 baseline request
    keys. Write/read back the bounded plans and format/freeze owned helpers before measurements.
-2. Obtain the slot and quiet-machine observations for each timed cell/shard, then run the
+2. Obtain the slot and raw readiness observations plus explicit Q1 host-active admission
+   for each timed cell/shard, then run the
    exact manifest. If a level is hidden, retain its request through diagnostic
    `--include-unsupported`, record why and keep that setting consistent across its shards.
    Do not re-offer it or silently substitute another level.
@@ -210,12 +300,12 @@ item list belongs in the report **and final reply**; a small GS sample closes no
 | MS18a-T01 | All 204 outcomes/configuration/source identities and failures retained |
 | MS18a-T02 | Qualified vs in-band cohorts, stored bounds, null reasons and costs correct |
 | MS18a-T03 | No source/tuning change; incomplete/invariant-failed evidence is not a pass |
-| MS18a-T04 | Plans precede phases; each timed cell/shard has recorded quiet-machine readiness and actual lock/process status |
+| MS18a-T04 | Plans precede phases; each timed cell/shard retains the raw strict-screen result, explicit Q1 admission, descriptive host-active label and actual lock/process status |
 
 ## Test plan and gate
 
 Generator payload, **only after its whole-command bound is admitted** through the normal
-helper and section 7's quiet precondition; then every manifest cell:
+helper and section 7's precondition as amended for this task by Q1; then every manifest cell:
 
 ```powershell
 node tests\soak.js --variant=classic9 --level=normal --count=12 --seed=20260101 --no-gate --json=..\docs\difficulty-v3\evidence\MS18a\classic9-normal.json
@@ -247,8 +337,9 @@ Correctness/evidence corruption or changing a recorded decision stops;
 time/availability is a named numerical MS18c/MS18d item and independent work continues.
 Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s, with existing absolute-index
 shards; do not invent another slow-cell evidence/tooling class or report incomplete data as complete.
-The QUESTION pause and final-gate quiet precondition still apply. Return the inherited/new item
-list; verify the unchanged quick baseline, with no suite/CI changes.
+The QUESTION pause and final-gate precondition, with Q1's MS18a-only disposition, still apply.
+Return the inherited/new item list, including MS18a-Q1-HOST; verify the unchanged quick
+baseline, with no suite/CI changes.
 
 ## Execution log
 
