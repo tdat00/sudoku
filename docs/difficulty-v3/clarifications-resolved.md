@@ -21,6 +21,9 @@ the lack of authorization at execution time remains explicit, and no standing S1
 MS18c-Q1/Q2 are resolved by the owner's Discord answer on 2026-11-18 at 21:31:46 (+07:00),
 S-OD13: host-active GQ, and a GQ-only longer bounded command route whose ceilings are chosen
 jointly by SA-Opus (SA1) and SA-Astra (SA2), not Fable. Numeric ceilings still need that joint approval.
+MS18c-Q3 is resolved by the owner's Discord answer on 2026-11-18 at 23:05:53 (+07:00),
+S-OD14: one narrowly authorized recovery relaunch per GQ cell, only after prior joint
+SA1/SA2 diagnosis/approval and only when no complete record exists; all traces remain.
 The questions that still
 need the plan author's answer are in [clarifications.md](clarifications.md); when one is answered, it moves here.
 
@@ -2581,6 +2584,50 @@ Binding scope:
 - CV6-05's separate conditional Normal-budget delegation to Fable is unchanged.
   S-OD7, S-OD12/S0, correctness stops, full-scope publication and SA1 review still bind.
 
+## MS18c-Q3 / S-OD14 — one bounded GQ recovery relaunch
+
+The orchestrator reports posting MS18c-Q3 on Discord at about **2026-11-18 22:38
+(+07:00)**. The prepared question offered A (retain the payload-relaunch prohibition,
+with a possible publication gap) or B (at most one recovery relaunch per cell after
+a T-kill, worker/supervisor fault or session loss, only with no complete record and
+prior joint SA1/SA2 diagnosis/approval). A missing final JSON was explicitly not
+treated as proof that no measured work occurred.
+
+**Owner, Discord author `amicably8850`, 2026-11-18 23:05:53 (+07:00), relayed
+verbatim by the orchestrator:**
+
+> Q3: chọn B
+
+English: Q3 selects B.
+
+Binding scope:
+
+- At most **one recovery payload opportunity per cell**, after the first failed
+  execution/supervision episode, with **joint SA1/SA2 diagnosis and approval recorded
+  before relaunch**. This is not an automatic retry or a fresh allowance on restart.
+- It applies only when **no complete cell record exists**. A complete record is never
+  rerun, including a hidden verdict or a completed record needing correctness/bound
+  review. A correctness failure is never erased, and a faster repeat is never selected.
+  Complete protocol-proved early stops count as complete records.
+- Preserve all failed/partial traces and use the same qualified source, seed,
+  configuration, machine/Node and qualification protocol. Administrative output
+  paths are separate for each attempt; no failed evidence is overwritten.
+- A still-running supervisor is **adopted**, never relaunched. Confirm termination
+  of the prior supervisor/job before recovery. Missing/stale status alone grants no
+  recovery permission.
+- The pack defines separate payload and admission counters: primary payload slot 1,
+  one expressly authorized recovery slot 2, each with its own bounded two-admission
+  ledger (one >=60 s re-ask only for an eligible unstarted CPU hold). The recovery
+  authorization must explicitly grant that second slot/admission budget; old counters
+  remain intact. Exhausted ordinary CPU holds are not a recovery fault.
+- A second payload failure, or exhaustion of its recovery admission budget, is a
+  **permanent gap for that qualification epoch**. No third payload or automatic new
+  authorization/epoch; incomplete qualification still cannot be published.
+- S-OD14 narrowly supersedes the earlier payload-relaunch prohibition. It grants no
+  automatic higher ceiling, source/protocol/offer change, correctness waiver or new
+  calibration. S-OD13's joint numeric authority, all actual p95 rules, S-OD7 and the
+  Stage 1/Stage 2/Stage 3 boundaries remain.
+
 ## Owner decisions — current resume register
 
 This register is a navigation aid, not a rewrite of the questions or answers above. The later decision governs
@@ -2606,6 +2653,7 @@ where an earlier recovery/process rule conflicts. The pause commit is a historic
 | S-OD11 | Owner, 2026-11-17 04:30 (+07:00), Discord: "GC-01: chọn A."; GC-01. Option A is binding: bounded grouped attempt first, initially 4,096 additional nodes and 50,000 shared construction/search units. Only a local work/node cap permits `forcingChain` to discard grouped scratch and run the complete singleton search with no local work cap, under the same caller-clamped short window and parent budget; no budget reset or fallback for parent exhaustion, cancellation/errors, completed negatives or window rejection. Its minimum is certified in the complete singleton graph, not the abandoned grouped graph. `forcingChainLong` stays on the bounded grouped route, with no fallback/second allowance; incomplete construction/minimum returns null. IR54 is preserved. Record both phases and total cost; R10's once-only own-new-limit adjustment and all proof/E/GH/quick/CI/qualification gates remain. No numeric adjustment or availability guarantee is made by this answer. Finish accepted/committed MS14a before MS13c, then MS14b/MS14c; no change to MS14a. S-AV36: policy resolved, measurements/cost/audit still open. |
 | S-OD12 | Owner, 2026-11-17 13:46 (+07:00), Discord: "tôi chọn A và S0"; JF-02. **A + S0:** approve retention of MS13c's verified Jellyfish source `testkit-4242-8657`, snapshot and complete acquisition records retroactively for MS13c only, explicitly preserving that the scan lacked authorization when performed. No further scan, acquisition-budget reset, unused quota, finder/prior/target change or GH/quick/release waiver. Case-by-case permission remains; S1 is not approved. Ordinary B/IR72 source acquisition remains available, but any future exception/expansion needs separate prior owner authorization; neither S-OD10 nor S-OD12 is inherited by another task/ID. Resolve the authorization hold, then finish the reviewed fixes and final GH/both quick sets/CI before MS13c acceptance/commit. S-OD11, S-OD4 and the final qualification/performance obligations remain unchanged. |
 | S-OD13 | Owner, Discord author `amicably8850`, **2026-11-18 21:31:46 (+07:00)**: **"Q1: A. Q2: chọn phương án B nhưng giao SA-Opus và SA-Astra chọn mức trần, không cần thông qua Fable."** MS18c-Q1-A approves declared host-active GQ with raw p95/budgets/jobs/seeds/120000 ms guard unchanged, the existing additional-consumer hold and one >=60 s re-ask only before payload start. MS18c-Q2-B approves a GQ-only longer bounded command route; **SA1/Opus and SA2/Astra jointly choose and approve the numerical per-cell limits, not Fable or the developer**. File-only preflight precedes a hard joint-approval stop; no numerical ceiling is pre-approved by this owner answer. Other gates keep 450/540; no scheduler/protocol/offer-rule change, partial publication, acquisition permission or general timing waiver follows. CV6-05's separate conditional Fable delegation remains. |
+| S-OD14 | Owner, Discord author `amicably8850`, **2026-11-18 23:05:53 (+07:00)**, verbatim: **"Q3: chọn B"**. MS18c-Q3 permits at most one recovery relaunch per GQ cell after T-kill, worker/supervisor fault or session loss, only when no complete record exists and **SA1+SA2 diagnose and approve beforehand**. Preserve all traces and unchanged qualified source/seed/protocol; a complete record (including hidden) is never rerun, correctness is not erased and a faster run is not selected. Adopt a live supervisor. Separate explicit payload/admission budgets and immutable attempt paths; no implicit reset. A failed second payload or exhausted recovery admission budget is a permanent gap, blocking complete publication. No automatic ceiling/source/qualification-rule change; Stage 2 binding/release still required. |
 
 **Q-MS07e-2 — pack-author ruling (SA2, 2026-11-15), not another owner decision:** no change to
 the projection rule and no speculative one-off launch of the six unexecuted cells. Route
