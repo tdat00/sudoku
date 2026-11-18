@@ -1,0 +1,32 @@
+inventory before 154, after 154; names only before 1, only after 1
+  difficulty > difficulty: the score of rating v3 > reproduces the worked examples: classic9 499 and Samurai 633
+  -> difficulty > difficulty: the score of rating v3 > reproduces the worked examples: published 499 and 633, current 499 and 593
+ 1 classic9-nightmare   selects  8 (planned 8) same names (renamed substituted)
+ 2 classic9-hell1       selects  8 (planned 8) same names (renamed substituted)
+ 3 classic9-veryEasy    selects  8 (planned 8) same names (renamed substituted)
+ 4 classic9-easy        selects  8 (planned 8) same names (renamed substituted)
+ 5 classic9-normal      selects  8 (planned 8) same names (renamed substituted)
+ 6 classic9-hard        selects  8 (planned 8) same names (renamed substituted)
+ 7 classic9-expert      selects  8 (planned 8) same names (renamed substituted)
+ 8 classic9-master      selects  8 (planned 8) same names (renamed substituted)
+ 9 confusion-matrix     selects  1 (planned 1) same names (renamed substituted)
+10 levels               selects  4 (planned 4) same names (renamed substituted)
+11 spec9                selects  8 (planned 8) same names (renamed substituted)
+12 spec-other           selects  4 (planned 4) same names (renamed substituted)
+13 qualification        selects  6 (planned 6) same names (renamed substituted)
+14 clue-floor           selects  9 (planned 9) same names (renamed substituted)
+15 score-v3             selects 15 (planned 15) same names (renamed substituted)
+16 score-table          selects  4 (planned 4) same names (renamed substituted)
+17 labelled             selects  7 (planned 7) same names (renamed substituted)
+18 removing             selects  2 (planned 2) same names (renamed substituted)
+19 oracle               selects  7 (planned 7) same names (renamed substituted)
+20 guarantees           selects 10 (planned 10) same names (renamed substituted)
+21 cap                  selects  5 (planned 5) same names (renamed substituted)
+22 unreachable          selects  5 (planned 5) same names (renamed substituted)
+23 safety               selects  3 (planned 3) same names (renamed substituted)
+the repaired test occupies lines 645-698 of the new file
+  hunk @@ -645 +645,4 @@: new lines 645-648 inside the test
+  hunk @@ -654,0 +658 @@: new lines 658-658 inside the test
+  hunk @@ -661,0 +666,10 @@: new lines 666-675 inside the test
+  hunk @@ -679,2 +693,3 @@: new lines 693-695 inside the test
+4 hunk(s), 18 line(s) added, 3 removed

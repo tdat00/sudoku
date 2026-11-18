@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: the clue floor of a variant (clueFloor) > --results=..\docs\difficulty-v3\evidence\MS17b\gd\clue-floor.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty: 9 passed  (32 ms)
+
+Suites: 1
+Tests:  9 total, 9 passed, 0 failed, 0 skipped
+Time:   32 ms running tests, 276 ms total
+Results: docs/difficulty-v3/evidence/MS17b/gd/clue-floor.json
+exit=0 seconds=0.505

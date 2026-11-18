@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > digger.generate: when the level cannot be reached > --results=..\docs\difficulty-v3\evidence\MS17b\gd\unreachable.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty: 5 passed  (295 ms)
+
+Suites: 1
+Tests:  5 total, 5 passed, 0 failed, 0 skipped
+Time:   296 ms running tests, 532 ms total
+Results: docs/difficulty-v3/evidence/MS17b/gd/unreachable.json
+exit=0 seconds=0.768

@@ -1,0 +1,409 @@
+[
+ {
+  "order": 1,
+  "id": "classic9-nightmare",
+  "filter": "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare >",
+  "selected": 8,
+  "olderSourceSeconds": 17.317,
+  "boundSeconds": 149,
+  "admitted": true,
+  "names": [
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > hits the requested level in at least 90 % of the puzzles",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > I2, I3, I6: givens belong to the solution they determine; at least minClues",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > I5: every puzzle has a complete proof; an exact one has its score in the band",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > I7: every deduction on the way to the solution is sound",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > has the pattern of empty cells that the default symmetry asks for (rotational 180)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > is generated well inside the budget of design.md section 9.1 (median time)"
+  ]
+ },
+ {
+  "order": 2,
+  "id": "classic9-hell1",
+  "filter": "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 >",
+  "selected": 8,
+  "olderSourceSeconds": 113.613,
+  "boundSeconds": 919,
+  "admitted": false,
+  "names": [
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > hits the requested level in at least 90 % of the puzzles",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > I2, I3, I6: givens belong to the solution they determine; at least minClues",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > I5: every puzzle has a complete proof; an exact one has its score in the band",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > I7: every deduction on the way to the solution is sound",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > has the pattern of empty cells that the default symmetry asks for (rotational 180)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > is generated well inside the budget of design.md section 9.1 (median time)"
+  ]
+ },
+ {
+  "order": 3,
+  "id": "classic9-veryEasy",
+  "filter": "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy >",
+  "selected": 8,
+  "olderSourceSeconds": 0.734,
+  "boundSeconds": 16,
+  "admitted": true,
+  "names": [
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > hits the requested level in at least 90 % of the puzzles",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > I2, I3, I6: givens belong to the solution they determine; at least minClues",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > I5: every puzzle has a complete proof; an exact one has its score in the band",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > I7: every deduction on the way to the solution is sound",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > has the pattern of empty cells that the default symmetry asks for (rotational 180)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy > is generated well inside the budget of design.md section 9.1 (median time)"
+  ]
+ },
+ {
+  "order": 4,
+  "id": "classic9-easy",
+  "filter": "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy >",
+  "selected": 8,
+  "olderSourceSeconds": 23.911,
+  "boundSeconds": 202,
+  "admitted": true,
+  "names": [
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > hits the requested level in at least 90 % of the puzzles",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > I2, I3, I6: givens belong to the solution they determine; at least minClues",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > I5: every puzzle has a complete proof; an exact one has its score in the band",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > I7: every deduction on the way to the solution is sound",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > has the pattern of empty cells that the default symmetry asks for (rotational 180)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > is generated well inside the budget of design.md section 9.1 (median time)"
+  ]
+ },
+ {
+  "order": 5,
+  "id": "classic9-normal",
+  "filter": "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal >",
+  "selected": 8,
+  "olderSourceSeconds": 30.464,
+  "boundSeconds": 254,
+  "admitted": true,
+  "names": [
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > hits the requested level in at least 90 % of the puzzles",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > I2, I3, I6: givens belong to the solution they determine; at least minClues",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > I5: every puzzle has a complete proof; an exact one has its score in the band",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > I7: every deduction on the way to the solution is sound",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > has the pattern of empty cells that the default symmetry asks for (rotational 180)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > is generated well inside the budget of design.md section 9.1 (median time)"
+  ]
+ },
+ {
+  "order": 6,
+  "id": "classic9-hard",
+  "filter": "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard >",
+  "selected": 8,
+  "olderSourceSeconds": 3.509,
+  "boundSeconds": 39,
+  "admitted": true,
+  "names": [
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > hits the requested level in at least 90 % of the puzzles",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > I2, I3, I6: givens belong to the solution they determine; at least minClues",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > I5: every puzzle has a complete proof; an exact one has its score in the band",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > I7: every deduction on the way to the solution is sound",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > has the pattern of empty cells that the default symmetry asks for (rotational 180)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > is generated well inside the budget of design.md section 9.1 (median time)"
+  ]
+ },
+ {
+  "order": 7,
+  "id": "classic9-expert",
+  "filter": "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert >",
+  "selected": 8,
+  "olderSourceSeconds": 3.514,
+  "boundSeconds": 39,
+  "admitted": true,
+  "names": [
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > hits the requested level in at least 90 % of the puzzles",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > I2, I3, I6: givens belong to the solution they determine; at least minClues",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > I5: every puzzle has a complete proof; an exact one has its score in the band",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > I7: every deduction on the way to the solution is sound",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > has the pattern of empty cells that the default symmetry asks for (rotational 180)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert > is generated well inside the budget of design.md section 9.1 (median time)"
+  ]
+ },
+ {
+  "order": 8,
+  "id": "classic9-master",
+  "filter": "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master >",
+  "selected": 8,
+  "olderSourceSeconds": 8.227,
+  "boundSeconds": 76,
+  "admitted": true,
+  "names": [
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > hits the requested level in at least 90 % of the puzzles",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > I2, I3, I6: givens belong to the solution they determine; at least minClues",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > I5: every puzzle has a complete proof; an exact one has its score in the band",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > I7: every deduction on the way to the solution is sound",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > has the pattern of empty cells that the default symmetry asks for (rotational 180)",
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master > is generated well inside the budget of design.md section 9.1 (median time)"
+  ]
+ },
+ {
+  "order": 9,
+  "id": "confusion-matrix",
+  "filter": "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > is a confusion matrix",
+  "selected": 1,
+  "olderSourceSeconds": 191.687,
+  "boundSeconds": 1544,
+  "admitted": false,
+  "names": [
+   "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > is a confusion matrix with its diagonal as the most common cell of every row"
+  ]
+ },
+ {
+  "order": 10,
+  "id": "levels",
+  "filter": "difficulty > difficulty: levels >",
+  "selected": 4,
+  "olderSourceSeconds": 0.943,
+  "boundSeconds": 18,
+  "admitted": true,
+  "names": [
+   "difficulty > difficulty: levels > lists the nine levels, easiest first, and rejects anything else",
+   "difficulty > difficulty: levels > agrees with the list that the variant registry validates difficultySupport against",
+   "difficulty > difficulty: levels > has one band table: [min, max) bands that tile the scale from 0, with an open top",
+   "difficulty > difficulty: levels > gives every score exactly one level, edges included"
+  ]
+ },
+ {
+  "order": 11,
+  "id": "spec9",
+  "filter": "difficulty > difficulty: spec(level, model) on a 9x9 board >",
+  "selected": 8,
+  "olderSourceSeconds": 0.463,
+  "boundSeconds": 14,
+  "admitted": true,
+  "names": [
+   "difficulty > difficulty: spec(level, model) on a 9x9 board > returns the fields of design.md section 13.7",
+   "difficulty > difficulty: spec(level, model) on a 9x9 board > has the bands of the table, not scaled",
+   "difficulty > difficulty: spec(level, model) on a 9x9 board > keeps the clue ranges of section 5.7 (expert as hard, the hell levels as nightmare)",
+   "difficulty > difficulty: spec(level, model) on a 9x9 board > allows exactly the techniques with 1.25 x weight below the band maximum, in ladder order",
+   "difficulty > difficulty: spec(level, model) on a 9x9 board > derives the allowed groups from the allowed techniques; no group owns a level",
+   "difficulty > difficulty: spec(level, model) on a 9x9 board > uses the technique oracle at every level and the proposal dig from nightmare on",
+   "difficulty > difficulty: spec(level, model) on a 9x9 board > never offers a technique that is scoped to another variant",
+   "difficulty > difficulty: spec(level, model) on a 9x9 board > asks for fewer clues per unit on boards with fewer digits, never for more"
+  ]
+ },
+ {
+  "order": 12,
+  "id": "spec-other",
+  "filter": "difficulty > difficulty: spec on other boards, and difficultySupport >",
+  "selected": 4,
+  "olderSourceSeconds": 0.486,
+  "boundSeconds": 14,
+  "admitted": true,
+  "names": [
+   "difficulty > difficulty: spec on other boards, and difficultySupport > keeps the bands on every board and scales only the clue range by cellCount / 81",
+   "difficulty > difficulty: spec on other boards, and difficultySupport > throws for a level the variant does not support",
+   "difficulty > difficulty: spec on other boards, and difficultySupport > isSupported follows the variant definition; unknown variants support every level",
+   "difficulty > difficulty: spec on other boards, and difficultySupport > offers in every variant exactly the levels the qualification published (docs/difficulty-rating/qualification.md)"
+  ]
+ },
+ {
+  "order": 13,
+  "id": "qualification",
+  "filter": "difficulty > qualification: tests/qualify.js counts every request",
+  "selected": 6,
+  "olderSourceSeconds": 3.782,
+  "boundSeconds": 41,
+  "admitted": true,
+  "names": [
+   "difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > never offers a level on an incomplete round (39 or 99 outcomes)",
+   "difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > publishes a complete first round: 40 outcomes, offered",
+   "difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > decides a borderline level on exactly 100 outcomes",
+   "difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > fails the run when a worker dies on the last request of the first round",
+   "difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > fails the run when a worker dies on the last request of the second round",
+   "difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > fails the run on a clean exit with a request in flight, an IPC error or a stray answer"
+  ]
+ },
+ {
+  "order": 14,
+  "id": "clue-floor",
+  "filter": "difficulty > difficulty: the clue floor of a variant (clueFloor) >",
+  "selected": 9,
+  "olderSourceSeconds": 0.495,
+  "boundSeconds": 14,
+  "admitted": true,
+  "names": [
+   "difficulty > difficulty: the clue floor of a variant (clueFloor) > without a declaration the floor is the classic9 floor scaled by cellCount / 81",
+   "difficulty > difficulty: the clue floor of a variant (clueFloor) > a table gives absolute floors; a level that is missing has no floor (0)",
+   "difficulty > difficulty: the clue floor of a variant (clueFloor) > a function gets (level, model, the derived floor) and may scale it; nonsense falls back",
+   "difficulty > difficulty: the clue floor of a variant (clueFloor) > spec(level, null) and boards of unregistered variants keep working",
+   "difficulty > difficulty: the clue floor of a variant (clueFloor) > Killer declares 40 clues for veryEasy and none for the levels above",
+   "difficulty > difficulty: the clue floor of a variant (clueFloor) > Greater-Than and the 9x9 hybrids keep the derived floor of veryEasy and easy and scale the rest",
+   "difficulty > difficulty: the clue floor of a variant (clueFloor) > a clueFloorScale multiplies the derived floor of its levels; a missing level keeps it",
+   "difficulty > difficulty: the clue floor of a variant (clueFloor) > clueFloor sees the scaled floor as the derived one, and has the last word",
+   "difficulty > difficulty: the clue floor of a variant (clueFloor) > a registration with a malformed clueFloor, clueFloorScale or restartThreshold is refused"
+  ]
+ },
+ {
+  "order": 15,
+  "id": "score-v3",
+  "filter": "difficulty > difficulty: the score of rating v3 >",
+  "selected": 15,
+  "olderSourceSeconds": 0.612,
+  "boundSeconds": 15,
+  "admitted": true,
+  "names": [
+   "difficulty > difficulty: the score of rating v3 > is round(80E/(E+40) + P + 0.25 P log2(1 + W/P)) with the weights of section 5.2",
+   "difficulty > difficulty: the score of rating v3 > has the weight table of section 5.2, and a technique without a weight is an error",
+   "difficulty > difficulty: the score of rating v3 > reproduces the worked examples: classic9 499 and Samurai 633",
+   "difficulty > difficulty: the score of rating v3 > is pure: the same empty cells and technique counts give the same score on every board",
+   "difficulty > difficulty: the score of rating v3 > never decreases when a count, the empty cells or the weight of the hardest technique grows",
+   "difficulty > difficulty: the score of rating v3 > does not depend on the order of the steps, only on how often each technique was used",
+   "difficulty > difficulty: the score of rating v3 > rates a puzzle that needs only singles by its empty cells: at most easy on any board",
+   "difficulty > difficulty: the score of rating v3 > counts one expensive step in full on any board (no technique floor, no size scaling)",
+   "difficulty > difficulty: the score of rating v3 > picks the hardest technique by weight, then by the larger registration order, then by id",
+   "difficulty > difficulty: the score of rating v3 > gives a puzzle without a complete proof no level and no score (it is never a hit)",
+   "difficulty > difficulty: the score of rating v3 > carries the metadata of section 5.4: rawScore = score, ratingVersion 3, the counts",
+   "difficulty > difficulty: the score of rating v3 > returns a confidence between 0 and 1: 0 on a band edge, high deep inside the band",
+   "difficulty > difficulty: the score of rating v3 > does not depend on whether the solver collected its steps",
+   "difficulty > difficulty: the score of rating v3 > rates the same report the same whichever way it is classified",
+   "difficulty > difficulty: the score of rating v3 > proves uniqueness only with a complete proof that assumes none"
+  ]
+ },
+ {
+  "order": 16,
+  "id": "score-table",
+  "filter": "difficulty > difficulty: the Difficulty Score table (section 5.6) >",
+  "selected": 4,
+  "olderSourceSeconds": 0.493,
+  "boundSeconds": 14,
+  "admitted": true,
+  "names": [
+   "difficulty > difficulty: the Difficulty Score table (section 5.6) > shares the score among the rows exactly: the hardest row also carries P, the empty cells V",
+   "difficulty > difficulty: the Difficulty Score table (section 5.6) > rounds the shares once, to whole numbers that add up to the score (the worked example)",
+   "difficulty > difficulty: the Difficulty Score table (section 5.6) > adds up to the score for any counts, also without empty cells or without techniques",
+   "difficulty > difficulty: the Difficulty Score table (section 5.6) > exposes the exact numbers behind every whole number of the table"
+  ]
+ },
+ {
+  "order": 17,
+  "id": "labelled",
+  "filter": "difficulty > difficulty: labelled puzzles (fixtures/rated.js) >",
+  "selected": 7,
+  "olderSourceSeconds": 1.381,
+  "boundSeconds": 22,
+  "admitted": true,
+  "names": [
+   "difficulty > difficulty: labelled puzzles (fixtures/rated.js) > has at least 20 labelled puzzles, each with exactly one solution",
+   "difficulty > difficulty: labelled puzzles (fixtures/rated.js) > classify matches every label within one level",
+   "difficulty > difficulty: labelled puzzles (fixtures/rated.js) > v3 reference: every entry carries its current expectation, and classify gives its level exactly",
+   "difficulty > difficulty: labelled puzzles (fixtures/rated.js) > v3 reference: the level is required (or vacuous) as expected, derived and by the current floor",
+   "difficulty > difficulty: labelled puzzles (fixtures/rated.js) > the v2 certificate of a constructed puzzle is about techniques, not a v3 floor",
+   "difficulty > difficulty: labelled puzzles (fixtures/rated.js) > v3 reference: rates the famous hardest puzzles hell2, with a deep Nishio step and a complete proof",
+   "difficulty > difficulty: labelled puzzles (fixtures/rated.js) > puts every label in order: harder labels never rate lower on average"
+  ]
+ },
+ {
+  "order": 18,
+  "id": "removing",
+  "filter": "difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1) >",
+  "selected": 2,
+  "olderSourceSeconds": 0.716,
+  "boundSeconds": 16,
+  "admitted": true,
+  "names": [
+   "difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1) > rarely lowers the score: at most 5 of 100 puzzles of 30 to 50 clues",
+   "difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1) > rarely lowers the level, and never by more than one: 300 puzzles of 22 to 50 clues"
+  ]
+ },
+ {
+  "order": 19,
+  "id": "oracle",
+  "filter": "difficulty > digger: technique-bounded oracle >",
+  "selected": 7,
+  "olderSourceSeconds": 0.936,
+  "boundSeconds": 18,
+  "admitted": true,
+  "names": [
+   "difficulty > digger: technique-bounded oracle > keeps the puzzle solvable with the allowed techniques only, which also makes it unique",
+   "difficulty > digger: technique-bounded oracle > stops at the upper edge of a band: no accepted removal takes the score to maxScore",
+   "difficulty > digger: technique-bounded oracle > digs less deep with fewer techniques: singles only never beats more techniques",
+   "difficulty > digger: technique-bounded oracle > never uses a technique that assumes uniqueness: it is listed, but the oracle skips it",
+   "difficulty > digger: technique-bounded oracle > reports the groups it removed, in order, and they account for every removed clue",
+   "difficulty > digger: technique-bounded oracle > continues a dug puzzle from startGivens without touching the clues that were kept",
+   "difficulty > digger: technique-bounded oracle > rejects options it cannot use"
+  ]
+ },
+ {
+  "order": 20,
+  "id": "guarantees",
+  "filter": "difficulty > digger.generate: guarantees >",
+  "selected": 10,
+  "olderSourceSeconds": 41.681,
+  "boundSeconds": 344,
+  "admitted": true,
+  "names": [
+   "difficulty > digger.generate: guarantees > I4: the same seed gives the same puzzle, another seed another one",
+   "difficulty > digger.generate: guarantees > is independent of the emit callback",
+   "difficulty > digger.generate: guarantees > returns the documented fields",
+   "difficulty > digger.generate: guarantees > honours minClues and the unit floor of the spec on every level",
+   "difficulty > digger.generate: guarantees > works with other symmetries and with none",
+   "difficulty > digger.generate: guarantees > keeps the configured symmetry on the top tiers too (proposals and their refinement)",
+   "difficulty > digger.generate: guarantees > digLevel makes one attempt from a given solution and says whether it hit the level",
+   "difficulty > digger.generate: guarantees > works on the smaller boards for the levels they support",
+   "difficulty > digger.generate: guarantees > rejects a level the variant does not support and options that make no sense",
+   "difficulty > digger.generate: guarantees > propagates a budget that runs out instead of swallowing it"
+  ]
+ },
+ {
+  "order": 21,
+  "id": "cap",
+  "filter": "difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) >",
+  "selected": 5,
+  "olderSourceSeconds": 5.688,
+  "boundSeconds": 56,
+  "admitted": true,
+  "names": [
+   "difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > counts every full rating at the default cap: classic9 top tier, Greater-Than, Killer",
+   "difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > runs out inside the downward refinement without passing the cap",
+   "difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > runs out inside the local search, and hands on the rating it has instead of rating again",
+   "difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > runs out inside a variant strategy: Greater-Than tuning and the Killer layout search",
+   "difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > a cap of nothing at all ends with the error path, never with an unrated puzzle"
+  ]
+ },
+ {
+  "order": 22,
+  "id": "unreachable",
+  "filter": "difficulty > digger.generate: when the level cannot be reached >",
+  "selected": 5,
+  "olderSourceSeconds": 0.753,
+  "boundSeconds": 17,
+  "admitted": true,
+  "names": [
+   "difficulty > digger.generate: when the level cannot be reached > returns the closest completely rated puzzle with difficulty.approximate and does not throw",
+   "difficulty > digger.generate: when the level cannot be reached > prefers the closest result: a puzzle one level off beats one several levels off",
+   "difficulty > digger.generate: when the level cannot be reached > stops after maxAttempts x digTries dig samples and never more",
+   "difficulty > digger.generate: when the level cannot be reached > tries more dig samples per grid when the symmetry digs in groups of four",
+   "difficulty > digger.generate: when the level cannot be reached > throws digger.noRatedPuzzle when not one sample has a complete proof"
+  ]
+ },
+ {
+  "order": 23,
+  "id": "safety",
+  "filter": "difficulty > digger.generate: safety net against a technique bug (risk R3) >",
+  "selected": 3,
+  "olderSourceSeconds": 5.213,
+  "boundSeconds": 52,
+  "admitted": true,
+  "names": [
+   "difficulty > digger.generate: safety net against a technique bug (risk R3) > never returns an ambiguous puzzle, reports the bug and still delivers a unique puzzle",
+   "difficulty > digger.generate: safety net against a technique bug (risk R3) > digLevel marks the puzzle it had to replace",
+   "difficulty > digger.generate: safety net against a technique bug (risk R3) > never returns an ambiguous candidate of a search either: the keeper counts before it keeps"
+  ]
+ }
+]

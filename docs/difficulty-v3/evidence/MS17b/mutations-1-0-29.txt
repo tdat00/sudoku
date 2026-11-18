@@ -1,0 +1,59 @@
+mutation 0 (schema stays 2): DETECTED - 23 total, 22 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: schema 3 under the same key; a schema-2 list is purged, not migrated
+mutation 1 (schema 4): DETECTED - 23 total, 22 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.9 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: schema 3 under the same key; a schema-2 list is purged, not migrated
+mutation 2 (storage key renamed): DETECTED - 23 total, 22 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: schema 3 under the same key; a schema-2 list is purged, not migrated
+mutation 3 (an older list is read): DETECTED - 23 total, 22 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.9 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: schema 3 under the same key; a schema-2 list is purged, not migrated
+mutation 4 (a newer list is read): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: LRU store > purges a list of another schema version
+mutation 5 (the exported VERSION says 2): DETECTED - 23 total, 22 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.8 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: schema 3 under the same key; a schema-2 list is purged, not migrated
+mutation 6 (the default store version stays 2): DETECTED - 23 total, 22 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.9 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: schema 3 under the same key; a schema-2 list is purged, not migrated
+mutation 7 (rating version stays 2): DETECTED - 23 total, 22 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: schema 3 under the same key; a schema-2 list is purged, not migrated
+mutation 8 (rating version 4): DETECTED - 23 total, 22 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: schema 3 under the same key; a schema-2 list is purged, not migrated
+mutation 9 (rating version as text): DETECTED - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL cache > cache: serialisation > round trip equals a fresh generation: classic9 hard
+mutation 10 (the exported rating version stays 2): DETECTED - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL cache > cache: serialisation > round trip equals a fresh generation: classic9 hard
+mutation 11 (classify stamps 2): DETECTED - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL cache > cache: serialisation > round trip equals a fresh generation: classic9 hard
+mutation 12 (classify stamps nothing): DETECTED - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL cache > cache: serialisation > round trip equals a fresh generation: classic9 hard
+mutation 13 (the record check of the holder is dropped): NOT DETECTED, EQUIVALENT (every caller passes an object that is a record or an array: serialize and classificationKey have tested isRecord, deserialize a non-null object (an array has no own exact: the same refusal), verify the result of fromWire) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.2 s
+mutation 14 (an inherited exact is accepted): DETECTED - 24 total, 23 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write and read boundaries need an own boolean exact; nothing becomes a valid false
+mutation 15 (a non-boolean exact is accepted): DETECTED - 24 total, 23 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write and read boundaries need an own boolean exact; nothing becomes a valid false
+mutation 16 (the rating is never checked): DETECTED - 22 total, 21 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.7 s
+    FAIL cache > cache: serialisation > refuses data that is not a valid puzzle
+mutation 17 (serialize accepts a non-record): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.3 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 18 (serialize skips the check): DETECTED - 24 total, 23 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.0 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write and read boundaries need an own boolean exact; nothing becomes a valid false
+mutation 19 (deserialize skips the raw check): DETECTED - 18 total, 17 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.5 s
+    FAIL cache > cache: serialisation > MS05a-T01: keeps the exactness flag; an entry stored without it is refused, not read as not exact
+mutation 20 (deserialize checks after the coercion): DETECTED - 18 total, 17 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.8 s
+    FAIL cache > cache: serialisation > MS05a-T01: keeps the exactness flag; an entry stored without it is refused, not read as not exact
+mutation 21 (verify skips the check): NOT DETECTED, EQUIVALENT (verify gets the result of fromWire, which hands over wire.rating and the flag unchanged (exact as a strict boolean) and a model of the wire cellCount: the deserialize check before it has already decided on the same data) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.8 s
+mutation 22 (the model size is never known): DETECTED - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.4 s
+    FAIL cache > cache: serialisation > round trip equals a fresh generation: classic9 hard
+mutation 23 (the model size is read unguarded): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 24 (the rating record check is dropped): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 25 (the own-field loop is dropped): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 26 (level is not required to be own): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 27 (score is not required to be own): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 28 (rawScore is not required to be own): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 29 (confidence is not required to be own): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+detected 28 of 30, survivors 2, 262.6 s

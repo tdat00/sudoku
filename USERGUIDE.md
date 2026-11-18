@@ -98,9 +98,10 @@ while the puzzle can still be solved with the techniques that fit the band of th
 *technique-bounded oracle*, [design.md](generator/design.md) §6.8), and it only returns puzzles with a complete logical
 proof. The same seed with the same options always gives the same puzzle.
 
-**Rating v2 compatibility.** "The same seed gives the same puzzle" holds within one rating/generator version.
-This version changes the scoring and the generation (rating v2), so a link or a history entry made by an older
-version may regenerate a different puzzle, and the scores already stored in the history are not re-rated (what
+**Rating version compatibility.** "The same seed gives the same puzzle" holds within one rating/generator version.
+This version changes what a level means and the generation (rating v3), so a link or a history entry made by an older
+version may regenerate a different puzzle, the puzzles an older version cached are dropped once, and the scores already
+stored in the history are not re-rated (what
 changed in the stored data is in the [developer guide](DEVELOPERGUIDE.md#cache-and-pre-generation)). The history
 keeps only the recipe (seed and settings), not the puzzle: an entry that does not say which rating version made
 it, or that was made by an earlier one, carries the note "Made by an earlier version", because selecting it

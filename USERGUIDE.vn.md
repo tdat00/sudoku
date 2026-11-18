@@ -97,9 +97,10 @@ khoảng điểm chứa điểm đó ([design.md](generator/design.md) §6.6). B
 các kỹ thuật hợp với khoảng điểm của mức đã chọn (*oracle bị giới hạn theo kỹ thuật*, [design.md](generator/design.md)
 §6.8), và chỉ trả về đề có lời giải logic trọn vẹn. Cùng seed và cùng tùy chọn luôn cho ra cùng một đề.
 
-**Tương thích với cách tính điểm v2.** "Cùng seed cho cùng đề" chỉ đúng trong cùng một phiên bản tính điểm/trình
-sinh đề. Phiên bản này đổi cách tính điểm và cách tạo đề (rating v2), nên một liên kết hay một mục lịch sử do
-phiên bản cũ tạo ra có thể tạo lại thành một đề khác, và điểm đã lưu trong lịch sử không được tính lại (những gì
+**Tương thích giữa các phiên bản tính điểm.** "Cùng seed cho cùng đề" chỉ đúng trong cùng một phiên bản tính điểm/trình
+sinh đề. Phiên bản này đổi ý nghĩa của một mức và cách tạo đề (rating v3), nên một liên kết hay một mục lịch sử do
+phiên bản cũ tạo ra có thể tạo lại thành một đề khác, các đề mà phiên bản cũ đã lưu trong bộ nhớ đệm bị bỏ một lần,
+và điểm đã lưu trong lịch sử không được tính lại (những gì
 thay đổi trong dữ liệu đã lưu nằm trong [hướng dẫn cho lập trình viên](DEVELOPERGUIDE.vn.md#bộ-nhớ-đệm-và-tạo-sẵn-đề)).
 Lịch sử chỉ giữ công thức (seed và tùy chọn), không giữ đề: mục không ghi phiên bản tính điểm nào đã tạo ra nó, hoặc do
 một phiên bản cũ hơn tạo, có ghi chú "Do phiên bản cũ hơn tạo", vì chọn nó sẽ tạo lại công thức bằng mô hình tính điểm

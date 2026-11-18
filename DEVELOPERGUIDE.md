@@ -418,9 +418,17 @@ which "Generate" (with an empty seed) and "Generate random" then hand out instan
 generation is in progress, pauses in a hidden tab, skips configurations that are slow, and does not exist in
 main-thread mode. A switch in Settings turns the pre-generation off (the choice is not remembered).
 
-Rating v2 changed the scoring and the generation: the cache drops the puzzles an older version stored, once; the
-scores already stored in the history are not re-rated; and an exported document keeps the
-`sudoku-generator/v1` format and gains `difficulty.ratingVersion: 2`.
+Rating v3 (MS17b) changed the meaning of a level again, so `SG.difficulty.RATING_VERSION` and the cache schema are
+3: a schema-2 list is purged (not migrated, not stamped as current), and the cache admits only a current canonical
+result, an own boolean `exact` and a complete rating of the current version, checked in `serialize` before
+`SG.pipeline.toWire` can turn a missing flag into a valid false and on the decoded wire before
+`SG.pipeline.fromWire` does (that function still reads an absent flag as false for the worker wire, which stays
+version 1; a shallow fallback, `exact: false`, is a valid entry; a canonical unrated result is refused). A
+regeneration is the same puzzle only when its givens, solution, exactness, whole standardized rating (version and
+technique counts included) and semantic model are equal; timings, work counters, target, trace and symbol display
+are ignored. The scores already stored in the history are not re-rated (its store stays version 1), and an exported
+document keeps the `sudoku-generator/v1` format and carries `difficulty.ratingVersion: 3` (2 in a document of
+rating v2, which stays a claim).
 
 ### Puzzle history
 
@@ -1233,7 +1241,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js # the quick set (55 suites, 4,769 tests), whole or in disjoint shards
+node tests/node-runner.js # the quick set (55 suites, 4,784 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (63 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -1245,7 +1253,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 55 suites,
-4,769 tests — the 37 suites of `tests/suites/` and the 18 of `../core/tests/suites/` that the
+4,784 tests — the 37 suites of `tests/suites/` and the 18 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -1302,7 +1310,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 63 suites, 55 of them quick (4,769 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 63 suites, 55 of them quick (4,784 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1691,9 +1699,11 @@ this part is about its code.
 
 - The puzzle document carries the rebuilt model, so the player has no variant or generation code at all (see
   [The exchange format](#the-exchange-format)).
-- Generator rating-v2 documents still use `sudoku-generator/v1`; the player preserves `difficulty.ratingVersion`
-  without recalculating scores. Older documents and texts still open, but the previous level ids are not mapped
-  to the new ones. Changing rating metadata does not change a puzzle's saved-progress identity.
+- Generator rating-v2 and rating-v3 documents still use `sudoku-generator/v1`; the player preserves
+  `difficulty.ratingVersion` (any positive integer, 2 or 3 today) as the document's claim, without recalculating
+  scores and never as a certificate that a level was required. Older documents and texts still open, but the
+  previous level ids are not mapped to the new ones. Changing rating metadata does not change a puzzle's
+  saved-progress identity.
 - The token of a puzzle link is compressed and URL-safe: the text of the puzzles of the generator's Play button
   (`t.…`), or the document of one puzzle (`z.…`).
 
@@ -1710,7 +1720,7 @@ static server, for example `python -m http.server` or `npx serve`, and open `htt
 ## Player tests
 
 ```
-node tests/node-runner.js          # every suite (32, 2,978 tests); no packages (run on Node 24)
+node tests/node-runner.js          # every suite (32, 2,981 tests); no packages (run on Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

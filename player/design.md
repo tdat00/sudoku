@@ -216,9 +216,11 @@ Everything else is ignored, so the generator may add fields.
 
 Difficulty IDs, easiest first, are `veryEasy`, `easy`, `normal`, `hard`, `expert`, `master`, `nightmare`,
 `hell1`, `hell2`. Both language packs supply their names and descriptions; text import resolves
-the names in either language independently of the player's current language. The generator's rating v2
-keeps the v1 document container and adds `difficulty.ratingVersion: 2`. A positive safe integer rating version
-is preserved in the compact stored/shared document; missing or unreadable optional metadata is non-fatal.
+the names in either language independently of the player's current language. The generator's rating v2 and
+rating v3 keep the v1 document container and add `difficulty.ratingVersion` (2, and 3 since MS17b). A positive
+safe integer rating version is preserved in the compact stored/shared document as the document's claim, never as
+a certificate that a level was required (old v2 claims stay v2, a current v3 claim is no new trust rule); missing
+or unreadable optional metadata is non-fatal.
 The player does not re-score imported puzzles, infer a version from a text header, or change legacy scores.
 Difficulty and rating version are not part of puzzle identity, so they cannot reset saved progress.
 Ids from before rating v2 (`medium`, `veryHard`, `evil`, `nightmare1`, `nightmare2`) are not translated: in a
@@ -604,7 +606,7 @@ strings; added: `player.*` (shell, open flow, info card, recent list, welcome), 
 
 ## 10. Testing
 `node tests/node-runner.js` (32 suites: the 14 of `tests/suites/` and the 18 shared ones of `core/tests/suites/`;
-2,978 tests; no install) is the default quick set: developers and coding
+2,981 tests; no install) is the default quick set: developers and coding
 agents run it (or a few suites with `--suite=`) while developing, and `.github/workflows/pages.yml` runs all of it
 before every deployment. When one command cannot hold the whole set, it is covered by disjoint shards as the
 generator's quick set is (`generator/design.md` section 15.1); the cost measured for each app, on a named source and
@@ -625,7 +627,7 @@ they are **manual**, not part of CI, and are run only when a change touches the 
 | `harness` | the test harness itself (`expect`, deep equality, the runner and its isolation) |
 | `techniques`, `tech-*`, `logical-solver` | the 40 techniques: positive / negative fixtures, soundness against known solutions (the sweep of `techniques` runs it for every registered technique, with real supplemental positions for the skyscraper, the two-string kite, the remote pairs, the empty rectangle, the finned X-Wing, the finned Swordfish, the WXYZ-Wing, BUG+1, the restricted XY-chain, the ALS-XZ, Sue de Coq, the long and the deep chain techniques and, on real Jigsaw boards, the Law of Leftovers), the solver loop (ported; a small test kit stands in for generation); the shared `tech-chain` suite also tests the **inactive** grouped chain graph `SG.chainGraph` against its independent checker `SG.chainProofs` (MS13a, 40 tests: no hint, no help example and no rating reads the graph, so the player's hints are unchanged); the shared `tech-als` suite (174 tests: MS15a's 58, MS15b's 53 and MS16's 63) tests the almost-locked-set enumerator `SG.alsPatterns.enumerate` (its records against an independent enumeration of all subsets, its work counts against a recount that re-implements the engine's walk), the **active** ALS-XZ `alsXz` and the **active** Sue de Coq `sueDeCoq` (the proof by hand, the first witness and every elimination against an independent oracle and the exact solver, the shared work guard of ALS-XZ and the private guard of Sue de Coq, the caps, the parent budget and the observer record) |
 | `exchange` | token round trips (documents and text bundles), the active puzzle of a link, errors (shared, byte-identical) |
-| `importer` | all 18 fixtures rebuild valid models with exactly one solution; tokens, links, bundles (`t.` / `s.`, `active`); text lines (4 / 6 / 9); the nine level names in both languages and rating metadata; wrong version, damaged and hostile input, fuzzed damage |
+| `importer` | all 18 fixtures rebuild valid models with exactly one solution; tokens, links, bundles (`t.` / `s.`, `active`); text lines (4 / 6 / 9); the nine level names in both languages and rating metadata (a legacy v2 and a current v3 claim, each kept as stated); wrong version, damaged and hostile input, fuzzed damage |
 | `model-aids` | sign edges, word line, symbol modes |
 | `fixtures` | the committed documents themselves: all 15 variants and the three Vietnamese ones, each with a model that builds and has one solution |
 | `text-boards` | the boards rebuilt from the text export equal the generator's models; the Jigsaw builder checks the length of a region map and the model validation the regions |

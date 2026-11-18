@@ -230,6 +230,37 @@
       });
     });
 
+    ['expert', 'hell1', 'hell2'].forEach(function (level) {
+      it('keeps a current v3 ' + level + ' rating claim through storage and sharing', function () {
+        need();
+        var doc = K.document('classic9');
+        var score = { expert: 700, hell1: 2400, hell2: 3600 }[level];
+        doc.difficulty = {
+          requested: level, achieved: level, score: score, rawScore: score,
+          hardestTechnique: 'nishio', ratingVersion: 3, futureField: { unused: true }
+        };
+        var outcome = open(doc);
+        expect(outcome.ok).toBe(true);
+        expect(outcome.errors).toEqual([]);
+        var puzzle = outcome.puzzle;
+        expect(puzzle.info.difficulty).toEqual({
+          requested: level, achieved: level, score: score, hardestTechnique: 'nishio', ratingVersion: 3
+        });
+        expect(puzzle.document.format).toBe('sudoku-generator/v1');
+        expect(puzzle.document.difficulty.ratingVersion).toBe(3);
+        var reopened = I.openDocument(puzzle.document);
+        expect(reopened.ok).toBe(true);
+        expect(reopened.puzzle.info.difficulty).toEqual(puzzle.info.difficulty);
+        return SG.exchange.encode(puzzle.document).then(function (token) {
+          return I.open(token);
+        }).then(function (shared) {
+          expect(shared.ok).toBe(true);
+          expect(shared.puzzle.id).toBe(puzzle.id);
+          expect(shared.puzzle.info.difficulty).toEqual(puzzle.info.difficulty);
+        });
+      });
+    });
+
     it('leaves legacy labels and scores unchanged and does not invent a rating version', function () {
       need();
       var doc = K.document('classic9');

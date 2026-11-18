@@ -601,7 +601,7 @@
       });
   });
 
-  describe('difficulty: the score of rating v2', function () {
+  describe('difficulty: the score of rating v3', function () {
     var RANDOM_IDS = ['nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine',
       'nakedPair', 'hiddenTriple', 'xWing', 'swordfish', 'xyWing', 'forcingChain', 'nishio', 'cageCombo',
       'ruleOf45', 'ineqChain'];
@@ -642,7 +642,10 @@
       expectCode(function () { D.scoreOf({ noSuchTechnique: 1 }, 10); }, 'difficulty.unknownTechnique');
     });
 
-    it('reproduces the worked examples: classic9 499 and Samurai 633', function () {
+    it('reproduces the worked examples: published 499 and 633, current 499 and 593', function () {
+      // The published calculations use fixed count maps (docs/difficulty-rating); the current ratings
+      // are what the canonical solver gives for the same puzzles today. The classic9 one is the same in
+      // both, the Samurai one is not.
       var classic = { nakedSingle: 29, hiddenSingleBox: 19, hiddenSingleLine: 5, pointing: 5, nakedPair: 1,
         xWing: 1 };
       var parts = D.breakdown(classic, 53);
@@ -652,6 +655,7 @@
       expect(parts.workTerm).toBeCloseTo(133.82, 2);
       expect(parts.score).toBe(499);
       expect(D.levelOfScore(parts.score)).toBe('hard');
+      // The published Samurai counts (Simple Colouring is the hardest step): 263 empty cells of 369.
       var samurai = { nakedSingle: 204, hiddenSingleBox: 42, hiddenSingleLine: 17, pointing: 6, boxLine: 1,
         nakedPair: 1, xWing: 1, simpleColouring: 1 };
       var big = D.breakdown(samurai, 263);
@@ -659,6 +663,16 @@
       expect(big.work).toBeCloseTo(1372, 9);
       expect(big.empty).toBeCloseTo(69.44, 2);
       expect(big.score).toBe(633);
+      // The current counts of the same puzzle (106 givens): the Skyscraper (weight 330, earlier in the
+      // ladder) replaces the Simple Colouring (weight 360), so the peak, the work and the score fall and
+      // the level stays Hard.
+      var samuraiNow = { nakedSingle: 204, hiddenSingleBox: 42, hiddenSingleLine: 17, pointing: 6, boxLine: 1,
+        nakedPair: 1, xWing: 1, skyscraper: 1 };
+      var bigNow = D.breakdown(samuraiNow, 263);
+      expect(bigNow.peak).toBe(330);
+      expect(bigNow.work).toBeCloseTo(1342, 9);
+      expect(bigNow.empty).toBeCloseTo(69.44, 2);
+      expect(bigNow.score).toBe(593);
       // The same puzzles rated from their givens (the solver path of the report).
       var rated = D.rate(model9, parse('4037105000170000208000001000004900100006030000900850000090000010' +
         '50000640001056208'));
@@ -676,8 +690,9 @@
         var givens = Int32Array.from(text.split('').map(Number));
         expect(givens.length).toBe(samuraiModel.cellCount);
         var r = D.rate(samuraiModel, givens);
-        expect(r.techniqueCounts).toEqual(samurai);
-        expect(r.score).toBe(633);
+        expect(r.techniqueCounts).toEqual(samuraiNow);
+        expect(r.empties).toBe(263);
+        expect(r.score).toBe(593);
         expect(r.level).toBe('hard');
       }
     });
@@ -780,15 +795,15 @@
       expect(rating.empties).toBe(60);
       expect(rating.techniqueCounts).toEqual({ nakedSingle: 20, xWing: 1 });
       expect(rating.hardestTechnique).toBe('xWing');
-      expect(rating.ratingVersion).toBe(2);
+      expect(rating.ratingVersion).toBe(3);
     });
 
-    it('carries the metadata of section 5.4: rawScore = score, ratingVersion 2, the counts', function () {
+    it('carries the metadata of section 5.4: rawScore = score, ratingVersion 3, the counts', function () {
       var rating = D.classify(fakeReport({ nakedSingle: 30, hiddenSingleBox: 4, nakedPair: 2 }, 50), model9);
       expect(rating.rawScore).toBe(rating.score);
       expect(Number.isInteger(rating.score)).toBe(true);
       expect(rating.ratingVersion).toBe(D.RATING_VERSION);
-      expect(D.RATING_VERSION).toBe(2);
+      expect(D.RATING_VERSION).toBe(3);
       expect(rating.empties).toBe(50);
       expect(rating.solved).toBe(true);
       expect(rating.techniqueCounts).toEqual({ nakedSingle: 30, hiddenSingleBox: 4, nakedPair: 2 });
@@ -1393,7 +1408,7 @@
       expect(p.givens).toHaveLength(81);
       expect(p.solution).toHaveLength(81);
       expect(typeof p.stats.oracleCalls).toBe('number');
-      expect(p.rating.ratingVersion).toBe(2);
+      expect(p.rating.ratingVersion).toBe(3);
     });
 
     it('honours minClues and the unit floor of the spec on every level', function () {
@@ -1550,9 +1565,12 @@
       expect(D.rate(model, run.puzzle.givens).score).toBe(run.puzzle.rating.score);
     }
 
-    /** Finds a seed whose cap runs out inside `phase`, checking the accounting of every seed tried. */
-    function exhaustedIn(variantId, level, maxRatings, phase, digTries) {
-      for (var seed = 1; seed <= 12; seed++) {
+    /**
+     * Finds a seed whose cap runs out inside `phase`, checking the accounting of every seed tried. The search
+     * stops at the first match and tries seeds 1 to `lastSeed` (12 unless a caller says otherwise).
+     */
+    function exhaustedIn(variantId, level, maxRatings, phase, digTries, lastSeed) {
+      for (var seed = 1; seed <= (lastSeed || 12); seed++) {
         var run = capped(variantId, level, seed, maxRatings, digTries);
         expectAccounted(run, maxRatings);
         if (run.origins.length === maxRatings && run.origins[maxRatings - 1] === phase) return run;
@@ -1570,7 +1588,9 @@
     }, 120000);
 
     it('runs out inside the downward refinement without passing the cap', function () {
-      exhaustedIn('classic9', 'nightmare', 3, 'refine', 1);
+      // Since MS15b (ALS-XZ) changed the dig path of seed 8, no seed of 1 to 12 qualifies; this call looks at
+      // seeds 1 to 24.
+      exhaustedIn('classic9', 'nightmare', 3, 'refine', 1, 24);
     }, 60000);
 
     it('runs out inside the local search, and hands on the rating it has instead of rating again',

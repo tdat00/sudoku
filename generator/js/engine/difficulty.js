@@ -1,5 +1,5 @@
 /**
- * Difficulty model, rating v2: the nine levels, the specification the hole digger works to for a level, and
+ * Difficulty model, rating v3: the nine levels, the specification the hole digger works to for a level, and
  * the rating of a finished puzzle (docs/difficulty-rating/report-detailed.md sections 4-5).
  *
  * Score: one formula for every variant and board size. Its only inputs are the number of cells empty at the
@@ -65,7 +65,7 @@
 
   const VARIANT_GROUPS = Object.freeze(['cage', 'ineq']);
 
-  const RATING_VERSION = 2;
+  const RATING_VERSION = 3;
 
   // Reference size of the clue floors (classic9); the score bands are not scaled.
   const REFERENCE_CELLS = 81;
@@ -510,7 +510,7 @@
   // Rating: { level (null without a complete proof), score (integer; null likewise), rawScore (= score; kept
   // for exported files), hardestTechnique (largest weight; ties: larger registration `order`, then id; null
   // when no step was needed), hardestGroup, confidence (0..1: how deep inside its band the score lies; 0 on
-  // an edge or without a proof), solved, empties, techniqueCounts, ratingVersion (2) }
+  // an edge or without a proof), solved, empties, techniqueCounts, ratingVersion (3) }
 
   // Rates the result of `SG.logicalSolver.solve`; only the technique counts are used, so `collectSteps` may
   // be on or off. Solve with every technique and `assumeUniqueness: true` (what `rate` does) so the rating

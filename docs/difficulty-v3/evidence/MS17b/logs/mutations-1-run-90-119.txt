@@ -1,0 +1,2 @@
+$ node generator\tests\artifacts\difficulty-v3\MS17b\run-mutations.cjs Q:\git\sudoku\docs\difficulty-v3\evidence\MS17b\mutations-1-90-119.txt 90 119
+exit=1 seconds=391.706

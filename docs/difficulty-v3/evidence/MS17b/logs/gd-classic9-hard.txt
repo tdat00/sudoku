@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard > --results=..\docs\difficulty-v3\evidence\MS17b\gd\classic9-hard.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty: 8 passed  (3.13 s)
+
+Suites: 1
+Tests:  8 total, 8 passed, 0 failed, 0 skipped
+Time:   3.13 s running tests, 3.37 s total
+Results: docs/difficulty-v3/evidence/MS17b/gd/classic9-hard.json
+exit=0 seconds=3.601

@@ -402,9 +402,17 @@ một hai đề với cùng tùy chọn trong một worker, để nút "Tạo đ
 ngay. Nó không bao giờ chạy khi đang có một lần tạo, tạm dừng khi tab bị ẩn, bỏ qua các cấu hình chậm, và
 không tồn tại ở chế độ luồng chính. Một công tắc trong Cài đặt tắt việc tạo sẵn (lựa chọn này không được nhớ).
 
-Rating v2 đã đổi cách tính điểm và cách tạo đề: bộ nhớ đệm bỏ các đề do phiên bản cũ lưu, một lần; điểm đã lưu
-trong lịch sử không được tính lại; và tài liệu xuất ra vẫn giữ định dạng `sudoku-generator/v1`, có thêm
-`difficulty.ratingVersion: 2`.
+Rating v3 (MS17b) lại đổi ý nghĩa của một mức, nên `SG.difficulty.RATING_VERSION` và phiên bản lược đồ của bộ nhớ
+đệm đều là 3: danh sách lược đồ 2 bị bỏ (không chuyển đổi, không đóng dấu thành bản hiện tại), và bộ nhớ đệm chỉ
+nhận một kết quả chuẩn hiện tại, tức là có thuộc tính riêng `exact` kiểu boolean và một rating đầy đủ của phiên bản
+hiện tại, được kiểm tra trong `serialize` trước khi `SG.pipeline.toWire` kịp biến một cờ thiếu thành giá trị false
+hợp lệ, và trên wire đã giải mã trước khi `SG.pipeline.fromWire` làm vậy (hàm đó vẫn đọc cờ vắng mặt là false cho
+wire của worker, vẫn là phiên bản 1; một kết quả dự phòng nông, `exact: false`, là mục hợp lệ; một kết quả chuẩn
+chưa được chấm điểm bị từ chối). Đề tạo lại chỉ được coi là cùng một đề khi đề, lời giải, tính chính xác (`exact`),
+toàn bộ rating đã chuẩn hóa (cả phiên bản lẫn số lần dùng kỹ thuật) và mô hình ngữ nghĩa đều bằng nhau; thời gian,
+bộ đếm công việc, mục tiêu, trace và cách hiển thị ký hiệu bị bỏ qua. Điểm đã lưu trong lịch sử không được tính
+lại (kho lịch sử vẫn là phiên bản 1), và tài liệu xuất ra vẫn giữ định dạng `sudoku-generator/v1`, mang
+`difficulty.ratingVersion: 3` (là 2 trong tài liệu của rating v2, vẫn chỉ là một tuyên bố).
 
 ### Lịch sử các đề
 
@@ -990,7 +998,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (55 suite, 4.769 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (55 suite, 4.784 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (63 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -1001,7 +1009,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 55 suite, 4.769 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 55 suite, 4.784 bài —
 37 suite ở `tests/suites/` và 18 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -1057,7 +1065,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 63 suite, trong đó 55 suite nhanh (4.769 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 63 suite, trong đó 55 suite nhanh (4.784 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -1437,8 +1445,10 @@ Trình sinh đề Sudoku tạo ra và cho bạn chơi. Ứng dụng làm gì và
 
 - Tài liệu đề mang sẵn mô hình đã dựng, nên trình chơi không có mã biến thể hay mã tạo đề nào (xem
   [Định dạng trao đổi](#định-dạng-trao-đổi)).
-- Tài liệu dùng cách chấm điểm v2 vẫn có định dạng `sudoku-generator/v1`; trình chơi giữ
-  `difficulty.ratingVersion` và không tính lại điểm. Tài liệu và văn bản cũ vẫn mở được, nhưng các mã mức cũ không
+- Tài liệu dùng cách chấm điểm v2 hay v3 vẫn có định dạng `sudoku-generator/v1`; trình chơi giữ
+  `difficulty.ratingVersion` (mọi số nguyên dương, hiện là 2 hoặc 3) như một tuyên bố của tài liệu, không tính lại
+  điểm và không bao giờ coi nó là chứng nhận rằng một mức là bắt buộc. Tài liệu và văn bản cũ vẫn mở được, nhưng
+  các mã mức cũ không
   được ánh xạ sang mã mới. Đổi thông tin chấm điểm không làm thay đổi định danh đề dùng để lưu tiến độ.
 - Mã (token) của một liên kết đề đã nén và an toàn cho URL: văn bản các đề của nút Chơi ở trình sinh đề (`t.…`),
   hoặc tài liệu của một đề (`z.…`).
@@ -1456,7 +1466,7 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (32 bộ, 2.978 bài); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (32 bộ, 2.981 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 

@@ -502,17 +502,20 @@
       expect(JSON.stringify(C.serialize(made))).not.toMatch(/fromCache/);
     });
 
-    it('MS05a-T01: keeps the exactness flag; an entry stored before it decodes as not exact', function () {
-      const made = P.run(CASES[0], null);
-      [true, false].forEach(function (flag) {
-        const data = C.serialize(Object.assign({}, made, { exact: flag }));
-        expect(data.exact).toBe(flag);
-        expect(C.deserialize(JSON.stringify(data)).exact).toBe(flag);
+    it('MS05a-T01: keeps the exactness flag; an entry stored without it is refused, not read as not exact',
+      function () {
+        const made = P.run(CASES[0], null);
+        [true, false].forEach(function (flag) {
+          const data = C.serialize(Object.assign({}, made, { exact: flag }));
+          expect(data.exact).toBe(flag);
+          expect(C.deserialize(JSON.stringify(data)).exact).toBe(flag);
+        });
+        // MS17b (schema 3): the cache needs the explicit flag; the shared wire still reads a missing one as
+        // false (worker.test.js)
+        const before = JSON.parse(JSON.stringify(C.serialize(made)));
+        delete before.exact;
+        expect(function () { return C.deserialize(before); }).toThrow(SG.errors.GenerationError);
       });
-      const before = JSON.parse(JSON.stringify(C.serialize(made)));
-      delete before.exact;
-      expect(C.deserialize(before).exact).toBe(false);
-    });
 
     it('MS06c1-T01: keeps the target (a number, zero, null) of the result; an entry stored before it is null',
       function () {
@@ -606,6 +609,871 @@
       expect(function () { C.deserialize('{nope'); }).toThrow(fail);
       expect(function () { C.deserialize(null); }).toThrow(fail);
       expect(function () { C.deserialize({ $t: 'Nightmare', d: [] }); }).toThrow(fail);
+    });
+  });
+
+  describe('cache: version 3 and the complete classification (MS17b)', function () {
+    beforeEach(function () {
+      ready();
+      C.clear();
+    });
+
+    const EASY = { variantId: 'classic9', difficulty: 'easy', seed: 5, trace: 'summary' };
+    const KILLER = { variantId: 'killer', difficulty: 'easy', seed: 5, trace: 'summary' };
+    const SIGNS = { variantId: 'greaterThan', difficulty: 'normal', seed: 5, trace: 'summary' };
+    const WORDOKU = { variantId: 'wordoku', difficulty: 'easy', seed: 5, trace: 'summary' };
+    const SHALLOW = { variantId: 'classic9', difficulty: 'nightmare', seed: 6, trace: 'summary',
+      maxAttempts: 1 };
+    const RATING_FIELDS = ['level', 'score', 'rawScore', 'confidence', 'hardestTechnique', 'hardestGroup',
+      'solved', 'empties', 'techniqueCounts', 'ratingVersion'];
+
+    const generated = {};
+
+    /** A fresh generation of `config`, made once: the cases below only read it and build changed copies. */
+    function runOnce(config) {
+      const id = JSON.stringify(config);
+      if (!generated[id]) generated[id] = P.run(config, null);
+      return generated[id];
+    }
+
+    function wireOf(result) {
+      return JSON.parse(JSON.stringify(C.serialize(result)));
+    }
+
+    function refuses(wire) {
+      expect(function () { return C.deserialize(wire); }).toThrow(SG.errors.GenerationError);
+    }
+
+    it('MS17b-T01: schema 3 under the same key; a schema-2 list is purged, not migrated', function () {
+      expect(C.VERSION).toBe(3);
+      expect(SG.difficulty.RATING_VERSION).toBe(3);
+      expect(C.STORAGE_KEY).toBe('sg.cache.v1');
+      const made = runOnce(EASY);
+      const storage = memoryStorage();
+      expect(putEntry(C.createStore({ storage: storage, version: 2 }), made)).toBe(true);
+      expect(stored(storage).version).toBe(2);
+      const current = C.createStore({ storage: storage });
+      expect(current.list()).toEqual([]);
+      expect(storage.data[C.STORAGE_KEY]).toBeUndefined();
+      expect(putEntry(current, made)).toBe(true);
+      expect(stored(storage).version).toBe(3);
+      expect(keysOf(C.createStore({ storage: storage }))).toEqual([key(made.config)]);
+      expect(C.deserialize(current.get(key(made.config)).data).givens).toEqual(made.givens);
+    });
+
+    it('MS17b-T01: the write and read boundaries need an own boolean exact; nothing becomes a valid false',
+      function () {
+        const made = runOnce(EASY);
+        [true, false].forEach(function (flag) {
+          const data = C.serialize(Object.assign({}, made, { exact: flag }));
+          expect(data.exact).toBe(flag);
+          expect(C.deserialize(JSON.stringify(data)).exact).toBe(flag);
+        });
+        const missing = Object.assign({}, made);
+        delete missing.exact;
+        const inherited = Object.assign(Object.create({ exact: true }), missing);
+        const odd = ['true', 1, 0, null, undefined, {}, []].map(function (value) {
+          return Object.assign({}, made, { exact: value });
+        });
+        [missing, inherited].concat(odd).forEach(function (bad) {
+          expect(function () { return C.serialize(bad); }).toThrow(SG.errors.GenerationError);
+          expect(C.put(bad)).toBe(false);
+        });
+        expect(C.stats().count).toBe(0);
+        ['true', 1, 0, null].forEach(function (value) {
+          const wire = wireOf(made);
+          wire.exact = value;
+          refuses(wire);
+        });
+        const absent = wireOf(made);
+        delete absent.exact;
+        refuses(absent);
+        // the shared wire keeps its worker compatibility: it reads a missing flag as false, never as exact
+        const shared = P.toWire(made);
+        delete shared.exact;
+        expect(P.fromWire(shared).exact).toBe(false);
+        expect(C.put(made)).toBe(true);
+        expect(C.has(key(made.config))).toBe(true);
+      });
+
+    it('MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter',
+      function () {
+        const made = runOnce(EASY);
+        const rating = made.rating;
+        expect(RATING_FIELDS.filter(function (name) { return !(name in rating); })).toEqual([]);
+        expect(rating.hardestTechnique).not.toBeNull();
+        expect(Object.keys(rating.techniqueCounts).length).toBeGreaterThan(0);
+        const otherGroup = rating.hardestGroup === 'fish' ? 'wing' : 'fish';
+        function bad(mutate) {
+          const wire = wireOf(made);
+          mutate(wire.rating, wire);
+          refuses(wire);
+          // the write boundary refuses the same ratings, whatever the rating holds
+          const result = Object.assign({}, made, { rating: JSON.parse(JSON.stringify(made.rating)) });
+          mutate(result.rating, result);
+          expect(function () { return C.serialize(result); }).toThrow(SG.errors.GenerationError);
+        }
+        RATING_FIELDS.forEach(function (name) { bad(function (r) { delete r[name]; }); });
+        [null, [], 'rating', 7].forEach(function (value) {
+          bad(function (r, holder) { holder.rating = value; });
+        });
+        ['hell3', 'Hard', 5, null, ''].forEach(function (value) { bad(function (r) { r.level = value; }); });
+        [-1, 1.5, '700', null, true, NaN, Infinity].forEach(function (value) {
+          bad(function (r) {
+            r.score = value;
+            r.rawScore = value;
+          });
+        });
+        [rating.score + 1, String(rating.score), null].forEach(function (value) {
+          bad(function (r) { r.rawScore = value; });
+        });
+        [-0.1, 1.1, '0.5', null, true, NaN, Infinity, -Infinity].forEach(function (value) {
+          bad(function (r) { r.confidence = value; });
+        });
+        bad(function (r) { r.hardestTechnique = null; });
+        bad(function (r) { r.hardestGroup = null; });
+        bad(function (r) { r.hardestGroup = otherGroup; });
+        bad(function (r) { r.hardestTechnique = 'noSuchTechnique'; });
+        bad(function (r) { r.hardestTechnique = 5; });
+        bad(function (r) {
+          r.hardestTechnique = null;
+          r.hardestGroup = 'basic';
+        });
+        [false, 'true', 1, null].forEach(function (value) { bad(function (r) { r.solved = value; }); });
+        [-1, 82, 1.5, '30', null].forEach(function (value) { bad(function (r) { r.empties = value; }); });
+        [null, [], 'x', 7, { noSuchTechnique: 1 }, { nakedSingle: -1 }, { nakedSingle: 1.5 },
+          { nakedSingle: '3' }, { nakedSingle: null }, { nakedSingle: 3, noSuchTechnique: 0 }].forEach(
+          function (value) { bad(function (r) { r.techniqueCounts = value; }); });
+        [2, 4, '3', 3.5, null, true].forEach(function (value) {
+          bad(function (r) { r.ratingVersion = value; });
+        });
+      });
+
+    it('MS17b-T01: the bounds of a rating are inclusive, extra fields are ignored, any level may be a ' +
+      'fallback', function () {
+      const made = runOnce(EASY);
+      function read(mutate) {
+        const wire = wireOf(made);
+        mutate(wire.rating);
+        return C.deserialize(wire).rating;
+      }
+      expect(read(function (r) { r.note = 'extra'; }).note).toBe('extra');
+      expect(read(function (r) { r.empties = 0; }).empties).toBe(0);
+      expect(read(function (r) { r.empties = 81; }).empties).toBe(81);
+      expect(read(function (r) { r.confidence = 0; }).confidence).toBe(0);
+      expect(read(function (r) { r.confidence = 1; }).confidence).toBe(1);
+      expect(read(function (r) {
+        r.score = 0;
+        r.rawScore = 0;
+      }).score).toBe(0);
+      expect(read(function (r) { r.techniqueCounts = {}; }).techniqueCounts).toEqual({});
+      expect(read(function (r) { r.techniqueCounts.xWing = 0; }).techniqueCounts.xWing).toBe(0);
+      const none = read(function (r) {
+        r.hardestTechnique = null;
+        r.hardestGroup = null;
+      });
+      expect([none.hardestTechnique, none.hardestGroup]).toEqual([null, null]);
+      SG.difficulty.LEVELS.forEach(function (level) {
+        expect(read(function (r) { r.level = level; }).level).toBe(level);
+      });
+    });
+
+    it('MS17b-T01: a canonical unrated result is refused by the cache, in both directions', function () {
+      const made = runOnce(EASY);
+      const unrated = SG.difficulty.classify(
+        { solved: false, score: 120, techniqueCounts: { nakedSingle: 4 } }, made.model);
+      expect(unrated.solved).toBe(false);
+      expect(unrated.level).toBeNull();
+      expect(unrated.score).toBeNull();
+      const result = Object.assign({}, made, { rating: unrated });
+      expect(function () { return C.serialize(result); }).toThrow(SG.errors.GenerationError);
+      expect(C.put(result)).toBe(false);
+      expect(C.has(key(made.config))).toBe(false);
+      const wire = wireOf(made);
+      wire.rating = JSON.parse(JSON.stringify(unrated));
+      refuses(wire);
+    });
+
+    it('MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only ' +
+      'inherits its rating', function () {
+      const made = runOnce(EASY);
+      [null, undefined, 'text', 7, [], function () { return made; }].forEach(function (bad) {
+        expect(function () { return C.serialize(bad); }).toThrow(SG.errors.GenerationError);
+        expect(C.put(bad)).toBe(false);
+      });
+      ['81', 81.5, 0, -1, null, undefined, NaN].forEach(function (cellCount) {
+        const bad = Object.assign({}, made, {
+          model: Object.assign({}, made.model, { cellCount: cellCount })
+        });
+        expect(function () { return C.serialize(bad); }).toThrow(SG.errors.GenerationError);
+      });
+      const noModel = Object.assign({}, made, { model: null });
+      expect(function () { return C.serialize(noModel); }).toThrow(SG.errors.GenerationError);
+      const inherited = Object.assign({}, made, { rating: Object.create(made.rating) });
+      expect(function () { return C.serialize(inherited); }).toThrow(SG.errors.GenerationError);
+      // each field alone may not be inherited either
+      RATING_FIELDS.forEach(function (name) {
+        const own = Object.assign({}, made.rating);
+        delete own[name];
+        const proto = {};
+        proto[name] = made.rating[name];
+        const bad = Object.assign({}, made, { rating: Object.setPrototypeOf(own, proto) });
+        expect(function () { return C.serialize(bad); }).toThrow(SG.errors.GenerationError);
+      });
+      [0, -1].forEach(function (cellCount) {
+        const bad = Object.assign({}, made, {
+          rating: Object.assign({}, made.rating, { empties: 0 }),
+          model: Object.assign({}, made.model, { cellCount: cellCount })
+        });
+        expect(function () { return C.serialize(bad); }).toThrow(SG.errors.GenerationError);
+      });
+      ['cellCount', 'model'].forEach(function (name) {
+        const wire = wireOf(made);
+        if (name === 'model') wire.model = null;
+        else wire.model.cellCount = '81';
+        refuses(wire);
+      });
+    });
+
+    it('MS17b-T01: the current version itself must be a positive safe integer and the level and technique ' +
+      'registries present', function () {
+        const made = runOnce(EASY);
+        const difficulty = SG.difficulty;
+        const savedVersion = difficulty.RATING_VERSION;
+        const savedLevels = difficulty.LEVELS;
+        const savedTechniques = SG.techniques;
+        try {
+          // a rating that states exactly the odd current value is still refused: nothing is coerced
+          const odds = ['3', 3.5, 0, -1, NaN, Infinity, null, undefined, [3], Number.MAX_SAFE_INTEGER + 1,
+            { valueOf: function () { return 3; } }];
+          odds.forEach(function (odd) {
+            difficulty.RATING_VERSION = odd;
+            const rating = Object.assign({}, made.rating, { ratingVersion: odd });
+            const bad = Object.assign({}, made, { rating: rating });
+            expect(function () { return C.serialize(bad); }).toThrow(SG.errors.GenerationError);
+          });
+          difficulty.RATING_VERSION = savedVersion;
+          [undefined, null, 'hard', {}].forEach(function (odd) {
+            difficulty.LEVELS = odd;
+            expect(function () { return C.serialize(made); }).toThrow(SG.errors.GenerationError);
+          });
+          difficulty.LEVELS = savedLevels;
+          [undefined, null, {}, { has: 5 }].forEach(function (odd) {
+            SG.techniques = odd;
+            expect(function () { return C.serialize(made); }).toThrow(SG.errors.GenerationError);
+          });
+        } finally {
+          difficulty.RATING_VERSION = savedVersion;
+          difficulty.LEVELS = savedLevels;
+          SG.techniques = savedTechniques;
+        }
+        expect(C.serialize(made).rating.ratingVersion).toBe(3);
+      });
+
+    it('MS17b-B01: a stored entry of an older rating version or without its flag or a field is not served',
+      async function () {
+        const config = Object.assign({}, EASY, { seed: 51 });
+        const made = runOnce(config);
+        const damage = [
+          function (w) { w.rating.ratingVersion = 2; },
+          function (w) { delete w.exact; },
+          function (w) { delete w.rating.empties; },
+          function (w) { w.rating.hardestGroup = 'cage'; }
+        ];
+        for (let i = 0; i < damage.length; i++) {
+          const env = makeEnv();
+          const wire = wireOf(made);
+          damage[i](wire);
+          const cfg = key(Object.assign({}, config, { seed: undefined }));
+          expect(env.store.put({ key: key(config), cfg: cfg, pool: false, data: wire })).toBe(true);
+          const out = await env.client.generate(config, null);
+          expect(out.fromCache).toBeUndefined();
+          expect(env.inner.calls.length).toBe(1);
+          expect(out.rating.ratingVersion).toBe(3);
+          env.clock.advance(0);
+          const hit = await env.client.generate(config, null);
+          expect(hit.fromCache).toBe(true);
+          expect(env.inner.calls.length).toBe(1);
+        }
+      });
+
+    function withRating(patch) {
+      return function (fresh) {
+        return Object.assign({}, fresh, { rating: Object.assign({}, fresh.rating, patch(fresh.rating)) });
+      };
+    }
+
+    function withModel(patch) {
+      return function (fresh) {
+        return Object.assign({}, fresh, { model: Object.assign({}, fresh.model, patch(fresh.model)) });
+      };
+    }
+
+    function withLayout(patch) {
+      return withModel(function (model) {
+        return { layout: Object.assign({}, model.layout, patch(model.layout)) };
+      });
+    }
+
+    function without(field) {
+      return function (fresh) {
+        const copy = Object.assign({}, fresh);
+        delete copy[field];
+        return copy;
+      };
+    }
+
+    function changeOne(list, index, patch) {
+      return Array.from(list, function (item, i) {
+        return i === index ? Object.assign({}, item, patch(item)) : item;
+      });
+    }
+
+    /**
+     * What the controller does when `change(fresh)` is the regeneration of the cached puzzle of `config`:
+     * 'same' (the record is attached) or 'stale' (the entry is dropped, the toast shown, the puzzle generated
+     * again). `mode` damages the served puzzle itself first (a damaged copy in memory): 'both' changes it the
+     * same way as the regeneration, so that the two sides agree on bad data, and 'served' changes only the
+     * served side; such a pair must never be taken for the same puzzle.
+     */
+    async function verdict(config, change, mode) {
+      const made = runOnce(config);
+      const env = makeEnv();
+      putEntry(env.store, made, false);
+      const hit = await env.client.generate(config, null);
+      if (hit.fromCache !== true) return 'not served';
+      if (mode === 'both' || mode === 'served') {
+        const changed = change(hit);
+        Object.keys(hit).forEach(function (name) { if (!(name in changed)) delete hit[name]; });
+        Object.assign(hit, changed);
+      }
+      env.app.display(hit);
+      await flush();
+      if (env.bg.calls.length !== 1) return 'no regeneration';
+      env.bg.pending = null;
+      env.bg.calls[0].resolve(change === null || mode === 'served' ? made : change(made));
+      await flush();
+      if (env.app.attached.length === 1 && env.app.toasts.length === 0 && env.app.generated.length === 0) {
+        return 'same';
+      }
+      const dropped = env.store.get(key(config), { touch: false }) === null;
+      if (env.app.attached.length === 0 && env.app.toasts.join() === 'warning:cache.stale' &&
+          env.app.generated.length === 1 && dropped) {
+        return 'stale';
+      }
+      return 'neither (' + env.app.attached.length + ' attached, toasts ' + env.app.toasts.join() + ', ' +
+        env.app.generated.length + ' generated)';
+    }
+
+    async function wrongVerdicts(rows, expected, mode) {
+      const wrong = [];
+      for (let i = 0; i < rows.length; i++) {
+        const got = await verdict(rows[i][1], rows[i][2], mode);
+        if (got !== expected) wrong.push(rows[i][0] + ': ' + got);
+      }
+      return wrong;
+    }
+
+    function reorderedCounts(rating) {
+      const out = {};
+      Object.keys(rating.techniqueCounts).reverse().forEach(function (id) {
+        out[id] = rating.techniqueCounts[id];
+      });
+      if (!('swordfish' in out)) out.swordfish = 0;
+      return { techniqueCounts: out };
+    }
+
+    it('MS17b-T02: a regeneration that differs only in timing, display or representation is the same puzzle',
+      async function () {
+        const rows = [
+          ['the identical regeneration', EASY, null],
+          ['a shallow fallback regenerates equal', SHALLOW, null],
+          ['timings, attempts, work, target, warnings and trace differ', EASY, function (f) {
+            return Object.assign({}, f, { timings: { total: 1 }, attempts: f.attempts + 2, work: undefined,
+              target: 123, warnings: ['x'], config: Object.assign({}, f.config, { trace: 'off' }) });
+          }],
+          ['an extra rating field', EASY, withRating(function () { return { steps: [], note: 'x' }; })],
+          ['counts in another key order with valid zero entries', EASY, withRating(reorderedCounts)],
+          ['a null-prototype count map', EASY, withRating(function (r) {
+            return { techniqueCounts: Object.assign(Object.create(null), r.techniqueCounts) };
+          })],
+          ['unit cells in another order', EASY, withModel(function (m) {
+            return { units: Array.from(m.units, function (u) { return Int32Array.from(u).reverse(); }) };
+          })],
+          ['cage cells in another order', KILLER, withModel(function (m) {
+            return { cages: Array.from(m.cages, function (c) {
+              return Object.assign({}, c, { cells: Int32Array.from(c.cells).reverse() });
+            }) };
+          })],
+          ['overlay cells in another order', WORDOKU, withLayout(function (l) {
+            return { overlays: Array.from(l.overlays, function (o) {
+              return { kind: o.kind, cells: Int32Array.from(o.cells).reverse() };
+            }) };
+          })],
+          ['other unit labels', EASY, withModel(function (m) {
+            return { unitMeta: Array.from(m.unitMeta, function (u) {
+              return Object.assign({}, u, { label: 'X' + u.label });
+            }) };
+          })],
+          ['a partial flag that is false instead of absent', EASY, withModel(function (m) {
+            return { unitMeta: changeOne(m.unitMeta, 0, function () { return { partial: false }; }) };
+          })],
+          ['other symbols and symbol mode (display only)', WORDOKU, withModel(function (m) {
+            return { symbols: { mode: 'other', labels: m.symbols.labels.slice().reverse() } };
+          })],
+          ['other derived indexes', EASY, withModel(function () { return { peers: [], cellUnits: [] }; })],
+          ['an equal copy rebuilt from the wire', KILLER, function (f) { return P.fromWire(P.toWire(f)); }],
+          ['an equal Greater-Than copy rebuilt from the wire', SIGNS, function (f) {
+            return P.fromWire(P.toWire(f));
+          }]
+        ];
+        expect(await wrongVerdicts(rows, 'same')).toEqual([]);
+      });
+
+    it('MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included',
+      async function () {
+        const rating = runOnce(EASY).rating;
+        const counts = Object.keys(rating.techniqueCounts);
+        const hardest = rating.hardestTechnique === 'nakedSingle'
+          ? { hardestTechnique: 'xWing', hardestGroup: 'fish' }
+          : { hardestTechnique: 'nakedSingle', hardestGroup: 'basic' };
+        const rows = [
+          ['exact flipped', EASY, function (f) { return Object.assign({}, f, { exact: !f.exact }); }],
+          ['exact missing', EASY, without('exact')],
+          ['exact not a boolean', EASY, function (f) { return Object.assign({}, f, { exact: 'true' }); }],
+          ['another level, same score', EASY, withRating(function (r) {
+            return { level: r.level === 'hard' ? 'normal' : 'hard' };
+          })],
+          ['another score and raw score', EASY, withRating(function (r) {
+            return { score: r.score + 1, rawScore: r.score + 1 };
+          })],
+          ['another confidence', EASY, withRating(function (r) {
+            return { confidence: r.confidence === 0.5 ? 0.25 : 0.5 };
+          })],
+          ['another hardest technique and group', EASY, withRating(function () { return hardest; })],
+          ['another number of empty cells', EASY, withRating(function (r) {
+            return { empties: r.empties === 0 ? 1 : r.empties - 1 };
+          })],
+          ['another count', EASY, withRating(function (r) {
+            const more = {};
+            more[counts[0]] = r.techniqueCounts[counts[0]] + 1;
+            return { techniqueCounts: Object.assign({}, r.techniqueCounts, more) };
+          })],
+          ['an extra counted technique', EASY, withRating(function (r) {
+            return { techniqueCounts: Object.assign({}, r.techniqueCounts, { swordfish: 2 }) };
+          })],
+          ['an extra technique used once', EASY, withRating(function (r) {
+            return { techniqueCounts: Object.assign({}, r.techniqueCounts, { swordfish: 1 }) };
+          })],
+          ['a count dropped', EASY, withRating(function (r) {
+            const copy = Object.assign({}, r.techniqueCounts);
+            delete copy[counts[0]];
+            return { techniqueCounts: copy };
+          })],
+          ['an empty count map', EASY, withRating(function () { return { techniqueCounts: {} }; })],
+          ['another rating version', EASY, withRating(function () { return { ratingVersion: 2 }; })],
+          ['a future rating version', EASY, withRating(function () { return { ratingVersion: 4 }; })],
+          ['no rating', EASY, function (f) { return Object.assign({}, f, { rating: null }); }],
+          ['solved false', EASY, withRating(function () { return { solved: false }; })],
+          ['a raw score that differs', EASY, withRating(function (r) { return { rawScore: r.score + 1 }; })],
+          ['a negative score', EASY, withRating(function () { return { score: -1, rawScore: -1 }; })],
+          ['a group that is not the registered one', EASY, withRating(function (r) {
+            return { hardestGroup: r.hardestGroup === 'fish' ? 'wing' : 'fish' };
+          })],
+          ['more empty cells than the board', EASY, withRating(function () { return { empties: 82 }; })]
+        ];
+        RATING_FIELDS.forEach(function (name) {
+          rows.push(['the rating field ' + name + ' missing', EASY, function (f) {
+            const copy = Object.assign({}, f.rating);
+            delete copy[name];
+            return Object.assign({}, f, { rating: copy });
+          }]);
+        });
+        rows.push(['an unknown hardest technique', EASY, withRating(function () {
+          return { hardestTechnique: 'noSuchTechnique', hardestGroup: 'basic' };
+        })]);
+        const sameGroup = SG.techniques.list().filter(function (t) {
+          return t.group === rating.hardestGroup && t.id !== rating.hardestTechnique;
+        })[0];
+        expect(sameGroup).toBeDefined();
+        rows.push(['another hardest technique of the same group', EASY, withRating(function () {
+          return { hardestTechnique: sameGroup.id };
+        })]);
+        rows.push(['rating fields that are only inherited', EASY, function (f) {
+          return Object.assign({}, f, { rating: Object.create(f.rating) });
+        }]);
+        rows.push(['one given changed', EASY, function (f) {
+          const givens = Int32Array.from(f.givens);
+          givens[0] += 1;
+          return Object.assign({}, f, { givens: givens });
+        }]);
+        rows.push(['one solution cell changed', EASY, function (f) {
+          const solution = Int32Array.from(f.solution);
+          solution[0] += 1;
+          return Object.assign({}, f, { solution: solution });
+        }]);
+        rows.push(['shorter givens', EASY, function (f) {
+          return Object.assign({}, f, { givens: f.givens.slice(0, f.givens.length - 1) });
+        }]);
+        rows.push(['shorter solution', EASY, function (f) {
+          return Object.assign({}, f, { solution: f.solution.slice(0, f.solution.length - 1) });
+        }]);
+        rows.push(['no givens', EASY, function (f) { return Object.assign({}, f, { givens: null }); }]);
+        rows.push(['no solution', EASY, function (f) {
+          return Object.assign({}, f, { solution: undefined });
+        }]);
+        ['text', 7, [], {}, null, undefined].forEach(function (value, i) {
+          rows.push(['a regeneration that is no result #' + i, EASY, function () { return value; }]);
+        });
+        expect(await wrongVerdicts(rows, 'stale')).toEqual([]);
+        // invalid on both sides at once (a damaged copy of the served puzzle) is not "the same" either
+        const invalid = new RegExp(['exact missing', 'exact not', 'rating version', 'no rating',
+          'solved false', 'raw score that', 'negative', 'registered', 'more empty', 'field .* missing',
+          'unknown hardest', 'only inherited'].join('|'));
+        const both = rows.filter(function (row) { return invalid.test(row[0]); });
+        expect(both.length).toBeGreaterThan(15);
+        expect(await wrongVerdicts(both, 'stale', 'both')).toEqual([]);
+      });
+
+    it('MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both',
+      async function () {
+        const premises = { killer: runOnce(KILLER).model, signs: runOnce(SIGNS).model,
+          wordoku: runOnce(WORDOKU).model, classic: runOnce(EASY).model };
+        expect(premises.killer.cages.length).toBeGreaterThan(1);
+        expect(premises.signs.inequalities.length).toBeGreaterThan(1);
+        expect(premises.wordoku.layout.overlays.length).toBeGreaterThan(0);
+        expect(premises.classic.units.length).toBeGreaterThan(1);
+        function cellsWith(cells, n) {
+          const copy = Int32Array.from(cells);
+          copy[0] = (copy[0] + 1) % n;
+          return copy;
+        }
+        // the first and the last entry exchanged: the same values in another order, so another board
+        function swapped(vectorOfCells) {
+          const copy = Int32Array.from(vectorOfCells);
+          const last = copy.length - 1;
+          const kept = copy[0];
+          copy[0] = copy[last];
+          copy[last] = kept;
+          expect(copy[0]).not.toBe(vectorOfCells[0]);
+          return copy;
+        }
+        function vector(name, change) {
+          return withModel(function (m) {
+            const copy = Int32Array.from(m[name]);
+            copy[0] = change(copy[0]);
+            const patch = {};
+            patch[name] = copy;
+            return patch;
+          });
+        }
+        const rows = [
+          ['a cage sum changed', KILLER, withModel(function (m) {
+            return { cages: changeOne(m.cages, 0, function (c) { return { sum: c.sum + 1 }; }) };
+          })],
+          ['a cage cell replaced', KILLER, withModel(function (m) {
+            return { cages: changeOne(m.cages, 0, function (c) {
+              return { cells: cellsWith(c.cells, m.cellCount) };
+            }) };
+          })],
+          ['a cage distinct flag flipped', KILLER, withModel(function (m) {
+            return { cages: changeOne(m.cages, 0, function (c) { return { distinct: !c.distinct }; }) };
+          })],
+          ['a cage removed', KILLER, withModel(function (m) {
+            return { cages: Array.from(m.cages).slice(1) };
+          })],
+          ['cages in another outer order', KILLER, withModel(function (m) {
+            return { cages: Array.from(m.cages).reverse() };
+          })],
+          ['a sign reversed', SIGNS, withModel(function (m) {
+            return { inequalities: changeOne(m.inequalities, 0, function (s) {
+              return { a: s.b, b: s.a };
+            }) };
+          })],
+          ['a sign removed', SIGNS, withModel(function (m) {
+            return { inequalities: Array.from(m.inequalities).slice(1) };
+          })],
+          ['signs in another outer order', SIGNS, withModel(function (m) {
+            return { inequalities: Array.from(m.inequalities).reverse() };
+          })],
+          ['a unit kind changed', EASY, withModel(function (m) {
+            return { unitMeta: changeOne(m.unitMeta, 0, function (u) { return { kind: u.kind + 'x' }; }) };
+          })],
+          ['a unit grid index changed', EASY, withModel(function (m) {
+            return { unitMeta: changeOne(m.unitMeta, 0, function (u) {
+              return { gridIndex: u.gridIndex + 1 };
+            }) };
+          })],
+          ['a unit marked partial', EASY, withModel(function (m) {
+            return { unitMeta: changeOne(m.unitMeta, 0, function () { return { partial: true }; }) };
+          })],
+          ['a unit cell replaced', EASY, withModel(function (m) {
+            return { units: Array.from(m.units, function (u, i) {
+              return i === 0 ? cellsWith(u, m.cellCount) : u;
+            }) };
+          })],
+          ['units in another outer order', EASY, withModel(function (m) {
+            return { units: Array.from(m.units).reverse(), unitMeta: Array.from(m.unitMeta).reverse() };
+          })],
+          ['a unit removed', EASY, withModel(function (m) {
+            return { units: Array.from(m.units).slice(1), unitMeta: Array.from(m.unitMeta).slice(1) };
+          })],
+          ['a region mapping changed', EASY, withLayout(function (l) {
+            const copy = Int32Array.from(l.cellRegion);
+            copy[0] += 1;
+            return { cellRegion: copy };
+          })],
+          ['a cell row changed', EASY, withLayout(function (l) {
+            const copy = Int32Array.from(l.cellRow);
+            copy[0] += 1;
+            return { cellRow: copy };
+          })],
+          ['a cell column changed', EASY, withLayout(function (l) {
+            const copy = Int32Array.from(l.cellCol);
+            copy[0] += 1;
+            return { cellCol: copy };
+          })],
+          ['two cell rows swapped', EASY, withLayout(function (l) {
+            return { cellRow: swapped(l.cellRow) };
+          })],
+          ['two cell columns swapped', EASY, withLayout(function (l) {
+            return { cellCol: swapped(l.cellCol) };
+          })],
+          ['two region entries swapped', EASY, withLayout(function (l) {
+            return { cellRegion: swapped(l.cellRegion) };
+          })],
+          ['the row count changed', EASY, withLayout(function (l) { return { rows: l.rows + 1 }; })],
+          ['the column count changed', EASY, withLayout(function (l) { return { cols: l.cols + 1 }; })],
+          ['a fixed cell changed', EASY, vector('fixedCells', function (v) { return v + 1; })],
+          ['a sub-grid origin changed', EASY, withLayout(function (l) {
+            return { subGrids: changeOne(l.subGrids, 0, function (g) {
+              return { originRow: g.originRow + 1 };
+            }) };
+          })],
+          ['a sub-grid origin column changed', EASY, withLayout(function (l) {
+            return { subGrids: changeOne(l.subGrids, 0, function (g) {
+              return { originCol: g.originCol + 1 };
+            }) };
+          })],
+          ['a sub-grid index changed', EASY, withLayout(function (l) {
+            return { subGrids: changeOne(l.subGrids, 0, function (g) {
+              return { gridIndex: g.gridIndex + 1 };
+            }) };
+          })],
+          ['an overlay kind changed', WORDOKU, withLayout(function (l) {
+            return { overlays: changeOne(l.overlays, 0, function (o) { return { kind: o.kind + 'x' }; }) };
+          })],
+          ['an overlay cell replaced', WORDOKU, withLayout(function (l) {
+            return { overlays: changeOne(l.overlays, 0, function (o) {
+              return { cells: cellsWith(o.cells, premises.wordoku.cellCount) };
+            }) };
+          })],
+          ['an overlay added', WORDOKU, withLayout(function (l) {
+            return { overlays: Array.from(l.overlays).concat([l.overlays[0]]) };
+          })],
+          ['the variant changed', EASY, withModel(function () { return { variantId: 'classic9x' }; })],
+          ['the digits changed', EASY, withModel(function (m) { return { digits: m.digits + 1 }; })]
+        ];
+        expect(await wrongVerdicts(rows, 'stale')).toEqual([]);
+      });
+
+    it('MS17b-T02: malformed model or count data never matches and never throws out of the comparison',
+      async function () {
+        const rows = [
+          ['no model', EASY, function (f) { return Object.assign({}, f, { model: null }); }],
+          ['a model that is not a record', EASY, function (f) { return Object.assign({}, f, { model: 5 }); }],
+          ['no layout', EASY, withModel(function () { return { layout: null }; })],
+          ['units that are not a list', EASY, withModel(function () { return { units: 5 }; })],
+          ['unit metadata of another length', EASY, withModel(function (m) {
+            return { unitMeta: Array.from(m.unitMeta).slice(1) };
+          })],
+          ['a unit cell out of range', EASY, withModel(function (m) {
+            return { units: Array.from(m.units, function (u, i) { return i === 0 ? [m.cellCount] : u; }) };
+          })],
+          ['a fractional unit cell', EASY, withModel(function (m) {
+            return { units: Array.from(m.units, function (u, i) { return i === 0 ? [1.5] : u; }) };
+          })],
+          ['a unit metadata that is not a record', EASY, withModel(function (m) {
+            return { unitMeta: Array.from(m.unitMeta, function (u, i) { return i === 0 ? null : u; }) };
+          })],
+          ['a partial flag that is not a boolean', EASY, withModel(function (m) {
+            return { unitMeta: changeOne(m.unitMeta, 0, function () { return { partial: 'yes' }; }) };
+          })],
+          ['a cage sum that is not finite', KILLER, withModel(function (m) {
+            return { cages: changeOne(m.cages, 0, function () { return { sum: NaN }; }) };
+          })],
+          ['a cage sum that is a string', KILLER, withModel(function (m) {
+            return { cages: changeOne(m.cages, 0, function (c) { return { sum: String(c.sum) }; }) };
+          })],
+          ['a cage flag that is missing', KILLER, withModel(function (m) {
+            return { cages: changeOne(m.cages, 0, function () { return { distinct: undefined }; }) };
+          })],
+          ['a sign with a missing end', SIGNS, withModel(function (m) {
+            return { inequalities: changeOne(m.inequalities, 0, function () { return { b: undefined }; }) };
+          })],
+          ['a fixed-cell vector of the wrong length', EASY, withModel(function () {
+            return { fixedCells: new Int32Array(10) };
+          })],
+          ['a fixed-cell vector that is too long', EASY, withModel(function () {
+            return { fixedCells: new Int32Array(82) };
+          })],
+          ['unit metadata with an extra entry', EASY, withModel(function (m) {
+            return { unitMeta: Array.from(m.unitMeta).concat([m.unitMeta[0]]) };
+          })],
+          ['a region vector with a fractional entry', EASY, withLayout(function (l) {
+            const copy = Array.from(l.cellRegion);
+            copy[0] = 0.5;
+            return { cellRegion: copy };
+          })],
+          ['an overlay without its kind', WORDOKU, withLayout(function (l) {
+            return { overlays: changeOne(l.overlays, 0, function () { return { kind: 7 }; }) };
+          })],
+          ['a sub-grid with a missing field', EASY, withLayout(function (l) {
+            return { subGrids: changeOne(l.subGrids, 0, function () { return { originCol: undefined }; }) };
+          })],
+          ['a cell count that is a string', EASY, withModel(function () { return { cellCount: '81' }; })],
+          ['no variant id', EASY, withModel(function () { return { variantId: undefined }; })],
+          ['digits that are not an integer', EASY, withModel(function () { return { digits: 9.5 }; })],
+          ['a row count that is not an integer', EASY, withLayout(function () { return { rows: 9.5 }; })],
+          ['a column count that is not an integer', EASY, withLayout(function () { return { cols: '9' }; })],
+          ['a cage cell out of range', KILLER, withModel(function (m) {
+            return { cages: changeOne(m.cages, 0, function () { return { cells: [m.cellCount] }; }) };
+          })],
+          ['a sign end out of range', SIGNS, withModel(function (m) {
+            return { inequalities: changeOne(m.inequalities, 0, function () { return { a: m.cellCount }; }) };
+          })],
+          ['a sign end that is not an integer', SIGNS, withModel(function (m) {
+            return { inequalities: changeOne(m.inequalities, 0, function () { return { a: 0.5 }; }) };
+          })],
+          ['a sign second end out of range', SIGNS, withModel(function (m) {
+            return { inequalities: changeOne(m.inequalities, 0, function () { return { b: m.cellCount }; }) };
+          })],
+          ['a sign end that is negative', SIGNS, withModel(function (m) {
+            return { inequalities: changeOne(m.inequalities, 0, function () { return { a: -1 }; }) };
+          })],
+          ['a sign second end that is negative', SIGNS, withModel(function (m) {
+            return { inequalities: changeOne(m.inequalities, 0, function () { return { b: -1 }; }) };
+          })],
+          ['a sign that is null', SIGNS, withModel(function (m) {
+            return { inequalities: Array.from(m.inequalities, function (s, i) {
+              return i === 0 ? null : s;
+            }) };
+          })],
+          ['a cage that is null', KILLER, withModel(function (m) {
+            return { cages: Array.from(m.cages, function (c, i) { return i === 0 ? null : c; }) };
+          })],
+          ['an overlay that is null', WORDOKU, withLayout(function (l) {
+            return { overlays: Array.from(l.overlays, function (o, i) { return i === 0 ? null : o; }) };
+          })],
+          ['a sub-grid that is null', EASY, withLayout(function () { return { subGrids: [null] }; })],
+          ['a sub-grid without its index', EASY, withLayout(function (l) {
+            return { subGrids: changeOne(l.subGrids, 0, function () { return { gridIndex: undefined }; }) };
+          })],
+          ['a sub-grid without its first origin', EASY, withLayout(function (l) {
+            return { subGrids: changeOne(l.subGrids, 0, function () { return { originRow: '0' }; }) };
+          })],
+          ['digits that are zero', EASY, withModel(function () { return { digits: 0 }; })],
+          ['a unit kind that is not a text', EASY, withModel(function (m) {
+            return { unitMeta: changeOne(m.unitMeta, 0, function () { return { kind: 7 }; }) };
+          })],
+          ['a unit grid index that is a text', EASY, withModel(function (m) {
+            return { unitMeta: changeOne(m.unitMeta, 0, function () { return { gridIndex: '0' }; }) };
+          })],
+          ['a negative unit cell', EASY, withModel(function (m) {
+            return { units: Array.from(m.units, function (u, i) { return i === 0 ? [-1] : u; }) };
+          })],
+          ['a unit that is a data view', EASY, withModel(function (m) {
+            return { units: Array.from(m.units, function (u, i) {
+              return i === 0 ? new DataView(new ArrayBuffer(8)) : u;
+            }) };
+          })],
+          ['no givens', EASY, function (f) { return Object.assign({}, f, { givens: null }); }],
+          ['no solution', EASY, function (f) { return Object.assign({}, f, { solution: undefined }); }],
+          ['givens that are no list', EASY, function (f) { return Object.assign({}, f, { givens: {} }); }],
+          ['a solution that is no list', EASY, function (f) {
+            return Object.assign({}, f, { solution: {} });
+          }]
+        ];
+        function counts(make) {
+          return withRating(function (r) {
+            return { techniqueCounts: make(Object.assign({}, r.techniqueCounts)) };
+          });
+        }
+        [['no count map', function () { return undefined; }],
+          ['a null count map', function () { return null; }],
+          ['an array', function () { return []; }],
+          ['an array carrying the keys', function (c) { return Object.assign([], c); }],
+          ['a text', function () { return 'text'; }],
+          ['a number', function () { return 7; }],
+          ['a Map', function (c) {
+            return new Map(Object.keys(c).map(function (id) { return [id, c[id]]; }));
+          }],
+          ['the right keys under another prototype', function (c) {
+            return Object.assign(Object.create({ inherited: 1 }), c);
+          }],
+          ['an unknown id with a zero count', function (c) {
+            return Object.assign(c, { noSuchTechnique: 0 });
+          }],
+          ['an unknown id', function (c) { return Object.assign(c, { noSuchTechnique: 1 }); }],
+          ['a negative count', function (c) { return Object.assign(c, { swordfish: -1 }); }],
+          ['a fractional count', function (c) { return Object.assign(c, { swordfish: 0.5 }); }],
+          ['a NaN count', function (c) { return Object.assign(c, { swordfish: NaN }); }],
+          ['an infinite count', function (c) { return Object.assign(c, { swordfish: Infinity }); }],
+          ['a count beyond the safe integers', function (c) {
+            return Object.assign(c, { swordfish: Number.MAX_SAFE_INTEGER + 1 });
+          }],
+          ['a string count', function (c) { return Object.assign(c, { swordfish: '3' }); }],
+          ['a null count', function (c) { return Object.assign(c, { swordfish: null }); }]
+        ].forEach(function (row) { rows.push([row[0], EASY, counts(row[1])]); });
+        expect(await wrongVerdicts(rows, 'stale')).toEqual([]);
+        expect(await wrongVerdicts(rows, 'stale', 'both')).toEqual([]);
+        expect(await wrongVerdicts(rows, 'stale', 'served')).toEqual([]);
+      });
+
+    it('MS17b-T02: the comparison changes nothing it reads and solves nothing', async function () {
+      const made = runOnce(KILLER);
+      const reversed = function (list) {
+        return Array.from(list, function (u) { return Int32Array.from(u).reverse(); });
+      };
+      const fresh = Object.assign({}, made, {
+        rating: Object.assign({}, made.rating, reorderedCounts(made.rating)),
+        model: Object.assign({}, made.model, { units: reversed(made.model.units),
+          cages: Array.from(made.model.cages, function (c) {
+            return Object.assign({}, c, { cells: Int32Array.from(c.cells).reverse() });
+          }) })
+      });
+      const snapshot = function () {
+        return JSON.stringify([P.toWire(fresh), Object.keys(fresh.rating.techniqueCounts),
+          Array.from(fresh.model.cages[0].cells), Array.from(fresh.model.units[0])]);
+      };
+      const before = snapshot();
+      const env = makeEnv();
+      putEntry(env.store, made, false);
+      const hit = await env.client.generate(KILLER, null);
+      env.app.display(hit);
+      await flush();
+      expect(env.bg.calls.length).toBe(1);
+      const solvers = [[SG.logicalSolver, 'solve'], [SG.dfs, 'countSolutions'], [SG.difficulty, 'classify'],
+        [SG.difficulty, 'rate']];
+      const originals = solvers.map(function (pair) { return pair[0][pair[1]]; });
+      let calls = 0;
+      solvers.forEach(function (pair, i) {
+        pair[0][pair[1]] = function () {
+          calls++;
+          return originals[i].apply(this, arguments);
+        };
+      });
+      try {
+        env.bg.complete(fresh);
+        await flush();
+      } finally {
+        solvers.forEach(function (pair, i) { pair[0][pair[1]] = originals[i]; });
+      }
+      expect(env.app.attached.length).toBe(1);
+      expect(env.app.toasts).toEqual([]);
+      expect(calls).toBe(0);
+      expect(snapshot()).toBe(before);
+      expect(Object.keys(hit.rating.techniqueCounts)).toEqual(Object.keys(made.rating.techniqueCounts));
     });
   });
 

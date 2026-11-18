@@ -1,0 +1,57 @@
+mutation 148 (a sub-grid need not be a record): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 149 (a sub-grid index need not be an integer): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 150 (a sub-grid row origin need not be an integer): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 151 (a sub-grid column origin need not be an integer): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 152 (the sub-grid key drops the row origin): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.3 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 153 (the sub-grid key drops the column origin): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.3 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 154 (the sub-grid key drops the index): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 155 (unit metadata of another length is accepted): NOT DETECTED (exit 0) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.3 s
+mutation 156 (a malformed unit is accepted): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 157 (unit metadata need not be a record): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 158 (a unit kind need not be a text): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.7 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 159 (a unit grid index need not be an integer): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.7 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 160 (a partial flag need not be a boolean): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 161 (the partial flag is kept raw): DETECTED - 31 total, 30 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration that differs only in timing, display or representation is the same puzzle
+mutation 162 (the unit key drops the cells): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 163 (the unit key drops the kind): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 164 (the unit key drops the grid index): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.7 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 165 (the unit key drops the partial flag): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 166 (the unit label is compared): DETECTED - 31 total, 30 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration that differs only in timing, display or representation is the same puzzle
+mutation 167 (the symbols are compared): DETECTED - 31 total, 30 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration that differs only in timing, display or representation is the same puzzle
+mutation 168 (the layout guard is dropped): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 169 (the model guard is dropped): NOT DETECTED (exit 0) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.5 s
+mutation 170 (the variant id is not checked): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 171 (the model size is not checked in the key): NOT DETECTED, EQUIVALENT (sameResult runs classificationKey first, which refuses a result whose model.cellCount is not an integer of at least 1, and vectorOf compares the list length to n strictly, so a non-number never equals a length) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.5 s
+mutation 172 (the digits need not be an integer): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 173 (zero digits are accepted): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 174 (the sizes are not checked): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.7 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 175 (a malformed part needs every part malformed): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 176 (the key drops the variant): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 177 (the key drops the cell count): NOT STARTED (elapsed 397.2 s)
+detected 26 of 29, survivors 3, 1 not started, 397.2 s

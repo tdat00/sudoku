@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "e99b9a462541dd10694a1f17be6b2bd3b6824415b7b9fdbc95fb9799963c6a77",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1) >","exact":null,"count":2},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 807,
+  "results": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 565.7,
+    "tests": [
+      {"suite":"difficulty","name":"rarely lowers the score: at most 5 of 100 puzzles of 30 to 50 clues","fullName":"difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1) > rarely lowers the score: at most 5 of 100 puzzles of 30 to 50 clues","status":"pass","ms":63.697,"reason":"","error":null,"ordinal":57},
+      {"suite":"difficulty","name":"rarely lowers the level, and never by more than one: 300 puzzles of 22 to 50 clues","fullName":"difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1) > rarely lowers the level, and never by more than one: 300 puzzles of 22 to 50 clues","status":"pass","ms":501.423,"reason":"","error":null,"ordinal":58}
+    ],
+    "suites": [
+      {"name":"difficulty","total":2,"passed":2,"failed":0,"skipped":0,"ms":565.483}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1) >","--results=..\\docs\\difficulty-v3\\evidence\\MS17b\\gd\\removing.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: the score of rating v3 > --results=..\docs\difficulty-v3\evidence\MS17b\gd\score-v3-repaired.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty: 15 passed  (663 ms)
+
+Suites: 1
+Tests:  15 total, 15 passed, 0 failed, 0 skipped
+Time:   663 ms running tests, 906 ms total
+Results: docs/difficulty-v3/evidence/MS17b/gd/score-v3-repaired.json
+exit=0 seconds=1.133

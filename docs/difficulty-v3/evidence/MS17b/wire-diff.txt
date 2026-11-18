@@ -1,0 +1,12 @@
+MS17b wire difference: canonical tests/fixtures/replay-wire.js against the fresh ledgers of docs\difficulty-v3\evidence\MS17b\wire
+G09: source ff55cbce4c34..., 1 differing path(s) - exactly rating.ratingVersion 2 -> 3
+    G09.rating.ratingVersion: canonical 2 -> fresh 3
+G10: source ff55cbce4c34..., 1 differing path(s) - exactly rating.ratingVersion 2 -> 3
+    G10.rating.ratingVersion: canonical 2 -> fresh 3
+G11: source ff55cbce4c34..., 1 differing path(s) - exactly rating.ratingVersion 2 -> 3
+    G11.rating.ratingVersion: canonical 2 -> fresh 3
+G12: source ff55cbce4c34..., 1 differing path(s) - exactly rating.ratingVersion 2 -> 3
+    G12.rating.ratingVersion: canonical 2 -> fresh 3
+G13: source ff55cbce4c34..., 1 differing path(s) - exactly rating.ratingVersion 2 -> 3
+    G13.rating.ratingVersion: canonical 2 -> fresh 3
+total differing paths 5, of which the expected rating.ratingVersion 2 -> 3: 5 (all and only the five version fields)

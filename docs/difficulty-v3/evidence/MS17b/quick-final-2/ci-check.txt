@@ -1,0 +1,9 @@
+$ node tests\artifacts\difficulty-v3\MS17b\ci-check.cjs
+Generator quick set: 4784 tests in 55 suites; Player quick set: 2981 tests in 32 suites
+  group shared-small: 4 shard(s) (core-shared, steps, replay, mega), 2742 tests, projected 1260 s of 1800 s
+  group own-suites: 2 shard(s) (own-fast, digger-target), 1822 tests, projected 1260 s of 1800 s
+  group pipeline: 1 shard(s) (pipeline), 151 tests, projected 420 s of 1800 s
+  group replay-player: 1 shard(s) (player), 69 tests, projected 450 s of 1800 s
+  Player job: projected 720 s of 1800 s
+Every quick test is in exactly one shard (4784 of 4784), no manual or unknown suite, no empty shard, every job inside its limit: check passed.
+exit=0 seconds=4.615

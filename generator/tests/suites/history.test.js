@@ -584,6 +584,24 @@
       expect(shown({ noDifficulty: true })).toEqual([true, false, false]);
     });
 
+    it('MS17b-T01: with the real producer version an older or missing marker shows the note; the current ' +
+      'one and a future one do not', function () {
+      ready();
+      var current = SG.difficulty.RATING_VERSION;
+      expect(current).toBe(3);
+      var saved = [legacy('1'), marked(legacy('2'), 1), marked(legacy('3'), 2), marked(legacy('4'), 3),
+        marked(legacy('5'), 4), marked(legacy('6'), 99)];
+      withPanel({ current: current, saved: saved }, function (panel) {
+        expect(notes(panel)).toEqual([true, true, true, false, false, false]);
+      });
+      // the entry of a result of today states version 3, so it never shows the note
+      withPanel({ current: current, saved: [legacy('9')] }, function (panel) {
+        panel.handlers.result({ result: resultWith(current, 500) });
+        expect(versionsOf(panel.stored())).toEqual([3, undefined]);
+        expect(notes(panel)).toEqual([false, true]);
+      });
+    });
+
     it('MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place',
       function () {
         ready();

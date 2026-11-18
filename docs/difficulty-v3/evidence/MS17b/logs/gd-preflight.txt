@@ -1,0 +1,26 @@
+$ node generator\tests\artifacts\difficulty-v3\MS17b\gd-preflight.cjs
+ 1 classic9-nightmare   selects  8 (planned 8) same names  exit 0  0.47 s
+ 2 classic9-hell1       selects  8 (planned 8) same names  exit 0  0.37 s
+ 3 classic9-veryEasy    selects  8 (planned 8) same names  exit 0  0.38 s
+ 4 classic9-easy        selects  8 (planned 8) same names  exit 0  0.38 s
+ 5 classic9-normal      selects  8 (planned 8) same names  exit 0  0.38 s
+ 6 classic9-hard        selects  8 (planned 8) same names  exit 0  0.36 s
+ 7 classic9-expert      selects  8 (planned 8) same names  exit 0  0.36 s
+ 8 classic9-master      selects  8 (planned 8) same names  exit 0  0.36 s
+ 9 confusion-matrix     selects  1 (planned 1) same names  exit 0  0.40 s
+10 levels               selects  4 (planned 4) same names  exit 0  0.41 s
+11 spec9                selects  8 (planned 8) same names  exit 0  0.39 s
+12 spec-other           selects  4 (planned 4) same names  exit 0  0.39 s
+13 qualification        selects  6 (planned 6) same names  exit 0  0.36 s
+14 clue-floor           selects  9 (planned 9) same names  exit 0  0.38 s
+15 score-v3             selects 15 (planned 15) same names  exit 0  0.57 s
+16 score-table          selects  4 (planned 4) same names  exit 0  0.51 s
+17 labelled             selects  7 (planned 7) same names  exit 0  0.34 s
+18 removing             selects  2 (planned 2) same names  exit 0  0.36 s
+19 oracle               selects  7 (planned 7) same names  exit 0  0.35 s
+20 guarantees           selects 10 (planned 10) same names  exit 0  0.35 s
+21 cap                  selects  5 (planned 5) same names  exit 0  0.35 s
+22 unreachable          selects  5 (planned 5) same names  exit 0  0.35 s
+23 safety               selects  3 (planned 3) same names  exit 0  0.34 s
+union 154 names, duplicated 0, inventory names not selected 0, inventory 154
+exit=0 seconds=9.051

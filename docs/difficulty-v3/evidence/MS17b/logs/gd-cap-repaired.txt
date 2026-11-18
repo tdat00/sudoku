@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > --results=..\docs\difficulty-v3\evidence\MS17b\gd\cap-repaired.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty: 5 passed  (5.59 s)
+
+Suites: 1
+Tests:  5 total, 5 passed, 0 failed, 0 skipped
+Time:   5.59 s running tests, 5.84 s total
+Results: docs/difficulty-v3/evidence/MS17b/gd/cap-repaired.json
+exit=0 seconds=6.082

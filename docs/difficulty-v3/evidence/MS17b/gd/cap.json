@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "e99b9a462541dd10694a1f17be6b2bd3b6824415b7b9fdbc95fb9799963c6a77",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) >","exact":null,"count":5},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 5697.9,
+  "results": {
+    "total": 5,
+    "passed": 4,
+    "failed": 1,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 5460.6,
+    "tests": [
+      {"suite":"difficulty","name":"counts every full rating at the default cap: classic9 top tier, Greater-Than, Killer","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > counts every full rating at the default cap: classic9 top tier, Greater-Than, Killer","status":"pass","ms":5011.825,"reason":"","error":null,"ordinal":141},
+      {"suite":"difficulty","name":"runs out inside the downward refinement without passing the cap","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > runs out inside the downward refinement without passing the cap","status":"fail","ms":232.355,"reason":"","error":{"name":"Error","message":"classic9 nightmare: no seed ran out of ratings inside refine","stack":"Error: classic9 nightmare: no seed ran out of ratings inside refine\n    at exhaustedIn (<repo>\\generator\\tests\\manual\\difficulty.test.js:1575:13)\n    at Object.<anonymous> (<repo>\\generator\\tests\\manual\\difficulty.test.js:1588:7)\n    at invoke (<repo>\\core\\tests\\harness.js:416:18)\n    at runTest (<repo>\\core\\tests\\harness.js:457:18)\n    at Object.run (<repo>\\core\\tests\\harness.js:621:27)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async main (<repo>\\generator\\tests\\node-runner.js:357:19)"},"ordinal":142},
+      {"suite":"difficulty","name":"runs out inside the local search, and hands on the rating it has instead of rating again","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > runs out inside the local search, and hands on the rating it has instead of rating again","status":"pass","ms":7.093,"reason":"","error":null,"ordinal":143},
+      {"suite":"difficulty","name":"runs out inside a variant strategy: Greater-Than tuning and the Killer layout search","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > runs out inside a variant strategy: Greater-Than tuning and the Killer layout search","status":"pass","ms":201.468,"reason":"","error":null,"ordinal":144},
+      {"suite":"difficulty","name":"a cap of nothing at all ends with the error path, never with an unrated puzzle","fullName":"difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > a cap of nothing at all ends with the error path, never with an unrated puzzle","status":"pass","ms":6.135,"reason":"","error":null,"ordinal":145}
+    ],
+    "suites": [
+      {"name":"difficulty","total":5,"passed":4,"failed":1,"skipped":0,"ms":5459.451}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) >","--results=..\\docs\\difficulty-v3\\evidence\\MS17b\\gd\\cap.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

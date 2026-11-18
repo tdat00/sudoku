@@ -1,0 +1,6 @@
+registry position (0-based) of skyscraper 17 (weight 330), simpleColouring 20 (weight 360), xWing 16
+classic9 worked example: expected counts {"nakedSingle":29,"hiddenSingleBox":19,"hiddenSingleLine":5,"pointing":5,"nakedPair":1,"xWing":1}, empties 53, score 499, level hard
+                         actual   counts {"nakedSingle":29,"hiddenSingleBox":19,"hiddenSingleLine":5,"pointing":5,"nakedPair":1,"xWing":1}, empties 53, score 499, level hard, hardest xWing
+Samurai worked example:  expected counts {"nakedSingle":204,"hiddenSingleBox":42,"hiddenSingleLine":17,"pointing":6,"boxLine":1,"nakedPair":1,"xWing":1,"simpleColouring":1}, empties 263, score 633, level hard
+                         actual   counts {"nakedSingle":204,"hiddenSingleBox":42,"hiddenSingleLine":17,"pointing":6,"boxLine":1,"nakedPair":1,"xWing":1,"skyscraper":1}, empties 263, score 593, level hard, hardest skyscraper
+breakdown of the expected counts: peak 360, work 1372, score 633; of the actual counts: peak 330, work 1342, score 593

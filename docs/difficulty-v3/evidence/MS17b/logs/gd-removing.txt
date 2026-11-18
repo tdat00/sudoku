@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1) > --results=..\docs\difficulty-v3\evidence\MS17b\gd\removing.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty: 2 passed  (565 ms)
+
+Suites: 1
+Tests:  2 total, 2 passed, 0 failed, 0 skipped
+Time:   566 ms running tests, 807 ms total
+Results: docs/difficulty-v3/evidence/MS17b/gd/removing.json
+exit=0 seconds=1.031

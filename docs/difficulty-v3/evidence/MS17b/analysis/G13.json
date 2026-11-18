@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "ff55cbce4c34034d501ee495417e7c69da953143c9f74a4bae4f5b722d719421",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "7d3dfcd5ba646d5b4e583debf1d8fc0429821d28",
+  "dirty": true,
+  "generatedAt": "2026-11-18T06:33:21.989Z",
+  "argv": ["--ids=G13","--record=..\\docs\\difficulty-v3\\evidence\\MS17b\\analysis\\G13.json"],
+  "records": [
+    {"key":"G13","request":{"variantId":"samurai","difficulty":"nightmare","seed":"42"},"value":{"id":"G13","request":{"variantId":"samurai","difficulty":"nightmare","seed":"42"},"today":{"steps":14,"missing":1},"counts":{"compact":8,"details":145},"board":{"cells":369,"cages":0,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,8,"D/Dig",16,25,25,"nakedSingle","—","—","F"],[3,98,"D/Dig",196,69,44,"nakedSingle","—","—","—"],[4,126,"G/Choose",251,73,4,"hiddenSingleLine","—","—","N"],[5,127,"G/Choose",253,296,223,"nakedPair","Y","—","—"],[6,128,"G/Choose",255,394,98,"nakedTriple","—","—","N"],[7,143,"G+A/Mixed",249,1876,1482,"alsXz","Y","—","—"],[8,143,"F/Final",249,1876,0,"alsXz","—","—","—"]],"details":[0,5,9,12,15,18,20,23,25,27,29,31,32,34,35,37,38,39,40,41,42,43,44,45,46,47,48,48,49,50,50,51,52,52,53,53,54,54,55,55,56,56,57,57,58,58,58,59,59,59,60,60,60,61,61,61,62,62,62,62,63,63,63,63,64,64,64,64,65,65,65,65,65,66,66,66,66,66,66,67,67,67,67,67,67,68,68,68,68,68,68,68,69,69,69,69,69,69,69,69,70,70,70,70,70,70,70,70,70,71,71,71,71,72,72,72,72,72,72,72,73,73,73,73,73,73,73,296,394,3610,3761,3801,3814,3849,3880,2168,2167,2165,2157,2156,2149,2147,2004,1876,1876],"alive":null,"folds":[{"step":7,"peak":3880,"end":1876,"removed":12,"restored":18,"signs":0,"opening":false}],"jumps":[{"step":5,"from":73,"to":296,"before":{"P":1.5,"W":265,"R":2.802386,"V":69.003436,"E":251,"level":"easy"},"after":{"P":120,"W":1296,"R":106.821449,"V":69.078498,"E":253,"level":"normal"},"choice":{"chosen":296,"others":5,"nulls":0,"max":73,"at":336,"rated":7,"refused":1},"singles":[{"op":"remove","cell":"G1-R7C9","score":73},{"op":"remove","cell":"G4-R3C1","score":153}],"cause":"mixed","frame":null,"firstUse":{"k":98,"n":272,"technique":"nakedPair"},"key":"technique.nakedPair.step","effects":"remove candidate 8@G3-R1C3, 9@G3-R1C3"},{"step":7,"from":394,"to":1876,"before":{"P":180,"W":1505.5,"R":145.219852,"V":69.152542,"E":255,"level":"normal"},"after":{"P":1250,"W":3049.75,"R":556.976464,"V":68.927336,"E":249,"level":"nightmare"},"choice":null,"singles":[],"cause":"multi-move","frame":null,"firstUse":{"k":80,"n":269,"technique":"alsXz"},"key":"technique.alsXz.step","effects":"remove candidate 9@G2-R7C9, 9@G2-R9C2"}]},"ms":39229,"overrides":[]}
+  ]
+}

@@ -170,6 +170,20 @@
         'cages', 'inequalities']);
     });
 
+    it('MS17b-T01: states the rating version the rating states (3 for a current result), never a made-up one',
+      function () {
+        ready();
+        var r = realResult('classic9', 'easy', 5);
+        expect(r.rating.ratingVersion).toBe(3);
+        expect(E.toJson(r, FIXED).difficulty.ratingVersion).toBe(3);
+        var legacy = Object.assign({}, r, { rating: Object.assign({}, r.rating, { ratingVersion: 2 }) });
+        expect(E.toJson(legacy, FIXED).difficulty.ratingVersion).toBe(2);
+        var bare = Object.assign({}, r.rating);
+        delete bare.ratingVersion;
+        var none = E.toJson(Object.assign({}, r, { rating: bare }), FIXED).difficulty;
+        expect('ratingVersion' in none).toBe(false);
+      });
+
     it('is plain data that survives JSON.stringify exactly', function () {
       ready();
       SG.variants.list().forEach(function (def) {
