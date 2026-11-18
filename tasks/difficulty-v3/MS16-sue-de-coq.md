@@ -8,7 +8,7 @@
 | Owner / milestone | Shared ALS / both apps; M16 complete catalogue |
 | Authority | R10/R19/R20/R21; S-OD4, S-OD12/S0 and accepted MS15a/MS15b guard contracts |
 | Review | Orchestrator against MS08a/IR72 and generic soundness/order checks; no routine SA1 review |
-| Status | Pre-implementation Q1-Q5 settled below; resume only on the orchestrator's explicit relay |
+| Status | Implementation reported complete; Q6 GH-source ruling below; orchestrator acceptance pending |
 
 ## Goal & business context
 
@@ -346,6 +346,64 @@ If that route is exhausted or cannot run safely, pause with the actual attempted
 batch accounting and a concrete bounded acquisition proposal for the owner. Do not silently
 substitute synthetic evidence, change priorities, broaden R1 or begin the proposed scan.
 
+### SA2 ruling — Q6: fixed E request as the GH source, 2026-11-18
+
+**Accept this source under ordinary B / IR72 H1. No S-OD12/S0 owner exception is needed.**
+`classic9/nightmare#377` was already a fixed request in this task's mandatory E manifest.
+Its current-source puzzle and Sue-de-Coq use were recorded in the owned E mechanism work
+before GH. G4 materialized that one known request through the normal Generator pipeline
+and checked its hash, rather than searching seeds, constructing a new corpus or changing
+the request to obtain a hint. The saved export's 81 givens also equal
+`mechanism-hash-tree.json`'s current-source givens exactly.
+
+The subsequent Player normal-hint replay, not the rating's technique count alone, establishes
+the real example: Sue de Coq at hint 19, 58 hints to solve; the all-40 check matches.
+Keep the verified source/example. No replacement source, discovery batch, new generation
+or owner request is needed merely because of this ruling.
+This is **not I2 specimen replacement**: no old pin/premise was replaced, and no
+"lowest qualifying seed of a scan" claim or unnecessary seed scan is required.
+
+Record the following lineage in the **existing MS16 evidence**, not a new provenance schema:
+
+| Field | Required record |
+|---|---|
+| Origin/choice | Fixed owned E request `classic9/nightmare#377`; selected after the sole changed hash and its E mechanism observation, not after a GH seed search |
+| Runtime source | The frozen MS16 candidate on accepted base `8b26e83`, not the base engine itself; E `sourceHash` `8740fd9e8ed34fe1d80fada564b59b5467d75f8f61be0d2c14abae92320dfb4e`; preserve the ledger's actual commit/dirty provenance |
+| Ledger/puzzle | `docs/difficulty-v3/evidence/MS16/hashes/classic9-nightmare-10.json`, record hash `7831a2bc8ff9c470`, no recorded overrides; current puzzle has 33 clues |
+| Materialization | `make-source-e.js`: exactly one fixed `SG.pipeline.run` request, `classic9`, `nightmare`, seed 377, `trace:'off'`, empty variant options, unchanged defaults and the recorder's requested-level wrapper / 120000 ms budget; hash equality is checked before its output write |
+| Export source | `player/tests/artifacts/difficulty-v3/MS16/sources-e377.json`; keep the established schema-1 export text and true Generator metadata `classic9` / `Nightmare` / `377`, including `#1,Classic Sudoku 9x9,Nightmare,377` |
+| Replay/checks | G4-G6 commands/transcripts and actual lock-log times; one source replayed for the new ID, hint 19 / 58 hints solved, followed by all 40 matching |
+| Accounting | One known-source materialization in G4; no discovery batch or corpus scan. E and its cause/mechanism regenerations remain separately accounted work, not erased by "one request" |
+
+Do not relabel this as a test-kit seed/index or as proof of unique eligibility among all
+regression seeds. Do not say that the base engine reproduces the **new** hash/puzzle:
+the `8b26e83` comparator reproduces the old saved hash (36 clues), while the MS16 tree
+reproduces the new E record and the 33-clue GH source. The existing section 10 records
+that distinction correctly.
+
+This confirms the fixed, already-owned source reuse above; it grants no standing corpus
+scan, enumeration of additional candidate requests, quota reset, altered recipe, gate
+waiver or change to normal-hint priorities. Other GH command/count/admission requirements
+remain for the orchestrator's template review; this is not acceptance of the whole task.
+In particular, reconcile G3's recorded 27-source / `--max-puzzles=64` new-ID check with
+IR72 H1's at-most-16 source bound; this source-legitimacy ruling grants no count increase.
+If review instead reveals a search, a recipe/source mismatch or failed normal replay,
+preserve the records and raise QUESTION before replacement work or any expansion.
+
+**Process note — MS16-Q6, carry to MS18e.** Record that the developer chose and acted on
+the source-permission interpretation, including G4/G5, without the required QUESTION pause,
+and first submitted that judgment for a ruling at completion. Record the actual chronology
+and this later confirmation; do not imply prior approval. The source is legitimate, so
+do not call this an unauthorized corpus scan or a retroactive S0 exception. The process
+deviation is retaining an unresolved permission judgment for final review rather than
+pausing before acting. A source inside a settled ordinary-B rule is otherwise a routine
+choice; this does not impose individual approval for every unambiguous known source.
+
+Add the note and lineage cross-references to the evidence/final report and its audit-item
+list before acceptance. No runtime, catalogue, source text or golden change follows from
+this ruling. Evidence-only corrections outside both fingerprints do not require new E
+or quick runs; any actual fingerprinted change still follows the existing revalidation rules.
+
 ### Predecessor specimens: narrow MS16-only permission
 
 Preserve the accepted literal **pre-ALS** recipe added under MS15b Q5, including its
@@ -493,7 +551,8 @@ a claim that S0 prohibits expressly authorized generation measurements.
 
 Give MS17 the complete catalogue and every final limit/source record. No missing ID/example waits
 for the version task. Include the predecessor-specimen inventory, exact pin-ruling trace,
-MS15b-Q6 and all inherited/new numerical items, explicitly including MS15b-GP-J/GP-U.
+MS15b-Q6, the MS16-Q6 process/provenance disposition and all inherited/new numerical items,
+explicitly including MS15b-GP-J/GP-U.
 
 ## Resume rules — S-OD4
 

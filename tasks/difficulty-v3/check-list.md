@@ -184,9 +184,12 @@ No intermediate pruning. Parent milestones are not additional waves or commits.
 **Current serial handoff, 2026-11-18.** MS15b is accepted and committed at **`8b26e83`**,
 after orchestrator template review and rechecks. MS15a (`b958a58`, SA1 accepted), MS14c
 (`6a9fbf6`; M14 complete), MS14b (`0e3a0c4`), MS13c (`9d58d86`) and resolved JF-02/S-OD12
-(A + S0) remain prior boundaries. **MS16's pre-implementation Q1-Q5 are settled in its brief**;
-the developer stopped before a tracked edit and resumes only on the orchestrator's explicit
-relay. The order remains MS16 -> MS17a -> MS17b and the unchanged remainder.
+(A + S0) remain prior boundaries. **MS16 is reported complete and under orchestrator template
+review, not yet accepted.** Its Q1-Q5 were settled after a correct pre-implementation pause.
+Q6 confirms the fixed E request `classic9/nightmare#377` as an ordinary-B GH source, with
+explicit lineage and a process note for the later permission judgment made without a pause.
+It is not a corpus exception or a whole-task acceptance. The order remains
+MS16 -> MS17a -> MS17b and the unchanged remainder.
 The rulings fix R1 geometry, all two/three-cell intersection subsets, P3's actual charge
 points, canonical witness/target order and the diagnostic API/observer contract, including
 the missing opts-array validation already required by MS15b Q3. No broader scope, shared-limit
@@ -504,6 +507,17 @@ new level-availability failure. Both views have fifteen jump occurrences, eighte
 transitions overall; the compact inventory is not an all-view absence proof. No new source
 hunt or golden-manifest change is assigned. Final fingerprinted docs/counts precede final
 quick runs; this disposition does not waive E, current GH or any other integration gate.
+
+**MS16-Q6 — fixed-source lineage and missing QUESTION pause; MS18e audit.**
+The single already-owned E request `classic9/nightmare#377` may supply the real GH example
+through its recorded normal-pipeline materialization, hash/givens identity and Player
+normal-hint replay. This is ordinary B/H1, not I2 pin replacement, a corpus scan or a new
+S0 exception. MS16's leaf specifies the source/ledger/export/log cross-references and the
+old-base/new-candidate distinction. Keep the legitimate example, but disclose that the
+developer executed the permission interpretation before asking and presented it for
+review only at completion. Evidence/report corrections and audit disposition are required;
+no new generation, source replacement, evidence class or automatic E/quick rerun follows.
+Other template-review gates/bounds and the orchestrator's acceptance remain outstanding.
 
 **Q-MS07e-2 — SA2 ruling, 2026-11-15: no rule change; route to MS18c.**
 Do not reopen MS07e or launch the six cells once speculatively. Its section 4 source/projections
