@@ -185,11 +185,15 @@ No intermediate pruning. Parent milestones are not additional waves or commits.
 after orchestrator template review and rechecks. MS16 (`d41a6dd`), MS15b (`8b26e83`),
 MS15a (`b958a58`, SA1 accepted), MS14c (`6a9fbf6`), MS14b (`0e3a0c4`), MS13c (`9d58d86`)
 and resolved JF-02/S-OD12 (A + S0) remain prior boundaries.
-**MS17b's pre-implementation Q1-Q5 are settled in its brief** after a correct pause:
-strict rating/flag boundaries, full canonical rating comparison, the conservative model
-projection, current-vs-historical pins and source-qualified phase ordering. Resume only
-on the orchestrator's explicit relay, then MS18a -> MS18b -> MS18c and the unchanged
-final remainder. It receives **SA1 cross-review before acceptance**, not template-only review.
+**MS17b is active, with implementation/E reported complete and GD paused correctly at
+#15; Q6/Q7 in its brief now authorize the scoped repair and guarded continuation.**
+Keep the published Samurai fixed-count calculation 633, while pinning its current
+canonical rating at 593 (Skyscraper replaces Simple Colouring; 263 empties / 106 givens).
+Retain the failed run, recheck only its fifteen-test group, and resume the eight independent
+GD groups without an unconditional continue-on-failure rule. Final gates and **SA1
+cross-review before acceptance** remain; the mutant-equivalence claims are not accepted
+by this pin ruling. Resume only on the orchestrator's explicit relay, then
+MS18a -> MS18b -> MS18c and the unchanged final remainder.
 The named S3 catalogue is complete; no new technique, weight, limit selection or corpus
 campaign is assigned to this version/cache step.
 MS17a preserves history envelope 1 and actual producer markers. Its explanatory title

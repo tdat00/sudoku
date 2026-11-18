@@ -8,7 +8,7 @@
 | Owner / milestone | Generator integration; M17 release candidate frozen |
 | Authority | R20/R22; SA2-Q-S05/S07/S10 |
 | Review | SA1 cross-review before orchestrator acceptance; not template-only |
-| Status | Pre-implementation Q1-Q5 settled below; resume only on the orchestrator's explicit relay |
+| Status | Implementation/E reported complete; GD Q6-Q7 settled below; final gates and SA1 review pending |
 
 ## Goal & business context
 
@@ -291,6 +291,94 @@ SA1 cross-review remains required before acceptance. A review, mutant or gate fi
 changes included bytes invalidates the affected E families and quick-source coverage
 under the existing rules; no review exemption or retagging. None of these rulings grants
 new source acquisition, finder tuning, version-independent schema changes or extra scope.
+
+### SA2 rulings — Q6/Q7: GD worked example and continuation, 2026-11-18
+
+The developer stopped correctly after GD #15 (`score-v3`) failed, 14/15, before editing
+the pin or running another GD command. This is a stale current-ladder expectation, not
+an aggregate availability failure or a reason to change production rating behavior.
+These rulings do not accept the eighteen claimed equivalent mutants; SA1 still reviews them.
+
+**Q6 / GD #15 — choose B, preserving both meanings of the existing test.**
+The test contains a published fixed-count calculation **and** a live canonical rating.
+Do not replace the former with the latter:
+
+1. Keep the entire classic9 calculation/live-rating branch unchanged: counts as recorded,
+   53 empties, score **499**, level **hard**.
+2. Keep the published Samurai count map with `simpleColouring:1` and its `D.breakdown`
+   assertions unchanged: E **263**, peak **360**, work **1372**, empty term **69.44**
+   (existing tolerance), score **633**. Those fixed inputs still reproduce the formula.
+3. Give the live Samurai branch a separate, independently pinned current count map:
+
+```javascript
+{
+  nakedSingle: 204,
+  hiddenSingleBox: 42,
+  hiddenSingleLine: 17,
+  pointing: 6,
+  boxLine: 1,
+  nakedPair: 1,
+  xWing: 1,
+  skyscraper: 1
+}
+```
+
+Its expected `simpleColouring` key is **absent**, not retained as 1 or derived from the
+actual result. Assert current `r.empties === 263`, `r.score === 593`, `r.level === 'hard'`
+and exact count-map equality. The corresponding current breakdown has peak **330**,
+work **1342**, empty term **69.44** and score **593**; it does not replace the published
+633 calculation above.
+
+**Correct the prose:** 263 is the number of **empty cells**, not givens. The unchanged
+Samurai text contains **369 cells / 106 givens**. Keep that text, model construction and
+registry/allowed-technique behavior unchanged; do not disable Skyscraper or install a
+historical ladder to make the current rating equal 633.
+
+Rename/comment the single test so that it distinguishes published calculations
+**499/633** from current canonical ratings **499/593**. Keep it one test, with every
+previous formula assertion retained, so #15 still selects fifteen tests.
+Update only the directly related `generator/design.md` section 15.2 row to state that
+distinction and current rating v3. Do not globally replace 633/593 or rewrite historical
+worked-example records; the guides' other 593 values describe unrelated replay facts.
+
+The existing transcript `worked-example.txt` supplies the exact current counts. The
+production `difficulty.js` diff is version/header-only, and the finders are unchanged
+from the accepted base: this is an earlier Skyscraper choice exposed by the deferred
+manual suite, **not an MS17b scoring change**. Record that distinction in the evidence/notes.
+Do not defer the stale assertion to MS18c/d/e as an unresolved performance item.
+
+Save/verify the repair plan before running it. Re-run **only #15**, locked with expected
+exit 0, to **new result/log paths**; retain the original 14/15 failure and original
+plan/inventory. Preserve the pre-repair manual-test bytes/hash before editing, so the
+selected-test retention proof has an actual before state. Record the test-name/expectation
+mapping and use the repaired fifteen-test
+record for acceptance, not both old and new copies as duplicate coverage.
+Earlier GD groups whose runtime and selected test bodies/inputs are unchanged need not be
+rerun: retain their actual identities and the narrow diff proof, not a relabelled
+final-source fingerprint. Refresh the current inventory/coverage mapping after the rename.
+
+This repair changes only the manual test and directly related documentation. They are
+not E inputs. Verify the frozen runtime/recorder bytes and both E identities still match;
+then retain the existing E records, with **no E regeneration or canonical write**.
+Do not edit/retag the frozen records. Finish fingerprinted docs/counts before the planned
+final quick pair; this ruling does not exempt any later runtime change from revalidation.
+
+**Q7 / GD #16-#23 — resume them, but reject unconditional continue-on-failure.**
+After the scoped repair/recheck and a saved, verified continuation plan, run the eight
+independent groups serially under their existing bounds: score-table, labelled, removing,
+oracle, guarantees, cap, unreachable and safety (**43 tests**).
+The plan's unadmitted Hell 1 and confusion-matrix populations stay unstarted and named;
+they are not hidden in these selectors or converted to passes.
+
+Each of these eight commands expects **exit 0**, with no blanket `-AllowExit1`.
+Keep stop-on-unexpected-exit and inspect the failing assertions before any later group.
+Only a definitively classified, already-authorized S-OD4 performance/availability outcome
+permits independent continuation; new stale pins, unexplained non-batch assertions,
+incorrect puzzles/flags/warnings, unsound deductions or evidence problems require the
+existing QUESTION/correctness stop. Do not alter the driver to swallow every nonzero
+exit, treat a batch label as proof that its failure was only aggregate, or finish the
+remaining groups before reporting a newly unresolved failure.
+No new stop-rule waiver, scope, source acquisition or limit adjustment is granted.
 
 Keep exports' existing positive ratingVersion field and no external floor/target/work certificate.
 Do not blindly replace literal 2 in legacy/stub/import tests or old help source text.
