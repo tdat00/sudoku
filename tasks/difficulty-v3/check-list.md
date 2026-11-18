@@ -181,11 +181,14 @@ MS14a/MS15a kernels likewise precede their registrations. Final GQ is MS18c,
 after all S3, MS17b and final rechecks MS18b.
 No intermediate pruning. Parent milestones are not additional waves or commits.
 
-**Current serial handoff, 2026-11-18.** MS17b is accepted and committed at **`57c1b10`**
-(16:29:15 +07:00) after two SA1 rounds; M17 is complete. MS17a (`5b94904`), MS16
+**Current serial handoff, 2026-11-18.** MS18a is accepted and committed at **`484b8a52`**
+after orchestrator template review, independent recount, 24 reproduced Normal rows and
+the passing 4,784-test CI inventory check. Its runtime/soak remain the accepted MS17b
+candidate **`57c1b10`**; the new commit also contains evidence, helpers and notes, not
+only pack files. M17 remains complete. MS17a (`5b94904`), MS16
 (`d41a6dd`), MS15b (`8b26e83`), MS15a (`b958a58`, SA1 accepted), MS14c (`6a9fbf6`),
 MS14b (`0e3a0c4`), MS13c (`9d58d86`) and resolved JF-02/S-OD12 (A + S0) remain prior
-boundaries. Next: **MS18a -> MS18b -> MS18c -> MS18d -> MS18e**, one developer at a time.
+boundaries. Next: **MS18b -> MS18c -> MS18d -> MS18e**, one developer at a time.
 **MS18a and MS18b receive orchestrator template/contract review; SA1 cross-review is
 at MS18c.** No extra analyst review gate is added. A specific unresolved question still
 goes through the orchestrator and the QUESTION pause.
@@ -234,10 +237,33 @@ output, locked bisect IR12 defects and mislabelled footers for MS18e, not protec
 Carry **S-AV36-S-AV39, MS15b-Q6, MS15b-GP-J, MS15b-GP-U and MS16-Q6**, their distinct
 populations and all earlier items under their recorded dispositions. MS15b's **37-cell**
 GP remains one full record, one pilot-only cell and **35 unmeasured**, not S-AV38's
-**50-cell** population. MS16/MS17a/MS17b added no generation-GP campaign. MS18a's
-**17-cell/204-request** GS is a matched comparison, not a substitute for GD/GQ/GP.
-Its old MS02 qualified cohort is **91/204**, not the old score-only **202/204**;
-preserve the separate MS06 target comparison and historical timing caveats.
+**50-cell** population. MS16/MS17a/MS17b added no generation-GP campaign. Accepted
+MS18a has **17/17 cells, 204/204 outcomes**, 32 completed payload commands and 159
+reporter checks. Exact **91 -> 163/204** (without old vacuous Hell 1, **79 -> 163/192**),
+in band **202 -> 204**, shallow **111/202 -> 41/204**. The thirteen same-request losses
+are twelve old-vacuous Hell 1 hits plus `greaterThan:expert:0`; 85 requests gained
+exactness. Generation **128.81 -> 828.43 s** is descriptive, not GQ/GP.
+Its old qualified cohort is not the old score-only 202/204. Keep the separate MS06
+target comparison and historical timing caveats. Use the final Q3 reporter/freeze;
+its successful-attempt transcript and multi-commit display fixes changed no ledger.
+
+**MS18b fixed scope and decision boundary:** 288 fresh R5 outcomes at 64/128/256/none
+with C4 fixed, plus 72 fresh C4/C6 outcomes with R5 256 fixed. No combined provisional
+pair, 8/4/2 experiment or re-use/retagging of MS18a as comparison rows. Complete both
+independent bounded experiments and the read-only packet under current defaults.
+R5 selects the smallest finite no-per-cell-hit-loss setting with a strict upper-median
+full-rating reduction somewhere, else none on complete evidence; C selects more exact
+hits, **6 on a tie**. A different winner stops before default edits and GQ/MS18c for
+the owner's keep-current or separately implemented/refreshed change decision. Missing
+data means undetermined, not the measured winner none or a reconfirmation.
+The leaf gives the exact evidence tables and a Vietnamese Discord question template.
+
+MS18a's zero-exact cells are **classic9 Hell 1, Killer Hard and Killer Expert (0/12,
+12/12 shallow, eight attempts each)**. Killer Hard/Expert remain in every fixed R5
+setting, with no invented minimum-hit condition; Hell 1 is not added to either
+experiment. Their availability/offer consequences remain MS18c, including S-OD7's
+separate Killer withholding. No new tuning, calibration, pruning or owner question
+follows merely from the zero counts.
 
 **Machine availability, owner at 16:42 (+07:00), relayed at 16:44:**
 "Các task pentomino đã dừng hoàn toàn, hãy tùy ý sử dụng resource của máy."
@@ -266,6 +292,20 @@ eligible hold becomes a named unexecuted gap and independent entries continue wi
 another QUESTION for that recurrence. Unknown/evidence/identity/payload failures still
 stop. **MS18a-Q2-ADMISSION** carries every attempt/gap to the final report, MS18b
 readiness preparation and MS18e; missing outcomes never become a complete-matrix pass.
+
+**MS18b readiness renewal, before dispatch on `484b8a52`:** the leaf explicitly
+authorizes **`MS18b-host-active`**, preserving Q1's verified PID-1968 instance,
+separate raw strict screen/admission, >=0.5 CPU-s/s additional-consumer hold and
+descriptive timing label. It renews Q2's one fresh-slot re-ask per fixed logical entry
+after >=60 s outside locks; a second eligible hold is a gap and safe entries continue.
+MS18a had 24/32 executed strict screens fail and two holds resolved at attempt 2;
+no payload rerun or remaining gap. Both named items remain audit history; this renewal
+settles their MS18b readiness handoff, not their attribution limits or later GQ/GP.
+**Attempt identity must include experiment/setting/seed as well as the absolute span**:
+MS18a's helper key omits the overrides and cannot be copied unchanged. Same-span
+different-setting entries are distinct; aliases cannot reset the same entry's quota.
+Use the accepted Q2 driver and Q3 reporting fixes, not superseded helper copies.
+No automatic readiness waiver is granted to MS18c/MS18d.
 
 Write/read back bounded plans before phases and format owned helpers before their
 freeze; no post-freeze source adjustment disguised as housekeeping. **S-OD12/S0**
@@ -949,6 +989,13 @@ unstarted additional-consumer CPU hold: one re-ask, >=60 s after release, distin
 records, no third attempt. A second hold stays an unexecuted gap; no service exemption,
 relaxed predicate, repeated payload or complete-matrix claim follows.
 
+**MS18b dispatch renewal at `484b8a52`:** its own brief explicitly authorizes the same
+host-active admission and bounded re-ask behavior under **`MS18b-host-active`**, with
+experiment-aware identities and fresh task records. This is a new task-scoped grant,
+not retroactive extension of MS18a's ruling. Read the MS18b leaf before running; the
+raw numerical screen below remains recorded, not silently turned into a quiet pass.
+The later GQ/GP readiness contract still needs its own dispatch disposition.
+
 - Obtain the normal shared slot/mutex and establish that no foreign timing-lock holder or
   known foreign CPU-heavy job is active. Never delete another lock, kill another session's
   process or infer permission to ignore an occupied/stale lock from the owner statement.
@@ -969,8 +1016,9 @@ relaxed predicate, repeated payload or complete-matrix claim follows.
   change or permanent measurement-tool edit is assigned. Include wrapper/readiness time
   in the whole-command/per-item projection and 540 s ceiling when it is inside that command.
   Preserve the 15 s gap between lock acquisitions and the tool's original request clocks.
-- If admission fails (for MS18a, Q1's explicit admission rather than the raw numerical
-  screen alone), **do not start the timed payload**; record the reason, release our
+- If admission fails (for MS18a/MS18b, the explicitly authorized host-active admission
+  rather than the raw numerical screen alone), **do not start the timed payload**;
+  record the reason, release our
   slot and inform the orchestrator. It is an environmental hold/unstarted command, not a
   slow puzzle, availability miss or owner policy question. Continue permitted non-timed
   work; obtain a new planned slot/check rather than polling indefinitely under our mutex.
