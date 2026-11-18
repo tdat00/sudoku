@@ -426,14 +426,25 @@ scores already stored in the history are not re-rated; and an exported document 
 
 `SG.history` (`js/ui/history.js`) adds every puzzle the page generates to a list kept in `localStorage`
 (`sg.history.v1`, newest first, 100 entries at most; with no storage the list lives in memory). An entry is small:
-variant, level asked for and reached, seed, clues, score and the configuration that rebuilds the puzzle
-(`SG.history.entryOf(result)`; its key, `SG.history.keyOf`, is derived from them when the list is read, not
-stored); an imported puzzle is not listed because no seed rebuilds it. The list is the
+variant, level asked for and reached, seed, clues, score and the configuration that rebuilds the puzzle, plus, when
+the result states one, `ratingVersion`
+(`SG.history.entryOf(result)`; its key, `SG.history.keyOf`, is derived from the recipe when the list is read, not
+stored); an imported puzzle is not listed because no seed rebuilds it. `ratingVersion` is the
+`rating.ratingVersion` of the result the entry was made from, a positive integer copied as stated: it is never
+filled in with the current version for a result or an old entry that has none, never coerced from a string or a
+fraction, and a missing or malformed one is left out (the recipe is kept); a future positive version is kept. It is
+display data, not part of the key, of `SG.history.overridesOf` (the store state that generates the entry again), of
+the cache or of an exported puzzle, and the envelope stays `{ version: 1, entries }` under the same key. The list is the
 left panel of the page (`#history-root`; under the result on narrower screens). A puzzle that is generated again
-moves to the top; picking an entry writes its configuration to the form and generates it (the same seed gives
-the same puzzle within one generator version, and the cache serves it at once when it still has it) without
-moving it; an entry made before rating v2 may regenerate a different puzzle, and its stored level and score are
-not re-rated. Each entry can be removed, and **Remove all** empties the list.
+moves to the top; picking an entry writes its configuration to the form and generates it again with the current
+rating model (the cache serves a compatible result at once) without moving it, and the new result's own marker
+replaces the old one, or leaves the entry without one when the result states none. Only the recipe is stored, no
+puzzle, so an entry made by an earlier version may give another puzzle, and its stored level and score are not
+re-rated. An entry without `ratingVersion`, or with a smaller one than the current `SG.difficulty.RATING_VERSION`,
+shows a second line "Made by an earlier version; selecting this entry regenerates the puzzle using the current
+rating model." and the explanation as the title of its button; an equal or a larger version (never called earlier),
+or a current version that is not a positive integer, shows neither, and an entry without a marker is not claimed to
+be of any version. Each entry can be removed, and **Remove all** empties the list.
 
 ### The address bar and settings
 
@@ -1222,7 +1233,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js                          # the quick set (55 suites, 4,755 tests), whole or in disjoint shards
+node tests/node-runner.js # the quick set (55 suites, 4,769 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (63 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -1234,7 +1245,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 55 suites,
-4,755 tests — the 37 suites of `tests/suites/` and the 18 of `../core/tests/suites/` that the
+4,769 tests — the 37 suites of `tests/suites/` and the 18 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -1291,7 +1302,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 63 suites, 55 of them quick (4,755 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 63 suites, 55 of them quick (4,769 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,

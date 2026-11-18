@@ -101,6 +101,9 @@ các kỹ thuật hợp với khoảng điểm của mức đã chọn (*oracle 
 sinh đề. Phiên bản này đổi cách tính điểm và cách tạo đề (rating v2), nên một liên kết hay một mục lịch sử do
 phiên bản cũ tạo ra có thể tạo lại thành một đề khác, và điểm đã lưu trong lịch sử không được tính lại (những gì
 thay đổi trong dữ liệu đã lưu nằm trong [hướng dẫn cho lập trình viên](DEVELOPERGUIDE.vn.md#bộ-nhớ-đệm-và-tạo-sẵn-đề)).
+Lịch sử chỉ giữ công thức (seed và tùy chọn), không giữ đề: mục không ghi phiên bản tính điểm nào đã tạo ra nó, hoặc do
+một phiên bản cũ hơn tạo, có ghi chú "Do phiên bản cũ hơn tạo", vì chọn nó sẽ tạo lại công thức bằng mô hình tính điểm
+hiện tại.
 
 ## Tính năng của trình sinh đề
 
@@ -134,8 +137,9 @@ thay đổi trong dữ liệu đã lưu nằm trong [hướng dẫn cho lập tr
   được phân bổ cho nó, rồi các ô trống, và dòng Tổng bằng đúng điểm của đề; thẻ Các bước tạo đề cho bảng tương tự
   ở mọi bước, nên ở bước cuối dòng Tổng của nó là điểm của thẻ Tóm tắt.
 - **Danh sách các đề đã tạo** — mỗi đề bạn tạo được lưu trong trình duyệt (tối đa 100, mới nhất ở trên) và hiện
-  ở bên trái dưới dạng "biến thể" và "mức: điểm, seed"; bấm vào một đề để mở lại (cùng seed cho cùng đề trong
-  cùng một phiên bản trình sinh đề), xóa từng đề, hoặc xóa cả danh sách.
+  ở bên trái dưới dạng "biến thể" và "mức: điểm, seed"; bấm vào một đề để mở lại (đề được tạo lại từ seed và tùy
+  chọn của nó bằng mô hình tính điểm hiện tại; mục do một phiên bản cũ hơn tạo, hoặc không ghi lại phiên bản đã tạo
+  ra nó, ghi "Do phiên bản cũ hơn tạo" và có thể cho ra một đề khác), xóa từng đề, hoặc xóa cả danh sách.
 - **Giao diện song ngữ** (Anh / Việt), đổi ngay không cần tải lại trang; mọi chuỗi chữ, kể cả tên kỹ thuật giải
   và luật của từng biến thể, đều có cả hai ngôn ngữ.
 - **Kết quả được đảm bảo** — đúng một lời giải (do một bộ giải riêng kiểm tra), đúng mức độ yêu cầu (điểm nằm

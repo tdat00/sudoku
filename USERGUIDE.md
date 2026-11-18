@@ -101,7 +101,10 @@ proof. The same seed with the same options always gives the same puzzle.
 **Rating v2 compatibility.** "The same seed gives the same puzzle" holds within one rating/generator version.
 This version changes the scoring and the generation (rating v2), so a link or a history entry made by an older
 version may regenerate a different puzzle, and the scores already stored in the history are not re-rated (what
-changed in the stored data is in the [developer guide](DEVELOPERGUIDE.md#cache-and-pre-generation)).
+changed in the stored data is in the [developer guide](DEVELOPERGUIDE.md#cache-and-pre-generation)). The history
+keeps only the recipe (seed and settings), not the puzzle: an entry that does not say which rating version made
+it, or that was made by an earlier one, carries the note "Made by an earlier version", because selecting it
+generates the recipe again with the current rating model.
 
 ## Generator features
 
@@ -135,8 +138,10 @@ changed in the stored data is in the [developer guide](DEVELOPERGUIDE.md#cache-a
   points and its share of the score, then the empty cells, and a Total equal to the score; the Generation steps
   tab shows the same table for every step, so at the last step its Total is the score of the Summary.
 - **Generated puzzles list** — every puzzle you make is saved in the browser (up to 100, newest first) and shown
-  on the left as "variant" and "level: score, seed"; click one to open it again (the same seed gives the same
-  puzzle within one generator version), remove one, or clear the list.
+  on the left as "variant" and "level: score, seed"; click one to open it again (the puzzle is generated again
+  from its seed and settings with the current rating model; an entry made by an earlier version, or one that does
+  not record its version, says "Made by an earlier version" and may give a different puzzle), remove one, or clear
+  the list.
 - **Bilingual interface** (English / Vietnamese), switched without a reload; every string, including the
   solving techniques and the variant rules, exists in both languages.
 - **Guaranteed result** — exactly one solution (checked by a separate solver), the requested level (a score in its

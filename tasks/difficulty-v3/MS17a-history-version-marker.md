@@ -362,14 +362,14 @@ Preserve r5p's explicit/default attempt semantics in regenerated recipes. Return
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted after orchestrator review (template and contract; not in the SA1 set). The developer paused before any edit with Q1-Q5, ruled by SA2 in `d8bd407` (modified A: visible note plus supplementary title for earlier entries only, exact EN/VI strings, no CSS or placeholders; private panel-only predicate; never inherit or manufacture a producer stamp; fresh evidence ledgers only; named doc changes approved). The developer's reading that the title replaces the open-button title for earlier entries only (option A placement) was confirmed by the orchestrator as consistent with "modified A" |
+| Start | 2026-11-18 09:19:39 (+07:00), base `d37960b` (implementation base `d41a6dd`, MS16); pack-only `d8bd407` landed during the task |
+| End | Q1-Q5 stop 09:23:50, ruling 09:34:22 (relayed about 09:35); final report 10:16:35; orchestrator review and re-check about 10:17-10:19; commit 10:19 |
+| Duration | About 57 min developer (including about 11 min question wait); orchestrator review about 2 min; locked commands in `docs/difficulty-v3/evidence/MS17a/lock-log.jsonl` (17 rows, 1,081.8 node seconds) |
+| Model | claude-sonnet-5.5 (developer); gpt-6-astra (SA2 preparation and ruling); claude-opus-5.5 (orchestrator review) |
+| Token usage | Developer: 141 model calls; 43,157,695 input tokens (42,460,944 cache reads); 203,915 output tokens. SA2 (MS17a preparation and ruling): 16 calls; 4,640,251 input (4,522,427 cache reads); 74,295 output |
+| AI credits | about 803 (developer); about 1,525 (SA2) |
+| Verification | `generator/js/ui/history.js`: optional stored `ratingVersion` copied from `result.rating.ratingVersion` only when a positive integer (never filled with the current version, never coerced; malformed stored markers read as missing and dropped at the next write; future versions kept); not part of `keyOf`, `idOf`, `overridesOf`, generation config, cache or export; envelope stays `{version: 1}` under `sg.history.v1`; reopening keeps replacement semantics with the marker from the new result only. Private `madeEarlier` compares against a validated `SG.difficulty.RATING_VERSION`; missing or older markers show the muted note line and the explanatory title (SA2's EN/VI strings inline), equal or future show neither. `RATING_VERSION` and cache `SCHEMA_VERSION` stay 2. Tests: history 15 -> 29 (data and panel cases on a fake document). Mutants: 50/50 detected on the final bytes. E: replay identity `20d5873d...` -> `9023f9eb...` (hash identity unchanged); 5 wires and 14 analyses recorded fresh and matching the unchanged canonical fixtures; MS16's 520-key hash ledgers merge-checked read-only (520/520 unchanged); nothing written. GH 40/40 check-only. Quick sets: Generator 4,769/4,769 (543.9 s), Player 2,978/2,978 (118.9 s); no projection changes; fingerprints Generator `bae8cc89...`, Player `1dfe66ea...`; CI check passes. Orchestrator: marker code read (private predicate, no public API); locked Generator `history,export,i18n,help,ui-contract,purity` 344/344 (17.3 s), Player `play,help,help-example-tools,i18n,ui-contract` 294/294 (13.9 s), CI shard check 4,769 of 4,769 |
+| Acceptance | MS17a-B01, B02, T01-T03 met (developer evidence in `docs/difficulty-v3/evidence/MS17a/evidence.md`); orchestrator review: accept |
+| Issues & resolutions | None blocking. Plan corrections after first writing (E per-item projections, quick file list, S-AV08 comparison and manifest SHA) were made before the following commands and are disclosed, including one replaced unverified explanation. Gaps: no browser run (panel tested on a fake document, long-line wrapping unseen); very large doubles such as 1e21 accepted as versions, untested; a marker-less entry is not provably earlier (generic R22 wording). The owner was offered the Vietnamese wording in Discord; no change requested before commit |
+| Handoff | To MS17b: accepted source with the history marker (history store version 1); quick totals Generator 4,769 (543.9 s) and Player 2,978 (118.9 s); fingerprints Generator `bae8cc89...`, Player `1dfe66ea...`; projections unchanged (core-shared 170, steps 70, replay 70, mega 50, own-fast 320, digger-target 30, pipeline 80, Generator player shard 90, Player job 180); replay identity `9023f9eb...`, hash identity `8740fd9e...`; help catalogue 40; rating/cache version 3 and the limit freeze belong to MS17b; named items S-AV36-S-AV39, MS15b-Q6, MS15b-GP-J, MS15b-GP-U, MS16-Q6; MS17b is in the SA1 review set |

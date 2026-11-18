@@ -1,0 +1,17 @@
+$ node tests\node-runner.js --suite=history,export,i18n,help,ui-contract,purity
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+(node:18996) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   export: 78 passed  (8.83 s)
+ok   help: 30 passed  (5.69 s)
+ok   history: 29 passed  (1.79 s)
+ok   i18n: 97 passed  (330 ms)
+ok   purity: 42 passed  (29 ms)
+ok   ui-contract: 68 passed  (348 ms)
+
+Suites: 6
+Tests:  344 total, 344 passed, 0 failed, 0 skipped
+Time:   17.01 s running tests, 17.15 s total
+exit=0 seconds=17.277

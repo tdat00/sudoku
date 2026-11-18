@@ -410,13 +410,24 @@ trong lịch sử không được tính lại; và tài liệu xuất ra vẫn g
 
 `SG.history` (`js/ui/history.js`) thêm mọi đề trang tạo ra vào một danh sách lưu trong `localStorage`
 (`sg.history.v1`, mới nhất ở trên, tối đa 100 mục; không có storage thì danh sách chỉ nằm trong bộ nhớ). Mỗi mục
-nhỏ gọn: biến thể, mức đã chọn và mức đạt được, seed, số ô cho sẵn, điểm và cấu hình để dựng lại đề
-(`SG.history.entryOf(result)`; khóa của mục, `SG.history.keyOf`, được suy ra từ các trường đó khi đọc danh
-sách chứ không được lưu); đề nhập vào không được liệt kê vì không có seed nào dựng lại được. Danh sách là
+nhỏ gọn: biến thể, mức đã chọn và mức đạt được, seed, số ô cho sẵn, điểm và cấu hình để dựng lại đề, cùng
+`ratingVersion` khi kết quả có nêu
+(`SG.history.entryOf(result)`; khóa của mục, `SG.history.keyOf`, được suy ra từ công thức khi đọc danh
+sách chứ không được lưu); đề nhập vào không được liệt kê vì không có seed nào dựng lại được. `ratingVersion` là
+`rating.ratingVersion` của kết quả đã tạo ra mục, một số nguyên dương được chép đúng như kết quả nêu: không bao giờ
+điền phiên bản hiện tại cho một kết quả hay một mục cũ không có nó, không ép kiểu từ chuỗi hay phân số, và giá trị
+thiếu hoặc sai dạng bị bỏ đi (công thức vẫn được giữ); số nguyên dương lớn hơn phiên bản hiện tại vẫn được giữ.
+Đó là dữ liệu để hiển thị, không thuộc khóa, không thuộc `SG.history.overridesOf` (trạng thái store để tạo lại mục
+đó), không thuộc bộ nhớ đệm hay đề xuất ra, và phong bì vẫn là `{ version: 1, entries }` dưới cùng khóa. Danh sách là
 panel bên trái của trang (`#history-root`; nằm dưới phần kết quả trên màn hình hẹp). Đề được tạo lại sẽ lên đầu
-danh sách; bấm một mục sẽ ghi cấu hình của nó vào biểu mẫu rồi tạo đề (cùng seed cho cùng đề trong cùng một
-phiên bản trình sinh đề, và bộ nhớ đệm trả về ngay nếu còn) mà không đổi vị trí của mục; một mục có từ trước rating
-v2 có thể tạo lại thành một đề khác, và mức cùng điểm đã lưu của nó không được tính lại. Mỗi mục có thể xóa, và
+danh sách; bấm một mục sẽ ghi cấu hình của nó vào biểu mẫu rồi tạo lại đề bằng mô hình tính điểm hiện tại (bộ nhớ
+đệm trả về ngay một kết quả phù hợp nếu có) mà không đổi vị trí của mục, và dấu của kết quả mới thay dấu cũ, hoặc để
+mục không có dấu khi kết quả không nêu. Chỉ công thức được lưu, không lưu đề, nên một mục do phiên bản cũ hơn tạo có
+thể cho ra một đề khác, và mức cùng điểm đã lưu của nó không được tính lại. Mục không có `ratingVersion`, hoặc có số
+nhỏ hơn `SG.difficulty.RATING_VERSION` hiện tại, hiện thêm một dòng "Do phiên bản cũ hơn tạo; chọn mục này sẽ tạo lại
+đề bằng mô hình tính điểm hiện tại." và phần giải thích làm tiêu đề (title) của nút; phiên bản bằng hoặc lớn hơn
+(không bao giờ gọi là cũ hơn), hay phiên bản hiện tại không phải số nguyên dương, thì không hiện gì, và mục không có
+dấu không bị khẳng định là của phiên bản nào. Mỗi mục có thể xóa, và
 nút **Xóa hết** làm trống danh sách.
 
 ### Thanh địa chỉ và cài đặt
@@ -979,7 +990,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (55 suite, 4.755 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (55 suite, 4.769 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (63 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -990,7 +1001,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 55 suite, 4.755 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 55 suite, 4.769 bài —
 37 suite ở `tests/suites/` và 18 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -1046,7 +1057,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 63 suite, trong đó 55 suite nhanh (4.755 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 63 suite, trong đó 55 suite nhanh (4.769 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
