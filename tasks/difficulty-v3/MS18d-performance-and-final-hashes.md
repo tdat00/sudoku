@@ -22,6 +22,27 @@ follow check-list section 7.
 
 ## Inputs & context
 
+**MS18c post-GQ handoff, 2026-11-19 (not dispatch permission):** both analysts
+accepted all **135** GQ records, **79 offered / 56 hidden**, measured at `ed2fe50c`,
+dirty, sources `0ca29eaeebc295b6`, under the declared host-active policy. MS18c still
+must finish its official merge, orchestrator pre-publication/publication checkpoints,
+compatibility/manual/E/quick/CI closure and final review before this task starts.
+The single authoritative merged input will be
+**`docs\difficulty-v3\evidence\MS18c\merge\qualification-v3.json`**, not a
+top-level duplicate. Preserve its measured source metadata and the A/B support-only
+publication proof; a publication-only source-hash change is not permission to retag
+GQ or manufacture a new measurement.
+
+Carry **MS18c-GQ-ENGINE-COST** into the existing cost analysis: SA1's reported
+matching-outcome ratios are about 1.13 overall and 2-6.6x in several named cells;
+MS18c separately records a stricter 2,122-pair comparator and its exact selection
+rule. Preserve/reconcile definitions, keys, counts and both source identities
+before quantitative attribution. This is a source-specific engine-cost signal,
+not jobs-1 GP, identical-puzzle proof, a target adjustment or an extra profiling/
+GQ campaign. Use existing records and this task's already authorized GP/profile
+scope/bounds. IR17 is also carried because classic9 Nightmare remains offered;
+the old 430.5 s GD observation is not a new whole-command bound or a GD assignment here.
+
 R24, verbatim:
 
 > Final GP measures 50 runs per offered performance-table cell, records p50/p95/max and the aggregate
@@ -48,8 +69,13 @@ or above the qualification budget. The v2 Easy-from-Normal migration does not re
 bands. Record old/new target, qualifying p95, previous target and budget before GP; never change a
 target because GP failed. Any genuinely undefined target-policy case is a blocker, not an omitted cell.
 
-**CV6-05 / S-AV01 precondition:** obtain MS18c's fixed ending before final timing. A hidden Normal
-cell is not offered and follows the ordinary performance manifest. If Normal qualifies but its
+**CV6-05 / S-AV01 precondition:** MS18c's accepted fixed ending is **"not offered"**:
+Normal has 40/40 hits but p95 10,192.4051 ms > 10,000 ms. Confirm that ending in the
+checked merge/publication handoff before timing. The Fable trigger did not occur;
+no Normal-only target or CV6 budget change is assigned. A hidden Normal cell follows
+the ordinary offered performance manifest; its fixed diagnostic seed is retained
+elsewhere. The following alternatives are decision history, not current work:
+if Normal qualifies but its
 final-source CV6 still fails, the plan author decides the conditional fallback contract once on
 MS18c's data, before GP: one millisecond base for `BUDGET_MS.normal` and the same base for its
 GP target if present, no more than 10,000 ms, machine scaling left to `SG.test.timeLimit`.
@@ -77,6 +103,8 @@ new scope, cap, budget, performance target or generator change.
 
 - **S-AV11 stage profile:** when this task measures performance, obtain a stage profile of the
   single recorded Jigsaw request (`jigsaw9`, Expert, seed 1111; 325.313 s in MS05b3).
+  Expert is now hidden by qualification: retain this assigned diagnostic request
+  under a restored diagnostic-only support guard, never a public re-offer or changed seed.
   Use the existing pipeline stage timings/recording facilities, retaining the request's trace/options
   and the measured source identity. Keep this identified diagnostic separate from the unchanged
   50-run GP populations, seeds, warmup and aggregate. Until the profile identifies its stage, do not
@@ -148,7 +176,8 @@ input must be resolved, never guessed as a zero-cost cell.
 3. Aggregate the complete matrix against >=90%; do not relax targets after seeing GP.
 4. Fresh-record every GG identity and complete check-only merge.
 5. Run bounded quick coverage if target/docs changed; reconcile inherited/new cost items, including
-   CV6 and checkpoint large-board findings. No algorithm repair or budget change here.
+   S-AV01's not-offered ending, **MS18c-GQ-ENGINE-COST**, IR17 and checkpoint
+   large-board findings. No algorithm repair or unauthorized budget change here.
 
 ## Acceptance criteria — Business
 
@@ -172,7 +201,7 @@ From Generator, preflight first (read-only, expected under a second; create the 
 driver before this command). Do not start a flagged cell; other bounded cells may proceed:
 
 ```powershell
-node tests\artifacts\difficulty-v3\MS18d\project-gp.js --qualification=..\docs\difficulty-v3\qualification-v3.json --json=..\docs\difficulty-v3\evidence\MS18d\gp-preflight.json
+node tests\artifacts\difficulty-v3\MS18d\project-gp.js --qualification=..\docs\difficulty-v3\evidence\MS18c\merge\qualification-v3.json --json=..\docs\difficulty-v3\evidence\MS18d\gp-preflight.json
 ```
 
 Test its arithmetic with synthetic 40- and 100-request rows, a missing offered cell, duplicate

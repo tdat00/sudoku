@@ -31,6 +31,19 @@ and fourteen analyses. Every final offer meets (c1); bounded fallbacks are misse
 additionally withholds Killer Hard/Expert until later calibration without altering their raw
 qualification verdicts or the complete 135-cell population.
 
+**MS18c post-GQ handoff, 2026-11-19:** the 135-record set is jointly accepted
+(79 offered / 56 hidden, 4,313 outcomes, 27 retained budget timeouts, zero invalid).
+Audit its measured `ed2fe50c`, dirty / sources `0ca29eaeebc295b6` identity against
+the unchanged `outputs-sha256-gq.txt` inventory, receipts/journals and the official
+**`evidence\MS18c\merge\qualification-v3.json`**. Preserve the orchestrator's
+separate A pre-publication and B support-array/live-report commits and their
+measured/publication source proof; neither intermediate commit alone accepted MS18c.
+The continuation assigns the **complete bounded `variants` manual suite** and
+MS05b3 population audit to MS18c. Reconcile its final-source coverage, including
+the one MS07f replay test containing both fixed mega16 requests; replace only
+invalidated coverage under the existing identity/compatibility rules. Remaining
+GD/deep and the three MS07f `perf` ratio cases still belong here.
+
 R20, verbatim:
 
 > Record every reclassification, the old and v3 labels/requiredness, and the causing technique in
@@ -94,18 +107,30 @@ Reconcile the four relocated cases through the final-source selectors below, not
 pass or the warn-only status of unrelated manual performance samples.
 
 **Q-MS07e-2 audit (S-AV27):** account for mega12/hell1, mega16/nightmare, mega16/hell1,
-greaterThan/expert, greaterThan/hell1 and butterfly/hell1 individually. No launch-rule amendment
-was approved: current-source projections must include the serial second round and fit <=450 s
-under the 540 s ceiling, without advance early-stop credit. Final unexecuted cells are explicit
-unsatisfied qualification/publication gates, never hidden verdicts or complete release evidence.
+greaterThan/expert, greaterThan/hell1 and butterfly/hell1 individually. **The final
+execution gap is closed:** all six ran in MS18c and are hidden on time.
+**S-OD13 did approve** the GQ-only joint-bound route; the immutable class manifest,
+structural monitor and retained execution evidence govern those completed runs,
+not the earlier 450/540 GQ restriction. The serial second round is unchanged and
+the old MS07e checkpoint remains incomplete on its own source. No advance
+early-stop credit, new GQ run or non-GQ timing/limit waiver follows.
+
+Audit **MS18c-GQ-ENGINE-COST** and MS18d's source-qualified disposition, including
+the distinction between SA1's reported matching-outcome ratios and SA2's explicit
+strict comparator. Keep the paired cohorts/keys/counts and the timing-environment
+qualification; no unproved attribution or time subtraction. Carry IR17 because
+classic9 Nightmare is offered: 430.5 s is old-source evidence and 449 s is not a bound.
 
 **CV6-05 audit:** MS05e is "measured, set aside", not an accepted sign repair. Keep its saved
 `docs/difficulty-v3/evidence/MS05e/candidate-pool-4.patch`, measurements and restoration/identity
 proof as history; do not rebuild or run the rejected candidate for this audit. S-AV16/S-AV17
 are withdrawn current-source items, not deleted observations. S-AV08's restored baseline was
 648.0 s; report the actual final-source quick cost separately. Verify S-AV01's one evidenced
-ending under checklist section 2 and MS18c: not offered by ordinary qualification/population
-rules; final-source CV6 pass; or the recorded final Normal contract decision before MS18d timing.
+ending under checklist section 2 and MS18c: **not offered** (40/40 hits, p95
+10,192.4051 ms > 10,000), with the ordinary hidden-cell public-manual population
+treatment and fixed diagnostic Normal seed 4 preserved. No Fable trigger or
+Normal base change occurred. The other recorded alternatives were a final-source
+CV6 pass or an assigned Normal contract decision before MS18d timing.
 For that conditional contract verify the same base in CV6 and its GP target if present, <=10,000 ms,
 factor application through `SG.test.timeLimit`, and updates to the test, corresponding GP target,
 `generator/design.md` section 9.1 (the `greaterThan` Normal cell) and both developer guides in the
@@ -157,7 +182,10 @@ No merge, push, workflow dispatch or new browser run is authorized by this task 
 
 Use MS07f's relocation map and the actual final files. Preflight with `--list-tests`: exactly
 three hard-failing ratio cases in `perf`, and one replay case containing the two unchanged
-mega16 requests in `variants`. No warn-only wrapper, extra sweep, stub or skipped hidden request.
+mega16 requests in `variants`. MS18c's explicitly assigned complete `variants`
+coverage can supply that replay case when final-source identity/compatibility is
+proved; do not blindly repeat it or substitute another recipe. No warn-only
+wrapper, unassigned extra sweep, stub or skipped hidden request.
 MS18c owns any diagnostic-only support guard needed by the fixed replay requests; verify its
 array restoration and do not weaken the public unsupported-level refusal.
 

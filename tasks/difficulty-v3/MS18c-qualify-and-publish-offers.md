@@ -2,12 +2,12 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS18b; S-OD13/S-OD14 recorded; Stage 1 preflight then joint Stage 2 binding and explicit Stage 3 release |
-| Accepted base | `14d8c903` (MS18b); runtime candidate remains `57c1b10`, R5 256 / C4 reconfirmed |
-| Size / active time | Medium; 35-50 minutes plus GQ |
+| Depends on | MS18b; completed Stage 1-3 GQ and joint SET ACCEPT; SA1 final AGREE on this continuation and orchestrator release |
+| Accepted base | MS18b `14d8c903`; GQ measured at `ed2fe50c`, dirty, sources `0ca29eaeebc295b6`; R5 256 / C4 unchanged |
+| Size / active time | Medium; continuation includes bounded manual/E/quick/CI work; no whole-phase duration claim |
 | Owner / milestone | Qualification/publication; M18c |
 | Authority / review | R24/R21, AUTH-S1, SA1-Q-S5, S-OD4 (c1), S-OD7/S-OD8/S-OD13/S-OD14, CV6-05; joint ceiling/recovery approval and SA1 cross-review |
-| Status | Stage 1 complete; Stage 2 bindings published; await SA1 final confirmation and orchestrator preparation release, then supervisor/canary review gates |
+| Status | GQ 135/135 jointly SET ACCEPT; freeze/official merge, two provenance commits and compatibility/validation closure remain; await continuation release |
 
 ## Goal & business context
 
@@ -17,13 +17,21 @@ withholding of Killer Hard/Expert. Preserve the v2 record and keep the live tabl
 ## Scope
 
 In: full 135-cell GQ-final, v2 archive, live table/support arrays, stored-request notification and
-diagnostic/publication compatibility of the final offers; CV6-05's final S-AV01 disposition before GP.
-Out: solver/generator tuning, weight changes, intermediate table publication or dropped cells.
+diagnostic/publication compatibility of the final offers; the complete bounded `variants` manual suite,
+MS05b3 population audit and CV6-05's final S-AV01 disposition before GP.
+Out: new GQ generation/repeats, solver/generator tuning, weight changes, partial table publication or dropped cells.
 
 ## Repository rules
 
-AGENTS/checklist; no Git/pack/log writes. This is the explicit exception permitting the live
-`docs/difficulty-rating/qualification.md` update, not edits to other dated reports.
+AGENTS/checklist. **The developer makes no Git writes, pack edits or task-log edits.**
+The orchestrator owns staging, implementation commits, pushes and CI actions; SA2 commits
+pack-only. The mandatory pre-publication/publication split below replaces one final
+implementation commit for this task, but does not transfer Git authority to the developer.
+It supersedes earlier post-GQ "wait until task acceptance to commit" wording only
+after the complete measured set has been accepted; the immutable measurement
+manifest and the no-code-commit-during-GQ rule are not rewritten.
+This is the explicit exception permitting the live `docs/difficulty-rating/qualification.md`
+update and the bounded manual work below, not edits to other dated reports or frozen GQ files.
 
 ## Accepted handoff and owner actions
 
@@ -46,17 +54,18 @@ Use `evidence/MS18b/evidence.md`, `decision-packet.md`, `selection.json` and the
 | **MS18c-Q1: final qualification measurement environment** | **Resolved by S-OD13: A.** Declared host-active GQ; actual raw p95 and the full qualification contract remain binding. |
 | **MS18c-Q2: complete qualification execution route** | **Resolved by S-OD13: B.** Both analysts approve all 135 source-bound P/A/T/O assignments in `MS18c-gq-approved-ceilings.json`; the Stage 2 record and Stage 3 release/review gates below govern execution. |
 | **MS18c-Q3: one recovery payload relaunch** | **Resolved by S-OD14: B**, owner at 2026-11-18 23:05:53 (+07:00). The owner-answer precondition is satisfied; each actual recovery still needs the separate prior joint diagnosis/authorization below. |
-| CV6-05 Greater-Than Normal fallback contract | **Conditional later, not an unconditional start dependency.** Only if final Normal qualifies and its final-source CV6 still fails: return numbers to Fable under the already recorded delegation, before MS18d. No budget value selected now. |
+| CV6-05 Greater-Than Normal fallback contract | **Resolved for this set: S-AV01 closes "not offered".** Normal has 40/40 hits but p95 10,192.4051 ms > 10,000 ms. The Fable trigger is not met; no Normal budget change or special CV6 exception. |
 | A variant with no qualified/offered level, unexpected publication incompatibility | **Conditional blocker if observed.** No invented passing level or silent population change. Assign the compatibility decision/fix through the orchestrator. |
 
 No R5/C or Q1/Q2 owner choice remains open. **The numerical method and all 135
 source-bound assignments are jointly approved, not a developer choice.** Stage 1
 has finished and stopped; its original pending rows and reports stay unchanged.
 The pack-only approved manifest is separate. Q3 is answered as **S-OD14**.
-Publication of the manifest alone releases neither implementation nor GQ:
-SA1's final confirmation of this convergence and the orchestrator's explicit
-preparation release precede Stage 3. Supervisor review and the canary pause follow
-before the remaining cells. SA1 retains final review.
+The GQ execution phase has now finished and both analysts give **SET ACCEPT**.
+The historical staging/supervision contract below remains the provenance of those
+runs, not permission to repeat them. The current action is the **post-GQ continuation**
+below, only after SA1's final AGREE on this pack and the orchestrator's release.
+No official merge or live publication has yet occurred. SA1 retains final task review.
 
 **S-OD13 — owner, Discord author `amicably8850`, 2026-11-18 21:31:46 (+07:00):**
 
@@ -88,7 +97,284 @@ Rating/cache **3**, history/worker wire **1**, grouped proof **2**, catalogue/GH
 **180**, in the established shard order. Maintain counts/projections only by the
 existing quick rule after actual relevant verification; no membership/factor change.
 
-## Stage 2 binding and convergence
+## Post-GQ joint acceptance and continuation — 2026-11-19
+
+This section governs the remaining work. It combines both independent full-set
+reviews, relayed together by the orchestrator at **2026-11-19T06:00:51.278+07:00**:
+
+- **MS18c-GQ-SA1-20261119:** SA1/Opus, **"SET ACCEPT"**, complete set reviewed read-only.
+- **MS18c-GQ-SA2-20261119:** SA2/Astra, **"SET ACCEPT — for the GQ evidence set"**,
+  complete set reviewed read-only; the canonical pure merge validator passed in
+  memory, with no official merge file written.
+
+This is GQ evidence acceptance, **not MS18c task acceptance or a release/deployment**.
+The same developer **`5fe8b2d2` continues, strictly serially**, after the orchestrator
+relays SA1's final AGREE on this continuation and explicitly releases it.
+Do not invoke another GQ supervisor, generation/probe/pilot, `begin`/`post`/close-out
+or recovery for this completed set. No source retuning or repeat to improve a time.
+
+### Accepted set and numerical corrections
+
+Measured identity: **`ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89`, dirty**;
+engine sources **`0ca29eaeebc295b6`**, qualifier
+**`c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77`**.
+All records retain the approved attempt policy, Node **v26.13.0**, AMD EPYC 7763 /
+16 logical processors / 64 GB / Windows 10.0.26300, jobs **4** and
+**`MS18c-GQ-host-active`**. The manifest blob is
+**`e9c3c2410fcf7aced811e11868c0f26004951b85`** and the epoch is
+**`MS18c-GQ-20261118-01`**. Never retag this measured identity to a later checkpoint.
+
+| Fact | Accepted value |
+|---|---|
+| Cells / attempts / journal events | **135 / 140 / 960**; 135 canonical copies and matching receipts |
+| Outcomes | **4,313**: 3,783 exact hits, 503 approximate, **27 `budget.exceeded` errors**, zero invalid; all 4,286 non-error outcomes valid and solved |
+| Verdicts | **79 offered / 56 hidden**; every variant retains at least one level |
+| Faults / gaps / recovery | Zero supervisor/worker execution failures, T-expiries, leftovers, gaps or S-OD14 recoveries; captured request timeouts are misses, not failed cell executions |
+| Second rounds | **Three**: hyper/Expert 53 requests, flower/Nightmare 50, wordoku/Normal 46 |
+| Bounds | max R **7.8444534 s**; min W-Q-R **0.1795489 s**; max Q-S **1.0731562 s**; W-Q **7.3844708-8.034013 s**; every R<=45 and A/T/O/request bound passed |
+| Measured W | max **368.08897 s** (samurai/Hell 1); sum **6760.276141 s** (about 1.88 h), not total acquisition/wait time |
+| Admission | Five eligible primary-slot CPU holds, each followed by exactly ordinal 2; **all 140 raw strict screens failed**, with named-policy admission recorded separately |
+| Timeouts by cell | mega16/Hell 1 **9**; samurai/Hell 1 **9**; sohei/Hell 1 **6**; Greater-Than/Hell 1 **2**; samurai/Nightmare **1**; max **120,051.7349 ms**, below 130,000 |
+
+The initial prose saying "four requests" at the guard was incorrect: it is **27
+outcomes across five cells**, including samurai/Nightmare. Preserve and report all
+of them. Do not silently drop errors from rates or percentiles.
+
+| Held cell | Actual lock release -> next acquisition | Actual release -> journalled admission |
+|---|---:|---:|
+| mega12/hell2 | 61.585 s | 63.993 s |
+| killer/hell2 | 61.814 s | 64.320 s |
+| butterfly/veryEasy | 61.976 s | 64.469 s |
+| flower/nightmare | 86.405 s | 88.945 s |
+| wordoku/hard | 77.356 s | 79.820 s |
+
+The mega12 journal-release-to-admission interval is **64.027 s**. Its run ID was
+allocated before a logged **22 s** re-ask wait; run-ID timestamps are not admission
+timestamps. The minimum ordinary release-to-acquisition gap is **15.015 s**.
+
+**Heartbeat disclosure:** in 53 short runs `status.clocks.rSeconds` is still null:
+the last heartbeat preceded qualifier creation. For all 135, the journalled
+`qualifier-created.rSeconds`, acceptance receipt R and final
+`status.post.monitor.metrics.rSeconds` agree. `activeProcesses` and
+`clocks.elapsedSeconds` are also last-heartbeat snapshots, not terminal job counts
+or total O. The native window/drain result, receipt and terminal logs establish the
+completed run. Document these semantics; **do not repair/overwrite old status files
+or invent a missing time**. No authoritative R or monitor result is missing.
+
+SA2's reviewed-set digest is
+**`00d611b7760cdbe435cf74c76420a49aa527c90d32c4daf496fcb02b195d308a`**:
+SHA-256 of UTF-8 lines
+`key<TAB>canonical-JSON-sha256<TAB>receipt-sha256<TAB>journal-tip-hash<LF>`,
+in approved manifest row order. This supplements, not replaces, the complete
+file inventory required first below.
+
+### Historical comparisons, decisions and item routing
+
+The actual v2 archive is **19,785 bytes**, SHA-256
+**`6d148c5e9ecf445075e26d960ec18bc181ea2c05ca039f1f98726458931162ff`**,
+byte-identical to the still-unmodified live v2 table. Relative to its **118 offers**,
+the final set removes **39** and adds none. Report every removal to the owner
+through the orchestrator; these are accepted (c1) outcomes, not new questions.
+
+Relative to MS07e's **129 measured cells**, twelve offered cells become hidden:
+mega16/Expert; diagonalX/Expert; hyper/Expert; jigsaw9/Expert and Nightmare;
+killer/Hell 2; Greater-Than/Normal and Nightmare; samurai/Nightmare and Hell 2;
+sohei/Nightmare; flower/Nightmare. **Greater-Than/Master and flower/Master regain
+an offer.** The six old gaps are now all measured and hidden on time. Do not
+backfill or relabel the older, still-incomplete MS07e checkpoint with these new-source records.
+Other hidden Easy/Normal cases were already hidden at MS07e; classic4/6 were hidden
+in v2 too. Keep historical sources, machines, cohorts and their actual verdicts distinct.
+
+| Item | Binding continuation/handoff disposition |
+|---|---|
+| **S-AV01 / CV6-05** | **Close "not offered".** Greater-Than Normal has 40/40 hits and p95 **10,192.4051 ms** against 10,000 (about **1.9% over**). No Fable trigger, new budget, Normal-only waiver or special hidden-cell treatment. The 700 ms CV6 base and historical failed cohorts remain; apply the same recorded public-manual population policy as for every hidden cell. |
+| **S-AV05 / S-AV06 / S-OD7** | Killer Hard **0/14**, misses; Expert **2/12**, time. Preserve both raw hidden verdicts and publish **"hidden until later calibration (S-OD7)"** separately. No in-v3 recalibration; later calibration remains outside this task. |
+| **S-AV27 / Q-MS07e-2** | **Close the final-qualification execution gap**: mega12/hell1, mega16/nightmare, mega16/hell1, greaterThan/expert, greaterThan/hell1 and butterfly/hell1 all ran and are hidden on time. S-OD13 supplied the approved bounded route; the serial second-round scheduler was not repaired. Preserve its mixed-concurrency caveat and the old unexecuted records. |
+| **IR17** | Carry forward because classic9 Nightmare remains offered: the older GD batch cost **430.5 s**, so **449 s is not a reusable bound**. Require a current-source whole-command projection with conservative margin under unchanged 450/540 protection; MS18e owns the remaining GD audit. |
+| **MS18c-GQ-ENGINE-COST** | **Open to MS18d; MS18e audits.** Preserve the source-qualified matched-outcome cost comparison below. No new GQ, algorithm tuning, target fitting, budget relaxation or attribution-based time subtraction. |
+| **Close misses, plain notes** | Greater-Than Normal as above; diagonalX/Expert **37/40**, p95 **11,795.9214 ms** against 10,000. Both are hidden without an early stop. Neither is an owner/Fable question or a reason to choose a faster repeat. |
+
+For **MS18c-GQ-ENGINE-COST**, SA1 reports a median per-request new/old time ratio
+of about **1.13 overall** on matching recorded outcomes, with approximately
+**6.6x mega16/Expert, 5.1x jigsaw9/Expert, 4.3x sohei/Master, 2.7x mega12/Expert and
+2.1x diagonalX/Expert**. This is an engine-cost investigation signal, not a GP
+measurement, identical-puzzle proof or a controlled causal attribution.
+
+Keep the comparison definition explicit. SA2's separate stricter file-only check
+(same key/index/seed and **every recorded request field except `ms`, including
+score**, old time positive) has **2,122 pairs**, median ratio **1.1240**; its five
+cell cohorts respectively have **29/15/5/18/8 pairs**, medians
+**6.5530 / 4.7940 / 4.3160 / 2.6429 / 2.2272**. Do not silently combine these
+cohort definitions or present the stricter check as reproduction of SA1's exact
+filter. MS18d retains/reconciles the pair-selection rules, keys, counts and source
+identities in its existing cost analysis. This does **not** hold publication or
+authorize another timing campaign/tooling class; existing GP/profile bounds and
+targets remain. No environment normalization of GQ follows.
+
+### Orchestrator TSV disclosure
+
+The orchestrator reports that a `node -` TSV script used `process.argv[1]` rather
+than the supplied output argument. It wrote a **26,231-byte** file named `-` under
+`evidence\MS18c\` at **05:31:53 (+07:00)**, after GQ and outside `runs\` and
+`qualification\`. At about **05:52** it was moved to:
+
+`C:\Users\ledat\.copilot\session-state\c2f29688-8568-4f25-bace-e644d381e5f9\files\ms18c-gq-cell-log.tsv`
+
+No GQ evidence file was touched. Both reviewers had used the primary records when
+that stated path was unavailable. SA2 subsequently verified the moved file:
+**135 rows**, SHA-256
+**`09b83de1b174ac5f9e7504bd1b03ef5bd9961d96063d156a99a20add05d98148`**;
+keys, counters, verdicts, counts and paths match the receipts, and times match their
+display rounding. It is a derived convenience log, not full-precision timing authority.
+Copy/verify it into **`evidence\MS18c\gq-cell-log.tsv`** during closeout, outside the
+frozen trees; preserve its provenance. Do not rename/move any primary run evidence.
+
+### Combined continuation sequence — exact paths and commit ownership
+
+**All top-level Node commands and all timed continuation work use
+`Invoke-Dv3Node`, including file-only Node merge/validation/inventory commands.**
+Use ordinary **<=450 s projected / 540 s hard** protection, the shared slot and
+existing non-GQ readiness/spacing rules. No unlocked sub-ten-second Node exception
+in this continuation and no use of the long GQ supervisor for manual/E/GH/quick/GP.
+File-only PowerShell hashing/copying is allowed; its outputs still obey the freeze.
+This is the local Windows invocation rule; CI retains its existing platform,
+runners and workflow limits. The GQ environment permission is not a GP timing waiver.
+
+1. **Freeze first, before any merge or publication edit.** Inventory **every file**
+   (including hidden files, journals, receipts, held attempts, status/logs and
+   `last-release.txt`) recursively under
+   `docs\difficulty-v3\evidence\MS18c\runs\` and `...\qualification\`.
+   Write the complete sorted repository-relative SHA-256 inventory once to
+   **`docs\difficulty-v3\evidence\MS18c\outputs-sha256-gq.txt`**, outside both trees.
+   Record file count/bytes and verify both file-set equality and every hash.
+   If the inventory already exists, verify it, never overwrite it to conceal a drift.
+   Thereafter **no file under either tree is edited, moved, added or removed**.
+   Exclude them from formatters, status refreshes and helper reruns. Preserve the
+   original preflight and s3b helper/evidence inventories too. New reports, TSV copy,
+   merge output and closure evidence belong outside those frozen trees.
+2. **Official merge, still on sources `0ca29eaeebc295b6`.** Re-verify the frozen
+   inputs, then run `qualify.js --merge=<qualification folder> --jobs=4`.
+   The one authoritative output pair is:
+   - **`docs\difficulty-v3\evidence\MS18c\merge\qualification-v3.json`**
+   - **`docs\difficulty-v3\evidence\MS18c\merge\table.md`**
+
+   This replaces the earlier top-level `qualification-v3.json` / evidence-root
+   `table.md` examples; create no competing alias. Write the command transcript,
+   validation and hashes under `merge\` as separate sidecars. Require **exit 0 AND
+   `totals.invalid === 0`**, all 135 keys exactly once, full per-request validation
+   (no `valid:false`, non-error outcomes valid/solved, exactly the **27 documented
+   `budget.exceeded` errors**) and every verdict/summary equal to its receipt.
+   Inspect correctness warnings explicitly; any correctness warning or unexpected
+   mismatch means **STOP**. A raw hidden verdict or those retained timeouts is not
+   such a failure. Re-verify the complete GQ inventory after the merge.
+3. **STOP for orchestrator checkpoint A: pre-publication commit.** The developer
+   submits an explicit file list and verification; **the orchestrator stages and
+   commits**, never the developer. Include the GQ evidence/inventories, MS18c helpers
+   and their frozen revisions, the eight prepared compatibility edits, v2 archive/
+   receipt, derived log/disclosures and checked merge record. Include any necessary
+   explanatory closeout evidence, but **no support-array edit or live-table change**.
+   Source bytes must still give `0ca29eaeebc295b6`; archive and raw records retain
+   their original bytes/metadata. Record the measured identity as **`ed2fe50c`,
+   dirty**, not as checkpoint A. The orchestrator records the actual A commit ID
+   and explicitly releases publication.
+4. **Publication is atomic in orchestrator checkpoint B.** The developer prepares:
+   - the **15 desired `difficultySupport` lists**, exactly the accepted 79 cells in
+     global level order, including S-OD7 withholding; unchanged lists need no
+     artificial text edit;
+   - **`docs/difficulty-rating/qualification.md`**, composed from the checked
+     merged table, not a blind table-body overwrite.
+
+   The live report states the unchanged protocol, **host-active—not strict-quiet—
+   environment**, CPU/memory/OS/Node/jobs, measured and publication **source**
+   identities, all outcomes/timeouts, S-OD7's separate product restriction and
+   **all 39 removals**, plus the two close-miss notes. Preserve the exact
+   support-array-only engine diff from A and compute the publication identity
+   after those array edits. No solver/default/weight/limit/protocol change is
+   part of this exception; never change old shard hashes or rerun the source-checking
+   merger against newly published arrays to retag the measurement.
+
+   **STOP for the orchestrator to inspect and commit B.** B contains **only the
+   support-array diff and the live report, together**. This reconciles "publish
+   offers and support arrays together" with the two-commit split: A publishes
+   neither; B changes both in one commit. No unrelated closure edit enters B.
+   Record its actual commit ID in subsequent handoff evidence. A/B are provenance
+   checkpoints, not final task acceptance, deployment or permission to start MS18d.
+5. **Compatibility and MS05b3 population closure.** Audit every level/selector
+   affected by the new offers before claiming publication accepted. Map old and
+   new public manual populations, fixed diagnostic populations, counts and seed
+   recipes explicitly. Standard public generation uses published offers and retains
+   unsupported-level refusal coverage. Fixed diagnostic requests are not pruned,
+   normalized to another level, re-indexed or exposed in public menus.
+
+   In particular, Greater-Than's current nine-level assertions at
+   **`generator\tests\manual\greater-than.test.js:782,805`**, registration at
+   **`:950`** and lazy corpus at **`:199`** need publication compatibility.
+   Locate by quoted assertion/function if lines move. Filtering supported levels
+   must **not compact `100*(originalLevelIndex+1)+i` seeds**. Apply the same
+   public-manual policy to Normal's CV6 as to every other hidden cell; no special
+   Normal skip/waiver or 700 ms budget change. Audit other variant-specific
+   hard-coded lists too; do not leave MS18e to discover unsupported-level failures.
+   Preserve invariant/hit/time assertions, counts within retained populations,
+   fixed synthetic/diagnostic cases and original seed derivation.
+
+   Keep and verify all fixed diagnostic requests with restoration in `finally`:
+   **mega16 Nightmare 478576959**, **mega16 Hell 1 2422420669**,
+   **classic9 Hell 1 seed 3** and **Greater-Than Normal seed 4**. Preserve their
+   assertions and existing tiers/timeouts. The current `variants.test.js`
+   `realResult` guard is the correct kind of compatibility change; it is not
+   permission to omit its now-hidden requests. Retain the quick replay, Player
+   result and stored-request initial-notification checks in both languages.
+6. **Run the complete manual `variants.test.js` suite, then finish final gates.**
+   This continuation explicitly authorizes **all of `--suite=variants`**, not
+   merely its two fixed replay requests, and is the narrow AGENTS heavy-test
+   exception. It does **not** authorize `--all`, a blanket `--manual`, browser runs
+   or the rest of final GD/deep. Inventory the full selection after publication and
+   audit it through disjoint **whole-test** shards, every selected test accounted
+   for once, each preflighted within ordinary 450/540 protection through
+   `Invoke-Dv3Node`. Keep selected/result IDs, actual exits and source identities
+   under **`evidence\MS18c\closure\manual-variants\`**. Do not introduce skips,
+   shorten corpora, split a request/compound assertion, or use the GQ deadline.
+   An inadmissible or failed shard keeps its real status and named S-OD4 disposition;
+   never claim omitted coverage or a failed gate passed. An inventory or an
+   unexecuted gap does not satisfy complete-suite execution; unresolved gaps are
+   explicit unmet coverage in the final review, not a silent handoff/deferment.
+
+   Complete the existing E route **5 wires -> 14 analyses -> 520 hashes**, all
+   merge-checks and **all-40 GH check-only**; no expected-hash/help/fixture rewrite.
+   Finish bilingual guides/designs, actual counts, population dispositions and
+   fingerprinted inputs **before the final evidence that depends on them**.
+   Then both complete bounded quick sets, unchanged CI group/tier/factor rules,
+   measured projection updates by the existing rule, final CI metadata and matching-
+   head CI. If guides/tests change after a manual/quick/E run, replace affected
+   evidence or prove compatibility by the existing exact-diff rules; no retagging.
+   Full remaining GD/deep and the three MS07f `perf` ratio cases remain MS18e;
+   it reconciles this complete `variants` coverage and its fixed replay case by
+   final-source identity instead of blindly repeating unchanged expensive work.
+
+   Any unexpected output change means **STOP and QUESTION before any corrective
+   source/test/fixture/doc/canonical write, accepting the changed output or
+   continuing dependent publication**. Preserving the raw failure output/logs is
+   still required; do not suppress a failure or adjust a threshold/fixture to make
+   it pass. Correctness/evidence corruption or a change
+   to a recorded decision retains its existing stop. Availability/cost findings
+   keep named numbers and owners under S-OD4.
+7. **Close items and STOP for SA1 final review.** Supply the complete item register:
+   S-AV01 **not offered**; S-AV05/06 **S-OD7**; S-AV27's final-GQ gap **closed**;
+   IR17 **carried**; **MS18c-GQ-ENGINE-COST open to MS18d**; all other inherited
+   findings retain evidence and dispositions. Re-verify `outputs-sha256-gq.txt`
+   and the v2 archive, report the actual A/B commit IDs, measured/publication/final
+   identities, whole-suite coverage, E/GH/quick/CI results and disclosures.
+   The owner report goes **through the orchestrator**; do not ask about ordinary
+   hidden/close-miss verdicts or reopen Fable's untriggered Normal choice.
+
+   **All implementation/closure commits remain orchestrator-owned.** Additional
+   closure commit(s) may hold the coupled manual/test/docs changes and new evidence
+   after B, kept separate from B's support/report-only diff; no frozen GQ file
+   changes. These checkpoint commits do not check off MS18c. Final SA1 review,
+   matching-head CI and orchestrator acceptance must complete before MS18d starts.
+   SA2's current and later task-pack commits contain **pack files only**.
+
+## Historical Stage 2 binding and convergence
 
 The Stage 1 developer finished and stopped at **`42e0d239`**. Both analysts
 independently checked the 135 rows, identities and arithmetic, and reproduced the
@@ -685,10 +971,11 @@ is blocked** by the gap; it is not a hidden qualification verdict.
   figure is still historical planning context, not a promised total or per-command
   timeout: sum the actual approved projections plus gaps/waits and report unknowns.
 
-### Exact Stage 3 preparation release text
+### Historical Stage 3 preparation release text
 
-For the orchestrator to relay **only after SA1's final AGREE on this convergence**;
-this text in the pack is not itself a release:
+This was the preparation release, not the current continuation. Its gates and
+payloads are now historical; **do not relay it to restart the completed GQ set**.
+The post-GQ continuation above requires its own final AGREE and orchestrator release:
 
 > Assign epoch `MS18c-GQ-20261118-01` and release MS18c Stage 3 preparation only
 > against the committed approved-ceilings manifest. Complete unhashed compatibility
@@ -952,7 +1239,11 @@ Reconcile all inherited availability items (including S-OD7's Killer disposition
 Nightmare/hell1) with final verdicts. A hidden verdict needs no calibration to be legitimate.
 Route remaining cost findings to MS18d; include the complete item list for MS18e.
 
-**Q-MS07e-2 / S-AV27 — six historically unexecuted cells.** MS07e's section 4
+**Q-MS07e-2 / S-AV27 — final gap closed; historical route retained.** All six
+now have complete, accepted MS18c records and hidden-on-time verdicts. The serial
+second-round behavior and the old checkpoint's incompleteness remain facts, not
+repaired history. The following explains the route that was approved and executed;
+it is not a request for another run. MS07e's section 4
 left mega12/hell1 (556 s), mega16/nightmare (1,246 s), mega16/hell1 (1,808 s),
 greaterThan/expert (919 s), greaterThan/hell1 (3,957 s) and butterfly/hell1 (4,032 s)
 unexecuted; those are that source's projections, not measured qualification verdicts.
@@ -972,8 +1263,15 @@ and honest-gap disposition are unchanged.
 
 ### CV6-05 — the three fixed S-AV01 endings, before MS18d timing
 
+**Current ending:** the complete accepted final set hides Greater-Than Normal:
+40/40 hits, p95 **10,192.4051 ms > 10,000 ms**. S-AV01 therefore closes **"not offered"**.
+The Fable trigger is **not met**. No separate Normal CV6 run/budget change is assigned
+by this continuation; its public-manual case receives the same audited population
+treatment as every hidden cell. Keep Greater-Than Normal seed 4 as a fixed diagnostic.
+The alternatives below remain the recorded decision framework, not open choices.
+
 The sign pool was measured and set aside; Greater-Than uses its restored first-allowed sign
-pass. S-AV01 enters final work open at 5,209 ms against 1,400 ms on CV6's seeds and 10.6 s p95
+pass. S-AV01 entered final work open at 5,209 ms against 1,400 ms on CV6's seeds and 10.6 s p95
 on 7000-7039. These are historical cohorts, not qualification verdicts. Normal's CV6 base
 remains 700 ms and GP rules stay unchanged until the specific decision below.
 
@@ -1003,13 +1301,14 @@ retained as history. Any later regression has its own originating task/source an
 
 ### Publication and diagnostic compatibility
 
-**Freeze and directory discipline.** Complete the assigned compatibility code/tests,
-locale bytes and included-source formatting before qualification. Record the qualifier's
-own source/tool/attempt-policy identities and the separate quick/E identities.
-Keep only completed GQ cell JSONs in `evidence/MS18c/qualification/`; plans, readiness,
-attempt logs, failed-run records and the merged JSON belong outside that merge-input
-directory. A held admission is not a cell record. Do not overwrite or retag a failed/
-completed attempt to obtain a new time.
+**Freeze and directory discipline.** The accepted qualification inputs are now
+immutable; the post-GQ inventory is the first continuation action. Record the
+qualifier's measured source/tool/attempt-policy identities separately from publication
+and final quick/E identities. Keep only the once-promoted cell JSON/Markdown pairs in
+`evidence/MS18c/qualification/`; plans, readiness, logs and receipts stay in their
+original locations. The official JSON/Markdown merge pair goes only under
+**`evidence\MS18c\merge\`**. A held admission is not a cell record. Do not overwrite,
+move, format or retag a failed/completed attempt to obtain a new time.
 
 The qualifier's --markdown writes a table BODY. Render to an evidence file, then compose the live
 report with protocol, machine/Node/jobs/source, complete table and removals; do not erase its
@@ -1032,10 +1331,10 @@ correctness conditions before publication. An invalid/non-unique puzzle is a sto
 not an ordinary hidden verdict or an error that withholding a level can excuse.
 Captured generation errors/timeouts still count as misses under the unchanged protocol.
 
-Archive the actual existing v2 live file byte-for-byte, with provenance/hash, before
-replacement. It is the October v2 record (different recorded CPU/Node), not MS07e's
-partial checkpoint or a newly composed v2 table. No archive exists at this base;
-if one exists at dispatch, verify it rather than overwrite history.
+The actual v2 live file was already archived byte-for-byte and verified, with the
+receipt under `evidence\MS18c\v2-archive.md`. Preserve it and its SHA-256 above.
+It is the October v2 record (different recorded CPU/Node), not MS07e's partial
+checkpoint or a newly composed v2 table. Never overwrite this existing archive.
 
 Fixed regression/replay corpora remain all original keys/recipes. MS03a/d tooling temporarily
 enables hidden requested levels. Apply the same diagnostic-only guard around the quick replay
@@ -1091,7 +1390,8 @@ Finish fingerprinted guides/counts/tests before both complete bounded quick sets
 maintain CI projections by the existing rule, save final metadata before the final
 CI check, and verify final fingerprints. Keep source-qualified deep/manual replay
 evidence and reconcile its original requests; no blind expensive duplicate if already
-compatible. Full final GD/other deep ownership remains MS18e. If a necessary support/
+compatible. MS18c now owns the complete bounded `variants` suite; remaining GD/deep
+and final coverage reconciliation remain MS18e. If a necessary support/
 test population compatibility step cannot be completed here, assign it explicitly
 before declaring publication accepted, not as a hidden release debt.
 
@@ -1110,13 +1410,15 @@ population distinct. The final reply and MS18e handoff include:
 | S-AV25 / MS18a classic9 Hell 1 | Current default 0/12 shallow, old MS02 12/12 vacuous. Expected hidden, but final raw GQ decides; no premature verdict. |
 | S-AV14, S-AV15 and MS17b GD gaps | Normal 83/100 failed; Hell 1's 8 tests/20-request batch and confusion's 1 test unexecuted at stated 919/1544 s bounds. GQ does not replace GD; MS18e keeps them. |
 | MS17b-GD21-PROCESS; MS15b-Q6; MS16-Q6 | Preserve unlocked diagnostic/bisect defects, controlled placement coverage and fixed seed-377 lineage/pause disclosure; MS18e audit. |
-| S-AV01 / CV6-05 | Follow the three conditional endings above before GP. No decision on a new Normal budget is made now. |
-| Q-MS07e-2 / S-AV27 | Six older unexecuted cells; one-worker second round and mixed-concurrency timing. Q2 here resolves the route, not their availability. |
+| S-AV01 / CV6-05 | **Closed "not offered"** on the accepted final set; Normal 40/40, p95 10,192.4051 ms > 10,000. No Fable trigger or budget change; keep original failures and the ordinary hidden-cell population treatment. |
+| Q-MS07e-2 / S-AV27 | **Final execution gap closed:** all six ran and are hidden on time. Preserve the old unexecuted checkpoint and unchanged one-worker second round/mixed-concurrency caveat. |
+| IR17 | Classic9 Nightmare stays offered. Carry the old 430.5 s GD warning; 449 s is not a bound. Current-source conservative admission still required; remaining GD belongs to MS18e. |
+| **MS18c-GQ-ENGINE-COST** | Open to MS18d, MS18e audit: retain SA1's approximately 2-6.6x cell cost signals and the explicit, separate strict comparator above. Reconcile cohort definitions/source identities in existing analysis; no new GQ/GP waiver or source tuning. |
 | S-AV28-S-AV30, MS18a `greaterThan:expert:0`, S-AV18-S-AV23 | Prior source/sample-specific availability/target effects; reconcile with final verdicts, retain historical losses, do not generalize a 12-request cohort. |
 | S-AV36-S-AV39, S-AV31/S-AV33/S-AV34 | Construction/seeded/synthetic/repository/whole-generation populations and frozen finder limits remain separate. This task supplies availability, MS18d costs, MS18e audit. |
 | MS15b-GP-J / MS15b-GP-U; S-AV38 | ALS 37-cell record: one full, one pilot-only, 35 unmeasured; distinct from grouped 50-cell incomplete GP. Final GP remains MS18d. |
-| **MS18c-Q1 / MS18c-Q2 / S-OD13** | Owner selects A/B; Stage 1 has stopped and both analysts approve all 135 bindings. The committed manifest, strengthened R monitor, capability proofs, supervisor review and canary pause govern Stage 3. Retain approvals, assumption/bound breaches and gaps for MS18e. |
-| **MS18c-Q3 / S-OD14 recovery** | Owner selects B at 23:05:53 (+07:00). The owner-answer gate is satisfied; actual recovery needs prior joint diagnosis/committed one-use authorization, separate counters, immutable paths and proof no live/complete primary remains. Failed recovery is a permanent gap. |
+| **MS18c-Q1 / MS18c-Q2 / S-OD13** | GQ complete and jointly accepted: 135/135, valid R/monitor bounds, five eligible re-asks, no gap, all raw strict screens failed under the declared host-active policy. Retain the immutable manifest, receipts/journals, source identities and both approvals for MS18e. |
+| **MS18c-Q3 / S-OD14 recovery** | Owner selected B; **no recovery was used** in this complete set. Keep the approved journal/close-out rules as history; no completed record may be relaunched or its counters reset. |
 
 Standing quick cost, earlier resolved decisions and withdrawn S-AV16/S-AV17 findings
 retain their recorded dispositions. Name new actual offer losses, time misses or
@@ -1124,7 +1426,10 @@ unexecuted populations; a named item never substitutes for complete publication.
 
 ## Files to create/modify
 
-- Evidence/MS18c and final qualification JSON under docs/difficulty-v3.
+- New closeout evidence under `docs\difficulty-v3\evidence\MS18c\`, including
+  `outputs-sha256-gq.txt`, the derived TSV copy, `merge\qualification-v3.json` /
+  `merge\table.md`, and `closure\manual-variants\`. No writes in frozen `runs\`,
+  `qualification\`, original preflight or original archived helper/evidence inventories.
 - **Stage 1 only:** the file-only preflight/planner/tests and its outputs at the paths
   above; no source, live runner, qualification or publication changes.
 - **Stage 3 after joint binding and explicit release under S-OD13/S-OD14:** task-owned admitted-launch, validation/reporting
@@ -1132,7 +1437,8 @@ unexecuted populations; a named item never substitutes for complete publication.
   Do not copy MS18b's cap/window attempt key for GQ:
   use variant/level and the frozen qualifier/source/protocol/jobs/seed/attempt-policy
   identity, with separate attempts only before any payload start.
-- New `docs/difficulty-v3/qualification-v2.md`; live qualification.md; notes with every removed level.
+- Preserve the existing `docs/difficulty-v3/qualification-v2.md`; update live
+  qualification.md and notes with every removed level under the A/B commit split.
 - Only `difficultySupport` arrays in `generator/js/variants/*.js`.
 - `generator/js/ui/store.js`, `controls.js` and app startup only as needed for the stored-request
   correction note; existing EN/VI keys or both languages if a new message is necessary. No generation policy.
@@ -1141,6 +1447,11 @@ unexecuted populations; a named item never substitutes for complete publication.
   tests. Only hidden-level diagnostic compatibility; S-OD8's requests/assertions/tier stay intact.
   Enumerate directly affected quick/manual offer assertions/populations before editing; preserve original
   diagnostic requests and public refusal coverage. Existing reader path remains.
+- `generator/tests/manual/greater-than.test.js` and other variant-specific manual
+  files identified by the MS05b3 audit: only coupled published-support assertions,
+  public-population registration and seed-preserving compatibility. No altered
+  invariant/hit/time threshold, retained-cell count, fixed diagnostic recipe or
+  Normal `BUDGET_MS` change.
 - Generator design 5.1/15.4 and both user/developer guides in EN/VI: actual availability,
   qualifications versus S-OD7 withholding, relevant behavior and current test counts.
 - Fresh E records and check-only GH/quick/CI evidence as above; no canonical expectation
@@ -1153,40 +1464,20 @@ unexecuted populations; a named item never substitutes for complete publication.
 
 ## Implementation steps
 
-0. **Stage 1 is complete and stopped. The published Stage 2 binding belongs jointly
-   to SA1/SA2. S-OD14 satisfies the Q3 owner-answer gate, not the explicit
-   preparation/canary/continuation releases that govern steps 1-6 below.**
-   No numerical ceiling is chosen by the developer. Read back
-   each phase plan, confirm approved inputs/slot and format before freezes.
-1. Finish the narrowly coupled compatibility logic/tests on controlled hidden-level fixtures, without
-   pruning live offers. Then freeze candidate/defaults and archive v2 before any live-table change.
-2. Implement/freeze supervision and pass the focused gates and stand-in proofs.
-   Stop for SA1 supervisor review, then the orchestrator's canary/window GO.
-   Run `classic4/veryEasy` once and stop for SA1's file-only acceptance; only then
-   collect the remaining 134 under the approved bounded route. Preflight every
-   admission, merge/check before support publication, and require zero invalid puzzles.
-   Distinguish protocol-proved hidden verdicts from failures, holds and unexecuted cells.
-3. Update live report and exact matching product support arrays together; record every
-   addition/removal and S-OD7's separate Killer withholding without altering the raw GQ verdicts.
-   Audit MS05b3's manual level/selector population against those offers now. Some variant suites
-   have fixed `LEVELS` arrays; requesting a newly hidden level through the normal pipeline throws
-   `difficulty.unsupportedLevel`. Identify any such test/publication compatibility work before
-   claiming publication accepted and assign a bounded follow-up through the orchestrator.
-   Do not leave MS18e to discover it, silently drop a selector, enable hidden production requests,
-   compact surviving seed indexes, or present a zero-test result as passed. This audit does not
-   authorize weakening an I5/hit threshold; record the explicit qualification-driven population
-   disposition and keep the independent fixed GG/GR diagnostic populations unchanged.
-4. Preserve fixed diagnostic recipes after hiding levels and restore arrays even on failure.
-   Verify all three golden consumers, mega deep requests, every affected fixed quick request
-   and MS07f's two fixed manual mega16 replays. Their original requests/assertions remain.
-   Keep diagnostic generation separate from public unsupported-level refusal; no lost request
-   or reindexed manual seed is disguised as a qualification-driven test update.
-   Verify stored hidden-request nearest-level selection and its visible initial note in both languages.
-5. Verify publication-only engine diff and resolve S-AV01 by the three CV6-05 endings above.
-   Hand MS18d the offered/performance manifest, final-source CV6 evidence and any recorded
-   same-step Normal contract change before its final timing runs.
-6. Complete source-aware E/GH, both final quick sets, final CI metadata/check and the
-   complete item/owner-decision record. SA1 reviews before orchestrator acceptance.
+The **combined continuation sequence above is authoritative**; GQ is finished,
+not work to repeat. In order:
+
+1. Freeze every existing run/qualification file before the official merge.
+2. Merge to the exact `evidence\MS18c\merge\` pair and validate exit, zero invalid,
+   all request outcomes and every receipt; STOP for orchestrator checkpoint A.
+3. Prepare the support-array-only diff and full live report together; STOP for
+   orchestrator checkpoint B, with measured/publication identities kept distinct.
+4. Close the MS05b3 public/diagnostic population audit, preserving all fixed requests
+   and seed indices; prepare final fingerprinted guides/counts/tests.
+5. Account for the entire bounded `variants` manual suite; complete final-source
+   E/GH, both complete bounded quick sets, CI metadata/projections and matching-head CI.
+6. Deliver all item dispositions, A/B provenance and unchanged evidence hashes;
+   STOP for SA1 final review and orchestrator acceptance. Developer Git writes remain forbidden.
 
 ## Acceptance criteria — Business
 
@@ -1207,33 +1498,30 @@ unexecuted populations; a named item never substitutes for complete publication.
 | MS18c-T06 | Pre-publication checked merge has zero invalid puzzles; source/publication compatibility proved; final source-aware E/GH/quick/CI closure and SA1 review complete |
 | MS18c-T07 | Bounded detached supervisor/kill-on-close containment and adoption proven; committed manifest/payload identities enforced; Q1/gaps/T/O/window whitelist honored; no implicit relaunch |
 | MS18c-T08 | Recovery only by committed prior joint authorization: one slot 2, separate bounded admissions, immutable paths and complete-record/live-run refusal; failed recovery remains a permanent gap |
+| MS18c-T09 | Post-GQ inventory covers every frozen run/qualification file; exact merge output pair passes all receipt/request checks; separate orchestrator A/B commits preserve measured identity and publish arrays/report atomically |
+| MS18c-T10 | Complete bounded final `variants` manual-suite accounting and MS05b3 population audit; fixed diagnostic seeds/tiers/assertions preserved; authoritative heartbeat semantics, TSV disclosure and all item dispositions recorded |
 
 ## Test plan and gates
 
-Generator payload examples, **not launch authorization**: only after Stage 2 binding
-approval under S-OD13/S-OD14, tested Stage 3 supervision and explicit release:
+**Current continuation only, after final AGREE/release and the GQ file freeze.**
+No new **GQ** generation/probe command is authorized: all 135 GQ cells already exist.
+From Generator, the exact official merge command is:
 
 ```powershell
-node tests\qualify.js --variant=classic4 --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS18c\runs\classic4-veryEasy\payload-1\admission-1\qualifier.json --markdown=..\docs\difficulty-v3\evidence\MS18c\runs\classic4-veryEasy\payload-1\admission-1\qualifier.md
-node tests\qualify.js --merge=..\docs\difficulty-v3\evidence\MS18c\qualification --jobs=4 --json=..\docs\difficulty-v3\qualification-v3.json --markdown=..\docs\difficulty-v3\evidence\MS18c\table.md
+Set-Location Q:\git\sudoku\generator
+. .\tests\artifacts\difficulty-v3\MS18c\invoke-dv3node.ps1
+Invoke-Dv3Node -Task MS18c-merge -NodeArgs @('tests\qualify.js', '--merge=..\docs\difficulty-v3\evidence\MS18c\qualification', '--jobs=4', '--json=..\docs\difficulty-v3\evidence\MS18c\merge\qualification-v3.json', '--markdown=..\docs\difficulty-v3\evidence\MS18c\merge\table.md')
 ```
 
-The first line illustrates the primary/admission-1 payload built by the approved
-supervisor, not a direct launch bypass. The merge reads only the once-promoted,
-complete checked cell records; attempt paths and receipts remain outside its folder.
+The merge reads the frozen once-promoted cells; receipts/attempts and output are
+outside its input folder. A command exit 0 does not waive the explicit checks above.
+The former Normal CV6 command is **not scheduled**: the accepted Normal verdict is
+hidden, so CV6-05's qualification prerequisite did not occur.
 
-**Conditional Normal CV6 only (CV6-05):** if Normal qualifies and no compatible final-source
-record exists, preflight the exact selector with `--list-tests` (selected total 1), then use
-the current-source projection and existing lock/450 s planning/540 s ceiling rules:
-
-```powershell
-Invoke-Dv3Node -Task MS18c -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=greater-than','--filter=> normal: 20 puzzles > CV6:','--verbose','--results=..\docs\difficulty-v3\evidence\MS18c\cv6\normal-results.json')
-```
-
-Keep all 20 requests and original seeds; `-AllowExit1` records the expected timing failure,
-not acceptance. No whole Greater-Than corpus or other CV6/I5 selector is added here.
-Hand this record and its identity to MS18e for coverage reconciliation; any later changed
-contract/fingerprint requires the normal compatibility/replacement handling.
+Preflight the full `variants` inventory and every disjoint shard through
+`Invoke-Dv3Node`; keep outputs in `closure\manual-variants\`. Full-suite coverage
+does not authorize an unbounded whole-suite invocation. No other manual suite's
+full generation sweep is added here by a population-compatibility edit.
 
 GQ jobs 4; the staged plan above governs projections, approvals and actual waits.
 GQ uses **only its committed, jointly approved structural class binding**, never
@@ -1244,20 +1532,23 @@ A slow cell without an approved bounded route is a named
 availability item; continue safe cells and independent audit work, never invent a hidden verdict
 or a new tooling class. **Do not publish an incomplete matrix.** The final record must say if
 publication remains unready; changing the qualification/publication rule requires the owner.
-Generator candidate selectors: `--suite=variants-registry,store,controls,smoke,replay,steps,player,help,ui-contract,qualification-records`;
-both quick sets. Test restoration after diagnostic failure and unchanged request identity for a
-temporarily hidden G04 request. Final full GD is MS18e; no hash rewrite just to hide a support error.
+Generator candidate focused selectors: `--suite=variants-registry,store,controls,smoke,replay,steps,player,help,ui-contract,qualification-records`;
+all run through `Invoke-Dv3Node`, as do both complete quick sets and the complete
+bounded manual `variants` coverage. Test restoration after diagnostic failure and unchanged request identity for a
+temporarily hidden G04 request. Remaining final GD is MS18e; no hash rewrite just to hide a support error.
 Run the stored-load notification through actual startup/control initialization, not only
 `sanitizeWithNotes`. Preserve r5p's explicit 8 and default-mode migration behavior.
 
 ## Definition of done & handoff
 
-Give MS18d/e full qualification/provenance, offered lists, v2 archive, compatibility evidence,
+Give MS18d/e the checked merge at `evidence\MS18c\merge\qualification-v3.json`,
+the GQ inventory and A/B provenance, offered lists, v2 archive, compatibility evidence,
 the Q3 answer and its actual execution disposition, and
-the cumulative numerical item list, including S-AV01's fixed ending and any decided Normal
-contract update completed before GP. Include S-OD7's two withheld cells and the disposition
-of each Q-MS07e-2 cell; an unexecuted cell is not a hidden verdict. Hand off the unchanged
-MS07f manual replay selectors and any diagnostic compatibility proof for MS18e's final checks.
+the cumulative numerical item list, including S-AV01 **not offered**, no triggered Normal
+contract update, IR17 and **MS18c-GQ-ENGINE-COST**. Include S-OD7's two withheld cells and the disposition
+of each Q-MS07e-2 cell; an unexecuted cell is not a hidden verdict. Hand off the full
+`variants` inventory/results, unchanged MS07f manual replay selectors and diagnostic
+compatibility proof for MS18e's final checks.
 A correctly hidden large-board cell is a valid result, not a blocker.
 If any variant has no offered level and current UI/registry cannot represent that, report a blocker
 for an assigned compatibility fix; never invent a qualified level.

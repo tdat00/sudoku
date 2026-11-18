@@ -114,7 +114,7 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [ ] | MS18 | MS18a-MS18e | Final evidence (parent) | MS17b | split | Evidence/release | M18 | 43-47 |
 | [x] | MS18a | [MS18a](MS18a-final-matched-soak.md) | Matched final soak | MS17b | S, 25-35 min | Evidence | M18a | 43 |
 | [x] | MS18b | [MS18b](MS18b-recheck-cap-and-window.md) | Cap/window final rechecks | MS18a | S, 25-40 min | Evidence | M18b | 44 |
-| [ ] | MS18c | [MS18c](MS18c-qualify-and-publish-offers.md) | Qualify and publish offers | MS18b; S-OD13/S-OD14; Stage 2 bindings published; staged release, supervisor and canary reviews | M, 35-50 min | Qualification | M18c | 45 |
+| [ ] | MS18c | [MS18c](MS18c-qualify-and-publish-offers.md) | Qualify and publish offers | GQ 135/135 jointly accepted; continuation AGREE/release, frozen merge, orchestrator A/B checkpoints and final closure | M + bounded manual/E/quick/CI | Qualification | M18c | 45 |
 | [ ] | MS18d | [MS18d](MS18d-performance-and-final-hashes.md) | Final GP preflight/performance/hashes | MS18c | M, 40-55 min + GP/GG | Evidence | M18d | 46 |
 | [ ] | MS18e | [MS18e](MS18e-release-evidence-closure.md) | Final correctness/items/workflows and PR CI | MS18d | M, 40-60 min + GD/deep/CI | Release evidence/CI | M18 | 47 |
 
@@ -153,7 +153,8 @@ the fingerprinted source/artifact surface, with no untracked fingerprinted input
 After the developer's report/evidence/notes corrections and SA1's cross-check of these pack
 edits, MS06a captures all 17 cells/204 requests on the restored first-allowed sign pass.
 Its prerequisite is **MS05e closed, set aside, identity proved**, not an accepted pool or a
-passing Normal CV6. S-AV01 remains open under the fixed Q2(a) endings below.
+passing Normal CV6. S-AV01 remained open under Q2(a) at that handoff; the accepted
+MS18c final GQ now closes it **"not offered"**, preserving the historical failures.
 MS06b's pure policy helpers are inactive; its sole production-path edit forwards an explicitly
 present strategy target and is tested for number/null/absence. MS06c1 adds nullable transport
 and typed objectives with unchanged numeric ranking, but draws no target and activates no
@@ -181,7 +182,7 @@ MS14a/MS15a kernels likewise precede their registrations. Final GQ is MS18c,
 after all S3, MS17b and final rechecks MS18b.
 No intermediate pruning. Parent milestones are not additional waves or commits.
 
-**Current serial handoff, 2026-11-18.** MS18b is accepted and committed at **`14d8c903`**
+**Current serial handoff, 2026-11-19.** MS18b is accepted and committed at **`14d8c903`**
 after orchestrator template review, independent derivation of both rules, 24 reproduced
 decisive rows and the passing CI check. **360/360** outcomes, 44 commands, all DIAGNOSTICS
 PASS, 145 reporter checks; R5 **256** reconfirmed (Jigsaw Expert median **1215 -> 1104**),
@@ -192,15 +193,28 @@ M17 remains complete. MS17a (`5b94904`), MS16
 (`d41a6dd`), MS15b (`8b26e83`), MS15a (`b958a58`, SA1 accepted), MS14c (`6a9fbf6`),
 MS14b (`0e3a0c4`), MS13c (`9d58d86`) and resolved JF-02/S-OD12 (A + S0) remain prior
 boundaries. Next: **MS18c -> MS18d -> MS18e**, one developer at a time. **MS18c
-Stage 1 finished and stopped at `42e0d239`; both analysts approve all 135 Stage 2
-bindings.** `MS18c-gq-approved-ceilings.json` contains the separate immutable
-authority; the Stage 1 pending rows/reports stay unchanged. Await **SA1 final
-confirmation of the convergence and the orchestrator's Stage 3 preparation
-release**. Before real GQ: capability/focused gates, SA1 supervisor review, then a
-separate canary/window GO; after `classic4/veryEasy`, stop for SA1's file-only
-acceptance before the other 134. **S-OD14 satisfies Q3's owner-answer gate**, not
-any actual recovery approval. The developer chooses no ceiling, epoch reset or
-recovery authorization. SA1 remains the final cross-reviewer.
+GQ is complete: 135/135, independently SET ACCEPT by both SA1 and SA2.** Measured
+at **`ed2fe50c`, dirty**, sources **`0ca29eaeebc295b6`**: 4,313 outcomes,
+3,783 hits, 503 approximate, **27 budget timeouts**, zero invalid; **79 offered /
+56 hidden**, five eligible ordinal-2 re-asks, no gap/recovery. The 135 receipts and
+960 journal events bind the original manifest; all raw strict screens failed under
+the explicitly declared **host-active** policy. No new GQ or record retagging.
+
+Await **SA1 final AGREE on the leaf's combined continuation and the orchestrator's
+release** to the same developer **`5fe8b2d2`**. First freeze every file under
+`runs\` and `qualification\` to **`outputs-sha256-gq.txt`**. Official merge outputs
+are only **`evidence\MS18c\merge\qualification-v3.json`** and **`merge\table.md`**.
+Require exit 0, explicit zero invalid, the documented per-request errors and
+agreement with all receipts. The **orchestrator**, not the developer, commits
+checkpoint **A** (pre-publication evidence/helpers/compat/v2/merge), then **B**
+(support-array-only diff **and** the live report together); later closure commits
+remain orchestrator-owned. No Git writes by the developer.
+
+The continuation also owns the **complete bounded `variants` manual suite**,
+MS05b3 population audit and fixed diagnostic guards, then final-source E/GH,
+guides/counts, both bounded quick sets, CI and SA1 final review. All Node and timed
+continuation commands use **`Invoke-Dv3Node`**, ordinary **450/540**, not the GQ
+watchdog. Neither A nor B is full MS18c acceptance; MS18d waits for that final closure.
 **MS18a and MS18b receive orchestrator template/contract review; SA1 cross-review is
 at MS18c**, including its now-agreed supervisor and canary checkpoints. A specific unresolved question still
 goes through the orchestrator and the QUESTION pause.
@@ -381,7 +395,8 @@ plus canonical `checkCell` and header/protocol validation.
 Freeze the exact `SOURCE_FILES` declaration and all engine/tool/policy/Node/machine
 inputs before **every admission**, not just the first payload. HEAD remains at
 `42e0d239` or pack-only descendants throughout GQ; authorized unhashed compatibility
-and helper working-tree edits await the normal task acceptance commit. Changes
+and helper working-tree edits remain uncommitted through GQ; the post-GQ A/B
+sequence above governs their later commits. Changes
 to frozen inputs or code commits need re-derived rows and joint reapproval.
 Pin the full host tuple in the manifest: exact .NET StartTime, CIM UTC creation
 to microseconds, PID/parent/executable/CIM name; .NET ProcessName is ignored.
@@ -679,12 +694,12 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 
 | Item | Source-qualified evidence and current disposition | First/final owner |
 |---|---|---|
-| S-AV01 Greater-Than Normal CV6 | **Open, CV6-05 Q2(a).** Restored `f7be90f` source: 5,209 ms p95 against 1,400 ms on seeds 300-319; 10.6 s p95 on 7000-7039. `BUDGET_MS.normal` stays 700 ms and GP rules stay unchanged. These cohorts are not final qualification; the three fixed endings below govern. Origin: CV6-01, 2,035 ms at MS04 | MS07e, then MS18c/MS18d; MS18e audit |
+| S-AV01 Greater-Than Normal CV6 | **Closed "not offered", CV6-05 Q2(a).** Accepted MS18c GQ: 40/40 hits but p95 **10,192.4051 ms > 10,000 ms**. No Fable trigger or Normal-only exception; public-manual population follows every other hidden cell and fixed diagnostic Normal seed 4 remains. `BUDGET_MS.normal` stays 700 ms. Historical `f7be90f` p95 5,209 ms vs 1,400 on seeds 300-319, 10.6 s on 7000-7039, and MS04's 2,035 ms are retained, not relabelled | MS18c publication/population record; MS18d handoff; MS18e audit |
 | S-AV02 mega12 Nightmare | r4 seed 1: 48.202 s against 6 s; seed 3: 47.1 s, shallow at 8 attempts | r5p/r5m update, MS07e, MS18c/MS18d |
 | S-AV03 mega16 Nightmare | r4 quick: 60 s timeouts; seed 3 diagnostic: 310.2 s, exact at attempt 6; app 120 s. **PR-S2 remark:** on the reviewed size-default search, mega16 Nightmare fails the 30 s qualification budget by its work ceiling, not as a tail | r5p/r5m update, MS07e, MS18c/MS18d |
 | S-AV04 samurai Nightmare/G13 | r4: 104.712 s of 120 s, shallow at 8 attempts (history). **MS13c candidate re-measurement, SA1 review 2026-11-17:** the same G13 request (Samurai Nightmare seed 42), accepted MS14a chain engine versus candidate `5EBA1AE5...AC9D1`, about **11.0 -> 94.2 s**; the activation changes the puzzle and attempts (1 -> 2). One wire-request observation, not a population p95: above the 30 s qualification reference and near the 120 s guard for this request, not a final qualification verdict. See S-AV38 for the wider activation cost/partial GP record. | r5p/r6a/MS07e history; MS13c re-measurement; MS18c/MS18d; MS18e audit |
-| S-AV05 Killer Hard | **S-OD7: hidden until later calibration; no in-v3 Killer weight recalibration.** MS07e: 0/14 exact, all in band and shallow, p95 6.6 s; observed hidden. Earlier R5: 0/12 at every setting; MS05b3: 0/20. Owner question Q-MS07e-1 is answered, not pending | Later calibration; MS18c publication, MS18e audit |
-| S-AV06 Killer Expert | **S-OD7: hidden until later calibration; no in-v3 Killer weight recalibration.** MS07e: 1/14 exact, 13 shallow, p95 17.8 s, stopped on time; observed hidden. Earlier R5: 0/12 at every setting. Owner question Q-MS07e-1 is answered, not pending | Later calibration; MS18c publication, MS18e audit |
+| S-AV05 Killer Hard | **S-OD7: hidden until later calibration; no in-v3 Killer weight recalibration.** Final MS18c: **0/14**, hidden on misses; preserve raw verdict and separate owner withholding. MS07e: 0/14 exact, all in band/shallow, p95 6.6 s. Earlier R5: 0/12 at every setting; MS05b3: 0/20. Q-MS07e-1 is answered, not pending | Later calibration; MS18c publication, MS18e audit |
+| S-AV06 Killer Expert | **S-OD7: hidden until later calibration; no in-v3 Killer weight recalibration.** Final MS18c: **2/12**, hidden on time; preserve raw verdict and separate owner withholding. MS07e: 1/14 exact, 13 shallow, p95 17.8 s, stopped on time. Earlier R5: 0/12 at every setting. Q-MS07e-1 is answered, not pending | Later calibration; MS18c publication, MS18e audit |
 | S-AV07 classic9 Nightmare | 2/12 exact at none and 256; S2.2 is expected to add the missing tier | MS07e, MS18c |
 | S-AV08 standing quick cost | **MS07f implemented S-OD8: 296.670 s Generator (3,560 tests; sum of the four group commands), 35.012 s Player (1,807), measured 2026-11-15; within the run-to-run spread of the five-minute mark, no further move approved.** Earlier: S-OD8 approved; implementation is MS07f after MS08a. MS07e: **692.1 s** Generator, **33.5 s** Player; section 9's three ratio tests plus combined replay case cost 392.1 s, but the classic9 request stays quick. No five-minute promise or further move follows. Earlier: **679.4 s** at MS07d (+46 merger tests). Earlier: **684.3 s** at MS07c (C = 4 makes the Nightmare work smaller). Earlier: **744.9 s** at MS07b (+7.9 % over MS07a's 690.2 s; G14 now rates `nishioDeep`). Earlier: **690.7 s** at MS06c2 (MS06b 652.9 s, MS06c1 650.7 s; the activation adds about 40 s: `pipeline` +35.8 s in four puzzle-generating tests, +15-21 %; `mega` +40 %; IR47). Earlier: **648.0 s**, MS05r6c Generator quick baseline retained by the CV6-05 restoration/identity proof. Rejected pool: 726.2 s, historical only. Earlier b1's 713.8 s was partial, not a complete baseline | MS07f; MS18e final cost/tier audit |
 | S-AV16 Greater-Than Nightmare CV6 | **Withdrawn as a current-source item (CV6-05).** Rejected pool p95 40,396 ms against 20,000 ms remains historical evidence. Restored source returns to the observed 19,192 ms pass; see the margin note below | History retained; MS18e audit, not an open pool regression |
@@ -698,7 +713,9 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | S-AV24 mega Hell 1 request time | MS07b (14 records, final source): mega12 29.3-34.4 s, mega16 99.9-123.3 s; 120 s guard exceeded by 1 of 7 mega16; 30 s qualification budget exceeded by mega12 6 of 7 and mega16 7 of 7 | MS07e, MS18c/MS18d |
 | S-AV25 Hell 1 exactness | MS07b: 0 of 14 mega Hell 1 records and 0 of 2 classic9 pilot requests exact (in band, shallow); SA1 expects the classic9 Hell 1 GD batch (at least 90 % exact) to fail at MS07e | MS07e, MS18c |
 | S-AV26 classic9 Hell 1 cost (indication) | MS07b pilot: about 5 s per request against the 2.5 s design budget; two requests only; related to S-AV19 | MS07e, MS18d |
-| S-AV27 qualification second round on one worker | MS07d (`round2-workers.txt`): in a one-level invocation the 60 second-round requests run on the single worker that finished round 1 (max in flight 1 for jobs 1/2/4/8, against 1/2/4/8 in round 1): about 60 request times of wall instead of about 15 per expanding cell; verdicts and the early-stop proof unchanged; scheduler untouched. MS07e left six cells unexecuted above the 450 s projection limit; Q-MS07e-2 below routes them to MS18c without a rule change. The p95 of an expanded cell mixes one-worker and up-to-four-worker timings: not comparable across cells, `--jobs` values or jobs-1 GP timings, and not a protected timing measurement | MS18c (six cells/current-source bounds); timing caveat to MS18d/MS18e |
+| S-AV27 qualification second round on one worker | **Final execution gap closed by MS18c under S-OD13:** all six old unexecuted cells ran and are hidden on time; all 135 records accepted. The scheduler is unchanged: MS07d's `round2-workers.txt` still establishes the possible 60 serial second-round requests. Final expansions were hyper/Expert 53, flower/Nightmare 50 and wordoku/Normal 46 requests. Preserve MS07e's incomplete old-source checkpoint and mixed-concurrency caveat; GQ is not jobs-1 GP timing and receives no time normalization | Closed final-GQ gap; timing/cost caveat to MS18d, MS18e audit |
+| MS18c-GQ-ENGINE-COST | **Open.** SA1 reports matched recorded-outcome median new/old time ratio about **1.13 overall**, with about **6.6x mega16/Expert, 5.1x jigsaw9/Expert, 4.3x sohei/Master, 2.7x mega12/Expert, 2.1x diagonalX/Expert**. The leaf separately records SA2's strictly defined 2,122-pair comparator (median 1.1240) and per-cell counts/ratios; do not silently combine cohorts. Preserve/reconcile definitions, keys and source identities within existing MS18d analysis. Engine-cost signal, not controlled causal attribution, a GP result or permission to normalize GQ/retune/rerun | MS18d; MS18e audit |
+| IR17 final carry | Classic9 Nightmare remains offered. The older `00647f9` GD batch cost **430.5 s**; **449 s is not a reusable bound**. Require current-source conservative whole-command admission under unchanged 450/540 protection, with honest named incomplete coverage if not admissible | MS18c handoff; remaining GD and final audit MS18e |
 | S-AV28 Easy availability | MS07e GQ: diagonalX Easy 28/40, hyper 29/40, samurai 10/22, sohei 4/18, butterfly 1/15, flower 0/14 (current offers lose Easy on six variants); 40/40 elsewhere | MS18c |
 | S-AV29 Greater-Than Master time | MS07e GQ: 40/40 hits but p95 14.5 s over the 10 s budget (heavy tail; the cell took 35.3 s against a 27.5 s projection): hidden by time | MS18c, MS18d |
 | S-AV30 mid-level shortfalls | MS07e GQ: flower Expert 23/35, flower Master 29/40, wordoku Normal 35/46; classic9 Normal and mega16 Expert at exactly 36/40 | MS18c |
@@ -773,9 +790,16 @@ The old six observations remain historical; no outcome is relabelled. The Stage 
 preflight and Stage 2 joint approval must precede any GQ-specific higher limit;
 no early-stop credit, scheduler change or incomplete publication is authorized.
 
-**CV6-05: S-AV01's three fixed endings.** Nobody now edits, skips or wraps the Normal CV6
-assertion. It is manual, outside the quick set and CI, and its honest red outcome blocks no
-task. Keep Greater-Than Normal offered until final qualification; no interim pruning.
+**Current CV6-05 ending:** MS18c's accepted Normal cell is hidden (40/40,
+p95 10,192.4051 ms against 10,000), so S-AV01 is **not offered**. The Fable trigger
+did not occur. MS18c's population audit applies the same public-manual treatment as
+to every hidden cell; no Normal-only waiver, budget change or diagnostic seed loss.
+
+**CV6-05: S-AV01's three fixed endings (decision framework).** The Normal CV6
+assertion remains manual, outside quick/CI, with no rewritten threshold or wrapper
+to conceal an old failure. Normal was kept offered until final qualification,
+without interim pruning; the current failed-GQ branch now authorizes ordinary
+publication/population treatment after the checked merge.
 
 | Final outcome | Binding S-AV01 disposition |
 |---|---|
@@ -1159,15 +1183,15 @@ not retroactive extension of MS18a's ruling. Read the MS18b leaf before running;
 raw numerical screen below remains recorded, not silently turned into a quiet pass.
 The later GQ/GP readiness contract still needs its own dispatch disposition.
 
-**MS18c / S-OD13:** Q1-A explicitly approves **`MS18c-GQ-host-active`**, raw p95
-binding. Stage 1 has stopped and all 135 Stage 2 bindings are approved.
-Stage 3 needs the unchanged committed manifest, final confirmation and explicit
-staged releases/reviews (supervisor, then one original-cell canary); **S-OD14**
-has satisfied Q3's owner-answer gate but pre-approves no individual recovery.
-The approved detached GQ supervisor owns admission/gaps/T/O and job-contained workers;
-agent replacement adopts it rather than relaunching. The leaf's GQ-window whitelist,
-monitor and immutable-manifest checks bind. The shared helper below remains unchanged
-at 540 s for non-GQ work; no global timeout or product-budget increase follows.
+**MS18c / S-OD13 measurement history:** the declared **`MS18c-GQ-host-active`**
+policy and immutable class/monitor contract governed the now-complete, jointly
+accepted 135-cell set. All raw strict screens failed; no time was adjusted.
+Five eligible re-asks were retained and **no S-OD14 recovery was used**.
+Preserve all journals/receipts and supervisor evidence; no new GQ run follows.
+The current continuation freezes those files, then uses **`Invoke-Dv3Node` for
+all Node and timed work**, ordinary 450/540, under the leaf's A/B checkpoints.
+The shared helper below remains unchanged; no global timeout, product-budget or
+GP timing waiver follows from the GQ permission.
 
 - Obtain the normal shared slot/mutex and establish that no foreign timing-lock holder or
   known foreign CPU-heavy job is active. Never delete another lock, kill another session's
@@ -1387,7 +1411,7 @@ It does not broaden output-change, finder-activation or fixture-update authority
 | GR | Same behavior owners, plus MS05a, MS06c1, MS17a and MS17b; source-changed inactive tasks under the rule above | After r6a: complete E five-wire/fourteen-analysis record/merge/write/check; G09-G13 wires, G01-G14 analyses. Inactive closure records/checks affected complete families without canonical updates. MS17a's UI edit needed fresh 5+14 records, values unchanged. MS17b expects five wire producer-version changes 2 -> 3: explain/publish/check the complete family before analyses. Analyses are freshly recorded but expected unchanged; no version field is projected. Earlier four-wire evidence stays historical. r6b checks current merges. MS06c1 permits only target metadata, not changed puzzles/ratings/old operations. |
 | GH | MS04 if affected; MS07b/c, all introducing/enhanced-proof tasks through MS16; inactive check-only closure under IR72; MS17a/MS17b all-40 check-only | B bounded real sources, E write/check for every affected ID. Inactive kernels/tests-only tasks run complete GH --check, with no discovery or write; MS14c changes no finder. MS17a/MS17b retain the catalogue and own only their current all-ID checks, no acquisition or refresh. |
 | GQ-first | MS07e, merger prepared in MS07d | All Q135 cells, `--jobs=4`, per-cell JSON/markdown, checked complete merge; checkpoint-only report, no support changes. |
-| GD | MS04; MS05r6b; MS07e; MS17b; MS18e | Bounded difficulty coverage below; historical MS04 also ran killer/greater-than. MS05r2/MS07d use only fast fake-worker `--filter="qualification:"`. Post-selection b3 owns early I5/CV3/refusals; r6b closes its named outstanding CV3 list. MS18e owns full final GD; MS14c is corpus-free. MS05e's GD-CV6 experiment is closed/set aside; MS18c's conditional Normal CV6 below supplies the CV6-05 decision before GP. |
+| GD | MS04; MS05r6b; MS07e; MS17b; MS18c `variants`; MS18e remainder/audit | Bounded difficulty coverage below; historical MS04 also ran killer/greater-than. MS05r2/MS07d use only fast fake-worker `--filter="qualification:"`. Post-selection b3 owns early I5/CV3/refusals; r6b closes its named outstanding CV3 list. The accepted post-GQ continuation explicitly gives MS18c the complete bounded manual `variants` suite and MS05b3 population audit. MS18e reconciles that final-source coverage and owns remaining GD/deep and the three MS07f `perf` ratios; no blind duplicate or omitted case. MS14c stays corpus-free. S-AV01 is now not offered; no conditional Normal timing run is scheduled. |
 | GD-I5/CV3 early | MS05b3 after r5p/r5/r5m; r6b reconciliation | Per-level I5 with `> <level>: <count> puzzles > I5:` (extra-regions includes variant); `> variants: <id> > CV3 <level>:` plus `> variants: <id> > CV3 unsupported:`. Selected total 1, same seeds/counts, jobs 1, locked <=540 s. B1 requires live mega Nightmare CV3, one locked command per cell, with deep occurrence-id references; >240 s is a named availability item. |
 | Recovery profiles | MS05r1 | G13, mega12 Nightmare seed 3, mega16 Nightmare seed 3; maxAttempts 1, actual per-attempt work and sample/local stage time; one bounded request/invocation. |
 | Recovery non-selecting diagnostics | MS05r4 | The same three requests at all 64/128/256/none, full normal attempts: 12 outcomes outside R5's matrix. Report all four even if none wins; do not change the selector. |
@@ -1405,12 +1429,12 @@ It does not broaden output-change, finder-activation or fixture-update authority
 | Mega hell1 / final deep | MS07b extends r5m; MS18e final-source closure | MS07b preserves fourteen additional hell1 occurrences/relations under the same quick/deep rule. Final current-source inventory: 28 Nightmare/hell1 occurrences, one per locked request. MS18e's offered mega CV3 cells run live, one locked cell at a time as in B1, with deep occurrence ids only as cross-references; no CV3 record-provider/reuse route, deep generation in CI or blanket per-technique deep rerun. |
 | GS-CV6 / GD-CV6 | MS05e, historical experiment closed/set aside | Preserve literal Normal 300-319/7000-7039 and Easy/Hard/Expert 300-319 comparisons, tried pools 4/8/16 and the 18 CV6/I5 selector outcomes. CV6-05 restores the first-allowed pass and keeps the failed candidate's evidence, not its algorithm. No repeat for this answer; subsequent tasks use the restored baseline and their own authorized evidence. |
 | GG/GR/GH-CV6 | MS05e, historical experiment closed/set aside | Candidate E and 12 pins stay recorded; the saved patch rebuilds their source. Production fixtures, pins, suite/CI lists and guides return to `f7be90f`; earlier E/quick/GD stand only after the orchestrator's exact-identity proof. Do not mix the rejected candidate with restored expectations or relabel its ledgers. |
-| Final Normal GD-CV6 disposition | MS18c, conditional under CV6-05 | If Normal qualifies, use compatible final-source CV6 evidence or collect only `--suite=greater-than --filter="> normal: 20 puzzles > CV6:"` before MS18d timing, with selected total 1, unchanged seeds/count/budget and existing lock/projection rules. This is not full GD or permission to alter an assertion; apply section 2's three endings. MS18e accounts for the final selector under the normal source-identity rules. |
+| Final Normal GD-CV6 disposition | MS18c under CV6-05; MS18e audit | **Resolved: Normal hidden, S-AV01 not offered.** No Fable trigger, new budget or separate CV6 generation run. Its public-manual case receives the same recorded hidden-cell population treatment as every other cell, preserving original seed indexing and fixed diagnostic Normal seed 4. Old failures stay historical. |
 | GS target | MS06a before / MS06d after | All 17 cells before/after MS06c1 transport + atomic MS06c2 activation; retain isolated comparison and report every hit loss. |
 | GS window | MS07c, repeated MS18b | Three Nightmare cells x C4/C6, 12 requests each; more exact hits, tie 6. |
 | GS Hell 1 pilot | MS07b; MS07c repeats only if default C changes | `node tests\soak.js --variant=classic9 --level=hell1 --from=0 --count=2 --total-count=2 --seed=20260101 --no-gate --json=..\docs\difficulty-v3\evidence\<task>\hell1-pilot.json`; exact two-request shard (bare --count=2 runs at least five at HEAD). Jobs 1/no --jobs; 540 s ceiling. Project unchanged 20-request GD/40-request GQ cost; pilot is not selection evidence. |
 | GS-after | MS18a | All 17 original cells; current vs old reference-qualified cohorts, not old score-only exactness. |
-| GQ-final | MS18c after MS18b (done), S-OD13/S-OD14, file-only preflight, joint Stage 2 binding and explicit release | Q135/jobs 4/default early stop; structural A/T/monitor, raw p95 unchanged; bounded detached supervisor/committed manifest/window. Recovery only by prior joint diagnosis and one-use case authorization; no completed-record rerun, implicit reset or partial publication. |
+| GQ-final | MS18c: measured set 135/135 jointly accepted; official merge/publication/closure pending | Preserve the complete host-active Q135/jobs 4/default-early-stop evidence, raw p95 and immutable monitor/manifest. Freeze every run/qualification file before merging to `evidence\MS18c\merge\`; require zero invalid and receipt/request agreement. Orchestrator checkpoints A then B publish the support lists/live report together only in B. No GQ repeat, record retagging or partial publication. |
 
 GD: per-puzzle I5 and `digLevel` correctness contracts must pass; performance/availability failures
 are recorded and routed under S-OD4, not repaired by lowering assertions. GQ worker errors or missing replies fail the run; hidden verdicts
@@ -1695,6 +1719,13 @@ Final reply from every developer:
 
 The orchestrator owns logs, acceptance and commits. All Execution logs below the task documents remain
 empty until that review. The analyst reports are traceability, not additional design research for the developer.
+
+**MS18c post-GQ commit sequence exception:** the orchestrator makes checkpoint **A**
+(frozen GQ evidence/helpers/compatibility/v2 archive/checked merge, no live publication),
+then checkpoint **B** (only the support-array diff and live report, together).
+Later coupled closure commits are also orchestrator-owned. The developer makes
+**no Git writes**; SA2 commits pack-only. A/B are provenance checkpoints, not full
+MS18c acceptance or authority to start MS18d before final review and CI.
 
 ## 9. Release record
 
