@@ -420,6 +420,17 @@
       'every X of the other. The two sets cannot both hold X, so one of them lacks X and holds all of its ' +
       'other digits. A digit Z that both sets can hold is therefore in one of them, and a cell that sees ' +
       'every Z of both sets cannot hold Z.',
+    'technique.sueDeCoq': 'Sue de Coq (a line crossing a box)',
+    'technique.sueDeCoq.desc': 'Sue de Coq works where a row or column crosses a box or region, on two or ' +
+      'three open cells of the crossing. Together they can hold some digits. Take an almost locked set in ' +
+      'the row or column outside the box and another in the box outside the row or column, with no digit ' +
+      'in common and both inside the digits of the crossing, such that the digits of the crossing number ' +
+      'exactly as many as the cells of the crossing and of the two sets. Then the crossing holds the one ' +
+      'digit that each set lacks and every digit that is in neither set. So every digit of the first set ' +
+      'is used in the row or column, every digit of the second set in the box, and every other digit at ' +
+      'the crossing, which is in both. That removes the first set\'s digits from the rest of the row or ' +
+      'column, the second set\'s digits from the rest of the box, and the other digit from the rest of ' +
+      'both.',
     'technique.forcingChainLong': 'Long Forcing Chain',
     'technique.forcingChainLong.desc': 'The same kind of chain as the Forcing Chain, but one that is too ' +
       'long for it: the shortest chain that works has more links than the plain Forcing Chain allows (up ' +
@@ -586,6 +597,20 @@
       'every {digitX} of the other, so at most one of the sets holds {digitX}. The other set then holds all ' +
       'of its other digits, so one of the two sets holds {digitY}. A candidate {digitY} that sees every ' +
       '{digitY} of both sets is removed.',
+    'technique.sueDeCoq.step': 'Sue de Coq where {line} meets {box}: the marked cells there can only hold ' +
+      'the digits {digits} and {partDigits}. With the marked cells of {line} outside {box}, which can only ' +
+      'hold {digits}, and the marked cells of {box} outside {line}, which can only hold {partDigits}, they ' +
+      'have exactly as many cells as digits. So every one of {digits} is used among the marked cells of ' +
+      '{line}, and every one of {partDigits} among the marked cells of {box}. The digits {digits} are ' +
+      'removed from the other cells of {line}, and {partDigits} from the other cells of {box}.',
+    'technique.sueDeCoq.step.extra': 'Sue de Coq where {line} meets {box}: the marked cells there can only ' +
+      'hold the digits {digits}, {partDigits} and {forced}. With the marked cells of {line} outside {box}, ' +
+      'which can only hold {digits}, and the marked cells of {box} outside {line}, which can only hold ' +
+      '{partDigits}, they have exactly as many cells as digits. So every one of {digits} is used among the ' +
+      'marked cells of {line}, every one of {partDigits} among the marked cells of {box}, and the digit ' +
+      '{forced} is used at the crossing, which is in both. The digits {digits} are removed from the other ' +
+      'cells of {line}, {partDigits} from the other cells of {box}, and {forced} from the other cells of ' +
+      'both.',
     'technique.nishio.step': 'Trial and error (depth {depth}): if {label} were {digit}, simple deductions ' +
       'would end in a contradiction. So {digit} is removed from {label}.',
     'technique.forcingChainLong.step.endpoints': 'Long forcing chain of {length} links: {chains}. If the ' +

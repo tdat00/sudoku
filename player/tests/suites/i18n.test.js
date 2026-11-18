@@ -1144,6 +1144,50 @@
         }
       });
 
+    it('renders the Sue de Coq step in both languages from its real fixtures, both forms: the line, the ' +
+      'box and every digit list, and the left-over digit only when there is one', function () {
+        packsReady();
+        if (!F || !H) SG.test.skip('the technique fixtures are not loaded');
+        var model = H.model('classic9');
+        var ctx = SG.techniques.createContext(model);
+        I.setCellLabeler(function (i) { return SG.model.cellLabel(model, i); });
+        try {
+          expect(F.byId.sueDeCoq.positive).toHaveLength(2);
+          var keys = [];
+          F.byId.sueDeCoq.positive.forEach(function (fixture) {
+            var finding = SG.techniques.get('sueDeCoq').find(model, stateOf(model, fixture), ctx);
+            if (finding === null) throw new Error('fixture "' + fixture.name + '" found nothing');
+            keys.push(finding.i18nKey);
+            var args = finding.i18nArgs;
+            expect(Object.keys(args)).toEqual(['digits', 'partDigits', 'forced', 'line', 'box']);
+            var base = 'technique.sueDeCoq.step';
+            expect(finding.i18nKey).toBe(base + (args.forced.length === 0 ? '' : '.extra'));
+            LOCALES.forEach(function (code) {
+              var text = inLocale(code, function () { return I.t(finding.i18nKey, args); });
+              if (/[{}]|undefined|NaN|\[object/.test(text) || text === finding.i18nKey) {
+                throw new Error(finding.i18nKey + ' renders as "' + text + '" in ' + code);
+              }
+              [args.line, args.box, args.digits.join(', '), args.partDigits.join(', ')]
+                .forEach(function (part) {
+                  expect([code, text.indexOf(part) !== -1]).toEqual([code, true]);
+                });
+              if (args.forced.length > 0) expect(text).toContain(args.forced.join(', '));
+              placeholders(SG.locales[code][finding.i18nKey]).forEach(function (name) {
+                expect(hasOwn(args, name)).toBe(true);
+              });
+            });
+          });
+          expect(keys).toEqual(['technique.sueDeCoq.step', 'technique.sueDeCoq.step.extra']);
+          // the two forms differ in the placeholder set: only the extra one names the left-over digit
+          LOCALES.forEach(function (code) {
+            expect(placeholders(SG.locales[code]['technique.sueDeCoq.step'])).not.toContain('forced');
+            expect(placeholders(SG.locales[code]['technique.sueDeCoq.step.extra'])).toContain('forced');
+          });
+        } finally {
+          I.setCellLabeler(null);
+        }
+      });
+
     it('picks the colouring text that matches args.rule', function () {
       packsReady();
       var args = { digit: 4, colour1: ['R1C1'], colour2: ['R2C2'], falseColour: 1,

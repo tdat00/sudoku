@@ -1,0 +1,400 @@
+$ node tests\artifacts\difficulty-v3\MS16\probe-sdc.js ..\docs\difficulty-v3\evidence\MS16\probe-sdc.json
+population A: 16 positions (of 85 unique puzzles, 86 fixture strings)
+{
+ "label": "A real classic 9x9 at order 196",
+ "positions": 16,
+ "R1": {
+  "pairs": {
+   "min": 22,
+   "median": 37,
+   "p90": 52,
+   "max": 52
+  },
+  "i2": {
+   "min": 28,
+   "median": 56,
+   "p90": 81,
+   "max": 83
+  },
+  "i3": {
+   "min": 3,
+   "median": 10,
+   "p90": 16,
+   "max": 17
+  },
+  "capacityValid": {
+   "min": 0,
+   "median": 0,
+   "p90": 1,
+   "max": 1
+  },
+  "positionsWithValid": 2,
+  "positionsWithElimination": 0,
+  "patternsWithElimination": 0,
+  "zEmpty": 0,
+  "zNonEmpty": 0,
+  "positionsWithZEmpty": 0,
+  "positionsWithZNonEmpty": 0,
+  "agreeFound": 16,
+  "agreeValid": 16,
+  "unsound": 0,
+  "scheme1Whole": {
+   "min": 3009,
+   "median": 8854,
+   "p90": 11972,
+   "max": 13636
+  },
+  "scheme2Whole": {
+   "min": 2423,
+   "median": 5362,
+   "p90": 7607,
+   "max": 7702
+  },
+  "scheme1AbovePlus": 0,
+  "scheme2Above": 0,
+  "scheme1First": null,
+  "scheme2First": null,
+  "perI": {
+   "min": 1316,
+   "median": 7276,
+   "p90": 10087,
+   "max": 11808
+  },
+  "perPair": {
+   "min": 728,
+   "median": 4110,
+   "p90": 5412,
+   "max": 5809
+  },
+  "ab": {
+   "min": 0,
+   "median": 4,
+   "p90": 10,
+   "max": 38
+  },
+  "scan": {
+   "min": 0,
+   "median": 0,
+   "p90": 15,
+   "max": 15
+  },
+  "prep": {
+   "min": 81,
+   "median": 81,
+   "p90": 81,
+   "max": 81
+  }
+ },
+ "R2": {
+  "pairs": {
+   "min": 22,
+   "median": 37,
+   "p90": 52,
+   "max": 52
+  },
+  "i2": {
+   "min": 28,
+   "median": 56,
+   "p90": 81,
+   "max": 83
+  },
+  "i3": {
+   "min": 3,
+   "median": 10,
+   "p90": 16,
+   "max": 17
+  },
+  "capacityValid": {
+   "min": 0,
+   "median": 0,
+   "p90": 1,
+   "max": 1
+  },
+  "positionsWithValid": 2,
+  "positionsWithElimination": 0,
+  "patternsWithElimination": 0,
+  "zEmpty": 0,
+  "zNonEmpty": 0,
+  "positionsWithZEmpty": 0,
+  "positionsWithZNonEmpty": 0,
+  "agreeFound": 16,
+  "agreeValid": 16,
+  "unsound": 0,
+  "scheme1Whole": {
+   "min": 3009,
+   "median": 8854,
+   "p90": 11972,
+   "max": 13636
+  },
+  "scheme2Whole": {
+   "min": 2423,
+   "median": 5362,
+   "p90": 7607,
+   "max": 7702
+  },
+  "scheme1AbovePlus": 0,
+  "scheme2Above": 0,
+  "scheme1First": null,
+  "scheme2First": null,
+  "perI": {
+   "min": 1316,
+   "median": 7276,
+   "p90": 10087,
+   "max": 11808
+  },
+  "perPair": {
+   "min": 728,
+   "median": 4110,
+   "p90": 5412,
+   "max": 5809
+  },
+  "ab": {
+   "min": 0,
+   "median": 4,
+   "p90": 10,
+   "max": 38
+  },
+  "scan": {
+   "min": 0,
+   "median": 0,
+   "p90": 15,
+   "max": 15
+  },
+  "prep": {
+   "min": 81,
+   "median": 81,
+   "p90": 81,
+   "max": 81
+  }
+ },
+ "records": {
+  "min": 14,
+  "median": 129,
+  "p90": 157,
+  "max": 164
+ },
+ "enumWork": {
+  "min": 901,
+  "median": 1420,
+  "p90": 1687,
+  "max": 1726
+ },
+ "enumCapped": 0,
+ "ms": {
+  "min": 1,
+  "median": 2,
+  "p90": 3,
+  "max": 6
+ }
+}
+population B: 42 positions
+{
+ "label": "B seeded",
+ "positions": 42,
+ "R1": {
+  "pairs": {
+   "min": 34,
+   "median": 50,
+   "p90": 128,
+   "max": 318
+  },
+  "i2": {
+   "min": 79,
+   "median": 107,
+   "p90": 508,
+   "max": 910
+  },
+  "i3": {
+   "min": 19,
+   "median": 37,
+   "p90": 237,
+   "max": 296
+  },
+  "capacityValid": {
+   "min": 0,
+   "median": 0,
+   "p90": 2,
+   "max": 18
+  },
+  "positionsWithValid": 14,
+  "positionsWithElimination": 14,
+  "patternsWithElimination": 42,
+  "zEmpty": 20,
+  "zNonEmpty": 22,
+  "positionsWithZEmpty": 12,
+  "positionsWithZNonEmpty": 8,
+  "agreeFound": 42,
+  "agreeValid": 42,
+  "unsound": 0,
+  "scheme1Whole": {
+   "min": 2582,
+   "median": 45345,
+   "p90": 494457,
+   "max": 11165073
+  },
+  "scheme2Whole": {
+   "min": 1957,
+   "median": 21090,
+   "p90": 147232,
+   "max": 3020480
+  },
+  "scheme1AbovePlus": 19,
+  "scheme2Above": 7,
+  "scheme1First": {
+   "min": 5779,
+   "median": 116755,
+   "p90": 2699151,
+   "max": 4210637
+  },
+  "scheme2First": {
+   "min": 4715,
+   "median": 40010,
+   "p90": 518872,
+   "max": 1174747
+  },
+  "perI": {
+   "min": 890,
+   "median": 41327,
+   "p90": 476370,
+   "max": 11120526
+  },
+  "perPair": {
+   "min": 252,
+   "median": 16748,
+   "p90": 125610,
+   "max": 2932278
+  },
+  "ab": {
+   "min": 0,
+   "median": 91,
+   "p90": 432,
+   "max": 1563
+  },
+  "scan": {
+   "min": 0,
+   "median": 0,
+   "p90": 42,
+   "max": 270
+  },
+  "prep": {
+   "min": 81,
+   "median": 81,
+   "p90": 256,
+   "max": 405
+  }
+ },
+ "R2": {
+  "pairs": {
+   "min": 34,
+   "median": 52,
+   "p90": 128,
+   "max": 318
+  },
+  "i2": {
+   "min": 79,
+   "median": 136,
+   "p90": 508,
+   "max": 910
+  },
+  "i3": {
+   "min": 19,
+   "median": 42,
+   "p90": 237,
+   "max": 296
+  },
+  "capacityValid": {
+   "min": 0,
+   "median": 0,
+   "p90": 3,
+   "max": 18
+  },
+  "positionsWithValid": 14,
+  "positionsWithElimination": 14,
+  "patternsWithElimination": 46,
+  "zEmpty": 21,
+  "zNonEmpty": 25,
+  "positionsWithZEmpty": 12,
+  "positionsWithZNonEmpty": 10,
+  "agreeFound": 42,
+  "agreeValid": 42,
+  "unsound": 0,
+  "scheme1Whole": {
+   "min": 2582,
+   "median": 45363,
+   "p90": 494457,
+   "max": 11165073
+  },
+  "scheme2Whole": {
+   "min": 1957,
+   "median": 21090,
+   "p90": 147232,
+   "max": 3020480
+  },
+  "scheme1AbovePlus": 20,
+  "scheme2Above": 9,
+  "scheme1First": {
+   "min": 5779,
+   "median": 116755,
+   "p90": 2699151,
+   "max": 4210637
+  },
+  "scheme2First": {
+   "min": 4715,
+   "median": 40010,
+   "p90": 518872,
+   "max": 1174747
+  },
+  "perI": {
+   "min": 890,
+   "median": 41327,
+   "p90": 476370,
+   "max": 11120526
+  },
+  "perPair": {
+   "min": 252,
+   "median": 17179,
+   "p90": 125610,
+   "max": 2932278
+  },
+  "ab": {
+   "min": 0,
+   "median": 120,
+   "p90": 483,
+   "max": 1563
+  },
+  "scan": {
+   "min": 0,
+   "median": 0,
+   "p90": 45,
+   "max": 270
+  },
+  "prep": {
+   "min": 81,
+   "median": 99,
+   "p90": 256,
+   "max": 405
+  }
+ },
+ "records": {
+  "min": 2,
+  "median": 291,
+  "p90": 1107,
+  "max": 9221
+ },
+ "enumWork": {
+  "min": 1274,
+  "median": 3723,
+  "p90": 15993,
+  "max": 41141
+ },
+ "enumCapped": 0,
+ "ms": {
+  "min": 1,
+  "median": 4,
+  "p90": 23,
+  "max": 288
+ }
+}
+first eliminations of A (up to 8):
+seconds 2.1
+exit=0 seconds=2.311

@@ -1,0 +1,19 @@
+$ node tests\artifacts\difficulty-v3\MS16\premise-proof.js
+nishio positive | nishio depth 1 on puzzle 1 | old 31 ids, new 32 ids | bcbe9eb0f5279301 bcbe9eb0f5279301 same | sueDeCoq on the old position: null
+nishio positive | nishio depth 1 on puzzle 2 | old 31 ids, new 32 ids | e9cd8f0e7fa4ce00 e9cd8f0e7fa4ce00 same | sueDeCoq on the old position: null
+nishio negative | nishio leaves the refutation of hard-platinum, which needs a guess ins | old 31 ids, new 32 ids | 9fcd35fc09a010c4 9fcd35fc09a010c4 same | sueDeCoq on the old position: null
+sueDeCoq negative | sueDeCoq has nothing left to do once the techniques through it are exh | old 30 ids, new 31 ids | 9fcd35fc09a010c4 9fcd35fc09a010c4 same | sueDeCoq on the old position: null
+forcingChainLong positive | forcingChainLong contradiction of 5 links on a dug puzzle | old 30 ids, new 31 ids | 00cda2d9c9f3193d 00cda2d9c9f3193d same | sueDeCoq on the old position: null
+forcingChainLong positive | forcingChainLong contradiction of 6 links on a dug puzzle | old 30 ids, new 31 ids | a2c545f4a3611001 a2c545f4a3611001 same | sueDeCoq on the old position: null
+forcingChainLong negative | forcingChainLong finds nothing on the stuck position of hard-platinum  | old 30 ids, new 31 ids | 9fcd35fc09a010c4 9fcd35fc09a010c4 same | sueDeCoq on the old position: null
+nishioDeep positive | nishioDeep depth 2 on hard-platinum | old 32 ids, new 33 ids | 9fcd35fc09a010c4 9fcd35fc09a010c4 same | sueDeCoq on the old position: null
+nishioDeep positive | nishioDeep depth 2 on the 2012 puzzle | old 32 ids, new 33 ids | 81c09ef96185e4ae 81c09ef96185e4ae same | sueDeCoq on the old position: null
+nishioDeep negative | nishioDeep leaves the depth 1 refutation of the first v2 puzzle to nis | old 31 ids, new 32 ids | bcbe9eb0f5279301 bcbe9eb0f5279301 same | sueDeCoq on the old position: null
+forcingChainLong supplement | a long chain of 5 links (dug puzzle) | old 30 ids, new 31 ids | 00cda2d9c9f3193d 00cda2d9c9f3193d same | sueDeCoq on the old position: null
+forcingChainLong supplement | a long chain of 6 links (dug puzzle) | old 30 ids, new 31 ids | a2c545f4a3611001 a2c545f4a3611001 same | sueDeCoq on the old position: null
+forcingChainLong supplement | a second long chain (dug puzzle) | old 30 ids, new 31 ids | 85d4d4dde1c0c86f 85d4d4dde1c0c86f same | sueDeCoq on the old position: null
+nishioDeep supplement | depth 2 on hard-platinum | old 32 ids, new 33 ids | 9fcd35fc09a010c4 9fcd35fc09a010c4 same | sueDeCoq on the old position: null
+nishioDeep supplement | depth 2 on the 2012 puzzle | old 32 ids, new 33 ids | 81c09ef96185e4ae 81c09ef96185e4ae same | sueDeCoq on the old position: null
+nishioDeep supplement | depth 2 on golden nugget | old 32 ids, new 33 ids | be8132744d9958cc be8132744d9958cc same | sueDeCoq on the old position: null
+fixtures whose list contains sueDeCoq: 16, different positions: 0, sueDeCoq firing on the old position: 0
+exit=0 seconds=0.950

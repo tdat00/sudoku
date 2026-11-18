@@ -1,0 +1,6 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=sueDeCoq --sources=tests\artifacts\difficulty-v3\MS16\sources-e377.json --max-puzzles=8 --max-hints=400 --write
+selected 1 technique ID(s); mode write
+replaying 1 puzzle(s) for 1 ID(s) (--max-puzzles=8, --max-hints=400)
+puzzle 1/1 classic9 Nightmare 377 -> 58 hint(s), solved; wanted found: sueDeCoq
+wrote player/js/ui/help-examples.js (40 examples; 1 selected: sueDeCoq; the others kept)
+exit=0 seconds=0.329

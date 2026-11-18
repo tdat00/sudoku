@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS16\cause.js --kind=hash --ledgers=..\docs\difficulty-v3\evidence\MS16\hashes --only=classic9/nightmare --json=..\docs\difficulty-v3\evidence\MS16\cause-hash-tree.json
+classic9/nightmare: 1 of 20 differ in the ledger (seeds 377); equal to the saved 19, to the ledger 20 (13.5 s)
+hashes examined 20 (engine tree, 13.5 s); equal to the saved output 19, equal to the ledger 20, ledger differs from the saved 1
+exit=0 seconds=13.770

@@ -30,7 +30,8 @@
  * built from explicit `after` lists or an initial real puzzle state. MS07b replaces the four chain IDs
  * (forcingChain 1..C links, forcingChainLong, nishio depth 1, nishioDeep) this way; MS08a adds skyscraper,
  * MS08b twoStringKite, MS08c emptyRectangle, MS09a finnedXWing, MS09b finnedSwordfish, MS10a remotePairs, MS10b
- * wxyzWing, MS11c bugPlusOne, MS12 xyChain and MS15b alsXz (MS11a and MS11b replace the uniqueRectangle entry).
+ * wxyzWing, MS11c bugPlusOne, MS12 xyChain, MS15b alsXz and MS16 sueDeCoq (MS11a and MS11b replace the
+ * uniqueRectangle entry).
  */
 (function () {
   'use strict';
@@ -47,18 +48,18 @@
   ];
 
   /**
-   * The 33 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
-   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the twelve
+   * The 34 classic techniques in the order of the registry of rating v3 (cheapest first). The scoped cage and
+   * inequality techniques are not classic. Differs from LADDER in the place of jellyfish and in the thirteen
    * techniques added since: skyscraper (MS08a), twoStringKite (MS08b), emptyRectangle (MS08c), finnedXWing
    * (MS09a), remotePairs (MS10a), finnedSwordfish (MS09b), wxyzWing (MS10b), bugPlusOne (MS11c), xyChain (MS12),
-   * alsXz (MS15b) and the two chain windows forcingChainLong and nishioDeep (MS07b).
+   * alsXz (MS15b), sueDeCoq (MS16) and the two chain windows forcingChainLong and nishioDeep (MS07b).
    */
   var REGISTRY_ORDER = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
     'nakedTriple', 'hiddenTriple', 'nakedQuad', 'hiddenQuad', 'xWing', 'skyscraper', 'twoStringKite', 'remotePairs',
     'simpleColouring', 'emptyRectangle', 'finnedXWing', 'swordfish', 'finnedSwordfish', 'jellyfish', 'xyWing',
     'xyzWing', 'wxyzWing', 'wWing', 'uniqueRectangle', 'bugPlusOne', 'xyChain', 'forcingChain', 'alsXz',
-    'forcingChainLong', 'nishio', 'nishioDeep'
+    'sueDeCoq', 'forcingChainLong', 'nishio', 'nishioDeep'
   ];
 
   /** The techniques the ladder tries before `id`: the position after them is where `id` is reached. */
@@ -755,8 +756,8 @@
    * Explicit positions of the chain IDs under rating v3 (MS07b). The arrays are copied lists of registered ids,
    * so that a technique registered later cannot move a position: the techniques below the chain group (in the
    * order of the registry) and xyChain (MS12, order 186), then forcingChain, alsXz (MS15b, order 194),
-   * forcingChainLong and nishio, one after the other. Each position is where the solver, allowed only the ids of
-   * its list, gets stuck, which is where the next ID is reached.
+   * sueDeCoq (MS16, order 196), forcingChainLong and nishio, one after the other. Each position is where the
+   * solver, allowed only the ids of its list, gets stuck, which is where the next ID is reached.
    */
   var BELOW_CHAINS = [
     'nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine', 'nakedPair', 'hiddenPair',
@@ -766,7 +767,8 @@
   ];
   var THROUGH_SHORT_CHAIN = BELOW_CHAINS.concat(['forcingChain']);
   var THROUGH_ALS = THROUGH_SHORT_CHAIN.concat(['alsXz']);
-  var THROUGH_LONG_CHAIN = THROUGH_ALS.concat(['forcingChainLong']);
+  var THROUGH_SDC = THROUGH_ALS.concat(['sueDeCoq']);
+  var THROUGH_LONG_CHAIN = THROUGH_SDC.concat(['forcingChainLong']);
   var THROUGH_NISHIO = THROUGH_LONG_CHAIN.concat(['nishio']);
 
   // Where skyscraper is reached under rating v3 (MS08a): the techniques before it in the registry, and the same
@@ -912,6 +914,10 @@
   var FSF_SPARSE = '.3.....2..7.4....8..853.7....715......5...2......9..17...62...5...8.1..416.......';
   var FSF_SPARE = '.6.8..2....36...8.9....3.4.5.278........6.59.7.......2.3.5......57.1.6.....3.7...';
   var FSF_ORDINARY = '32.7.......6219..5..9.8..........1.6......87.8...5..3..7.8.5...5.896.....3.......';
+  // Two real puzzles of the Player's help catalogue sources (classic 9 x 9, unique solution), used as
+  // sueDeCoq supplements at their first positions (MS16).
+  var SDC_HELP_PAIR = '6....2..4......9....3.7521..9.1.48....4...1....58.7.3..6142.5....2......9..5....2';
+  var SDC_HELP_QUAD = '3..7.5....5.....6.72...8.5.2..9...1.61..5..98.7...1..6.9.4...71.6.....3....3.9..5';
 
   // Real unique puzzles of the remotePairs fixtures (MS10a), the puzzles of the seeded corpus of
   // H.randomStatesWithKnownSolution(classic9, seed 777) (dug by SG.testkit.dig, unique by construction), named by
@@ -1068,6 +1074,49 @@
             'anything)',
           puzzle: DUG_24,
           after: THROUGH_SHORT_CHAIN,
+          propagate: true
+        }
+      ]
+    },
+    sueDeCoq: {
+      positive: [
+        {
+          name: 'sueDeCoq in row 8 and box 8: R8C4 and R8C5 hold 6, 7, 3, 4 and 9 with R8C3 {6,7} in the ' +
+            'row and R7C5 and R9C5 {3,4,9} in the box, so R8C2, R8C8 and R8C9 lose the 6 and the 7 (a ' +
+            'puzzle of the remotePairs fixtures, first position)',
+          puzzle: RP_LONG,
+          after: null,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[64, 6], [64, 7], [70, 7], [71, 6], [71, 7]]
+          }
+        },
+        {
+          name: 'sueDeCoq in row 4 and box 6 with the digit 3 left over: R4C7, R4C8 and R4C9 hold 2, 7, 1, ' +
+            '5 and 3 with R4C1 {2,7} in the row and R6C8 {1,5} in the box, so the 3 is removed elsewhere ' +
+            'in both units (a puzzle of the unique rectangle fixtures, first position)',
+          puzzle: UR_TYPE4,
+          after: null,
+          propagate: true,
+          expect: {
+            placements: [],
+            eliminations: [[30, 3], [30, 7], [32, 3], [32, 7], [42, 3], [51, 1], [53, 1], [53, 5]]
+          }
+        }
+      ],
+      negative: [
+        {
+          name: 'sueDeCoq has nothing left to do once the techniques through it are exhausted',
+          puzzle: PLATINUM,
+          after: THROUGH_SDC,
+          propagate: true
+        },
+        {
+          name: 'sueDeCoq leaves a chain of 5 links to forcingChainLong (the techniques before it are ' +
+            'exhausted, and no crossing holds two almost locked sets)',
+          puzzle: DUG_24,
+          after: THROUGH_ALS,
           propagate: true
         }
       ]
@@ -1564,7 +1613,7 @@
         {
           name: 'forcingChainLong contradiction of 5 links on a dug puzzle',
           puzzle: DUG_24,
-          after: THROUGH_ALS,
+          after: THROUGH_SDC,
           propagate: true,
           expect: {
             placements: [],
@@ -1574,7 +1623,7 @@
         {
           name: 'forcingChainLong contradiction of 6 links on a dug puzzle',
           puzzle: DUG_730,
-          after: THROUGH_ALS,
+          after: THROUGH_SDC,
           propagate: true,
           expect: {
             placements: [],
@@ -1586,7 +1635,7 @@
         {
           name: 'forcingChainLong finds nothing on the stuck position of hard-platinum (no chain at all)',
           puzzle: PLATINUM,
-          after: THROUGH_ALS,
+          after: THROUGH_SDC,
           propagate: true
         },
         {
@@ -1706,7 +1755,10 @@
    * random states of the sweep give it no firing at all), so its three real positions, all at that position, give the
    * sweep its minimum of 3 firings on top of the unchanged random population (an exact fit: one supplement fewer would
    * fail the minimum, which stays as it is): the answer is a middle candidate in two of them and the lowest in a
-   * position with 42 open cells.
+   * position with 42 open cells. MS16: sueDeCoq fires in some of the random states of the sweep and is hardly
+   * ever the first deduction of a real position (every position of the agreement populations of the tech-als
+   * suite where it fires has an ALS-XZ deduction too), so its four real positions, all first positions, are
+   * added on top in the same way.
    */
   var SUPPLEMENTS = {
     alsXz: [
@@ -1718,6 +1770,17 @@
         puzzle: XY_THIRD, after: THROUGH_SHORT_CHAIN, propagate: true },
       { name: 'alsXz on a real position (a puzzle of the unique rectangle fixtures)',
         puzzle: UR_COLUMN, after: THROUGH_SHORT_CHAIN, propagate: true }
+    ],
+    sueDeCoq: [
+      { name: 'sueDeCoq on a real position (the second puzzle of the wxyzWing fixtures, first position, ' +
+        'singles still open)', puzzle: WX_SECOND, after: null, propagate: false },
+      { name: 'sueDeCoq on a real position (the sparse puzzle of the finnedSwordfish fixtures, first ' +
+        'position)', puzzle: FSF_SPARSE, after: null, propagate: true },
+      { name: 'sueDeCoq on a real position (the source of the hiddenPair help example, singles still ' +
+        'open): a B side of two cells, one digit left over', puzzle: SDC_HELP_PAIR, after: null,
+        propagate: false },
+      { name: 'sueDeCoq on a real position (the source of the nakedQuad help example, singles still ' +
+        'open)', puzzle: SDC_HELP_QUAD, after: null, propagate: false }
     ],
     xyChain: [
       { name: 'xyChain on the 8, a chain of 9 edges (a third seeded dug puzzle)', puzzle: XY_THIRD,
@@ -1804,9 +1867,9 @@
         propagate: true }
     ],
     forcingChainLong: [
-      { name: 'a long chain of 5 links (dug puzzle)', puzzle: DUG_24, after: THROUGH_ALS, propagate: true },
-      { name: 'a long chain of 6 links (dug puzzle)', puzzle: DUG_730, after: THROUGH_ALS, propagate: true },
-      { name: 'a second long chain (dug puzzle)', puzzle: DUG_155, after: THROUGH_ALS, propagate: true }
+      { name: 'a long chain of 5 links (dug puzzle)', puzzle: DUG_24, after: THROUGH_SDC, propagate: true },
+      { name: 'a long chain of 6 links (dug puzzle)', puzzle: DUG_730, after: THROUGH_SDC, propagate: true },
+      { name: 'a second long chain (dug puzzle)', puzzle: DUG_155, after: THROUGH_SDC, propagate: true }
     ],
     nishioDeep: [
       { name: 'depth 2 on hard-platinum', puzzle: PLATINUM, after: THROUGH_NISHIO, propagate: true },

@@ -1,0 +1,31 @@
+MS16 unlocked runs (IR07 disclosure). Everything else of this task ran through Invoke-Dv3Node / Invoke-Locked (lock-log.jsonl).
+
+1. 2026-11-18, before 05:20 +07:00, from generator\: one `node -e` that loaded the Generator sources through
+   tests\artifacts\difficulty-v3\MS15b\load.js (read-only: no generation, no corpus, no write) and printed the registry
+   (39 techniques, 33 unscoped; the chain group xyChain 186, forcingChain 190, alsXz 194, forcingChainLong 198, nishio 200,
+   nishioDeep 202 with their base costs and weights). The tool call returned within its 30 s initial wait; the duration was
+   not separately timed, so this is NOT a measured-under-10-seconds exemption, only a disclosure that it ran without the lock.
+   No other task held a lock at the time (neither %TEMP%\dv3-timing.lock nor %TEMP%\dv3-sudoku.lock existed).
+
+Aborted runs: none. Failed runs: lock-log.jsonl row 1 (MS16 P0.1 probe-sdc, exit 1, a script bug fixed at once; no output kept).
+
+Added at the end of the task (2026-11-18, after 08:20 +07:00). Further commands that ran WITHOUT the lock, all read-only, none
+generating, recording or writing a file of the repository, each reading small files or the tree and ending well under 10 s
+(not separately timed; disclosed, not claimed as measured exemptions):
+2. `node -e` (Player folder) listing the 39 keys of `SG.helpExamples` and, later, printing the fields of the new `sueDeCoq`
+   example (about 07:44 and 07:50 +07:00).
+3. `node -e` reading `.github/scripts/generator-quick.json` provenance (about 08:19) and the result JSON of the quick passes
+   to total tests, suites and wall seconds (three times, about 07:55, 08:00 and 08:19).
+4. `node generator/tests/artifacts/difficulty-v3/MS15b/fingerprint-now.js` (MS15b's scratch, run from the repository root, which
+   hashes the fingerprint inputs of the two runners; read-only) after the first quick pass and after the final one (about
+   08:00 and 08:19).
+5. `git status`, `git diff --stat`, `git diff -U0` filtered to one line, PowerShell `Get-Content`/`Select-String`/`Compare-Object`
+   reads of logs, ledgers (`sourceHash` of the 123 ledgers, the engine-frozen against engine-after-e comparison) and the
+   lock log.
+Failed or invalid runs that are NOT aborts: the first follow-up compound of the mutation phase (`logs/mutations-follow-run-1.txt`,
+`mutations-follow-1.txt`, 378 s) ran its second suite list past the 30 s kill of `mutant-run.cjs`, so its "DETECTED" lines are
+timeouts and not detections; it was repeated as M4b (`mutations-follow-2.txt`). The three-suite list was measured separately
+afterwards (`logs/time-suite-*.txt`). Output noise: three locked commands printed their whole log to the transcript of the tool
+(the freeze text, the rated-effect JSON lines and the hash-shard lines); nothing was lost or changed by that.
+Lock waits: every locked command's wait is in `lock-log.jsonl` (`waitSeconds`); the longest, 40.2 s on the format check of 07:25,
+was another session holding `dv3-timing.lock`. No lock was removed or forced, and none was found stale.

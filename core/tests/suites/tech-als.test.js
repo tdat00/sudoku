@@ -1,7 +1,8 @@
 // Almost-locked sets: the bounded enumerator SG.alsPatterns.enumerate of ../core/js/engine/tech-als.js
-// (difficulty v3, R18, MS15a) and ALS-XZ (MS15b), the registered technique alsXz that reads it through
-// SG.alsPatterns.findXz. The enumerator is a helper with no observer of its own; ALS-XZ is the only ALS
-// technique registered, Sue de Coq (MS16) is not active yet.
+// (difficulty v3, R18, MS15a), ALS-XZ (MS15b), the registered technique alsXz that reads it through
+// SG.alsPatterns.findXz, and Sue de Coq (MS16), the registered technique sueDeCoq that reads it through
+// SG.alsPatterns.findSueDeCoq. The enumerator is a helper with no observer of its own; ALS-XZ and Sue de Coq
+// are the only ALS techniques registered.
 //
 // Layout of this suite:
 //   scope        the API, the limits, ALS-XZ registered and no other ALS technique, no observer record of the
@@ -17,6 +18,11 @@
 //   als-xz       the registered technique: its seam, the proof by hand (the brief's witness and its near
 //                misses), the Finding against an independent search, the one guard (work, caps, record quota),
 //                the parent budget, the observer record, ownership
+//   sue-de-coq   the registered technique (R19, MS16): the same sections for the line/box intersection
+//                form: the seam, the proof by hand (the brief's vector in both orientations, both forms of
+//                Z, a proper subset of the intersection, the near misses and the wrong roles of a unit),
+//                agreement with an independent search on every kind of board, the one guard with its nine
+//                charge points, the parent budget and the observer record, ownership
 //
 // The enumeration of the RECORDS (`oracle`) is independent: it is written from model.units, the state and
 // sorted digit lists only (all subsets of the open cells of each unit, the union of their digits, a table by
@@ -389,25 +395,28 @@
   // ---------------------------------------------------------------------------------------------------------
 
   describe('als enumerator: scope', function () {
-    it('offers enumerate, createWork, spend, findXz and the limits 4 cells, ' +
+    it('offers enumerate, createWork, spend, findXz, findSueDeCoq and the limits 4 cells, ' +
       '4096 records and 50000 units', function () {
       expect(typeof A.enumerate).toBe('function');
       expect(typeof A.createWork).toBe('function');
       expect(typeof A.spend).toBe('function');
       expect(typeof A.findXz).toBe('function');
+      expect(typeof A.findSueDeCoq).toBe('function');
       expect(A.LIMITS).toEqual(DEFAULT);
       expect(Object.isFrozen(A.LIMITS)).toBe(true);
-      expect(Object.keys(A).sort()).toEqual(['LIMITS', 'createWork', 'enumerate', 'findXz', 'spend']);
+      expect(Object.keys(A).sort())
+        .toEqual(['LIMITS', 'createWork', 'enumerate', 'findSueDeCoq', 'findXz', 'spend']);
     });
 
-    it('registers ALS-XZ only: alsXz is active, Sue de Coq and every other ALS technique are absent',
-      function () {
+    it('registers ALS-XZ and Sue de Coq only: alsXz and sueDeCoq are active, every other ALS technique is ' +
+      'absent', function () {
         expect(SG.techniques.has('alsXz')).toBe(true);
-        ['sueDeCoq', 'als', 'alsEnumerate', 'alsXyWing', 'deathBlossom'].forEach(function (id) {
+        expect(SG.techniques.has('sueDeCoq')).toBe(true);
+        ['als', 'alsEnumerate', 'alsXyWing', 'deathBlossom'].forEach(function (id) {
           expect(SG.techniques.has(id)).toBe(false);
         });
         SG.techniques.list().forEach(function (def) {
-          if (def.id !== 'alsXz') expect(/^als/i.test(def.id) || /sueDeCoq/.test(def.id)).toBe(false);
+          if (def.id !== 'alsXz') expect(/^als/i.test(def.id)).toBe(false);
         });
       });
 
@@ -1426,7 +1435,8 @@
       expect(def.baseCost).toBeLessThan(long.baseCost);
       var ids = SG.techniques.list().map(function (t) { return t.id; });
       expect(ids.indexOf('alsXz')).toBe(ids.indexOf('forcingChain') + 1);
-      expect(ids.indexOf('alsXz')).toBe(ids.indexOf('forcingChainLong') - 1);
+      // Sue de Coq (196, MS16) sits between it and the long chain
+      expect(ids.indexOf('alsXz')).toBe(ids.indexOf('sueDeCoq') - 1);
       // no other technique has its order
       expect(SG.techniques.list().filter(function (t) { return t.order === 194; })).toHaveLength(1);
     });
@@ -1484,14 +1494,14 @@
         expect(xzRun(m9, state, { workLimit: undefined, limits: undefined }).finding).not.toBeNull();
       });
 
-    it('offers no other ALS technique: Sue de Coq and the rest stay absent', function () {
-      ['sueDeCoq', 'als', 'alsEnumerate', 'alsXyWing', 'deathBlossom', 'alsXy'].forEach(function (id) {
+    it('offers no other ALS technique: the rest stay absent, and Sue de Coq is the second one', function () {
+      ['als', 'alsEnumerate', 'alsXyWing', 'deathBlossom', 'alsXy'].forEach(function (id) {
         expect(SG.techniques.has(id)).toBe(false);
       });
       var ids = SG.techniques.list().filter(function (def) {
         return /^als/i.test(def.id) || /sueDeCoq/.test(def.id);
       }).map(function (def) { return def.id; });
-      expect(ids).toEqual(['alsXz']);
+      expect(ids).toEqual(['alsXz', 'sueDeCoq']);
     });
   });
 
@@ -2263,6 +2273,1425 @@
           SG.techniques.get('forcingChain').find(m9, item.state, ctx);
           expect([n, JSON.stringify(A.findXz(m9, item.state, ctx))]).toEqual([n, plain]);
           expect([n, JSON.stringify(SG.techniques.get('alsXz').find(m9, item.state, ctx))]).toEqual([n, plain]);
+        });
+      });
+  });
+
+  // =========================================================================================================
+  // Sue de Coq (R19, MS16): the registered technique sueDeCoq and `SG.alsPatterns.findSueDeCoq`
+
+  // The brief's vector: I = {R1C1, R1C2} with C = {1,2,3,4}; A = R1C5 {1,2} in row 1 outside box 1;
+  // B = R2C3 {3,4} in box 1 outside row 1. The other cells keep all their candidates.
+  var SDC_BASE = { R1C1: '1234', R1C2: '1234', R1C5: '12', R2C3: '34' };
+  // I = {R1C1, R1C2, R1C3} with C = {1,2,3,4,5}, so |C| = 3 + 1 + 1 and Z = {5}; no 2-cell subset is a
+  // witness.
+  var SDC_EXTRA = { R1C1: '1234', R1C2: '1235', R1C3: '125', R1C5: '12', R2C3: '34' };
+  // R1C3 is an open cell of the intersection outside I = {R1C1, R1C2}: an ordinary target (it loses the 1).
+  var SDC_SUBSET = { R1C1: '1234', R1C2: '1234', R1C3: '15', R1C5: '12', R2C3: '34' };
+
+  var SDC_ID = 'sueDeCoq';
+
+  function sdcRoles(model, boxKinds) {
+    var out = { lines: [], boxes: [] };
+    model.unitMeta.forEach(function (meta, u) {
+      if (meta.kind === 'row' || meta.kind === 'col') out.lines.push(u);
+      else if ((boxKinds || ['box', 'region']).indexOf(meta.kind) !== -1) out.boxes.push(u);
+    });
+    return out;
+  }
+
+  function heldIn(model, unit, cell) { return model.units[unit].indexOf(cell) !== -1; }
+
+  /** The state after solving every cell of a random solution (no open cell, so no geometry at all). */
+  function solvedState(model, seed) {
+    var solution = SG.testkit.randomSolution(model, SG.testkit.rng.create(seed));
+    var state = SG.model.initState(model);
+    for (var c = 0; c < model.cellCount; c++) SG.constraints.assign(model, state, c, solution[c]);
+    return state;
+  }
+
+  /**
+   * Every Sue de Coq witness that has a target, in the canonical order, written from the definition of R19
+   * with model.units, model.unitMeta and the state: a line (row or column) U and a box (box or region, or
+   * the `boxKinds` given) V sharing two or more open cells; I a 2- or 3-subset of those cells; A a record
+   * whose cells all lie in U and not in V, B one in V and not in U (the records in their canonical order);
+   * both digit lists inside the digits of I and disjoint; |C| = |I| + p + q; the targets are the candidates
+   * of the digits of A (and Z) in the other cells of U and of the digits of B (and Z) in those of V, never
+   * in I, A or B.
+   * { line, box, tuple, a, b, z, targets }.
+   */
+  function sdcWitnesses(model, state, records, firstOnly, boxKinds) {
+    var roles = sdcRoles(model, boxKinds);
+    var out = [];
+    roles.lines.forEach(function (l) {
+      roles.boxes.forEach(function (b) {
+        if (firstOnly && out.length > 0) return;
+        var shared = openCells(model, state, l).filter(function (c) { return heldIn(model, b, c); });
+        if (shared.length < 2) return;
+        var sideA = records.filter(function (r) {
+          return r.cells.every(function (c) { return heldIn(model, l, c) && !heldIn(model, b, c); });
+        });
+        var sideB = records.filter(function (r) {
+          return r.cells.every(function (c) { return heldIn(model, b, c) && !heldIn(model, l, c); });
+        });
+        [2, 3].forEach(function (size) {
+          eachCombination(shared, size, function (tuple) {
+            var union = tuple.reduce(function (acc, c) {
+              return mergeDigits(acc, digitsOf(model, state, c));
+            }, []);
+            sideA.forEach(function (a) {
+              sideB.forEach(function (bb) {
+                if (firstOnly && out.length > 0) return;
+                var inside = a.digits.concat(bb.digits).every(function (d) {
+                  return union.indexOf(d) !== -1;
+                });
+                if (!inside) return;
+                if (a.digits.some(function (d) { return bb.digits.indexOf(d) !== -1; })) return;
+                if (union.length !== size + a.cells.length + bb.cells.length) return;
+                var z = union.filter(function (d) {
+                  return a.digits.indexOf(d) === -1 && bb.digits.indexOf(d) === -1;
+                });
+                var targets = [];
+                for (var c = 0; c < model.cellCount; c++) {
+                  if (state.value[c] !== 0 || tuple.indexOf(c) !== -1) continue;
+                  if (a.cells.indexOf(c) !== -1 || bb.cells.indexOf(c) !== -1) continue;
+                  var drop = [];
+                  if (heldIn(model, l, c)) drop = drop.concat(a.digits, z);
+                  if (heldIn(model, b, c)) drop = drop.concat(bb.digits, z);
+                  var have = digitsOf(model, state, c);
+                  mergeDigits(drop, []).forEach(function (d) {
+                    if (have.indexOf(d) !== -1) targets.push([c, d]);
+                  });
+                }
+                if (targets.length > 0) {
+                  out.push({ line: l, box: b, tuple: tuple, a: a, b: bb, z: z, targets: targets });
+                }
+              });
+            });
+          });
+        });
+      });
+    });
+    return out;
+  }
+
+  function sdcFindingOf(model, w) {
+    return {
+      technique: SDC_ID,
+      cells: w.tuple.concat(w.a.cells, w.b.cells).sort(numeric),
+      placements: [],
+      eliminations: w.targets,
+      i18nKey: 'technique.sueDeCoq.step' + (w.z.length === 0 ? '' : '.extra'),
+      i18nArgs: {
+        digits: w.a.digits,
+        partDigits: w.b.digits,
+        forced: w.z,
+        line: model.unitMeta[w.line].label,
+        box: model.unitMeta[w.box].label
+      }
+    };
+  }
+
+  /**
+   * The units the stated rule charges around the enumeration, up to the witness w (null: every pair):
+   * { geometry, rest, pairs }, `geometry` the cells of the boxes visited (solved cells included, one unit
+   * each), `rest` the units after the enumeration: a record classified, a pair opened, a record of each home
+   * list tested for lying outside the other unit, a tuple opened, a side record tested for its digits inside
+   * C (both sides, every tuple), a pair (A, B) tested, a cell of U and V visited for each valid witness. With
+   * no pair of two open shared cells nothing is enumerated and `rest` is 0. NOT independent: it re-implements
+   * the count of the rule from its words, so it pins the stated count rather than discovers it.
+   */
+  function sdcUnits(model, state, records, w) {
+    var roles = sdcRoles(model);
+    var geometry = 0;
+    roles.boxes.forEach(function (b) { geometry += model.units[b].length; });
+    var pairs = [];
+    roles.lines.forEach(function (l) {
+      roles.boxes.forEach(function (b) {
+        var shared = openCells(model, state, l).filter(function (c) { return heldIn(model, b, c); });
+        if (shared.length >= 2) pairs.push({ l: l, b: b, shared: shared });
+      });
+    });
+    if (pairs.length === 0) return { geometry: geometry, rest: 0, pairs: 0 };
+    var rest = records.length;
+    var done = false;
+    var within = function (unit) {
+      return function (r) { return r.cells.every(function (c) { return heldIn(model, unit, c); }); };
+    };
+    var outside = function (unit) {
+      return function (r) { return r.cells.every(function (c) { return !heldIn(model, unit, c); }); };
+    };
+    pairs.forEach(function (p) {
+      if (done) return;
+      rest += 1;
+      var homeA = records.filter(within(p.l));
+      var homeB = records.filter(within(p.b));
+      rest += homeA.length + homeB.length;
+      var sideA = homeA.filter(outside(p.b));
+      var sideB = homeB.filter(outside(p.l));
+      if (sideA.length === 0 || sideB.length === 0) return;
+      var scope = mergeDigits(Array.prototype.slice.call(model.units[p.l]),
+        Array.prototype.slice.call(model.units[p.b])).length;
+      [2, 3].forEach(function (size) {
+        eachCombination(p.shared, size, function (tuple) {
+          if (done) return;
+          rest += 1 + sideA.length + sideB.length;
+          var union = tuple.reduce(function (acc, c) {
+            return mergeDigits(acc, digitsOf(model, state, c));
+          }, []);
+          var inside = function (r) {
+            return r.digits.every(function (d) { return union.indexOf(d) !== -1; });
+          };
+          sideA.filter(inside).forEach(function (a) {
+            sideB.filter(inside).forEach(function (b) {
+              if (done) return;
+              rest += 1;
+              if (a.digits.some(function (d) { return b.digits.indexOf(d) !== -1; })) return;
+              if (union.length !== size + a.cells.length + b.cells.length) return;
+              rest += scope;
+              if (w !== null && w.line === p.l && w.box === p.b && w.tuple.join() === tuple.join() &&
+                  w.a === a && w.b === b) {
+                done = true;
+              }
+            });
+          });
+        });
+      });
+    });
+    return { geometry: geometry, rest: rest, pairs: pairs.length };
+  }
+
+  /** A call of findSueDeCoq with a context that collects the observer records: { finding, seen }. */
+  function sdcRun(model, state, opts, ctxOptions) {
+    var seen = [];
+    var options = Object.assign({ onPatternWork: function (r) { seen.push(r); } }, ctxOptions || {});
+    var finding = A.findSueDeCoq(model, state, SG.techniques.createContext(model, options), opts);
+    return { finding: finding, seen: seen };
+  }
+
+  /**
+   * The plan of one position under the production limits: the independent witnesses of the retained prefix
+   * (the first 4096 records), the geometry units, the enumeration and the units after it up to the first
+   * witness.
+   */
+  function sdcPlan(model, state, limits) {
+    var enumeration = run(model, state, limits, undefined);
+    var records = enumeration.result.records;
+    var all = oracle(model, state, 4).records;
+    var witnesses = sdcWitnesses(model, state, records, false);
+    var first = witnesses.length > 0 ? witnesses[0] : null;
+    var units = sdcUnits(model, state, records, first);
+    var enumerated = units.pairs > 0;
+    return {
+      records: records, all: all, witnesses: witnesses, first: first, geometry: units.geometry,
+      rest: units.rest, E: enumerated ? enumeration.work.used : 0, enumerated: enumerated,
+      capHit: enumeration.result.capHit,
+      T: units.geometry + (enumerated ? enumeration.work.used : 0) + units.rest
+    };
+  }
+
+  /** The cells of a 9 x 9 position or Finding turned the other way: R(r)C(c) becomes R(c)C(r). */
+  function transposed(spec) {
+    var out = {};
+    Object.keys(spec).forEach(function (ref) {
+      var m = /^R(\d)C(\d)$/.exec(ref);
+      out['R' + m[2] + 'C' + m[1]] = spec[ref];
+    });
+    return out;
+  }
+
+  var SDC_ORDER = SG.fixtures.techniques.registryOrder;
+
+  /** The ids of the registry before `id` (the preparatory list of an explicit position). */
+  function through(id) { return SDC_ORDER.slice(0, SDC_ORDER.indexOf(id)); }
+
+  /** The real classic 9 x 9 puzzles of the fixtures with a unique solution, each stuck after `ids`. */
+  function realPositions(ids) {
+    var F = SG.fixtures.techniques;
+    var seen = {};
+    var out = [];
+    function add(fixture) {
+      if (!fixture || typeof fixture.puzzle !== 'string' || fixture.puzzle.length !== 81 ||
+          seen[fixture.puzzle]) {
+        return;
+      }
+      seen[fixture.puzzle] = true;
+      var givens = H.parsePuzzle(m9, fixture.puzzle);
+      if (SG.dfs.countSolutions(m9, givens, 2) !== 1) return;
+      var state = H.stateAfter(m9, fixture.puzzle, ids);
+      if (state.unsolvedCount === 0) return;
+      out.push({ state: state, solution: SG.dfs.solve(m9, givens) });
+    }
+    Object.keys(F.byId).forEach(function (id) {
+      F.byId[id].positive.forEach(add);
+      F.byId[id].negative.forEach(add);
+    });
+    Object.keys(F.supplements).forEach(function (id) { F.supplements[id].forEach(add); });
+    return out;
+  }
+
+  describe('sue-de-coq: the registered technique and the seam', function () {
+    it('is registered as sueDeCoq: chain group, order 196, base cost 112, unscoped, no uniqueness, between ' +
+      'alsXz (194) and forcingChainLong (198), and the chain group has seven members', function () {
+        var def = SG.techniques.get(SDC_ID);
+        expect(SG.techniques.list().filter(function (t) { return t.id === SDC_ID; })).toHaveLength(1);
+        expect(def.group).toBe('chain');
+        expect(def.order).toBe(196);
+        expect(def.baseCost).toBe(112);
+        expect(def.i18nKey).toBe('technique.sueDeCoq');
+        expect(def.variantScope).toBeNull();
+        expect(def.assumesUniqueness).toBe(false);
+        expect(typeof def.find).toBe('function');
+        var als = SG.techniques.get('alsXz');
+        var long = SG.techniques.get('forcingChainLong');
+        expect([SG.techniques.get('forcingChain').order, als.order, def.order, long.order,
+          SG.techniques.get('nishio').order, SG.techniques.get('nishioDeep').order])
+          .toEqual([190, 194, 196, 198, 200, 202]);
+        expect(als.order).toBeLessThan(def.order);
+        expect(def.order).toBeLessThan(long.order);
+        expect(als.baseCost).toBeLessThan(def.baseCost);
+        expect(def.baseCost).toBeLessThan(long.baseCost);
+        var ids = SG.techniques.list().map(function (t) { return t.id; });
+        expect(ids.indexOf(SDC_ID)).toBe(ids.indexOf('alsXz') + 1);
+        expect(ids.indexOf(SDC_ID)).toBe(ids.indexOf('forcingChainLong') - 1);
+        expect(SG.techniques.list().filter(function (t) { return t.order === 196; })).toHaveLength(1);
+        expect(SG.techniques.list().filter(function (t) { return t.group === 'chain'; }).map(function (t) {
+          return t.id;
+        })).toEqual(['xyChain', 'forcingChain', 'alsXz', 'sueDeCoq', 'forcingChainLong', 'nishio',
+          'nishioDeep']);
+      });
+
+    it('is registered once even when the file is loaded again: the registry keeps its first definitions',
+      function () {
+        var source = SG.test.node && SG.test.node.fs.readFileSync(
+          SG.test.node.path.join(SG.test.node.root, '../core/js/engine/tech-als.js'), 'utf8');
+        if (!source) SG.test.skip('needs the Node runner to reload the source');
+        var def = SG.techniques.get(SDC_ID);
+        var als = SG.techniques.get('alsXz');
+        var count = SG.techniques.list().length;
+        SG.test.node.vm.runInThisContext(source, { filename: '../core/js/engine/tech-als.js' });
+        expect(SG.techniques.get(SDC_ID)).toBe(def);
+        expect(SG.techniques.get('alsXz')).toBe(als);
+        expect(SG.techniques.list().length).toBe(count);
+        expect(SG.alsPatterns.LIMITS).toEqual(DEFAULT);
+      });
+
+    it('runs with its own allowance 50,000 and the production limits: the registered finder takes no ' +
+      'options, and never reads limits from the context', function () {
+        var def = SG.techniques.get(SDC_ID);
+        var state = position(m9, SDC_BASE);
+        var seen = [];
+        var ctx = SG.techniques.createContext(m9, { onPatternWork: function (r) { seen.push(r); } });
+        var plain = def.find(m9, state, ctx);
+        var extra = def.find(m9, state, ctx, { workLimit: 5, limits: { cells: 1, records: 1 } });
+        expect(extra).toEqual(plain);
+        expect(plain).not.toBeNull();
+        expect(seen).toHaveLength(2);
+        expect(seen[0]).toEqual(seen[1]);
+        expect(seen[0].limit).toBe(50000);
+        expect(seen[0].retained).toBeGreaterThan(1);
+        var hostile = SG.techniques.createContext(m9, {
+          limits: { cells: 1, records: 1 }, workLimit: 5, onPatternWork: function (r) { seen.push(r); }
+        });
+        expect(def.find(m9, state, hostile)).toEqual(plain);
+        expect(seen[2].limit).toBe(50000);
+        expect(seen[2].retained).toBe(seen[0].retained);
+        expect(plain).toEqual(A.findSueDeCoq(m9, state, SG.techniques.createContext(m9, {})));
+      });
+
+    it('takes opts = { workLimit, limits } as the seam of the tests and refuses anything else before any ' +
+      'work: null, a number, a string, a boolean, an array, a negative or non-finite limit, for both finders',
+      function () {
+        var state = position(m9, SDC_BASE);
+        var bad = [null, 5, 'x', true, [], [1], [{ workLimit: 5 }], { workLimit: -1 }, { workLimit: NaN },
+          { workLimit: Infinity }, { workLimit: '5' }, { workLimit: null }, { limits: null }, { limits: 5 },
+          { limits: { cells: -1 } }, { limits: { records: NaN } }, { limits: { cells: Infinity } }];
+        [['findXz', A.findXz], ['findSueDeCoq', A.findSueDeCoq]].forEach(function (finder) {
+          bad.forEach(function (opts) {
+            var seen = [];
+            var checks = 0;
+            var ctx = Object.assign({}, SG.techniques.createContext(m9, {}), {
+              options: { onPatternWork: function (r) { seen.push(r); } },
+              check: function () { checks++; }
+            });
+            var err = caught(function () { finder[1](m9, state, ctx, opts); });
+            var label = finder[0] + ' ' + JSON.stringify(opts);
+            expect([label, err && err.code]).toEqual([label, 'solver.invalidOption']);
+            expect([label, seen.length, checks]).toEqual([label, 0, 0]);
+          });
+        });
+        // a whole number of at least 0 is accepted and floored, and undefined means no option
+        var out = sdcRun(m9, state, { workLimit: 2.9, limits: { cells: 1.7, records: 100 } });
+        expect(out.seen).toHaveLength(1);
+        expect(out.seen[0].limit).toBe(2);
+        expect(sdcRun(m9, state, {}).finding).not.toBeNull();
+        expect(sdcRun(m9, state, { workLimit: undefined, limits: undefined }).finding).not.toBeNull();
+        expect(sdcRun(m9, state, { workLimit: undefined }).seen[0].limit).toBe(50000);
+        expect(sdcRun(m9, state, { workLimit: 0 }).seen[0].limit).toBe(0);
+      });
+
+    it('checks an explicit limits override even when the geometry ends the call before any enumeration',
+      function () {
+        var solved = solvedState(m9, 1601);
+        expect(solved.unsolvedCount).toBe(0);
+        [{ limits: { cells: -1 } }, { limits: { records: NaN } }, { limits: null }, { limits: 'x' },
+          { workLimit: -2 }]
+          .forEach(function (opts) {
+            var seen = [];
+            var checks = 0;
+            var ctx = Object.assign({}, SG.techniques.createContext(m9, {}), {
+              options: { onPatternWork: function (r) { seen.push(r); } },
+              check: function () { checks++; }
+            });
+            var err = caught(function () { A.findSueDeCoq(m9, solved, ctx, opts); });
+            var label = JSON.stringify(opts);
+            expect([label, err && err.code]).toEqual([label, 'solver.invalidOption']);
+            expect([label, seen.length, checks]).toEqual([label, 0, 0]);
+          });
+        // a valid override passes through the same early return
+        var ok = sdcRun(m9, solved, { limits: { cells: 2, records: 5 } });
+        expect(ok.finding).toBeNull();
+        expect(ok.seen).toHaveLength(1);
+      });
+
+    it('defaults to its own private allowance, SDC_WORK_LIMIT, and not to the shared LIMITS.work',
+      function () {
+        var state = position(m9, SDC_BASE);
+        expect(A.LIMITS.work).toBe(50000);
+        expect(sdcRun(m9, state).seen[0].limit).toBe(50000);
+        expect(sdcRun(m9, state, { limits: { records: 100 } }).seen[0].limit).toBe(50000);
+        // the guard is a fresh one for each call: a second call starts from zero and ends with the same
+        // record
+        var a = sdcRun(m9, state).seen[0];
+        var b = sdcRun(m9, state).seen[0];
+        expect(a).toEqual(b);
+        expect(a.work).toBeGreaterThan(0);
+        // and no guard of an earlier ALS-XZ call is reused
+        A.findXz(m9, state, SG.techniques.createContext(m9, {}));
+        expect(sdcRun(m9, state).seen[0]).toEqual(a);
+      });
+  });
+
+  describe('sue-de-coq: the proof by hand', function () {
+    function cellOf(ref) { return H.cell(m9, ref); }
+    function turn(cell) { return (cell % 9) * 9 + Math.floor(cell / 9); }
+
+    /** Eliminations from the cells of a list: [[cell, [digits]], ...] to sorted [cell, digit] pairs. */
+    function pairsOf(list) {
+      var out = [];
+      list.forEach(function (item) { item[1].forEach(function (d) { out.push([item[0], d]); }); });
+      return out;
+    }
+
+    /** A position and its transpose: the same pattern read along a column and a box. */
+    function bothWays(spec) { return [['rows', spec], ['columns', transposed(spec)]]; }
+
+    /** A complete negative: the independent search finds nothing and neither does the finder. */
+    function expectNone(model, state, label) {
+      var plan = sdcPlan(model, state);
+      expect([label, plan.witnesses.length]).toEqual([label, 0]);
+      var out = sdcRun(model, state);
+      expect([label, out.finding]).toEqual([label, null]);
+      expect(out.seen).toEqual([{
+        id: SDC_ID, work: plan.T, limit: 50000, capHit: null,
+        retained: plan.enumerated ? plan.records.length : 0
+      }]);
+      return plan;
+    }
+
+    // what the brief's vector removes: 1 and 2 from the other cells of row 1, 3 and 4 from the other cells of
+    // box 1
+    var BASE_ELIMINATIONS = pairsOf([
+      [2, [1, 2, 3, 4]], [3, [1, 2]], [5, [1, 2]], [6, [1, 2]], [7, [1, 2]], [8, [1, 2]],
+      [9, [3, 4]], [10, [3, 4]], [18, [3, 4]], [19, [3, 4]], [20, [3, 4]]
+    ]);
+
+    it('finds the brief\'s vector: I = {R1C1, R1C2} with C = {1,2,3,4}, A = R1C5 {1,2}, B = R2C3 {3,4}; it ' +
+      'removes 1 and 2 elsewhere in row 1 and 3 and 4 elsewhere in box 1, and nothing from I, A or B',
+    function () {
+      var state = position(m9, SDC_BASE);
+      var plan = sdcPlan(m9, state);
+      var w = plan.first;
+      expect([w.line, w.box, w.tuple, w.a.cells, w.b.cells, w.z]).toEqual([0, 18, [0, 1], [4], [11], []]);
+      expect(plan.witnesses.filter(function (x) { return x.tuple.length === 2; }).length).toBeGreaterThan(0);
+      var out = sdcRun(m9, state);
+      expect(out.finding).toEqual({
+        technique: 'sueDeCoq',
+        cells: [0, 1, 4, 11],
+        placements: [],
+        eliminations: BASE_ELIMINATIONS,
+        i18nKey: 'technique.sueDeCoq.step',
+        i18nArgs: { digits: [1, 2], partDigits: [3, 4], forced: [], line: 'R1', box: 'B1' }
+      });
+      expect(Object.keys(out.finding)).toEqual(['technique', 'cells', 'placements', 'eliminations', 'i18nKey',
+        'i18nArgs']);
+      expect(Object.keys(out.finding.i18nArgs)).toEqual(['digits', 'partDigits', 'forced', 'line', 'box']);
+      expect(out.finding).toEqual(sdcFindingOf(m9, w));
+      var removed = out.finding.eliminations.map(function (e) { return e[0]; });
+      [0, 1, 4, 11].forEach(function (c) { expect(removed).not.toContain(c); });
+      // R1C3 sees both units and loses all four digits; R4C1 sees R1C1 only through column 1 and keeps
+      // everything
+      expect(removed).not.toContain(cellOf('R4C1'));
+      expect(out.seen).toEqual([{
+        id: 'sueDeCoq', work: plan.T, limit: 50000, capHit: null, retained: plan.records.length
+      }]);
+      expect(plan.records).toHaveLength(4);
+    });
+
+    it('finds the same pattern along a column and a box: the transposed vector, with the transposed removals',
+      function () {
+      var state = position(m9, transposed(SDC_BASE));
+      var out = sdcRun(m9, state);
+      var plan = sdcPlan(m9, state);
+      expect(out.finding.cells).toEqual([0, 9, 19, 36]);
+      expect(out.finding.i18nArgs)
+        .toEqual({ digits: [1, 2], partDigits: [3, 4], forced: [], line: 'C1', box: 'B1' });
+      expect(out.finding.eliminations).toEqual(BASE_ELIMINATIONS
+        .map(function (e) { return [turn(e[0]), e[1]]; })
+        .sort(function (a, b) { return a[0] - b[0] || a[1] - b[1]; }));
+      expect(out.finding).toEqual(sdcFindingOf(m9, plan.first));
+      expect(out.seen[0].work).toBe(plan.T);
+    });
+
+    it('adds the Z digit for a three-cell I: I = {R1C1, R1C2, R1C3} with C = {1,2,3,4,5} also removes the ' +
+      '5 elsewhere in row 1 and in box 1, and the key is the extra one', function () {
+      bothWays(SDC_EXTRA).forEach(function (way) {
+        var state = position(m9, way[1]);
+        var plan = sdcPlan(m9, state);
+        var w = plan.first;
+        var out = sdcRun(m9, state);
+        var turned = way[0] === 'columns';
+        var fix = function (cell) { return turned ? turn(cell) : cell; };
+        var expected = pairsOf([
+          [3, [1, 2, 5]], [5, [1, 2, 5]], [6, [1, 2, 5]], [7, [1, 2, 5]], [8, [1, 2, 5]],
+          [9, [3, 4, 5]], [10, [3, 4, 5]], [18, [3, 4, 5]], [19, [3, 4, 5]], [20, [3, 4, 5]]
+        ]).map(function (e) { return [fix(e[0]), e[1]]; })
+          .sort(function (a, b) { return a[0] - b[0] || a[1] - b[1]; });
+        expect([way[0], w.tuple.length, w.z]).toEqual([way[0], 3, [5]]);
+        expect([way[0], out.finding.i18nKey]).toEqual([way[0], 'technique.sueDeCoq.step.extra']);
+        var args = out.finding.i18nArgs;
+        expect([way[0], args.forced, args.digits, args.partDigits]).toEqual([way[0], [5], [1, 2], [3, 4]]);
+        expect([way[0], out.finding.eliminations]).toEqual([way[0], expected]);
+        expect(out.finding.cells).toEqual([0, 1, 2, 4, 11].map(fix).sort(numeric));
+        expect(out.finding).toEqual(sdcFindingOf(m9, w));
+        // none of the three cells of I, nor A, nor B, loses a candidate
+        var removed = out.finding.eliminations.map(function (e) { return e[0]; });
+        [0, 1, 2, 4, 11].forEach(function (c) { expect(removed).not.toContain(fix(c)); });
+      });
+    });
+
+    it('takes every 2-subset of the open shared cells as I, not only the whole intersection: with R1C3 ' +
+      'open the pair {R1C1, R1C2} is I and R1C3 is an ordinary target', function () {
+      bothWays(SDC_SUBSET).forEach(function (way) {
+        var state = position(m9, way[1]);
+        var plan = sdcPlan(m9, state);
+        var w = plan.first;
+        var turned = way[0] === 'columns';
+        var fix = function (cell) { return turned ? turn(cell) : cell; };
+        expect([way[0], w.tuple.slice().sort(numeric), w.z])
+          .toEqual([way[0], [0, 1].map(fix).sort(numeric), []]);
+        var out = sdcRun(m9, state);
+        var third = fix(2);
+        var onThird = out.finding.eliminations.filter(function (e) { return e[0] === third; });
+        expect([way[0], onThird]).toEqual([way[0], [[third, 1]]]);
+        expect(out.finding.cells).toEqual([0, 1, 4, 11].map(fix).sort(numeric));
+        expect(out.finding).toEqual(sdcFindingOf(m9, w));
+      });
+      // with R1C3 solved the same pair is the whole open intersection and the pattern is the same
+      var solved = position(m9, SDC_BASE, { R1C3: 7 });
+      expect(sdcPlan(m9, solved).first.tuple).toEqual([0, 1]);
+      expect(sdcRun(m9, solved).finding.cells).toEqual([0, 1, 4, 11]);
+    });
+
+    it('never removes a candidate of a solved cell, and keeps what it must not touch: a cell that sees I ' +
+      'only by another unit, and a candidate that is not one of the digits', function () {
+      var state = position(m9, SDC_BASE, { R1C4: 1, R2C1: 3 });
+      var out = sdcRun(m9, state);
+      var removed = out.finding.eliminations.map(function (e) { return e[0]; });
+      expect(removed).not.toContain(cellOf('R1C4'));
+      expect(removed).not.toContain(cellOf('R2C1'));
+      out.finding.eliminations.forEach(function (e) {
+        var open = (state.candidates[e[0]] & (1 << (e[1] - 1))) !== 0;
+        expect([e, state.value[e[0]], open]).toEqual([e, 0, true]);
+      });
+      // a cell of row 1 without the digits 1 and 2 loses nothing: R1C6 holds only 5 and 6
+      var narrow = position(m9, Object.assign({ R1C6: '56' }, SDC_BASE));
+      var fromNarrow = sdcRun(m9, narrow).finding.eliminations.map(function (e) { return e[0]; });
+      expect(fromNarrow).not.toContain(cellOf('R1C6'));
+      expect(sdcRun(m9, narrow).finding).toEqual(sdcFindingOf(m9, sdcPlan(m9, narrow).first));
+    });
+
+    it('finds nothing when the digits of A and B overlap, when |C| is not |I| + p + q, when A or B is not ' +
+      'inside C, or when the sets are in the wrong unit, in rows and in columns', function () {
+      var cases = [
+        ['A and B share the 2', Object.assign({}, SDC_BASE, { R2C3: '23' })],
+        ['|C| is one too big for p = q = 1', Object.assign({}, SDC_BASE, { R1C2: '12345' })],
+        // three cells whose digits are one short of |I| + p + q: such a position has no solution at all
+        ['|C| is one short of |I| + p + q for a three-cell I',
+          { R1C1: '12', R1C2: '13', R1C3: '14', R1C5: '12', R2C3: '34' }],
+        ['|C| is one too small: B has a digit outside C',
+          Object.assign({}, SDC_BASE, { R1C1: '123', R1C2: '123' })],
+        ['A has a digit outside C', Object.assign({}, SDC_BASE, { R1C5: '15' })],
+        ['A is a cell of the intersection, in the box',
+          { R1C1: '1234', R1C2: '1234', R1C3: '12', R2C3: '34' }],
+        ['B is a cell of the line, outside the box', { R1C1: '1234', R1C2: '1234', R1C5: '12', R1C6: '34' }],
+        ['A is a cell of another row', { R1C1: '1234', R1C2: '1234', R4C5: '12', R2C3: '34' }],
+        ['B is in a box other than the I box', { R1C1: '1234', R1C2: '1234', R1C5: '12', R5C5: '34' }]
+      ];
+      cases.forEach(function (item) {
+        bothWays(item[1]).forEach(function (way) {
+          expectNone(m9, position(m9, way[1]), item[0] + ', ' + way[0]);
+        });
+      });
+      // each near miss differs from the brief's vector by one fact, and that vector does fire
+      expect(sdcRun(m9, position(m9, SDC_BASE)).finding).not.toBeNull();
+    });
+
+    it('has no witness with a single open cell of the intersection, or when the digits of the cells are no ' +
+      'almost locked set', function () {
+      // one open shared cell: R1C2 and R1C3 are solved
+      expectNone(m9, position(m9, { R1C1: '1234', R1C5: '12', R2C3: '34' }, { R1C2: 5, R1C3: 6 }),
+        'one shared cell');
+      // a one-cell set with three digits is no almost locked set: there is no A
+      expectNone(m9, position(m9, { R1C1: '1234', R1C2: '1234', R1C5: '123', R2C3: '34' }),
+        'no ALS on the A side');
+    });
+
+    it('reads a window, a diagonal or a cage as neither the line nor the box: a pattern that exists only ' +
+      'with a window as the box is not taken', function () {
+      // W1 holds R2C2..R4C4; row 2 meets it in R2C2, R2C3, R2C4 (the last in box 2). I = {R2C3, R2C4} is in
+      // one box only through the window
+      var spec = { R2C3: '1234', R2C4: '1234', R2C7: '12', R3C3: '34' };
+      var state = position(hyperModel, spec);
+      var all = oracle(hyperModel, state, 4).records;
+      var asWindow = sdcWitnesses(hyperModel, state, all, false, ['window']);
+      expect(asWindow.length).toBeGreaterThan(0);
+      var w = asWindow[0];
+      expect([hyperModel.unitMeta[w.box].kind, w.tuple]).toEqual(['window', [11, 12]]);
+      var plan = sdcPlan(hyperModel, state);
+      expect(plan.witnesses).toHaveLength(0);
+      expect(sdcWitnesses(hyperModel, state, all, false, ['box'])).toHaveLength(0);
+      var out = sdcRun(hyperModel, state);
+      expect(out.finding).toBeNull();
+      expect(out.seen[0].capHit).toBeNull();
+      // a diagonal meets a line in one cell, a cage here in none: neither makes a pair on its own
+      [diagonalModel, cageModel].forEach(function (model) {
+        var other = sdcPlan(model, position(model, { R1C1: '1234', R2C2: '1234', R1C5: '12', R3C3: '34' }));
+        other.witnesses.forEach(function (x) {
+          expect(['row', 'col']).toContain(model.unitMeta[x.line].kind);
+          expect(['box', 'region']).toContain(model.unitMeta[x.box].kind);
+        });
+      });
+    });
+  });
+
+  describe('sue-de-coq: agreement with the independent search, and exactness', function () {
+    var ORDER = SDC_ORDER;
+
+    /** The seeded positions of `seededStates`, with the solution that every candidate set contains. */
+    function seededWithSolution(model, solve, seed, count, keepRange) {
+      var rng = SG.testkit.rng.create(seed);
+      var out = [];
+      for (var i = 0; i < count; i++) {
+        var solution = solve(model, rng.fork('grid' + i));
+        var pick = rng.fork('pick' + i);
+        var placedShare = 0.03 + 0.25 * pick.next();
+        var keep = keepRange[0] + (keepRange[1] - keepRange[0]) * pick.next();
+        var state = SG.model.initState(model);
+        var c;
+        var v;
+        for (c = 0; c < model.cellCount; c++) {
+          if (pick.next() < placedShare) SG.constraints.assign(model, state, c, solution[c]);
+        }
+        for (c = 0; c < model.cellCount; c++) {
+          if (state.value[c] !== 0) continue;
+          for (v = 1; v <= model.digits; v++) {
+            if (v !== solution[c] && (state.candidates[c] & (1 << (v - 1))) !== 0 && pick.next() >= keep) {
+              SG.constraints.eliminate(model, state, c, v);
+            }
+          }
+        }
+        out.push({ state: state, solution: solution });
+      }
+      return out;
+    }
+
+    /** Forcing the eliminated digit leaves no completion at all: the exact search finds none. */
+    function expectImpossible(model, state, cell, digit, label) {
+      var forced = SG.model.cloneState(state);
+      if (!SG.constraints.assign(model, forced, cell, digit)) return;
+      if (!SG.constraints.propagate(model, forced)) return;
+      var result = SG.dfs.searchFrom(model, forced, { maxBacktracks: 300000 });
+      expect([label, result.aborted, result.found]).toEqual([label, false, 0]);
+    }
+
+    var SPARSE = [0.05, 0.4];
+    var POPULATIONS = [
+      { name: 'real fixtures after the basic techniques', model: m9, exact: true, real: ORDER.slice(0, 3) },
+      { name: 'real fixtures through the locked techniques', model: m9, exact: true,
+        real: through('nakedPair') },
+      { name: 'real fixtures through the triples', model: m9, exact: true, real: through('nakedQuad') },
+      { name: 'real fixtures through the fish', model: m9, exact: true, real: through('xyWing') },
+      { name: 'real fixtures where alsXz\'s predecessors are exhausted', model: m9, exact: true,
+        real: through('forcingChain') },
+      { name: 'classic9 seeded (seed 4001)', model: m9, exact: true, seed: 4001, count: 8, keep: SPARSE },
+      { name: 'classic9 seeded (seed 4011)', model: m9, exact: true, seed: 4011, count: 8, keep: SPARSE },
+      { name: 'classic9 sweep states', model: m9, exact: true, sweep: 40 },
+      { name: 'classic6', model: m6, exact: true, seed: 4002, count: 12, keep: SPARSE },
+      { name: 'classic4', model: m4, exact: true, seed: 4003, count: 12, keep: SPARSE },
+      { name: '12 digits', model: m12, exact: true, seed: 4004, count: 4, keep: SPARSE },
+      { name: '16 digits', model: m16, exact: false, seed: 4029, count: 3, keep: SPARSE },
+      { name: 'diagonal', model: diagonalModel, exact: true, seed: 4017, count: 6, keep: SPARSE },
+      { name: 'windows', model: hyperModel, exact: true, seed: 4017, count: 6, keep: SPARSE },
+      { name: 'partial cage', model: cageModel, exact: true, seed: 4018, count: 6, keep: SPARSE },
+      { name: 'samurai', model: samuraiModel, exact: false, seed: 4006, count: 2, keep: SPARSE },
+      { name: 'samurai, denser', model: samuraiModel, exact: false, seed: 4016, count: 2, keep: [0.3, 0.6] }
+    ];
+    ['staggered', 'wavy', 'mixed', 'crossed'].forEach(function (name, i) {
+      [false, true].forEach(function (flip) {
+        var layout = J.parse(J.LAYOUTS[name]);
+        POPULATIONS.push({
+          name: 'jigsaw ' + name + (flip ? ' (transposed)' : ''),
+          model: J.build(flip ? J.transpose(layout) : layout), solve: J.solve, exact: true,
+          seed: 4100 + 2 * i + (flip ? 1 : 0), count: 6, keep: SPARSE
+        });
+      });
+    });
+
+    var tally = { positions: 0, fired: 0, byPopulation: {}, eliminations: 0, zEmpty: 0, zNonEmpty: 0,
+      twoCells: 0, threeCells: 0, properSubset: 0, wholeIntersection: 0, oneCellSides: 0, bigSides: 0,
+      notTheMost: 0, multipleTargets: 0, cut: 0, recordQuota: 0, exact: 0, withoutAlsXz: 0, withAlsXz: 0,
+      labels: {}, regions: 0 };
+
+    function checkPosition(pop, item, i) {
+      var model = pop.model;
+      var state = item.state;
+      var label = pop.name + ' #' + i;
+      var plan = sdcPlan(model, state);
+      var out = sdcRun(model, state);
+      var first = plan.first;
+      tally.positions++;
+      if (plan.all.length > DEFAULT.records) tally.recordQuota++;
+      if (plan.T > DEFAULT.work) {
+        // the guard of 50,000 units is spent before the first witness (or the end): a cut call, no Finding
+        expect([label, out.finding]).toEqual([label, null]);
+        expect([label, out.seen]).toEqual([label, [{
+          id: SDC_ID, work: DEFAULT.work, limit: DEFAULT.work, capHit: 'work', retained: out.seen[0].retained
+        }]]);
+        tally.cut++;
+        return true;
+      }
+      var capHit = plan.enumerated && plan.capHit === 'records' ? 'records' : null;
+      if (first === null) expect([label, out.finding]).toEqual([label, null]);
+      else same(label, out.finding, sdcFindingOf(model, first));
+      expect([label, out.seen]).toEqual([label, [{
+        id: SDC_ID, work: plan.T, limit: DEFAULT.work, capHit: capHit,
+        retained: plan.enumerated ? plan.records.length : 0
+      }]]);
+      tally.byPopulation[pop.name] = (tally.byPopulation[pop.name] || 0) + (first === null ? 0 : 1);
+      if (first === null) return true;
+      tally.fired++;
+      tally.eliminations += out.finding.eliminations.length;
+      tally[first.z.length === 0 ? 'zEmpty' : 'zNonEmpty']++;
+      tally[first.tuple.length === 2 ? 'twoCells' : 'threeCells']++;
+      var shared = openCells(model, state, first.line)
+        .filter(function (c) { return heldIn(model, first.box, c); });
+      tally[first.tuple.length < shared.length ? 'properSubset' : 'wholeIntersection']++;
+      if (first.a.cells.length === 1 && first.b.cells.length === 1) tally.oneCellSides++;
+      if (first.a.cells.length + first.b.cells.length >= 4) tally.bigSides++;
+      if (first.targets.length > 1) tally.multipleTargets++;
+      var largest = plan.witnesses.some(function (w) { return w.targets.length > first.targets.length; });
+      if (largest) tally.notTheMost++;
+      var kinds = [model.unitMeta[first.line].kind, model.unitMeta[first.box].kind];
+      tally.labels[kinds.join('/')] = (tally.labels[kinds.join('/')] || 0) + 1;
+      if (kinds[1] === 'region') tally.regions++;
+      // ALS-XZ is a separate finder: both may fire on one position, either may not
+      var xzFound = A.findXz(model, state, SG.techniques.createContext(model, {})) !== null;
+      tally[xzFound ? 'withAlsXz' : 'withoutAlsXz']++;
+      // the line and the box named in the Finding are the real units, and every removal is sound
+      expect(out.finding.i18nArgs.line).toBe(model.unitMeta[first.line].label);
+      expect(out.finding.i18nArgs.box).toBe(model.unitMeta[first.box].label);
+      out.finding.eliminations.forEach(function (e, k) {
+        expect([label, e, item.solution[e[0]] === e[1]]).toEqual([label, e, false]);
+        if (pop.exact && k < 2) {
+          expectImpossible(model, state, e[0], e[1], label);
+          tally.exact++;
+        }
+      });
+      return true;
+    }
+
+    POPULATIONS.forEach(function (pop) {
+      it('gives the independent search\'s first witness, its work and its record on ' + pop.name,
+        function () {
+          var items;
+          if (pop.real) {
+            items = realPositions(pop.real);
+          } else if (pop.sweep) {
+            items = H.randomStatesWithKnownSolution(pop.model, SG.testkit.rng.create(20260101), pop.sweep);
+          } else {
+            items = seededWithSolution(pop.model, pop.solve || randomSolution, pop.seed, pop.count, pop.keep);
+          }
+          var used = 0;
+          items.forEach(function (item, i) { if (checkPosition(pop, item, i)) used++; });
+          expect([pop.name, used > 0]).toEqual([pop.name, true]);
+        });
+    });
+
+    it('exercises the rule on those positions: firings on every kind of board and in the real fixtures, ' +
+      'both forms of Z, two- and three-cell I, a proper subset of the intersection, larger sets, several ' +
+      'targets, a first witness that is not the largest, a record-capped call, regions as boxes, and the ' +
+      'exact search',
+      function () {
+        expect(tally.positions).toBeGreaterThan(400);
+        POPULATIONS.forEach(function (pop) {
+          expect([pop.name, tally.byPopulation[pop.name] > 0]).toEqual([pop.name, true]);
+        });
+        expect(tally.fired).toBeGreaterThan(60);
+        expect(tally.zEmpty).toBeGreaterThan(30);
+        expect(tally.zNonEmpty).toBeGreaterThan(30);
+        expect(tally.twoCells).toBeGreaterThan(30);
+        expect(tally.threeCells).toBeGreaterThan(30);
+        expect(tally.properSubset).toBeGreaterThan(10);
+        expect(tally.wholeIntersection).toBeGreaterThan(40);
+        expect(tally.oneCellSides).toBeGreaterThan(30);
+        expect(tally.bigSides).toBeGreaterThan(8);
+        expect(tally.multipleTargets).toBeGreaterThan(50);
+        expect(tally.notTheMost).toBeGreaterThan(8);
+        expect(tally.recordQuota).toBeGreaterThan(0);
+        expect(tally.regions).toBeGreaterThan(12);
+        // ALS-XZ is another finder: on these positions it also fires wherever Sue de Coq does, which says
+        // nothing about a position that the registry reaches only after ALS-XZ is exhausted
+        expect(tally.withAlsXz + tally.withoutAlsXz).toBe(tally.fired);
+        expect(tally.exact).toBeGreaterThan(100);
+        // only rows and columns against boxes and regions ever appear
+        Object.keys(tally.labels).forEach(function (key) {
+          expect(['row/box', 'col/box', 'row/region', 'col/region']).toContain(key);
+        });
+      });
+  });
+
+  describe('sue-de-coq: the one guard, the work limit and the record quota', function () {
+    var BASE = position(m9, SDC_BASE);
+    // every other cell of the row and the box of the vector is left with digits that are none of 1 to 4, so
+    // the capacity condition holds for {R1C1, R1C2}, R1C5 and R2C3 and no target is left
+    var NO_TARGET = position(m9, Object.assign({
+      R1C4: '6', R1C6: '7', R1C7: '8', R1C8: '9', R1C9: '67', R2C1: '6', R2C2: '7', R3C1: '8', R3C2: '9',
+      R3C3: '67'
+    }, SDC_BASE), { R1C3: 5 });
+
+    /** Two open cells left of a solved board: `leave` are the cells that stay open. */
+    function almostSolved(model, seed, leave) {
+      var solution = SG.testkit.randomSolution(model, SG.testkit.rng.create(seed));
+      var state = SG.model.initState(model);
+      for (var c = 0; c < model.cellCount; c++) {
+        if (leave.indexOf(c) === -1) SG.constraints.assign(model, state, c, solution[c]);
+      }
+      return state;
+    }
+
+    it('charges the geometry, the enumeration and the search to one guard: a limit L gives the Finding ' +
+      'from the whole count on, and a cut call has spent exactly L, with no Finding and capHit work',
+      function () {
+        var plan = sdcPlan(m9, BASE);
+        var T = plan.T;
+        expect(plan.geometry).toBe(81);
+        expect(T).toBeGreaterThan(plan.geometry + plan.E);
+        for (var limit = 0; limit <= T + 2; limit++) {
+          var out = sdcRun(m9, BASE, { workLimit: limit });
+          var label = 'limit ' + limit;
+          expect(out.seen).toHaveLength(1);
+          var record = out.seen[0];
+          expect([label, record.id, record.limit]).toEqual([label, SDC_ID, limit]);
+          if (limit >= T) {
+            expect([label, record.capHit, record.work, out.finding === null])
+              .toEqual([label, null, T, false]);
+          } else {
+            // a refused unit leaves used === limit; a partial scan of the targets is dropped whole
+            expect([label, record.capHit, record.work, out.finding]).toEqual([label, 'work', limit, null]);
+          }
+          if (limit >= plan.geometry + plan.E) {
+            expect([label, record.retained]).toEqual([label, plan.records.length]);
+          }
+          if (limit <= plan.geometry) expect([label, record.retained]).toEqual([label, 0]);
+        }
+      });
+
+    it('ends in the geometry when no (line, box) pair has two open shared cells: no enumeration, retained ' +
+      '0, and exactly the geometry is no cap while one unit less is', function () {
+        var geometry = 81;
+        [['a solved board', solvedState(m9, 1601)],
+          ['two open cells that share no pair', almostSolved(m9, 1602, [0, 40])]].forEach(function (item) {
+          var state = item[1];
+          expect([item[0], sdcPlan(m9, state).enumerated]).toEqual([item[0], false]);
+          expect(sdcRun(m9, state).seen).toEqual([{ id: SDC_ID, work: geometry, limit: 50000, capHit: null,
+            retained: 0 }]);
+          var exact = sdcRun(m9, state, { workLimit: geometry });
+          expect([item[0], exact.finding, exact.seen]).toEqual([item[0], null, [{
+            id: SDC_ID, work: geometry, limit: geometry, capHit: null, retained: 0
+          }]]);
+          var short = sdcRun(m9, state, { workLimit: geometry - 1 });
+          expect([item[0], short.finding, short.seen]).toEqual([item[0], null, [{
+            id: SDC_ID, work: geometry - 1, limit: geometry - 1, capHit: 'work', retained: 0
+          }]]);
+          expect(sdcRun(m9, state, { workLimit: 0 }).seen[0].capHit).toBe('work');
+        });
+        // the pair {R1C1, R1C2} of two open cells exists: the enumeration runs, and a normal negative has no
+        // cap
+        var pair = almostSolved(m9, 1603, [0, 1]);
+        var plan = sdcPlan(m9, pair);
+        expect(plan.enumerated).toBe(true);
+        expect(plan.witnesses).toHaveLength(0);
+        expect(sdcRun(m9, pair).seen).toEqual([{ id: SDC_ID, work: plan.T, limit: 50000, capHit: null,
+          retained: plan.records.length }]);
+      });
+
+    it('is cut by the guard inside the geometry before any enumeration, and a cut at the first unit of the ' +
+      'enumeration still retains nothing', function () {
+        var plan = sdcPlan(m9, BASE);
+        [0, 1, 40, 80].forEach(function (limit) {
+          var out = sdcRun(m9, BASE, { workLimit: limit });
+          expect(out.finding).toBeNull();
+          expect(out.seen).toEqual([{ id: SDC_ID, work: limit, limit: limit, capHit: 'work', retained: 0 }]);
+        });
+        var edge = sdcRun(m9, BASE, { workLimit: plan.geometry });
+        expect(edge.finding).toBeNull();
+        expect(edge.seen).toEqual([{ id: SDC_ID, work: 81, limit: 81, capHit: 'work', retained: 0 }]);
+        // after the enumeration the next refused unit is the first classified record, then the first pair
+        // opened
+        var afterEnumeration = sdcRun(m9, BASE, { workLimit: plan.geometry + plan.E });
+        expect(afterEnumeration.seen).toEqual([{ id: SDC_ID, work: plan.geometry + plan.E,
+          limit: plan.geometry + plan.E, capHit: 'work', retained: plan.records.length }]);
+        var afterRecords = plan.geometry + plan.E + plan.records.length;
+        var atPairs = sdcRun(m9, BASE, { workLimit: afterRecords });
+        expect(atPairs.seen).toEqual([{ id: SDC_ID, work: afterRecords, limit: afterRecords, capHit: 'work',
+          retained: plan.records.length }]);
+      });
+
+    it('charges a valid witness without a target, and every rejected test: the call that scans the 15 ' +
+      'cells of the row and the box and finds nothing is complete at exactly its count and cut one unit ' +
+      'short',
+      function () {
+        var plan = sdcPlan(m9, NO_TARGET);
+        expect(plan.witnesses).toHaveLength(0);
+        var out = sdcRun(m9, NO_TARGET);
+        expect(out.finding).toBeNull();
+        expect(out.seen).toEqual([{ id: SDC_ID, work: plan.T, limit: 50000, capHit: null,
+          retained: plan.records.length }]);
+        // the vector of the brief is still a valid witness of the position: only its targets are gone
+        var short = sdcRun(m9, NO_TARGET, { workLimit: plan.T - 1 });
+        expect([short.finding, short.seen[0].capHit, short.seen[0].work]).toEqual([null, 'work', plan.T - 1]);
+        expect(sdcRun(m9, NO_TARGET, { workLimit: plan.T }).seen[0].capHit).toBeNull();
+        // the 15 cells of the target scan are the last units: with 15 fewer the call is cut before them
+        expect(sdcRun(m9, NO_TARGET, { workLimit: plan.T - 15 }).seen[0].capHit).toBe('work');
+        // a valid witness with targets differs from it by the target scan only in what it returns
+        var withTargets = sdcPlan(m9, BASE);
+        expect(withTargets.first).not.toBeNull();
+      });
+
+    it('keeps a prefix of the records when the quota cuts and still searches its witnesses: the Finding of ' +
+      'a prefix is a proof and the cap stays visible; a prefix without a witness claims no absence',
+    function () {
+        var plan = sdcPlan(m9, BASE);
+        expect(plan.records.map(function (r) { return r.cells; }))
+          .toEqual([[4], [11], [0, 1, 4], [0, 1, 11]]);
+        // two records are R1C5 and R2C3, the A and the B of the vector: the witness is still found
+        var two = sdcRun(m9, BASE, { limits: { records: 2 } });
+        var plan2 = sdcPlan(m9, BASE, { records: 2 });
+        expect(plan2.first).not.toBeNull();
+        expect(two.finding).toEqual(sdcFindingOf(m9, plan2.first));
+        expect(two.finding.cells).toEqual([0, 1, 4, 11]);
+        expect(two.seen).toEqual([{ id: SDC_ID, work: plan2.T, limit: 50000, capHit: 'records',
+          retained: 2 }]);
+        // one record holds no B: no Finding, no claim, the cap stays records
+        var one = sdcRun(m9, BASE, { limits: { records: 1 } });
+        expect(sdcPlan(m9, BASE, { records: 1 }).witnesses).toHaveLength(0);
+        expect(one.finding).toBeNull();
+        expect([one.seen[0].capHit, one.seen[0].retained]).toEqual(['records', 1]);
+        // exactly the quota is allowed: four records and no cap; one more record than allowed is a cap
+        expect(sdcRun(m9, BASE, { limits: { records: 4 } }).seen[0].capHit).toBeNull();
+        expect(sdcRun(m9, BASE, { limits: { records: 3 } }).seen[0].capHit).toBe('records');
+      });
+
+    it('reports the work cap before the record quota when both happened', function () {
+      var plan2 = sdcPlan(m9, BASE, { records: 2 });
+      var cutSearch = sdcRun(m9, BASE, { limits: { records: 2 }, workLimit: plan2.T - 1 });
+      expect(cutSearch.finding).toBeNull();
+      expect(cutSearch.seen).toEqual([{ id: SDC_ID, work: plan2.T - 1, limit: plan2.T - 1, capHit: 'work',
+        retained: 2 }]);
+      // a cut inside the enumeration after the quota was reached (the probe of the next size)
+      var cutEnumeration = sdcRun(m9, BASE, {
+        limits: { records: 2 }, workLimit: plan2.geometry + plan2.E - 1
+      });
+      expect(cutEnumeration.finding).toBeNull();
+      expect(cutEnumeration.seen[0].capHit).toBe('work');
+    });
+
+    it('lets the default 50,000 cut a call and reports it, while a lifted limit finds nothing either',
+      function () {
+        var state = position(m16, {});
+        for (var c = 0; c < m16.cellCount; c++) state.candidates[c] = 3;
+        // every cell {1,2} of a 16 x 16 board: the enumeration alone costs 154,032 units
+        var out = sdcRun(m16, state);
+        expect(out.finding).toBeNull();
+        expect(out.seen).toEqual([{ id: SDC_ID, work: 50000, limit: 50000, capHit: 'work', retained: 256 }]);
+      });
+
+    it('has the allowance of its own guard only: a lifted workLimit changes no finding of a complete call',
+      function () {
+        [BASE, NO_TARGET, position(m9, SDC_EXTRA)].forEach(function (state, i) {
+          var plain = sdcRun(m9, state);
+          var lifted = sdcRun(m9, state, { workLimit: 5000000 });
+          expect([i, JSON.stringify(lifted.finding)]).toEqual([i, JSON.stringify(plain.finding)]);
+          expect([i, lifted.seen[0].work, lifted.seen[0].capHit]).toEqual([i, plain.seen[0].work, null]);
+          expect(lifted.seen[0].limit).toBe(5000000);
+        });
+      });
+  });
+
+  describe('sue-de-coq: the parent budget, errors and the observer record', function () {
+    var BASE = position(m9, SDC_BASE);
+
+    function exceeded() { return new SG.errors.GenerationError('budget.exceeded', { reason: 'nodes' }); }
+
+    /** A context whose check counts its calls and calls hook(n), n from 1, which may throw. */
+    function counting(model, observer, hook) {
+      var counter = { calls: 0 };
+      var ctx = Object.assign({}, SG.techniques.createContext(model, { onPatternWork: observer }), {
+        check: function () {
+          counter.calls++;
+          if (hook) hook(counter.calls);
+        }
+      });
+      return { ctx: ctx, counter: counter };
+    }
+
+    // the real classic 9 x 9 position, among those where every technique before sueDeCoq is exhausted, that
+    // has no witness and the longest search: a complete negative of a few thousand units, so that the search
+    // has checks of its own
+    var negativeCache = null;
+    function negative() {
+      if (negativeCache !== null) return negativeCache;
+      var ids = SG.techniques.list().filter(function (t) { return t.variantScope === null && t.order < 196; })
+        .map(function (t) { return t.id; });
+      var best = null;
+      realPositions(ids).forEach(function (item) {
+        var plan = sdcPlan(m9, item.state);
+        if (plan.first === null && plan.enumerated && (best === null || plan.rest > best.rest)) {
+          best = { state: item.state, rest: plan.rest };
+        }
+      });
+      negativeCache = best.state;
+      return negativeCache;
+    }
+
+    var samuraiBlank = SG.model.initState(samuraiModel);
+
+    /**
+     * Where the parent is asked: in order, the check at entry, one every 256 units of the geometry, one at
+     * the end of the geometry, then (with a pair) the enumeration's own entry check, one every 256 units of
+     * it, one after it, one every 256 units of the classification, one after it, one every 256 units of the
+     * search and one before the record is published. `spents[k]` is what the guard has spent when check k + 1
+     * is made and `kinds[k]` which one it is. NOT independent: it states the rule.
+     */
+    function layout(model, state, limits) {
+      var plan = sdcPlan(model, state, limits);
+      var spents = [0];
+      var kinds = ['entry'];
+      function cadence(units, from, kind) {
+        for (var j = 1; j <= Math.floor((units - 1) / 256); j++) {
+          spents.push(from + 256 * j);
+          kinds.push(kind);
+        }
+      }
+      function boundary(at, kind) {
+        spents.push(at);
+        kinds.push(kind);
+      }
+      cadence(plan.geometry, 0, 'geometry');
+      boundary(plan.geometry, 'afterGeometry');
+      var K = plan.enumerated ? plan.records.length : 0;
+      var S = plan.enumerated ? plan.rest - K : 0;
+      if (plan.enumerated) {
+        boundary(plan.geometry, 'enumerateEntry');
+        cadence(plan.E, plan.geometry, 'enumeration');
+        boundary(plan.geometry + plan.E, 'afterEnumeration');
+        cadence(K, plan.geometry + plan.E, 'classification');
+        boundary(plan.geometry + plan.E + K, 'afterClassification');
+        cadence(S, plan.geometry + plan.E + K, 'search');
+        boundary(plan.T, 'final');
+      }
+      return { plan: plan, spents: spents, kinds: kinds, N: spents.length };
+    }
+
+    /** How many checks a call makes when the guard refuses the unit after the L-th (L < T). */
+    function checksBefore(lay, L) {
+      var G = lay.plan.geometry;
+      var E = lay.plan.E;
+      var K = lay.plan.records.length;
+      var done = { entry: 0, afterGeometry: G, enumerateEntry: G, afterEnumeration: G + E,
+        afterClassification: G + E + K, final: lay.plan.T };
+      var n = 0;
+      lay.kinds.forEach(function (kind, k) {
+        if (done[kind] !== undefined) {
+          if (L >= done[kind]) n++;
+        } else if (lay.spents[k] < L) {
+          n++;
+        }
+      });
+      return n;
+    }
+
+    // built when a test asks for them: the real negative is chosen among the fixture positions
+    function positions() {
+      return [
+        ['the brief\'s vector', m9, BASE],
+        ['a real complete negative', m9, negative()],
+        ['a blank Samurai board', samuraiModel, samuraiBlank],
+        ['a solved board', m9, solvedState(m9, 1601)]
+      ];
+    }
+
+    it('asks the parent budget at entry, every 256 units, at the end of the geometry, of the enumeration ' +
+      'and of the classification, and before publishing', function () {
+        positions().forEach(function (item) {
+          var lay = layout(item[1], item[2]);
+          var seen = [];
+          var c = counting(item[1], function (r) { seen.push(r); });
+          A.findSueDeCoq(item[1], item[2], c.ctx);
+          expect([item[0], c.counter.calls]).toEqual([item[0], lay.N]);
+          expect([item[0], seen.length, seen[0].work]).toEqual([item[0], 1, lay.plan.T]);
+        });
+        // the shapes the rule needs are all there: a geometry check of the 405 cells of a Samurai board, many
+        // checks of the search of the real negative, and none of the enumeration for the solved board
+        var samurai = layout(samuraiModel, samuraiBlank);
+        expect(samurai.kinds.filter(function (k) { return k === 'geometry'; })).toHaveLength(1);
+        var real = layout(m9, negative());
+        expect(real.plan.witnesses).toHaveLength(0);
+        expect(real.kinds.filter(function (k) { return k === 'search'; }).length).toBeGreaterThan(1);
+        expect(layout(m9, solvedState(m9, 1601)).N).toBe(2);
+      });
+
+    it('asks nothing more of the parent once the guard refused a unit', function () {
+      positions().forEach(function (item) {
+        var lay = layout(item[1], item[2]);
+        var T = lay.plan.T;
+        var limits = [0, 1, 40, lay.plan.geometry - 1, lay.plan.geometry, lay.plan.geometry + 1,
+          lay.plan.geometry + lay.plan.E - 1, lay.plan.geometry + lay.plan.E, Math.floor(T / 2), T - 2,
+          T - 1, T];
+        limits.forEach(function (limit) {
+          if (limit < 0 || limit > T) return;
+          var c = counting(item[1], null);
+          A.findSueDeCoq(item[1], item[2], c.ctx, { workLimit: limit });
+          var expected = limit >= T ? lay.N : checksBefore(lay, limit);
+          expect([item[0], limit, c.counter.calls]).toEqual([item[0], limit, expected]);
+        });
+      });
+    });
+
+    it('answers a stop of the parent at any one of those checks with no Finding and no error, and the one ' +
+      'record says what the guard had spent', function () {
+        var all = positions();
+        [all[0], all[1], all[2]].forEach(function (item) {
+          var lay = layout(item[1], item[2]);
+          var ks = [];
+          for (var k = 1; k <= lay.N; k++) {
+            var edge = k <= 4 || k >= lay.N - 3 || k % 5 === 0 || lay.kinds[k - 1] !== lay.kinds[k - 2];
+            if (lay.N <= 14 || edge) ks.push(k);
+          }
+          ks.forEach(function (stop) {
+            var seen = [];
+            var c = counting(item[1], function (r) { seen.push(r); }, function (n) {
+              if (n === stop) throw exceeded();
+            });
+            var kind = lay.kinds[stop - 1];
+            var label = item[0] + ', stop at check ' + stop + ' of ' + lay.N + ' (' + kind + ')';
+            var finding = A.findSueDeCoq(item[1], item[2], c.ctx);
+            expect([label, finding]).toEqual([label, null]);
+            expect([label, seen.length]).toEqual([label, 1]);
+            expect([label, seen[0].work, seen[0].capHit, seen[0].limit])
+              .toEqual([label, lay.spents[stop - 1], null, 50000]);
+            // a stop in the enumeration is remembered: the call asks once more, it passes, and nothing is
+            // searched
+            var inEnumeration = kind === 'enumerateEntry' || kind === 'enumeration';
+            expect([label, c.counter.calls]).toEqual([label, inEnumeration ? stop + 1 : stop]);
+            var early = kind === 'entry' || kind === 'geometry' || kind === 'afterGeometry' ||
+              kind === 'enumerateEntry';
+            if (early) {
+              expect([label, seen[0].retained]).toEqual([label, 0]);
+            }
+            if (!inEnumeration && stop >= lay.N - 2 && lay.plan.enumerated) {
+              expect([label, seen[0].retained]).toEqual([label, lay.plan.records.length]);
+            }
+          });
+        });
+      });
+
+    it('remembers a stop of the parent seen once: even when the budget answers again the prefix is not used',
+      function () {
+        var lay = layout(m9, BASE);
+        var entry = lay.kinds.indexOf('enumerateEntry') + 1;
+        var seen = [];
+        var c = counting(m9, function (r) { seen.push(r); }, function (n) {
+          if (n === entry) throw exceeded();
+        });
+        expect(A.findSueDeCoq(m9, BASE, c.ctx)).toBeNull();
+        expect(c.counter.calls).toBe(entry + 1);
+        expect(seen).toEqual([{ id: SDC_ID, work: 81, limit: 50000, capHit: null, retained: 0 }]);
+        // the same call without the stop finds the witness
+        expect(A.findSueDeCoq(m9, BASE, SG.techniques.createContext(m9, {}))).not.toBeNull();
+      });
+
+    it('does not erase a cap already reported: the record quota stays after a stop of the parent',
+      function () {
+        var lay = layout(m9, BASE, { records: 2 });
+        ['afterClassification', 'final'].forEach(function (kind) {
+          var stop = lay.kinds.indexOf(kind) + 1;
+          var seen = [];
+          var c = counting(m9, function (r) { seen.push(r); }, function (n) {
+            if (n === stop) throw exceeded();
+          });
+          expect([kind, A.findSueDeCoq(m9, BASE, c.ctx, { limits: { records: 2 } })]).toEqual([kind, null]);
+          expect([kind, seen.length]).toEqual([kind, 1]);
+          expect([kind, seen[0].capHit, seen[0].retained]).toEqual([kind, 'records', 2]);
+        });
+      });
+
+    it('answers a real spent budget as no Finding, and the budget stays spent for the caller', function () {
+      var parent = SG.budget.create({ nodes: 3 });
+      var seen = [];
+      var ctx = SG.techniques.createContext(m9, {
+        budget: parent, onPatternWork: function (r) { seen.push(r); }
+      });
+      expect(A.findSueDeCoq(m9, negative(), ctx)).toBeNull();
+      expect(seen).toHaveLength(1);
+      expect(seen[0].capHit).toBeNull();
+      expect(caught(function () { parent.check(); }).code).toBe('budget.exceeded');
+      var gone = SG.budget.create({ nodes: 0 });
+      var first = [];
+      expect(A.findSueDeCoq(m9, BASE, SG.techniques.createContext(m9, {
+        budget: gone, onPatternWork: function (r) { first.push(r); }
+      }))).toBeNull();
+      expect(first).toEqual([{ id: SDC_ID, work: 0, limit: 50000, capHit: null, retained: 0 }]);
+    });
+
+    it('lets cancellation and every other error through from every check, with nothing published',
+      function () {
+      var kinds = [
+        ['a cancellation of the parent',
+          new SG.errors.GenerationError('budget.cancelled', { reason: 'cancelled' })],
+        ['an error that is not a budget error', new Error('boom')],
+        ['a plain sentinel object', Object.freeze({ sentinel: 'parent cancellation' })],
+        ['an object with a code that is not a budget code', { code: 'other.code' }],
+        ['a thrown null', null],
+        ['a thrown undefined', undefined],
+        ['a thrown zero', 0]
+      ];
+      var all = positions();
+      [all[0], all[1], all[3]].forEach(function (item) {
+        var lay = layout(item[1], item[2]);
+        var stops = [1, 2, lay.N - 1, lay.N];
+        lay.kinds.forEach(function (kind, k) {
+          if (kind !== lay.kinds[k - 1]) stops.push(k + 1);
+        });
+        stops.forEach(function (stop) {
+          kinds.forEach(function (kind) {
+            var seen = [];
+            var c = counting(item[1], function (r) { seen.push(r); }, function (n) {
+              if (n === stop) throw kind[1];
+            });
+            var threw = false;
+            var thrown = null;
+            var returned = null;
+            try {
+              returned = A.findSueDeCoq(item[1], item[2], c.ctx);
+            } catch (e) {
+              threw = true;
+              thrown = e;
+            }
+            var label = item[0] + ', ' + kind[0] + ', check ' + stop;
+            expect([label, threw, thrown === kind[1], returned, seen.length])
+              .toEqual([label, true, true, null, 0]);
+            expect([label, c.counter.calls]).toEqual([label, stop]);
+          });
+        });
+      });
+    });
+
+    it('drops a Finding when the budget fails after the search: the last check is before publishing',
+      function () {
+      var lay = layout(m9, BASE);
+      expect(lay.plan.first).not.toBeNull();
+      var seen = [];
+      var c = counting(m9, function (r) { seen.push(r); }, function (n) {
+        if (n === lay.N) throw exceeded();
+      });
+      expect(A.findSueDeCoq(m9, BASE, c.ctx)).toBeNull();
+      expect(seen).toEqual([{ id: SDC_ID, work: lay.plan.T, limit: 50000, capHit: null,
+        retained: lay.plan.records.length }]);
+      // the same position with a final check that passes returns the Finding
+      expect(A.findSueDeCoq(m9, BASE, counting(m9, null).ctx)).not.toBeNull();
+    });
+
+    it('publishes one record per call that returns, after the search and outside the error handling: an ' +
+      'observer that throws is not swallowed, whatever it throws', function () {
+        var calls = 0;
+        var boom = new Error('observer');
+        var err = caught(function () {
+          A.findSueDeCoq(m9, BASE, SG.techniques.createContext(m9, {
+            onPatternWork: function () { calls++; throw boom; }
+          }));
+        });
+        expect([calls, err === boom]).toEqual([1, true]);
+        // an observer that throws a budget error is not taken for a stop of the parent: no retry, no second
+        // record
+        var stop = exceeded();
+        var published = 0;
+        var other = caught(function () {
+          A.findSueDeCoq(m9, BASE, SG.techniques.createContext(m9, {
+            onPatternWork: function () { published++; throw stop; }
+          }));
+        });
+        expect([published, other === stop]).toEqual([1, true]);
+        // the same on a cut call and on a call that the parent stopped
+        var cutThrown = caught(function () {
+          A.findSueDeCoq(m9, BASE, SG.techniques.createContext(m9, {
+            onPatternWork: function () { throw stop; }
+          }), { workLimit: 5 });
+        });
+        expect(cutThrown === stop).toBe(true);
+        // a cut call and a stopped call publish their record as well
+        var records = [];
+        var observer = function (r) { records.push(r); };
+        A.findSueDeCoq(m9, BASE, SG.techniques.createContext(m9, { onPatternWork: observer }),
+          { workLimit: 5 });
+        A.findSueDeCoq(m9, BASE, SG.techniques.createContext(m9, {
+          budget: SG.budget.create({ nodes: 0 }), onPatternWork: observer
+        }));
+        expect(records.map(function (r) { return [r.capHit, r.work]; })).toEqual([['work', 5], [null, 0]]);
+      });
+
+    it('gives exactly id, work, limit, capHit and retained, a new object for each call, and reads a ' +
+      'context without options or with a hostile observer the same way', function () {
+        var a = sdcRun(m9, BASE).seen[0];
+        var b = sdcRun(m9, BASE).seen[0];
+        expect(Object.keys(a)).toEqual(['id', 'work', 'limit', 'capHit', 'retained']);
+        expect(a).toEqual(b);
+        expect(a).not.toBe(b);
+        var base = SG.techniques.createContext(m9, {});
+        var calls = 0;
+        [undefined, null, { onPatternWork: 'no' }, { onPatternWork: 5 }].forEach(function (options) {
+          var ctx = Object.assign({}, base, { options: options });
+          expect(A.findSueDeCoq(m9, BASE, ctx)).toEqual(A.findSueDeCoq(m9, BASE, base));
+        });
+        var counting2 = Object.assign({}, base, { options: { onPatternWork: function () { calls++; } } });
+        A.findSueDeCoq(m9, BASE, counting2);
+        expect(calls).toBe(1);
+      });
+  });
+
+  describe('sue-de-coq: ownership, immutability and no cache', function () {
+    it('returns arrays of its own: writing to the Finding changes nothing in the next call', function () {
+      var state = position(m9, SDC_EXTRA);
+      var ctx = SG.techniques.createContext(m9, {});
+      var first = A.findSueDeCoq(m9, state, ctx);
+      var snapshot = JSON.stringify(first);
+      first.cells.push(999);
+      first.cells.reverse();
+      first.eliminations.forEach(function (e) { e.push(1); e[0] = -1; });
+      first.eliminations.length = 0;
+      first.placements.push([1, 1]);
+      first.i18nArgs.digits.push(9);
+      first.i18nArgs.partDigits.length = 0;
+      first.i18nArgs.forced.push(8);
+      first.i18nArgs.line = 'X';
+      var second = A.findSueDeCoq(m9, state, ctx);
+      expect(JSON.stringify(second)).toBe(snapshot);
+      var arrays = [second.cells, second.placements, second.eliminations, second.i18nArgs.digits,
+        second.i18nArgs.partDigits, second.i18nArgs.forced];
+      second.eliminations.forEach(function (e) { arrays.push(e); });
+      arrays.forEach(function (a, i) {
+        arrays.forEach(function (b, j) { if (i !== j) expect(a === b).toBe(false); });
+      });
+      expect(JSON.parse(JSON.stringify(second))).toEqual(second);
+      // the records the enumerator returns are the caller's too: nothing of them is shared with the Finding
+      var records = run(m9, state).result.records;
+      expect(records.every(function (r) { return r.digits !== second.i18nArgs.digits; })).toBe(true);
+    });
+
+    it('reads the model, the state and the context only, with the debug checks on', function () {
+      var before = SG.DEBUG;
+      SG.setDebug(true);
+      try {
+        [m9, m6, cageModel, hyperModel, m12].forEach(function (model, k) {
+          seededStates(model, randomSolution, 4040 + k, 4, [0.05, 0.4]).forEach(function (state, i) {
+            var snapshot = snapshotOf(model, state);
+            var ctx = Object.freeze(Object.assign({}, SG.techniques.createContext(model, {})));
+            var first = A.findSueDeCoq(model, state, ctx);
+            var second = A.findSueDeCoq(model, state, ctx);
+            expect([k, i, second]).toEqual([k, i, first]);
+            expect([k, i, snapshotOf(model, state)]).toEqual([k, i, snapshot]);
+          });
+        });
+      } finally {
+        SG.setDebug(before);
+      }
+    });
+
+    it('keeps no candidate list and no geometry: the same state object, changed between calls, is read ' +
+      'again every time', function () {
+        var model = m9;
+        var state = seededStates(model, randomSolution, 4001, 1, [0.05, 0.4])[0];
+        var rng = SG.testkit.rng.create(79);
+        var changes = 0;
+        var fired = 0;
+        for (var round = 0; round < 60; round++) {
+          var cell = rng.int(model.cellCount);
+          if (state.value[cell] === 0) {
+            var digit = 1 + rng.int(model.digits);
+            if (rng.next() < 0.7) state.candidates[cell] &= ~(1 << (digit - 1));
+            else state.candidates[cell] |= 1 << (digit - 1);
+            changes++;
+          }
+          var plan = sdcPlan(model, state);
+          var got = A.findSueDeCoq(model, state, SG.techniques.createContext(model, {}));
+          same('round ' + round, got, plan.first !== null ? sdcFindingOf(model, plan.first) : null);
+          if (got !== null) fired++;
+        }
+        expect(changes).toBeGreaterThan(30);
+        expect(fired).toBeGreaterThan(3);
+      });
+
+    it('does not depend on the order of the cells inside a unit: the same Finding and record when every ' +
+      'unit lists its cells from the highest', function () {
+        var descending = buildModel('als-order', 9, 3, 3, [], { descendingCells: true });
+        var fired = 0;
+        seededStates(m9, randomSolution, 4001, 30, [0.05, 0.4]).forEach(function (state, i) {
+          var plain = sdcRun(m9, state);
+          var other = sdcRun(descending, state);
+          expect([i, other.finding]).toEqual([i, plain.finding]);
+          expect([i, other.seen]).toEqual([i, plain.seen]);
+          if (plain.finding !== null) fired++;
+        });
+        expect(fired).toBeGreaterThan(3);
+      });
+
+    it('shares nothing with the enumerator or the other finders: calls interleaved give the same answers, ' +
+      'and ALS-XZ is unchanged by them', function () {
+        var items = H.randomStatesWithKnownSolution(m9, SG.testkit.rng.create(1971), 6);
+        items.forEach(function (item, n) {
+          var ctx = SG.techniques.createContext(m9, {});
+          var plain = JSON.stringify(A.findSueDeCoq(m9, item.state, ctx));
+          var xz = JSON.stringify(A.findXz(m9, item.state, ctx));
+          A.enumerate(m9, item.state, ctx, A.createWork());
+          SG.techniques.get('xyChain').find(m9, item.state, ctx);
+          SG.techniques.get('forcingChain').find(m9, item.state, ctx);
+          expect([n, JSON.stringify(A.findSueDeCoq(m9, item.state, ctx))]).toEqual([n, plain]);
+          var registered = JSON.stringify(SG.techniques.get(SDC_ID).find(m9, item.state, ctx));
+          expect([n, registered]).toEqual([n, plain]);
+          expect([n, JSON.stringify(A.findXz(m9, item.state, ctx))]).toEqual([n, xz]);
+          var xzRegistered = JSON.stringify(SG.techniques.get('alsXz').find(m9, item.state, ctx));
+          expect([n, xzRegistered]).toEqual([n, xz]);
         });
       });
   });

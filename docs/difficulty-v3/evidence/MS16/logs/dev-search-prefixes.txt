@@ -1,0 +1,10 @@
+$ node tests\artifacts\difficulty-v3\MS16\search-sdc.js prefixes
+puzzles 85
+prefix none (0 ids): 1 of 85 fire, Z non-empty 0; wxyzWings q.step I6 elim 7
+prefix singles (3 ids): 4 of 85 fire, Z non-empty 1; pointing- q.step I4 elim 4 | uniqueRectangle+ q.step.extra I5 elim 8 | remotePairs+ q.step I5 elim 5 | finnedSwordfish+ q.step I4 elim 2
+prefix below40 (3 ids): 4 of 85 fire, Z non-empty 1; pointing- q.step I4 elim 4 | uniqueRectangle+ q.step.extra I5 elim 8 | remotePairs+ q.step I5 elim 5 | finnedSwordfish+ q.step I4 elim 2
+prefix below60 (5 ids): 8 of 85 fire, Z non-empty 3; pointing- q.step I4 elim 4 | nakedQuad+ q.step I4 elim 3 | uniqueRectangle+ q.step.extra I5 elim 8 | remotePairs+ q.step I5 elim 5 | twoStringKite+ q.step I4 elim 3 | finnedSwordfish+ q.step I4 elim 2
+prefix below100 (9 ids): 5 of 85 fire, Z non-empty 3; nakedQuad+ q.step I4 elim 3 | nakedQuad+ q.step.extra I6 elim 3 | uniqueRectangle+ q.step.extra I5 elim 8 | finnedSwordfish+ q.step I4 elim 2 | uniqueRectangles q.step.extra I5 elim 6
+prefix below140 (21 ids): 4 of 85 fire, Z non-empty 2; uniqueRectangle+ q.step.extra I5 elim 8 | finnedSwordfish+ q.step I4 elim 1 | uniqueRectangles q.step.extra I5 elim 5 | remotePairss q.step I4 elim 1
+prefix below190 (28 ids): 1 of 85 fire, Z non-empty 1; uniqueRectangle+ q.step.extra I5 elim 6
+exit=0 seconds=0.688

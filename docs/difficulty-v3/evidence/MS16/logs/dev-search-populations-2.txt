@@ -1,0 +1,27 @@
+$ node tests\artifacts\difficulty-v3\MS16\search-sdc.js populations [0.3,0.6]
+classic9 4001 keep [0.3,0.6]: 8 positions, fired 0 (Z non-empty 0), work-capped 0, record-capped 0, 14 ms
+classic9 4011 keep [0.3,0.6]: 8 positions, fired 2 (Z non-empty 2), work-capped 0, record-capped 0, 9 ms
+classic9 4021 keep [0.3,0.6]: 8 positions, fired 3 (Z non-empty 2), work-capped 0, record-capped 0, 9 ms
+classic6 4002 keep [0.3,0.6]: 12 positions, fired 3 (Z non-empty 1), work-capped 0, record-capped 0, 4 ms
+classic6 4012 keep [0.3,0.6]: 12 positions, fired 3 (Z non-empty 2), work-capped 0, record-capped 0, 4 ms
+classic4 4003 keep [0.3,0.6]: 12 positions, fired 3 (Z non-empty 0), work-capped 0, record-capped 0, 1 ms
+classic4 4013 keep [0.3,0.6]: 12 positions, fired 2 (Z non-empty 0), work-capped 0, record-capped 0, 2 ms
+12 digits 4004 keep [0.3,0.6]: 4 positions, fired 1 (Z non-empty 0), work-capped 0, record-capped 0, 4 ms
+12 digits 4014 keep [0.3,0.6]: 4 positions, fired 2 (Z non-empty 1), work-capped 0, record-capped 0, 6 ms
+16 digits 4005 keep [0.3,0.6]: 3 positions, fired 0 (Z non-empty 0), work-capped 0, record-capped 0, 6 ms
+16 digits 4015 keep [0.3,0.6]: 3 positions, fired 0 (Z non-empty 0), work-capped 0, record-capped 0, 4 ms
+samurai 4006 keep [0.3,0.6]: 2 positions, fired 0 (Z non-empty 0), work-capped 0, record-capped 0, 7 ms
+samurai 4016 keep [0.3,0.6]: 2 positions, fired 2 (Z non-empty 2), work-capped 0, record-capped 0, 9 ms
+diagonalX 4007 keep [0.3,0.6]: 6 positions, fired 1 (Z non-empty 0), work-capped 0, record-capped 0, 3 ms
+hyper 4007 keep [0.3,0.6]: 6 positions, fired 1 (Z non-empty 0), work-capped 0, record-capped 0, 6 ms
+diagonalX 4017 keep [0.3,0.6]: 6 positions, fired 3 (Z non-empty 3), work-capped 0, record-capped 0, 6 ms
+hyper 4017 keep [0.3,0.6]: 6 positions, fired 3 (Z non-empty 2), work-capped 0, record-capped 0, 4 ms
+jigsaw staggered keep [0.3,0.6]: 6 positions, fired 0 (Z non-empty 0), work-capped 0, record-capped 0, 5 ms
+jigsaw staggered T keep [0.3,0.6]: 6 positions, fired 0 (Z non-empty 0), work-capped 0, record-capped 0, 45 ms
+jigsaw wavy keep [0.3,0.6]: 6 positions, fired 0 (Z non-empty 0), work-capped 0, record-capped 0, 3 ms
+jigsaw wavy T keep [0.3,0.6]: 6 positions, fired 0 (Z non-empty 0), work-capped 0, record-capped 0, 4 ms
+jigsaw mixed keep [0.3,0.6]: 6 positions, fired 3 (Z non-empty 1), work-capped 0, record-capped 0, 131 ms
+jigsaw mixed T keep [0.3,0.6]: 6 positions, fired 1 (Z non-empty 1), work-capped 0, record-capped 0, 3 ms
+jigsaw crossed keep [0.3,0.6]: 6 positions, fired 1 (Z non-empty 0), work-capped 0, record-capped 0, 23 ms
+jigsaw crossed T keep [0.3,0.6]: 6 positions, fired 2 (Z non-empty 0), work-capped 0, record-capped 0, 3 ms
+exit=0 seconds=0.522

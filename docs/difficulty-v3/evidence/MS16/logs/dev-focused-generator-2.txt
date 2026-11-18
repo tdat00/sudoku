@@ -1,0 +1,27 @@
+$ node tests\node-runner.js --suite=tech-als,techniques,technique-weights,difficulty-floor,pattern-cost-tools,tech-chain,tech-subset,tech-cage,i18n,digger-target,help
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-floor: 48 passed  (31.15 s)
+ok   digger-target: 75 passed  (1.88 s)
+ok   help: 30 passed  (5.53 s)
+ok   i18n: 97 passed  (272 ms)
+ok   pattern-cost-tools: 44 passed  (5.19 s)
+FAIL tech-als: 172 passed, 1 failed  (16.28 s)
+ok   tech-cage: 33 passed  (28 ms)
+ok   tech-chain: 239 passed  (23.17 s)
+ok   tech-subset: 167 passed  (8.08 s)
+ok   technique-weights: 18 passed  (4 ms)
+ok   techniques: 284 passed  (6.80 s)
+
+Failures:
+  FAIL tech-als > als-xz: the registered technique and the seam > is registered as alsXz: chain group, order 194, base cost 106, unscoped, no uniqueness, between forcingChain (190) and forcingChainLong (198)
+       AssertionError: expected 35 to be 36
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:1437:36)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+
+Suites: 11
+Tests:  1208 total, 1207 passed, 1 failed, 0 skipped
+Time:   98.39 s running tests, 98.55 s total
+exit=1 seconds=98.726

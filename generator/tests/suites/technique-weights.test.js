@@ -289,8 +289,9 @@
         expect([als.group, als.baseCost, als.variantScope, als.assumesUniqueness])
           .toEqual(['chain', 106, null, false]);
         expect(position('alsXz')).toBe(position('forcingChain') + 1);
-        expect(position('alsXz')).toBe(position('forcingChainLong') - 1);
+        expect(position('alsXz')).toBe(position('sueDeCoq') - 1);
         // the order follows the weight and the base cost: the neighbours are 190 / 1100 / 90 and 198 / 1400 / 118
+        // (Sue de Coq, 196, sits between ALS-XZ and the long chain since MS16)
         var short = SG.techniques.get('forcingChain');
         var long = SG.techniques.get('forcingChainLong');
         expect([short.order, D.WEIGHTS.forcingChain, short.baseCost]).toEqual([190, 1100, 90]);
@@ -313,6 +314,43 @@
         // allowed right after forcingChain
         expect(D.spec('nightmare', model).allowedTechniques.indexOf('alsXz'))
           .toBe(D.spec('nightmare', model).allowedTechniques.indexOf('forcingChain') + 1);
+      });
+
+    it('places sueDeCoq between alsXz and forcingChainLong: order 196, weight 1300, base cost 112, a ' +
+      'Nightmare-tier chain technique of its own group (R19)', function () {
+        var model = SG.techHelper.model('classic9');
+        var sue = SG.techniques.get('sueDeCoq');
+        expect([sue.order, D.WEIGHTS.sueDeCoq]).toEqual([196, 1300]);
+        expect([sue.group, sue.baseCost, sue.variantScope, sue.assumesUniqueness])
+          .toEqual(['chain', 112, null, false]);
+        expect(position('sueDeCoq')).toBe(position('alsXz') + 1);
+        expect(position('sueDeCoq')).toBe(position('forcingChainLong') - 1);
+        // the order follows the weight and the base cost: the neighbours are 194 / 1250 / 106 and
+        // 198 / 1400 / 118
+        var als = SG.techniques.get('alsXz');
+        var long = SG.techniques.get('forcingChainLong');
+        expect([als.order, D.WEIGHTS.alsXz, als.baseCost]).toEqual([194, 1250, 106]);
+        expect([long.order, D.WEIGHTS.forcingChainLong, long.baseCost]).toEqual([198, 1400, 118]);
+        expect(als.order).toBeLessThan(sue.order);
+        expect(sue.order).toBeLessThan(long.order);
+        expect(als.baseCost).toBeLessThan(sue.baseCost);
+        expect(sue.baseCost).toBeLessThan(long.baseCost);
+        expect(D.WEIGHTS.alsXz).toBeLessThan(D.WEIGHTS.sueDeCoq);
+        expect(D.WEIGHTS.sueDeCoq).toBeLessThan(D.WEIGHTS.forcingChainLong);
+        // its own weight decides the hardest technique, no tie is needed
+        expect(D.breakdown({ alsXz: 1, sueDeCoq: 1 }, 10).hardest).toBe('sueDeCoq');
+        expect(D.breakdown({ sueDeCoq: 1, forcingChainLong: 1 }, 10).hardest).toBe('forcingChainLong');
+        // 1.25 x 1300 = 1625 is above Master's maximum (1500) and below Nightmare's (2400): Nightmare's tier
+        expect(1.25 * D.WEIGHTS.sueDeCoq).toBeGreaterThan(D.spec('master', model).max);
+        expect(1.25 * D.WEIGHTS.sueDeCoq).toBeLessThan(D.spec('nightmare', model).max);
+        expect(D.spec('master', model).allowedTechniques).not.toContain('sueDeCoq');
+        expect(D.spec('nightmare', model).allowedTechniques).toContain('sueDeCoq');
+        expect(D.spec('nightmare', model).tierTechniques).toContain('sueDeCoq');
+        expect(D.spec('nightmare', model).floorTechniques).not.toContain('sueDeCoq');
+        expect(D.spec('hell1', model).floorTechniques).toContain('sueDeCoq');
+        // allowed right after alsXz
+        expect(D.spec('nightmare', model).allowedTechniques.indexOf('sueDeCoq'))
+          .toBe(D.spec('nightmare', model).allowedTechniques.indexOf('alsXz') + 1);
       });
 
     it('places finnedSwordfish between swordfish and jellyfish: order 134, weight 480, a Hard-tier technique ' +

@@ -1,0 +1,5 @@
+$ node tests\perf.js --hash-merge=..\docs\difficulty-v3\evidence\MS16\hashes --check-hashes
+merged 104 ledgers: all 520 keys exactly once, recorded from the current sources
+CHANGED classic9/nightmare: seeds 377
+regression hashes: 1 of 520 puzzles changed (merged ledgers, nothing generated)
+exit=1 seconds=0.673

@@ -1,0 +1,39 @@
+$ node tests\node-runner.js --suite=tech-als --filter=sue-de-coq
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-als: 57 passed, 5 failed  (7.87 s)
+
+Failures:
+  FAIL tech-als > sue-de-coq: the proof by hand > finds the same pattern along a column and a box: the transposed vector, with the transposed removals
+       AssertionError: expected Array(4)[0, 9, 19, 36] to equal Array(4)[0, 9, 36, 29]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:2684:33)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL tech-als > sue-de-coq: the proof by hand > takes every 2-subset of the open shared cells as I, not only the whole intersection: with R1C3 open the pair {R1C1, R1C2} is I and R1C3 is an ordinary target
+       AssertionError: expected Array(3)["columns", Array(2)[0, 1], Array(0)[]] to equal Array(3)["columns", Array(2)[0, 9], Array(0)[]]
+       at Q:\git\sudoku\core\tests\suites\tech-als.test.js:2726:63
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:2720:28)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL tech-als > sue-de-coq: the proof by hand > has no witness with a single open cell of the intersection, or when the digits of the cells are no almost locked set
+       AssertionError: expected Array(2)["no ALS on the A side but an unrelated one", 1] to equal Array(2)["no ALS on the A side but an unrelated one", 0]
+       at expectNone (Q:\git\sudoku\core\tests\suites\tech-als.test.js:2634:46)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:2783:7)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL tech-als > sue-de-coq: agreement with the independent search, and exactness > exercises the rule on those positions: firings on every kind of board, both forms of Z, two- and three-cell I, a proper subset of the intersection, larger sets, several targets, a first witness that is not the largest, cut and record-capped calls, regions as boxes, and the exact search
+       AssertionError: expected 0 to be > 5
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:3005:36)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL tech-als > sue-de-coq: the parent budget, errors and the observer record > asks the parent budget at entry, every 256 units, at the end of the geometry, of the enumeration and of the classification, and before publishing
+       AssertionError: expected 1 to be > 1
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:3284:83)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+
+Suites: 1
+Tests:  62 total, 57 passed, 5 failed, 0 skipped
+Time:   7.87 s running tests, 8.03 s total
+exit=1 seconds=8.158

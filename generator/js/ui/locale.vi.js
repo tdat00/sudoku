@@ -412,6 +412,17 @@
       'đều nhìn thấy mọi ô chứa X của tập kia. Hai tập không thể cùng chứa X, nên một trong hai tập thiếu ' +
       'X và chứa đủ mọi chữ số còn lại. Chữ số Z mà cả hai tập đều có thể chứa vì thế nằm trong một trong ' +
       'hai tập, và ô nhìn thấy mọi ô chứa Z của cả hai tập không thể chứa Z.',
+    'technique.sueDeCoq': 'Sue de Coq (giao của hàng/cột và khối)',
+    'technique.sueDeCoq.desc': 'Sue de Coq dùng ở chỗ một hàng hoặc cột cắt một khối hoặc vùng, trên hai ' +
+      'hoặc ba ô còn trống của chỗ giao. Các ô đó cùng có thể chứa một số chữ số. Lấy một tập gần khóa ' +
+      'nằm trong hàng hoặc cột ngoài khối và một tập gần khóa nằm trong khối ngoài hàng hoặc cột, hai tập ' +
+      'không có chữ số chung và đều nằm trong các chữ số của chỗ giao, sao cho số chữ số của chỗ giao ' +
+      'đúng bằng tổng số ô của chỗ giao và của hai tập. Khi đó chỗ giao chứa chữ số mà mỗi tập còn thiếu ' +
+      'và mọi chữ số không thuộc tập nào. Vì vậy mọi chữ số của tập thứ nhất được dùng trong hàng hoặc ' +
+      'cột, mọi chữ số của tập thứ hai được dùng trong khối, và mọi chữ số còn lại nằm ở chỗ giao, tức ' +
+      'là nằm trong cả hai. Nhờ đó loại được các chữ số của tập thứ nhất khỏi phần còn lại của hàng hoặc ' +
+      'cột, các chữ số của tập thứ hai khỏi phần còn lại của khối, và chữ số còn lại khỏi phần còn lại ' +
+      'của cả hai.',
     'technique.forcingChainLong': 'Chuỗi suy luận dài (Long Forcing Chain)',
     'technique.forcingChainLong.desc': 'Cùng loại chuỗi với Chuỗi suy luận nhưng quá dài so với nó: chuỗi ' +
       'ngắn nhất dùng được có nhiều liên kết hơn mức Chuỗi suy luận thường cho phép (tối đa 12 liên kết). ' +
@@ -569,6 +580,20 @@
       'tập này đều nhìn thấy mọi ô chứa {digitX} của tập kia, nên nhiều nhất một tập chứa {digitX}. Tập ' +
       'còn lại khi đó chứa đủ mọi chữ số khác của nó, nên một trong hai tập chứa {digitY}. Ứng viên ' +
       '{digitY} nhìn thấy mọi ô chứa {digitY} của cả hai tập bị loại.',
+    'technique.sueDeCoq.step': 'Sue de Coq tại chỗ {line} giao {box}: các ô đánh dấu ở đó chỉ có thể chứa ' +
+      'các chữ số {digits} và {partDigits}. Cùng với các ô đánh dấu của {line} nằm ngoài {box}, chỉ có thể ' +
+      'chứa {digits}, và các ô đánh dấu của {box} nằm ngoài {line}, chỉ có thể chứa {partDigits}, số ô ' +
+      'đúng bằng số chữ số. Vì vậy mỗi chữ số trong {digits} được dùng ở các ô đánh dấu của {line}, và ' +
+      'mỗi chữ số trong {partDigits} được dùng ở các ô đánh dấu của {box}. Các chữ số {digits} bị loại ' +
+      'khỏi các ô còn lại của {line}, và {partDigits} bị loại khỏi các ô còn lại của {box}.',
+    'technique.sueDeCoq.step.extra': 'Sue de Coq tại chỗ {line} giao {box}: các ô đánh dấu ở đó chỉ có thể ' +
+      'chứa các chữ số {digits}, {partDigits} và {forced}. Cùng với các ô đánh dấu của {line} nằm ngoài ' +
+      '{box}, chỉ có thể chứa {digits}, và các ô đánh dấu của {box} nằm ngoài {line}, chỉ có thể chứa ' +
+      '{partDigits}, số ô đúng bằng số chữ số. Vì vậy mỗi chữ số trong {digits} được dùng ở các ô đánh dấu ' +
+      'của {line}, mỗi chữ số trong {partDigits} được dùng ở các ô đánh dấu của {box}, và chữ số {forced} ' +
+      'được dùng ở chỗ giao, tức là nằm trong cả hai. Các chữ số {digits} bị loại khỏi các ô còn lại của ' +
+      '{line}, {partDigits} bị loại khỏi các ô còn lại của {box}, và {forced} bị loại khỏi các ô còn lại ' +
+      'của cả hai.',
     'technique.nishio.step': 'Thử–sai (độ sâu {depth}): nếu {label} là {digit} thì các suy luận đơn giản ' +
       'sẽ dẫn đến mâu thuẫn. Vậy {digit} bị loại khỏi {label}.',
     'technique.forcingChainLong.step.endpoints': 'Chuỗi suy luận dài hơn thường, {length} liên kết: ' +

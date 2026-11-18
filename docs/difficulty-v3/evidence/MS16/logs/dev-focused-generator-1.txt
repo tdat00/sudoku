@@ -1,0 +1,41 @@
+$ node tests\node-runner.js --suite=techniques,technique-weights,difficulty-floor,pattern-cost-tools,tech-chain,tech-subset,tech-cage,i18n,digger-target,help
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-floor: 48 passed  (32.86 s)
+ok   digger-target: 75 passed  (1.84 s)
+ok   help: 30 passed  (5.56 s)
+ok   i18n: 96 passed  (257 ms)
+ok   pattern-cost-tools: 44 passed  (4.98 s)
+ok   tech-cage: 33 passed  (31 ms)
+FAIL tech-chain: 238 passed, 1 failed  (23.09 s)
+ok   tech-subset: 167 passed  (8.08 s)
+FAIL technique-weights: 16 passed, 1 failed  (5 ms)
+FAIL techniques: 275 passed, 2 failed  (6.81 s)
+
+Failures:
+  FAIL tech-chain > chain group: registration > registers the five chain ids with the values of design.md 6.6 (R9, R15), and alsXz (MS15b) between forcingChain and forcingChainLong
+       AssertionError: expected Array(7)["xyChain", "forcingChain", "alsXz", "sueDeCoq", "forcingChainLong", "nishio", "nishioDeep"] to equal Array(6)["xyChain", "forcingChain", "alsXz", "forcingChainLong", "nishio", "nishioDeep"]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:702:11)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL technique-weights > techniques: the order of the registry follows the weights (rating v3) > places alsXz between forcingChain and forcingChainLong: order 194, weight 1250, a Nightmare-tier chain technique of its own group (R18)
+       AssertionError: expected 35 to be 36
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\technique-weights.test.js:292:35)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL techniques > techniques: registry > has the 33 techniques of the classic ladder registered, in the current registry order
+       AssertionError: expected Array(34)["nakedSingle", "hiddenSingleBox", "hiddenSingleLine", "pointing", "boxLine", "nakedPair", "hiddenPair", "nakedTriple", "hiddenTriple", "nakedQuad", "hiddenQuad", "xWing", ...] to equal Array(33)["nakedSingle", "hiddenSingleBox", "hiddenSingleLine", "pointing", "boxLine", "nakedPair", "hiddenPair", "nakedTriple", "hiddenTriple", "nakedQuad", "hiddenQuad", "xWing", ...]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:78:58)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL techniques > techniques: fixtures (fixtures/techniques.js) > has fixtures for exactly the techniques of the classic ladder (add them for a new one)
+       AssertionError: expected Array(1)["sueDeCoq"] to equal Array(0)[]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:141:23)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+
+Suites: 10
+Tests:  1026 total, 1022 passed, 4 failed, 0 skipped
+Time:   83.52 s running tests, 83.70 s total
+exit=1 seconds=83.845

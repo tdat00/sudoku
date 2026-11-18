@@ -1,0 +1,19 @@
+$ node tests\artifacts\difficulty-v3\MS16\probe-sdc.js ..\docs\difficulty-v3\evidence\MS16\probe-sdc.json
+Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS16\probe-sdc.js:136
+        run.scan += new Set(model.units[p.U].concat(model.units[p.V])).size;
+                                             ^
+
+TypeError: model.units[p.U].concat is not a function
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS16\probe-sdc.js:136:46
+    at Array.forEach (<anonymous>)
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS16\probe-sdc.js:133:34
+    at Array.forEach (<anonymous>)
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS16\probe-sdc.js:133:13
+    at Array.forEach (<anonymous>)
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS16\probe-sdc.js:125:48
+    at Array.forEach (<anonymous>)
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS16\probe-sdc.js:125:12
+    at Array.forEach (<anonymous>)
+
+Node.js v26.13.0
+exit=1 seconds=0.549

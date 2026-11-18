@@ -1,0 +1,17 @@
+mutation 15 (S05 the default allowance is LIMITS.work, not its own constant): DETECTED by run 1 (generator techniques,tech-chain,technique-weights) - killed after 30 s - 1 failing - 47.3 s
+    TIMEOUT: killed after 30 s, the test run did not end (non-termination)
+mutation 37 (K02 holdsAll tests the first cell too): DETECTED by run 1 (generator techniques,tech-chain,technique-weights) - killed after 30 s - 1 failing - 47.9 s
+    TIMEOUT: killed after 30 s, the test run did not end (non-termination)
+mutation 39 (K04 a unit that is neither line nor box also gets home lists): DETECTED by run 1 (generator techniques,tech-chain,technique-weights) - killed after 30 s - 1 failing - 47.4 s
+    TIMEOUT: killed after 30 s, the test run did not end (non-termination)
+mutation 57 (T04 a size above the shared cells is walked): DETECTED by run 1 (generator techniques,tech-chain,technique-weights) - killed after 30 s - 1 failing - 47.1 s
+    TIMEOUT: killed after 30 s, the test run did not end (non-termination)
+mutation 102 (F09 digits is the record's own array): DETECTED by run 1 (generator techniques,tech-chain,technique-weights) - killed after 30 s - 1 failing - 47.1 s
+    TIMEOUT: killed after 30 s, the test run did not end (non-termination)
+mutation 103 (F10 partDigits is the record's own array): DETECTED by run 1 (generator techniques,tech-chain,technique-weights) - killed after 30 s - 1 failing - 47.1 s
+    TIMEOUT: killed after 30 s, the test run did not end (non-termination)
+mutation 155 (C01 one common digit is enough to enter the pair): DETECTED by run 1 (generator techniques,tech-chain,technique-weights) - killed after 30 s - 1 failing - 46.9 s
+    TIMEOUT: killed after 30 s, the test run did not end (non-termination)
+mutation 339 (S06 the records are remembered for the next call): DETECTED by run 1 (generator techniques,tech-chain,technique-weights) - killed after 30 s - 1 failing - 47.4 s
+    TIMEOUT: killed after 30 s, the test run did not end (non-termination)
+detected 8 of 8, survivors 0, 378.1 s

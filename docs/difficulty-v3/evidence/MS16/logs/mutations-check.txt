@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS16\check-mutations.cjs
+sdc 139, xz 71, enum 131
+341 mutations, 0 with a bad fragment
+exit=0 seconds=0.107

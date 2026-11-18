@@ -74,15 +74,16 @@
   }
 
   describe('techniques: registry', function () {
-    it('has the 33 techniques of the classic ladder registered, in the current registry order', function () {
+    it('has the 34 techniques of the classic ladder registered, in the current registry order', function () {
       expect(classic.map(function (t) { return t.id; })).toEqual(F.registryOrder);
-      expect(F.registryOrder.length).toBe(33);
+      expect(F.registryOrder.length).toBe(34);
     });
 
     it('keeps the v2 ladder as history: the old ids keep their relative order in the expanded registry, ' +
       'jellyfish apart', function () {
         var added = ['skyscraper', 'twoStringKite', 'remotePairs', 'emptyRectangle', 'finnedXWing',
-          'finnedSwordfish', 'wxyzWing', 'bugPlusOne', 'xyChain', 'alsXz', 'forcingChainLong', 'nishioDeep'];
+          'finnedSwordfish', 'wxyzWing', 'bugPlusOne', 'xyChain', 'alsXz', 'sueDeCoq', 'forcingChainLong',
+          'nishioDeep'];
         function oldIds(list) {
           return list.filter(function (id) { return id !== 'jellyfish' && added.indexOf(id) === -1; });
         }
@@ -96,8 +97,8 @@
         expect(F.registryOrder.indexOf('jellyfish')).toBeLessThan(F.registryOrder.indexOf('xyWing'));
         // the old ids in the old relative order, and the new ones inside the chain group at their R9 places
         expect(oldIds(F.registryOrder)).toEqual(oldIds(F.ladder));
-        expect(F.registryOrder.slice(-5))
-          .toEqual(['forcingChain', 'alsXz', 'forcingChainLong', 'nishio', 'nishioDeep']);
+        expect(F.registryOrder.slice(-6))
+          .toEqual(['forcingChain', 'alsXz', 'sueDeCoq', 'forcingChainLong', 'nishio', 'nishioDeep']);
       });
 
     it('lists techniques cheapest first: orders ascend and ids are unique', function () {
@@ -142,12 +143,13 @@
       expect(stale).toEqual([]);
     });
 
-    it('puts the positive positions of a replaced or added entry where its id is reached in the registry ' +
-      '(MS07b, MS08a, MS08b, MS08c, MS09a, MS09b, MS10a, MS10b, MS11a, MS11c, MS12, MS15b)', function () {
+    it('puts the positive positions of a replaced or added entry where its id is reached in the ' +
+      'registry (MS07b, MS08a, MS08b, MS08c, MS09a, MS09b, MS10a, MS10b, MS11a, MS11c, MS12, MS15b, MS16)',
+      function () {
         var replaced = F.ids.filter(function (id) { return F.byId[id] !== F.historyV2.byId[id]; });
         expect(replaced.sort()).toEqual(['alsXz', 'bugPlusOne', 'emptyRectangle', 'finnedSwordfish', 'finnedXWing',
-          'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep', 'remotePairs', 'skyscraper', 'twoStringKite',
-          'uniqueRectangle', 'wxyzWing', 'xyChain']);
+          'forcingChain', 'forcingChainLong', 'nishio', 'nishioDeep', 'remotePairs', 'skyscraper', 'sueDeCoq',
+          'twoStringKite', 'uniqueRectangle', 'wxyzWing', 'xyChain']);
         replaced.forEach(function (id) {
           var below = F.registryOrder.slice(0, F.registryOrder.indexOf(id));
           F.byId[id].positive.forEach(function (fixture) {

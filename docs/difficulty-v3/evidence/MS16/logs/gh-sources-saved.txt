@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS16\make-sources.cjs --ids=sueDeCoq --out=tests\artifacts\difficulty-v3\MS16\sources-saved.json
+wrote tests\artifacts\difficulty-v3\MS16\sources-saved.json: 1 id(s), 27 distinct saved source(s)
+exit=0 seconds=0.097

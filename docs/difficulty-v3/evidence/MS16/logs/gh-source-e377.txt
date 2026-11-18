@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS16\make-source-e.js --ledgers=..\docs\difficulty-v3\evidence\MS16\hashes --out=tests\artifacts\difficulty-v3\MS16\sources-e377.json
+regenerated classic9/nightmare#377 (hash equals the E ledger): #1 | Classic Sudoku 9x9 | Nightmare | 377; clues 33; wrote tests\artifacts\difficulty-v3\MS16\sources-e377.json
+exit=0 seconds=0.963

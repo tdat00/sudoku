@@ -690,8 +690,8 @@
       ['nishioDeep', 202, 210]
     ];
 
-    it('registers the five chain ids with the values of design.md 6.6 (R9, R15), and alsXz (MS15b) between ' +
-      'forcingChain and forcingChainLong', function () {
+    it('registers the five chain ids with the values of design.md 6.6 (R9, R15), alsXz (MS15b) and ' +
+      'sueDeCoq (MS16) between forcingChain and forcingChainLong', function () {
       TABLE.forEach(function (row) {
         var t = SG.techniques.get(row[0]);
         expect([row[0], t.group, t.order, t.baseCost, t.i18nKey]).toEqual([row[0], 'chain', row[1], row[2],
@@ -699,7 +699,8 @@
       });
       expect(SG.techniques.list().filter(function (t) { return t.group === 'chain'; }).map(function (t) {
         return t.id;
-      })).toEqual(['xyChain', 'forcingChain', 'alsXz', 'forcingChainLong', 'nishio', 'nishioDeep']);
+      })).toEqual(['xyChain', 'forcingChain', 'alsXz', 'sueDeCoq', 'forcingChainLong', 'nishio',
+        'nishioDeep']);
     });
 
     it('applies to every variant and does not rely on a unique solution', function () {

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sources": {
+    "sueDeCoq": [
+      {"variantId":"classic9","level":"Nightmare","seed":"377","text":"#1,Classic Sudoku 9x9,Nightmare,377\n.....5..9\n5....8..7\n..8..1524\n8.163....\n25..7..61\n....529.8\n7259..8..\n9..5....3\n1..4....."}
+    ]
+  }
+}

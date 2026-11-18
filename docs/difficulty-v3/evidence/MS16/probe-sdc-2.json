@@ -1,0 +1,9445 @@
+{
+ "node": "v26.13.0",
+ "seconds": 2.5,
+ "note": "diagnostic lifted limits (guard 1e9, records 1e7, cells 4); R1 = rows/cols against box and region kinds, R2 = rows/cols against every other unit; P1 charges one unit per record tested per I, P2 one unit per record classified per (line, box) pair, P3 one unit per record classified once plus one per home candidate at each pair; all three also charge prep (cells of the box-like units), one per pair, one per I opened, the subset filter, the A-by-B pairs and the target scan",
+ "populationA": {
+  "realClassic9Fixtures": {
+   "total": 86,
+   "unique": 85,
+   "positionsAtOrder196": 16
+  },
+  "summary": {
+   "label": "A real classic 9x9 at order 196",
+   "positions": 16,
+   "R1": {
+    "pairs": {
+     "min": 22,
+     "median": 37,
+     "p90": 52,
+     "max": 52
+    },
+    "i2": {
+     "min": 28,
+     "median": 56,
+     "p90": 81,
+     "max": 83
+    },
+    "i3": {
+     "min": 3,
+     "median": 10,
+     "p90": 16,
+     "max": 17
+    },
+    "capacityValid": {
+     "min": 0,
+     "median": 0,
+     "p90": 1,
+     "max": 1
+    },
+    "positionsWithValid": 2,
+    "positionsWithElimination": 0,
+    "patternsWithElimination": 0,
+    "zEmpty": 0,
+    "zNonEmpty": 0,
+    "positionsWithZEmpty": 0,
+    "positionsWithZNonEmpty": 0,
+    "agreeFound": 16,
+    "agreeValid": 16,
+    "unsound": 0,
+    "scheme1Whole": {
+     "min": 3061,
+     "median": 8886,
+     "p90": 12013,
+     "max": 13669
+    },
+    "scheme2Whole": {
+     "min": 2475,
+     "median": 5392,
+     "p90": 7644,
+     "max": 7735
+    },
+    "scheme3Whole": {
+     "min": 1669,
+     "median": 2172,
+     "p90": 2810,
+     "max": 3103
+    },
+    "scheme1Above": 0,
+    "scheme2Above": 0,
+    "scheme3Above": 0,
+    "scheme1First": null,
+    "scheme2First": null,
+    "scheme3First": null,
+    "wholeIntersection": 0,
+    "properSubset": 0,
+    "capacityValidAll": 2,
+    "capacityValidStrict": 2,
+    "perI": {
+     "min": 1316,
+     "median": 7276,
+     "p90": 10087,
+     "max": 11808
+    },
+    "perPair": {
+     "min": 728,
+     "median": 4110,
+     "p90": 5412,
+     "max": 5809
+    },
+    "home": {
+     "min": 66,
+     "median": 368,
+     "p90": 518,
+     "max": 616
+    },
+    "filter": {
+     "min": 2,
+     "median": 114,
+     "p90": 235,
+     "max": 462
+    },
+    "ab": {
+     "min": 0,
+     "median": 4,
+     "p90": 10,
+     "max": 38
+    },
+    "scan": {
+     "min": 0,
+     "median": 0,
+     "p90": 15,
+     "max": 15
+    },
+    "prep": {
+     "min": 81,
+     "median": 81,
+     "p90": 81,
+     "max": 81
+    }
+   },
+   "R2": {
+    "pairs": {
+     "min": 22,
+     "median": 37,
+     "p90": 52,
+     "max": 52
+    },
+    "i2": {
+     "min": 28,
+     "median": 56,
+     "p90": 81,
+     "max": 83
+    },
+    "i3": {
+     "min": 3,
+     "median": 10,
+     "p90": 16,
+     "max": 17
+    },
+    "capacityValid": {
+     "min": 0,
+     "median": 0,
+     "p90": 1,
+     "max": 1
+    },
+    "positionsWithValid": 2,
+    "positionsWithElimination": 0,
+    "patternsWithElimination": 0,
+    "zEmpty": 0,
+    "zNonEmpty": 0,
+    "positionsWithZEmpty": 0,
+    "positionsWithZNonEmpty": 0,
+    "agreeFound": 16,
+    "agreeValid": 16,
+    "unsound": 0,
+    "scheme1Whole": {
+     "min": 3061,
+     "median": 8886,
+     "p90": 12013,
+     "max": 13669
+    },
+    "scheme2Whole": {
+     "min": 2475,
+     "median": 5392,
+     "p90": 7644,
+     "max": 7735
+    },
+    "scheme3Whole": {
+     "min": 1669,
+     "median": 2172,
+     "p90": 2810,
+     "max": 3103
+    },
+    "scheme1Above": 0,
+    "scheme2Above": 0,
+    "scheme3Above": 0,
+    "scheme1First": null,
+    "scheme2First": null,
+    "scheme3First": null,
+    "wholeIntersection": 0,
+    "properSubset": 0,
+    "capacityValidAll": 2,
+    "capacityValidStrict": 2,
+    "perI": {
+     "min": 1316,
+     "median": 7276,
+     "p90": 10087,
+     "max": 11808
+    },
+    "perPair": {
+     "min": 728,
+     "median": 4110,
+     "p90": 5412,
+     "max": 5809
+    },
+    "home": {
+     "min": 66,
+     "median": 368,
+     "p90": 518,
+     "max": 616
+    },
+    "filter": {
+     "min": 2,
+     "median": 114,
+     "p90": 235,
+     "max": 462
+    },
+    "ab": {
+     "min": 0,
+     "median": 4,
+     "p90": 10,
+     "max": 38
+    },
+    "scan": {
+     "min": 0,
+     "median": 0,
+     "p90": 15,
+     "max": 15
+    },
+    "prep": {
+     "min": 81,
+     "median": 81,
+     "p90": 81,
+     "max": 81
+    }
+   },
+   "records": {
+    "min": 14,
+    "median": 129,
+    "p90": 157,
+    "max": 164
+   },
+   "enumWork": {
+    "min": 901,
+    "median": 1420,
+    "p90": 1687,
+    "max": 1726
+   },
+   "enumCapped": 0,
+   "ms": {
+    "min": 1,
+    "median": 2,
+    "p90": 3,
+    "max": 7
+   }
+  },
+  "rows": [
+   {
+    "tag": "xyWing- 2.6...8.......357...59....1...2..41..5..8.3..1...4...6.2..157...8..........7...6.",
+    "open": 53,
+    "digits": 9,
+    "cells": 81,
+    "records": 131,
+    "enumCapHit": null,
+    "enumWork": 1726,
+    "R1": {
+     "pairs": 41,
+     "i2": 65,
+     "i3": 12,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 41,
+      "opened": 77,
+      "perI": 10087,
+      "perPair": 5371,
+      "classify": 131,
+      "home": 518,
+      "filter": 235,
+      "ab": 1,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 10287,
+      "p2": 5806,
+      "p3": 1084
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 12013,
+      "p2": 7532,
+      "p3": 2810
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 41,
+     "i2": 65,
+     "i3": 12,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 41,
+      "opened": 77,
+      "perI": 10087,
+      "perPair": 5371,
+      "classify": 131,
+      "home": 518,
+      "filter": 235,
+      "ab": 1,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 10287,
+      "p2": 5806,
+      "p3": 1084
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 12013,
+      "p2": 7532,
+      "p3": 2810
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 7
+   },
+   {
+    "tag": "forcingChain+ .6125...3..5.......9...81.....8...469....672.....3..8..7.3......5....6..6.....234",
+    "open": 48,
+    "digits": 9,
+    "cells": 81,
+    "records": 129,
+    "enumCapHit": null,
+    "enumWork": 1395,
+    "R1": {
+     "pairs": 38,
+     "i2": 54,
+     "i3": 8,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 38,
+      "opened": 62,
+      "perI": 7998,
+      "perPair": 4902,
+      "classify": 129,
+      "home": 471,
+      "filter": 149,
+      "ab": 9,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 8188,
+      "p2": 5241,
+      "p3": 939
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 9583,
+      "p2": 6636,
+      "p3": 2334
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 38,
+     "i2": 54,
+     "i3": 8,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 38,
+      "opened": 62,
+      "perI": 7998,
+      "perPair": 4902,
+      "classify": 129,
+      "home": 471,
+      "filter": 149,
+      "ab": 9,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 8188,
+      "p2": 5241,
+      "p3": 939
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 9583,
+      "p2": 6636,
+      "p3": 2334
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 3
+   },
+   {
+    "tag": "forcingChain+ ..53.....8......2..7..1.5..4....53...1..7...6..32...8..6.5....9..4....3......97..",
+    "open": 56,
+    "digits": 9,
+    "cells": 81,
+    "records": 51,
+    "enumCapHit": null,
+    "enumWork": 1630,
+    "R1": {
+     "pairs": 51,
+     "i2": 65,
+     "i3": 7,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 51,
+      "opened": 72,
+      "perI": 3672,
+      "perPair": 2601,
+      "classify": 51,
+      "home": 238,
+      "filter": 51,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 3876,
+      "p2": 2856,
+      "p3": 544
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 5506,
+      "p2": 4486,
+      "p3": 2174
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 51,
+     "i2": 65,
+     "i3": 7,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 51,
+      "opened": 72,
+      "perI": 3672,
+      "perPair": 2601,
+      "classify": 51,
+      "home": 238,
+      "filter": 51,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 3876,
+      "p2": 2856,
+      "p3": 544
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 5506,
+      "p2": 4486,
+      "p3": 2174
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 2
+   },
+   {
+    "tag": "forcingChain- ..7..1..6.8....1..5..6.78.3..65..7.......8..2.9..6....459........2...5......1..9.",
+    "open": 43,
+    "digits": 9,
+    "cells": 81,
+    "records": 116,
+    "enumCapHit": null,
+    "enumWork": 1053,
+    "R1": {
+     "pairs": 33,
+     "i2": 43,
+     "i3": 5,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 33,
+      "opened": 48,
+      "perI": 5568,
+      "perPair": 3828,
+      "classify": 116,
+      "home": 314,
+      "filter": 59,
+      "ab": 2,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 5732,
+      "p2": 4051,
+      "p3": 653
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 6785,
+      "p2": 5104,
+      "p3": 1706
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 33,
+     "i2": 43,
+     "i3": 5,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 33,
+      "opened": 48,
+      "perI": 5568,
+      "perPair": 3828,
+      "classify": 116,
+      "home": 314,
+      "filter": 59,
+      "ab": 2,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 5732,
+      "p2": 4051,
+      "p3": 653
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 6785,
+      "p2": 5104,
+      "p3": 1706
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 2
+   },
+   {
+    "tag": "nishio- .......12........3..23..4....18....5.6..7.8.......9.....85.....9...4.5..47...6...",
+    "open": 59,
+    "digits": 9,
+    "cells": 81,
+    "records": 27,
+    "enumCapHit": null,
+    "enumWork": 1332,
+    "R1": {
+     "pairs": 49,
+     "i2": 81,
+     "i3": 16,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 97,
+      "perI": 2619,
+      "perPair": 1323,
+      "classify": 27,
+      "home": 98,
+      "filter": 16,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 2846,
+      "p2": 1566,
+      "p3": 368
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 4178,
+      "p2": 2898,
+      "p3": 1700
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 49,
+     "i2": 81,
+     "i3": 16,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 97,
+      "perI": 2619,
+      "perPair": 1323,
+      "classify": 27,
+      "home": 98,
+      "filter": 16,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 2846,
+      "p2": 1566,
+      "p3": 368
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 4178,
+      "p2": 2898,
+      "p3": 1700
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 1
+   },
+   {
+    "tag": "twoStringKite- 1....7.9..3..2...8..96..5....53..9...1..8...26....4...3......1..4......7..7...3..",
+    "open": 57,
+    "digits": 9,
+    "cells": 81,
+    "records": 39,
+    "enumCapHit": null,
+    "enumWork": 1687,
+    "R1": {
+     "pairs": 52,
+     "i2": 68,
+     "i3": 8,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 52,
+      "opened": 76,
+      "perI": 2964,
+      "perPair": 2028,
+      "classify": 39,
+      "home": 160,
+      "filter": 29,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 3173,
+      "p2": 2266,
+      "p3": 437
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 4860,
+      "p2": 3953,
+      "p3": 2124
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 52,
+     "i2": 68,
+     "i3": 8,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 52,
+      "opened": 76,
+      "perI": 2964,
+      "perPair": 2028,
+      "classify": 39,
+      "home": 160,
+      "filter": 29,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 3173,
+      "p2": 2266,
+      "p3": 437
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 4860,
+      "p2": 3953,
+      "p3": 2124
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 2
+   },
+   {
+    "tag": "emptyRectangle+ ..3....9.5..6..1...97.8...2....74..67..9.8..18..16....3...1.56...6..3..9.1....8..",
+    "open": 48,
+    "digits": 9,
+    "cells": 81,
+    "records": 157,
+    "enumCapHit": null,
+    "enumWork": 1525,
+    "R1": {
+     "pairs": 37,
+     "i2": 47,
+     "i3": 5,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 37,
+      "opened": 52,
+      "perI": 8164,
+      "perPair": 5809,
+      "classify": 157,
+      "home": 475,
+      "filter": 135,
+      "ab": 5,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 8339,
+      "p2": 6119,
+      "p3": 942
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 9864,
+      "p2": 7644,
+      "p3": 2467
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 37,
+     "i2": 47,
+     "i3": 5,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 37,
+      "opened": 52,
+      "perI": 8164,
+      "perPair": 5809,
+      "classify": 157,
+      "home": 475,
+      "filter": 135,
+      "ab": 5,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 8339,
+      "p2": 6119,
+      "p3": 942
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 9864,
+      "p2": 7644,
+      "p3": 2467
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 2
+   },
+   {
+    "tag": "finnedXWing+ .19.7....7....85..6..5.....1.59....8.84...96.9....32.5.....7..9..76....4....5.78.",
+    "open": 37,
+    "digits": 9,
+    "cells": 81,
+    "records": 152,
+    "enumCapHit": null,
+    "enumWork": 901,
+    "R1": {
+     "pairs": 22,
+     "i2": 28,
+     "i3": 3,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 22,
+      "opened": 31,
+      "perI": 4712,
+      "perPair": 3344,
+      "classify": 152,
+      "home": 368,
+      "filter": 109,
+      "ab": 5,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 4851,
+      "p2": 3592,
+      "p3": 768
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 5752,
+      "p2": 4493,
+      "p3": 1669
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 22,
+     "i2": 28,
+     "i3": 3,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 22,
+      "opened": 31,
+      "perI": 4712,
+      "perPair": 3344,
+      "classify": 152,
+      "home": 368,
+      "filter": 109,
+      "ab": 5,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 4851,
+      "p2": 3592,
+      "p3": 768
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 5752,
+      "p2": 4493,
+      "p3": 1669
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 1
+   },
+   {
+    "tag": "finnedXWing+ 76.....8.........4.....32...5....8.6...1..97...15.....4...8.69.82..9.4.....7.....",
+    "open": 46,
+    "digits": 9,
+    "cells": 81,
+    "records": 107,
+    "enumCapHit": null,
+    "enumWork": 1428,
+    "R1": {
+     "pairs": 32,
+     "i2": 56,
+     "i3": 12,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 32,
+      "opened": 68,
+      "perI": 7276,
+      "perPair": 3424,
+      "classify": 107,
+      "home": 315,
+      "filter": 140,
+      "ab": 1,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 7458,
+      "p2": 3746,
+      "p3": 744
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 8886,
+      "p2": 5174,
+      "p3": 2172
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 32,
+     "i2": 56,
+     "i3": 12,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 32,
+      "opened": 68,
+      "perI": 7276,
+      "perPair": 3424,
+      "classify": 107,
+      "home": 315,
+      "filter": 140,
+      "ab": 1,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 7458,
+      "p2": 3746,
+      "p3": 744
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 8886,
+      "p2": 5174,
+      "p3": 2172
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 2
+   },
+   {
+    "tag": "forcingChainLong+ .98....2......1.8..4..7.3..3.5.....8..98.3......2.45.........526..4...7..3....1..",
+    "open": 47,
+    "digits": 9,
+    "cells": 81,
+    "records": 129,
+    "enumCapHit": null,
+    "enumWork": 1420,
+    "R1": {
+     "pairs": 32,
+     "i2": 52,
+     "i3": 10,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 32,
+      "opened": 62,
+      "perI": 7998,
+      "perPair": 4128,
+      "classify": 129,
+      "home": 342,
+      "filter": 101,
+      "ab": 10,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 8183,
+      "p2": 4414,
+      "p3": 757
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 9603,
+      "p2": 5834,
+      "p3": 2177
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 32,
+     "i2": 52,
+     "i3": 10,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 32,
+      "opened": 62,
+      "perI": 7998,
+      "perPair": 4128,
+      "classify": 129,
+      "home": 342,
+      "filter": 101,
+      "ab": 10,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 8183,
+      "p2": 4414,
+      "p3": 757
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 9603,
+      "p2": 5834,
+      "p3": 2177
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 2
+   },
+   {
+    "tag": "nishioDeep+ 8..........36......7..9.2...5...7.......457.....1...3...1....68..85...1..9....4..",
+    "open": 60,
+    "digits": 9,
+    "cells": 81,
+    "records": 20,
+    "enumCapHit": null,
+    "enumWork": 1354,
+    "R1": {
+     "pairs": 49,
+     "i2": 83,
+     "i3": 17,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 100,
+      "perI": 2000,
+      "perPair": 980,
+      "classify": 20,
+      "home": 88,
+      "filter": 18,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 2230,
+      "p2": 1228,
+      "p3": 356
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 3584,
+      "p2": 2582,
+      "p3": 1710
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 49,
+     "i2": 83,
+     "i3": 17,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 100,
+      "perI": 2000,
+      "perPair": 980,
+      "classify": 20,
+      "home": 88,
+      "filter": 18,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 2230,
+      "p2": 1228,
+      "p3": 356
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 3584,
+      "p2": 2582,
+      "p3": 1710
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 1
+   },
+   {
+    "tag": "alsXzs 4.38..5...5.....4.......2.938..17.....65.3....1....9.7.....6......94..5.....2.7.6",
+    "open": 48,
+    "digits": 9,
+    "cells": 81,
+    "records": 164,
+    "enumCapHit": null,
+    "enumWork": 1654,
+    "R1": {
+     "pairs": 33,
+     "i2": 59,
+     "i3": 13,
+     "capacityValid": 1,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 1
+     },
+     "oracleValid": 1,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 33,
+      "opened": 72,
+      "perI": 11808,
+      "perPair": 5412,
+      "classify": 164,
+      "home": 616,
+      "filter": 462,
+      "ab": 6,
+      "scan": 15
+     },
+     "totals": {
+      "p1": 12015,
+      "p2": 6081,
+      "p3": 1449
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 13669,
+      "p2": 7735,
+      "p3": 3103
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 33,
+     "i2": 59,
+     "i3": 13,
+     "capacityValid": 1,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 1
+     },
+     "oracleValid": 1,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 33,
+      "opened": 72,
+      "perI": 11808,
+      "perPair": 5412,
+      "classify": 164,
+      "home": 616,
+      "filter": 462,
+      "ab": 6,
+      "scan": 15
+     },
+     "totals": {
+      "p1": 12015,
+      "p2": 6081,
+      "p3": 1449
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 13669,
+      "p2": 7735,
+      "p3": 3103
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 3
+   },
+   {
+    "tag": "xyChains 2.....7..1......656..1.74...7.3...4...9.....8..6...3.1..38....791..5.....8...1.2.",
+    "open": 43,
+    "digits": 9,
+    "cells": 81,
+    "records": 137,
+    "enumCapHit": null,
+    "enumWork": 990,
+    "R1": {
+     "pairs": 30,
+     "i2": 42,
+     "i3": 6,
+     "capacityValid": 1,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 1
+     },
+     "oracleValid": 1,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 30,
+      "opened": 48,
+      "perI": 6576,
+      "perPair": 4110,
+      "classify": 137,
+      "home": 389,
+      "filter": 114,
+      "ab": 4,
+      "scan": 15
+     },
+     "totals": {
+      "p1": 6754,
+      "p2": 4402,
+      "p3": 818
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 7744,
+      "p2": 5392,
+      "p3": 1808
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 30,
+     "i2": 42,
+     "i3": 6,
+     "capacityValid": 1,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 1
+     },
+     "oracleValid": 1,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 30,
+      "opened": 48,
+      "perI": 6576,
+      "perPair": 4110,
+      "classify": 137,
+      "home": 389,
+      "filter": 114,
+      "ab": 4,
+      "scan": 15
+     },
+     "totals": {
+      "p1": 6754,
+      "p2": 4402,
+      "p3": 818
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 7744,
+      "p2": 5392,
+      "p3": 1808
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 2
+   },
+   {
+    "tag": "uniqueRectangles 5...42.....4.......7..9...84...7.6.5.9......16..13.7....28.4.............1.75.4..",
+    "open": 45,
+    "digits": 9,
+    "cells": 81,
+    "records": 142,
+    "enumCapHit": null,
+    "enumWork": 1259,
+    "R1": {
+     "pairs": 29,
+     "i2": 53,
+     "i3": 12,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 29,
+      "opened": 65,
+      "perI": 9230,
+      "perPair": 4118,
+      "classify": 142,
+      "home": 371,
+      "filter": 163,
+      "ab": 7,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 9412,
+      "p2": 4463,
+      "p3": 858
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 10671,
+      "p2": 5722,
+      "p3": 2117
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 29,
+     "i2": 53,
+     "i3": 12,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 29,
+      "opened": 65,
+      "perI": 9230,
+      "perPair": 4118,
+      "classify": 142,
+      "home": 371,
+      "filter": 163,
+      "ab": 7,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 9412,
+      "p2": 4463,
+      "p3": 858
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 10671,
+      "p2": 5722,
+      "p3": 2117
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 2
+   },
+   {
+    "tag": "forcingChainLongs ...284.....51..83.....53....9.........8.....6.6..351.437.....6....4.2..88.......7",
+    "open": 44,
+    "digits": 9,
+    "cells": 81,
+    "records": 144,
+    "enumCapHit": null,
+    "enumWork": 1281,
+    "R1": {
+     "pairs": 31,
+     "i2": 47,
+     "i3": 8,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 31,
+      "opened": 55,
+      "perI": 7920,
+      "perPair": 4464,
+      "classify": 144,
+      "home": 499,
+      "filter": 221,
+      "ab": 38,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 8125,
+      "p2": 4890,
+      "p3": 1069
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 9406,
+      "p2": 6171,
+      "p3": 2350
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 31,
+     "i2": 47,
+     "i3": 8,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 31,
+      "opened": 55,
+      "perI": 7920,
+      "perPair": 4464,
+      "classify": 144,
+      "home": 499,
+      "filter": 221,
+      "ab": 38,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 8125,
+      "p2": 4890,
+      "p3": 1069
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 9406,
+      "p2": 6171,
+      "p3": 2350
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 2
+   },
+   {
+    "tag": "nishioDeeps .......39.....1..5..3.5.8....8.9...6.7...2...1..4.......9.8..5..2....6..4..7.....",
+    "open": 60,
+    "digits": 9,
+    "cells": 81,
+    "records": 14,
+    "enumCapHit": null,
+    "enumWork": 1518,
+    "R1": {
+     "pairs": 52,
+     "i2": 80,
+     "i3": 14,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 52,
+      "opened": 94,
+      "perI": 1316,
+      "perPair": 728,
+      "classify": 14,
+      "home": 66,
+      "filter": 2,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 1543,
+      "p2": 957,
+      "p3": 309
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 3061,
+      "p2": 2475,
+      "p3": 1827
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 52,
+     "i2": 80,
+     "i3": 14,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 52,
+      "opened": 94,
+      "perI": 1316,
+      "perPair": 728,
+      "classify": 14,
+      "home": 66,
+      "filter": 2,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 1543,
+      "p2": 957,
+      "p3": 309
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 3061,
+      "p2": 2475,
+      "p3": 1827
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 1
+   }
+  ]
+ },
+ "populationB": {
+  "summary": {
+   "label": "B seeded (all)",
+   "positions": 42,
+   "R1": {
+    "pairs": {
+     "min": 34,
+     "median": 50,
+     "p90": 128,
+     "max": 318
+    },
+    "i2": {
+     "min": 79,
+     "median": 107,
+     "p90": 508,
+     "max": 910
+    },
+    "i3": {
+     "min": 19,
+     "median": 37,
+     "p90": 237,
+     "max": 296
+    },
+    "capacityValid": {
+     "min": 0,
+     "median": 0,
+     "p90": 2,
+     "max": 18
+    },
+    "positionsWithValid": 14,
+    "positionsWithElimination": 14,
+    "patternsWithElimination": 42,
+    "zEmpty": 20,
+    "zNonEmpty": 22,
+    "positionsWithZEmpty": 12,
+    "positionsWithZNonEmpty": 8,
+    "agreeFound": 42,
+    "agreeValid": 42,
+    "unsound": 0,
+    "scheme1Whole": {
+     "min": 2634,
+     "median": 45398,
+     "p90": 494775,
+     "max": 11165391
+    },
+    "scheme2Whole": {
+     "min": 2009,
+     "median": 21131,
+     "p90": 147550,
+     "max": 3020798
+    },
+    "scheme3Whole": {
+     "min": 1709,
+     "median": 7258,
+     "p90": 24772,
+     "max": 147018
+    },
+    "scheme1Above": 19,
+    "scheme2Above": 7,
+    "scheme3Above": 3,
+    "scheme1First": {
+     "min": 5782,
+     "median": 116802,
+     "p90": 2699277,
+     "max": 4210758
+    },
+    "scheme2First": {
+     "min": 4718,
+     "median": 40057,
+     "p90": 518998,
+     "max": 1174868
+    },
+    "scheme3First": {
+     "min": 4079,
+     "median": 11525,
+     "p90": 87330,
+     "max": 101791
+    },
+    "wholeIntersection": 36,
+    "properSubset": 6,
+    "capacityValidAll": 43,
+    "capacityValidStrict": 36,
+    "perI": {
+     "min": 890,
+     "median": 41327,
+     "p90": 476370,
+     "max": 11120526
+    },
+    "perPair": {
+     "min": 252,
+     "median": 16748,
+     "p90": 125610,
+     "max": 2932278
+    },
+    "home": {
+     "min": 18,
+     "median": 1311,
+     "p90": 4428,
+     "max": 49277
+    },
+    "filter": {
+     "min": 5,
+     "median": 982,
+     "p90": 4357,
+     "max": 43655
+    },
+    "ab": {
+     "min": 0,
+     "median": 91,
+     "p90": 432,
+     "max": 1563
+    },
+    "scan": {
+     "min": 0,
+     "median": 0,
+     "p90": 42,
+     "max": 270
+    },
+    "prep": {
+     "min": 81,
+     "median": 81,
+     "p90": 256,
+     "max": 405
+    }
+   },
+   "R2": {
+    "pairs": {
+     "min": 34,
+     "median": 52,
+     "p90": 128,
+     "max": 318
+    },
+    "i2": {
+     "min": 79,
+     "median": 136,
+     "p90": 508,
+     "max": 910
+    },
+    "i3": {
+     "min": 19,
+     "median": 42,
+     "p90": 237,
+     "max": 296
+    },
+    "capacityValid": {
+     "min": 0,
+     "median": 0,
+     "p90": 3,
+     "max": 18
+    },
+    "positionsWithValid": 14,
+    "positionsWithElimination": 14,
+    "patternsWithElimination": 46,
+    "zEmpty": 21,
+    "zNonEmpty": 25,
+    "positionsWithZEmpty": 12,
+    "positionsWithZNonEmpty": 10,
+    "agreeFound": 42,
+    "agreeValid": 42,
+    "unsound": 0,
+    "scheme1Whole": {
+     "min": 2634,
+     "median": 45416,
+     "p90": 494775,
+     "max": 11165391
+    },
+    "scheme2Whole": {
+     "min": 2009,
+     "median": 21131,
+     "p90": 147550,
+     "max": 3020798
+    },
+    "scheme3Whole": {
+     "min": 1709,
+     "median": 8129,
+     "p90": 24772,
+     "max": 147018
+    },
+    "scheme1Above": 20,
+    "scheme2Above": 9,
+    "scheme3Above": 3,
+    "scheme1First": {
+     "min": 5782,
+     "median": 116802,
+     "p90": 2699277,
+     "max": 4210758
+    },
+    "scheme2First": {
+     "min": 4718,
+     "median": 40057,
+     "p90": 518998,
+     "max": 1174868
+    },
+    "scheme3First": {
+     "min": 4079,
+     "median": 11525,
+     "p90": 87330,
+     "max": 101791
+    },
+    "wholeIntersection": 39,
+    "properSubset": 7,
+    "capacityValidAll": 47,
+    "capacityValidStrict": 39,
+    "perI": {
+     "min": 890,
+     "median": 41327,
+     "p90": 476370,
+     "max": 11120526
+    },
+    "perPair": {
+     "min": 252,
+     "median": 17179,
+     "p90": 125610,
+     "max": 2932278
+    },
+    "home": {
+     "min": 18,
+     "median": 1402,
+     "p90": 4495,
+     "max": 49277
+    },
+    "filter": {
+     "min": 5,
+     "median": 1107,
+     "p90": 4357,
+     "max": 43655
+    },
+    "ab": {
+     "min": 0,
+     "median": 120,
+     "p90": 483,
+     "max": 1563
+    },
+    "scan": {
+     "min": 0,
+     "median": 0,
+     "p90": 45,
+     "max": 270
+    },
+    "prep": {
+     "min": 81,
+     "median": 99,
+     "p90": 256,
+     "max": 405
+    }
+   },
+   "records": {
+    "min": 2,
+    "median": 291,
+    "p90": 1107,
+    "max": 9221
+   },
+   "enumWork": {
+    "min": 1274,
+    "median": 3723,
+    "p90": 15993,
+    "max": 41141
+   },
+   "enumCapped": 0,
+   "ms": {
+    "min": 1,
+    "median": 6,
+    "p90": 34,
+    "max": 525
+   }
+  },
+  "perBoard": [
+   {
+    "label": "B classic9",
+    "positions": 12,
+    "R1": {
+     "pairs": {
+      "min": 41,
+      "median": 49,
+      "p90": 52,
+      "max": 52
+     },
+     "i2": {
+      "min": 79,
+      "median": 107,
+      "p90": 136,
+      "max": 136
+     },
+     "i3": {
+      "min": 19,
+      "median": 29,
+      "p90": 42,
+      "max": 42
+     },
+     "capacityValid": {
+      "min": 0,
+      "median": 0,
+      "p90": 2,
+      "max": 3
+     },
+     "positionsWithValid": 3,
+     "positionsWithElimination": 3,
+     "patternsWithElimination": 6,
+     "zEmpty": 6,
+     "zNonEmpty": 0,
+     "positionsWithZEmpty": 3,
+     "positionsWithZNonEmpty": 0,
+     "agreeFound": 12,
+     "agreeValid": 12,
+     "unsound": 0,
+     "scheme1Whole": {
+      "min": 2634,
+      "median": 33379,
+      "p90": 126325,
+      "max": 158773
+     },
+     "scheme2Whole": {
+      "min": 2009,
+      "median": 14807,
+      "p90": 43683,
+      "max": 63721
+     },
+     "scheme3Whole": {
+      "min": 1709,
+      "median": 5151,
+      "p90": 12140,
+      "max": 14053
+     },
+     "scheme1Above": 4,
+     "scheme2Above": 1,
+     "scheme3Above": 0,
+     "scheme1First": {
+      "min": 6848,
+      "median": 116802,
+      "p90": 119086,
+      "max": 119086
+     },
+     "scheme2First": {
+      "min": 4718,
+      "median": 40057,
+      "p90": 50232,
+      "max": 50232
+     },
+     "scheme3First": {
+      "min": 4079,
+      "median": 11525,
+      "p90": 11826,
+      "max": 11826
+     },
+     "wholeIntersection": 6,
+     "properSubset": 0,
+     "capacityValidAll": 6,
+     "capacityValidStrict": 6,
+     "perI": {
+      "min": 890,
+      "median": 30192,
+      "p90": 120150,
+      "max": 153272
+     },
+     "perPair": {
+      "min": 260,
+      "median": 11439,
+      "p90": 35629,
+      "max": 55223
+     },
+     "home": {
+      "min": 18,
+      "median": 1000,
+      "p90": 3419,
+      "max": 4428
+     },
+     "filter": {
+      "min": 5,
+      "median": 742,
+      "p90": 2408,
+      "max": 2997
+     },
+     "ab": {
+      "min": 0,
+      "median": 90,
+      "p90": 213,
+      "max": 339
+     },
+     "scan": {
+      "min": 0,
+      "median": 0,
+      "p90": 30,
+      "max": 45
+     },
+     "prep": {
+      "min": 81,
+      "median": 81,
+      "p90": 81,
+      "max": 81
+     }
+    },
+    "R2": {
+     "pairs": {
+      "min": 41,
+      "median": 49,
+      "p90": 52,
+      "max": 52
+     },
+     "i2": {
+      "min": 79,
+      "median": 107,
+      "p90": 136,
+      "max": 136
+     },
+     "i3": {
+      "min": 19,
+      "median": 29,
+      "p90": 42,
+      "max": 42
+     },
+     "capacityValid": {
+      "min": 0,
+      "median": 0,
+      "p90": 2,
+      "max": 3
+     },
+     "positionsWithValid": 3,
+     "positionsWithElimination": 3,
+     "patternsWithElimination": 6,
+     "zEmpty": 6,
+     "zNonEmpty": 0,
+     "positionsWithZEmpty": 3,
+     "positionsWithZNonEmpty": 0,
+     "agreeFound": 12,
+     "agreeValid": 12,
+     "unsound": 0,
+     "scheme1Whole": {
+      "min": 2634,
+      "median": 33379,
+      "p90": 126325,
+      "max": 158773
+     },
+     "scheme2Whole": {
+      "min": 2009,
+      "median": 14807,
+      "p90": 43683,
+      "max": 63721
+     },
+     "scheme3Whole": {
+      "min": 1709,
+      "median": 5151,
+      "p90": 12140,
+      "max": 14053
+     },
+     "scheme1Above": 4,
+     "scheme2Above": 1,
+     "scheme3Above": 0,
+     "scheme1First": {
+      "min": 6848,
+      "median": 116802,
+      "p90": 119086,
+      "max": 119086
+     },
+     "scheme2First": {
+      "min": 4718,
+      "median": 40057,
+      "p90": 50232,
+      "max": 50232
+     },
+     "scheme3First": {
+      "min": 4079,
+      "median": 11525,
+      "p90": 11826,
+      "max": 11826
+     },
+     "wholeIntersection": 6,
+     "properSubset": 0,
+     "capacityValidAll": 6,
+     "capacityValidStrict": 6,
+     "perI": {
+      "min": 890,
+      "median": 30192,
+      "p90": 120150,
+      "max": 153272
+     },
+     "perPair": {
+      "min": 260,
+      "median": 11439,
+      "p90": 35629,
+      "max": 55223
+     },
+     "home": {
+      "min": 18,
+      "median": 1000,
+      "p90": 3419,
+      "max": 4428
+     },
+     "filter": {
+      "min": 5,
+      "median": 742,
+      "p90": 2408,
+      "max": 2997
+     },
+     "ab": {
+      "min": 0,
+      "median": 90,
+      "p90": 213,
+      "max": 339
+     },
+     "scan": {
+      "min": 0,
+      "median": 0,
+      "p90": 30,
+      "max": 45
+     },
+     "prep": {
+      "min": 81,
+      "median": 81,
+      "p90": 81,
+      "max": 81
+     }
+    },
+    "records": {
+     "min": 5,
+     "median": 279,
+     "p90": 869,
+     "max": 1127
+    },
+    "enumWork": {
+     "min": 1274,
+     "median": 2700,
+     "p90": 4992,
+     "max": 5480
+    },
+    "enumCapped": 0,
+    "ms": {
+     "min": 1,
+     "median": 5,
+     "p90": 11,
+     "max": 14
+    }
+   },
+   {
+    "label": "B 12 digits",
+    "positions": 4,
+    "R1": {
+     "pairs": {
+      "min": 77,
+      "median": 84,
+      "p90": 84,
+      "max": 84
+     },
+     "i2": {
+      "min": 218,
+      "median": 297,
+      "p90": 297,
+      "max": 297
+     },
+     "i3": {
+      "min": 90,
+      "median": 144,
+      "p90": 144,
+      "max": 144
+     },
+     "capacityValid": {
+      "min": 0,
+      "median": 2,
+      "p90": 2,
+      "max": 2
+     },
+     "positionsWithValid": 2,
+     "positionsWithElimination": 2,
+     "patternsWithElimination": 3,
+     "zEmpty": 1,
+     "zNonEmpty": 2,
+     "positionsWithZEmpty": 1,
+     "positionsWithZNonEmpty": 2,
+     "agreeFound": 4,
+     "agreeValid": 4,
+     "unsound": 0,
+     "scheme1Whole": {
+      "min": 23386,
+      "median": 160914,
+      "p90": 1447798,
+      "max": 1447798
+     },
+     "scheme2Whole": {
+      "min": 9649,
+      "median": 49469,
+      "p90": 313631,
+      "max": 313631
+     },
+     "scheme3Whole": {
+      "min": 5351,
+      "median": 14305,
+      "p90": 60988,
+      "max": 60988
+     },
+     "scheme1Above": 2,
+     "scheme2Above": 1,
+     "scheme3Above": 1,
+     "scheme1First": {
+      "min": 153435,
+      "median": 168446,
+      "p90": 168446,
+      "max": 168446
+     },
+     "scheme2First": {
+      "min": 44421,
+      "median": 44759,
+      "p90": 44759,
+      "max": 44759
+     },
+     "scheme3First": {
+      "min": 13636,
+      "median": 26442,
+      "p90": 26442,
+      "max": 26442
+     },
+     "wholeIntersection": 3,
+     "properSubset": 0,
+     "capacityValidAll": 4,
+     "capacityValidStrict": 3,
+     "perI": {
+      "min": 19096,
+      "median": 152460,
+      "p90": 1427517,
+      "max": 1427517
+     },
+     "perPair": {
+      "min": 4774,
+      "median": 38115,
+      "p90": 271908,
+      "max": 271908
+     },
+     "home": {
+      "min": 414,
+      "median": 2456,
+      "p90": 16028,
+      "max": 16028
+     },
+     "filter": {
+      "min": 585,
+      "median": 2900,
+      "p90": 21442,
+      "max": 21442
+     },
+     "ab": {
+      "min": 38,
+      "median": 320,
+      "p90": 344,
+      "max": 344
+     },
+     "scan": {
+      "min": 0,
+      "median": 40,
+      "p90": 42,
+      "max": 42
+     },
+     "prep": {
+      "min": 144,
+      "median": 144,
+      "p90": 144,
+      "max": 144
+     }
+    },
+    "R2": {
+     "pairs": {
+      "min": 77,
+      "median": 84,
+      "p90": 84,
+      "max": 84
+     },
+     "i2": {
+      "min": 218,
+      "median": 297,
+      "p90": 297,
+      "max": 297
+     },
+     "i3": {
+      "min": 90,
+      "median": 144,
+      "p90": 144,
+      "max": 144
+     },
+     "capacityValid": {
+      "min": 0,
+      "median": 2,
+      "p90": 2,
+      "max": 2
+     },
+     "positionsWithValid": 2,
+     "positionsWithElimination": 2,
+     "patternsWithElimination": 3,
+     "zEmpty": 1,
+     "zNonEmpty": 2,
+     "positionsWithZEmpty": 1,
+     "positionsWithZNonEmpty": 2,
+     "agreeFound": 4,
+     "agreeValid": 4,
+     "unsound": 0,
+     "scheme1Whole": {
+      "min": 23386,
+      "median": 160914,
+      "p90": 1447798,
+      "max": 1447798
+     },
+     "scheme2Whole": {
+      "min": 9649,
+      "median": 49469,
+      "p90": 313631,
+      "max": 313631
+     },
+     "scheme3Whole": {
+      "min": 5351,
+      "median": 14305,
+      "p90": 60988,
+      "max": 60988
+     },
+     "scheme1Above": 2,
+     "scheme2Above": 1,
+     "scheme3Above": 1,
+     "scheme1First": {
+      "min": 153435,
+      "median": 168446,
+      "p90": 168446,
+      "max": 168446
+     },
+     "scheme2First": {
+      "min": 44421,
+      "median": 44759,
+      "p90": 44759,
+      "max": 44759
+     },
+     "scheme3First": {
+      "min": 13636,
+      "median": 26442,
+      "p90": 26442,
+      "max": 26442
+     },
+     "wholeIntersection": 3,
+     "properSubset": 0,
+     "capacityValidAll": 4,
+     "capacityValidStrict": 3,
+     "perI": {
+      "min": 19096,
+      "median": 152460,
+      "p90": 1427517,
+      "max": 1427517
+     },
+     "perPair": {
+      "min": 4774,
+      "median": 38115,
+      "p90": 271908,
+      "max": 271908
+     },
+     "home": {
+      "min": 414,
+      "median": 2456,
+      "p90": 16028,
+      "max": 16028
+     },
+     "filter": {
+      "min": 585,
+      "median": 2900,
+      "p90": 21442,
+      "max": 21442
+     },
+     "ab": {
+      "min": 38,
+      "median": 320,
+      "p90": 344,
+      "max": 344
+     },
+     "scan": {
+      "min": 0,
+      "median": 40,
+      "p90": 42,
+      "max": 42
+     },
+     "prep": {
+      "min": 144,
+      "median": 144,
+      "p90": 144,
+      "max": 144
+     }
+    },
+    "records": {
+     "min": 62,
+     "median": 495,
+     "p90": 3237,
+     "max": 3237
+    },
+    "enumWork": {
+     "min": 3723,
+     "median": 7539,
+     "p90": 19252,
+     "max": 19252
+    },
+    "enumCapped": 0,
+    "ms": {
+     "min": 4,
+     "median": 12,
+     "p90": 74,
+     "max": 74
+    }
+   },
+   {
+    "label": "B 16 digits",
+    "positions": 4,
+    "R1": {
+     "pairs": {
+      "min": 126,
+      "median": 128,
+      "p90": 128,
+      "max": 128
+     },
+     "i2": {
+      "min": 457,
+      "median": 508,
+      "p90": 508,
+      "max": 508
+     },
+     "i3": {
+      "min": 230,
+      "median": 274,
+      "p90": 274,
+      "max": 274
+     },
+     "capacityValid": {
+      "min": 0,
+      "median": 0,
+      "p90": 1,
+      "max": 1
+     },
+     "positionsWithValid": 1,
+     "positionsWithElimination": 1,
+     "patternsWithElimination": 1,
+     "zEmpty": 1,
+     "zNonEmpty": 0,
+     "positionsWithZEmpty": 1,
+     "positionsWithZNonEmpty": 0,
+     "agreeFound": 4,
+     "agreeValid": 4,
+     "unsound": 0,
+     "scheme1Whole": {
+      "min": 7082,
+      "median": 171647,
+      "p90": 2769145,
+      "max": 2769145
+     },
+     "scheme2Whole": {
+      "min": 6054,
+      "median": 47535,
+      "p90": 526714,
+      "max": 526714
+     },
+     "scheme3Whole": {
+      "min": 5834,
+      "median": 20650,
+      "p90": 102625,
+      "max": 102625
+     },
+     "scheme1Above": 2,
+     "scheme2Above": 1,
+     "scheme3Above": 1,
+     "scheme1First": {
+      "min": 2699277,
+      "median": 2699277,
+      "p90": 2699277,
+      "max": 2699277
+     },
+     "scheme2First": {
+      "min": 518998,
+      "median": 518998,
+      "p90": 518998,
+      "max": 518998
+     },
+     "scheme3First": {
+      "min": 101791,
+      "median": 101791,
+      "p90": 101791,
+      "max": 101791
+     },
+     "wholeIntersection": 0,
+     "properSubset": 1,
+     "capacityValidAll": 1,
+     "capacityValidStrict": 0,
+     "perI": {
+      "min": 1374,
+      "median": 157323,
+      "p90": 2729962,
+      "max": 2729962
+     },
+     "perPair": {
+      "min": 252,
+      "median": 28854,
+      "p90": 446848,
+      "max": 446848
+     },
+     "home": {
+      "min": 30,
+      "median": 1740,
+      "p90": 19268,
+      "max": 19268
+     },
+     "filter": {
+      "min": 94,
+      "median": 4357,
+      "p90": 40683,
+      "max": 40683
+     },
+     "ab": {
+      "min": 0,
+      "median": 205,
+      "p90": 1563,
+      "max": 1563
+     },
+     "scan": {
+      "min": 0,
+      "median": 0,
+      "p90": 28,
+      "max": 28
+     },
+     "prep": {
+      "min": 256,
+      "median": 256,
+      "p90": 256,
+      "max": 256
+     }
+    },
+    "R2": {
+     "pairs": {
+      "min": 126,
+      "median": 128,
+      "p90": 128,
+      "max": 128
+     },
+     "i2": {
+      "min": 457,
+      "median": 508,
+      "p90": 508,
+      "max": 508
+     },
+     "i3": {
+      "min": 230,
+      "median": 274,
+      "p90": 274,
+      "max": 274
+     },
+     "capacityValid": {
+      "min": 0,
+      "median": 0,
+      "p90": 1,
+      "max": 1
+     },
+     "positionsWithValid": 1,
+     "positionsWithElimination": 1,
+     "patternsWithElimination": 1,
+     "zEmpty": 1,
+     "zNonEmpty": 0,
+     "positionsWithZEmpty": 1,
+     "positionsWithZNonEmpty": 0,
+     "agreeFound": 4,
+     "agreeValid": 4,
+     "unsound": 0,
+     "scheme1Whole": {
+      "min": 7082,
+      "median": 171647,
+      "p90": 2769145,
+      "max": 2769145
+     },
+     "scheme2Whole": {
+      "min": 6054,
+      "median": 47535,
+      "p90": 526714,
+      "max": 526714
+     },
+     "scheme3Whole": {
+      "min": 5834,
+      "median": 20650,
+      "p90": 102625,
+      "max": 102625
+     },
+     "scheme1Above": 2,
+     "scheme2Above": 1,
+     "scheme3Above": 1,
+     "scheme1First": {
+      "min": 2699277,
+      "median": 2699277,
+      "p90": 2699277,
+      "max": 2699277
+     },
+     "scheme2First": {
+      "min": 518998,
+      "median": 518998,
+      "p90": 518998,
+      "max": 518998
+     },
+     "scheme3First": {
+      "min": 101791,
+      "median": 101791,
+      "p90": 101791,
+      "max": 101791
+     },
+     "wholeIntersection": 0,
+     "properSubset": 1,
+     "capacityValidAll": 1,
+     "capacityValidStrict": 0,
+     "perI": {
+      "min": 1374,
+      "median": 157323,
+      "p90": 2729962,
+      "max": 2729962
+     },
+     "perPair": {
+      "min": 252,
+      "median": 28854,
+      "p90": 446848,
+      "max": 446848
+     },
+     "home": {
+      "min": 30,
+      "median": 1740,
+      "p90": 19268,
+      "max": 19268
+     },
+     "filter": {
+      "min": 94,
+      "median": 4357,
+      "p90": 40683,
+      "max": 40683
+     },
+     "ab": {
+      "min": 0,
+      "median": 205,
+      "p90": 1563,
+      "max": 1563
+     },
+     "scan": {
+      "min": 0,
+      "median": 0,
+      "p90": 28,
+      "max": 28
+     },
+     "prep": {
+      "min": 256,
+      "median": 256,
+      "p90": 256,
+      "max": 256
+     }
+    },
+    "records": {
+     "min": 2,
+     "median": 229,
+     "p90": 3491,
+     "max": 3491
+    },
+    "enumWork": {
+     "min": 4639,
+     "median": 13050,
+     "p90": 36426,
+     "max": 36426
+    },
+    "enumCapped": 0,
+    "ms": {
+     "min": 10,
+     "median": 18,
+     "p90": 125,
+     "max": 125
+    }
+   },
+   {
+    "label": "B samurai",
+    "positions": 4,
+    "R1": {
+     "pairs": {
+      "min": 315,
+      "median": 318,
+      "p90": 318,
+      "max": 318
+     },
+     "i2": {
+      "min": 789,
+      "median": 910,
+      "p90": 910,
+      "max": 910
+     },
+     "i3": {
+      "min": 237,
+      "median": 296,
+      "p90": 296,
+      "max": 296
+     },
+     "capacityValid": {
+      "min": 0,
+      "median": 3,
+      "p90": 18,
+      "max": 18
+     },
+     "positionsWithValid": 2,
+     "positionsWithElimination": 2,
+     "patternsWithElimination": 21,
+     "zEmpty": 5,
+     "zNonEmpty": 16,
+     "positionsWithZEmpty": 2,
+     "positionsWithZNonEmpty": 2,
+     "agreeFound": 4,
+     "agreeValid": 4,
+     "unsound": 0,
+     "scheme1Whole": {
+      "min": 146941,
+      "median": 1157434,
+      "p90": 11165391,
+      "max": 11165391
+     },
+     "scheme2Whole": {
+      "min": 54295,
+      "median": 376618,
+      "p90": 3020798,
+      "max": 3020798
+     },
+     "scheme3Whole": {
+      "min": 13847,
+      "median": 35704,
+      "p90": 147018,
+      "max": 147018
+     },
+     "scheme1Above": 4,
+     "scheme2Above": 4,
+     "scheme3Above": 1,
+     "scheme1First": {
+      "min": 231277,
+      "median": 4210758,
+      "p90": 4210758,
+      "max": 4210758
+     },
+     "scheme2First": {
+      "min": 92912,
+      "median": 1174868,
+      "p90": 1174868,
+      "max": 1174868
+     },
+     "scheme3First": {
+      "min": 23347,
+      "median": 87330,
+      "p90": 87330,
+      "max": 87330
+     },
+     "wholeIntersection": 17,
+     "properSubset": 4,
+     "capacityValidAll": 21,
+     "capacityValidStrict": 17,
+     "perI": {
+      "min": 135432,
+      "median": 1135782,
+      "p90": 11120526,
+      "max": 11120526
+     },
+     "perPair": {
+      "min": 41580,
+      "median": 348705,
+      "p90": 2932278,
+      "max": 2932278
+     },
+     "home": {
+      "min": 1000,
+      "median": 6684,
+      "p90": 49277,
+      "max": 49277
+     },
+     "filter": {
+      "min": 1206,
+      "median": 6261,
+      "p90": 43655,
+      "max": 43655
+     },
+     "ab": {
+      "min": 172,
+      "median": 795,
+      "p90": 1525,
+      "max": 1525
+     },
+     "scan": {
+      "min": 0,
+      "median": 45,
+      "p90": 270,
+      "max": 270
+     },
+     "prep": {
+      "min": 405,
+      "median": 405,
+      "p90": 405,
+      "max": 405
+     }
+    },
+    "R2": {
+     "pairs": {
+      "min": 315,
+      "median": 318,
+      "p90": 318,
+      "max": 318
+     },
+     "i2": {
+      "min": 789,
+      "median": 910,
+      "p90": 910,
+      "max": 910
+     },
+     "i3": {
+      "min": 237,
+      "median": 296,
+      "p90": 296,
+      "max": 296
+     },
+     "capacityValid": {
+      "min": 0,
+      "median": 3,
+      "p90": 18,
+      "max": 18
+     },
+     "positionsWithValid": 2,
+     "positionsWithElimination": 2,
+     "patternsWithElimination": 21,
+     "zEmpty": 5,
+     "zNonEmpty": 16,
+     "positionsWithZEmpty": 2,
+     "positionsWithZNonEmpty": 2,
+     "agreeFound": 4,
+     "agreeValid": 4,
+     "unsound": 0,
+     "scheme1Whole": {
+      "min": 146941,
+      "median": 1157434,
+      "p90": 11165391,
+      "max": 11165391
+     },
+     "scheme2Whole": {
+      "min": 54295,
+      "median": 376618,
+      "p90": 3020798,
+      "max": 3020798
+     },
+     "scheme3Whole": {
+      "min": 13847,
+      "median": 35704,
+      "p90": 147018,
+      "max": 147018
+     },
+     "scheme1Above": 4,
+     "scheme2Above": 4,
+     "scheme3Above": 1,
+     "scheme1First": {
+      "min": 231277,
+      "median": 4210758,
+      "p90": 4210758,
+      "max": 4210758
+     },
+     "scheme2First": {
+      "min": 92912,
+      "median": 1174868,
+      "p90": 1174868,
+      "max": 1174868
+     },
+     "scheme3First": {
+      "min": 23347,
+      "median": 87330,
+      "p90": 87330,
+      "max": 87330
+     },
+     "wholeIntersection": 17,
+     "properSubset": 4,
+     "capacityValidAll": 21,
+     "capacityValidStrict": 17,
+     "perI": {
+      "min": 135432,
+      "median": 1135782,
+      "p90": 11120526,
+      "max": 11120526
+     },
+     "perPair": {
+      "min": 41580,
+      "median": 348705,
+      "p90": 2932278,
+      "max": 2932278
+     },
+     "home": {
+      "min": 1000,
+      "median": 6684,
+      "p90": 49277,
+      "max": 49277
+     },
+     "filter": {
+      "min": 1206,
+      "median": 6261,
+      "p90": 43655,
+      "max": 43655
+     },
+     "ab": {
+      "min": 172,
+      "median": 795,
+      "p90": 1525,
+      "max": 1525
+     },
+     "scan": {
+      "min": 0,
+      "median": 45,
+      "p90": 270,
+      "max": 270
+     },
+     "prep": {
+      "min": 405,
+      "median": 405,
+      "p90": 405,
+      "max": 405
+     }
+    },
+    "records": {
+     "min": 132,
+     "median": 1107,
+     "p90": 9221,
+     "max": 9221
+    },
+    "enumWork": {
+     "min": 9591,
+     "median": 19066,
+     "p90": 41141,
+     "max": 41141
+    },
+    "enumCapped": 0,
+    "ms": {
+     "min": 17,
+     "median": 74,
+     "p90": 525,
+     "max": 525
+    }
+   },
+   {
+    "label": "B diagonalX",
+    "positions": 6,
+    "R1": {
+     "pairs": {
+      "min": 40,
+      "median": 50,
+      "p90": 53,
+      "max": 53
+     },
+     "i2": {
+      "min": 94,
+      "median": 102,
+      "p90": 113,
+      "max": 113
+     },
+     "i3": {
+      "min": 26,
+      "median": 27,
+      "p90": 30,
+      "max": 30
+     },
+     "capacityValid": {
+      "min": 0,
+      "median": 0,
+      "p90": 1,
+      "max": 1
+     },
+     "positionsWithValid": 1,
+     "positionsWithElimination": 1,
+     "patternsWithElimination": 1,
+     "zEmpty": 0,
+     "zNonEmpty": 1,
+     "positionsWithZEmpty": 0,
+     "positionsWithZNonEmpty": 1,
+     "agreeFound": 6,
+     "agreeValid": 6,
+     "unsound": 0,
+     "scheme1Whole": {
+      "min": 6650,
+      "median": 45398,
+      "p90": 114126,
+      "max": 114126
+     },
+     "scheme2Whole": {
+      "min": 4052,
+      "median": 20750,
+      "p90": 43151,
+      "max": 43151
+     },
+     "scheme3Whole": {
+      "min": 2632,
+      "median": 6524,
+      "p90": 11276,
+      "max": 11276
+     },
+     "scheme1Above": 2,
+     "scheme2Above": 0,
+     "scheme3Above": 0,
+     "scheme1First": {
+      "min": 44814,
+      "median": 44814,
+      "p90": 44814,
+      "max": 44814
+     },
+     "scheme2First": {
+      "min": 19685,
+      "median": 19685,
+      "p90": 19685,
+      "max": 19685
+     },
+     "scheme3First": {
+      "min": 6460,
+      "median": 6460,
+      "p90": 6460,
+      "max": 6460
+     },
+     "wholeIntersection": 1,
+     "properSubset": 0,
+     "capacityValidAll": 1,
+     "capacityValidStrict": 1,
+     "perI": {
+      "min": 4290,
+      "median": 41327,
+      "p90": 109021,
+      "max": 109021
+     },
+     "perPair": {
+      "min": 1590,
+      "median": 16100,
+      "p90": 36040,
+      "max": 36040
+     },
+     "home": {
+      "min": 140,
+      "median": 1402,
+      "p90": 3264,
+      "max": 3264
+     },
+     "filter": {
+      "min": 102,
+      "median": 964,
+      "p90": 2006,
+      "max": 2006
+     },
+     "ab": {
+      "min": 0,
+      "median": 157,
+      "p90": 432,
+      "max": 432
+     },
+     "scan": {
+      "min": 0,
+      "median": 0,
+      "p90": 15,
+      "max": 15
+     },
+     "prep": {
+      "min": 81,
+      "median": 81,
+      "p90": 81,
+      "max": 81
+     }
+    },
+    "R2": {
+     "pairs": {
+      "min": 40,
+      "median": 50,
+      "p90": 53,
+      "max": 53
+     },
+     "i2": {
+      "min": 94,
+      "median": 102,
+      "p90": 113,
+      "max": 113
+     },
+     "i3": {
+      "min": 26,
+      "median": 27,
+      "p90": 30,
+      "max": 30
+     },
+     "capacityValid": {
+      "min": 0,
+      "median": 0,
+      "p90": 1,
+      "max": 1
+     },
+     "positionsWithValid": 1,
+     "positionsWithElimination": 1,
+     "patternsWithElimination": 1,
+     "zEmpty": 0,
+     "zNonEmpty": 1,
+     "positionsWithZEmpty": 0,
+     "positionsWithZNonEmpty": 1,
+     "agreeFound": 6,
+     "agreeValid": 6,
+     "unsound": 0,
+     "scheme1Whole": {
+      "min": 6668,
+      "median": 45416,
+      "p90": 114144,
+      "max": 114144
+     },
+     "scheme2Whole": {
+      "min": 4070,
+      "median": 20768,
+      "p90": 43169,
+      "max": 43169
+     },
+     "scheme3Whole": {
+      "min": 2650,
+      "median": 6542,
+      "p90": 11294,
+      "max": 11294
+     },
+     "scheme1Above": 2,
+     "scheme2Above": 0,
+     "scheme3Above": 0,
+     "scheme1First": {
+      "min": 44832,
+      "median": 44832,
+      "p90": 44832,
+      "max": 44832
+     },
+     "scheme2First": {
+      "min": 19703,
+      "median": 19703,
+      "p90": 19703,
+      "max": 19703
+     },
+     "scheme3First": {
+      "min": 6478,
+      "median": 6478,
+      "p90": 6478,
+      "max": 6478
+     },
+     "wholeIntersection": 1,
+     "properSubset": 0,
+     "capacityValidAll": 1,
+     "capacityValidStrict": 1,
+     "perI": {
+      "min": 4290,
+      "median": 41327,
+      "p90": 109021,
+      "max": 109021
+     },
+     "perPair": {
+      "min": 1590,
+      "median": 16100,
+      "p90": 36040,
+      "max": 36040
+     },
+     "home": {
+      "min": 140,
+      "median": 1402,
+      "p90": 3264,
+      "max": 3264
+     },
+     "filter": {
+      "min": 102,
+      "median": 964,
+      "p90": 2006,
+      "max": 2006
+     },
+     "ab": {
+      "min": 0,
+      "median": 157,
+      "p90": 432,
+      "max": 432
+     },
+     "scan": {
+      "min": 0,
+      "median": 0,
+      "p90": 15,
+      "max": 15
+     },
+     "prep": {
+      "min": 99,
+      "median": 99,
+      "p90": 99,
+      "max": 99
+     }
+    },
+    "records": {
+     "min": 30,
+     "median": 322,
+     "p90": 901,
+     "max": 901
+    },
+    "enumWork": {
+     "min": 2082,
+     "median": 3613,
+     "p90": 4863,
+     "max": 4863
+    },
+    "enumCapped": 0,
+    "ms": {
+     "min": 1,
+     "median": 4,
+     "p90": 8,
+     "max": 8
+    }
+   },
+   {
+    "label": "B hyper",
+    "positions": 6,
+    "R1": {
+     "pairs": {
+      "min": 40,
+      "median": 50,
+      "p90": 53,
+      "max": 53
+     },
+     "i2": {
+      "min": 94,
+      "median": 102,
+      "p90": 113,
+      "max": 113
+     },
+     "i3": {
+      "min": 26,
+      "median": 27,
+      "p90": 30,
+      "max": 30
+     },
+     "capacityValid": {
+      "min": 0,
+      "median": 1,
+      "p90": 2,
+      "max": 2
+     },
+     "positionsWithValid": 3,
+     "positionsWithElimination": 3,
+     "patternsWithElimination": 5,
+     "zEmpty": 4,
+     "zNonEmpty": 1,
+     "positionsWithZEmpty": 3,
+     "positionsWithZNonEmpty": 1,
+     "agreeFound": 6,
+     "agreeValid": 6,
+     "unsound": 0,
+     "scheme1Whole": {
+      "min": 9958,
+      "median": 59096,
+      "p90": 112211,
+      "max": 112211
+     },
+     "scheme2Whole": {
+      "min": 5694,
+      "median": 26850,
+      "p90": 42371,
+      "max": 42371
+     },
+     "scheme3Whole": {
+      "min": 3387,
+      "median": 7567,
+      "p90": 10670,
+      "max": 10670
+     },
+     "scheme1Above": 3,
+     "scheme2Above": 0,
+     "scheme3Above": 0,
+     "scheme1First": {
+      "min": 17642,
+      "median": 18577,
+      "p90": 58462,
+      "max": 58462
+     },
+     "scheme2First": {
+      "min": 10225,
+      "median": 10365,
+      "p90": 21288,
+      "max": 21288
+     },
+     "scheme3First": {
+      "min": 5115,
+      "median": 5407,
+      "p90": 7881,
+      "max": 7881
+     },
+     "wholeIntersection": 5,
+     "properSubset": 0,
+     "capacityValidAll": 5,
+     "capacityValidStrict": 5,
+     "perI": {
+      "min": 7293,
+      "median": 54528,
+      "p90": 106601,
+      "max": 106601
+     },
+     "perPair": {
+      "min": 2703,
+      "median": 21300,
+      "p90": 35240,
+      "max": 35240
+     },
+     "home": {
+      "min": 345,
+      "median": 1591,
+      "p90": 2658,
+      "max": 2658
+     },
+     "filter": {
+      "min": 250,
+      "median": 1008,
+      "p90": 1734,
+      "max": 1734
+     },
+     "ab": {
+      "min": 0,
+      "median": 52,
+      "p90": 428,
+      "max": 428
+     },
+     "scan": {
+      "min": 0,
+      "median": 15,
+      "p90": 30,
+      "max": 30
+     },
+     "prep": {
+      "min": 81,
+      "median": 81,
+      "p90": 81,
+      "max": 81
+     }
+    },
+    "R2": {
+     "pairs": {
+      "min": 60,
+      "median": 71,
+      "p90": 77,
+      "max": 77
+     },
+     "i2": {
+      "min": 142,
+      "median": 149,
+      "p90": 177,
+      "max": 177
+     },
+     "i3": {
+      "min": 39,
+      "median": 41,
+      "p90": 50,
+      "max": 50
+     },
+     "capacityValid": {
+      "min": 0,
+      "median": 2,
+      "p90": 4,
+      "max": 4
+     },
+     "positionsWithValid": 3,
+     "positionsWithElimination": 3,
+     "patternsWithElimination": 9,
+     "zEmpty": 5,
+     "zNonEmpty": 4,
+     "positionsWithZEmpty": 3,
+     "positionsWithZNonEmpty": 3,
+     "agreeFound": 6,
+     "agreeValid": 6,
+     "unsound": 0,
+     "scheme1Whole": {
+      "min": 14400,
+      "median": 84919,
+      "p90": 166951,
+      "max": 166951
+     },
+     "scheme2Whole": {
+      "min": 7233,
+      "median": 36636,
+      "p90": 61197,
+      "max": 61197
+     },
+     "scheme3Whole": {
+      "min": 3782,
+      "median": 9246,
+      "p90": 13713,
+      "max": 13713
+     },
+     "scheme1Above": 4,
+     "scheme2Above": 2,
+     "scheme3Above": 0,
+     "scheme1First": {
+      "min": 23670,
+      "median": 25284,
+      "p90": 60636,
+      "max": 60636
+     },
+     "scheme2First": {
+      "min": 12429,
+      "median": 12537,
+      "p90": 22117,
+      "max": 22117
+     },
+     "scheme3First": {
+      "min": 5495,
+      "median": 5651,
+      "p90": 7912,
+      "max": 7912
+     },
+     "wholeIntersection": 8,
+     "properSubset": 1,
+     "capacityValidAll": 9,
+     "capacityValidStrict": 8,
+     "perI": {
+      "min": 11577,
+      "median": 80088,
+      "p90": 161223,
+      "max": 161223
+     },
+     "perPair": {
+      "min": 3927,
+      "median": 30246,
+      "p90": 52860,
+      "max": 52860
+     },
+     "home": {
+      "min": 425,
+      "median": 2430,
+      "p90": 4495,
+      "max": 4495
+     },
+     "filter": {
+      "min": 390,
+      "median": 1750,
+      "p90": 2762,
+      "max": 2762
+     },
+     "ab": {
+      "min": 0,
+      "median": 139,
+      "p90": 544,
+      "max": 544
+     },
+     "scan": {
+      "min": 0,
+      "median": 30,
+      "p90": 60,
+      "max": 60
+     },
+     "prep": {
+      "min": 117,
+      "median": 117,
+      "p90": 117,
+      "max": 117
+     }
+    },
+    "records": {
+     "min": 51,
+     "median": 426,
+     "p90": 881,
+     "max": 881
+    },
+    "enumWork": {
+     "min": 2339,
+     "median": 4141,
+     "p90": 5368,
+     "max": 5368
+    },
+    "enumCapped": 0,
+    "ms": {
+     "min": 2,
+     "median": 7,
+     "p90": 9,
+     "max": 9
+    }
+   },
+   {
+    "label": "B jigsaw9",
+    "positions": 6,
+    "R1": {
+     "pairs": {
+      "min": 34,
+      "median": 37,
+      "p90": 46,
+      "max": 46
+     },
+     "i2": {
+      "min": 93,
+      "median": 98,
+      "p90": 103,
+      "max": 103
+     },
+     "i3": {
+      "min": 37,
+      "median": 42,
+      "p90": 57,
+      "max": 57
+     },
+     "capacityValid": {
+      "min": 0,
+      "median": 0,
+      "p90": 3,
+      "max": 3
+     },
+     "positionsWithValid": 2,
+     "positionsWithElimination": 2,
+     "patternsWithElimination": 5,
+     "zEmpty": 3,
+     "zNonEmpty": 2,
+     "positionsWithZEmpty": 2,
+     "positionsWithZNonEmpty": 2,
+     "agreeFound": 6,
+     "agreeValid": 6,
+     "unsound": 0,
+     "scheme1Whole": {
+      "min": 7488,
+      "median": 44275,
+      "p90": 126830,
+      "max": 126830
+     },
+     "scheme2Whole": {
+      "min": 4067,
+      "median": 15044,
+      "p90": 33802,
+      "max": 33802
+     },
+     "scheme3Whole": {
+      "min": 2515,
+      "median": 5485,
+      "p90": 9522,
+      "max": 9522
+     },
+     "scheme1Above": 2,
+     "scheme2Above": 0,
+     "scheme3Above": 0,
+     "scheme1First": {
+      "min": 5782,
+      "median": 27560,
+      "p90": 27560,
+      "max": 27560
+     },
+     "scheme2First": {
+      "min": 5833,
+      "median": 9405,
+      "p90": 9405,
+      "max": 9405
+     },
+     "scheme3First": {
+      "min": 4630,
+      "median": 4634,
+      "p90": 4634,
+      "max": 4634
+     },
+     "wholeIntersection": 4,
+     "properSubset": 1,
+     "capacityValidAll": 5,
+     "capacityValidStrict": 4,
+     "perI": {
+      "min": 5320,
+      "median": 40740,
+      "p90": 122250,
+      "max": 122250
+     },
+     "perPair": {
+      "min": 1748,
+      "median": 10767,
+      "p90": 27710,
+      "max": 27710
+     },
+     "home": {
+      "min": 158,
+      "median": 917,
+      "p90": 2615,
+      "max": 2615
+     },
+     "filter": {
+      "min": 151,
+      "median": 742,
+      "p90": 1612,
+      "max": 1612
+     },
+     "ab": {
+      "min": 0,
+      "median": 44,
+      "p90": 123,
+      "max": 123
+     },
+     "scan": {
+      "min": 0,
+      "median": 0,
+      "p90": 46,
+      "max": 46
+     },
+     "prep": {
+      "min": 81,
+      "median": 81,
+      "p90": 81,
+      "max": 81
+     }
+    },
+    "R2": {
+     "pairs": {
+      "min": 34,
+      "median": 37,
+      "p90": 46,
+      "max": 46
+     },
+     "i2": {
+      "min": 93,
+      "median": 98,
+      "p90": 103,
+      "max": 103
+     },
+     "i3": {
+      "min": 37,
+      "median": 42,
+      "p90": 57,
+      "max": 57
+     },
+     "capacityValid": {
+      "min": 0,
+      "median": 0,
+      "p90": 3,
+      "max": 3
+     },
+     "positionsWithValid": 2,
+     "positionsWithElimination": 2,
+     "patternsWithElimination": 5,
+     "zEmpty": 3,
+     "zNonEmpty": 2,
+     "positionsWithZEmpty": 2,
+     "positionsWithZNonEmpty": 2,
+     "agreeFound": 6,
+     "agreeValid": 6,
+     "unsound": 0,
+     "scheme1Whole": {
+      "min": 7488,
+      "median": 44275,
+      "p90": 126830,
+      "max": 126830
+     },
+     "scheme2Whole": {
+      "min": 4067,
+      "median": 15044,
+      "p90": 33802,
+      "max": 33802
+     },
+     "scheme3Whole": {
+      "min": 2515,
+      "median": 5485,
+      "p90": 9522,
+      "max": 9522
+     },
+     "scheme1Above": 2,
+     "scheme2Above": 0,
+     "scheme3Above": 0,
+     "scheme1First": {
+      "min": 5782,
+      "median": 27560,
+      "p90": 27560,
+      "max": 27560
+     },
+     "scheme2First": {
+      "min": 5833,
+      "median": 9405,
+      "p90": 9405,
+      "max": 9405
+     },
+     "scheme3First": {
+      "min": 4630,
+      "median": 4634,
+      "p90": 4634,
+      "max": 4634
+     },
+     "wholeIntersection": 4,
+     "properSubset": 1,
+     "capacityValidAll": 5,
+     "capacityValidStrict": 4,
+     "perI": {
+      "min": 5320,
+      "median": 40740,
+      "p90": 122250,
+      "max": 122250
+     },
+     "perPair": {
+      "min": 1748,
+      "median": 10767,
+      "p90": 27710,
+      "max": 27710
+     },
+     "home": {
+      "min": 158,
+      "median": 917,
+      "p90": 2615,
+      "max": 2615
+     },
+     "filter": {
+      "min": 151,
+      "median": 742,
+      "p90": 1612,
+      "max": 1612
+     },
+     "ab": {
+      "min": 0,
+      "median": 44,
+      "p90": 123,
+      "max": 123
+     },
+     "scan": {
+      "min": 0,
+      "median": 0,
+      "p90": 46,
+      "max": 46
+     },
+     "prep": {
+      "min": 81,
+      "median": 81,
+      "p90": 81,
+      "max": 81
+     }
+    },
+    "records": {
+     "min": 38,
+     "median": 291,
+     "p90": 815,
+     "max": 815
+    },
+    "enumWork": {
+     "min": 1901,
+     "median": 3248,
+     "p90": 4310,
+     "max": 4310
+    },
+    "enumCapped": 0,
+    "ms": {
+     "min": 1,
+     "median": 4,
+     "p90": 6,
+     "max": 6
+    }
+   }
+  ],
+  "rows": [
+   {
+    "tag": "classic9 keep 0.05-0.4 #0",
+    "open": 66,
+    "digits": 9,
+    "cells": 81,
+    "records": 364,
+    "enumCapHit": null,
+    "enumWork": 3457,
+    "R1": {
+     "pairs": 49,
+     "i2": 107,
+     "i3": 29,
+     "capacityValid": 1,
+     "withElimination": 1,
+     "byForm": {
+      "zEmpty": 1,
+      "zNonEmpty": 0,
+      "i2": 1,
+      "i3": 0,
+      "wholeIntersection": 1,
+      "properSubset": 0,
+      "strictCapacityValid": 1
+     },
+     "oracleValid": 1,
+     "oracleWithElimination": 1,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 136,
+      "perI": 49504,
+      "perPair": 17836,
+      "classify": 364,
+      "home": 1627,
+      "filter": 1107,
+      "ab": 173,
+      "scan": 15
+     },
+     "totals": {
+      "p1": 49958,
+      "p2": 19397,
+      "p3": 3552
+     },
+     "firstTotals": {
+      "p1": 3391,
+      "p2": 1261,
+      "p3": 622
+     },
+     "whole": {
+      "p1": 53415,
+      "p2": 22854,
+      "p3": 7009
+     },
+     "firstWhole": {
+      "p1": 6848,
+      "p2": 4718,
+      "p3": 4079
+     },
+     "first": {
+      "line": "R2",
+      "box": "B1",
+      "I": [
+       "R2C1",
+       "R2C3"
+      ],
+      "A": [
+       "R2C9"
+      ],
+      "aDigits": [
+       3,
+       7
+      ],
+      "B": [
+       "R3C1"
+      ],
+      "bDigits": [
+       4,
+       9
+      ],
+      "Z": [],
+      "eliminations": [
+       "R1C1-9",
+       "R2C4-3",
+       "R2C4-7",
+       "R2C7-3",
+       "R2C7-7",
+       "R3C3-4",
+       "R3C3-9"
+      ]
+     }
+    },
+    "R2": {
+     "pairs": 49,
+     "i2": 107,
+     "i3": 29,
+     "capacityValid": 1,
+     "withElimination": 1,
+     "byForm": {
+      "zEmpty": 1,
+      "zNonEmpty": 0,
+      "i2": 1,
+      "i3": 0,
+      "wholeIntersection": 1,
+      "properSubset": 0,
+      "strictCapacityValid": 1
+     },
+     "oracleValid": 1,
+     "oracleWithElimination": 1,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 136,
+      "perI": 49504,
+      "perPair": 17836,
+      "classify": 364,
+      "home": 1627,
+      "filter": 1107,
+      "ab": 173,
+      "scan": 15
+     },
+     "totals": {
+      "p1": 49958,
+      "p2": 19397,
+      "p3": 3552
+     },
+     "firstTotals": {
+      "p1": 3391,
+      "p2": 1261,
+      "p3": 622
+     },
+     "whole": {
+      "p1": 53415,
+      "p2": 22854,
+      "p3": 7009
+     },
+     "firstWhole": {
+      "p1": 6848,
+      "p2": 4718,
+      "p3": 4079
+     },
+     "first": {
+      "line": "R2",
+      "box": "B1",
+      "I": [
+       "R2C1",
+       "R2C3"
+      ],
+      "A": [
+       "R2C9"
+      ],
+      "aDigits": [
+       3,
+       7
+      ],
+      "B": [
+       "R3C1"
+      ],
+      "bDigits": [
+       4,
+       9
+      ],
+      "Z": [],
+      "eliminations": [
+       "R1C1-9",
+       "R2C4-3",
+       "R2C4-7",
+       "R2C7-3",
+       "R2C7-7",
+       "R3C3-4",
+       "R3C3-9"
+      ]
+     }
+    },
+    "ms": 6,
+    "population": "classic9"
+   },
+   {
+    "tag": "classic9 keep 0.05-0.4 #1",
+    "open": 74,
+    "digits": 9,
+    "cells": 81,
+    "records": 675,
+    "enumCapHit": null,
+    "enumWork": 5480,
+    "R1": {
+     "pairs": 52,
+     "i2": 136,
+     "i3": 42,
+     "capacityValid": 3,
+     "withElimination": 3,
+     "byForm": {
+      "zEmpty": 3,
+      "zNonEmpty": 0,
+      "i2": 3,
+      "i3": 0,
+      "wholeIntersection": 3,
+      "properSubset": 0,
+      "strictCapacityValid": 3
+     },
+     "oracleValid": 3,
+     "oracleWithElimination": 3,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 52,
+      "opened": 178,
+      "perI": 120150,
+      "perPair": 35100,
+      "classify": 675,
+      "home": 2882,
+      "filter": 2408,
+      "ab": 339,
+      "scan": 45
+     },
+     "totals": {
+      "p1": 120845,
+      "p2": 38203,
+      "p3": 6660
+     },
+     "firstTotals": {
+      "p1": 111322,
+      "p2": 34577,
+      "p3": 6045
+     },
+     "whole": {
+      "p1": 126325,
+      "p2": 43683,
+      "p3": 12140
+     },
+     "firstWhole": {
+      "p1": 116802,
+      "p2": 40057,
+      "p3": 11525
+     },
+     "first": {
+      "line": "C8",
+      "box": "B3",
+      "I": [
+       "R1C8",
+       "R2C8"
+      ],
+      "A": [
+       "R4C8",
+       "R8C8"
+      ],
+      "aDigits": [
+       2,
+       4,
+       6
+      ],
+      "B": [
+       "R1C7",
+       "R2C7",
+       "R3C7"
+      ],
+      "bDigits": [
+       1,
+       3,
+       5,
+       9
+      ],
+      "Z": [],
+      "eliminations": [
+       "R1C9-9",
+       "R2C9-9"
+      ]
+     }
+    },
+    "R2": {
+     "pairs": 52,
+     "i2": 136,
+     "i3": 42,
+     "capacityValid": 3,
+     "withElimination": 3,
+     "byForm": {
+      "zEmpty": 3,
+      "zNonEmpty": 0,
+      "i2": 3,
+      "i3": 0,
+      "wholeIntersection": 3,
+      "properSubset": 0,
+      "strictCapacityValid": 3
+     },
+     "oracleValid": 3,
+     "oracleWithElimination": 3,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 52,
+      "opened": 178,
+      "perI": 120150,
+      "perPair": 35100,
+      "classify": 675,
+      "home": 2882,
+      "filter": 2408,
+      "ab": 339,
+      "scan": 45
+     },
+     "totals": {
+      "p1": 120845,
+      "p2": 38203,
+      "p3": 6660
+     },
+     "firstTotals": {
+      "p1": 111322,
+      "p2": 34577,
+      "p3": 6045
+     },
+     "whole": {
+      "p1": 126325,
+      "p2": 43683,
+      "p3": 12140
+     },
+     "firstWhole": {
+      "p1": 116802,
+      "p2": 40057,
+      "p3": 11525
+     },
+     "first": {
+      "line": "C8",
+      "box": "B3",
+      "I": [
+       "R1C8",
+       "R2C8"
+      ],
+      "A": [
+       "R4C8",
+       "R8C8"
+      ],
+      "aDigits": [
+       2,
+       4,
+       6
+      ],
+      "B": [
+       "R1C7",
+       "R2C7",
+       "R3C7"
+      ],
+      "bDigits": [
+       1,
+       3,
+       5,
+       9
+      ],
+      "Z": [],
+      "eliminations": [
+       "R1C9-9",
+       "R2C9-9"
+      ]
+     }
+    },
+    "ms": 9,
+    "population": "classic9"
+   },
+   {
+    "tag": "classic9 keep 0.05-0.4 #2",
+    "open": 66,
+    "digits": 9,
+    "cells": 81,
+    "records": 1127,
+    "enumCapHit": null,
+    "enumWork": 4992,
+    "R1": {
+     "pairs": 49,
+     "i2": 107,
+     "i3": 29,
+     "capacityValid": 2,
+     "withElimination": 2,
+     "byForm": {
+      "zEmpty": 2,
+      "zNonEmpty": 0,
+      "i2": 2,
+      "i3": 0,
+      "wholeIntersection": 2,
+      "properSubset": 0,
+      "strictCapacityValid": 2
+     },
+     "oracleValid": 2,
+     "oracleWithElimination": 2,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 136,
+      "perI": 153272,
+      "perPair": 55223,
+      "classify": 1127,
+      "home": 4428,
+      "filter": 2997,
+      "ab": 213,
+      "scan": 30
+     },
+     "totals": {
+      "p1": 153781,
+      "p2": 58729,
+      "p3": 9061
+     },
+     "firstTotals": {
+      "p1": 114094,
+      "p2": 45240,
+      "p3": 6834
+     },
+     "whole": {
+      "p1": 158773,
+      "p2": 63721,
+      "p3": 14053
+     },
+     "firstWhole": {
+      "p1": 119086,
+      "p2": 50232,
+      "p3": 11826
+     },
+     "first": {
+      "line": "C5",
+      "box": "B5",
+      "I": [
+       "R4C5",
+       "R5C5"
+      ],
+      "A": [
+       "R1C5"
+      ],
+      "aDigits": [
+       2,
+       3
+      ],
+      "B": [
+       "R4C4",
+       "R5C4",
+       "R5C6",
+       "R6C4"
+      ],
+      "bDigits": [
+       1,
+       4,
+       5,
+       6,
+       9
+      ],
+      "Z": [],
+      "eliminations": [
+       "R6C6-1",
+       "R9C5-3"
+      ]
+     }
+    },
+    "R2": {
+     "pairs": 49,
+     "i2": 107,
+     "i3": 29,
+     "capacityValid": 2,
+     "withElimination": 2,
+     "byForm": {
+      "zEmpty": 2,
+      "zNonEmpty": 0,
+      "i2": 2,
+      "i3": 0,
+      "wholeIntersection": 2,
+      "properSubset": 0,
+      "strictCapacityValid": 2
+     },
+     "oracleValid": 2,
+     "oracleWithElimination": 2,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 136,
+      "perI": 153272,
+      "perPair": 55223,
+      "classify": 1127,
+      "home": 4428,
+      "filter": 2997,
+      "ab": 213,
+      "scan": 30
+     },
+     "totals": {
+      "p1": 153781,
+      "p2": 58729,
+      "p3": 9061
+     },
+     "firstTotals": {
+      "p1": 114094,
+      "p2": 45240,
+      "p3": 6834
+     },
+     "whole": {
+      "p1": 158773,
+      "p2": 63721,
+      "p3": 14053
+     },
+     "firstWhole": {
+      "p1": 119086,
+      "p2": 50232,
+      "p3": 11826
+     },
+     "first": {
+      "line": "C5",
+      "box": "B5",
+      "I": [
+       "R4C5",
+       "R5C5"
+      ],
+      "A": [
+       "R1C5"
+      ],
+      "aDigits": [
+       2,
+       3
+      ],
+      "B": [
+       "R4C4",
+       "R5C4",
+       "R5C6",
+       "R6C4"
+      ],
+      "bDigits": [
+       1,
+       4,
+       5,
+       6,
+       9
+      ],
+      "Z": [],
+      "eliminations": [
+       "R6C6-1",
+       "R9C5-3"
+      ]
+     }
+    },
+    "ms": 14,
+    "population": "classic9"
+   },
+   {
+    "tag": "classic9 keep 0.05-0.4 #3",
+    "open": 57,
+    "digits": 9,
+    "cells": 81,
+    "records": 869,
+    "enumCapHit": null,
+    "enumWork": 3624,
+    "R1": {
+     "pairs": 41,
+     "i2": 79,
+     "i3": 19,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 41,
+      "opened": 98,
+      "perI": 85162,
+      "perPair": 35629,
+      "classify": 869,
+      "home": 3419,
+      "filter": 1799,
+      "ab": 1,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 85383,
+      "p2": 37649,
+      "p3": 6308
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 89007,
+      "p2": 41273,
+      "p3": 9932
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 41,
+     "i2": 79,
+     "i3": 19,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 41,
+      "opened": 98,
+      "perI": 85162,
+      "perPair": 35629,
+      "classify": 869,
+      "home": 3419,
+      "filter": 1799,
+      "ab": 1,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 85383,
+      "p2": 37649,
+      "p3": 6308
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 89007,
+      "p2": 41273,
+      "p3": 9932
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 11,
+    "population": "classic9"
+   },
+   {
+    "tag": "classic9 keep 0.3-0.6 #0",
+    "open": 66,
+    "digits": 9,
+    "cells": 81,
+    "records": 70,
+    "enumCapHit": null,
+    "enumWork": 2172,
+    "R1": {
+     "pairs": 49,
+     "i2": 107,
+     "i3": 29,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 136,
+      "perI": 9520,
+      "perPair": 3430,
+      "classify": 70,
+      "home": 340,
+      "filter": 280,
+      "ab": 14,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 9800,
+      "p2": 3990,
+      "p3": 970
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 11972,
+      "p2": 6162,
+      "p3": 3142
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 49,
+     "i2": 107,
+     "i3": 29,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 136,
+      "perI": 9520,
+      "perPair": 3430,
+      "classify": 70,
+      "home": 340,
+      "filter": 280,
+      "ab": 14,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 9800,
+      "p2": 3990,
+      "p3": 970
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 11972,
+      "p2": 6162,
+      "p3": 3142
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 2,
+    "population": "classic9"
+   },
+   {
+    "tag": "classic9 keep 0.3-0.6 #1",
+    "open": 74,
+    "digits": 9,
+    "cells": 81,
+    "records": 37,
+    "enumCapHit": null,
+    "enumWork": 2449,
+    "R1": {
+     "pairs": 52,
+     "i2": 136,
+     "i3": 42,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 52,
+      "opened": 178,
+      "perI": 6586,
+      "perPair": 1924,
+      "classify": 37,
+      "home": 176,
+      "filter": 216,
+      "ab": 14,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 6911,
+      "p2": 2465,
+      "p3": 754
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 9360,
+      "p2": 4914,
+      "p3": 3203
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 52,
+     "i2": 136,
+     "i3": 42,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 52,
+      "opened": 178,
+      "perI": 6586,
+      "perPair": 1924,
+      "classify": 37,
+      "home": 176,
+      "filter": 216,
+      "ab": 14,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 6911,
+      "p2": 2465,
+      "p3": 754
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 9360,
+      "p2": 4914,
+      "p3": 3203
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 3,
+    "population": "classic9"
+   },
+   {
+    "tag": "classic9 keep 0.3-0.6 #2",
+    "open": 66,
+    "digits": 9,
+    "cells": 81,
+    "records": 222,
+    "enumCapHit": null,
+    "enumWork": 2798,
+    "R1": {
+     "pairs": 49,
+     "i2": 107,
+     "i3": 29,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 136,
+      "perI": 30192,
+      "perPair": 10878,
+      "classify": 222,
+      "home": 1000,
+      "filter": 742,
+      "ab": 123,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 30581,
+      "p2": 12009,
+      "p3": 2353
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 33379,
+      "p2": 14807,
+      "p3": 5151
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 49,
+     "i2": 107,
+     "i3": 29,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 136,
+      "perI": 30192,
+      "perPair": 10878,
+      "classify": 222,
+      "home": 1000,
+      "filter": 742,
+      "ab": 123,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 30581,
+      "p2": 12009,
+      "p3": 2353
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 33379,
+      "p2": 14807,
+      "p3": 5151
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 5,
+    "population": "classic9"
+   },
+   {
+    "tag": "classic9 keep 0.3-0.6 #3",
+    "open": 57,
+    "digits": 9,
+    "cells": 81,
+    "records": 419,
+    "enumCapHit": null,
+    "enumWork": 2700,
+    "R1": {
+     "pairs": 41,
+     "i2": 79,
+     "i3": 19,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 41,
+      "opened": 98,
+      "perI": 41062,
+      "perPair": 17179,
+      "classify": 419,
+      "home": 1525,
+      "filter": 912,
+      "ab": 120,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 41402,
+      "p2": 18431,
+      "p3": 3196
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 44102,
+      "p2": 21131,
+      "p3": 5896
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 41,
+     "i2": 79,
+     "i3": 19,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 41,
+      "opened": 98,
+      "perI": 41062,
+      "perPair": 17179,
+      "classify": 419,
+      "home": 1525,
+      "filter": 912,
+      "ab": 120,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 41402,
+      "p2": 18431,
+      "p3": 3196
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 44102,
+      "p2": 21131,
+      "p3": 5896
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 5,
+    "population": "classic9"
+   },
+   {
+    "tag": "classic9 keep 0.5-0.8 #0",
+    "open": 66,
+    "digits": 9,
+    "cells": 81,
+    "records": 22,
+    "enumCapHit": null,
+    "enumWork": 1274,
+    "R1": {
+     "pairs": 49,
+     "i2": 107,
+     "i3": 29,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 136,
+      "perI": 2992,
+      "perPair": 1078,
+      "classify": 22,
+      "home": 82,
+      "filter": 59,
+      "ab": 6,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 3264,
+      "p2": 1409,
+      "p3": 435
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 4538,
+      "p2": 2683,
+      "p3": 1709
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 49,
+     "i2": 107,
+     "i3": 29,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 136,
+      "perI": 2992,
+      "perPair": 1078,
+      "classify": 22,
+      "home": 82,
+      "filter": 59,
+      "ab": 6,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 3264,
+      "p2": 1409,
+      "p3": 435
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 4538,
+      "p2": 2683,
+      "p3": 1709
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 1,
+    "population": "classic9"
+   },
+   {
+    "tag": "classic9 keep 0.5-0.8 #1",
+    "open": 74,
+    "digits": 9,
+    "cells": 81,
+    "records": 5,
+    "enumCapHit": null,
+    "enumWork": 1433,
+    "R1": {
+     "pairs": 52,
+     "i2": 136,
+     "i3": 42,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 52,
+      "opened": 178,
+      "perI": 890,
+      "perPair": 260,
+      "classify": 5,
+      "home": 18,
+      "filter": 5,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 1201,
+      "p2": 576,
+      "p3": 339
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 2634,
+      "p2": 2009,
+      "p3": 1772
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 52,
+     "i2": 136,
+     "i3": 42,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 52,
+      "opened": 178,
+      "perI": 890,
+      "perPair": 260,
+      "classify": 5,
+      "home": 18,
+      "filter": 5,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 1201,
+      "p2": 576,
+      "p3": 339
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 2634,
+      "p2": 2009,
+      "p3": 1772
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 1,
+    "population": "classic9"
+   },
+   {
+    "tag": "classic9 keep 0.5-0.8 #2",
+    "open": 66,
+    "digits": 9,
+    "cells": 81,
+    "records": 33,
+    "enumCapHit": null,
+    "enumWork": 1705,
+    "R1": {
+     "pairs": 49,
+     "i2": 107,
+     "i3": 29,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 136,
+      "perI": 4488,
+      "perPair": 1617,
+      "classify": 33,
+      "home": 129,
+      "filter": 103,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 4754,
+      "p2": 1986,
+      "p3": 531
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 6459,
+      "p2": 3691,
+      "p3": 2236
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 49,
+     "i2": 107,
+     "i3": 29,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 49,
+      "opened": 136,
+      "perI": 4488,
+      "perPair": 1617,
+      "classify": 33,
+      "home": 129,
+      "filter": 103,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 4754,
+      "p2": 1986,
+      "p3": 531
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 6459,
+      "p2": 3691,
+      "p3": 2236
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 1,
+    "population": "classic9"
+   },
+   {
+    "tag": "classic9 keep 0.5-0.8 #3",
+    "open": 57,
+    "digits": 9,
+    "cells": 81,
+    "records": 279,
+    "enumCapHit": null,
+    "enumWork": 2255,
+    "R1": {
+     "pairs": 41,
+     "i2": 79,
+     "i3": 19,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 41,
+      "opened": 98,
+      "perI": 27342,
+      "perPair": 11439,
+      "classify": 279,
+      "home": 965,
+      "filter": 535,
+      "ab": 90,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 27652,
+      "p2": 12284,
+      "p3": 2089
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 29907,
+      "p2": 14539,
+      "p3": 4344
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 41,
+     "i2": 79,
+     "i3": 19,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 41,
+      "opened": 98,
+      "perI": 27342,
+      "perPair": 11439,
+      "classify": 279,
+      "home": 965,
+      "filter": 535,
+      "ab": 90,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 27652,
+      "p2": 12284,
+      "p3": 2089
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 29907,
+      "p2": 14539,
+      "p3": 4344
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 4,
+    "population": "classic9"
+   },
+   {
+    "tag": "12 digits keep 0.05-0.4 #0",
+    "open": 112,
+    "digits": 12,
+    "cells": 144,
+    "records": 495,
+    "enumCapHit": null,
+    "enumWork": 7539,
+    "R1": {
+     "pairs": 77,
+     "i2": 218,
+     "i3": 90,
+     "capacityValid": 2,
+     "withElimination": 2,
+     "byForm": {
+      "zEmpty": 1,
+      "zNonEmpty": 1,
+      "i2": 1,
+      "i3": 1,
+      "wholeIntersection": 2,
+      "properSubset": 0,
+      "strictCapacityValid": 2
+     },
+     "oracleValid": 2,
+     "oracleWithElimination": 2,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 144,
+      "pairs": 77,
+      "opened": 308,
+      "perI": 152460,
+      "perPair": 38115,
+      "classify": 495,
+      "home": 2456,
+      "filter": 2900,
+      "ab": 344,
+      "scan": 42
+     },
+     "totals": {
+      "p1": 153375,
+      "p2": 41930,
+      "p3": 6766
+     },
+     "firstTotals": {
+      "p1": 145896,
+      "p2": 37220,
+      "p3": 6097
+     },
+     "whole": {
+      "p1": 160914,
+      "p2": 49469,
+      "p3": 14305
+     },
+     "firstWhole": {
+      "p1": 153435,
+      "p2": 44759,
+      "p3": 13636
+     },
+     "first": {
+      "line": "C10",
+      "box": "B3",
+      "I": [
+       "R1C10",
+       "R2C10",
+       "R3C10"
+      ],
+      "A": [
+       "R10C10",
+       "R12C10"
+      ],
+      "aDigits": [
+       1,
+       5,
+       12
+      ],
+      "B": [
+       "R1C11"
+      ],
+      "bDigits": [
+       3,
+       11
+      ],
+      "Z": [
+       7
+      ],
+      "eliminations": [
+       "R1C9-7",
+       "R3C9-11",
+       "R3C11-11",
+       "R9C10-5"
+      ]
+     }
+    },
+    "R2": {
+     "pairs": 77,
+     "i2": 218,
+     "i3": 90,
+     "capacityValid": 2,
+     "withElimination": 2,
+     "byForm": {
+      "zEmpty": 1,
+      "zNonEmpty": 1,
+      "i2": 1,
+      "i3": 1,
+      "wholeIntersection": 2,
+      "properSubset": 0,
+      "strictCapacityValid": 2
+     },
+     "oracleValid": 2,
+     "oracleWithElimination": 2,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 144,
+      "pairs": 77,
+      "opened": 308,
+      "perI": 152460,
+      "perPair": 38115,
+      "classify": 495,
+      "home": 2456,
+      "filter": 2900,
+      "ab": 344,
+      "scan": 42
+     },
+     "totals": {
+      "p1": 153375,
+      "p2": 41930,
+      "p3": 6766
+     },
+     "firstTotals": {
+      "p1": 145896,
+      "p2": 37220,
+      "p3": 6097
+     },
+     "whole": {
+      "p1": 160914,
+      "p2": 49469,
+      "p3": 14305
+     },
+     "firstWhole": {
+      "p1": 153435,
+      "p2": 44759,
+      "p3": 13636
+     },
+     "first": {
+      "line": "C10",
+      "box": "B3",
+      "I": [
+       "R1C10",
+       "R2C10",
+       "R3C10"
+      ],
+      "A": [
+       "R10C10",
+       "R12C10"
+      ],
+      "aDigits": [
+       1,
+       5,
+       12
+      ],
+      "B": [
+       "R1C11"
+      ],
+      "bDigits": [
+       3,
+       11
+      ],
+      "Z": [
+       7
+      ],
+      "eliminations": [
+       "R1C9-7",
+       "R3C9-11",
+       "R3C11-11",
+       "R9C10-5"
+      ]
+     }
+    },
+    "ms": 12,
+    "population": "12 digits"
+   },
+   {
+    "tag": "12 digits keep 0.05-0.4 #1",
+    "open": 131,
+    "digits": 12,
+    "cells": 144,
+    "records": 3237,
+    "enumCapHit": null,
+    "enumWork": 19252,
+    "R1": {
+     "pairs": 84,
+     "i2": 297,
+     "i3": 144,
+     "capacityValid": 2,
+     "withElimination": 1,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 1,
+      "i2": 0,
+      "i3": 1,
+      "wholeIntersection": 1,
+      "properSubset": 0,
+      "strictCapacityValid": 1
+     },
+     "oracleValid": 2,
+     "oracleWithElimination": 1,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 144,
+      "pairs": 84,
+      "opened": 441,
+      "perI": 1427517,
+      "perPair": 271908,
+      "classify": 3237,
+      "home": 16028,
+      "filter": 21442,
+      "ab": 320,
+      "scan": 40
+     },
+     "totals": {
+      "p1": 1428546,
+      "p2": 294379,
+      "p3": 41736
+     },
+     "firstTotals": {
+      "p1": 149194,
+      "p2": 25169,
+      "p3": 7190
+     },
+     "whole": {
+      "p1": 1447798,
+      "p2": 313631,
+      "p3": 60988
+     },
+     "firstWhole": {
+      "p1": 168446,
+      "p2": 44421,
+      "p3": 26442
+     },
+     "first": {
+      "line": "R3",
+      "box": "B1",
+      "I": [
+       "R3C2",
+       "R3C3",
+       "R3C4"
+      ],
+      "A": [
+       "R3C8",
+       "R3C12"
+      ],
+      "aDigits": [
+       3,
+       4,
+       11
+      ],
+      "B": [
+       "R1C2",
+       "R1C4"
+      ],
+      "bDigits": [
+       1,
+       9,
+       10
+      ],
+      "Z": [
+       12
+      ],
+      "eliminations": [
+       "R2C1-12"
+      ]
+     }
+    },
+    "R2": {
+     "pairs": 84,
+     "i2": 297,
+     "i3": 144,
+     "capacityValid": 2,
+     "withElimination": 1,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 1,
+      "i2": 0,
+      "i3": 1,
+      "wholeIntersection": 1,
+      "properSubset": 0,
+      "strictCapacityValid": 1
+     },
+     "oracleValid": 2,
+     "oracleWithElimination": 1,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 144,
+      "pairs": 84,
+      "opened": 441,
+      "perI": 1427517,
+      "perPair": 271908,
+      "classify": 3237,
+      "home": 16028,
+      "filter": 21442,
+      "ab": 320,
+      "scan": 40
+     },
+     "totals": {
+      "p1": 1428546,
+      "p2": 294379,
+      "p3": 41736
+     },
+     "firstTotals": {
+      "p1": 149194,
+      "p2": 25169,
+      "p3": 7190
+     },
+     "whole": {
+      "p1": 1447798,
+      "p2": 313631,
+      "p3": 60988
+     },
+     "firstWhole": {
+      "p1": 168446,
+      "p2": 44421,
+      "p3": 26442
+     },
+     "first": {
+      "line": "R3",
+      "box": "B1",
+      "I": [
+       "R3C2",
+       "R3C3",
+       "R3C4"
+      ],
+      "A": [
+       "R3C8",
+       "R3C12"
+      ],
+      "aDigits": [
+       3,
+       4,
+       11
+      ],
+      "B": [
+       "R1C2",
+       "R1C4"
+      ],
+      "bDigits": [
+       1,
+       9,
+       10
+      ],
+      "Z": [
+       12
+      ],
+      "eliminations": [
+       "R2C1-12"
+      ]
+     }
+    },
+    "ms": 74,
+    "population": "12 digits"
+   },
+   {
+    "tag": "12 digits keep 0.3-0.6 #0",
+    "open": 112,
+    "digits": 12,
+    "cells": 144,
+    "records": 62,
+    "enumCapHit": null,
+    "enumWork": 3723,
+    "R1": {
+     "pairs": 77,
+     "i2": 218,
+     "i3": 90,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 144,
+      "pairs": 77,
+      "opened": 308,
+      "perI": 19096,
+      "perPair": 4774,
+      "classify": 62,
+      "home": 414,
+      "filter": 585,
+      "ab": 38,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 19663,
+      "p2": 5926,
+      "p3": 1628
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 23386,
+      "p2": 9649,
+      "p3": 5351
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 77,
+     "i2": 218,
+     "i3": 90,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 144,
+      "pairs": 77,
+      "opened": 308,
+      "perI": 19096,
+      "perPair": 4774,
+      "classify": 62,
+      "home": 414,
+      "filter": 585,
+      "ab": 38,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 19663,
+      "p2": 5926,
+      "p3": 1628
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 23386,
+      "p2": 9649,
+      "p3": 5351
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 4,
+    "population": "12 digits"
+   },
+   {
+    "tag": "12 digits keep 0.3-0.6 #1",
+    "open": 131,
+    "digits": 12,
+    "cells": 144,
+    "records": 75,
+    "enumCapHit": null,
+    "enumWork": 5491,
+    "R1": {
+     "pairs": 84,
+     "i2": 297,
+     "i3": 144,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 144,
+      "pairs": 84,
+      "opened": 441,
+      "perI": 33075,
+      "perPair": 6300,
+      "classify": 75,
+      "home": 536,
+      "filter": 1141,
+      "ab": 217,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 33961,
+      "p2": 8327,
+      "p3": 2638
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 39452,
+      "p2": 13818,
+      "p3": 8129
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 84,
+     "i2": 297,
+     "i3": 144,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 144,
+      "pairs": 84,
+      "opened": 441,
+      "perI": 33075,
+      "perPair": 6300,
+      "classify": 75,
+      "home": 536,
+      "filter": 1141,
+      "ab": 217,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 33961,
+      "p2": 8327,
+      "p3": 2638
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 39452,
+      "p2": 13818,
+      "p3": 8129
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 6,
+    "population": "12 digits"
+   },
+   {
+    "tag": "16 digits keep 0.05-0.4 #0",
+    "open": 209,
+    "digits": 16,
+    "cells": 256,
+    "records": 3491,
+    "enumCapHit": null,
+    "enumWork": 36426,
+    "R1": {
+     "pairs": 128,
+     "i2": 508,
+     "i3": 274,
+     "capacityValid": 1,
+     "withElimination": 1,
+     "byForm": {
+      "zEmpty": 1,
+      "zNonEmpty": 0,
+      "i2": 1,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 1,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 1,
+     "oracleWithElimination": 1,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 256,
+      "pairs": 128,
+      "opened": 782,
+      "perI": 2729962,
+      "perPair": 446848,
+      "classify": 3491,
+      "home": 19268,
+      "filter": 40683,
+      "ab": 1563,
+      "scan": 28
+     },
+     "totals": {
+      "p1": 2732719,
+      "p2": 490288,
+      "p3": 66199
+     },
+     "firstTotals": {
+      "p1": 2662851,
+      "p2": 482572,
+      "p3": 65365
+     },
+     "whole": {
+      "p1": 2769145,
+      "p2": 526714,
+      "p3": 102625
+     },
+     "firstWhole": {
+      "p1": 2699277,
+      "p2": 518998,
+      "p3": 101791
+     },
+     "first": {
+      "line": "C16",
+      "box": "B8",
+      "I": [
+       "R6C16",
+       "R7C16"
+      ],
+      "A": [
+       "R14C16"
+      ],
+      "aDigits": [
+       15,
+       16
+      ],
+      "B": [
+       "R7C13"
+      ],
+      "bDigits": [
+       8,
+       11
+      ],
+      "Z": [],
+      "eliminations": [
+       "R1C16-16",
+       "R3C16-15",
+       "R5C16-16",
+       "R8C14-11",
+       "R11C16-15",
+       "R13C16-16"
+      ]
+     }
+    },
+    "R2": {
+     "pairs": 128,
+     "i2": 508,
+     "i3": 274,
+     "capacityValid": 1,
+     "withElimination": 1,
+     "byForm": {
+      "zEmpty": 1,
+      "zNonEmpty": 0,
+      "i2": 1,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 1,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 1,
+     "oracleWithElimination": 1,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 256,
+      "pairs": 128,
+      "opened": 782,
+      "perI": 2729962,
+      "perPair": 446848,
+      "classify": 3491,
+      "home": 19268,
+      "filter": 40683,
+      "ab": 1563,
+      "scan": 28
+     },
+     "totals": {
+      "p1": 2732719,
+      "p2": 490288,
+      "p3": 66199
+     },
+     "firstTotals": {
+      "p1": 2662851,
+      "p2": 482572,
+      "p3": 65365
+     },
+     "whole": {
+      "p1": 2769145,
+      "p2": 526714,
+      "p3": 102625
+     },
+     "firstWhole": {
+      "p1": 2699277,
+      "p2": 518998,
+      "p3": 101791
+     },
+     "first": {
+      "line": "C16",
+      "box": "B8",
+      "I": [
+       "R6C16",
+       "R7C16"
+      ],
+      "A": [
+       "R14C16"
+      ],
+      "aDigits": [
+       15,
+       16
+      ],
+      "B": [
+       "R7C13"
+      ],
+      "bDigits": [
+       8,
+       11
+      ],
+      "Z": [],
+      "eliminations": [
+       "R1C16-16",
+       "R3C16-15",
+       "R5C16-16",
+       "R8C14-11",
+       "R11C16-15",
+       "R13C16-16"
+      ]
+     }
+    },
+    "ms": 125,
+    "population": "16 digits"
+   },
+   {
+    "tag": "16 digits keep 0.05-0.4 #1",
+    "open": 199,
+    "digits": 16,
+    "cells": 256,
+    "records": 229,
+    "enumCapHit": null,
+    "enumWork": 13050,
+    "R1": {
+     "pairs": 126,
+     "i2": 457,
+     "i3": 230,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 256,
+      "pairs": 126,
+      "opened": 687,
+      "perI": 157323,
+      "perPair": 28854,
+      "classify": 229,
+      "home": 1740,
+      "filter": 4357,
+      "ab": 205,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 158597,
+      "p2": 34485,
+      "p3": 7600
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 171647,
+      "p2": 47535,
+      "p3": 20650
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 126,
+     "i2": 457,
+     "i3": 230,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 256,
+      "pairs": 126,
+      "opened": 687,
+      "perI": 157323,
+      "perPair": 28854,
+      "classify": 229,
+      "home": 1740,
+      "filter": 4357,
+      "ab": 205,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 158597,
+      "p2": 34485,
+      "p3": 7600
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 171647,
+      "p2": 47535,
+      "p3": 20650
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 18,
+    "population": "16 digits"
+   },
+   {
+    "tag": "16 digits keep 0.3-0.6 #0",
+    "open": 209,
+    "digits": 16,
+    "cells": 256,
+    "records": 38,
+    "enumCapHit": null,
+    "enumWork": 8382,
+    "R1": {
+     "pairs": 128,
+     "i2": 508,
+     "i3": 274,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 256,
+      "pairs": 128,
+      "opened": 782,
+      "perI": 29716,
+      "perPair": 4864,
+      "classify": 38,
+      "home": 336,
+      "filter": 954,
+      "ab": 30,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 30912,
+      "p2": 7014,
+      "p3": 2524
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 39294,
+      "p2": 15396,
+      "p3": 10906
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 128,
+     "i2": 508,
+     "i3": 274,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 256,
+      "pairs": 128,
+      "opened": 782,
+      "perI": 29716,
+      "perPair": 4864,
+      "classify": 38,
+      "home": 336,
+      "filter": 954,
+      "ab": 30,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 30912,
+      "p2": 7014,
+      "p3": 2524
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 39294,
+      "p2": 15396,
+      "p3": 10906
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 16,
+    "population": "16 digits"
+   },
+   {
+    "tag": "16 digits keep 0.3-0.6 #1",
+    "open": 199,
+    "digits": 16,
+    "cells": 256,
+    "records": 2,
+    "enumCapHit": null,
+    "enumWork": 4639,
+    "R1": {
+     "pairs": 126,
+     "i2": 457,
+     "i3": 230,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 256,
+      "pairs": 126,
+      "opened": 687,
+      "perI": 1374,
+      "perPair": 252,
+      "classify": 2,
+      "home": 30,
+      "filter": 94,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 2443,
+      "p2": 1415,
+      "p3": 1195
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 7082,
+      "p2": 6054,
+      "p3": 5834
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 126,
+     "i2": 457,
+     "i3": 230,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 256,
+      "pairs": 126,
+      "opened": 687,
+      "perI": 1374,
+      "perPair": 252,
+      "classify": 2,
+      "home": 30,
+      "filter": 94,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 2443,
+      "p2": 1415,
+      "p3": 1195
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 7082,
+      "p2": 6054,
+      "p3": 5834
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 10,
+    "population": "16 digits"
+   },
+   {
+    "tag": "samurai keep 0.05-0.4 #0",
+    "open": 336,
+    "digits": 9,
+    "cells": 369,
+    "records": 1107,
+    "enumCapHit": null,
+    "enumWork": 19066,
+    "R1": {
+     "pairs": 315,
+     "i2": 789,
+     "i3": 237,
+     "capacityValid": 3,
+     "withElimination": 3,
+     "byForm": {
+      "zEmpty": 1,
+      "zNonEmpty": 2,
+      "i2": 1,
+      "i3": 2,
+      "wholeIntersection": 3,
+      "properSubset": 0,
+      "strictCapacityValid": 3
+     },
+     "oracleValid": 3,
+     "oracleWithElimination": 3,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 405,
+      "pairs": 315,
+      "opened": 1026,
+      "perI": 1135782,
+      "perPair": 348705,
+      "classify": 1107,
+      "home": 6684,
+      "filter": 6261,
+      "ab": 795,
+      "scan": 45
+     },
+     "totals": {
+      "p1": 1138368,
+      "p2": 357552,
+      "p3": 16638
+     },
+     "firstTotals": {
+      "p1": 212211,
+      "p2": 73846,
+      "p3": 4281
+     },
+     "whole": {
+      "p1": 1157434,
+      "p2": 376618,
+      "p3": 35704
+     },
+     "firstWhole": {
+      "p1": 231277,
+      "p2": 92912,
+      "p3": 23347
+     },
+     "first": {
+      "line": "G2-C1",
+      "box": "G2-B7",
+      "I": [
+       "G2-R7C1",
+       "G2-R8C1",
+       "G2-R9C1"
+      ],
+      "A": [
+       "G2-R4C1"
+      ],
+      "aDigits": [
+       7,
+       9
+      ],
+      "B": [
+       "G2-R7C3"
+      ],
+      "bDigits": [
+       5,
+       6
+      ],
+      "Z": [
+       8
+      ],
+      "eliminations": [
+       "G2-R2C1-8",
+       "G2-R2C1-9",
+       "G2-R7C2-6",
+       "G2-R7C2-8",
+       "G2-R8C2-8",
+       "G2-R8C3-5",
+       "G2-R8C3-6",
+       "G2-R8C3-8",
+       "G2-R9C3-8"
+      ]
+     }
+    },
+    "R2": {
+     "pairs": 315,
+     "i2": 789,
+     "i3": 237,
+     "capacityValid": 3,
+     "withElimination": 3,
+     "byForm": {
+      "zEmpty": 1,
+      "zNonEmpty": 2,
+      "i2": 1,
+      "i3": 2,
+      "wholeIntersection": 3,
+      "properSubset": 0,
+      "strictCapacityValid": 3
+     },
+     "oracleValid": 3,
+     "oracleWithElimination": 3,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 405,
+      "pairs": 315,
+      "opened": 1026,
+      "perI": 1135782,
+      "perPair": 348705,
+      "classify": 1107,
+      "home": 6684,
+      "filter": 6261,
+      "ab": 795,
+      "scan": 45
+     },
+     "totals": {
+      "p1": 1138368,
+      "p2": 357552,
+      "p3": 16638
+     },
+     "firstTotals": {
+      "p1": 212211,
+      "p2": 73846,
+      "p3": 4281
+     },
+     "whole": {
+      "p1": 1157434,
+      "p2": 376618,
+      "p3": 35704
+     },
+     "firstWhole": {
+      "p1": 231277,
+      "p2": 92912,
+      "p3": 23347
+     },
+     "first": {
+      "line": "G2-C1",
+      "box": "G2-B7",
+      "I": [
+       "G2-R7C1",
+       "G2-R8C1",
+       "G2-R9C1"
+      ],
+      "A": [
+       "G2-R4C1"
+      ],
+      "aDigits": [
+       7,
+       9
+      ],
+      "B": [
+       "G2-R7C3"
+      ],
+      "bDigits": [
+       5,
+       6
+      ],
+      "Z": [
+       8
+      ],
+      "eliminations": [
+       "G2-R2C1-8",
+       "G2-R2C1-9",
+       "G2-R7C2-6",
+       "G2-R7C2-8",
+       "G2-R8C2-8",
+       "G2-R8C3-5",
+       "G2-R8C3-6",
+       "G2-R8C3-8",
+       "G2-R9C3-8"
+      ]
+     }
+    },
+    "ms": 74,
+    "population": "samurai"
+   },
+   {
+    "tag": "samurai keep 0.05-0.4 #1",
+    "open": 358,
+    "digits": 9,
+    "cells": 369,
+    "records": 9221,
+    "enumCapHit": null,
+    "enumWork": 41141,
+    "R1": {
+     "pairs": 318,
+     "i2": 910,
+     "i3": 296,
+     "capacityValid": 18,
+     "withElimination": 18,
+     "byForm": {
+      "zEmpty": 4,
+      "zNonEmpty": 14,
+      "i2": 4,
+      "i3": 14,
+      "wholeIntersection": 14,
+      "properSubset": 4,
+      "strictCapacityValid": 14
+     },
+     "oracleValid": 18,
+     "oracleWithElimination": 18,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 405,
+      "pairs": 318,
+      "opened": 1206,
+      "perI": 11120526,
+      "perPair": 2932278,
+      "classify": 9221,
+      "home": 49277,
+      "filter": 43655,
+      "ab": 1525,
+      "scan": 270
+     },
+     "totals": {
+      "p1": 11124250,
+      "p2": 2979657,
+      "p3": 105877
+     },
+     "firstTotals": {
+      "p1": 4169617,
+      "p2": 1133727,
+      "p3": 46189
+     },
+     "whole": {
+      "p1": 11165391,
+      "p2": 3020798,
+      "p3": 147018
+     },
+     "firstWhole": {
+      "p1": 4210758,
+      "p2": 1174868,
+      "p3": 87330
+     },
+     "first": {
+      "line": "G3-R1",
+      "box": "G3-B1",
+      "I": [
+       "G3-R1C1",
+       "G3-R1C3"
+      ],
+      "A": [
+       "G3-R1C6"
+      ],
+      "aDigits": [
+       2,
+       6
+      ],
+      "B": [
+       "G3-R3C1"
+      ],
+      "bDigits": [
+       4,
+       8
+      ],
+      "Z": [],
+      "eliminations": [
+       "G3-R1C2-2",
+       "G3-R1C7-2",
+       "G3-R2C3-4",
+       "G3-R3C3-8"
+      ]
+     }
+    },
+    "R2": {
+     "pairs": 318,
+     "i2": 910,
+     "i3": 296,
+     "capacityValid": 18,
+     "withElimination": 18,
+     "byForm": {
+      "zEmpty": 4,
+      "zNonEmpty": 14,
+      "i2": 4,
+      "i3": 14,
+      "wholeIntersection": 14,
+      "properSubset": 4,
+      "strictCapacityValid": 14
+     },
+     "oracleValid": 18,
+     "oracleWithElimination": 18,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 405,
+      "pairs": 318,
+      "opened": 1206,
+      "perI": 11120526,
+      "perPair": 2932278,
+      "classify": 9221,
+      "home": 49277,
+      "filter": 43655,
+      "ab": 1525,
+      "scan": 270
+     },
+     "totals": {
+      "p1": 11124250,
+      "p2": 2979657,
+      "p3": 105877
+     },
+     "firstTotals": {
+      "p1": 4169617,
+      "p2": 1133727,
+      "p3": 46189
+     },
+     "whole": {
+      "p1": 11165391,
+      "p2": 3020798,
+      "p3": 147018
+     },
+     "firstWhole": {
+      "p1": 4210758,
+      "p2": 1174868,
+      "p3": 87330
+     },
+     "first": {
+      "line": "G3-R1",
+      "box": "G3-B1",
+      "I": [
+       "G3-R1C1",
+       "G3-R1C3"
+      ],
+      "A": [
+       "G3-R1C6"
+      ],
+      "aDigits": [
+       2,
+       6
+      ],
+      "B": [
+       "G3-R3C1"
+      ],
+      "bDigits": [
+       4,
+       8
+      ],
+      "Z": [],
+      "eliminations": [
+       "G3-R1C2-2",
+       "G3-R1C7-2",
+       "G3-R2C3-4",
+       "G3-R3C3-8"
+      ]
+     }
+    },
+    "ms": 525,
+    "population": "samurai"
+   },
+   {
+    "tag": "samurai keep 0.3-0.6 #0",
+    "open": 336,
+    "digits": 9,
+    "cells": 369,
+    "records": 132,
+    "enumCapHit": null,
+    "enumWork": 9591,
+    "R1": {
+     "pairs": 315,
+     "i2": 789,
+     "i3": 237,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 405,
+      "pairs": 315,
+      "opened": 1026,
+      "perI": 135432,
+      "perPair": 41580,
+      "classify": 132,
+      "home": 1000,
+      "filter": 1206,
+      "ab": 172,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 137350,
+      "p2": 44704,
+      "p3": 4256
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 146941,
+      "p2": 54295,
+      "p3": 13847
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 315,
+     "i2": 789,
+     "i3": 237,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 405,
+      "pairs": 315,
+      "opened": 1026,
+      "perI": 135432,
+      "perPair": 41580,
+      "classify": 132,
+      "home": 1000,
+      "filter": 1206,
+      "ab": 172,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 137350,
+      "p2": 44704,
+      "p3": 4256
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 146941,
+      "p2": 54295,
+      "p3": 13847
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 17,
+    "population": "samurai"
+   },
+   {
+    "tag": "samurai keep 0.3-0.6 #1",
+    "open": 358,
+    "digits": 9,
+    "cells": 369,
+    "records": 395,
+    "enumCapHit": null,
+    "enumWork": 15993,
+    "R1": {
+     "pairs": 318,
+     "i2": 910,
+     "i3": 296,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 405,
+      "pairs": 318,
+      "opened": 1206,
+      "perI": 476370,
+      "perPair": 125610,
+      "classify": 395,
+      "home": 2437,
+      "filter": 3535,
+      "ab": 483,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 478782,
+      "p2": 131557,
+      "p3": 8779
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 494775,
+      "p2": 147550,
+      "p3": 24772
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 318,
+     "i2": 910,
+     "i3": 296,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 405,
+      "pairs": 318,
+      "opened": 1206,
+      "perI": 476370,
+      "perPair": 125610,
+      "classify": 395,
+      "home": 2437,
+      "filter": 3535,
+      "ab": 483,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 478782,
+      "p2": 131557,
+      "p3": 8779
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 494775,
+      "p2": 147550,
+      "p3": 24772
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 34,
+    "population": "samurai"
+   },
+   {
+    "tag": "diagonalX keep 0.05-0.4 #0",
+    "open": 68,
+    "digits": 9,
+    "cells": 81,
+    "records": 289,
+    "enumCapHit": null,
+    "enumWork": 3613,
+    "R1": {
+     "pairs": 53,
+     "i2": 113,
+     "i3": 30,
+     "capacityValid": 1,
+     "withElimination": 1,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 1,
+      "i2": 0,
+      "i3": 1,
+      "wholeIntersection": 1,
+      "properSubset": 0,
+      "strictCapacityValid": 1
+     },
+     "oracleValid": 1,
+     "oracleWithElimination": 1,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 53,
+      "opened": 143,
+      "perI": 41327,
+      "perPair": 15317,
+      "classify": 289,
+      "home": 1264,
+      "filter": 900,
+      "ab": 166,
+      "scan": 15
+     },
+     "totals": {
+      "p1": 41785,
+      "p2": 16675,
+      "p3": 2911
+     },
+     "firstTotals": {
+      "p1": 41201,
+      "p2": 16072,
+      "p3": 2847
+     },
+     "whole": {
+      "p1": 45398,
+      "p2": 20288,
+      "p3": 6524
+     },
+     "firstWhole": {
+      "p1": 44814,
+      "p2": 19685,
+      "p3": 6460
+     },
+     "first": {
+      "line": "C9",
+      "box": "B3",
+      "I": [
+       "R1C9",
+       "R2C9",
+       "R3C9"
+      ],
+      "A": [
+       "R6C9"
+      ],
+      "aDigits": [
+       3,
+       9
+      ],
+      "B": [
+       "R1C7"
+      ],
+      "bDigits": [
+       1,
+       4
+      ],
+      "Z": [
+       2
+      ],
+      "eliminations": [
+       "R1C8-2",
+       "R2C7-1",
+       "R2C7-2",
+       "R3C7-1",
+       "R5C9-3",
+       "R8C9-2",
+       "R8C9-3"
+      ]
+     }
+    },
+    "R2": {
+     "pairs": 53,
+     "i2": 113,
+     "i3": 30,
+     "capacityValid": 1,
+     "withElimination": 1,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 1,
+      "i2": 0,
+      "i3": 1,
+      "wholeIntersection": 1,
+      "properSubset": 0,
+      "strictCapacityValid": 1
+     },
+     "oracleValid": 1,
+     "oracleWithElimination": 1,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 99,
+      "pairs": 53,
+      "opened": 143,
+      "perI": 41327,
+      "perPair": 15317,
+      "classify": 289,
+      "home": 1264,
+      "filter": 900,
+      "ab": 166,
+      "scan": 15
+     },
+     "totals": {
+      "p1": 41803,
+      "p2": 16693,
+      "p3": 2929
+     },
+     "firstTotals": {
+      "p1": 41219,
+      "p2": 16090,
+      "p3": 2865
+     },
+     "whole": {
+      "p1": 45416,
+      "p2": 20306,
+      "p3": 6542
+     },
+     "firstWhole": {
+      "p1": 44832,
+      "p2": 19703,
+      "p3": 6478
+     },
+     "first": {
+      "line": "C9",
+      "box": "B3",
+      "I": [
+       "R1C9",
+       "R2C9",
+       "R3C9"
+      ],
+      "A": [
+       "R6C9"
+      ],
+      "aDigits": [
+       3,
+       9
+      ],
+      "B": [
+       "R1C7"
+      ],
+      "bDigits": [
+       1,
+       4
+      ],
+      "Z": [
+       2
+      ],
+      "eliminations": [
+       "R1C8-2",
+       "R2C7-1",
+       "R2C7-2",
+       "R3C7-1",
+       "R5C9-3",
+       "R8C9-2",
+       "R8C9-3"
+      ]
+     }
+    },
+    "ms": 4,
+    "population": "diagonalX"
+   },
+   {
+    "tag": "diagonalX keep 0.05-0.4 #1",
+    "open": 60,
+    "digits": 9,
+    "cells": 81,
+    "records": 901,
+    "enumCapHit": null,
+    "enumWork": 4863,
+    "R1": {
+     "pairs": 40,
+     "i2": 94,
+     "i3": 27,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 40,
+      "opened": 121,
+      "perI": 109021,
+      "perPair": 36040,
+      "classify": 901,
+      "home": 3264,
+      "filter": 2006,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 109263,
+      "p2": 38288,
+      "p3": 6413
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 114126,
+      "p2": 43151,
+      "p3": 11276
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 40,
+     "i2": 94,
+     "i3": 27,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 99,
+      "pairs": 40,
+      "opened": 121,
+      "perI": 109021,
+      "perPair": 36040,
+      "classify": 901,
+      "home": 3264,
+      "filter": 2006,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 109281,
+      "p2": 38306,
+      "p3": 6431
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 114144,
+      "p2": 43169,
+      "p3": 11294
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 8,
+    "population": "diagonalX"
+   },
+   {
+    "tag": "diagonalX keep 0.05-0.4 #2",
+    "open": 65,
+    "digits": 9,
+    "cells": 81,
+    "records": 322,
+    "enumCapHit": null,
+    "enumWork": 3270,
+    "R1": {
+     "pairs": 50,
+     "i2": 102,
+     "i3": 26,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 50,
+      "opened": 128,
+      "perI": 41216,
+      "perPair": 16100,
+      "classify": 322,
+      "home": 1402,
+      "filter": 964,
+      "ab": 157,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 41632,
+      "p2": 17480,
+      "p3": 3104
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 44902,
+      "p2": 20750,
+      "p3": 6374
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 50,
+     "i2": 102,
+     "i3": 26,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 99,
+      "pairs": 50,
+      "opened": 128,
+      "perI": 41216,
+      "perPair": 16100,
+      "classify": 322,
+      "home": 1402,
+      "filter": 964,
+      "ab": 157,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 41650,
+      "p2": 17498,
+      "p3": 3122
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 44920,
+      "p2": 20768,
+      "p3": 6392
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 4,
+    "population": "diagonalX"
+   },
+   {
+    "tag": "diagonalX keep 0.3-0.6 #0",
+    "open": 68,
+    "digits": 9,
+    "cells": 81,
+    "records": 30,
+    "enumCapHit": null,
+    "enumWork": 2082,
+    "R1": {
+     "pairs": 53,
+     "i2": 113,
+     "i3": 30,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 53,
+      "opened": 143,
+      "perI": 4290,
+      "perPair": 1590,
+      "classify": 30,
+      "home": 140,
+      "filter": 102,
+      "ab": 1,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 4568,
+      "p2": 1970,
+      "p3": 550
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 6650,
+      "p2": 4052,
+      "p3": 2632
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 53,
+     "i2": 113,
+     "i3": 30,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 99,
+      "pairs": 53,
+      "opened": 143,
+      "perI": 4290,
+      "perPair": 1590,
+      "classify": 30,
+      "home": 140,
+      "filter": 102,
+      "ab": 1,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 4586,
+      "p2": 1988,
+      "p3": 568
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 6668,
+      "p2": 4070,
+      "p3": 2650
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 1,
+    "population": "diagonalX"
+   },
+   {
+    "tag": "diagonalX keep 0.3-0.6 #1",
+    "open": 60,
+    "digits": 9,
+    "cells": 81,
+    "records": 637,
+    "enumCapHit": null,
+    "enumWork": 3876,
+    "R1": {
+     "pairs": 40,
+     "i2": 94,
+     "i3": 27,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 40,
+      "opened": 121,
+      "perI": 77077,
+      "perPair": 25480,
+      "classify": 637,
+      "home": 2388,
+      "filter": 1723,
+      "ab": 432,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 77751,
+      "p2": 27877,
+      "p3": 5422
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 81627,
+      "p2": 31753,
+      "p3": 9298
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 40,
+     "i2": 94,
+     "i3": 27,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 99,
+      "pairs": 40,
+      "opened": 121,
+      "perI": 77077,
+      "perPair": 25480,
+      "classify": 637,
+      "home": 2388,
+      "filter": 1723,
+      "ab": 432,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 77769,
+      "p2": 27895,
+      "p3": 5440
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 81645,
+      "p2": 31771,
+      "p3": 9316
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 6,
+    "population": "diagonalX"
+   },
+   {
+    "tag": "diagonalX keep 0.3-0.6 #2",
+    "open": 65,
+    "digits": 9,
+    "cells": 81,
+    "records": 127,
+    "enumCapHit": null,
+    "enumWork": 2216,
+    "R1": {
+     "pairs": 50,
+     "i2": 102,
+     "i3": 26,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 50,
+      "opened": 128,
+      "perI": 16256,
+      "perPair": 6350,
+      "classify": 127,
+      "home": 551,
+      "filter": 401,
+      "ab": 52,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 16567,
+      "p2": 7062,
+      "p3": 1390
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 18783,
+      "p2": 9278,
+      "p3": 3606
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 50,
+     "i2": 102,
+     "i3": 26,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 99,
+      "pairs": 50,
+      "opened": 128,
+      "perI": 16256,
+      "perPair": 6350,
+      "classify": 127,
+      "home": 551,
+      "filter": 401,
+      "ab": 52,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 16585,
+      "p2": 7080,
+      "p3": 1408
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 18801,
+      "p2": 9296,
+      "p3": 3624
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 2,
+    "population": "diagonalX"
+   },
+   {
+    "tag": "hyper keep 0.05-0.4 #0",
+    "open": 68,
+    "digits": 9,
+    "cells": 81,
+    "records": 316,
+    "enumCapHit": null,
+    "enumWork": 4141,
+    "R1": {
+     "pairs": 53,
+     "i2": 113,
+     "i3": 30,
+     "capacityValid": 2,
+     "withElimination": 2,
+     "byForm": {
+      "zEmpty": 1,
+      "zNonEmpty": 1,
+      "i2": 1,
+      "i3": 1,
+      "wholeIntersection": 2,
+      "properSubset": 0,
+      "strictCapacityValid": 2
+     },
+     "oracleValid": 2,
+     "oracleWithElimination": 2,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 53,
+      "opened": 143,
+      "perI": 45188,
+      "perPair": 16748,
+      "classify": 316,
+      "home": 1311,
+      "filter": 1008,
+      "ab": 175,
+      "scan": 30
+     },
+     "totals": {
+      "p1": 45670,
+      "p2": 18238,
+      "p3": 3117
+     },
+     "firstTotals": {
+      "p1": 14436,
+      "p2": 6224,
+      "p3": 1266
+     },
+     "whole": {
+      "p1": 49811,
+      "p2": 22379,
+      "p3": 7258
+     },
+     "firstWhole": {
+      "p1": 18577,
+      "p2": 10365,
+      "p3": 5407
+     },
+     "first": {
+      "line": "R6",
+      "box": "B6",
+      "I": [
+       "R6C7",
+       "R6C8",
+       "R6C9"
+      ],
+      "A": [
+       "R6C4"
+      ],
+      "aDigits": [
+       8,
+       9
+      ],
+      "B": [
+       "R5C9"
+      ],
+      "bDigits": [
+       3,
+       6
+      ],
+      "Z": [
+       1
+      ],
+      "eliminations": [
+       "R4C8-1",
+       "R6C5-8",
+       "R6C6-9"
+      ]
+     }
+    },
+    "R2": {
+     "pairs": 77,
+     "i2": 177,
+     "i3": 50,
+     "capacityValid": 2,
+     "withElimination": 2,
+     "byForm": {
+      "zEmpty": 1,
+      "zNonEmpty": 1,
+      "i2": 1,
+      "i3": 1,
+      "wholeIntersection": 2,
+      "properSubset": 0,
+      "strictCapacityValid": 2
+     },
+     "oracleValid": 2,
+     "oracleWithElimination": 2,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 117,
+      "pairs": 77,
+      "opened": 227,
+      "perI": 71732,
+      "perPair": 24332,
+      "classify": 316,
+      "home": 2011,
+      "filter": 1750,
+      "ab": 312,
+      "scan": 30
+     },
+     "totals": {
+      "p1": 72495,
+      "p2": 26845,
+      "p3": 4840
+     },
+     "firstTotals": {
+      "p1": 21143,
+      "p2": 8288,
+      "p3": 1510
+     },
+     "whole": {
+      "p1": 76636,
+      "p2": 30986,
+      "p3": 8981
+     },
+     "firstWhole": {
+      "p1": 25284,
+      "p2": 12429,
+      "p3": 5651
+     },
+     "first": {
+      "line": "R6",
+      "box": "B6",
+      "I": [
+       "R6C7",
+       "R6C8",
+       "R6C9"
+      ],
+      "A": [
+       "R6C4"
+      ],
+      "aDigits": [
+       8,
+       9
+      ],
+      "B": [
+       "R5C9"
+      ],
+      "bDigits": [
+       3,
+       6
+      ],
+      "Z": [
+       1
+      ],
+      "eliminations": [
+       "R4C8-1",
+       "R6C5-8",
+       "R6C6-9"
+      ]
+     }
+    },
+    "ms": 5,
+    "population": "hyper"
+   },
+   {
+    "tag": "hyper keep 0.05-0.4 #1",
+    "open": 60,
+    "digits": 9,
+    "cells": 81,
+    "records": 881,
+    "enumCapHit": null,
+    "enumWork": 5368,
+    "R1": {
+     "pairs": 40,
+     "i2": 94,
+     "i3": 27,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 40,
+      "opened": 121,
+      "perI": 106601,
+      "perPair": 35240,
+      "classify": 881,
+      "home": 2658,
+      "filter": 1521,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 106843,
+      "p2": 37003,
+      "p3": 5302
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 112211,
+      "p2": 42371,
+      "p3": 10670
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 60,
+     "i2": 142,
+     "i3": 41,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 117,
+      "pairs": 60,
+      "opened": 183,
+      "perI": 161223,
+      "perPair": 52860,
+      "classify": 881,
+      "home": 4495,
+      "filter": 2609,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 161583,
+      "p2": 55829,
+      "p3": 8345
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 166951,
+      "p2": 61197,
+      "p3": 13713
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 9,
+    "population": "hyper"
+   },
+   {
+    "tag": "hyper keep 0.05-0.4 #2",
+    "open": 65,
+    "digits": 9,
+    "cells": 81,
+    "records": 426,
+    "enumCapHit": null,
+    "enumWork": 3851,
+    "R1": {
+     "pairs": 50,
+     "i2": 102,
+     "i3": 26,
+     "capacityValid": 2,
+     "withElimination": 2,
+     "byForm": {
+      "zEmpty": 2,
+      "zNonEmpty": 0,
+      "i2": 2,
+      "i3": 0,
+      "wholeIntersection": 2,
+      "properSubset": 0,
+      "strictCapacityValid": 2
+     },
+     "oracleValid": 2,
+     "oracleWithElimination": 2,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 50,
+      "opened": 128,
+      "perI": 54528,
+      "perPair": 21300,
+      "classify": 426,
+      "home": 1591,
+      "filter": 982,
+      "ab": 428,
+      "scan": 30
+     },
+     "totals": {
+      "p1": 55245,
+      "p2": 22999,
+      "p3": 3716
+     },
+     "firstTotals": {
+      "p1": 13791,
+      "p2": 6374,
+      "p3": 1264
+     },
+     "whole": {
+      "p1": 59096,
+      "p2": 26850,
+      "p3": 7567
+     },
+     "firstWhole": {
+      "p1": 17642,
+      "p2": 10225,
+      "p3": 5115
+     },
+     "first": {
+      "line": "R5",
+      "box": "B6",
+      "I": [
+       "R5C8",
+       "R5C9"
+      ],
+      "A": [
+       "R5C6"
+      ],
+      "aDigits": [
+       2,
+       6
+      ],
+      "B": [
+       "R4C9",
+       "R6C8"
+      ],
+      "bDigits": [
+       1,
+       4,
+       8
+      ],
+      "Z": [],
+      "eliminations": [
+       "R4C8-8",
+       "R5C3-6",
+       "R6C7-1",
+       "R6C7-4"
+      ]
+     }
+    },
+    "R2": {
+     "pairs": 71,
+     "i2": 149,
+     "i3": 39,
+     "capacityValid": 4,
+     "withElimination": 4,
+     "byForm": {
+      "zEmpty": 2,
+      "zNonEmpty": 2,
+      "i2": 2,
+      "i3": 2,
+      "wholeIntersection": 4,
+      "properSubset": 0,
+      "strictCapacityValid": 4
+     },
+     "oracleValid": 4,
+     "oracleWithElimination": 4,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 117,
+      "pairs": 71,
+      "opened": 188,
+      "perI": 80088,
+      "perPair": 30246,
+      "classify": 426,
+      "home": 2430,
+      "filter": 1559,
+      "ab": 544,
+      "scan": 60
+     },
+     "totals": {
+      "p1": 81068,
+      "p2": 32785,
+      "p3": 5395
+     },
+     "firstTotals": {
+      "p1": 19819,
+      "p2": 8686,
+      "p3": 1644
+     },
+     "whole": {
+      "p1": 84919,
+      "p2": 36636,
+      "p3": 9246
+     },
+     "firstWhole": {
+      "p1": 23670,
+      "p2": 12537,
+      "p3": 5495
+     },
+     "first": {
+      "line": "R5",
+      "box": "B6",
+      "I": [
+       "R5C8",
+       "R5C9"
+      ],
+      "A": [
+       "R5C6"
+      ],
+      "aDigits": [
+       2,
+       6
+      ],
+      "B": [
+       "R4C9",
+       "R6C8"
+      ],
+      "bDigits": [
+       1,
+       4,
+       8
+      ],
+      "Z": [],
+      "eliminations": [
+       "R4C8-8",
+       "R5C3-6",
+       "R6C7-1",
+       "R6C7-4"
+      ]
+     }
+    },
+    "ms": 7,
+    "population": "hyper"
+   },
+   {
+    "tag": "hyper keep 0.3-0.6 #0",
+    "open": 68,
+    "digits": 9,
+    "cells": 81,
+    "records": 51,
+    "enumCapHit": null,
+    "enumWork": 2339,
+    "R1": {
+     "pairs": 53,
+     "i2": 113,
+     "i3": 30,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 53,
+      "opened": 143,
+      "perI": 7293,
+      "perPair": 2703,
+      "classify": 51,
+      "home": 345,
+      "filter": 326,
+      "ab": 49,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 7619,
+      "p2": 3355,
+      "p3": 1048
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 9958,
+      "p2": 5694,
+      "p3": 3387
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 77,
+     "i2": 177,
+     "i3": 50,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 117,
+      "pairs": 77,
+      "opened": 227,
+      "perI": 11577,
+      "perPair": 3927,
+      "classify": 51,
+      "home": 425,
+      "filter": 483,
+      "ab": 63,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 12061,
+      "p2": 4894,
+      "p3": 1443
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 14400,
+      "p2": 7233,
+      "p3": 3782
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 2,
+    "population": "hyper"
+   },
+   {
+    "tag": "hyper keep 0.3-0.6 #1",
+    "open": 60,
+    "digits": 9,
+    "cells": 81,
+    "records": 708,
+    "enumCapHit": null,
+    "enumWork": 4428,
+    "R1": {
+     "pairs": 40,
+     "i2": 94,
+     "i3": 27,
+     "capacityValid": 1,
+     "withElimination": 1,
+     "byForm": {
+      "zEmpty": 1,
+      "zNonEmpty": 0,
+      "i2": 1,
+      "i3": 0,
+      "wholeIntersection": 1,
+      "properSubset": 0,
+      "strictCapacityValid": 1
+     },
+     "oracleValid": 1,
+     "oracleWithElimination": 1,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 40,
+      "opened": 121,
+      "perI": 85668,
+      "perPair": 28320,
+      "classify": 708,
+      "home": 2542,
+      "filter": 1734,
+      "ab": 52,
+      "scan": 15
+     },
+     "totals": {
+      "p1": 85977,
+      "p2": 30363,
+      "p3": 5293
+     },
+     "firstTotals": {
+      "p1": 54034,
+      "p2": 16860,
+      "p3": 3453
+     },
+     "whole": {
+      "p1": 90405,
+      "p2": 34791,
+      "p3": 9721
+     },
+     "firstWhole": {
+      "p1": 58462,
+      "p2": 21288,
+      "p3": 7881
+     },
+     "first": {
+      "line": "C2",
+      "box": "B1",
+      "I": [
+       "R2C2",
+       "R3C2"
+      ],
+      "A": [
+       "R4C2"
+      ],
+      "aDigits": [
+       3,
+       6
+      ],
+      "B": [
+       "R2C1"
+      ],
+      "bDigits": [
+       2,
+       7
+      ],
+      "Z": [],
+      "eliminations": [
+       "R3C3-7",
+       "R6C2-6"
+      ]
+     }
+    },
+    "R2": {
+     "pairs": 60,
+     "i2": 142,
+     "i3": 41,
+     "capacityValid": 3,
+     "withElimination": 3,
+     "byForm": {
+      "zEmpty": 2,
+      "zNonEmpty": 1,
+      "i2": 2,
+      "i3": 1,
+      "wholeIntersection": 2,
+      "properSubset": 1,
+      "strictCapacityValid": 2
+     },
+     "oracleValid": 3,
+     "oracleWithElimination": 3,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 117,
+      "pairs": 60,
+      "opened": 183,
+      "perI": 129564,
+      "perPair": 42480,
+      "classify": 708,
+      "home": 3731,
+      "filter": 2762,
+      "ab": 139,
+      "scan": 45
+     },
+     "totals": {
+      "p1": 130108,
+      "p2": 45786,
+      "p3": 7745
+     },
+     "firstTotals": {
+      "p1": 56208,
+      "p2": 17689,
+      "p3": 3484
+     },
+     "whole": {
+      "p1": 134536,
+      "p2": 50214,
+      "p3": 12173
+     },
+     "firstWhole": {
+      "p1": 60636,
+      "p2": 22117,
+      "p3": 7912
+     },
+     "first": {
+      "line": "R7",
+      "box": "W3",
+      "I": [
+       "R7C3",
+       "R7C4"
+      ],
+      "A": [
+       "R7C5"
+      ],
+      "aDigits": [
+       3,
+       8
+      ],
+      "B": [
+       "R6C4"
+      ],
+      "bDigits": [
+       2,
+       6
+      ],
+      "Z": [],
+      "eliminations": [
+       "R6C2-6",
+       "R6C3-6"
+      ]
+     }
+    },
+    "ms": 8,
+    "population": "hyper"
+   },
+   {
+    "tag": "hyper keep 0.3-0.6 #2",
+    "open": 65,
+    "digits": 9,
+    "cells": 81,
+    "records": 124,
+    "enumCapHit": null,
+    "enumWork": 2582,
+    "R1": {
+     "pairs": 50,
+     "i2": 102,
+     "i3": 26,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 50,
+      "opened": 128,
+      "perI": 15872,
+      "perPair": 6200,
+      "classify": 124,
+      "home": 470,
+      "filter": 250,
+      "ab": 27,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 16158,
+      "p2": 6736,
+      "p3": 1130
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 18740,
+      "p2": 9318,
+      "p3": 3712
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 71,
+     "i2": 149,
+     "i3": 39,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 117,
+      "pairs": 71,
+      "opened": 188,
+      "perI": 23312,
+      "perPair": 8804,
+      "classify": 124,
+      "home": 699,
+      "filter": 390,
+      "ab": 27,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 23715,
+      "p2": 9597,
+      "p3": 1616
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 26297,
+      "p2": 12179,
+      "p3": 4198
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 3,
+    "population": "hyper"
+   },
+   {
+    "tag": "jigsaw9 keep 0.05-0.4 #0",
+    "open": 68,
+    "digits": 9,
+    "cells": 81,
+    "records": 192,
+    "enumCapHit": null,
+    "enumWork": 3248,
+    "R1": {
+     "pairs": 46,
+     "i2": 103,
+     "i3": 37,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 46,
+      "opened": 140,
+      "perI": 26880,
+      "perPair": 8832,
+      "classify": 192,
+      "home": 785,
+      "filter": 627,
+      "ab": 44,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 27191,
+      "p2": 9770,
+      "p3": 1915
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 30439,
+      "p2": 13018,
+      "p3": 5163
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 46,
+     "i2": 103,
+     "i3": 37,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 46,
+      "opened": 140,
+      "perI": 26880,
+      "perPair": 8832,
+      "classify": 192,
+      "home": 785,
+      "filter": 627,
+      "ab": 44,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 27191,
+      "p2": 9770,
+      "p3": 1915
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 30439,
+      "p2": 13018,
+      "p3": 5163
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 3,
+    "population": "jigsaw9"
+   },
+   {
+    "tag": "jigsaw9 keep 0.05-0.4 #1",
+    "open": 60,
+    "digits": 9,
+    "cells": 81,
+    "records": 815,
+    "enumCapHit": null,
+    "enumWork": 4310,
+    "R1": {
+     "pairs": 34,
+     "i2": 93,
+     "i3": 57,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 34,
+      "opened": 150,
+      "perI": 122250,
+      "perPair": 27710,
+      "classify": 815,
+      "home": 2615,
+      "filter": 1512,
+      "ab": 5,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 122520,
+      "p2": 29492,
+      "p3": 5212
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 126830,
+      "p2": 33802,
+      "p3": 9522
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 34,
+     "i2": 93,
+     "i3": 57,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 34,
+      "opened": 150,
+      "perI": 122250,
+      "perPair": 27710,
+      "classify": 815,
+      "home": 2615,
+      "filter": 1512,
+      "ab": 5,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 122520,
+      "p2": 29492,
+      "p3": 5212
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 126830,
+      "p2": 33802,
+      "p3": 9522
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 6,
+    "population": "jigsaw9"
+   },
+   {
+    "tag": "jigsaw9 keep 0.05-0.4 #2",
+    "open": 65,
+    "digits": 9,
+    "cells": 81,
+    "records": 291,
+    "enumCapHit": null,
+    "enumWork": 3126,
+    "R1": {
+     "pairs": 37,
+     "i2": 98,
+     "i3": 42,
+     "capacityValid": 2,
+     "withElimination": 2,
+     "byForm": {
+      "zEmpty": 1,
+      "zNonEmpty": 1,
+      "i2": 1,
+      "i3": 1,
+      "wholeIntersection": 1,
+      "properSubset": 1,
+      "strictCapacityValid": 1
+     },
+     "oracleValid": 2,
+     "oracleWithElimination": 2,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 37,
+      "opened": 140,
+      "perI": 40740,
+      "perPair": 10767,
+      "classify": 291,
+      "home": 917,
+      "filter": 742,
+      "ab": 123,
+      "scan": 28
+     },
+     "totals": {
+      "p1": 41149,
+      "p2": 11918,
+      "p3": 2359
+     },
+     "firstTotals": {
+      "p1": 24434,
+      "p2": 6279,
+      "p3": 1508
+     },
+     "whole": {
+      "p1": 44275,
+      "p2": 15044,
+      "p3": 5485
+     },
+     "firstWhole": {
+      "p1": 27560,
+      "p2": 9405,
+      "p3": 4634
+     },
+     "first": {
+      "line": "C1",
+      "box": "J1",
+      "I": [
+       "R3C1",
+       "R4C1",
+       "R6C1"
+      ],
+      "A": [
+       "R8C1"
+      ],
+      "aDigits": [
+       2,
+       5
+      ],
+      "B": [
+       "R1C2",
+       "R1C3"
+      ],
+      "bDigits": [
+       6,
+       8,
+       9
+      ],
+      "Z": [
+       1
+      ],
+      "eliminations": [
+       "R1C1-8",
+       "R1C1-9",
+       "R2C1-2",
+       "R2C1-8",
+       "R2C1-9",
+       "R2C2-1",
+       "R2C2-8",
+       "R2C2-9",
+       "R7C1-1",
+       "R7C1-2",
+       "R9C1-5"
+      ]
+     }
+    },
+    "R2": {
+     "pairs": 37,
+     "i2": 98,
+     "i3": 42,
+     "capacityValid": 2,
+     "withElimination": 2,
+     "byForm": {
+      "zEmpty": 1,
+      "zNonEmpty": 1,
+      "i2": 1,
+      "i3": 1,
+      "wholeIntersection": 1,
+      "properSubset": 1,
+      "strictCapacityValid": 1
+     },
+     "oracleValid": 2,
+     "oracleWithElimination": 2,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 37,
+      "opened": 140,
+      "perI": 40740,
+      "perPair": 10767,
+      "classify": 291,
+      "home": 917,
+      "filter": 742,
+      "ab": 123,
+      "scan": 28
+     },
+     "totals": {
+      "p1": 41149,
+      "p2": 11918,
+      "p3": 2359
+     },
+     "firstTotals": {
+      "p1": 24434,
+      "p2": 6279,
+      "p3": 1508
+     },
+     "whole": {
+      "p1": 44275,
+      "p2": 15044,
+      "p3": 5485
+     },
+     "firstWhole": {
+      "p1": 27560,
+      "p2": 9405,
+      "p3": 4634
+     },
+     "first": {
+      "line": "C1",
+      "box": "J1",
+      "I": [
+       "R3C1",
+       "R4C1",
+       "R6C1"
+      ],
+      "A": [
+       "R8C1"
+      ],
+      "aDigits": [
+       2,
+       5
+      ],
+      "B": [
+       "R1C2",
+       "R1C3"
+      ],
+      "bDigits": [
+       6,
+       8,
+       9
+      ],
+      "Z": [
+       1
+      ],
+      "eliminations": [
+       "R1C1-8",
+       "R1C1-9",
+       "R2C1-2",
+       "R2C1-8",
+       "R2C1-9",
+       "R2C2-1",
+       "R2C2-8",
+       "R2C2-9",
+       "R7C1-1",
+       "R7C1-2",
+       "R9C1-5"
+      ]
+     }
+    },
+    "ms": 4,
+    "population": "jigsaw9"
+   },
+   {
+    "tag": "jigsaw9 keep 0.3-0.6 #0",
+    "open": 68,
+    "digits": 9,
+    "cells": 81,
+    "records": 38,
+    "enumCapHit": null,
+    "enumWork": 1901,
+    "R1": {
+     "pairs": 46,
+     "i2": 103,
+     "i3": 37,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 46,
+      "opened": 140,
+      "perI": 5320,
+      "perPair": 1748,
+      "classify": 38,
+      "home": 158,
+      "filter": 151,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 5587,
+      "p2": 2166,
+      "p3": 614
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 7488,
+      "p2": 4067,
+      "p3": 2515
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 46,
+     "i2": 103,
+     "i3": 37,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 46,
+      "opened": 140,
+      "perI": 5320,
+      "perPair": 1748,
+      "classify": 38,
+      "home": 158,
+      "filter": 151,
+      "ab": 0,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 5587,
+      "p2": 2166,
+      "p3": 614
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 7488,
+      "p2": 4067,
+      "p3": 2515
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 1,
+    "population": "jigsaw9"
+   },
+   {
+    "tag": "jigsaw9 keep 0.3-0.6 #1",
+    "open": 60,
+    "digits": 9,
+    "cells": 81,
+    "records": 697,
+    "enumCapHit": null,
+    "enumWork": 3586,
+    "R1": {
+     "pairs": 34,
+     "i2": 93,
+     "i3": 57,
+     "capacityValid": 3,
+     "withElimination": 3,
+     "byForm": {
+      "zEmpty": 2,
+      "zNonEmpty": 1,
+      "i2": 2,
+      "i3": 1,
+      "wholeIntersection": 3,
+      "properSubset": 0,
+      "strictCapacityValid": 3
+     },
+     "oracleValid": 3,
+     "oracleWithElimination": 3,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 34,
+      "opened": 150,
+      "perI": 104550,
+      "perPair": 23698,
+      "classify": 697,
+      "home": 2396,
+      "filter": 1612,
+      "ab": 91,
+      "scan": 46
+     },
+     "totals": {
+      "p1": 104952,
+      "p2": 25712,
+      "p3": 5107
+     },
+     "firstTotals": {
+      "p1": 2196,
+      "p2": 2247,
+      "p3": 1044
+     },
+     "whole": {
+      "p1": 108538,
+      "p2": 29298,
+      "p3": 8693
+     },
+     "firstWhole": {
+      "p1": 5782,
+      "p2": 5833,
+      "p3": 4630
+     },
+     "first": {
+      "line": "R2",
+      "box": "J1",
+      "I": [
+       "R2C1",
+       "R2C2"
+      ],
+      "A": [
+       "R2C7"
+      ],
+      "aDigits": [
+       6,
+       7
+      ],
+      "B": [
+       "R4C1"
+      ],
+      "bDigits": [
+       5,
+       9
+      ],
+      "Z": [],
+      "eliminations": [
+       "R1C1-5",
+       "R2C3-7",
+       "R2C6-6",
+       "R3C1-9",
+       "R5C1-9",
+       "R6C1-5"
+      ]
+     }
+    },
+    "R2": {
+     "pairs": 34,
+     "i2": 93,
+     "i3": 57,
+     "capacityValid": 3,
+     "withElimination": 3,
+     "byForm": {
+      "zEmpty": 2,
+      "zNonEmpty": 1,
+      "i2": 2,
+      "i3": 1,
+      "wholeIntersection": 3,
+      "properSubset": 0,
+      "strictCapacityValid": 3
+     },
+     "oracleValid": 3,
+     "oracleWithElimination": 3,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 34,
+      "opened": 150,
+      "perI": 104550,
+      "perPair": 23698,
+      "classify": 697,
+      "home": 2396,
+      "filter": 1612,
+      "ab": 91,
+      "scan": 46
+     },
+     "totals": {
+      "p1": 104952,
+      "p2": 25712,
+      "p3": 5107
+     },
+     "firstTotals": {
+      "p1": 2196,
+      "p2": 2247,
+      "p3": 1044
+     },
+     "whole": {
+      "p1": 108538,
+      "p2": 29298,
+      "p3": 8693
+     },
+     "firstWhole": {
+      "p1": 5782,
+      "p2": 5833,
+      "p3": 4630
+     },
+     "first": {
+      "line": "R2",
+      "box": "J1",
+      "I": [
+       "R2C1",
+       "R2C2"
+      ],
+      "A": [
+       "R2C7"
+      ],
+      "aDigits": [
+       6,
+       7
+      ],
+      "B": [
+       "R4C1"
+      ],
+      "bDigits": [
+       5,
+       9
+      ],
+      "Z": [],
+      "eliminations": [
+       "R1C1-5",
+       "R2C3-7",
+       "R2C6-6",
+       "R3C1-9",
+       "R5C1-9",
+       "R6C1-5"
+      ]
+     }
+    },
+    "ms": 6,
+    "population": "jigsaw9"
+   },
+   {
+    "tag": "jigsaw9 keep 0.3-0.6 #2",
+    "open": 65,
+    "digits": 9,
+    "cells": 81,
+    "records": 85,
+    "enumCapHit": null,
+    "enumWork": 2088,
+    "R1": {
+     "pairs": 37,
+     "i2": 98,
+     "i3": 42,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 37,
+      "opened": 140,
+      "perI": 11900,
+      "perPair": 3145,
+      "classify": 85,
+      "home": 239,
+      "filter": 179,
+      "ab": 5,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 12163,
+      "p2": 3587,
+      "p3": 766
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 14251,
+      "p2": 5675,
+      "p3": 2854
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "R2": {
+     "pairs": 37,
+     "i2": 98,
+     "i3": 42,
+     "capacityValid": 0,
+     "withElimination": 0,
+     "byForm": {
+      "zEmpty": 0,
+      "zNonEmpty": 0,
+      "i2": 0,
+      "i3": 0,
+      "wholeIntersection": 0,
+      "properSubset": 0,
+      "strictCapacityValid": 0
+     },
+     "oracleValid": 0,
+     "oracleWithElimination": 0,
+     "agreeFound": true,
+     "agreeValid": true,
+     "unsound": 0,
+     "counters": {
+      "prep": 81,
+      "pairs": 37,
+      "opened": 140,
+      "perI": 11900,
+      "perPair": 3145,
+      "classify": 85,
+      "home": 239,
+      "filter": 179,
+      "ab": 5,
+      "scan": 0
+     },
+     "totals": {
+      "p1": 12163,
+      "p2": 3587,
+      "p3": 766
+     },
+     "firstTotals": null,
+     "whole": {
+      "p1": 14251,
+      "p2": 5675,
+      "p3": 2854
+     },
+     "firstWhole": null,
+     "first": null
+    },
+    "ms": 2,
+    "population": "jigsaw9"
+   }
+  ]
+ }
+}

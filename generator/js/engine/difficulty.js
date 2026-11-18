@@ -110,6 +110,7 @@
     xyChain: 1000,
     forcingChain: 1100,
     alsXz: 1250,
+    sueDeCoq: 1300,
     forcingChainLong: 1400,
     nishio: 1700,
     nishioDeep: 2600,

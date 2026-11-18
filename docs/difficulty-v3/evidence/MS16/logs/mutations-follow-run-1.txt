@@ -1,0 +1,2 @@
+$ node tests\artifacts\difficulty-v3\MS16\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS16\mutations-follow-1.txt 0 340
+exit=0 seconds=378.225
