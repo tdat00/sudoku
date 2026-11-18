@@ -185,14 +185,17 @@ No intermediate pruning. Parent milestones are not additional waves or commits.
 after orchestrator template review and rechecks. MS16 (`d41a6dd`), MS15b (`8b26e83`),
 MS15a (`b958a58`, SA1 accepted), MS14c (`6a9fbf6`), MS14b (`0e3a0c4`), MS13c (`9d58d86`)
 and resolved JF-02/S-OD12 (A + S0) remain prior boundaries.
-**MS17b is active, with implementation/E reported complete and GD paused correctly at
-#15; Q6/Q7 in its brief now authorize the scoped repair and guarded continuation.**
-Keep the published Samurai fixed-count calculation 633, while pinning its current
-canonical rating at 593 (Skyscraper replaces Simple Colouring; 263 empties / 106 givens).
-Retain the failed run, recheck only its fifteen-test group, and resume the eight independent
-GD groups without an unconditional continue-on-failure rule. Final gates and **SA1
-cross-review before acceptance** remain; the mutant-equivalence claims are not accepted
-by this pin ruling. Resume only on the orchestrator's explicit relay, then
+**MS17b is active, with implementation/E reported complete; #15 is repaired and #16-#20
+pass. GD #21's witness failure now has Q8-Q11 rulings in the brief.**
+Only its classic9 Nightmare cap-3 refinement caller may use a 24-seed ceiling; the helper
+default/other callers stay at 12 and every accounting assertion remains. #22/#23 may run
+first under their existing bounded plans; #21 needs a distinct locked 5/5 repair record.
+MS17b-GD21-PROCESS preserves the 36.5 s unlocked diagnosis and the locked bisect driver's
+IR12 limitations for audit. The task-local standing pin rule covers only already-proved
+literal current-output repairs with unchanged specimens/predicates, not new windows,
+corpus routes or blanket continue-on-error.
+Final gates and **SA1 cross-review before acceptance** remain; mutant equivalences are
+not accepted by these pin rulings. Resume only on the orchestrator's explicit relay, then
 MS18a -> MS18b -> MS18c and the unchanged final remainder.
 The named S3 catalogue is complete; no new technique, weight, limit selection or corpus
 campaign is assigned to this version/cache step.

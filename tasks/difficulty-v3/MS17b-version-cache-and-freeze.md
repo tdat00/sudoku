@@ -8,7 +8,7 @@
 | Owner / milestone | Generator integration; M17 release candidate frozen |
 | Authority | R20/R22; SA2-Q-S05/S07/S10 |
 | Review | SA1 cross-review before orchestrator acceptance; not template-only |
-| Status | Implementation/E reported complete; GD Q6-Q7 settled below; final gates and SA1 review pending |
+| Status | GD #21 witness / Q8-Q11 settled below; final gates and SA1 review pending |
 
 ## Goal & business context
 
@@ -380,6 +380,126 @@ exit, treat a batch label as proof that its failure was only aggregate, or finis
 remaining groups before reporting a newly unresolved failure.
 No new stop-rule waiver, scope, source acquisition or limit adjustment is granted.
 
+### SA2 rulings — Q8-Q11: GD cap witness, run order and process, 2026-11-18
+
+The developer stopped after #21 (`cap`) failed 4/5; #15's repaired 15/15 and #16-#20
+remain their recorded results. The failure is the existing helper's witness predicate,
+not an observed fourth rating past a cap of three. No production repair is authorized.
+
+**Q8 / GD #21 — choose B1, but scope the larger window to this caller only.**
+Keep the helper's default ceiling **12**. Add an optional final test-helper argument for
+the ceiling and pass **24 only** from this invocation:
+
+```javascript
+exhaustedIn('classic9', 'nightmare', 3, 'refine', 1, 24);
+```
+
+The three other `exhaustedIn` call sites retain their existing twelve-seed windows;
+the other four tests keep all their inputs. Do not globally widen the shared helper,
+lower this cap to 2, change the test name/count, or change any production limit.
+Keep `maxAttempts:1`, `digTries:1`, cap **3**, the real variant hook/strategy, support
+restoration and **every `expectAccounted` assertion on every seed tried**.
+The endpoint is a bounded test-witness window, not a new fixed 24-puzzle statistical
+population; preserve the first-match behavior and record the changed window honestly.
+
+The reported first qualifying current witness is **seed 19**:
+`origins === ['sample','refine','refine']`, length **3**, last origin **refine**.
+Confirm it on the frozen current implementation, with the original accounting,
+returned-puzzle completeness/uniqueness and re-rating checks in the amended test.
+Seeds 6/40 merely visiting refine is not the same predicate. Seed 19 being exact is
+allowed: this test never required exact false. Do not claim that its three recorded
+calls by themselves prove a fourth was attempted and refused.
+
+This is specifically authorized I2 maintenance of an existing self-contained GD
+correctness regression, not GH/example acquisition or an extension of a corpus route.
+The production `CAP_RATINGS`, the classic9 100/20-request groups and S-OD12/S0 stay.
+The diagnostic range 1..40 is not made the test's range or a new acquisition allowance.
+Record that the wider diagnostic preceded this ruling; do not backdate the one-call
+permission or describe that probe as the unchanged twelve-seed test.
+No automatic 24 -> 48 extension or corresponding permission for other callers follows.
+
+Save a pre-repair manual-test snapshot/hash and a verified plan. Project the **whole
+amended #21 command**, including its accounting, uniqueness and re-rating checks;
+the small diagnosis-only timing is not that command's measurement.
+Re-run **only #21**, locked, expected exit 0 / **5 of 5**, to distinct result/log paths.
+Keep the 4/5 failure and its original inputs. Record the selected witness, before/after
+helper/call-site diff, and all 23 selectors/current coverage keys; no duplicate accepted
+coverage or old-result retagging. If the reported witness/premise does not reproduce,
+QUESTION rather than another expansion.
+
+No design expansion or production edit is needed; a short test comment and the existing
+evidence/notes may explain the local window. The manual-only repair is outside E inputs:
+verify the frozen input hashes/identities and retain E without regeneration or writes.
+Retain unaffected GD results with their actual identities and the narrow selected-code/
+input diff proof, as under Q6. Final quick/CI coverage still follows the repaired tree.
+
+**Q9 — yes, #22 and #23 may run before the #21 repair.**
+This changes Q7's sequencing only: the repair is now specified, so those two independent
+groups may be verified first after a saved/verified continuation plan and explicit
+resumption. They are **unreachable: 5 tests** and **safety: 3 tests**, expected exit 0,
+one bounded locked command each. Keep the existing projections/admission and stop on
+unexpected failure. #21 remains failed/pending repair, not a pass, until its new 5/5
+record exists. Hell 1/confusion-matrix unadmitted populations remain named/unstarted.
+
+**Q10 — disclosure is necessary, not a retroactive compliance certificate.**
+Record **MS17b-GD21-PROCESS** in the evidence/final report for MS18e: the complete
+five-commit diagnosis was one **36.5 s unlocked** payload with an unproved whole-command
+bound. "Read-only", fast individual cases or a later locked run does not excuse it.
+Preserve actual commands, source commits, available start/end times, durations and raw
+outputs. Do not infer no contention from "no lock wait"; mark unknown overlap as unknown.
+Its times are descriptive/unprotected, not slot-protected cost or selection measurements.
+
+The saved locked 90.049 s bisect supports the MS14b -> MS15b transition and the later
+sources/current tree. It starts at MS09b: it **does not repeat** the first five earlier
+commits of the unlocked loop. Keep the two populations/provenances separate.
+No historical rerun is required merely to erase the incident; the locked current #21
+recheck supplies the acceptance evidence for the repair.
+
+There is a separate driver issue visible in `cap-bisect.cjs`: its independent child
+processes have no IR12 per-item projection/elapsed admission check, and it continues
+after a nonzero child status. All recorded children here exited 0, so retain the observed
+functional output, but do not describe the driver as IR12-compliant merely because the
+outer run was locked and lasted 90 s. Record this limitation too. Do not reuse it until
+it enforces IR12 or the children are separately planned/locked commands; no tool rewrite
+or new bisect campaign is assigned just to improve the historical record.
+
+Also keep actual argv/per-seed output for the tree diagnostics: `cap-diagnosis.cjs`
+hardcodes "seeds 1..12" and "third" in its footer even when cap/range arguments differ.
+That footer cannot certify a 1..40 or cap-2 population. Label existing outputs truthfully;
+if the script is reused, preserve its original source and correct the diagnostic label
+before the new, separately recorded run. Do not rewrite old transcripts or backdate plans.
+If a needed output was not retained, mark that gap and record only the necessary bounded
+current-source confirmation under the lock; do not reconstruct an old transcript.
+Future historical/compound or otherwise unknown-cost generation diagnostics start locked,
+with a verified whole-command/per-item plan, not an unlocked trial.
+
+**Q11 — narrow standing rule for remaining MS17b GD pins, not automatic witness expansion.**
+Q7's need for a fresh ruling is superseded **only** for a literal current-output pin in
+the existing manual `difficulty` suite when all of the following are established before
+editing:
+
+- The existing owned specimen, recipe, allowed window and test predicate still hold;
+  the value is read from retained current-source evidence and the stale expectation is
+  traced to an earlier accepted change, not a new MS17b runtime defect.
+- Only the exact current-output literal/description and directly related doc wording
+  change, matcher for matcher. Historical/fixed-input calculations stay asserted; no
+  dropped case, weaker predicate, changed threshold/budget/count/seed/geometry, new
+  specimen, search/window growth or source acquisition is covered.
+- No invalid/non-unique puzzle, unsound deduction, wrong flag/warning, unexplained
+  classification or evidence-integrity issue is present. When distinguishing a pin from
+  such a failure is uncertain, it remains a QUESTION.
+- Preserve the first failure and pre-edit snapshot, write/verify the scoped repair plan,
+  record exact before/after values and source/premise proof, and re-run the affected
+  group locked to new paths. Use the replacement record once in coverage, retaining
+  earlier identities and historical failures honestly.
+
+Such a fully proved pin-only repair may proceed without another analyst round; record
+each use for orchestrator/SA1 review. It is not permission to ignore a failed command:
+stop that invocation, inspect/classify it, and proceed only after these conditions hold.
+All other failures retain QUESTION/correctness stops. In particular a new witness range,
+different cap or corpus proposal still needs its own ruling/owner authorization as
+applicable; Q8's specific 24 ceiling is not a standing source-search rule.
+
 Keep exports' existing positive ratingVersion field and no external floor/target/work certificate.
 Do not blindly replace literal 2 in legacy/stub/import tests or old help source text.
 Current reference fields are `v3Expected:{level,required}`; unrated null/null. Historical labels,
@@ -650,6 +770,7 @@ Give MS18 the immutable release-candidate identity, actual frozen settings, refe
 all compatibility results. Include the explained wire metadata publication, fresh three-family E
 identities/checks, all-40 GH, bounded GD inventory/results including gaps, actual quick/CI
 fingerprints, the complete limit-decision ledger and every inherited/new item.
+Carry MS17b-GD21-PROCESS and every use of Q11's scoped pin rule to the final audit.
 No support publication or claim of final qualification/performance/deep closure yet.
 
 ## Resume rules — S-OD4
