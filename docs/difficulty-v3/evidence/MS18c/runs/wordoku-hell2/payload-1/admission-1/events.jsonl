@@ -1,0 +1,6 @@
+{"at":"2026-11-18T22:29:51.669Z","t":0.1410098,"type":"launcher-start","who":"launcher","pid":19504,"node":"v26.13.0","cell":"wordoku/hell2","runId":"ms18c-20261118T222940862-13048","slot":1,"ordinal":1,"startSeconds":0.1403603}
+{"at":"2026-11-18T22:29:51.672Z","t":0.143285,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8567404}
+{"at":"2026-11-18T22:29:58.843Z","t":7.3145077,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.314,"ready":false}
+{"at":"2026-11-18T22:29:58.849Z","t":7.3209523,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["tests\\qualify.js","--variant=wordoku","--level=hell2","--jobs=4","--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-hell2\\payload-1\\admission-1\\qualifier.json","--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-hell2\\payload-1\\admission-1\\qualifier.md"]}
+{"at":"2026-11-18T22:29:58.871Z","t":7.342775,"type":"qualifier-created","who":"launcher","pid":31688,"rSeconds":7.3408407}
+{"at":"2026-11-18T22:30:42.164Z","t":50.6359175,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":43.2950325,"eventFailures":0}

@@ -772,7 +772,11 @@
     let records = {};
     let optionIds = [];
     let parts = null;
-    let adjustments = [];
+    // The corrections the store made while loading (a stored or linked level that the variant no longer
+    // offers): the form did not exist then, so it shows them from its first render, once.
+    let adjustments = typeof store.takeLoadAdjustments === 'function'
+      ? store.takeLoadAdjustments().filter(function (a) { return a && hasOwn.call(NOTE_KINDS, a.key); })
+      : [];
     let shownVariant = null;
     let destroyed = false;
     const toasts = [];

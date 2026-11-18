@@ -1,0 +1,6 @@
+{"at":"2026-11-18T18:17:06.482Z","t":0.1366721,"type":"launcher-start","who":"launcher","pid":24188,"node":"v26.13.0","cell":"stand-in/none","runId":"standin-full-chain-20261118181706-25112","slot":1,"ordinal":1,"startSeconds":0.1361188}
+{"at":"2026-11-18T18:17:06.486Z","t":0.1401198,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8598932}
+{"at":"2026-11-18T18:17:13.582Z","t":7.2366693,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.234,"ready":false}
+{"at":"2026-11-18T18:17:13.586Z","t":7.2398685,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["standin-parent.cjs","parent","6","4","Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\full-chain\\members.json"]}
+{"at":"2026-11-18T18:17:13.605Z","t":7.2592039,"type":"qualifier-created","who":"launcher","pid":12152,"rSeconds":7.2572319}
+{"at":"2026-11-18T18:17:19.827Z","t":13.4813315,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":6.2240696}

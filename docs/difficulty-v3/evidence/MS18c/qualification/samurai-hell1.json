@@ -1,0 +1,38 @@
+{
+  "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+  "seedBase": 20260601,
+  "machine": {"cpu":"AMD EPYC 7763 64-Core Processor","logicalProcessors":16,"memoryGb":64,"platform":"win32 10.0.26300","node":"v26.13.0","jobs":4},
+  "engine": {"sources":"0ca29eaeebc295b6","commit":"ed2fe50c","dirty":true},
+  "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+  "acceptance": "canonical-required-tier",
+  "ratingVersion": 3,
+  "probe": 0,
+  "earlyStop": true,
+  "guardMs": 120000,
+  "attemptPolicy": {"function":"SG.digger.defaultMaxAttempts","explicitMaxAttempts":false,"sources":{"js/engine/digger.js":"c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786","js/engine/pipeline.js":"b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1","js/variants/registry.js":"967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"}},
+  "started": "2026-11-18T21:31:36.141Z",
+  "finished": "2026-11-18T21:37:36.694Z",
+  "seconds": 361,
+  "cells": [
+    {
+      "variant": "samurai",
+      "level": "hell1",
+      "cellCount": 369,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {"n":9,"hits":0,"rate":0,"p50":120009.9475,"p95":120051.7349,"max":120051.7349,"verdict":"hidden","stopped":"time","errors":9,"approximate":0,"invalid":0},
+      "requests": [
+        {"key":"samurai/hell1","index":0,"seed":2465926200,"hit":false,"error":"budget.exceeded","ms":120009.8807},
+        {"key":"samurai/hell1","index":1,"seed":2482703819,"hit":false,"error":"budget.exceeded","ms":120023.4783},
+        {"key":"samurai/hell1","index":2,"seed":2499481438,"hit":false,"error":"budget.exceeded","ms":120017.0669},
+        {"key":"samurai/hell1","index":3,"seed":2516259057,"hit":false,"error":"budget.exceeded","ms":120001.2583},
+        {"key":"samurai/hell1","index":4,"seed":2533036676,"hit":false,"error":"budget.exceeded","ms":120007.8569},
+        {"key":"samurai/hell1","index":5,"seed":2549814295,"hit":false,"error":"budget.exceeded","ms":120043.3759},
+        {"key":"samurai/hell1","index":6,"seed":2566591914,"hit":false,"error":"budget.exceeded","ms":120009.9475},
+        {"key":"samurai/hell1","index":7,"seed":2583369533,"hit":false,"error":"budget.exceeded","ms":120051.7349},
+        {"key":"samurai/hell1","index":8,"seed":2331705248,"hit":false,"error":"budget.exceeded","ms":120005.5448}
+      ]
+    }
+  ],
+  "support": {"samurai":[]}
+}

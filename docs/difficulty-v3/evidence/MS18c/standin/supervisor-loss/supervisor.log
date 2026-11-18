@@ -1,0 +1,3 @@
+{"at":"2026-11-18T18:17:04.108Z","type":"standin-start","pid":34576,"runId":"standin-supervisor-loss-20261118181704-34576","scenario":"direct","hostJob":{"inJob":true,"limits":"limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0"}}
+{"at":"2026-11-18T18:17:04.199Z","type":"lock-acquired","waitedSeconds":0.023}
+{"at":"2026-11-18T18:17:04.314Z","type":"window-started","tStartNs":620605470940100,"createdAfterSeconds":0.0378687,"resumedAfterSeconds":0.04301,"launcherPid":28512,"created":"2026-11-18T18:17:04.271879Z"}

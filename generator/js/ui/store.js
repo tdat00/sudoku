@@ -587,7 +587,11 @@
    *   `(state, changedKeys, meta)`; `meta` is the caller's object plus `adjustments` (the corrections of
    *   `sanitizeWithNotes`). Returns the unsubscribe function.
    * @property {function(): Object} load  Start-up: URL > stored values > defaults; sets the language through
-   *   `SG.i18n`; notifies with `meta.source === 'load'`; rewrites the URL to its canonical form.
+   *   `SG.i18n`; notifies with `meta.source === 'load'` (`meta.adjustments`: the link's or the stored
+   *   configuration's value that the variant does not offer and that was corrected); rewrites the URL to its
+   *   canonical form.
+   * @property {function(): Array<Object>} takeLoadAdjustments  Those corrections of the last `load()`, once
+   *   (then an empty list): the start-up loads before the form is built, and the form shows them as notes.
    * @property {function(): number} newSeed  A random uint32, written into the state (as text) and returned.
    * @property {function(): Object} reset  Puzzle configuration back to the defaults (preferences kept).
    * @property {function(): boolean} persistent  False once the storage turned out to be unavailable.
@@ -616,6 +620,7 @@
     let listeners = [];
     const queue = [];
     let notifying = false;
+    let loadAdjustments = [];
 
     function get() {
       return state;
@@ -729,7 +734,8 @@
       const stored = readStored();
       const url = readUrl(location ? location.search : '');
       let draft = defaults();
-      if (!url.hasConfig && stored.last) {
+      const fromLast = !url.hasConfig && Boolean(stored.last);
+      if (fromLast) {
         draft = Object.assign(draft, pick(stored.last, CONFIG_KEYS), storedAttempts(stored.last));
       }
       draft = Object.assign(draft, stored.prefs);
@@ -738,13 +744,32 @@
       draft.lang = SG.i18n && typeof SG.i18n.detect === 'function'
         ? SG.i18n.detect({ urlLang: url.patch.lang, stored: stored.prefs.lang, navigator: navigatorLike })
         : (url.patch.lang || stored.prefs.lang || 'en');
-      const next = normalize(draft, null, defaults());
+      const corrections = [];
+      const next = normalize(draft, corrections, defaults());
+      // Only a value the link or the stored configuration named is a request that was corrected; a default
+      // that a variant does not offer is nobody's request (an ignored stored value, overridden by a valid
+      // link parameter, never reaches `normalize` as the draft value).
+      const named = function (key) {
+        return hasOwn.call(url.patch, key) || (fromLast && hasOwn.call(stored.last, key));
+      };
+      const adjustments = corrections.filter(function (a) { return named(a.key); });
       state = freezeState(next);
+      loadAdjustments = adjustments;
       applyLanguage(state.lang);
       syncUrl();
-      queue.push({ state: state, keys: STATE_KEYS.slice(), meta: { source: 'load', adjustments: [] } });
+      queue.push({ state: state, keys: STATE_KEYS.slice(), meta: { source: 'load', adjustments: adjustments } });
       drain();
       return state;
+    }
+
+    /**
+     * The corrections of the last `load()`, once: the start-up loads before the form exists, so nobody is
+     * subscribed to hear them, and the form takes them when it mounts. Nothing is stored.
+     */
+    function takeLoadAdjustments() {
+      const taken = loadAdjustments;
+      loadAdjustments = [];
+      return taken;
     }
 
     function newSeed() {
@@ -765,6 +790,7 @@
       set: set,
       subscribe: subscribe,
       load: load,
+      takeLoadAdjustments: takeLoadAdjustments,
       save: save,
       syncUrl: syncUrl,
       newSeed: newSeed,

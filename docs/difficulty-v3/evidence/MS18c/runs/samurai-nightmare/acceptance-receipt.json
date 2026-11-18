@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "samurai/nightmare",
+  "runId": "ms18c-20261118T212728765-456",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-nightmare\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "ad3dec545e5671c4a8824798a5911c344dc3c38edccf832b1720d4488b8a990f"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-nightmare\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "9184eebeeabd168d7297b58f8101ca0188e20c2567dc18d096af34b5a07838e5"
+    }
+  },
+  "wSeconds": 209.5733435,
+  "rSeconds": 7.2779833,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.2779833,
+      "requests": 17,
+      "maxMs": 120011.5779,
+      "stopped": "time",
+      "secondRoundRan": false,
+      "slowTotal": 9,
+      "slowFirstRound": 9,
+      "qSeconds": 202.109,
+      "sSeconds": 201.53139549999997,
+      "sFirstRoundSeconds": 201.53139549999997,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5776045000000158,
+      "wSeconds": 209.5733435,
+      "wMinusQ": 7.4643434999999885
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 17,
+    "hits": 14,
+    "rate": 0.8235294117647058,
+    "p50": 32277.2602,
+    "p95": 120011.5779,
+    "max": 120011.5779,
+    "verdict": "hidden",
+    "stopped": "time",
+    "errors": 1,
+    "approximate": 2,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\samurai-nightmare.json",
+      "sha256": "ad3dec545e5671c4a8824798a5911c344dc3c38edccf832b1720d4488b8a990f"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\samurai-nightmare.md",
+      "sha256": "9184eebeeabd168d7297b58f8101ca0188e20c2567dc18d096af34b5a07838e5"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

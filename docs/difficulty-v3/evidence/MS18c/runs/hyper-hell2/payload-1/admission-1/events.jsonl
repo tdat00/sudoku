@@ -1,0 +1,6 @@
+{"at":"2026-11-18T20:46:43.386Z","t":0.1347532,"type":"launcher-start","who":"launcher","pid":31480,"node":"v26.13.0","cell":"hyper/hell2","runId":"ms18c-20261118T204631946-8636","slot":1,"ordinal":1,"startSeconds":0.1341499}
+{"at":"2026-11-18T20:46:43.389Z","t":0.1369035,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8631272}
+{"at":"2026-11-18T20:46:50.444Z","t":7.191618,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.191,"ready":false}
+{"at":"2026-11-18T20:46:50.450Z","t":7.1977817,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["tests\\qualify.js","--variant=hyper","--level=hell2","--jobs=4","--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\hyper-hell2\\payload-1\\admission-1\\qualifier.json","--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\hyper-hell2\\payload-1\\admission-1\\qualifier.md"]}
+{"at":"2026-11-18T20:46:50.470Z","t":7.2182381,"type":"qualifier-created","who":"launcher","pid":20956,"rSeconds":7.2161843}
+{"at":"2026-11-18T20:47:11.367Z","t":28.1153006,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":20.8990787,"eventFailures":0}

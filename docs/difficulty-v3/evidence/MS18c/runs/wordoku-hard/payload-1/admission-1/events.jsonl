@@ -1,0 +1,3 @@
+{"at":"2026-11-18T22:25:18.874Z","t":0.1426415,"type":"launcher-start","who":"launcher","pid":21652,"node":"v26.13.0","cell":"wordoku/hard","runId":"ms18c-20261118T222507251-26536","slot":1,"ordinal":1,"startSeconds":0.142009}
+{"at":"2026-11-18T22:25:18.878Z","t":0.1453126,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8547081}
+{"at":"2026-11-18T22:25:26.020Z","t":7.2873689,"type":"readiness-end","who":"launcher","admitted":false,"eligible":true,"kind":"additional-consumer","readinessSeconds":7.287,"ready":false}

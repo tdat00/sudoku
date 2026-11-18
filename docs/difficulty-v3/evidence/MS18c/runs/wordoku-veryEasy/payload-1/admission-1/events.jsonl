@@ -1,0 +1,6 @@
+{"at":"2026-11-18T22:23:44.981Z","t":0.1353449,"type":"launcher-start","who":"launcher","pid":27208,"node":"v26.13.0","cell":"wordoku/veryEasy","runId":"ms18c-20261118T222334314-28364","slot":1,"ordinal":1,"startSeconds":0.1347182}
+{"at":"2026-11-18T22:23:44.984Z","t":0.1375015,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8625227}
+{"at":"2026-11-18T22:23:52.099Z","t":7.2527344,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.252,"ready":false}
+{"at":"2026-11-18T22:23:52.105Z","t":7.2588339,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["tests\\qualify.js","--variant=wordoku","--level=veryEasy","--jobs=4","--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-veryEasy\\payload-1\\admission-1\\qualifier.json","--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-veryEasy\\payload-1\\admission-1\\qualifier.md"]}
+{"at":"2026-11-18T22:23:52.126Z","t":7.2803203,"type":"qualifier-created","who":"launcher","pid":31000,"rSeconds":7.2783044}
+{"at":"2026-11-18T22:23:52.911Z","t":8.0653336,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":0.786995,"eventFailures":0}

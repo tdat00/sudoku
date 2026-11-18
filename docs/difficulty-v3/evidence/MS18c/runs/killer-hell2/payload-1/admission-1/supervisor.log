@@ -1,0 +1,7 @@
+{"at":"2026-11-18T21:06:45.434Z","type":"attempt-reserved","runId":"ms18c-20261118T210639776-24460","claimedRecovery":false,"ordinal":1,"preLog":"Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\killer-hell2\\pre-ms18c-20261118T210639776-24460.log","slot":1}
+{"at":"2026-11-18T21:06:45.500Z","type":"environment","removed":["NPM_CONFIG_CACHE","NPM_CONFIG_PREFIX"]}
+{"at":"2026-11-18T21:06:45.583Z","type":"window-started","resumedAfterSeconds":0.0391896,"createdAfterSeconds":0.0346416,"launcherPid":33548,"created":"2026-11-18T21:06:45.536137Z","tStartNs":630786760253500}
+{"at":"2026-11-18T21:06:52.820Z","type":"window-ended","launcherExit":3,"leftover":false,"callbackErrors":0,"members":[15184,23876,24952,31192,31284,32756,33548,33744],"fault":null,"wSeconds":7.28617,"tExpired":false}
+{"at":"2026-11-18T21:06:52.963Z","type":"post","result":{"ok":true,"outcome":"unstarted-hold","kind":"additional-consumer","eligible":true}}
+{"at":"2026-11-18T21:06:52.976Z","type":"lock-released","problem":null}
+{"at":"2026-11-18T21:06:52.987Z","type":"supervisor-exit","message":"attempt finished: unstarted-hold","code":3}

@@ -18,12 +18,19 @@
     return GOLDENS.filter(function (g) { return g.id === id; })[0];
   }
 
+  // A golden request is a fixed diagnostic whose level qualification may have hidden: the variant offers it for
+  // the length of the call only, and the exact array is put back in `finally` (MS18c).
+  function generate(request) {
+    return SG.fixtures.toolRecords.withRequestedLevel(request.variantId, request.difficulty, function () {
+      return SG.pipeline.run(SG.store.toConfig(request), null, SG.budget.create({ ms: 120000 }));
+    }).value;
+  }
+
   // The result of a golden request, with the snapshots that show the analysis leaves it alone.
   function entry(id) {
     if (!built[id]) {
       var g = golden(id);
-      var result = WIRE[id] ? R.fromPlainWire(WIRE[id])
-        : SG.pipeline.run(SG.store.toConfig(g.request), null, SG.budget.create({ ms: 120000 }));
+      var result = WIRE[id] ? R.fromPlainWire(WIRE[id]) : generate(g.request);
       built[id] = {
         golden: g, result: result, wire: R.toPlainWire(result), keys: Reflect.ownKeys(result), analysis: null
       };
@@ -1920,6 +1927,39 @@
       expect(step.eliminations).toEqual(json(r.step.eliminations));
       expect(step.placements).toEqual(json(r.step.placements));
       expect(Array.from(back.givens)).toEqual(Array.from(r.givens));
+    });
+  });
+
+  // MS18c: the fixed golden requests are diagnostics; a level that qualification hides stays reachable for them.
+  describe('replay: a golden request whose level is hidden (MS18c)', function () {
+    function codeOf(fn) {
+      try {
+        fn();
+      } catch (err) {
+        return err.code;
+      }
+      return null;
+    }
+
+    it('MS18c-T03: the loader generates the request although the variant no longer offers its level, and ' +
+      'the offers come back', function () {
+      var def = SG.variants.get('classic9');
+      var original = def.difficultySupport;
+      var offered = original.filter(function (level) { return level !== 'veryEasy'; });
+      def.difficultySupport = offered;
+      try {
+        var request = golden('G02').request;
+        expect(codeOf(function () {
+          SG.pipeline.run({ variantId: request.variantId, difficulty: request.difficulty, seed: 1 }, null);
+        })).toBe('difficulty.unsupportedLevel');
+        var result = generate(request);
+        expect(result.config.difficulty).toBe('veryEasy');
+        expect(result.config.variantId).toBe('classic9');
+        expect(def.difficultySupport).toBe(offered);
+      } finally {
+        def.difficultySupport = original;
+      }
+      expect(def.difficultySupport).toBe(original);
     });
   });
 })();

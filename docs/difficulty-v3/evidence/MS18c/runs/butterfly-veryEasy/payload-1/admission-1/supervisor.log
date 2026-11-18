@@ -1,0 +1,7 @@
+{"at":"2026-11-18T21:57:27.517Z","type":"attempt-reserved","claimedRecovery":false,"runId":"ms18c-20261118T215717085-29200","preLog":"Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-veryEasy\\pre-ms18c-20261118T215717085-29200.log","ordinal":1,"slot":1}
+{"at":"2026-11-18T21:57:27.584Z","type":"environment","removed":["NPM_CONFIG_CACHE","NPM_CONFIG_PREFIX"]}
+{"at":"2026-11-18T21:57:27.664Z","type":"window-started","createdAfterSeconds":0.0345496,"tStartNs":633828850562000,"resumedAfterSeconds":0.0388678,"launcherPid":34048,"created":"2026-11-18T21:57:27.620624Z"}
+{"at":"2026-11-18T21:57:34.933Z","type":"window-ended","wSeconds":7.3148107,"tExpired":false,"members":[2872,6308,6932,10292,13340,17120,27280,34048],"leftover":false,"callbackErrors":0,"launcherExit":3,"fault":null}
+{"at":"2026-11-18T21:57:35.696Z","type":"post","result":{"ok":true,"outcome":"unstarted-hold","kind":"additional-consumer","eligible":true}}
+{"at":"2026-11-18T21:57:35.709Z","type":"lock-released","problem":null}
+{"at":"2026-11-18T21:57:35.720Z","type":"supervisor-exit","code":3,"message":"attempt finished: unstarted-hold"}

@@ -1,0 +1,51 @@
+{
+  "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+  "seedBase": 20260601,
+  "machine": {"cpu":"AMD EPYC 7763 64-Core Processor","logicalProcessors":16,"memoryGb":64,"platform":"win32 10.0.26300","node":"v26.13.0","jobs":4},
+  "engine": {"sources":"0ca29eaeebc295b6","commit":"ed2fe50c","dirty":true},
+  "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+  "acceptance": "canonical-required-tier",
+  "ratingVersion": 3,
+  "probe": 0,
+  "earlyStop": true,
+  "guardMs": 120000,
+  "attemptPolicy": {"function":"SG.digger.defaultMaxAttempts","explicitMaxAttempts":false,"sources":{"js/engine/digger.js":"c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786","js/engine/pipeline.js":"b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1","js/variants/registry.js":"967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"}},
+  "started": "2026-11-18T21:02:14.093Z",
+  "finished": "2026-11-18T21:03:35.447Z",
+  "seconds": 81,
+  "cells": [
+    {
+      "variant": "killer",
+      "level": "nightmare",
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {"n":22,"hits":18,"rate":0.8181818181818182,"p50":5735.0451,"p95":32738.6213,"max":64771.7605,"verdict":"hidden","stopped":"time","errors":0,"approximate":4,"invalid":0},
+      "requests": [
+        {"key":"killer/nightmare","index":0,"seed":3691353210,"hit":true,"ms":3580.2535,"achieved":"nightmare","score":2342,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":1,"seed":3708130829,"hit":true,"ms":1991.2957,"achieved":"nightmare","score":2194,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":2,"seed":3657797972,"hit":true,"ms":2330.503,"achieved":"nightmare","score":2061,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":3,"seed":3674575591,"hit":true,"ms":5270.5501,"achieved":"nightmare","score":2370,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":4,"seed":3624242734,"hit":false,"ms":24262.8548,"achieved":"nightmare","score":1540,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"killer/nightmare","index":5,"seed":3641020353,"hit":true,"ms":514.9273,"achieved":"nightmare","score":2210,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":6,"seed":3590687496,"hit":true,"ms":10766.6105,"achieved":"nightmare","score":2299,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":7,"seed":3607465115,"hit":true,"ms":3695.6476,"achieved":"nightmare","score":2252,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":8,"seed":3557132258,"hit":true,"ms":2675.8325,"achieved":"nightmare","score":2286,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":9,"seed":3573909877,"hit":true,"ms":7781.4247,"achieved":"nightmare","score":2271,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":10,"seed":751534599,"hit":false,"ms":19601.0614,"achieved":"nightmare","score":1579,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"killer/nightmare","index":11,"seed":734756980,"hit":false,"ms":22723.5055,"achieved":"nightmare","score":2034,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"killer/nightmare","index":12,"seed":785089837,"hit":true,"ms":999.5272,"achieved":"nightmare","score":2269,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":13,"seed":768312218,"hit":false,"ms":64771.7605,"achieved":"nightmare","score":1896,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"killer/nightmare","index":14,"seed":684424123,"hit":true,"ms":22796.5295,"achieved":"nightmare","score":2092,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":15,"seed":667646504,"hit":true,"ms":32738.6213,"achieved":"nightmare","score":2319,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":16,"seed":717979361,"hit":true,"ms":7990.0193,"achieved":"nightmare","score":2369,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":17,"seed":701201742,"hit":true,"ms":3664.6496,"achieved":"nightmare","score":2304,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":18,"seed":617313647,"hit":true,"ms":6072.3322,"achieved":"nightmare","score":2109,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":19,"seed":600536028,"hit":true,"ms":12925.3596,"achieved":"nightmare","score":2303,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":20,"seed":2596528236,"hit":true,"ms":5735.0451,"achieved":"nightmare","score":2231,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/nightmare","index":21,"seed":2613305855,"hit":true,"ms":1862.5469,"achieved":"nightmare","score":2157,"solved":true,"approximate":false,"exact":true,"valid":true}
+      ]
+    }
+  ],
+  "support": {"killer":[]}
+}

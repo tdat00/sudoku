@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "flower/master",
+  "runId": "ms18c-20261118T221205738-31992",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-master\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "88479de938274b2fd90889791163e07d67077bf8734e5fca7ce21ed750ceb870"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-master\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "1b9e9fe4edac6d465be6dd0e224edb2ad1e15ef6a238c2250da03850caa8ef80"
+    }
+  },
+  "wSeconds": 14.0634061,
+  "rSeconds": 7.3257705,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.3257705,
+      "requests": 40,
+      "maxMs": 2364.3572,
+      "stopped": null,
+      "secondRoundRan": false,
+      "slowTotal": 0,
+      "slowFirstRound": 0,
+      "qSeconds": 6.535,
+      "sSeconds": 5.9842577,
+      "sFirstRoundSeconds": 5.9842577,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5507422999999999,
+      "wSeconds": 14.0634061,
+      "wMinusQ": 7.5284061
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 40,
+    "hits": 40,
+    "rate": 1,
+    "p50": 429.1758,
+    "p95": 1068.8657,
+    "max": 2364.3572,
+    "verdict": "offered",
+    "stopped": null,
+    "errors": 0,
+    "approximate": 0,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\flower-master.json",
+      "sha256": "88479de938274b2fd90889791163e07d67077bf8734e5fca7ce21ed750ceb870"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\flower-master.md",
+      "sha256": "1b9e9fe4edac6d465be6dd0e224edb2ad1e15ef6a238c2250da03850caa8ef80"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

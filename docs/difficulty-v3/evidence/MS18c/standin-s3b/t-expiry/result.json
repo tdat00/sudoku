@@ -1,0 +1,59 @@
+{
+  "name": "t-expiry",
+  "finalStatus": "tExpired",
+  "fault": null,
+  "writeFailures": 0,
+  "window": {
+    "jobLimits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "launcherPid": 8632,
+    "launcherCreated": "2026-11-18T19:18:34.613222Z",
+    "tStartIso": "2026-11-18T19:18:34.595Z",
+    "tStartTicks": 6242958222283,
+    "tStartNs": 624295822228300,
+    "createdAfterSeconds": 0.0353599,
+    "resumedAfterSeconds": 0.0401471,
+    "launcherExit": 1,
+    "tExpired": true,
+    "leftover": false,
+    "stuck": false,
+    "wSeconds": 12.2519055,
+    "launcherExitedAfterSeconds": 12.2482846,
+    "members": [
+      8632,
+      22212,
+      27316,
+      29448,
+      31784,
+      33004
+    ],
+    "membersDetail": [
+      {
+        "pid": 8632,
+        "createdUtcMicros": "2026-11-18T19:18:34.613222Z"
+      },
+      {
+        "pid": 22212,
+        "createdUtcMicros": "2026-11-18T19:18:34.722811Z"
+      },
+      {
+        "pid": 27316,
+        "createdUtcMicros": "2026-11-18T19:18:34.738436Z"
+      },
+      {
+        "pid": 29448,
+        "createdUtcMicros": "2026-11-18T19:18:34.637334Z"
+      },
+      {
+        "pid": 31784,
+        "createdUtcMicros": "2026-11-18T19:18:34.750056Z"
+      },
+      {
+        "pid": 33004,
+        "createdUtcMicros": "2026-11-18T19:18:34.764819Z"
+      }
+    ],
+    "fault": null,
+    "callbackErrors": 0,
+    "lastCallbackError": null
+  }
+}

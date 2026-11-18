@@ -1,0 +1,200 @@
+{
+  "schema": "MS18c-gq-readiness-v1",
+  "runId": "ms18c-20261118T213748100-27568",
+  "cell": "samurai/hell2",
+  "slot": 1,
+  "ordinal": 1,
+  "policy": "MS18c-GQ-host-active",
+  "environmentLabel": "shared-slot, CLI-host-active; not strict-quiet-machine timing",
+  "node": "v26.13.0",
+  "readinessSeconds": 7.283,
+  "capSeconds": 45,
+  "queryCapSeconds": 15,
+  "queries": [
+    {
+      "name": "host",
+      "seconds": 0.693,
+      "ok": true
+    },
+    {
+      "name": "snapshot-a",
+      "seconds": 0.719,
+      "ok": true
+    },
+    {
+      "name": "snapshot-b",
+      "seconds": 0.715,
+      "ok": true
+    }
+  ],
+  "timeouts": [],
+  "logicalCpus": 16,
+  "intervals": [
+    {
+      "index": 1,
+      "at": "2026-11-18T21:37:58.902Z",
+      "idleDelta": 15061,
+      "totalDelta": 16325,
+      "busyCores": 1.2388361408882087
+    },
+    {
+      "index": 2,
+      "at": "2026-11-18T21:37:59.901Z",
+      "idleDelta": 15265,
+      "totalDelta": 16097,
+      "busyCores": 0.8269863949804304
+    },
+    {
+      "index": 3,
+      "at": "2026-11-18T21:38:00.902Z",
+      "idleDelta": 15565,
+      "totalDelta": 16062,
+      "busyCores": 0.4950815589590345
+    },
+    {
+      "index": 4,
+      "at": "2026-11-18T21:38:01.904Z",
+      "idleDelta": 14781,
+      "totalDelta": 16156,
+      "busyCores": 1.3617231988115872
+    },
+    {
+      "index": 5,
+      "at": "2026-11-18T21:38:02.905Z",
+      "idleDelta": 15373,
+      "totalDelta": 16107,
+      "busyCores": 0.729123983361271
+    }
+  ],
+  "meanBusyCores": 0.9303502554001064,
+  "maxBusyCores": 1.3617231988115872,
+  "ready": false,
+  "strictReasons": [
+    "mean 0.930 busy cores is above 0.5",
+    "maximum 1.362 busy cores is above 1"
+  ],
+  "admitted": true,
+  "eligible": false,
+  "kind": null,
+  "holds": [],
+  "reason": "every admission condition of MS18c-GQ-host-active holds; the strict screen FAILED and is recorded unchanged",
+  "locks": {
+    "start": {
+      "foreign": {
+        "path": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-timing.lock",
+        "present": false
+      },
+      "own": {
+        "present": true,
+        "matchesRun": true,
+        "content": "27568|ms18c-20261118T213748100-27568|2026-11-18T21:37:52.342Z"
+      }
+    },
+    "recheck": {
+      "foreign": {
+        "path": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-timing.lock",
+        "present": false
+      },
+      "own": {
+        "present": true,
+        "matchesRun": true,
+        "content": "27568|ms18c-20261118T213748100-27568|2026-11-18T21:37:52.342Z"
+      }
+    }
+  },
+  "host": {
+    "expected": {
+      "pid": 1968,
+      "dotNetStartTime": "2026-11-13T19:26:33.6916441+07:00",
+      "cimCreationDateUtcMicroseconds": "2026-11-13T12:26:33.691644Z",
+      "cimCreationDateObserved": "2026-11-13T19:26:33.6916440+07:00",
+      "parentPid": 18780,
+      "executablePath": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe",
+      "cimName": "copilot.exe",
+      "ignoreDotNetProcessName": true,
+      "comparison": "Require the exact .NET StartTime string and separately the CIM UTC time truncated to microseconds, plus all other pinned fields. Do not compare the two seventh fractional digits.",
+      "newInstance": "No admission until the orchestrator records the new full-tuple confirmation; never substitute a PID/name automatically.",
+      "supervisorCreationIdentity": {
+        "source": "CIM CreationDate",
+        "timeZone": "UTC",
+        "fractionalDigits": 6,
+        "rounding": "truncate",
+        "match": "PID plus creation time, run/cell/epoch and manifest identity"
+      }
+    },
+    "observed": {
+      "pid": 1968,
+      "processName": "copilot",
+      "dotNetStartTime": "2026-11-13T19:26:33.6916441+07:00",
+      "cimName": "copilot.exe",
+      "cimParent": 18780,
+      "cimExe": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe",
+      "cimCreatedUtc": "2026-11-13T12:26:33.6916440Z"
+    }
+  },
+  "processWindow": {
+    "seconds": 5.7335,
+    "consumerLimitPerSecond": 0.5,
+    "unobservable": 0,
+    "unmatched": 0,
+    "busiest": [
+      {
+        "pid": 27568,
+        "name": "pwsh.exe",
+        "cpuSeconds": 1.078,
+        "host": false,
+        "launchChain": true
+      },
+      {
+        "pid": 22608,
+        "name": "powershell.exe",
+        "cpuSeconds": 0.766,
+        "host": false,
+        "launchChain": true
+      },
+      {
+        "pid": 1968,
+        "name": "copilot.exe",
+        "cpuSeconds": 0.609,
+        "host": true,
+        "launchChain": false
+      },
+      {
+        "pid": 5452,
+        "name": "MsSense.exe",
+        "cpuSeconds": 0.516,
+        "host": false,
+        "launchChain": false
+      },
+      {
+        "pid": 6552,
+        "name": "WindowsTerminal.exe",
+        "cpuSeconds": 0.281,
+        "host": false,
+        "launchChain": false
+      },
+      {
+        "pid": 5632,
+        "name": "MsMpEng.exe",
+        "cpuSeconds": 0.266,
+        "host": false,
+        "launchChain": false
+      },
+      {
+        "pid": 4,
+        "name": "System",
+        "cpuSeconds": 0.203,
+        "host": false,
+        "launchChain": false
+      },
+      {
+        "pid": 32684,
+        "name": "agency.exe",
+        "cpuSeconds": 0.188,
+        "host": false,
+        "launchChain": false
+      }
+    ]
+  },
+  "note": "the strict screen is kept as `ready`; `admitted` is the named policy; no CPU is subtracted from any observation and no process tree or service is exempt"
+}

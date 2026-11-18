@@ -14,11 +14,18 @@
 
   var cache = {};
 
+  // A fixed diagnostic request whose level qualification may have hidden: the variant offers the level for the
+  // length of the call only, and the exact array is put back in `finally` (MS18c).
+  function requested(request, run) {
+    return SG.fixtures.toolRecords.withRequestedLevel(request.variantId, request.difficulty, run).value;
+  }
+
   function result(variantId, difficulty, seed) {
     var key = variantId + '/' + difficulty + '/' + seed;
     if (!cache[key]) {
-      cache[key] = SG.pipeline.run(
-        { variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
+      cache[key] = requested({ variantId: variantId, difficulty: difficulty }, function () {
+        return SG.pipeline.run({ variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
+      });
     }
     return cache[key];
   }
@@ -41,8 +48,9 @@
   function golden(id) {
     if (!goldens[id]) {
       var g = GOLDENS.filter(function (x) { return x.id === id; })[0];
-      goldens[id] = WIRE[id] ? SG.replay.fromPlainWire(WIRE[id])
-        : SG.pipeline.run(SG.store.toConfig(g.request), null, SG.budget.create({ ms: 120000 }));
+      goldens[id] = WIRE[id] ? SG.replay.fromPlainWire(WIRE[id]) : requested(g.request, function () {
+        return SG.pipeline.run(SG.store.toConfig(g.request), null, SG.budget.create({ ms: 120000 }));
+      });
     }
     return goldens[id];
   }
@@ -1939,6 +1947,28 @@
       expect(typeof X.create).toBe('function');
       expect(function () { V.create(null); }).toThrow();
       expect(function () { X.create(null); }).toThrow();
+    });
+  });
+
+  // MS18c: the fixed requests of this suite are diagnostics; a level that qualification hides stays reachable.
+  describe('steps: a fixed request whose level is hidden (MS18c)', function () {
+    it('MS18c-T03: a real result and a golden are generated although their level is not offered, and the ' +
+      'offers come back', function () {
+      var def = SG.variants.get('classic9');
+      var original = def.difficultySupport;
+      var offered = original.filter(function (level) { return level !== 'easy' && level !== 'veryEasy'; });
+      def.difficultySupport = offered;
+      try {
+        var real = result('classic9', 'easy', 424242);
+        expect([real.config.variantId, real.config.difficulty]).toEqual(['classic9', 'easy']);
+        expect(def.difficultySupport).toBe(offered);
+        var g = golden('G02');
+        expect(g.config.difficulty).toBe('veryEasy');
+        expect(def.difficultySupport).toBe(offered);
+      } finally {
+        def.difficultySupport = original;
+      }
+      expect(def.difficultySupport).toBe(original);
     });
   });
 })();

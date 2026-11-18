@@ -1,0 +1,99 @@
+{
+  "name": "full-chain",
+  "finalStatus": "completed",
+  "fault": null,
+  "writeFailures": 0,
+  "window": {
+    "jobLimits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "launcherPid": 31284,
+    "launcherCreated": "2026-11-18T19:18:50.581706Z",
+    "tStartIso": "2026-11-18T19:18:50.560Z",
+    "tStartTicks": 6243117877222,
+    "tStartNs": 624311787722200,
+    "createdAfterSeconds": 0.0402965,
+    "resumedAfterSeconds": 0.0454319,
+    "launcherExit": 0,
+    "tExpired": false,
+    "leftover": false,
+    "stuck": false,
+    "wSeconds": 13.5004316,
+    "launcherExitedAfterSeconds": 13.4968853,
+    "members": [
+      3340,
+      4772,
+      7232,
+      7396,
+      19072,
+      24404,
+      25952,
+      28224,
+      31284,
+      31504,
+      32004,
+      32416,
+      34152,
+      34672
+    ],
+    "membersDetail": [
+      {
+        "pid": 3340,
+        "createdUtcMicros": "2026-11-18T19:18:57.801721Z"
+      },
+      {
+        "pid": 4772,
+        "createdUtcMicros": "2026-11-18T19:18:57.085675Z"
+      },
+      {
+        "pid": 7232,
+        "createdUtcMicros": "2026-11-18T19:18:57.946262Z"
+      },
+      {
+        "pid": 7396,
+        "createdUtcMicros": "2026-11-18T19:18:50.728771Z"
+      },
+      {
+        "pid": 19072,
+        "createdUtcMicros": "2026-11-18T19:18:57.904438Z"
+      },
+      {
+        "pid": 24404,
+        "createdUtcMicros": "2026-11-18T19:18:57.098849Z"
+      },
+      {
+        "pid": 25952,
+        "createdUtcMicros": "2026-11-18T19:18:50.608073Z"
+      },
+      {
+        "pid": 28224,
+        "createdUtcMicros": "2026-11-18T19:18:50.705805Z"
+      },
+      {
+        "pid": 31284,
+        "createdUtcMicros": "2026-11-18T19:18:50.581706Z"
+      },
+      {
+        "pid": 31504,
+        "createdUtcMicros": "2026-11-18T19:18:57.933267Z"
+      },
+      {
+        "pid": 32004,
+        "createdUtcMicros": "2026-11-18T19:18:57.921436Z"
+      },
+      {
+        "pid": 32416,
+        "createdUtcMicros": "2026-11-18T19:18:57.817143Z"
+      },
+      {
+        "pid": 34152,
+        "createdUtcMicros": "2026-11-18T19:18:51.398950Z"
+      },
+      {
+        "pid": 34672,
+        "createdUtcMicros": "2026-11-18T19:18:51.371267Z"
+      }
+    ],
+    "fault": null,
+    "callbackErrors": 0,
+    "lastCallbackError": null
+  }
+}

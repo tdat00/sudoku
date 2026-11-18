@@ -1,0 +1,6 @@
+{"at":"2026-11-18T21:45:12.207Z","t":0.1509884,"type":"launcher-start","who":"launcher","pid":33392,"node":"v26.13.0","cell":"sohei/nightmare","runId":"ms18c-20261118T214500946-29184","slot":1,"ordinal":1,"startSeconds":0.1502555}
+{"at":"2026-11-18T21:45:12.210Z","t":0.1538544,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8461768}
+{"at":"2026-11-18T21:45:19.490Z","t":7.4336407,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.433,"ready":false}
+{"at":"2026-11-18T21:45:19.496Z","t":7.4398253,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["tests\\qualify.js","--variant=sohei","--level=nightmare","--jobs=4","--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\sohei-nightmare\\payload-1\\admission-1\\qualifier.json","--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\sohei-nightmare\\payload-1\\admission-1\\qualifier.md"]}
+{"at":"2026-11-18T21:45:19.518Z","t":7.4609464,"type":"qualifier-created","who":"launcher","pid":31704,"rSeconds":7.4587264}
+{"at":"2026-11-18T21:48:49.686Z","t":217.6299464,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":210.1711751,"eventFailures":0}

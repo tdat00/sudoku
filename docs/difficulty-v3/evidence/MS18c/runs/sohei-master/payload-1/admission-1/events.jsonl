@@ -1,0 +1,6 @@
+{"at":"2026-11-18T21:44:27.167Z","t":0.1426063,"type":"launcher-start","who":"launcher","pid":15368,"node":"v26.13.0","cell":"sohei/master","runId":"ms18c-20261118T214416153-6912","slot":1,"ordinal":1,"startSeconds":0.1420432}
+{"at":"2026-11-18T21:44:27.170Z","t":0.1445984,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8554164}
+{"at":"2026-11-18T21:44:34.285Z","t":7.2598561,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.259,"ready":false}
+{"at":"2026-11-18T21:44:34.291Z","t":7.2659389,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["tests\\qualify.js","--variant=sohei","--level=master","--jobs=4","--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\sohei-master\\payload-1\\admission-1\\qualifier.json","--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\sohei-master\\payload-1\\admission-1\\qualifier.md"]}
+{"at":"2026-11-18T21:44:34.313Z","t":7.2872289,"type":"qualifier-created","who":"launcher","pid":14852,"rSeconds":7.2851569}
+{"at":"2026-11-18T21:44:52.407Z","t":25.3821098,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":18.0969099,"eventFailures":0}

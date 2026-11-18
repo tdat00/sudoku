@@ -1,0 +1,7 @@
+{"at":"2026-11-18T22:25:18.647Z","type":"attempt-reserved","preLog":"Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-hard\\pre-ms18c-20261118T222507251-26536.log","claimedRecovery":false,"runId":"ms18c-20261118T222507251-26536","ordinal":1,"slot":1}
+{"at":"2026-11-18T22:25:18.717Z","type":"environment","removed":["NPM_CONFIG_CACHE","NPM_CONFIG_PREFIX"]}
+{"at":"2026-11-18T22:25:18.798Z","type":"window-started","createdAfterSeconds":0.0350617,"tStartNs":635499985942500,"launcherPid":21652,"resumedAfterSeconds":0.0396109,"created":"2026-11-18T22:25:18.752344Z"}
+{"at":"2026-11-18T22:25:26.052Z","type":"window-ended","fault":null,"launcherExit":3,"callbackErrors":0,"wSeconds":7.3030172,"tExpired":false,"leftover":false,"members":[5012,5136,20216,21652,22520,26672,33728,34116]}
+{"at":"2026-11-18T22:25:26.195Z","type":"post","result":{"ok":true,"outcome":"unstarted-hold","kind":"additional-consumer","eligible":true}}
+{"at":"2026-11-18T22:25:26.207Z","type":"lock-released","problem":null}
+{"at":"2026-11-18T22:25:26.218Z","type":"supervisor-exit","code":3,"message":"attempt finished: unstarted-hold"}

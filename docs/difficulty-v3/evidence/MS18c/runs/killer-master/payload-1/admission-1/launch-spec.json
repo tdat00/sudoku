@@ -1,0 +1,70 @@
+{
+  "schema": "MS18c-gq-launch-spec-v1",
+  "runId": "ms18c-20261118T210017755-24868",
+  "cell": "killer/master",
+  "epoch": "MS18c-GQ-20261118-01",
+  "slot": 1,
+  "ordinal": 1,
+  "policy": "MS18c-GQ-host-active",
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "attemptDir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\killer-master\\payload-1\\admission-1",
+  "journalFile": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\killer-master\\journal.jsonl",
+  "lockFile": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-sudoku.lock",
+  "foreignLockFile": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-timing.lock",
+  "nodePath": "C:\\Program Files\\nodejs\\node.exe",
+  "nodeVersion": "v26.13.0",
+  "generatorDir": "Q:\\git\\sudoku\\generator",
+  "payloadArgs": [
+    "tests\\qualify.js",
+    "--variant=killer",
+    "--level=master",
+    "--jobs=4",
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\killer-master\\payload-1\\admission-1\\qualifier.json",
+    "--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\killer-master\\payload-1\\admission-1\\qualifier.md"
+  ],
+  "host": {
+    "pid": 1968,
+    "dotNetStartTime": "2026-11-13T19:26:33.6916441+07:00",
+    "cimCreationDateUtcMicroseconds": "2026-11-13T12:26:33.691644Z",
+    "cimCreationDateObserved": "2026-11-13T19:26:33.6916440+07:00",
+    "parentPid": 18780,
+    "executablePath": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe",
+    "cimName": "copilot.exe",
+    "ignoreDotNetProcessName": true,
+    "comparison": "Require the exact .NET StartTime string and separately the CIM UTC time truncated to microseconds, plus all other pinned fields. Do not compare the two seventh fractional digits.",
+    "newInstance": "No admission until the orchestrator records the new full-tuple confirmation; never substitute a PID/name automatically.",
+    "supervisorCreationIdentity": {
+      "source": "CIM CreationDate",
+      "timeZone": "UTC",
+      "fractionalDigits": 6,
+      "rounding": "truncate",
+      "match": "PID plus creation time, run/cell/epoch and manifest identity"
+    }
+  },
+  "caps": {
+    "callSeconds": 15,
+    "cumulativeSeconds": 45
+  },
+  "T": 2850,
+  "O": 5550,
+  "verified": {
+    "ratingVersion": 3,
+    "engineSources": "0ca29eaeebc295b6",
+    "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77"
+  },
+  "row": {
+    "key": "killer/master",
+    "cellCount": 81,
+    "digits": 9,
+    "attempts": 8,
+    "b": 10,
+    "budgetMs": 10000,
+    "F": 21,
+    "P": 2271,
+    "A": 2280,
+    "T": 2850,
+    "O": 5550,
+    "binding": "approved"
+  }
+}

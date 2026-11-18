@@ -1,0 +1,5 @@
+{"at":"2026-11-18T18:16:50.293Z","type":"standin-start","pid":26920,"scenario":"direct","runId":"standin-t-expiry-20261118181650-26920","hostJob":{"inJob":true,"limits":"limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0"}}
+{"at":"2026-11-18T18:16:50.387Z","type":"lock-acquired","waitedSeconds":0.023}
+{"at":"2026-11-18T18:16:50.504Z","type":"window-started","created":"2026-11-18T18:16:50.460161Z","tStartNs":620591659511700,"launcherPid":31916,"resumedAfterSeconds":0.0434319,"createdAfterSeconds":0.0381745}
+{"at":"2026-11-18T18:17:02.674Z","type":"window-ended","leftover":false,"launcherExit":1,"members":[9420,17184,17460,23128,26176,31916],"tExpired":true,"wSeconds":12.2237139}
+{"at":"2026-11-18T18:17:02.689Z","type":"lock-released","problem":null}

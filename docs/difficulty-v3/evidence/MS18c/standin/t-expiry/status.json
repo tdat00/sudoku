@@ -1,0 +1,118 @@
+{
+  "schema": "MS18c-gq-status-v1",
+  "standIn": true,
+  "name": "t-expiry",
+  "scenario": "direct",
+  "runId": "standin-t-expiry-20261118181650-26920",
+  "cell": "stand-in/none",
+  "state": "finished",
+  "supervisor": {
+    "pid": 26920,
+    "createdUtcMicros": "2026-11-18T18:16:48.900427Z",
+    "source": "CIM Win32_Process.CreationDate, UTC, truncated to microseconds",
+    "hostJob": {
+      "inJob": true,
+      "limits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0"
+    },
+    "powershell": "7.6.10",
+    "exe": "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+  },
+  "job": {
+    "unnamed": true,
+    "limits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "handleHeldBy": "this supervisor only"
+  },
+  "launcher": {
+    "pid": 31916,
+    "createdUtcMicros": "2026-11-18T18:16:50.460161Z",
+    "launchedSuspendedAssignedResumed": true
+  },
+  "clocks": {
+    "oStart": "2026-11-18T18:16:50.273Z",
+    "tStart": "2026-11-18T18:16:50.440Z",
+    "tDeadline": "2026-11-18T18:17:02.4509930Z",
+    "T": 12.0,
+    "rSeconds": null,
+    "wSeconds": 12.2237139,
+    "note": "T starts at the creation of the owned launcher and excludes the lock acquisition",
+    "elapsedSeconds": 11.693
+  },
+  "lock": {
+    "mode": "real",
+    "own": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-sudoku.lock",
+    "foreign": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-timing.lock"
+  },
+  "outputs": {
+    "dir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\t-expiry",
+    "status": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\t-expiry\\status.json",
+    "log": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\t-expiry\\supervisor.log",
+    "members": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\t-expiry\\members.json"
+  },
+  "members": [
+    9420,
+    17184,
+    17460,
+    23128,
+    26176,
+    31916
+  ],
+  "heartbeatAt": "2026-11-18T18:17:02.691Z",
+  "finalStatus": "tExpired",
+  "membership": [
+    {
+      "pid": 17184,
+      "name": "conhost",
+      "inThisJob": true
+    },
+    {
+      "pid": 31916,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 9420,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 26176,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 23128,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 17460,
+      "name": "node",
+      "inThisJob": true
+    }
+  ],
+  "activeProcesses": 6,
+  "window": {
+    "jobLimits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "launcherPid": 31916,
+    "launcherCreated": "2026-11-18T18:16:50.460161Z",
+    "tStartIso": "2026-11-18T18:16:50.440Z",
+    "tStartTicks": 6205916595117,
+    "tStartNs": 620591659511700,
+    "createdAfterSeconds": 0.0381745,
+    "resumedAfterSeconds": 0.0434319,
+    "launcherExit": 1,
+    "tExpired": true,
+    "leftover": false,
+    "stuck": false,
+    "wSeconds": 12.2237139,
+    "launcherExitedAfterSeconds": 12.2201643,
+    "members": [
+      9420,
+      17184,
+      17460,
+      23128,
+      26176,
+      31916
+    ]
+  }
+}

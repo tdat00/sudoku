@@ -1,0 +1,6 @@
+{"at":"2026-11-18T21:23:33.416Z","t":0.1383476,"type":"launcher-start","who":"launcher","pid":16488,"node":"v26.13.0","cell":"samurai/easy","runId":"ms18c-20261118T212321787-26428","slot":1,"ordinal":1,"startSeconds":0.13778}
+{"at":"2026-11-18T21:23:33.419Z","t":0.1403469,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8596664}
+{"at":"2026-11-18T21:23:40.535Z","t":7.2561945,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.256,"ready":false}
+{"at":"2026-11-18T21:23:40.541Z","t":7.2622566,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["tests\\qualify.js","--variant=samurai","--level=easy","--jobs=4","--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-easy\\payload-1\\admission-1\\qualifier.json","--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-easy\\payload-1\\admission-1\\qualifier.md"]}
+{"at":"2026-11-18T21:23:40.563Z","t":7.2842497,"type":"qualifier-created","who":"launcher","pid":11220,"rSeconds":7.2818672}
+{"at":"2026-11-18T21:23:45.345Z","t":12.0660459,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":4.7841309,"eventFailures":0}

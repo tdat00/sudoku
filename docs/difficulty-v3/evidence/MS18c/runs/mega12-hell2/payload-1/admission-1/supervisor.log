@@ -1,0 +1,7 @@
+{"at":"2026-11-18T20:10:26.986Z","type":"attempt-reserved","preLog":"Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\mega12-hell2\\pre-ms18c-20261118T201022576-29292.log","runId":"ms18c-20261118T201022576-29292","slot":1,"claimedRecovery":false,"ordinal":1}
+{"at":"2026-11-18T20:10:27.058Z","type":"environment","removed":["NPM_CONFIG_CACHE","NPM_CONFIG_PREFIX"]}
+{"at":"2026-11-18T20:10:27.141Z","type":"window-started","resumedAfterSeconds":0.0387692,"createdAfterSeconds":0.0339609,"created":"2026-11-18T20:10:27.096693Z","launcherPid":28664,"tStartNs":627408313659700}
+{"at":"2026-11-18T20:10:34.357Z","type":"window-ended","leftover":false,"fault":null,"callbackErrors":0,"tExpired":false,"wSeconds":7.2631188,"launcherExit":3,"members":[5628,14664,19180,20172,27968,28664,33520,33916]}
+{"at":"2026-11-18T20:10:34.493Z","type":"post","result":{"ok":true,"outcome":"unstarted-hold","kind":"additional-consumer","eligible":true}}
+{"at":"2026-11-18T20:10:34.506Z","type":"lock-released","problem":null}
+{"at":"2026-11-18T20:10:34.516Z","type":"supervisor-exit","code":3,"message":"attempt finished: unstarted-hold"}

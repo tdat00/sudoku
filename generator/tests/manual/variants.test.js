@@ -789,12 +789,14 @@
     var resultCache = {};
     var analysisCache = [];
 
-    /** A real result (memoised). */
+    /** A real result (memoised); the fixed request's level may be hidden by qualification, so the variant offers
+     * it for the length of the call only and the exact array is put back in `finally` (MS18c). */
     function realResult(variantId, difficulty, seed) {
       var key = [variantId, difficulty, seed].join('/');
       if (!resultCache[key]) {
-        resultCache[key] = SG.pipeline.run(
-          { variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
+        resultCache[key] = SG.fixtures.toolRecords.withRequestedLevel(variantId, difficulty, function () {
+          return SG.pipeline.run({ variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
+        }).value;
       }
       return resultCache[key];
     }

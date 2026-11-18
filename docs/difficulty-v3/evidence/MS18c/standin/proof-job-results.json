@@ -1,0 +1,369 @@
+{
+  "schema": "MS18c-proof-job-v1",
+  "at": "2026-11-18T18:17:19.922Z",
+  "harnessShell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+  "harnessPowerShell": "7.6.10",
+  "scenarios": [
+    {
+      "name": "normal",
+      "shell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+      "mode": "direct",
+      "runSeconds": 8.0,
+      "tSeconds": 60.0,
+      "supervisorKilledByHarness": false,
+      "supervisorKilledAtSeconds": null,
+      "supervisorExitedAtSeconds": 10.344,
+      "harnessTimedOut": false,
+      "supervisorPid": 4644,
+      "supervisorExitCode": 0,
+      "supervisorInHostJob": "true",
+      "finalStatus": "completed",
+      "wSeconds": "8.2728949",
+      "ownedProcessesObserved": 6,
+      "maxMembersInStatus": 6,
+      "members": [
+        {
+          "pid": 6436,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 14684,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 20228,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 27292,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 31496,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 32824,
+          "name": "node",
+          "inHarnessOuterJob": true
+        }
+      ],
+      "innerJobMembershipSamplesTrue": 6,
+      "innerJobMembershipSamplesFalse": 0,
+      "allObservedInHarnessOuterJob": true,
+      "deathDelaysSecondsAfterSupervisorExit": {
+        "20228": 0.008,
+        "32824": 0.01,
+        "14684": 0.01,
+        "31496": 0.011,
+        "6436": 0.011,
+        "27292": 0.011
+      },
+      "stillAliveAfter15s": [],
+      "allGone": true,
+      "privateLockLeftBehind": false,
+      "privateLockContent": null
+    },
+    {
+      "name": "normal-ps51",
+      "shell": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "mode": "direct",
+      "runSeconds": 8.0,
+      "tSeconds": 60.0,
+      "supervisorKilledByHarness": false,
+      "supervisorKilledAtSeconds": null,
+      "supervisorExitedAtSeconds": 9.437,
+      "harnessTimedOut": false,
+      "supervisorPid": 27480,
+      "supervisorExitCode": 0,
+      "supervisorInHostJob": "true",
+      "finalStatus": "completed",
+      "wSeconds": "8.2504497",
+      "ownedProcessesObserved": 6,
+      "maxMembersInStatus": 6,
+      "members": [
+        {
+          "pid": 2512,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 19660,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 24480,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 32408,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 33560,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 34124,
+          "name": "node",
+          "inHarnessOuterJob": true
+        }
+      ],
+      "innerJobMembershipSamplesTrue": 6,
+      "innerJobMembershipSamplesFalse": 0,
+      "allObservedInHarnessOuterJob": true,
+      "deathDelaysSecondsAfterSupervisorExit": {
+        "2512": -0.0,
+        "19660": 0.0,
+        "32408": 0.0,
+        "34124": 0.0,
+        "33560": 0.0,
+        "24480": 0.0
+      },
+      "stillAliveAfter15s": [],
+      "allGone": true,
+      "privateLockLeftBehind": false,
+      "privateLockContent": null
+    },
+    {
+      "name": "t-expiry",
+      "shell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+      "mode": "direct",
+      "runSeconds": 90.0,
+      "tSeconds": 12.0,
+      "supervisorKilledByHarness": false,
+      "supervisorKilledAtSeconds": null,
+      "supervisorExitedAtSeconds": 13.816,
+      "harnessTimedOut": false,
+      "supervisorPid": 26920,
+      "supervisorExitCode": 0,
+      "supervisorInHostJob": "true",
+      "finalStatus": "tExpired",
+      "wSeconds": "12.2237139",
+      "ownedProcessesObserved": 6,
+      "maxMembersInStatus": 6,
+      "members": [
+        {
+          "pid": 9420,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 17184,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 17460,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 23128,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 26176,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 31916,
+          "name": "node",
+          "inHarnessOuterJob": true
+        }
+      ],
+      "innerJobMembershipSamplesTrue": 6,
+      "innerJobMembershipSamplesFalse": 0,
+      "allObservedInHarnessOuterJob": true,
+      "deathDelaysSecondsAfterSupervisorExit": {
+        "17184": -0.0,
+        "26176": 0.0,
+        "23128": 0.0,
+        "31916": 0.0,
+        "9420": 0.0,
+        "17460": 0.0
+      },
+      "stillAliveAfter15s": [],
+      "allGone": true,
+      "privateLockLeftBehind": false,
+      "privateLockContent": null
+    },
+    {
+      "name": "supervisor-loss",
+      "shell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+      "mode": "direct",
+      "runSeconds": 90.0,
+      "tSeconds": 120.0,
+      "supervisorKilledByHarness": true,
+      "supervisorKilledAtSeconds": 2.06,
+      "supervisorExitedAtSeconds": 2.085,
+      "harnessTimedOut": false,
+      "supervisorPid": 34576,
+      "supervisorExitCode": -1,
+      "supervisorInHostJob": "true",
+      "finalStatus": "",
+      "wSeconds": "",
+      "ownedProcessesObserved": 6,
+      "maxMembersInStatus": 6,
+      "members": [
+        {
+          "pid": 3960,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 5144,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 10652,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 18612,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 28512,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 30724,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        }
+      ],
+      "innerJobMembershipSamplesTrue": 6,
+      "innerJobMembershipSamplesFalse": 0,
+      "allObservedInHarnessOuterJob": true,
+      "deathDelaysSecondsAfterSupervisorExit": {
+        "3960": 0.0,
+        "18612": 0.0,
+        "5144": 0.001,
+        "10652": 0.001,
+        "30724": 0.001,
+        "28512": 0.001
+      },
+      "stillAliveAfter15s": [],
+      "allGone": true,
+      "privateLockLeftBehind": true,
+      "privateLockContent": "34576|standin-supervisor-loss-20261118181704-34576|2026-11-18T18:17:04.182Z"
+    },
+    {
+      "name": "full-chain",
+      "shell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+      "mode": "full-chain",
+      "runSeconds": 6.0,
+      "tSeconds": 120.0,
+      "supervisorKilledByHarness": false,
+      "supervisorKilledAtSeconds": null,
+      "supervisorExitedAtSeconds": 15.049,
+      "harnessTimedOut": false,
+      "supervisorPid": 25112,
+      "supervisorExitCode": 0,
+      "supervisorInHostJob": "true",
+      "finalStatus": "completed",
+      "wSeconds": "13.4961156",
+      "ownedProcessesObserved": 12,
+      "maxMembersInStatus": 8,
+      "members": [
+        {
+          "pid": 3180,
+          "name": "powershell",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 4560,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 7668,
+          "name": "powershell",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 12152,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 21548,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 21824,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 24188,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 26416,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 27300,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 29200,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 31612,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 32412,
+          "name": "node",
+          "inHarnessOuterJob": true
+        }
+      ],
+      "innerJobMembershipSamplesTrue": 8,
+      "innerJobMembershipSamplesFalse": 0,
+      "allObservedInHarnessOuterJob": true,
+      "deathDelaysSecondsAfterSupervisorExit": {
+        "3180": -0.0,
+        "21824": -0.0,
+        "24188": -0.0,
+        "31612": 0.0,
+        "27300": 0.0,
+        "12152": 0.0,
+        "21548": 0.0,
+        "7668": 0.0,
+        "4560": 0.0,
+        "29200": 0.0,
+        "26416": 0.0,
+        "32412": 0.0
+      },
+      "stillAliveAfter15s": [],
+      "allGone": true,
+      "privateLockLeftBehind": false,
+      "privateLockContent": null
+    }
+  ]
+}

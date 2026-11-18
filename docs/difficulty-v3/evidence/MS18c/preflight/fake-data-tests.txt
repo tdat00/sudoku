@@ -1,0 +1,22 @@
+ok   the derived P/A/T/O of the three classes equal the brief table
+ok   R30 rounds up to a multiple of 30 in exact integer arithmetic
+ok   A and T are multiples of 30, O = T + 2700, and no class takes an outer cap
+ok   a board budget outside 2 / 10 / 30 has no class
+ok   board size gives the budget class and the default attempts at every boundary
+ok   fake boards give 135 unique keys in manifest order, 18 / 63 / 54, no problem
+ok   an incomplete, duplicated, foreign, reordered or tampered row set is rejected
+ok   a board map that breaks the 18 / 63 / 54 split is rejected
+ok   every invalid premise is rejected with its own reason
+ok   a cell or identity that cannot be bound keeps blockers and no numbers
+ok   the counting bounds never exceed 6G + 65F; worst case k = 1; k = 0 gives 6G + 64F
+ok   simulated worst-case durations stay within the generation-only bounds of the structure
+ok   monitor slow counts: <= 5 with no stop, <= 9 at a first-round stop, <= 6 if round 2 ran
+ok   a request is slow only above its budget; over 130000 ms is a breach whatever its outcome
+ok   Q-S <= 11 s, W-Q <= 60 s and W <= A hold exactly at their limits and fail just above
+ok   negative residuals are kept exactly as recorded, never clamped, and do not fail a check
+ok   invalid timing or record data is rejected, not clamped, and stops the next cell
+ok   the monitor accepts a record the existing cell checks accept and flags one they reject
+ok   the planner output carries no approval and the approval detector sees every spelling
+ok   the renderers are deterministic, CRLF only, without trailing blanks; the JSON reads back
+ok   the Git guard of the planner allows only the read-only commands it uses
+21 passed, 0 failed

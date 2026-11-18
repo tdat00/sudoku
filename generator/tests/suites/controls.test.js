@@ -1043,4 +1043,242 @@
       expect(fx.store.get().attemptsExplicit).toBe(false);
     });
   });
+
+  // MS18c: a stored (or linked) level that qualification has hidden is corrected while the store loads, which
+  // the app does before it builds this form. The form shows the note from its first render, once, in the
+  // language of the page; nothing about it is stored.
+  describe('controls: the note of a level corrected at start-up (MS18c)', function () {
+    var LAST = 'sg.lastConfig.v1';
+    var PREFS = 'sg.prefs.v1';
+
+    function storageOf(config, prefs) {
+      var data = {};
+      if (config) data[LAST] = JSON.stringify(config);
+      if (prefs) data[PREFS] = JSON.stringify(prefs);
+      return {
+        data: data,
+        getItem: function (k) { return hasOwn(data, k) ? data[k] : null; },
+        setItem: function (k, v) { data[k] = String(v); },
+        removeItem: function (k) { delete data[k]; }
+      };
+    }
+
+    function withHidden(variantId, hidden, fn) {
+      var def = SG.variants.get(variantId);
+      var original = def.difficultySupport;
+      def.difficultySupport = original.filter(function (level) { return hidden.indexOf(level) === -1; });
+      try {
+        return fn();
+      } finally {
+        def.difficultySupport = original;
+      }
+    }
+
+    /** The store loads first, then the form is built, as `SG.app.start` does. */
+    function startUp(storage) {
+      var doc = createFakeDom();
+      var form = doc.createElement('form');
+      form.setAttribute('id', 'controls-form');
+      doc.body.appendChild(form);
+      var store = S.create({ storage: storage, location: null, history: null, navigator: { languages: [] } });
+      var state = store.load();
+      var view = C.mount(form, store, { notify: function () {} });
+      return { doc: doc, form: form, store: store, state: state, view: view,
+        byId: function (id) { return doc.getElementById(id); } };
+    }
+
+    it('MS18c-T04: the first render says that the stored level is gone, in English and in Vietnamese', function () {
+      ready();
+      withEnglish(function () {
+        withHidden('classic9', ['hell1'], function () {
+          var en = startUp(storageOf({ variantId: 'classic9', difficulty: 'hell1', seed: '5' }));
+          expect(en.state.difficulty).toBe('nightmare');
+          expect(en.byId('ctl-difficulty').value).toBe('nightmare');
+          var notes = en.byId('ctl-notes');
+          expect(notes.hidden).toBe(false);
+          expect(notes.textContent).toBe(I.t('controls.note.difficultyChanged', {
+            variant: I.t('variant.classic9'), from: I.t('difficulty.hell1'), to: I.t('difficulty.nightmare')
+          }));
+          expect(notes.textContent).toMatch(/does not offer/);
+          en.view.destroy();
+          var vi = startUp(storageOf({ variantId: 'classic9', difficulty: 'hell1' }, { lang: 'vi' }));
+          expect(I.current).toBe('vi');
+          expect(vi.byId('ctl-notes').hidden).toBe(false);
+          expect(vi.byId('ctl-notes').textContent).toMatch(/không có mức/);
+          expect(vi.byId('ctl-notes').textContent).toContain(I.t('difficulty.hell1'));
+          expect(vi.byId('ctl-notes').textContent).toContain(I.t('difficulty.nightmare'));
+          vi.view.destroy();
+        });
+      });
+    });
+
+    it('MS18c-T04: the note is shown once, goes with the next choice, and is not stored', function () {
+      ready();
+      withEnglish(function () {
+        withHidden('classic9', ['hell1'], function () {
+          var storage = storageOf({ variantId: 'classic9', difficulty: 'hell1' });
+          var before = JSON.stringify(storage.data);
+          var first = startUp(storage);
+          expect(first.byId('ctl-notes').hidden).toBe(false);
+          expect(JSON.stringify(storage.data)).toBe(before);
+          // Another form on the same store finds nothing to say; a rebuild for the language keeps the note.
+          var second = C.mount(first.doc.createElement('form'), first.store, { notify: function () {} });
+          expect(first.store.takeLoadAdjustments()).toEqual([]);
+          second.destroy();
+          I.setLocale('vi');
+          expect(first.byId('ctl-notes').hidden).toBe(false);
+          expect(first.byId('ctl-notes').textContent).toMatch(/không có mức/);
+          I.setLocale('en');
+          pick(first.byId('ctl-difficulty'), 'hard');
+          expect(first.byId('ctl-notes').hidden).toBe(true);
+          first.view.destroy();
+        });
+      });
+    });
+
+    it('MS18c-T04: nothing is said for a default that is not offered or for an ignored stored level', function () {
+      ready();
+      withEnglish(function () {
+        withHidden('classic9', ['normal'], function () {
+          var fresh = startUp(storageOf(null));
+          expect(fresh.state.difficulty).toBe('easy');
+          expect(fresh.byId('ctl-notes').hidden).toBe(true);
+          fresh.view.destroy();
+        });
+        withHidden('classic9', ['hell1'], function () {
+          var fine = startUp(storageOf({ variantId: 'classic9', difficulty: 'expert' }));
+          expect(fine.byId('ctl-notes').hidden).toBe(true);
+          fine.view.destroy();
+        });
+      });
+    });
+
+    // The real start-up: a private copy of js/ui/app.js on a minimal fake document, with the real store loaded
+    // from the given storage, the real form on a fake DOM and stand-ins for the other views. `app.start()` is
+    // the code that loads the store and then mounts the controls.
+    function startApp(storage) {
+      var node = SG.test.node;
+      if (!node) SG.test.skip('needs the file system (Node only)');
+      var noop = function () {};
+      function element() {
+        return {
+          nodeType: 1, hidden: false, disabled: false, textContent: '', className: '',
+          style: { setProperty: noop },
+          classList: { toggle: noop, contains: function () { return false; }, add: noop, remove: noop },
+          setAttribute: noop, getAttribute: function () { return null; }, removeAttribute: noop,
+          addEventListener: noop, removeEventListener: noop, appendChild: function (c) { return c; },
+          removeChild: noop, contains: function () { return false; }, querySelector: function () { return null; },
+          focus: noop
+        };
+      }
+      var form = createFakeDom();
+      var formRoot = form.createElement('form');
+      formRoot.setAttribute('id', 'controls-form');
+      formRoot.classList = { toggle: noop, contains: function () { return false; }, add: noop, remove: noop };
+      form.body.appendChild(formRoot);
+      var byId = {};
+      ['board-svg', 'board-root', 'controls-root', 'btn-generate', 'btn-regenerate', 'btn-cancel', 'btn-export',
+        'btn-drawer', 'steps-root', 'player-root', 'result-root', 'main']
+        .forEach(function (id) { byId[id] = element(); });
+      byId['controls-form'] = formRoot;
+      var doc = {
+        readyState: 'loading', title: '', body: element(), documentElement: element(), activeElement: null,
+        getElementById: function (id) { return byId[id] || null; },
+        querySelector: function () { return null; }, querySelectorAll: function () { return []; },
+        createElement: element, createElementNS: element, addEventListener: noop, removeEventListener: noop
+      };
+      var sg = Object.assign({}, SG);
+      sg.localeFragments = [];
+      ['app', 'exportUi', 'a11y', 'theme', 'help', 'cache', 'history'].forEach(function (name) { delete sg[name]; });
+      var store = S.create({ storage: storage, location: null, history: null, navigator: { languages: [] } });
+      sg.store = Object.assign({}, S, { instance: function () { return store; } });
+      sg.boardView = { create: function () { return new Proxy({}, { get: function () { return noop; } }); } };
+      sg.stepView = {
+        create: function () { return { clear: noop, setSteps: noop, setPosition: noop, destroy: noop }; }
+      };
+      sg.resultView = { create: function () { return { clear: noop, show: noop, refresh: noop, destroy: noop }; } };
+      sg.player = {
+        LAYER_NAMES: [],
+        create: function () {
+          return { reset: noop, load: noop, bindControls: noop, setPreparation: noop, setAnalysis: noop,
+            destroy: noop, state: function () { return { finished: false, loaded: false, position: 0, length: 0 }; } };
+        },
+        createPreparation: function () { return { start: noop, cancel: noop, press: noop }; }
+      };
+      var source = node.fs.readFileSync(node.path.join(node.root, 'js/ui/app.js'), 'utf8');
+      new Function('self', 'document', source)({ SG: sg, setTimeout: setTimeout, clearTimeout: clearTimeout }, doc);
+      expect(sg.app.start()).toBe(true);
+      return { app: sg.app, store: store, notes: function () { return form.getElementById('ctl-notes'); },
+        select: function () { return form.getElementById('ctl-difficulty'); }, destroy: function () { sg.app.destroy(); } };
+    }
+
+    function withApp(storage, fn) {
+      var page = startApp(storage);
+      try {
+        return fn(page);
+      } finally {
+        page.destroy();
+        I.setLocale('en');
+      }
+    }
+
+    it('MS18c-T04: app start-up shows the note for a stored hidden level, in both languages', function () {
+      ready();
+      withEnglish(function () {
+        withHidden('classic9', ['hell1'], function () {
+          withApp(storageOf({ variantId: 'classic9', difficulty: 'hell1' }), function (page) {
+            expect(page.store.get().difficulty).toBe('nightmare');
+            expect(page.select().value).toBe('nightmare');
+            expect(page.notes().hidden).toBe(false);
+            expect(page.notes().textContent).toMatch(/does not offer/);
+          });
+          withApp(storageOf({ variantId: 'classic9', difficulty: 'hell1' }, { lang: 'vi' }), function (page) {
+            expect(page.notes().hidden).toBe(false);
+            expect(page.notes().textContent).toMatch(/không có mức/);
+          });
+          withApp(storageOf({ variantId: 'classic9', difficulty: 'expert' }), function (page) {
+            expect(page.notes().hidden).toBe(true);
+          });
+        });
+      });
+    });
+
+    it('MS18c-T04: the attempts intent is untouched by the correction at start-up', function () {
+      ready();
+      withEnglish(function () {
+        withHidden('mega16', ['hell1'], function () {
+          withApp(storageOf({ variantId: 'mega16', difficulty: 'hell1' }), function (page) {
+            var s = page.store.get();
+            expect([s.difficulty, s.maxAttempts, s.attemptsExplicit]).toEqual(['nightmare', 2, false]);
+            expect(page.notes().hidden).toBe(false);
+          });
+          withApp(storageOf({ variantId: 'mega16', difficulty: 'hell1', maxAttempts: 5, attemptsExplicit: true }),
+            function (page) {
+              var s = page.store.get();
+              expect([s.difficulty, s.maxAttempts, s.attemptsExplicit]).toEqual(['nightmare', 5, true]);
+              expect(page.notes().hidden).toBe(false);
+            });
+        });
+      });
+    });
+
+    it('MS18c-T04: the public request for a hidden level still throws and the fixed diagnostics still run', function () {
+      ready();
+      withHidden('classic9', ['hell1'], function () {
+        var threw = null;
+        try {
+          SG.pipeline.normalizeConfig({ variantId: 'classic9', difficulty: 'hell1', seed: 1 });
+        } catch (err) {
+          threw = err.code;
+        }
+        expect(threw).toBe('difficulty.unsupportedLevel');
+        var inside = SG.fixtures.toolRecords.withRequestedLevel('classic9', 'hell1', function () {
+          return SG.pipeline.normalizeConfig(S.toConfig({ variantId: 'classic9', difficulty: 'hell1', seed: '1' }))
+            .difficulty;
+        });
+        expect([inside.value, inside.overridden]).toEqual(['hell1', true]);
+        expect(SG.variants.get('classic9').difficultySupport.indexOf('hell1')).toBe(-1);
+      });
+    });
+  });
 })();

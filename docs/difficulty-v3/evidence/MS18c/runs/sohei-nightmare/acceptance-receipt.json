@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "sohei/nightmare",
+  "runId": "ms18c-20261118T214500946-29184",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\sohei-nightmare\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "38492c6fed57f7acbf184c2647c9ad0ab0a59ce6479230b08b2f551b2e34a6eb"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\sohei-nightmare\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "b586401422ccc84a16e0d6d29a0c58725f991ab3a78504e4fce74e8c5be64d58"
+    }
+  },
+  "wSeconds": 217.6436479,
+  "rSeconds": 7.4587264,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.4587264,
+      "requests": 30,
+      "maxMs": 100181.106,
+      "stopped": "time",
+      "secondRoundRan": false,
+      "slowTotal": 8,
+      "slowFirstRound": 8,
+      "qSeconds": 209.992,
+      "sSeconds": 209.42130509999998,
+      "sFirstRoundSeconds": 209.42130509999998,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5706949000000022,
+      "wSeconds": 217.6436479,
+      "wMinusQ": 7.651647899999982
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 30,
+    "hits": 29,
+    "rate": 0.9666666666666667,
+    "p50": 17202.6191,
+    "p95": 78814.875,
+    "max": 100181.106,
+    "verdict": "hidden",
+    "stopped": "time",
+    "errors": 0,
+    "approximate": 1,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\sohei-nightmare.json",
+      "sha256": "38492c6fed57f7acbf184c2647c9ad0ab0a59ce6479230b08b2f551b2e34a6eb"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\sohei-nightmare.md",
+      "sha256": "b586401422ccc84a16e0d6d29a0c58725f991ab3a78504e4fce74e8c5be64d58"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

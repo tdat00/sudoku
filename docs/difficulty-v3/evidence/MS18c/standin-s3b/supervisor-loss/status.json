@@ -1,0 +1,120 @@
+{
+  "schema": "MS18c-gq-status-v1",
+  "standIn": true,
+  "name": "supervisor-loss",
+  "scenario": "direct",
+  "runId": "standin-supervisor-loss-20261118191848-34416",
+  "cell": "stand-in/none",
+  "state": "running",
+  "supervisor": {
+    "pid": 34416,
+    "createdUtcMicros": "2026-11-18T19:18:46.930859Z",
+    "source": "CIM Win32_Process.CreationDate, UTC, truncated to microseconds",
+    "hostJob": {
+      "inJob": true,
+      "limits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0"
+    },
+    "powershell": "7.6.10",
+    "exe": "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+  },
+  "job": {
+    "unnamed": true,
+    "limits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "handleHeldBy": "this supervisor only"
+  },
+  "launcher": {
+    "pid": 22076,
+    "createdUtcMicros": "2026-11-18T19:18:48.431312Z",
+    "launchedSuspendedAssignedResumed": true
+  },
+  "clocks": {
+    "oStart": "2026-11-18T19:18:48.247Z",
+    "tStart": "2026-11-18T19:18:48.413Z",
+    "tDeadline": "2026-11-18T19:20:48.4242222Z",
+    "T": 120.0,
+    "rSeconds": null,
+    "wSeconds": null,
+    "note": "T starts at the creation of the owned launcher and excludes the lock acquisition",
+    "elapsedSeconds": 0.33
+  },
+  "lock": {
+    "mode": "private",
+    "own": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin-s3b\\supervisor-loss\\own.lock",
+    "foreign": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin-s3b\\supervisor-loss\\foreign.lock"
+  },
+  "outputs": {
+    "dir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin-s3b\\supervisor-loss",
+    "status": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin-s3b\\supervisor-loss\\status.json",
+    "log": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin-s3b\\supervisor-loss\\supervisor.log",
+    "members": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin-s3b\\supervisor-loss\\members.json"
+  },
+  "members": [
+    9152,
+    22076,
+    16680,
+    30756,
+    33692,
+    4316
+  ],
+  "membersSeen": [
+    {
+      "pid": 4316,
+      "createdUtcMicros": "2026-11-18T19:18:48.582152Z"
+    },
+    {
+      "pid": 9152,
+      "createdUtcMicros": "2026-11-18T19:18:48.456029Z"
+    },
+    {
+      "pid": 16680,
+      "createdUtcMicros": "2026-11-18T19:18:48.543268Z"
+    },
+    {
+      "pid": 22076,
+      "createdUtcMicros": "2026-11-18T19:18:48.431312Z"
+    },
+    {
+      "pid": 30756,
+      "createdUtcMicros": "2026-11-18T19:18:48.559481Z"
+    },
+    {
+      "pid": 33692,
+      "createdUtcMicros": "2026-11-18T19:18:48.570829Z"
+    }
+  ],
+  "heartbeatAt": "2026-11-18T19:18:48.796Z",
+  "finalStatus": null,
+  "membership": [
+    {
+      "pid": 9152,
+      "name": "conhost",
+      "inThisJob": true
+    },
+    {
+      "pid": 22076,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 16680,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 30756,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 33692,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 4316,
+      "name": "node",
+      "inThisJob": true
+    }
+  ],
+  "activeProcesses": 6
+}

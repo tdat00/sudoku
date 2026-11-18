@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "flower/nightmare",
+  "runId": "ms18c-20261118T221423141-32512",
+  "slot": 1,
+  "ordinal": 2,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\payload-1\\admission-2\\qualifier.json",
+      "sha256": "106609f55eba7b426e2318bae728058dac4f8fc1112bc8c219f092518d40a330"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\payload-1\\admission-2\\qualifier.md",
+      "sha256": "cf617159593db0e945538fe9542036a45e66b4c196d18ffee3a4a5a0e91b313d"
+    }
+  },
+  "wSeconds": 287.5431277,
+  "rSeconds": 7.3416913,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.3416913,
+      "requests": 50,
+      "maxMs": 36671.3023,
+      "stopped": "time",
+      "secondRoundRan": true,
+      "slowTotal": 6,
+      "slowFirstRound": 5,
+      "qSeconds": 280.001,
+      "sSeconds": 279.432813,
+      "sFirstRoundSeconds": 148.2545835,
+      "sSecondRoundSeconds": 131.17822950000001,
+      "qMinusS": 0.5681869999999762,
+      "wSeconds": 287.5431277,
+      "wMinusQ": 7.5421277000000115
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 50,
+    "hits": 42,
+    "rate": 0.84,
+    "p50": 11046.5158,
+    "p95": 32514.7798,
+    "max": 36671.3023,
+    "verdict": "hidden",
+    "stopped": "time",
+    "errors": 0,
+    "approximate": 8,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\flower-nightmare.json",
+      "sha256": "106609f55eba7b426e2318bae728058dac4f8fc1112bc8c219f092518d40a330"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\flower-nightmare.md",
+      "sha256": "cf617159593db0e945538fe9542036a45e66b4c196d18ffee3a4a5a0e91b313d"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

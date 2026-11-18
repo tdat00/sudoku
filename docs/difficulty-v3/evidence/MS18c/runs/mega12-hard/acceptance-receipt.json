@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "mega12/hard",
+  "runId": "ms18c-20261118T200254860-29444",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\mega12-hard\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "264fc0e073b3c11dad885264e3306cdeadc0ff887eb8269363a7b388f12452fe"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\mega12-hard\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "88e20711cea1a5e6b2de17e720252301d9b8f0452aa28985ef99d5df130db6e2"
+    }
+  },
+  "wSeconds": 8.9294913,
+  "rSeconds": 7.252325,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.252325,
+      "requests": 40,
+      "maxMs": 372.2446,
+      "stopped": null,
+      "secondRoundRan": false,
+      "slowTotal": 0,
+      "slowFirstRound": 0,
+      "qSeconds": 1.493,
+      "sSeconds": 0.9719204,
+      "sFirstRoundSeconds": 0.9719204,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5210796,
+      "wSeconds": 8.9294913,
+      "wMinusQ": 7.436491299999999
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 40,
+    "hits": 40,
+    "rate": 1,
+    "p50": 53.7559,
+    "p95": 219.9961,
+    "max": 372.2446,
+    "verdict": "offered",
+    "stopped": null,
+    "errors": 0,
+    "approximate": 0,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\mega12-hard.json",
+      "sha256": "264fc0e073b3c11dad885264e3306cdeadc0ff887eb8269363a7b388f12452fe"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\mega12-hard.md",
+      "sha256": "88e20711cea1a5e6b2de17e720252301d9b8f0452aa28985ef99d5df130db6e2"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

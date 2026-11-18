@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "butterfly/hell2",
+  "runId": "ms18c-20261118T220759278-23800",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-hell2\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "b49757cb3d93deb578c17fe753ee978daa7c908e4f5208101acf9e9d4471bb2f"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-hell2\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "7412226367f3afd15f0180239846f30319318ed5dc06f0f581b09820f71b2b28"
+    }
+  },
+  "wSeconds": 57.9730501,
+  "rSeconds": 7.3725595,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.3725595,
+      "requests": 40,
+      "maxMs": 14259.1274,
+      "stopped": null,
+      "secondRoundRan": false,
+      "slowTotal": 0,
+      "slowFirstRound": 0,
+      "qSeconds": 50.408,
+      "sSeconds": 49.8623902,
+      "sFirstRoundSeconds": 49.8623902,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5456097999999984,
+      "wSeconds": 57.9730501,
+      "wMinusQ": 7.5650501000000006
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 40,
+    "hits": 40,
+    "rate": 1,
+    "p50": 3409.5322,
+    "p95": 10951.9404,
+    "max": 14259.1274,
+    "verdict": "offered",
+    "stopped": null,
+    "errors": 0,
+    "approximate": 0,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\butterfly-hell2.json",
+      "sha256": "b49757cb3d93deb578c17fe753ee978daa7c908e4f5208101acf9e9d4471bb2f"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\butterfly-hell2.md",
+      "sha256": "7412226367f3afd15f0180239846f30319318ed5dc06f0f581b09820f71b2b28"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

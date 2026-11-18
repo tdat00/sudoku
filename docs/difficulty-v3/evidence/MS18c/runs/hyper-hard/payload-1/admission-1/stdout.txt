@@ -1,0 +1,8 @@
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine ed2fe50c+changes sources 0ca29eaeebc295b6
+hyper/hard: 40/40 hits, p95 80 ms (budget 10.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| hyper | hard | 40 | 40 | 100 % | 23 ms | 80 ms | 139 ms | 10.0 s | offered |
+
+hyper: ["hard"]

@@ -1,0 +1,3 @@
+{"at":"2026-11-18T20:10:27.212Z","t":0.1369193,"type":"launcher-start","who":"launcher","pid":28664,"node":"v26.13.0","cell":"mega12/hell2","runId":"ms18c-20261118T201022576-29292","slot":1,"ordinal":1,"startSeconds":0.1363402}
+{"at":"2026-11-18T20:10:27.215Z","t":0.1391519,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8608647}
+{"at":"2026-11-18T20:10:34.323Z","t":7.2467704,"type":"readiness-end","who":"launcher","admitted":false,"eligible":true,"kind":"additional-consumer","readinessSeconds":7.246,"ready":false}

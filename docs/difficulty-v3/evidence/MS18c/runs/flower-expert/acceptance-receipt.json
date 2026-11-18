@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "flower/expert",
+  "runId": "ms18c-20261118T221112576-34216",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-expert\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "05d8a8752251bdb4f71c6e87aaa0feec80f8d3802c34f7d11a29d3f3dea2b870"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-expert\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "a330a7f45b0d21e8216aae800529cb057a6482f0bd6bf6983d308eedd2039c95"
+    }
+  },
+  "wSeconds": 32.3176597,
+  "rSeconds": 7.3530071,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.3530071,
+      "requests": 35,
+      "maxMs": 8469.1919,
+      "stopped": "misses",
+      "secondRoundRan": false,
+      "slowTotal": 0,
+      "slowFirstRound": 0,
+      "qSeconds": 24.759,
+      "sSeconds": 24.222802099999996,
+      "sFirstRoundSeconds": 24.222802099999996,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5361979000000029,
+      "wSeconds": 32.3176597,
+      "wMinusQ": 7.5586597
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 35,
+    "hits": 23,
+    "rate": 0.6571428571428571,
+    "p50": 2197.8624,
+    "p95": 7717.0783,
+    "max": 8469.1919,
+    "verdict": "hidden",
+    "stopped": "misses",
+    "errors": 0,
+    "approximate": 12,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\flower-expert.json",
+      "sha256": "05d8a8752251bdb4f71c6e87aaa0feec80f8d3802c34f7d11a29d3f3dea2b870"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\flower-expert.md",
+      "sha256": "a330a7f45b0d21e8216aae800529cb057a6482f0bd6bf6983d308eedd2039c95"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

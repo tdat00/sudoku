@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "greaterThan/hell1",
+  "runId": "ms18c-20261118T211552458-12116",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\greaterThan-hell1\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "c9d67849a3831ee3a2bb22e86f9ca8c9c94d86719c414657abb96a5c4d8d6c44"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\greaterThan-hell1\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "f6caac321967ba1e8a8e5116cf002d3394856af738a0d93434e33a0ec5ac574e"
+    }
+  },
+  "wSeconds": 327.2536941,
+  "rSeconds": 7.2183194,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.2183194,
+      "requests": 9,
+      "maxMs": 120003.1741,
+      "stopped": "time",
+      "secondRoundRan": false,
+      "slowTotal": 9,
+      "slowFirstRound": 9,
+      "qSeconds": 319.85,
+      "sSeconds": 319.3058414,
+      "sFirstRoundSeconds": 319.3058414,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5441585999999661,
+      "wSeconds": 327.2536941,
+      "wMinusQ": 7.403694100000022
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 9,
+    "hits": 0,
+    "rate": 0,
+    "p50": 110612.7372,
+    "p95": 120003.1741,
+    "max": 120003.1741,
+    "verdict": "hidden",
+    "stopped": "time",
+    "errors": 2,
+    "approximate": 7,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\greaterThan-hell1.json",
+      "sha256": "c9d67849a3831ee3a2bb22e86f9ca8c9c94d86719c414657abb96a5c4d8d6c44"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\greaterThan-hell1.md",
+      "sha256": "f6caac321967ba1e8a8e5116cf002d3394856af738a0d93434e33a0ec5ac574e"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

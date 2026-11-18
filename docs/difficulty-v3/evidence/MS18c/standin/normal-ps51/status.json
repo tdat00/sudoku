@@ -1,0 +1,118 @@
+{
+    "schema":  "MS18c-gq-status-v1",
+    "standIn":  true,
+    "name":  "normal-ps51",
+    "scenario":  "direct",
+    "runId":  "standin-normal-ps51-20261118181640-27480",
+    "cell":  "stand-in/none",
+    "state":  "finished",
+    "supervisor":  {
+                       "pid":  27480,
+                       "createdUtcMicros":  "2026-11-18T18:16:39.434633Z",
+                       "source":  "CIM Win32_Process.CreationDate, UTC, truncated to microseconds",
+                       "hostJob":  {
+                                       "inJob":  true,
+                                       "limits":  "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0"
+                                   },
+                       "powershell":  "5.1.26100.9711",
+                       "exe":  "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+                   },
+    "job":  {
+                "unnamed":  true,
+                "limits":  "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+                "handleHeldBy":  "this supervisor only"
+            },
+    "launcher":  {
+                     "pid":  32408,
+                     "createdUtcMicros":  "2026-11-18T18:16:40.600885Z",
+                     "launchedSuspendedAssignedResumed":  true
+                 },
+    "clocks":  {
+                   "oStart":  "2026-11-18T18:16:40.357Z",
+                   "tStart":  "2026-11-18T18:16:40.581Z",
+                   "tDeadline":  "2026-11-18T18:17:40.5944512Z",
+                   "T":  60,
+                   "rSeconds":  null,
+                   "wSeconds":  8.2504497,
+                   "note":  "T starts at the creation of the owned launcher and excludes the lock acquisition",
+                   "elapsedSeconds":  7.676
+               },
+    "lock":  {
+                 "mode":  "real",
+                 "own":  "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-sudoku.lock",
+                 "foreign":  "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-timing.lock"
+             },
+    "outputs":  {
+                    "dir":  "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\normal-ps51",
+                    "status":  "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\normal-ps51\\status.json",
+                    "log":  "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\normal-ps51\\supervisor.log",
+                    "members":  "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\normal-ps51\\members.json"
+                },
+    "members":  [
+                    2512,
+                    19660,
+                    24480,
+                    32408,
+                    33560,
+                    34124
+                ],
+    "heartbeatAt":  "2026-11-18T18:16:48.862Z",
+    "finalStatus":  "completed",
+    "membership":  [
+                       {
+                           "pid":  19660,
+                           "name":  "conhost",
+                           "inThisJob":  true
+                       },
+                       {
+                           "pid":  32408,
+                           "name":  "node",
+                           "inThisJob":  true
+                       },
+                       {
+                           "pid":  24480,
+                           "name":  "node",
+                           "inThisJob":  true
+                       },
+                       {
+                           "pid":  2512,
+                           "name":  "node",
+                           "inThisJob":  true
+                       },
+                       {
+                           "pid":  34124,
+                           "name":  "node",
+                           "inThisJob":  true
+                       },
+                       {
+                           "pid":  33560,
+                           "name":  "node",
+                           "inThisJob":  true
+                       }
+                   ],
+    "activeProcesses":  6,
+    "window":  {
+                   "jobLimits":  "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+                   "launcherPid":  32408,
+                   "launcherCreated":  "2026-11-18T18:16:40.600885Z",
+                   "tStartIso":  "2026-11-18T18:16:40.581Z",
+                   "tStartTicks":  6205818009962,
+                   "tStartNs":  620581800996200,
+                   "createdAfterSeconds":  0.0364078,
+                   "resumedAfterSeconds":  0.0425991,
+                   "launcherExit":  0,
+                   "tExpired":  false,
+                   "leftover":  false,
+                   "stuck":  false,
+                   "wSeconds":  8.2504497,
+                   "launcherExitedAfterSeconds":  8.2452289,
+                   "members":  [
+                                   2512,
+                                   19660,
+                                   24480,
+                                   32408,
+                                   33560,
+                                   34124
+                               ]
+               }
+}

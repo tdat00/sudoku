@@ -1395,4 +1395,161 @@
       expect(shown(store)).toEqual(['mega16', 2, false]);
     });
   });
+
+  // MS18c: what qualification hides is no longer offered, so a level that the stored configuration or the
+  // link named can be gone. The start-up loads before the form exists: the corrections are kept once for
+  // it, never stored. Each test hides levels of one variant for its own length only.
+  describe('store: a stored or linked level the variant no longer offers (MS18c)', function () {
+    var LAST = 'sg.lastConfig.v1';
+
+    function lastOf(config) {
+      return memoryStorage({ [LAST]: JSON.stringify(config) });
+    }
+
+    function withOffers(variantId, hidden, fn) {
+      var def = SG.variants.get(variantId);
+      var original = def.difficultySupport;
+      def.difficultySupport = original.filter(function (level) { return hidden.indexOf(level) === -1; });
+      try {
+        return fn(def);
+      } finally {
+        def.difficultySupport = original;
+      }
+    }
+
+    function loadWith(storage, search) {
+      var e = env(search);
+      var store = makeStore({ storage: storage, env: e });
+      var heard = [];
+      store.subscribe(function (state, keys, meta) { heard.push(meta); });
+      var state = store.load();
+      return { store: store, state: state, heard: heard, urls: e.urls };
+    }
+
+    function adjustmentsOf(store) {
+      return store.takeLoadAdjustments().map(function (a) { return [a.key, a.from, a.to, a.reason]; });
+    }
+
+    it('MS18c-T05: a stored hidden level becomes the nearest offered one, the easier on a tie, with one ' +
+      'note', function () {
+      ready();
+      withEnglish(function () {
+        withOffers('classic9', ['hell1'], function () {
+          var storage = lastOf({ variantId: 'classic9', difficulty: 'hell1', seed: '5' });
+          var before = storage.data[LAST];
+          var page = loadWith(storage);
+          expect(page.state).toBe(page.store.get());
+          expect(page.state.difficulty).toBe('nightmare');
+          expect(page.heard.length).toBe(1);
+          expect(page.heard[0].source).toBe('load');
+          expect(page.heard[0].adjustments.map(function (a) { return [a.key, a.from, a.to]; }))
+            .toEqual([['difficulty', 'hell1', 'nightmare']]);
+          expect(adjustmentsOf(page.store)).toEqual([['difficulty', 'hell1', 'nightmare',
+            'unsupportedDifficulty']]);
+          // Once: the next taker finds nothing, and nothing about the note was stored.
+          expect(adjustmentsOf(page.store)).toEqual([]);
+          expect(storage.data[LAST]).toBe(before);
+          expect(Object.keys(storage.data)).toEqual([LAST]);
+          expect(page.urls).toEqual(['/index.html?d=nightmare&seed=5#top']);
+        });
+        withOffers('classic9', ['hell2', 'hell1', 'nightmare'], function () {
+          var page = loadWith(lastOf({ variantId: 'classic9', difficulty: 'hell2' }));
+          expect(page.state.difficulty).toBe('master');
+          expect(adjustmentsOf(page.store)).toEqual([['difficulty', 'hell2', 'master',
+            'unsupportedDifficulty']]);
+        });
+      });
+    });
+
+    it('MS18c-T05: a valid link parameter overrides the stored value and nothing is reported', function () {
+      ready();
+      withEnglish(function () {
+        withOffers('classic9', ['hell1'], function () {
+          var storage = lastOf({ variantId: 'classic9', difficulty: 'hell1', seed: '5' });
+          var fromLink = loadWith(storage, '?v=classic9&d=expert&seed=9');
+          expect(fromLink.state.difficulty).toBe('expert');
+          expect(adjustmentsOf(fromLink.store)).toEqual([]);
+          expect(fromLink.heard[0].adjustments).toEqual([]);
+          // A link that only carries the language keeps the stored configuration, and its note.
+          var langOnly = loadWith(storage, '?lang=en');
+          expect(langOnly.state.difficulty).toBe('nightmare');
+          expect(adjustmentsOf(langOnly.store).length).toBe(1);
+          // A link that names the hidden level itself is the request that is corrected.
+          var named = loadWith(storage, '?v=classic9&d=hell1');
+          expect(named.state.difficulty).toBe('nightmare');
+          expect(adjustmentsOf(named.store)).toEqual([['difficulty', 'hell1', 'nightmare',
+            'unsupportedDifficulty']]);
+        });
+      });
+    });
+
+    it('MS18c-T05: a default that the variant does not offer is nobody\'s request: corrected, not ' +
+      'reported', function () {
+      ready();
+      withEnglish(function () {
+        withOffers('classic9', ['normal'], function () {
+          var page = loadWith(memoryStorage());
+          expect(S.defaults().difficulty).toBe('normal');
+          expect(page.state.difficulty).toBe('easy');
+          expect(adjustmentsOf(page.store)).toEqual([]);
+          expect(page.heard[0].adjustments).toEqual([]);
+        });
+      });
+    });
+
+    it('MS18c-T05: the default and the chosen attempts survive the correction', function () {
+      ready();
+      withEnglish(function () {
+        withOffers('mega16', ['hell1'], function () {
+          var plain = loadWith(lastOf({ variantId: 'mega16', difficulty: 'hell1' }));
+          expect([plain.state.difficulty, plain.state.maxAttempts, plain.state.attemptsExplicit])
+            .toEqual(['nightmare', 2, false]);
+          expect(adjustmentsOf(plain.store).length).toBe(1);
+          var chosen = loadWith(lastOf({ variantId: 'mega16', difficulty: 'hell1', maxAttempts: 5,
+            attemptsExplicit: true }));
+          expect([chosen.state.difficulty, chosen.state.maxAttempts, chosen.state.attemptsExplicit])
+            .toEqual(['nightmare', 5, true]);
+          expect(S.toConfig(chosen.state).maxAttempts).toBe(5);
+          var legacyEight = loadWith(lastOf({ variantId: 'mega16', difficulty: 'hell1', maxAttempts: 8 }));
+          expect([legacyEight.state.maxAttempts, legacyEight.state.attemptsExplicit]).toEqual([2, false]);
+        });
+      });
+    });
+
+    it('MS18c-T05: a later change of the form does not bring the load corrections back', function () {
+      ready();
+      withEnglish(function () {
+        withOffers('classic9', ['hell1'], function () {
+          var storage = lastOf({ variantId: 'classic9', difficulty: 'hell1' });
+          var page = loadWith(storage);
+          page.store.set({ difficulty: 'expert' }, { source: 'controls' });
+          expect(adjustmentsOf(page.store)).toEqual([[ 'difficulty', 'hell1', 'nightmare',
+            'unsupportedDifficulty']]);
+          expect(JSON.parse(storage.data[LAST]).difficulty).toBe('expert');
+          var again = loadWith(storage);
+          expect(again.state.difficulty).toBe('expert');
+          expect(adjustmentsOf(again.store)).toEqual([]);
+        });
+      });
+    });
+
+    it('MS18c-T05: the guard puts the exact array back, and the public request for a hidden level still ' +
+      'throws', function () {
+      ready();
+      var def = SG.variants.get('classic4');
+      var original = def.difficultySupport;
+      var threw = null;
+      try {
+        SG.pipeline.normalizeConfig({ variantId: 'classic4', difficulty: 'hard', seed: 1 });
+      } catch (err) {
+        threw = err.code;
+      }
+      expect(threw).toBe('difficulty.unsupportedLevel');
+      var inside = SG.fixtures.toolRecords.withRequestedLevel('classic4', 'hard', function () {
+        return SG.pipeline.normalizeConfig({ variantId: 'classic4', difficulty: 'hard', seed: 1 }).difficulty;
+      });
+      expect([inside.value, inside.overridden]).toEqual(['hard', true]);
+      expect(def.difficultySupport).toBe(original);
+    });
+  });
 })();

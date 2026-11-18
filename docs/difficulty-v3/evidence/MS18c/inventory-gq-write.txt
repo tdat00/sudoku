@@ -1,0 +1,2 @@
+written docs\difficulty-v3\evidence\MS18c\outputs-sha256-gq.txt: 2201 files, 5774584 bytes
+MS18c-inventory-write exit=0 seconds=0.917

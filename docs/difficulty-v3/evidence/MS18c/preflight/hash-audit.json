@@ -1,0 +1,531 @@
+{
+  "schema": "MS18c-hash-audit-v1",
+  "head": "42e0d239bc8b9b8bd66a2d868ccc8601d8b0d5e4",
+  "headShort": "42e0d239",
+  "branch": "rating-v3",
+  "pack": {
+    "dispatchBase": "3d166c79cb8fcb07822624415ab90bbb1605a28d",
+    "head": "42e0d239bc8b9b8bd66a2d868ccc8601d8b0d5e4",
+    "headParent": "3d166c79cb8fcb07822624415ab90bbb1605a28d",
+    "headIsDispatchBase": false,
+    "changedSinceDispatchBase": [
+      "docs/difficulty-v3/clarifications-resolved.md",
+      "tasks/difficulty-v3/MS18c-qualify-and-publish-offers.md",
+      "tasks/difficulty-v3/check-list.md"
+    ],
+    "files": [
+      {
+        "file": "tasks/difficulty-v3/MS18c-qualify-and-publish-offers.md",
+        "blobAtDispatchBase": "81aa1dee13de26fa392323a45c096a92aca8050b",
+        "blobAtHead": "ee2ac273ca969869e733504e5b386d26ef06b5c6",
+        "workingTreeBlob": "ee2ac273ca969869e733504e5b386d26ef06b5c6",
+        "workingTreeSha256": "a888c506269edde09089a3bd81e184012f9bfea2cc485c899a7d369ab6a7a5ca",
+        "workingTreeBytes": 79077
+      },
+      {
+        "file": "tasks/difficulty-v3/check-list.md",
+        "blobAtDispatchBase": "f486ea99a6d9a414cde1b693f3bca1b8db2ca711",
+        "blobAtHead": "81dafcc89ba41b26320af0f3036ac97522427bc1",
+        "workingTreeBlob": "81dafcc89ba41b26320af0f3036ac97522427bc1",
+        "workingTreeSha256": "a83b7305339488fa7613e4d97e9890e69d7d1435a2b596b33f6fb54a725a4c00",
+        "workingTreeBytes": 199407
+      }
+    ]
+  },
+  "recipes": {
+    "source": "engine.sources = first 16 hex of SHA-256 over the bytes of the files of SOURCE_FILES in generator/tests/node-runner.js (js/ui and js/worker skipped, missing files skipped), in that order, no separator (tests/qualify.js sourceFiles + sourcesHash)",
+    "tool": "qualifierHash = SHA-256 over generator/tests/qualify.js bytes, NUL, generator/tests/fixtures/qualification-records.js bytes, NUL (tests/qualify.js qualifierHash)",
+    "attemptPolicy": "the object { function: \"SG.digger.defaultMaxAttempts\", explicitMaxAttempts: false, sources: { file: SHA-256 of its bytes } } of tests/qualify.js attemptPolicy for POLICY_FILES; digest = SHA-256 of its canonical text (sorted keys, as the records helper canon): the digest is this task's own, the qualifier compares the object",
+    "machine": "the object of tests/qualify.js machineInfo(4): { cpu, logicalProcessors, memoryGb, platform, node, jobs }; digest = SHA-256 of its canonical text",
+    "node": "process.version of the Node that runs this planner (the Node the locked runner starts is the first `node` on PATH; the qualifier workers use process.execPath)"
+  },
+  "baselines": [
+    {
+      "name": "engine.sources",
+      "brief": "0ca29eaeebc295b6",
+      "recomputed": "0ca29eaeebc295b6",
+      "match": true
+    },
+    {
+      "name": "source file count",
+      "brief": 46,
+      "recomputed": 46,
+      "match": true
+    },
+    {
+      "name": "qualifierHash",
+      "brief": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+      "recomputed": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+      "match": true
+    }
+  ],
+  "source": {
+    "engineSources": "0ca29eaeebc295b6",
+    "files": [
+      {
+        "file": "generator/../core/js/engine/ns.js",
+        "bytes": 891,
+        "sha256": "1c2785c1ddf7c5aea42c5633d54828711cca9901adb44211e1250654a1e6ddaa"
+      },
+      {
+        "file": "generator/../core/js/engine/errors.js",
+        "bytes": 805,
+        "sha256": "985557361062e6340440d1c39112d93821af6596d9fac14ebabcd157e304b69d"
+      },
+      {
+        "file": "generator/../core/js/engine/bits.js",
+        "bytes": 1490,
+        "sha256": "3033916f7b22241d365f25feeb4a44181e58cc05c7ce425d325938e772f69c03"
+      },
+      {
+        "file": "generator/../core/js/engine/budget.js",
+        "bytes": 5113,
+        "sha256": "708cd8694569b5496de038aa4c1a968543c64406ec84fa08b6689301362169b5"
+      },
+      {
+        "file": "generator/js/engine/rng.js",
+        "bytes": 2592,
+        "sha256": "f9f01a1c5fc380dc919ebde3c5fa3b73648dd9347a3bd1b04240aa09ccf7683c"
+      },
+      {
+        "file": "generator/../core/js/engine/model.js",
+        "bytes": 19968,
+        "sha256": "39312f91cdc2046aad0dd55423eaa4ceddbe7a4503b0570fe79bcef69618343e"
+      },
+      {
+        "file": "generator/../core/js/engine/constraints.js",
+        "bytes": 15954,
+        "sha256": "d614fa9242eeb883a88b60f2789090b47ab22425901f186261176e1421d8f729"
+      },
+      {
+        "file": "generator/../core/js/engine/combo-table.js",
+        "bytes": 11378,
+        "sha256": "cf25a8bf8d3e215c10a684a0378b3c00edfeaef58371fe309b17b689aa063f7a"
+      },
+      {
+        "file": "generator/../core/js/engine/dfs-solver.js",
+        "bytes": 13164,
+        "sha256": "1b1479e805afe1c9f4cc59089ba69a93688ea653583cc611e7ca89b3e6eef28d"
+      },
+      {
+        "file": "generator/../core/js/engine/techniques.js",
+        "bytes": 10884,
+        "sha256": "96e98414a205e6bdb872db3b951f41d9ba052fe30df15f419addd61b60aa76ad"
+      },
+      {
+        "file": "generator/../core/js/engine/logical-solver.js",
+        "bytes": 15719,
+        "sha256": "f6cbf0b071863b53406c5c82d41ef461f947263197fcb5e29fa96ee14f7b10ed"
+      },
+      {
+        "file": "generator/../core/js/engine/tech-basic.js",
+        "bytes": 12628,
+        "sha256": "ae6e91bea765f92f9be48e5e363074a3fd2a39f04936f46f2776745e21d43b23"
+      },
+      {
+        "file": "generator/../core/js/engine/tech-subset.js",
+        "bytes": 24646,
+        "sha256": "d3da8a1133097a8a95a81d6b60c3ee3b0608fcb3f5b72769370eed5a7ed4d382"
+      },
+      {
+        "file": "generator/../core/js/engine/tech-fish.js",
+        "bytes": 65468,
+        "sha256": "798717b7ee3df5ced733cb35268bd32bdaa7b7b9a23e085ac29c0e794c3b33c6"
+      },
+      {
+        "file": "generator/../core/js/engine/tech-wing.js",
+        "bytes": 73351,
+        "sha256": "c80afcd878be532f5d4ccac8450f95c8c0e6e5ee32d6547459402fd8809aaa80"
+      },
+      {
+        "file": "generator/../core/js/engine/tech-chain.js",
+        "bytes": 86764,
+        "sha256": "5eba1ae580d5f63ad0a1b2da0fcc4cad0c515c297c9391c691d4cb58626ac9d1"
+      },
+      {
+        "file": "generator/../core/js/engine/tech-als.js",
+        "bytes": 41261,
+        "sha256": "191923faaa644c391a6ac98dd42b2aa6c952aedec91d270e3a5716f019bdafb1"
+      },
+      {
+        "file": "generator/../core/js/engine/tech-cage.js",
+        "bytes": 23602,
+        "sha256": "584bad5795d09929860364e1a1eff145d65264698064bba2ae2d5538856a7c2b"
+      },
+      {
+        "file": "generator/../core/js/engine/tech-ineq.js",
+        "bytes": 20123,
+        "sha256": "73a7ea3cdb69eadb2773a6465ef4b2a4dcdb99e7846358f916d06d95175281d3"
+      },
+      {
+        "file": "generator/../core/js/engine/classic-model.js",
+        "bytes": 8399,
+        "sha256": "2ff7a47b80172aa6e53dfaf2aad081d0dbf6e86fe44b8c6a773ba935f18c82f8"
+      },
+      {
+        "file": "generator/../core/js/engine/model-aids.js",
+        "bytes": 4495,
+        "sha256": "ded046d761fcddd9379d4e240d5ae1f4648ece1b899cdd0975f57bb83b25e8eb"
+      },
+      {
+        "file": "generator/js/engine/difficulty.js",
+        "bytes": 29090,
+        "sha256": "2b420a13b6ea02a5b0d4c3ea50fc5e41068a35d46bae9d3b6ed41766def4116c"
+      },
+      {
+        "file": "generator/js/engine/full-grid.js",
+        "bytes": 11813,
+        "sha256": "9f633b4f150ef8e12c7cfbe4c64dd98e60d4a9d5ea8d878754d705c508f06889"
+      },
+      {
+        "file": "generator/js/engine/symmetry.js",
+        "bytes": 3428,
+        "sha256": "661dda3ec10fbac8825ef972d76c220ceae7f37aad652359e1e9a00158321002"
+      },
+      {
+        "file": "generator/js/engine/digger.js",
+        "bytes": 119004,
+        "sha256": "c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786"
+      },
+      {
+        "file": "generator/js/engine/events.js",
+        "bytes": 42001,
+        "sha256": "465314061967b57ffcacf704c2bd3caf710e675f1dc9703d0e5929cc9c9d0c1a"
+      },
+      {
+        "file": "generator/js/engine/explain-data.js",
+        "bytes": 7376,
+        "sha256": "705031f3ab8cfc92ac99281519091c40c0cfee61c284d118fdb1b4499b9aa32b"
+      },
+      {
+        "file": "generator/js/engine/pipeline.js",
+        "bytes": 19572,
+        "sha256": "b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1"
+      },
+      {
+        "file": "generator/js/engine/replay.js",
+        "bytes": 57960,
+        "sha256": "0279bccb518796fe207774fc7a599d5defb1f4d1120a5fb02434b6d634936d1d"
+      },
+      {
+        "file": "generator/js/variants/registry.js",
+        "bytes": 19859,
+        "sha256": "967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"
+      },
+      {
+        "file": "generator/js/variants/classic.js",
+        "bytes": 2583,
+        "sha256": "156d3709567831cc3c6de42952d19063182ecb41b645666727826e1d47acd7d4"
+      },
+      {
+        "file": "generator/js/variants/mega.js",
+        "bytes": 12081,
+        "sha256": "e5c88c313d192beb61d0318e6e219c7fe537b116846f6891970254c2202e6b5c"
+      },
+      {
+        "file": "generator/js/variants/extra-regions.js",
+        "bytes": 9114,
+        "sha256": "81a9242715f0cc0348b6e9eb9643faf1375b192df37ce0817abfb01485d49edc"
+      },
+      {
+        "file": "generator/js/variants/jigsaw.js",
+        "bytes": 31245,
+        "sha256": "0826ded674ccf417c20216b2ac7b54ce5eadb972390843b62646c0338418faa2"
+      },
+      {
+        "file": "generator/js/variants/killer.js",
+        "bytes": 55236,
+        "sha256": "885e3984da972b4e464bdbfb85b336988787ca2e56788feee80fc6458f8df7e8"
+      },
+      {
+        "file": "generator/js/variants/greater-than.js",
+        "bytes": 20708,
+        "sha256": "e4e6de520d46ce1ed74730e538fcaa983274ae28836a9542a33a016272e1fb88"
+      },
+      {
+        "file": "generator/js/variants/multigrid.js",
+        "bytes": 16594,
+        "sha256": "45587c628ad2f2b43e24e25790c709da6131d12a444a0246b78de1aded6c61a0"
+      },
+      {
+        "file": "generator/js/variants/wordoku.js",
+        "bytes": 23725,
+        "sha256": "2943caa2fb2d266368ed284225991104ed9617288da087e97aa19278c3e529ef"
+      },
+      {
+        "file": "generator/assets/wordlists/isograms.en.js",
+        "bytes": 7323,
+        "sha256": "eac38a7aa77efa7a7c3e5bc24fa1318ed445544d26870f8f668be28418a4b50c"
+      },
+      {
+        "file": "generator/assets/wordlists/isograms.vi.js",
+        "bytes": 7606,
+        "sha256": "7cb41ffae3655631b7ae04c501f43a336f4376fad5497d50965595a9572ce6a6"
+      },
+      {
+        "file": "generator/../core/js/ui/exchange.js",
+        "bytes": 9808,
+        "sha256": "ca950e7169f29fc42145c1489c131de70a01bdd1be00d8582bbe311f18a5ec39"
+      },
+      {
+        "file": "generator/../core/js/ui/symbols.js",
+        "bytes": 15679,
+        "sha256": "6143620911169d99775f00c00995916527976cbd4112b4f40765bb36ddd84e30"
+      },
+      {
+        "file": "generator/../core/js/ui/board-view.js",
+        "bytes": 55228,
+        "sha256": "80dc2e13041d0732c997d32061875901e94bbdfa3e482c9d642fefade8243353"
+      },
+      {
+        "file": "generator/../core/assets/wordbook/words.vi.js",
+        "bytes": 23740,
+        "sha256": "af5e6905bd129231f56d1a74a30af8653053504521c5a3c9d341fa0c8453825f"
+      },
+      {
+        "file": "generator/../core/assets/wordbook/words.en.js",
+        "bytes": 84895,
+        "sha256": "999b36d06c1b5d00908111a67f73e08aeeaa3ae627da7da4782ed722ed14c994"
+      },
+      {
+        "file": "generator/../core/js/ui/wordbook.js",
+        "bytes": 2205,
+        "sha256": "7ed839b35df49e0981aa333090e88ea94c867c6e346936e2cc3843b35602049c"
+      }
+    ]
+  },
+  "tool": {
+    "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+    "files": [
+      {
+        "file": "generator/tests/qualify.js",
+        "bytes": 32002,
+        "sha256": "d96c15bb8653c851f580e117c7382bdc6d489ff8fc64da1353232612353ca6af"
+      },
+      {
+        "file": "generator/tests/fixtures/qualification-records.js",
+        "bytes": 34129,
+        "sha256": "278bb9b0ba8e21a6d1a52808980eb9b00de401129a50d8180210c9f01ee1b7db"
+      }
+    ]
+  },
+  "attemptPolicy": {
+    "digest": "b9a2c2e0ada24933e6b54bc5588839d84d6cbd5c4b2aab05f89090c0c0daf8c8",
+    "object": {
+      "function": "SG.digger.defaultMaxAttempts",
+      "explicitMaxAttempts": false,
+      "sources": {
+        "js/engine/digger.js": "c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786",
+        "js/engine/pipeline.js": "b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1",
+        "js/variants/registry.js": "967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"
+      }
+    },
+    "files": [
+      {
+        "file": "generator/js/engine/digger.js",
+        "bytes": 119004,
+        "sha256": "c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786"
+      },
+      {
+        "file": "generator/js/engine/pipeline.js",
+        "bytes": 19572,
+        "sha256": "b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1"
+      },
+      {
+        "file": "generator/js/variants/registry.js",
+        "bytes": 19859,
+        "sha256": "967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"
+      }
+    ]
+  },
+  "node": {
+    "version": "v26.13.0",
+    "execPath": "C:\\Program Files\\nodejs\\node.exe",
+    "arch": "x64",
+    "v8": "14.6.202.34-node.40",
+    "modules": "147"
+  },
+  "machine": {
+    "digest": "67d100ebc61bd4ebef3f46ea13a25198e24dd1df47bd3fb7b23a10e83d1b569c",
+    "object": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300",
+      "node": "v26.13.0",
+      "jobs": 4
+    },
+    "osVersion": "Windows 11 Enterprise",
+    "arch": "x64",
+    "totalMemoryBytes": 68665831424
+  },
+  "git": {
+    "autocrlf": "true",
+    "safecrlf": "true"
+  },
+  "manifestCheckMechanics": {
+    "manifestPath": "tasks/difficulty-v3/MS18c-gq-approved-ceilings.json",
+    "existsAtHead": false,
+    "existsInWorkingTree": false,
+    "diffQuietExitForThatPath": 0,
+    "probes": [
+      {
+        "file": "generator/tests/qualify.js",
+        "blobAtHead": "a0cbcbb44e224c884582a94c49bb1b9b42407441",
+        "hashObject": "a0cbcbb44e224c884582a94c49bb1b9b42407441",
+        "hashObjectExit": 0,
+        "equal": true
+      },
+      {
+        "file": "generator/tests/fixtures/qualification-records.js",
+        "blobAtHead": "ec52ab0f8986491a8d0bac168fb9bc7bae68c498",
+        "hashObject": "ec52ab0f8986491a8d0bac168fb9bc7bae68c498",
+        "hashObjectExit": 0,
+        "equal": true
+      }
+    ],
+    "allProbesEqual": true
+  },
+  "declarations": {
+    "ratingVersion": 3,
+    "registryOrder": [
+      "classic4",
+      "classic6",
+      "classic9",
+      "mega12",
+      "mega16",
+      "diagonalX",
+      "hyper",
+      "jigsaw9",
+      "killer",
+      "greaterThan",
+      "samurai",
+      "sohei",
+      "butterfly",
+      "flower",
+      "wordoku"
+    ],
+    "variants": [
+      {
+        "id": "classic4",
+        "cellCount": 16,
+        "digits": 4,
+        "declaredCellCount": null,
+        "defaultAttemptsEngine": 8,
+        "budgetSeconds": 2
+      },
+      {
+        "id": "classic6",
+        "cellCount": 36,
+        "digits": 6,
+        "declaredCellCount": null,
+        "defaultAttemptsEngine": 8,
+        "budgetSeconds": 2
+      },
+      {
+        "id": "classic9",
+        "cellCount": 81,
+        "digits": 9,
+        "declaredCellCount": null,
+        "defaultAttemptsEngine": 8,
+        "budgetSeconds": 10
+      },
+      {
+        "id": "mega12",
+        "cellCount": 144,
+        "digits": 12,
+        "declaredCellCount": null,
+        "defaultAttemptsEngine": 4,
+        "budgetSeconds": 30
+      },
+      {
+        "id": "mega16",
+        "cellCount": 256,
+        "digits": 16,
+        "declaredCellCount": null,
+        "defaultAttemptsEngine": 2,
+        "budgetSeconds": 30
+      },
+      {
+        "id": "diagonalX",
+        "cellCount": 81,
+        "digits": 9,
+        "declaredCellCount": null,
+        "defaultAttemptsEngine": 8,
+        "budgetSeconds": 10
+      },
+      {
+        "id": "hyper",
+        "cellCount": 81,
+        "digits": 9,
+        "declaredCellCount": null,
+        "defaultAttemptsEngine": 8,
+        "budgetSeconds": 10
+      },
+      {
+        "id": "jigsaw9",
+        "cellCount": 81,
+        "digits": 9,
+        "declaredCellCount": null,
+        "defaultAttemptsEngine": 8,
+        "budgetSeconds": 10
+      },
+      {
+        "id": "killer",
+        "cellCount": 81,
+        "digits": 9,
+        "declaredCellCount": null,
+        "defaultAttemptsEngine": 8,
+        "budgetSeconds": 10
+      },
+      {
+        "id": "greaterThan",
+        "cellCount": 81,
+        "digits": 9,
+        "declaredCellCount": null,
+        "defaultAttemptsEngine": 8,
+        "budgetSeconds": 10
+      },
+      {
+        "id": "samurai",
+        "cellCount": 369,
+        "digits": 9,
+        "declaredCellCount": 369,
+        "defaultAttemptsEngine": 2,
+        "budgetSeconds": 30
+      },
+      {
+        "id": "sohei",
+        "cellCount": 288,
+        "digits": 9,
+        "declaredCellCount": 288,
+        "defaultAttemptsEngine": 2,
+        "budgetSeconds": 30
+      },
+      {
+        "id": "butterfly",
+        "cellCount": 144,
+        "digits": 9,
+        "declaredCellCount": 144,
+        "defaultAttemptsEngine": 4,
+        "budgetSeconds": 30
+      },
+      {
+        "id": "flower",
+        "cellCount": 189,
+        "digits": 9,
+        "declaredCellCount": 189,
+        "defaultAttemptsEngine": 2,
+        "budgetSeconds": 30
+      },
+      {
+        "id": "wordoku",
+        "cellCount": 81,
+        "digits": 9,
+        "declaredCellCount": null,
+        "defaultAttemptsEngine": 8,
+        "budgetSeconds": 10
+      }
+    ]
+  }
+}

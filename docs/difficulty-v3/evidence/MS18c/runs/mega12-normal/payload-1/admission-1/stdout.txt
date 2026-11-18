@@ -1,0 +1,8 @@
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine ed2fe50c+changes sources 0ca29eaeebc295b6
+mega12/normal: 40/40 hits, p95 70 ms (budget 30.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| mega12 | normal | 40 | 40 | 100 % | 22 ms | 70 ms | 128 ms | 30.0 s | offered |
+
+mega12: ["normal"]

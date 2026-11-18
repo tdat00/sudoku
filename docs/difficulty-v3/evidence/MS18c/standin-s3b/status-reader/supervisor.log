@@ -1,0 +1,5 @@
+{"at":"2026-11-18T19:19:41.012Z","type":"standin-start","scenario":"full-chain","runId":"standin-status-reader-20261118191940-9140","pid":9140,"hostJob":{"inJob":true,"limits":"limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0"}}
+{"at":"2026-11-18T19:19:41.111Z","type":"lock-acquired","waitedSeconds":0.022}
+{"at":"2026-11-18T19:19:41.248Z","type":"window-started","created":"2026-11-18T19:19:41.204088Z","launcherPid":25100,"tStartNs":624362411077900,"createdAfterSeconds":0.0388269,"resumedAfterSeconds":0.0437696}
+{"at":"2026-11-18T19:19:54.673Z","type":"window-ended","fault":null,"members":[11388,13020,17600,21772,21868,23016,24560,25100,28136,28880,28996,29660,32292,32724],"leftover":false,"callbackErrors":0,"wSeconds":13.4784287,"launcherExit":0,"tExpired":false}
+{"at":"2026-11-18T19:19:54.689Z","type":"lock-released","problem":null}

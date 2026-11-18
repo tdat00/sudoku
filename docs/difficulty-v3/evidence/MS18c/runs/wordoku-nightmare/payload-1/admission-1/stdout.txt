@@ -1,0 +1,8 @@
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine ed2fe50c+changes sources 0ca29eaeebc295b6
+wordoku/nightmare: 40/40 hits, p95 1.32 s (budget 10.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| wordoku | nightmare | 40 | 40 | 100 % | 550 ms | 1.32 s | 4.22 s | 10.0 s | offered |
+
+wordoku: ["nightmare"]

@@ -1,0 +1,182 @@
+{
+  "schema": "MS18c-gq-status-v1",
+  "runId": "ms18c-20261118T221238983-10668",
+  "cell": "flower/nightmare",
+  "epoch": "MS18c-GQ-20261118-01",
+  "payloadSlot": 1,
+  "admissionOrdinal": 1,
+  "state": "finished",
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "inputs": {
+    "ratingVersion": 3,
+    "engineSources": "0ca29eaeebc295b6",
+    "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77"
+  },
+  "policy": "MS18c-GQ-host-active",
+  "method": "MS18c-GQ-structural-v1",
+  "supervisor": {
+    "pid": 10668,
+    "createdUtcMicros": "2026-11-18T22:12:38.103747Z",
+    "source": "CIM Win32_Process.CreationDate, UTC, truncated to microseconds",
+    "hostJob": {
+      "inJob": true,
+      "limits": "limitFlags=0x800;killOnClose=False;breakawayOk=True;silentBreakawayOk=False;activeProcessLimit=0"
+    },
+    "powershell": "7.6.10"
+  },
+  "job": {
+    "unnamed": true,
+    "limits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "handleHeldBy": "this supervisor only"
+  },
+  "launcher": {
+    "pid": 32716,
+    "createdUtcMicros": "2026-11-18T22:12:49.690657Z"
+  },
+  "clocks": {
+    "oStart": "2026-11-18T22:12:38.980Z",
+    "oSeconds": 7200.0,
+    "oDeadline": "2026-11-19T00:12:38.9841099Z",
+    "T": 4500.0,
+    "tStart": "2026-11-18T22:12:49.673Z",
+    "tDeadline": "2026-11-18T23:27:49.7145944Z",
+    "rSeconds": null,
+    "wSeconds": 7.6039783,
+    "lockWaitedSeconds": 5.205,
+    "note": "T starts at the creation of the owned launcher after the lock acquisition and excludes that wait",
+    "elapsedSeconds": 0.361
+  },
+  "outputs": {
+    "dir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\payload-1\\admission-1",
+    "status": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\payload-1\\admission-1\\status.json",
+    "supervisorLog": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\payload-1\\admission-1\\supervisor.log",
+    "preLog": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\pre-ms18c-20261118T221238983-10668.log",
+    "events": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\payload-1\\admission-1\\events.jsonl",
+    "readiness": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\payload-1\\admission-1\\readiness.json",
+    "stdout": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\payload-1\\admission-1\\stdout.txt",
+    "stderr": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\payload-1\\admission-1\\stderr.txt",
+    "qualifierJson": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\payload-1\\admission-1\\qualifier.json",
+    "qualifierMarkdown": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\payload-1\\admission-1\\qualifier.md",
+    "journal": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\journal.jsonl",
+    "receipt": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\acceptance-receipt.json"
+  },
+  "members": [
+    11784,
+    13620,
+    20184,
+    24184,
+    29820,
+    32652,
+    32716,
+    34388
+  ],
+  "membersSeen": [
+    {
+      "pid": 11784,
+      "createdUtcMicros": "2026-11-18T22:12:56.274205Z"
+    },
+    {
+      "pid": 13620,
+      "createdUtcMicros": "2026-11-18T22:12:49.721689Z"
+    },
+    {
+      "pid": 20184,
+      "createdUtcMicros": "2026-11-18T22:12:49.847468Z"
+    },
+    {
+      "pid": 24184,
+      "createdUtcMicros": "2026-11-18T22:12:50.526036Z"
+    },
+    {
+      "pid": 29820,
+      "createdUtcMicros": "2026-11-18T22:12:49.872190Z"
+    },
+    {
+      "pid": 32652,
+      "createdUtcMicros": "2026-11-18T22:12:50.549374Z"
+    },
+    {
+      "pid": 32716,
+      "createdUtcMicros": "2026-11-18T22:12:49.690657Z"
+    },
+    {
+      "pid": 34388,
+      "createdUtcMicros": "2026-11-18T22:12:56.261755Z"
+    }
+  ],
+  "heartbeatAt": "2026-11-18T22:12:57.455Z",
+  "finalStatus": "unstarted-hold",
+  "exitCode": 3,
+  "activeProcesses": 4,
+  "window": {
+    "jobLimits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "launcherPid": 32716,
+    "launcherCreated": "2026-11-18T22:12:49.690657Z",
+    "tStartIso": "2026-11-18T22:12:49.673Z",
+    "tStartTicks": 6347509229209,
+    "tStartNs": 634750922920900,
+    "createdAfterSeconds": 0.0398567,
+    "resumedAfterSeconds": 0.0448827,
+    "launcherExit": 3,
+    "tExpired": false,
+    "leftover": false,
+    "stuck": false,
+    "wSeconds": 7.6039783,
+    "launcherExitedAfterSeconds": 7.6005015,
+    "members": [
+      11784,
+      13620,
+      20184,
+      24184,
+      29820,
+      32652,
+      32716,
+      34388
+    ],
+    "membersDetail": [
+      {
+        "pid": 11784,
+        "createdUtcMicros": "2026-11-18T22:12:56.274205Z"
+      },
+      {
+        "pid": 13620,
+        "createdUtcMicros": "2026-11-18T22:12:49.721689Z"
+      },
+      {
+        "pid": 20184,
+        "createdUtcMicros": "2026-11-18T22:12:49.847468Z"
+      },
+      {
+        "pid": 24184,
+        "createdUtcMicros": "2026-11-18T22:12:50.526036Z"
+      },
+      {
+        "pid": 29820,
+        "createdUtcMicros": "2026-11-18T22:12:49.872190Z"
+      },
+      {
+        "pid": 32652,
+        "createdUtcMicros": "2026-11-18T22:12:50.549374Z"
+      },
+      {
+        "pid": 32716,
+        "createdUtcMicros": "2026-11-18T22:12:49.690657Z"
+      },
+      {
+        "pid": 34388,
+        "createdUtcMicros": "2026-11-18T22:12:56.261755Z"
+      }
+    ],
+    "fault": null,
+    "callbackErrors": 0,
+    "lastCallbackError": null
+  },
+  "post": {
+    "ok": true,
+    "outcome": "unstarted-hold",
+    "kind": "additional-consumer",
+    "eligible": true
+  },
+  "writeFailures": 0
+}

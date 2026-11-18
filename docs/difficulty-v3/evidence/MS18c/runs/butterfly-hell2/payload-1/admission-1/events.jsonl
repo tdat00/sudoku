@@ -1,0 +1,6 @@
+{"at":"2026-11-18T22:08:04.301Z","t":0.1429395,"type":"launcher-start","who":"launcher","pid":11272,"node":"v26.13.0","cell":"butterfly/hell2","runId":"ms18c-20261118T220759278-23800","slot":1,"ordinal":1,"startSeconds":0.1423482}
+{"at":"2026-11-18T22:08:04.304Z","t":0.1451441,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8548744}
+{"at":"2026-11-18T22:08:11.505Z","t":7.3465105,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.346,"ready":false}
+{"at":"2026-11-18T22:08:11.511Z","t":7.3524649,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["tests\\qualify.js","--variant=butterfly","--level=hell2","--jobs=4","--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-hell2\\payload-1\\admission-1\\qualifier.json","--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-hell2\\payload-1\\admission-1\\qualifier.md"]}
+{"at":"2026-11-18T22:08:11.533Z","t":7.3745141,"type":"qualifier-created","who":"launcher","pid":29740,"rSeconds":7.3725595}
+{"at":"2026-11-18T22:09:02.117Z","t":57.9584354,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":50.5858202,"eventFailures":0}

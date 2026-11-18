@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "jigsaw9/veryEasy",
+  "runId": "ms18c-20261118T204720263-12592",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\jigsaw9-veryEasy\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "b700132269ed6d83585626ca82b1d1b4cf3156ed733e7b0123ca0e4d7a5e18ec"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\jigsaw9-veryEasy\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "fc7be6d0cb2095e9ecfdf29193d7ae14d8ac5246245b45ea5e89a2aa3801c301"
+    }
+  },
+  "wSeconds": 8.2067079,
+  "rSeconds": 7.2537515,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.2537515,
+      "requests": 40,
+      "maxMs": 74.0841,
+      "stopped": null,
+      "secondRoundRan": false,
+      "slowTotal": 0,
+      "slowFirstRound": 0,
+      "qSeconds": 0.766,
+      "sSeconds": 0.2397726,
+      "sFirstRoundSeconds": 0.2397726,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5262274,
+      "wSeconds": 8.2067079,
+      "wMinusQ": 7.4407079
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 40,
+    "hits": 40,
+    "rate": 1,
+    "p50": 14.7281,
+    "p95": 54.2844,
+    "max": 74.0841,
+    "verdict": "offered",
+    "stopped": null,
+    "errors": 0,
+    "approximate": 0,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\jigsaw9-veryEasy.json",
+      "sha256": "b700132269ed6d83585626ca82b1d1b4cf3156ed733e7b0123ca0e4d7a5e18ec"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\jigsaw9-veryEasy.md",
+      "sha256": "fc7be6d0cb2095e9ecfdf29193d7ae14d8ac5246245b45ea5e89a2aa3801c301"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "sohei/hard",
+  "runId": "ms18c-20261118T214303682-12664",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\sohei-hard\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "6446824f29d50617c756d7a0312896e099f35bf1e9133c74011c7f06d2c24692"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\sohei-hard\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "5a11d94a099bc35fdea0fc2693cf9c7454a3153b88afab05558e93621d21ef15"
+    }
+  },
+  "wSeconds": 10.4040364,
+  "rSeconds": 7.3406474,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.3406474,
+      "requests": 40,
+      "maxMs": 606.0797,
+      "stopped": null,
+      "secondRoundRan": false,
+      "slowTotal": 0,
+      "slowFirstRound": 0,
+      "qSeconds": 2.857,
+      "sSeconds": 2.2867436000000003,
+      "sFirstRoundSeconds": 2.2867436000000003,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5702563999999998,
+      "wSeconds": 10.4040364,
+      "wMinusQ": 7.5470364000000005
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 40,
+    "hits": 40,
+    "rate": 1,
+    "p50": 134.8213,
+    "p95": 516.3258,
+    "max": 606.0797,
+    "verdict": "offered",
+    "stopped": null,
+    "errors": 0,
+    "approximate": 0,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\sohei-hard.json",
+      "sha256": "6446824f29d50617c756d7a0312896e099f35bf1e9133c74011c7f06d2c24692"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\sohei-hard.md",
+      "sha256": "5a11d94a099bc35fdea0fc2693cf9c7454a3153b88afab05558e93621d21ef15"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

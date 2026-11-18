@@ -1,0 +1,4 @@
+outputs-sha256-s3.txt: 60 of 60 entries still match
+outputs-sha256-s3b.txt: 159 of 159 entries still match
+helpers since helpers-sha256-s3b.txt: 30 unchanged, changed [], new [freeze.cjs, inventory.cjs, merge-check.cjs]
+checked 206 files, 0 problems (the frozen runs and qualification trees are not read here)

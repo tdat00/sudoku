@@ -1,0 +1,94 @@
+{
+  "schema": "MS18c-gq-status-v1",
+  "standIn": true,
+  "name": "supervisor-loss",
+  "scenario": "direct",
+  "runId": "standin-supervisor-loss-20261118181704-34576",
+  "cell": "stand-in/none",
+  "state": "running",
+  "supervisor": {
+    "pid": 34576,
+    "createdUtcMicros": "2026-11-18T18:17:02.740054Z",
+    "source": "CIM Win32_Process.CreationDate, UTC, truncated to microseconds",
+    "hostJob": {
+      "inJob": true,
+      "limits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0"
+    },
+    "powershell": "7.6.10",
+    "exe": "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+  },
+  "job": {
+    "unnamed": true,
+    "limits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "handleHeldBy": "this supervisor only"
+  },
+  "launcher": {
+    "pid": 28512,
+    "createdUtcMicros": "2026-11-18T18:17:04.271879Z",
+    "launchedSuspendedAssignedResumed": true
+  },
+  "clocks": {
+    "oStart": "2026-11-18T18:17:04.088Z",
+    "tStart": "2026-11-18T18:17:04.252Z",
+    "tDeadline": "2026-11-18T18:19:04.2617844Z",
+    "T": 120.0,
+    "rSeconds": null,
+    "wSeconds": null,
+    "note": "T starts at the creation of the owned launcher and excludes the lock acquisition",
+    "elapsedSeconds": 0.325
+  },
+  "lock": {
+    "mode": "private",
+    "own": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\supervisor-loss\\own.lock",
+    "foreign": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\supervisor-loss\\foreign.lock"
+  },
+  "outputs": {
+    "dir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\supervisor-loss",
+    "status": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\supervisor-loss\\status.json",
+    "log": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\supervisor-loss\\supervisor.log",
+    "members": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\supervisor-loss\\members.json"
+  },
+  "members": [
+    30724,
+    28512,
+    5144,
+    18612,
+    3960,
+    10652
+  ],
+  "heartbeatAt": "2026-11-18T18:17:04.602Z",
+  "finalStatus": null,
+  "membership": [
+    {
+      "pid": 30724,
+      "name": "conhost",
+      "inThisJob": true
+    },
+    {
+      "pid": 28512,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 5144,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 18612,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 3960,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 10652,
+      "name": "node",
+      "inThisJob": true
+    }
+  ],
+  "activeProcesses": 6
+}

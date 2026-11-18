@@ -1,0 +1,59 @@
+{
+    "name":  "normal-ps51",
+    "finalStatus":  "completed",
+    "fault":  null,
+    "writeFailures":  0,
+    "window":  {
+                   "jobLimits":  "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+                   "launcherPid":  22564,
+                   "launcherCreated":  "2026-11-18T19:18:24.752545Z",
+                   "tStartIso":  "2026-11-18T19:18:24.733Z",
+                   "tStartTicks":  6242859602586,
+                   "tStartNs":  624285960258600,
+                   "createdAfterSeconds":  0.0369592,
+                   "resumedAfterSeconds":  0.043204,
+                   "launcherExit":  0,
+                   "tExpired":  false,
+                   "leftover":  false,
+                   "stuck":  false,
+                   "wSeconds":  8.2897096,
+                   "launcherExitedAfterSeconds":  8.2841224,
+                   "members":  [
+                                   22564,
+                                   28888,
+                                   31692,
+                                   32660,
+                                   32676,
+                                   33804
+                               ],
+                   "membersDetail":  [
+                                         {
+                                             "pid":  22564,
+                                             "createdUtcMicros":  "2026-11-18T19:18:24.752545Z"
+                                         },
+                                         {
+                                             "pid":  28888,
+                                             "createdUtcMicros":  "2026-11-18T19:18:24.877255Z"
+                                         },
+                                         {
+                                             "pid":  31692,
+                                             "createdUtcMicros":  "2026-11-18T19:18:24.778319Z"
+                                         },
+                                         {
+                                             "pid":  32660,
+                                             "createdUtcMicros":  "2026-11-18T19:18:24.914772Z"
+                                         },
+                                         {
+                                             "pid":  32676,
+                                             "createdUtcMicros":  "2026-11-18T19:18:24.903476Z"
+                                         },
+                                         {
+                                             "pid":  33804,
+                                             "createdUtcMicros":  "2026-11-18T19:18:24.893136Z"
+                                         }
+                                     ],
+                   "fault":  null,
+                   "callbackErrors":  0,
+                   "lastCallbackError":  null
+               }
+}

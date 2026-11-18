@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "butterfly/master",
+  "runId": "ms18c-20261118T220111892-19524",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-master\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "681a0836b3c24ac35ef3f7df43bb4de27db9c1316b02271e160eda34dd7247fa"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-master\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "d38a2577148ae6d303e554c8d897a67337dee1f8f7b9a4f8506b7399b95ac2cc"
+    }
+  },
+  "wSeconds": 11.3088431,
+  "rSeconds": 7.2841886,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.2841886,
+      "requests": 40,
+      "maxMs": 948.0175,
+      "stopped": null,
+      "secondRoundRan": false,
+      "slowTotal": 0,
+      "slowFirstRound": 0,
+      "qSeconds": 3.834,
+      "sSeconds": 3.2731324999999996,
+      "sFirstRoundSeconds": 3.2731324999999996,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5608675000000003,
+      "wSeconds": 11.3088431,
+      "wMinusQ": 7.4748431
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 40,
+    "hits": 40,
+    "rate": 1,
+    "p50": 272.0867,
+    "p95": 728.3479,
+    "max": 948.0175,
+    "verdict": "offered",
+    "stopped": null,
+    "errors": 0,
+    "approximate": 0,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\butterfly-master.json",
+      "sha256": "681a0836b3c24ac35ef3f7df43bb4de27db9c1316b02271e160eda34dd7247fa"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\butterfly-master.md",
+      "sha256": "d38a2577148ae6d303e554c8d897a67337dee1f8f7b9a4f8506b7399b95ac2cc"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

@@ -1,0 +1,38 @@
+{
+  "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+  "seedBase": 20260601,
+  "machine": {"cpu":"AMD EPYC 7763 64-Core Processor","logicalProcessors":16,"memoryGb":64,"platform":"win32 10.0.26300","node":"v26.13.0","jobs":4},
+  "engine": {"sources":"0ca29eaeebc295b6","commit":"ed2fe50c","dirty":true},
+  "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+  "acceptance": "canonical-required-tier",
+  "ratingVersion": 3,
+  "probe": 0,
+  "earlyStop": true,
+  "guardMs": 120000,
+  "attemptPolicy": {"function":"SG.digger.defaultMaxAttempts","explicitMaxAttempts":false,"sources":{"js/engine/digger.js":"c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786","js/engine/pipeline.js":"b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1","js/variants/registry.js":"967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"}},
+  "started": "2026-11-18T20:34:02.718Z",
+  "finished": "2026-11-18T20:38:21.944Z",
+  "seconds": 259,
+  "cells": [
+    {
+      "variant": "diagonalX",
+      "level": "hell1",
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {"n":9,"hits":0,"rate":0,"p50":89227.9479,"p95":100984.0059,"max":100984.0059,"verdict":"hidden","stopped":"time","errors":0,"approximate":9,"invalid":0},
+      "requests": [
+        {"key":"diagonalX/hell1","index":0,"seed":1428002575,"hit":false,"ms":95390.857,"achieved":"hell1","score":3024,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"diagonalX/hell1","index":1,"seed":1411224956,"hit":false,"ms":89448.4507,"achieved":"hell1","score":2936,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"diagonalX/hell1","index":2,"seed":1461557813,"hit":false,"ms":89227.9479,"achieved":"hell1","score":2611,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"diagonalX/hell1","index":3,"seed":1444780194,"hit":false,"ms":86919.3672,"achieved":"hell1","score":3588,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"diagonalX/hell1","index":4,"seed":1360892099,"hit":false,"ms":85195.0808,"achieved":"hell1","score":2508,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"diagonalX/hell1","index":5,"seed":1344114480,"hit":false,"ms":88886.1087,"achieved":"hell1","score":3378,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"diagonalX/hell1","index":6,"seed":1394447337,"hit":false,"ms":90156.8218,"achieved":"hell1","score":3511,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"diagonalX/hell1","index":7,"seed":1377669718,"hit":false,"ms":100984.0059,"achieved":"hell1","score":3128,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"diagonalX/hell1","index":8,"seed":1562223527,"hit":false,"ms":86563.2329,"achieved":"hell1","score":3531,"solved":true,"approximate":true,"exact":false,"valid":true}
+      ]
+    }
+  ],
+  "support": {"diagonalX":[]}
+}
