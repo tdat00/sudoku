@@ -102,3 +102,28 @@ node tests\soak.js --variant=classic9 --level=nightmare --count=12 --seed=202601
 (the same for `diagonalX` and `jigsaw9`). `--chain-window` is a diagnostic of the soak (generator design 15.4), absent by
 default; `tests/artifacts/difficulty-v3/MS07c/summarize-experiment.cjs` computes the table above from the six ledgers. Run
 through the shared lock, one cell per command. MS18b repeats the rule at the end.
+
+## Final recheck (MS18b, 2026-11-18): the same rule on the complete catalogue
+
+The task text above is history and stays as measured. MS18b repeated the R9 experiment on the final candidate (the accepted MS17b source `57c1b10`; rating version
+3; soak `sourceHash` `85537bbd...`, `toolHash` `efff9dcd...`, Node v26.13.0; the production defaults are still **R5 256 and C 4**): fresh requests (no MS18a or MS07c row was reused),
+the same three Nightmare cells (classic9, diagonalX, Jigsaw 9), twelve requests per cell and cutoff (tags `variant:level:index`, base seed 20260101), `--chain-window=4` and
+`--chain-window=6`, **6 logical cells, 72 requests**, with no `--shallow-cap` and the shallow allowance at its default, as 16 locked commands (jobs 1) under the named policy
+`MS18b-host-active` ("shared-slot, CLI-host-active; not strict-quiet-machine timing"). The evidence is in [evidence/MS18b/](evidence/MS18b/evidence.md) (`decision-packet.md`,
+`selection.json`). The rule is the one of this record: more exact hits in total wins, C = 6 on any tie.
+
+| Cell | C | Exact | In band, shallow | Errors | Attempts | Full ratings | Generation s (sum of 12) |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| classic9 | **4** | **12 / 12** | 0 | 0 | 21 | 2,078 | 15.2 |
+| classic9 | 6 | 2 / 12 | 10 | 0 | 89 | 15,932 | 77.2 |
+| diagonalX | **4** | **12 / 12** | 0 | 0 | 12 | 637 | 20.2 |
+| diagonalX | 6 | 12 / 12 | 0 | 0 | 18 | 2,327 | 70.1 |
+| Jigsaw 9 | **4** | **12 / 12** | 0 | 0 | 28 | 3,689 | 103.9 |
+| Jigsaw 9 | 6 | 6 / 12 | 6 | 0 | 83 | 18,604 | 378.8 |
+| **Total** | **4** | **36 / 36** | 0 | 0 | 61 | 6,404 | 139.3 |
+| **Total** | 6 | 20 / 36 | 16 | 0 | 190 | 36,863 | 526.1 |
+
+**Result: C = 4 is reconfirmed (36 exact hits against 20, no tie).** The rule winner equals the value in force, nothing is proposed to the owner and no default, source or
+fixture was edited. Per cell, C 6 is lower or equal in every variant (classic9 2 of 12, diagonalX 12 of 12, Jigsaw 9 6 of 12), all 72 requests returned a puzzle and no check
+failed. C 6 costs 3.8 times the generation of C 4 on these cells (shared machine, descriptive). The C 4 rows reproduce MS18a's puzzles in all 36 requests. One factor at a time:
+it says nothing about the joint behaviour of two changed defaults.

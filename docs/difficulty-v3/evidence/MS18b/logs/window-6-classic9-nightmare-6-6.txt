@@ -1,0 +1,68 @@
+$ node tests\soak.js --variant=classic9 --level=nightmare --count=6 --from=6 --total-count=12 --seed=20260101 --no-gate --chain-window=6 --json=..\docs\difficulty-v3\evidence\MS18b\window-6\shards\classic9-nightmare-6-6.json
+TASK MS18b window-6-classic9-nightmare-6-6
+STRICT SCREEN NOT READY: mean 1.044, max 1.765 busy cores of 16 (window-6-classic9-nightmare-6-6.json)
+POLICY MS18b-host-active ADMITTED: every admission condition of MS18b-host-active holds; the strict screen FAILED and is recorded unchanged
+LABEL shared-slot, CLI-host-active; not strict-quiet-machine timing
+START 2026-11-18T20:34:57.529+07:00
+Sudoku Generator soak test  (node v26.13.0, seed 20260101, 6 puzzles in 40.3 s)
+
+Calibration in force (score bands, lower bound of each level, the same on every board):
+  veryEasy 0 | easy 45 | normal 180 | hard 400 | expert 700 | master 1000 | nightmare 1500 | hell1 2400 | hell2 3600
+Technique weights: nakedSingle 1, hiddenSingleBox 1.25, hiddenSingleLine 1.5, pointing 40, boxLine 50, nakedPair 120, hiddenPair 145, nakedTriple 180, lawOfLeftovers 200, hiddenTriple 220, nakedQuad 260, hiddenQuad 300, xWing 320, skyscraper 330, twoStringKite 340, remotePairs 350, simpleColouring 360, emptyRectangle 380, finnedXWing 400, swordfish 420, finnedSwordfish 480, jellyfish 520, xyWing 650, xyzWing 750, wxyzWing 800, wWing 850, uniqueRectangle 900, bugPlusOne 920, xyChain 1000, forcingChain 1100, alsXz 1250, sueDeCoq 1300, forcingChainLong 1400, nishio 1700, nishioDeep 2600, cageCombo 40, ruleOf45 260, cageSplit 520, ineqChain 40, minMaxForcing 180
+Short-chain cutoff C: 6 (--chain-window; forcingChain 1 to 6 links, forcingChainLong 7 to 12)
+Shard of classic9/nightmare: requests 6 to 11 of a logical cell of 12
+
+== classic9 (81 cells) ==
+requested     veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2    n    hit  samples  ms p50     p95     max  budget
+nightmare            .          .          .          .          .          .          6          .          .    6    33%     80.0    6977    7550    75502500 SLOW
+exact: 2 of 6 (33.3%)
+
+group of the hardest technique per requested level (share of puzzles):
+  nightmare  chain 100%
+
+Score histogram (the bands of every board), all puzzles, by requested level:
+bin            veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2   all
+0-45                  .          .          .          .          .          .          .          .          .      0
+45-180                .          .          .          .          .          .          .          .          .      0
+180-400               .          .          .          .          .          .          .          .          .      0
+400-700               .          .          .          .          .          .          .          .          .      0
+700-1000              .          .          .          .          .          .          .          .          .      0
+1000-1500             .          .          .          .          .          .          .          .          .      0
+1500-2400             .          .          .          .          .          .          6          .          .      6 ##############################
+2400-3600             .          .          .          .          .          .          .          .          .      0
+3600-5400             .          .          .          .          .          .          .          .          .      0
+5400+                 .          .          .          .          .          .          .          .          .      0
+
+Invariants over 6 puzzles:
+  I1 ok
+  I2 ok
+  I3 ok
+  I4 ok
+  I5 ok
+  I6 ok
+  I7 ok
+
+classic9 hit rate per level: nightmare 33%
+RESULT: FAIL (classic9 below 90%: nightmare)
+
+Difficulty diagnostics (docs/difficulty-v3/evidence/MS18b/window-6/shards/classic9-nightmare-6-6.json): 6 of 6 requests recorded; the diagnostic solves took 0.1 s after the generation and the checks
+
+== classic9/nightmare: 6 requests, 0 errors, 0 unrated, 6 solved in band ==
+  old hits 2/6 (33%), qualified hits 2/6 (33%), shallow 4/6 (67%; 6 with a derived verdict); exact flag against the derived verdict: 0 disagreements
+  sampled reference: ok 1, vacuous 0, error 0, skipped 0, notSelected 5, notRun 0; final path: ok 6, mismatch 0, error 0, notRun 0
+  work: ok 6, mismatch 0, unavailable 0; local searches ended by shallow 13, ratings 0, proposals 26
+    full ratings (n=6): min 809, p10 809, p50 1231, p90 1710, max 1710, upper median 1231
+  cohort exact (old hits): 2 puzzles, peak alsXz 2
+    raw position (n=2): min 0.574, p10 0.574, p50 0.817, p90 0.817, max 0.817, upper median 0.817
+    adjusted position (n=2): min 0.517, p10 0.517, p50 0.791, p90 0.791, max 0.791, upper median 0.791
+    adjusted undefined: -
+  cohort all in band: 6 puzzles, peak forcingChain 3, xyChain 1, alsXz 2
+    raw position (n=6): min 0.069, p10 0.069, p50 0.623, p90 0.951, max 0.951, upper median 0.623
+    adjusted position (n=6): min -0.057, p10 -0.057, p50 0.572, p90 0.944, max 0.944, upper median 0.572
+    adjusted undefined: -
+  forcing-chain steps (4 of 6 rated paths): length 4 9, 5 12, 6 4; per-puzzle maximum 4 2, 6 2
+  nishio steps (0 of 6 rated paths): depth -; per-puzzle maximum -
+
+DIAGNOSTICS: PASS (request errors 0, invariant violations 0, check errors 0, reference errors 0, final-path errors 0, final-path mismatches 0, work unavailable 0)
+END 2026-11-18T20:35:38.492+07:00
+exit=0 seconds=40.963

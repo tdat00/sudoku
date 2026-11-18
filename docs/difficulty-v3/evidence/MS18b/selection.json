@@ -1,0 +1,4735 @@
+{
+  "schema": 1,
+  "milestone": "complete",
+  "decisionStatus": "reconfirmed (256 / C4)",
+  "complete": true,
+  "coverage": {
+    "intended": {
+      "R5": 288,
+      "R9": 72,
+      "total": 360
+    },
+    "recorded": {
+      "R5": 288,
+      "R9": 72,
+      "total": 360
+    },
+    "missing": [],
+    "errorRows": [],
+    "validCells": 30,
+    "cells": 30
+  },
+  "R5": {
+    "status": "determined",
+    "missing": [],
+    "comparisons": [
+      {
+        "setting": "64",
+        "perCell": [
+          {
+            "cell": "classic9/normal",
+            "known": true,
+            "hits": 10,
+            "noneHits": 11,
+            "hitDelta": -1,
+            "hitLoss": true,
+            "upperMedian": 66,
+            "noneUpperMedian": 66,
+            "medianDelta": 0,
+            "strictReduction": false,
+            "lostIndexes": [
+              11
+            ],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "classic9/master",
+            "known": true,
+            "hits": 12,
+            "noneHits": 12,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 4,
+            "noneUpperMedian": 4,
+            "medianDelta": 0,
+            "strictReduction": false,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "classic9/nightmare",
+            "known": true,
+            "hits": 11,
+            "noneHits": 12,
+            "hitDelta": -1,
+            "hitLoss": true,
+            "upperMedian": 49,
+            "noneUpperMedian": 49,
+            "medianDelta": 0,
+            "strictReduction": false,
+            "lostIndexes": [
+              2
+            ],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "killer/hard",
+            "known": true,
+            "hits": 0,
+            "noneHits": 0,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 503,
+            "noneUpperMedian": 581,
+            "medianDelta": -78,
+            "strictReduction": true,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "killer/expert",
+            "known": true,
+            "hits": 0,
+            "noneHits": 0,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 2255,
+            "noneUpperMedian": 2314,
+            "medianDelta": -59,
+            "strictReduction": true,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "jigsaw9/expert",
+            "known": true,
+            "hits": 11,
+            "noneHits": 11,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 434,
+            "noneUpperMedian": 1215,
+            "medianDelta": -781,
+            "strictReduction": true,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          }
+        ],
+        "complete": true,
+        "hitLossCells": [
+          "classic9/normal",
+          "classic9/nightmare"
+        ],
+        "reductionCells": [
+          "killer/hard",
+          "killer/expert",
+          "jigsaw9/expert"
+        ],
+        "eligible": false,
+        "matchedLosses": 2,
+        "matchedGains": 0
+      },
+      {
+        "setting": "128",
+        "perCell": [
+          {
+            "cell": "classic9/normal",
+            "known": true,
+            "hits": 10,
+            "noneHits": 11,
+            "hitDelta": -1,
+            "hitLoss": true,
+            "upperMedian": 66,
+            "noneUpperMedian": 66,
+            "medianDelta": 0,
+            "strictReduction": false,
+            "lostIndexes": [
+              11
+            ],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "classic9/master",
+            "known": true,
+            "hits": 12,
+            "noneHits": 12,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 4,
+            "noneUpperMedian": 4,
+            "medianDelta": 0,
+            "strictReduction": false,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "classic9/nightmare",
+            "known": true,
+            "hits": 12,
+            "noneHits": 12,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 49,
+            "noneUpperMedian": 49,
+            "medianDelta": 0,
+            "strictReduction": false,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "killer/hard",
+            "known": true,
+            "hits": 0,
+            "noneHits": 0,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 570,
+            "noneUpperMedian": 581,
+            "medianDelta": -11,
+            "strictReduction": true,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "killer/expert",
+            "known": true,
+            "hits": 0,
+            "noneHits": 0,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 2314,
+            "noneUpperMedian": 2314,
+            "medianDelta": 0,
+            "strictReduction": false,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "jigsaw9/expert",
+            "known": true,
+            "hits": 11,
+            "noneHits": 11,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 754,
+            "noneUpperMedian": 1215,
+            "medianDelta": -461,
+            "strictReduction": true,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          }
+        ],
+        "complete": true,
+        "hitLossCells": [
+          "classic9/normal"
+        ],
+        "reductionCells": [
+          "killer/hard",
+          "jigsaw9/expert"
+        ],
+        "eligible": false,
+        "matchedLosses": 1,
+        "matchedGains": 0
+      },
+      {
+        "setting": "256",
+        "perCell": [
+          {
+            "cell": "classic9/normal",
+            "known": true,
+            "hits": 11,
+            "noneHits": 11,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 66,
+            "noneUpperMedian": 66,
+            "medianDelta": 0,
+            "strictReduction": false,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "classic9/master",
+            "known": true,
+            "hits": 12,
+            "noneHits": 12,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 4,
+            "noneUpperMedian": 4,
+            "medianDelta": 0,
+            "strictReduction": false,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "classic9/nightmare",
+            "known": true,
+            "hits": 12,
+            "noneHits": 12,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 49,
+            "noneUpperMedian": 49,
+            "medianDelta": 0,
+            "strictReduction": false,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "killer/hard",
+            "known": true,
+            "hits": 0,
+            "noneHits": 0,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 581,
+            "noneUpperMedian": 581,
+            "medianDelta": 0,
+            "strictReduction": false,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "killer/expert",
+            "known": true,
+            "hits": 0,
+            "noneHits": 0,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 2314,
+            "noneUpperMedian": 2314,
+            "medianDelta": 0,
+            "strictReduction": false,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          },
+          {
+            "cell": "jigsaw9/expert",
+            "known": true,
+            "hits": 11,
+            "noneHits": 11,
+            "hitDelta": 0,
+            "hitLoss": false,
+            "upperMedian": 1104,
+            "noneUpperMedian": 1215,
+            "medianDelta": -111,
+            "strictReduction": true,
+            "lostIndexes": [],
+            "gainedIndexes": []
+          }
+        ],
+        "complete": true,
+        "hitLossCells": [],
+        "reductionCells": [
+          "jigsaw9/expert"
+        ],
+        "eligible": true,
+        "matchedLosses": 0,
+        "matchedGains": 0
+      }
+    ],
+    "eligible": [
+      "256"
+    ],
+    "winner": "256",
+    "inForce": "256",
+    "disposition": "same"
+  },
+  "C": {
+    "status": "determined",
+    "missing": [],
+    "totals": {
+      "4": 36,
+      "6": 20
+    },
+    "tie": false,
+    "winner": "4",
+    "inForce": "4",
+    "disposition": "same"
+  },
+  "identity": {
+    "sourceHash": [
+      "85537bbd28702233722e448d36d87f5faf445ca25668b1926e8ffb22f4b93c3a"
+    ],
+    "toolHash": [
+      "efff9dcd558e04dc17df7ba0a5778da35006b116d8ebca2bcda248ff3012b3c7"
+    ],
+    "node": [
+      "v26.13.0"
+    ],
+    "ratingVersion": [
+      3
+    ],
+    "machine": [
+      "AMD EPYC 7763 64-Core Processor x16"
+    ],
+    "expected": {
+      "sourceHash": "85537bbd28702233722e448d36d87f5faf445ca25668b1926e8ffb22f4b93c3a",
+      "toolHash": "efff9dcd558e04dc17df7ba0a5778da35006b116d8ebca2bcda248ff3012b3c7",
+      "node": "v26.13.0",
+      "shallowAllowance": 256,
+      "chainShortMax": 4
+    },
+    "ledgers": 44
+  },
+  "commits": [
+    {
+      "commit": "393775a1ea855787d731cb2684b196dfb45519ab",
+      "ledgers": 44
+    }
+  ],
+  "admission": {
+    "entries": 44,
+    "executed": 44,
+    "attemptRecords": 44,
+    "holds": 0,
+    "reAsked": [],
+    "gaps": [],
+    "heldPending": [],
+    "notRun": [],
+    "strictFailed": 40,
+    "strictPassed": 4
+  },
+  "time": {
+    "payloadSeconds": 2795.7,
+    "readinessSeconds": 316.4,
+    "commands": 44
+  },
+  "determinism": {
+    "cap256": {
+      "total": 72,
+      "samePuzzle": 72,
+      "sameExactFlag": 72
+    },
+    "window4": {
+      "total": 36,
+      "samePuzzle": 36,
+      "sameExactFlag": 36
+    }
+  },
+  "cells": [
+    {
+      "slot": "cap|64|classic9/normal",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "64",
+      "key": "classic9/normal",
+      "entries": [
+        "cap-64-classic9-normal"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 10,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10
+        ],
+        "inBand": 12,
+        "shallow": 2,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 66,
+        "fullRatings": [
+          3,
+          4,
+          42,
+          44,
+          46,
+          47,
+          66,
+          80,
+          82,
+          118,
+          367,
+          437
+        ],
+        "sumFullRatings": 1336,
+        "attempts": 37,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 2,
+        "localSearches": 27,
+        "endedByAllowance": 3,
+        "endedByProposals": 24,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 3,
+          "ratings": 0,
+          "proposals": 24
+        },
+        "generationSeconds": 3.19,
+        "slowestSeconds": 1.2
+      }
+    },
+    {
+      "slot": "cap|128|classic9/normal",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "128",
+      "key": "classic9/normal",
+      "entries": [
+        "cap-128-classic9-normal"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 10,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10
+        ],
+        "inBand": 12,
+        "shallow": 2,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 66,
+        "fullRatings": [
+          3,
+          4,
+          42,
+          44,
+          46,
+          47,
+          66,
+          82,
+          118,
+          144,
+          367,
+          565
+        ],
+        "sumFullRatings": 1528,
+        "attempts": 37,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 2,
+        "localSearches": 27,
+        "endedByAllowance": 3,
+        "endedByProposals": 24,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 3,
+          "ratings": 0,
+          "proposals": 24
+        },
+        "generationSeconds": 3.22,
+        "slowestSeconds": 1.21
+      }
+    },
+    {
+      "slot": "cap|256|classic9/normal",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "256",
+      "key": "classic9/normal",
+      "entries": [
+        "cap-256-classic9-normal"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 11,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 1,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 66,
+        "fullRatings": [
+          3,
+          4,
+          42,
+          44,
+          46,
+          47,
+          66,
+          82,
+          118,
+          272,
+          367,
+          661
+        ],
+        "sumFullRatings": 1752,
+        "attempts": 36,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 1,
+        "localSearches": 26,
+        "endedByAllowance": 2,
+        "endedByProposals": 23,
+        "endedByRatingCap": 0,
+        "endedNaturally": 1,
+        "requestCapHits": {
+          "shallow": 2,
+          "ratings": 0,
+          "proposals": 23
+        },
+        "generationSeconds": 3.22,
+        "slowestSeconds": 1.2
+      }
+    },
+    {
+      "slot": "cap|none|classic9/normal",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "none",
+      "key": "classic9/normal",
+      "entries": [
+        "cap-none-classic9-normal"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 11,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 1,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 66,
+        "fullRatings": [
+          3,
+          4,
+          42,
+          44,
+          46,
+          47,
+          66,
+          82,
+          118,
+          274,
+          367,
+          1233
+        ],
+        "sumFullRatings": 2326,
+        "attempts": 36,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 1,
+        "localSearches": 26,
+        "endedByAllowance": 0,
+        "endedByProposals": 25,
+        "endedByRatingCap": 0,
+        "endedNaturally": 1,
+        "requestCapHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 25
+        },
+        "generationSeconds": 3.63,
+        "slowestSeconds": 1.17
+      }
+    },
+    {
+      "slot": "cap|64|classic9/master",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "64",
+      "key": "classic9/master",
+      "entries": [
+        "cap-64-classic9-master"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 0,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 4,
+        "fullRatings": [
+          1,
+          1,
+          3,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          6,
+          7,
+          8
+        ],
+        "sumFullRatings": 47,
+        "attempts": 12,
+        "maxAttempts": 1,
+        "requestsWithEightAttempts": 0,
+        "localSearches": 0,
+        "endedByAllowance": 0,
+        "endedByProposals": 0,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 0
+        },
+        "generationSeconds": 1.2,
+        "slowestSeconds": 0.18
+      }
+    },
+    {
+      "slot": "cap|128|classic9/master",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "128",
+      "key": "classic9/master",
+      "entries": [
+        "cap-128-classic9-master"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 0,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 4,
+        "fullRatings": [
+          1,
+          1,
+          3,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          6,
+          7,
+          8
+        ],
+        "sumFullRatings": 47,
+        "attempts": 12,
+        "maxAttempts": 1,
+        "requestsWithEightAttempts": 0,
+        "localSearches": 0,
+        "endedByAllowance": 0,
+        "endedByProposals": 0,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 0
+        },
+        "generationSeconds": 1.19,
+        "slowestSeconds": 0.18
+      }
+    },
+    {
+      "slot": "cap|256|classic9/master",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "256",
+      "key": "classic9/master",
+      "entries": [
+        "cap-256-classic9-master"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 0,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 4,
+        "fullRatings": [
+          1,
+          1,
+          3,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          6,
+          7,
+          8
+        ],
+        "sumFullRatings": 47,
+        "attempts": 12,
+        "maxAttempts": 1,
+        "requestsWithEightAttempts": 0,
+        "localSearches": 0,
+        "endedByAllowance": 0,
+        "endedByProposals": 0,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 0
+        },
+        "generationSeconds": 1.19,
+        "slowestSeconds": 0.18
+      }
+    },
+    {
+      "slot": "cap|none|classic9/master",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "none",
+      "key": "classic9/master",
+      "entries": [
+        "cap-none-classic9-master"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 0,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 4,
+        "fullRatings": [
+          1,
+          1,
+          3,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          6,
+          7,
+          8
+        ],
+        "sumFullRatings": 47,
+        "attempts": 12,
+        "maxAttempts": 1,
+        "requestsWithEightAttempts": 0,
+        "localSearches": 0,
+        "endedByAllowance": 0,
+        "endedByProposals": 0,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 0
+        },
+        "generationSeconds": 1.16,
+        "slowestSeconds": 0.18
+      }
+    },
+    {
+      "slot": "cap|64|classic9/nightmare",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "64",
+      "key": "classic9/nightmare",
+      "entries": [
+        "cap-64-classic9-nightmare"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 11,
+        "hitIndexes": [
+          0,
+          1,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 1,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 49,
+        "fullRatings": [
+          5,
+          5,
+          6,
+          6,
+          9,
+          22,
+          49,
+          136,
+          210,
+          278,
+          605,
+          608
+        ],
+        "sumFullRatings": 1939,
+        "attempts": 29,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 1,
+        "localSearches": 21,
+        "endedByAllowance": 13,
+        "endedByProposals": 5,
+        "endedByRatingCap": 0,
+        "endedNaturally": 3,
+        "requestCapHits": {
+          "shallow": 13,
+          "ratings": 0,
+          "proposals": 5
+        },
+        "generationSeconds": 17.71,
+        "slowestSeconds": 4.7
+      }
+    },
+    {
+      "slot": "cap|128|classic9/nightmare",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "128",
+      "key": "classic9/nightmare",
+      "entries": [
+        "cap-128-classic9-nightmare"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 0,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 49,
+        "fullRatings": [
+          5,
+          5,
+          6,
+          6,
+          9,
+          22,
+          49,
+          102,
+          174,
+          200,
+          378,
+          750
+        ],
+        "sumFullRatings": 1706,
+        "attempts": 21,
+        "maxAttempts": 5,
+        "requestsWithEightAttempts": 0,
+        "localSearches": 14,
+        "endedByAllowance": 4,
+        "endedByProposals": 5,
+        "endedByRatingCap": 0,
+        "endedNaturally": 5,
+        "requestCapHits": {
+          "shallow": 4,
+          "ratings": 0,
+          "proposals": 5
+        },
+        "generationSeconds": 13.38,
+        "slowestSeconds": 4.42
+      }
+    },
+    {
+      "slot": "cap|256|classic9/nightmare",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "256",
+      "key": "classic9/nightmare",
+      "entries": [
+        "cap-256-classic9-nightmare"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 0,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 49,
+        "fullRatings": [
+          5,
+          5,
+          6,
+          6,
+          9,
+          22,
+          49,
+          102,
+          174,
+          328,
+          477,
+          895
+        ],
+        "sumFullRatings": 2078,
+        "attempts": 21,
+        "maxAttempts": 5,
+        "requestsWithEightAttempts": 0,
+        "localSearches": 14,
+        "endedByAllowance": 1,
+        "endedByProposals": 8,
+        "endedByRatingCap": 0,
+        "endedNaturally": 5,
+        "requestCapHits": {
+          "shallow": 1,
+          "ratings": 0,
+          "proposals": 8
+        },
+        "generationSeconds": 14.65,
+        "slowestSeconds": 5.12
+      }
+    },
+    {
+      "slot": "cap|none|classic9/nightmare",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "none",
+      "key": "classic9/nightmare",
+      "entries": [
+        "cap-none-classic9-nightmare"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 0,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 49,
+        "fullRatings": [
+          5,
+          5,
+          6,
+          6,
+          9,
+          22,
+          49,
+          102,
+          174,
+          477,
+          489,
+          895
+        ],
+        "sumFullRatings": 2239,
+        "attempts": 21,
+        "maxAttempts": 5,
+        "requestsWithEightAttempts": 0,
+        "localSearches": 14,
+        "endedByAllowance": 0,
+        "endedByProposals": 9,
+        "endedByRatingCap": 0,
+        "endedNaturally": 5,
+        "requestCapHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 9
+        },
+        "generationSeconds": 14.89,
+        "slowestSeconds": 5.08
+      }
+    },
+    {
+      "slot": "cap|64|killer/hard",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "64",
+      "key": "killer/hard",
+      "entries": [
+        "cap-64-killer-hard"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "inBand": 12,
+        "shallow": 12,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 503,
+        "fullRatings": [
+          447,
+          482,
+          482,
+          492,
+          493,
+          500,
+          503,
+          520,
+          530,
+          538,
+          547,
+          561
+        ],
+        "sumFullRatings": 6095,
+        "attempts": 96,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 12,
+        "localSearches": 96,
+        "endedByAllowance": 29,
+        "endedByProposals": 67,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 29,
+          "ratings": 0,
+          "proposals": 67
+        },
+        "generationSeconds": 58.48,
+        "slowestSeconds": 6.11
+      }
+    },
+    {
+      "slot": "cap|128|killer/hard",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "128",
+      "key": "killer/hard",
+      "entries": [
+        "cap-128-killer-hard"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "inBand": 12,
+        "shallow": 12,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 570,
+        "fullRatings": [
+          447,
+          499,
+          529,
+          539,
+          550,
+          563,
+          570,
+          581,
+          654,
+          658,
+          717,
+          752
+        ],
+        "sumFullRatings": 7059,
+        "attempts": 96,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 12,
+        "localSearches": 96,
+        "endedByAllowance": 9,
+        "endedByProposals": 87,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 9,
+          "ratings": 0,
+          "proposals": 87
+        },
+        "generationSeconds": 63.74,
+        "slowestSeconds": 6.92
+      }
+    },
+    {
+      "slot": "cap|256|killer/hard",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "256",
+      "key": "killer/hard",
+      "entries": [
+        "cap-256-killer-hard"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "inBand": 12,
+        "shallow": 12,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 581,
+        "fullRatings": [
+          447,
+          499,
+          529,
+          539,
+          550,
+          570,
+          581,
+          584,
+          767,
+          802,
+          805,
+          852
+        ],
+        "sumFullRatings": 7525,
+        "attempts": 96,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 12,
+        "localSearches": 96,
+        "endedByAllowance": 1,
+        "endedByProposals": 95,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 1,
+          "ratings": 0,
+          "proposals": 95
+        },
+        "generationSeconds": 64.75,
+        "slowestSeconds": 6.57
+      }
+    },
+    {
+      "slot": "cap|none|killer/hard",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "none",
+      "key": "killer/hard",
+      "entries": [
+        "cap-none-killer-hard"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "inBand": 12,
+        "shallow": 12,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 581,
+        "fullRatings": [
+          447,
+          499,
+          529,
+          539,
+          550,
+          570,
+          581,
+          584,
+          767,
+          805,
+          822,
+          852
+        ],
+        "sumFullRatings": 7545,
+        "attempts": 96,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 12,
+        "localSearches": 96,
+        "endedByAllowance": 0,
+        "endedByProposals": 96,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 96
+        },
+        "generationSeconds": 65.47,
+        "slowestSeconds": 6.6
+      }
+    },
+    {
+      "slot": "cap|64|killer/expert",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "64",
+      "key": "killer/expert",
+      "entries": [
+        "cap-64-killer-expert-0-6",
+        "cap-64-killer-expert-6-6"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "inBand": 12,
+        "shallow": 12,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 2255,
+        "fullRatings": [
+          1348,
+          1701,
+          1823,
+          1895,
+          1970,
+          2193,
+          2255,
+          2256,
+          2307,
+          2385,
+          2473,
+          2562
+        ],
+        "sumFullRatings": 25168,
+        "attempts": 96,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 12,
+        "localSearches": 96,
+        "endedByAllowance": 16,
+        "endedByProposals": 80,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 16,
+          "ratings": 0,
+          "proposals": 80
+        },
+        "generationSeconds": 239.22,
+        "slowestSeconds": 40.02
+      }
+    },
+    {
+      "slot": "cap|128|killer/expert",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "128",
+      "key": "killer/expert",
+      "entries": [
+        "cap-128-killer-expert-0-6",
+        "cap-128-killer-expert-6-6"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "inBand": 12,
+        "shallow": 12,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 2314,
+        "fullRatings": [
+          1378,
+          1785,
+          1887,
+          1957,
+          2004,
+          2193,
+          2314,
+          2319,
+          2332,
+          2437,
+          2537,
+          2599
+        ],
+        "sumFullRatings": 25742,
+        "attempts": 96,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 12,
+        "localSearches": 96,
+        "endedByAllowance": 4,
+        "endedByProposals": 92,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 4,
+          "ratings": 0,
+          "proposals": 92
+        },
+        "generationSeconds": 243.61,
+        "slowestSeconds": 40.51
+      }
+    },
+    {
+      "slot": "cap|256|killer/expert",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "256",
+      "key": "killer/expert",
+      "entries": [
+        "cap-256-killer-expert-0-6",
+        "cap-256-killer-expert-6-6"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "inBand": 12,
+        "shallow": 12,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 2314,
+        "fullRatings": [
+          1378,
+          1913,
+          1939,
+          1957,
+          2004,
+          2193,
+          2314,
+          2332,
+          2358,
+          2437,
+          2579,
+          2599
+        ],
+        "sumFullRatings": 26003,
+        "attempts": 96,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 12,
+        "localSearches": 96,
+        "endedByAllowance": 1,
+        "endedByProposals": 95,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 1,
+          "ratings": 0,
+          "proposals": 95
+        },
+        "generationSeconds": 243.6,
+        "slowestSeconds": 40.4
+      }
+    },
+    {
+      "slot": "cap|none|killer/expert",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "none",
+      "key": "killer/expert",
+      "entries": [
+        "cap-none-killer-expert-0-6",
+        "cap-none-killer-expert-6-6"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "inBand": 12,
+        "shallow": 12,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 2314,
+        "fullRatings": [
+          1378,
+          1939,
+          1957,
+          1959,
+          2004,
+          2193,
+          2314,
+          2332,
+          2358,
+          2437,
+          2579,
+          2599
+        ],
+        "sumFullRatings": 26049,
+        "attempts": 96,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 12,
+        "localSearches": 96,
+        "endedByAllowance": 0,
+        "endedByProposals": 96,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 96
+        },
+        "generationSeconds": 244.56,
+        "slowestSeconds": 40.49
+      }
+    },
+    {
+      "slot": "cap|64|jigsaw9/expert",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "64",
+      "key": "jigsaw9/expert",
+      "entries": [
+        "cap-64-jigsaw9-expert"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 11,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 1,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 434,
+        "fullRatings": [
+          7,
+          53,
+          160,
+          173,
+          238,
+          316,
+          434,
+          496,
+          505,
+          534,
+          542,
+          692
+        ],
+        "sumFullRatings": 4150,
+        "attempts": 62,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 3,
+        "localSearches": 57,
+        "endedByAllowance": 46,
+        "endedByProposals": 5,
+        "endedByRatingCap": 0,
+        "endedNaturally": 6,
+        "requestCapHits": {
+          "shallow": 46,
+          "ratings": 0,
+          "proposals": 5
+        },
+        "generationSeconds": 51.56,
+        "slowestSeconds": 7.05
+      }
+    },
+    {
+      "slot": "cap|128|jigsaw9/expert",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "128",
+      "key": "jigsaw9/expert",
+      "entries": [
+        "cap-128-jigsaw9-expert"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 11,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 1,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 754,
+        "fullRatings": [
+          7,
+          53,
+          288,
+          301,
+          368,
+          508,
+          754,
+          768,
+          822,
+          877,
+          880,
+          1057
+        ],
+        "sumFullRatings": 6683,
+        "attempts": 61,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 2,
+        "localSearches": 57,
+        "endedByAllowance": 36,
+        "endedByProposals": 14,
+        "endedByRatingCap": 0,
+        "endedNaturally": 7,
+        "requestCapHits": {
+          "shallow": 36,
+          "ratings": 0,
+          "proposals": 14
+        },
+        "generationSeconds": 63.5,
+        "slowestSeconds": 9.62
+      }
+    },
+    {
+      "slot": "cap|256|jigsaw9/expert",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "256",
+      "key": "jigsaw9/expert",
+      "entries": [
+        "cap-256-jigsaw9-expert"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 11,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 1,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 1104,
+        "fullRatings": [
+          7,
+          53,
+          428,
+          496,
+          538,
+          789,
+          1104,
+          1160,
+          1230,
+          1250,
+          1345,
+          1482
+        ],
+        "sumFullRatings": 9882,
+        "attempts": 61,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 2,
+        "localSearches": 57,
+        "endedByAllowance": 13,
+        "endedByProposals": 37,
+        "endedByRatingCap": 0,
+        "endedNaturally": 7,
+        "requestCapHits": {
+          "shallow": 13,
+          "ratings": 0,
+          "proposals": 37
+        },
+        "generationSeconds": 83.51,
+        "slowestSeconds": 13.67
+      }
+    },
+    {
+      "slot": "cap|none|jigsaw9/expert",
+      "experiment": "R5",
+      "family": "cap",
+      "setting": "none",
+      "key": "jigsaw9/expert",
+      "entries": [
+        "cap-none-jigsaw9-expert"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 11,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 1,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 1215,
+        "fullRatings": [
+          7,
+          53,
+          428,
+          577,
+          584,
+          869,
+          1215,
+          1340,
+          1372,
+          1572,
+          1618,
+          1814
+        ],
+        "sumFullRatings": 11449,
+        "attempts": 61,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 2,
+        "localSearches": 57,
+        "endedByAllowance": 0,
+        "endedByProposals": 50,
+        "endedByRatingCap": 0,
+        "endedNaturally": 7,
+        "requestCapHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 50
+        },
+        "generationSeconds": 93.4,
+        "slowestSeconds": 14.11
+      }
+    },
+    {
+      "slot": "window|4|classic9/nightmare",
+      "experiment": "R9",
+      "family": "window",
+      "setting": "4",
+      "key": "classic9/nightmare",
+      "entries": [
+        "window-4-classic9-nightmare"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 0,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 49,
+        "fullRatings": [
+          5,
+          5,
+          6,
+          6,
+          9,
+          22,
+          49,
+          102,
+          174,
+          328,
+          477,
+          895
+        ],
+        "sumFullRatings": 2078,
+        "attempts": 21,
+        "maxAttempts": 5,
+        "requestsWithEightAttempts": 0,
+        "localSearches": 14,
+        "endedByAllowance": 1,
+        "endedByProposals": 8,
+        "endedByRatingCap": 0,
+        "endedNaturally": 5,
+        "requestCapHits": {
+          "shallow": 1,
+          "ratings": 0,
+          "proposals": 8
+        },
+        "generationSeconds": 15.23,
+        "slowestSeconds": 5.33
+      }
+    },
+    {
+      "slot": "window|6|classic9/nightmare",
+      "experiment": "R9",
+      "family": "window",
+      "setting": "6",
+      "key": "classic9/nightmare",
+      "entries": [
+        "window-6-classic9-nightmare-0-6",
+        "window-6-classic9-nightmare-6-6"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 2,
+        "hitIndexes": [
+          8,
+          10
+        ],
+        "inBand": 12,
+        "shallow": 10,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 1343,
+        "fullRatings": [
+          809,
+          902,
+          1030,
+          1148,
+          1208,
+          1231,
+          1343,
+          1455,
+          1588,
+          1706,
+          1710,
+          1802
+        ],
+        "sumFullRatings": 15932,
+        "attempts": 89,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 10,
+        "localSearches": 87,
+        "endedByAllowance": 25,
+        "endedByProposals": 62,
+        "endedByRatingCap": 0,
+        "endedNaturally": 0,
+        "requestCapHits": {
+          "shallow": 25,
+          "ratings": 0,
+          "proposals": 62
+        },
+        "generationSeconds": 77.22,
+        "slowestSeconds": 7.96
+      }
+    },
+    {
+      "slot": "window|4|diagonalX/nightmare",
+      "experiment": "R9",
+      "family": "window",
+      "setting": "4",
+      "key": "diagonalX/nightmare",
+      "entries": [
+        "window-4-diagonalX-nightmare"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 0,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 34,
+        "fullRatings": [
+          3,
+          7,
+          7,
+          8,
+          32,
+          33,
+          34,
+          37,
+          49,
+          54,
+          64,
+          309
+        ],
+        "sumFullRatings": 637,
+        "attempts": 12,
+        "maxAttempts": 1,
+        "requestsWithEightAttempts": 0,
+        "localSearches": 1,
+        "endedByAllowance": 0,
+        "endedByProposals": 0,
+        "endedByRatingCap": 0,
+        "endedNaturally": 1,
+        "requestCapHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 0
+        },
+        "generationSeconds": 20.2,
+        "slowestSeconds": 5.84
+      }
+    },
+    {
+      "slot": "window|6|diagonalX/nightmare",
+      "experiment": "R9",
+      "family": "window",
+      "setting": "6",
+      "key": "diagonalX/nightmare",
+      "entries": [
+        "window-6-diagonalX-nightmare-0-4",
+        "window-6-diagonalX-nightmare-4-4",
+        "window-6-diagonalX-nightmare-8-4"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 0,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 55,
+        "fullRatings": [
+          40,
+          41,
+          44,
+          45,
+          46,
+          46,
+          55,
+          115,
+          325,
+          391,
+          554,
+          625
+        ],
+        "sumFullRatings": 2327,
+        "attempts": 18,
+        "maxAttempts": 3,
+        "requestsWithEightAttempts": 0,
+        "localSearches": 12,
+        "endedByAllowance": 3,
+        "endedByProposals": 3,
+        "endedByRatingCap": 0,
+        "endedNaturally": 6,
+        "requestCapHits": {
+          "shallow": 3,
+          "ratings": 0,
+          "proposals": 3
+        },
+        "generationSeconds": 70.11,
+        "slowestSeconds": 13.24
+      }
+    },
+    {
+      "slot": "window|4|jigsaw9/nightmare",
+      "experiment": "R9",
+      "family": "window",
+      "setting": "4",
+      "key": "jigsaw9/nightmare",
+      "entries": [
+        "window-4-jigsaw9-nightmare"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 0,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 297,
+        "fullRatings": [
+          26,
+          39,
+          242,
+          243,
+          274,
+          275,
+          297,
+          300,
+          408,
+          417,
+          431,
+          737
+        ],
+        "sumFullRatings": 3689,
+        "attempts": 28,
+        "maxAttempts": 5,
+        "requestsWithEightAttempts": 0,
+        "localSearches": 20,
+        "endedByAllowance": 4,
+        "endedByProposals": 12,
+        "endedByRatingCap": 0,
+        "endedNaturally": 4,
+        "requestCapHits": {
+          "shallow": 4,
+          "ratings": 0,
+          "proposals": 12
+        },
+        "generationSeconds": 103.86,
+        "slowestSeconds": 18.9
+      }
+    },
+    {
+      "slot": "window|6|jigsaw9/nightmare",
+      "experiment": "R9",
+      "family": "window",
+      "setting": "6",
+      "key": "jigsaw9/nightmare",
+      "entries": [
+        "window-6-jigsaw9-nightmare-0-1",
+        "window-6-jigsaw9-nightmare-1-2",
+        "window-6-jigsaw9-nightmare-3-2",
+        "window-6-jigsaw9-nightmare-5-1",
+        "window-6-jigsaw9-nightmare-6-2",
+        "window-6-jigsaw9-nightmare-8-2",
+        "window-6-jigsaw9-nightmare-10-1",
+        "window-6-jigsaw9-nightmare-11-1"
+      ],
+      "status": "valid",
+      "problems": [],
+      "missingIndexes": [],
+      "stats": {
+        "requests": 12,
+        "hits": 6,
+        "hitIndexes": [
+          0,
+          3,
+          6,
+          7,
+          10,
+          11
+        ],
+        "inBand": 12,
+        "shallow": 6,
+        "errors": 0,
+        "errorIndexes": [],
+        "upperMedian": 1859,
+        "fullRatings": [
+          557,
+          605,
+          1120,
+          1286,
+          1774,
+          1791,
+          1859,
+          1881,
+          1891,
+          1931,
+          1931,
+          1978
+        ],
+        "sumFullRatings": 18604,
+        "attempts": 83,
+        "maxAttempts": 8,
+        "requestsWithEightAttempts": 7,
+        "localSearches": 78,
+        "endedByAllowance": 45,
+        "endedByProposals": 32,
+        "endedByRatingCap": 0,
+        "endedNaturally": 1,
+        "requestCapHits": {
+          "shallow": 45,
+          "ratings": 0,
+          "proposals": 32
+        },
+        "generationSeconds": 378.78,
+        "slowestSeconds": 43.53
+      }
+    }
+  ],
+  "entries": [
+    {
+      "id": "cap-256-classic9-normal",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-256-classic9-normal",
+      "ledger": {
+        "file": "cap-256\\classic9-normal.json",
+        "sha256": "516BAC3E6FCDF621F4D8088653E610533D526B8EECC2955C40A78B75BD979D52"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 3.7,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 4.325,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-256-classic9-master",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-256-classic9-master",
+      "ledger": {
+        "file": "cap-256\\classic9-master.json",
+        "sha256": "E4DFA91236903420E342958C1F68FEFA1E8E102EF600F1525F2E68609D5BC9D2"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 1.5,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 2.143,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-256-classic9-nightmare",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-256-classic9-nightmare",
+      "ledger": {
+        "file": "cap-256\\classic9-nightmare.json",
+        "sha256": "3CC83DA88E98F78804A9D15ED273C5D12C000FD347D4F3E624637DADECDB8092"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 18.5,
+        "diagnosticSeconds": 0.2,
+        "exit": 0,
+        "processSeconds": 19.293,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-256-killer-hard",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-256-killer-hard",
+      "ledger": {
+        "file": "cap-256\\killer-hard.json",
+        "sha256": "3D787244D8E23AC755C79C5D7699E244AD74F6E3BDD1A1A5F518134C7D16D03C"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 80.5,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 81.158,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-256-killer-expert-0-6",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-256-killer-expert-0-6",
+      "ledger": {
+        "file": "cap-256\\shards\\killer-expert-0-6.json",
+        "sha256": "F93961FF54EA07B15A81E354F06C85BA8E315623872C039E18DB235A0AF2F5E0"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 158.9,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 159.537,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-256-killer-expert-6-6",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-256-killer-expert-6-6",
+      "ledger": {
+        "file": "cap-256\\shards\\killer-expert-6-6.json",
+        "sha256": "2E792878C160AF403E686DAC535D6C777C2243D1AAB5D311AC9A3FE93691CC9F"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 142.2,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 142.828,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-256-jigsaw9-expert",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-256-jigsaw9-expert",
+      "ledger": {
+        "file": "cap-256\\jigsaw9-expert.json",
+        "sha256": "6B12772DD2583E85C461898A3E4D4995B6B8CBB3BA68990CF0F91C28E6545A81"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 97.1,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 97.793,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-64-classic9-normal",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-64-classic9-normal",
+      "ledger": {
+        "file": "cap-64\\classic9-normal.json",
+        "sha256": "9750C47B9A4F5F481A8E79123F0B1D78A7DF88EAB6438E0F0352727B773320E9"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 3.7,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 4.251,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-64-classic9-master",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-64-classic9-master",
+      "ledger": {
+        "file": "cap-64\\classic9-master.json",
+        "sha256": "842D6480871E254FFC9B209ADF5F2EF266D94B62B4B6B6761C0368E12FB8F7CB"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 1.5,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 2.173,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-64-classic9-nightmare",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-64-classic9-nightmare",
+      "ledger": {
+        "file": "cap-64\\classic9-nightmare.json",
+        "sha256": "B8EEEDF5B9C76CDEF51DDAAAB088ECFBE5A24E476357D72552E59EC2E427E8A7"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 21.1,
+        "diagnosticSeconds": 0.2,
+        "exit": 0,
+        "processSeconds": 21.878,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-64-killer-hard",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-64-killer-hard",
+      "ledger": {
+        "file": "cap-64\\killer-hard.json",
+        "sha256": "8C082C0AB84DD174EE8C1788BB89DEFB91D3B8E8CEAB79B750EE6FEA33A16D43"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 72.3,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 72.95,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-64-killer-expert-0-6",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-64-killer-expert-0-6",
+      "ledger": {
+        "file": "cap-64\\shards\\killer-expert-0-6.json",
+        "sha256": "F1A8E7D7E3657EA0856EDBD3B591FC913AFC6CB693D50596A81E902A27C4F1DA"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 157.2,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 157.773,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-64-killer-expert-6-6",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-64-killer-expert-6-6",
+      "ledger": {
+        "file": "cap-64\\shards\\killer-expert-6-6.json",
+        "sha256": "F67EDF692814CD22253985A78FB78BC6282E28B3E32D34B4F9415B8AE773D173"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 138.7,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 139.298,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-64-jigsaw9-expert",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-64-jigsaw9-expert",
+      "ledger": {
+        "file": "cap-64\\jigsaw9-expert.json",
+        "sha256": "D81224B45814C103118A56B88AE3046A2A1DDC4AC3F2A1B886E050AD497E403B"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 60.5,
+        "diagnosticSeconds": 0.1,
+        "exit": 0,
+        "processSeconds": 61.159,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-128-classic9-normal",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-128-classic9-normal",
+      "ledger": {
+        "file": "cap-128\\classic9-normal.json",
+        "sha256": "4E9C763ECC5D66E793A3F7E250467332CA1425A77441146E5AC97A8BB0DE31CD"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 3.7,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 4.288,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-128-classic9-master",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-128-classic9-master",
+      "ledger": {
+        "file": "cap-128\\classic9-master.json",
+        "sha256": "9A339C9B30D35C20C916756295D05FF02A5374569E273B304FBB6ACEBE94F4BF"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 1.5,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 2.172,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-128-classic9-nightmare",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-128-classic9-nightmare",
+      "ledger": {
+        "file": "cap-128\\classic9-nightmare.json",
+        "sha256": "B7E0F08F94EF67D6EE32E2A81DFBECC41A9D9D99AFCC5DDD3D3EE9C3DA437B6A"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 16.8,
+        "diagnosticSeconds": 0.2,
+        "exit": 0,
+        "processSeconds": 17.507,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-128-killer-hard",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-128-killer-hard",
+      "ledger": {
+        "file": "cap-128\\killer-hard.json",
+        "sha256": "C782F3DC4DFABB95E0FD859A06EEA66E5BFF880B5DD15DC7E8CFE3FA336E8260"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 79.1,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 79.696,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-128-killer-expert-0-6",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-128-killer-expert-0-6",
+      "ledger": {
+        "file": "cap-128\\shards\\killer-expert-0-6.json",
+        "sha256": "25E1B082A7E6ECC1848885E0CE210675DF54176F0D5F0FDE75D1EBA25DEE598E"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 158.8,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 159.4,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-128-killer-expert-6-6",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-128-killer-expert-6-6",
+      "ledger": {
+        "file": "cap-128\\shards\\killer-expert-6-6.json",
+        "sha256": "619F4E585BF304E367A273DDB8EB7B5801F242BB78F6284423C8789D219F9E19"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 142.6,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 143.196,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-128-jigsaw9-expert",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-128-jigsaw9-expert",
+      "ledger": {
+        "file": "cap-128\\jigsaw9-expert.json",
+        "sha256": "0AD65545FB084E09F88F1C77EC9C1BCE4C86ADA058B4C64E718EB52A93E37D91"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 73.8,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 74.474,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-none-classic9-normal",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-none-classic9-normal",
+      "ledger": {
+        "file": "cap-none\\classic9-normal.json",
+        "sha256": "F1545563D7116D65BCE524E9A026BB949AA824B30CF302A66D9EAB65E8E2294C"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 4.3,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 4.903,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-none-classic9-master",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-none-classic9-master",
+      "ledger": {
+        "file": "cap-none\\classic9-master.json",
+        "sha256": "46FE231378C9AD56D711C283B86086516454EE1865453F916594323F041900F2"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 1.5,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 2.082,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-none-classic9-nightmare",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-none-classic9-nightmare",
+      "ledger": {
+        "file": "cap-none\\classic9-nightmare.json",
+        "sha256": "C3CCD3D85E58A829B4EE9A71DDCA0E111CC93905CBECB41A4C3D82D31202E2B8"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 18.7,
+        "diagnosticSeconds": 0.2,
+        "exit": 0,
+        "processSeconds": 19.466,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-none-killer-hard",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-none-killer-hard",
+      "ledger": {
+        "file": "cap-none\\killer-hard.json",
+        "sha256": "3421609312F36CB21CB6899C8B8A9EBC9155722BFCA87256227028632421AF78"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 81.5,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 82.162,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-none-killer-expert-0-6",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-none-killer-expert-0-6",
+      "ledger": {
+        "file": "cap-none\\shards\\killer-expert-0-6.json",
+        "sha256": "908E84C5942AEB87B4C87C30D32E757AE94B5130F163DE14097A2D0396E42C93"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 159.9,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 160.504,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-none-killer-expert-6-6",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-none-killer-expert-6-6",
+      "ledger": {
+        "file": "cap-none\\shards\\killer-expert-6-6.json",
+        "sha256": "27827150878AB90118B9A678884BE83E5FC4A747986CFCC1E323FCA8ECE370BB"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 142.2,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 142.79,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "cap-none-jigsaw9-expert",
+      "status": "valid",
+      "problems": [],
+      "executedId": "cap-none-jigsaw9-expert",
+      "ledger": {
+        "file": "cap-none\\jigsaw9-expert.json",
+        "sha256": "8841319ACBED1188E0CCEF08A6DBBE282CEDE7C12250663DF6D56429EE398781"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 108.2,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 108.815,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-4-classic9-nightmare",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-4-classic9-nightmare",
+      "ledger": {
+        "file": "window-4\\classic9-nightmare.json",
+        "sha256": "E4E40769D3BE0625009EE79BC13DECA0E6E7288BC8275B286B0516F3E5924C43"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 19.2,
+        "diagnosticSeconds": 0.2,
+        "exit": 0,
+        "processSeconds": 19.976,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-4-diagonalX-nightmare",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-4-diagonalX-nightmare",
+      "ledger": {
+        "file": "window-4\\diagonalX-nightmare.json",
+        "sha256": "8E2B3078BB045804ACA1D44A8677DFC4BFADEE92445A71C8CBF514A9E9AB0387"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 26.3,
+        "diagnosticSeconds": 0.2,
+        "exit": 0,
+        "processSeconds": 27.075,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-4-jigsaw9-nightmare",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-4-jigsaw9-nightmare",
+      "ledger": {
+        "file": "window-4\\jigsaw9-nightmare.json",
+        "sha256": "D21F199A5A1B4BEC9F8F683E5E6BBE617E25378C44FD8FB76FF71EAD6F0D40D2"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 121.9,
+        "diagnosticSeconds": 0.3,
+        "exit": 0,
+        "processSeconds": 122.797,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-6-classic9-nightmare-0-6",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-6-classic9-nightmare-0-6",
+      "ledger": {
+        "file": "window-6\\shards\\classic9-nightmare-0-6.json",
+        "sha256": "F18E799D9D500D90021F7143B3879BAD29A1DA3136B5AAA1B26016405D5DD022"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 55,
+        "diagnosticSeconds": 0.1,
+        "exit": 0,
+        "processSeconds": 55.631,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-6-classic9-nightmare-6-6",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-6-classic9-nightmare-6-6",
+      "ledger": {
+        "file": "window-6\\shards\\classic9-nightmare-6-6.json",
+        "sha256": "454AC95251759E8F992F247D789DF79FC6DFAEC325E0C7253A2E3E4D7129F2DA"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 40.3,
+        "diagnosticSeconds": 0.1,
+        "exit": 0,
+        "processSeconds": 40.963,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-6-diagonalX-nightmare-0-4",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-6-diagonalX-nightmare-0-4",
+      "ledger": {
+        "file": "window-6\\shards\\diagonalX-nightmare-0-4.json",
+        "sha256": "F8BB8A23E4EEDDDAC2D194FDFD70C56E442CB240257F22D76AA0B92269AD5B9C"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 26.7,
+        "diagnosticSeconds": 0.1,
+        "exit": 0,
+        "processSeconds": 27.28,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-6-diagonalX-nightmare-4-4",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-6-diagonalX-nightmare-4-4",
+      "ledger": {
+        "file": "window-6\\shards\\diagonalX-nightmare-4-4.json",
+        "sha256": "70FC51D407B5A8AA5F8A7D919CE6512E33D2C65308526459AB60D28334AB6314"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 22.2,
+        "diagnosticSeconds": 0.1,
+        "exit": 0,
+        "processSeconds": 22.809,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-6-diagonalX-nightmare-8-4",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-6-diagonalX-nightmare-8-4",
+      "ledger": {
+        "file": "window-6\\shards\\diagonalX-nightmare-8-4.json",
+        "sha256": "F8F41FD786EAF267261523E79A40FD293469503D32EB3C97F18D84D2C726124E"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 39.7,
+        "diagnosticSeconds": 0.1,
+        "exit": 0,
+        "processSeconds": 40.306,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-6-jigsaw9-nightmare-0-1",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-6-jigsaw9-nightmare-0-1",
+      "ledger": {
+        "file": "window-6\\shards\\jigsaw9-nightmare-0-1.json",
+        "sha256": "173E565E99CBCC7E46EB5D75705246288F95C5301E4B333121C5F5443FDEB3B1"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 65.1,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 65.702,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-6-jigsaw9-nightmare-1-2",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-6-jigsaw9-nightmare-1-2",
+      "ledger": {
+        "file": "window-6\\shards\\jigsaw9-nightmare-1-2.json",
+        "sha256": "5A51F84915C8A25C5DBC11F071127645C924BBBAA29A737F9EF2A5898895C431"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 79,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 79.65,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-6-jigsaw9-nightmare-3-2",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-6-jigsaw9-nightmare-3-2",
+      "ledger": {
+        "file": "window-6\\shards\\jigsaw9-nightmare-3-2.json",
+        "sha256": "6886E5D8D44CC0881AA04E3736C7A43A7862E5502FBFC43E321A6D5E8ABAC307"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 67.2,
+        "diagnosticSeconds": 0.1,
+        "exit": 0,
+        "processSeconds": 67.847,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-6-jigsaw9-nightmare-5-1",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-6-jigsaw9-nightmare-5-1",
+      "ledger": {
+        "file": "window-6\\shards\\jigsaw9-nightmare-5-1.json",
+        "sha256": "1948EE58C61FC7291298292BE6848F58B1551F2F21B244053A0AC61695C6C1FB"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 86.8,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 87.401,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-6-jigsaw9-nightmare-6-2",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-6-jigsaw9-nightmare-6-2",
+      "ledger": {
+        "file": "window-6\\shards\\jigsaw9-nightmare-6-2.json",
+        "sha256": "1FA2FAB04002AADAF9E2AE432FA6D1269544F74F12289388E5958FD5FDFF7930"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 38.3,
+        "diagnosticSeconds": 0.1,
+        "exit": 0,
+        "processSeconds": 39.026,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-6-jigsaw9-nightmare-8-2",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-6-jigsaw9-nightmare-8-2",
+      "ledger": {
+        "file": "window-6\\shards\\jigsaw9-nightmare-8-2.json",
+        "sha256": "5781A35FE79193F2D54561A487923831577AD567D44825A994284415DF0DFE9D"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 73.6,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 74.182,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-6-jigsaw9-nightmare-10-1",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-6-jigsaw9-nightmare-10-1",
+      "ledger": {
+        "file": "window-6\\shards\\jigsaw9-nightmare-10-1.json",
+        "sha256": "2F06D05EF1961E2ACB61532BEF32C4A1ED54C065880476FD3E9A1ED2F2D29080"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 22.4,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 23.041,
+        "diagnostics": "PASS"
+      }
+    },
+    {
+      "id": "window-6-jigsaw9-nightmare-11-1",
+      "status": "valid",
+      "problems": [],
+      "executedId": "window-6-jigsaw9-nightmare-11-1",
+      "ledger": {
+        "file": "window-6\\shards\\jigsaw9-nightmare-11-1.json",
+        "sha256": "ECB5AAA531F9CAE3BC51217F055BF924CD2264947D9D5A2871B1D8D5CB3CAD5D"
+      },
+      "checks": {
+        "invariantViolations": {
+          "I1": 0,
+          "I2": 0,
+          "I3": 0,
+          "I4": 0,
+          "I5": 0,
+          "I6": 0,
+          "I7": 0
+        },
+        "requestErrors": 0,
+        "checkErrors": [],
+        "referenceErrors": 0,
+        "pathErrors": 0,
+        "pathMismatches": 0,
+        "workUnavailable": 0,
+        "failed": false,
+        "result": "PASS"
+      },
+      "transcript": {
+        "soakSeconds": 33.4,
+        "diagnosticSeconds": 0,
+        "exit": 0,
+        "processSeconds": 34.014,
+        "diagnostics": "PASS"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "label": "entry cap-256-classic9-normal: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen passed",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-classic9-normal: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-classic9-normal: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-classic9-master: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-classic9-master: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-classic9-master: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-classic9-nightmare: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-classic9-nightmare: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-classic9-nightmare: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-killer-hard: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-killer-hard: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-killer-hard: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-killer-expert-0-6: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-killer-expert-0-6: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-killer-expert-0-6: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-killer-expert-6-6: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-killer-expert-6-6: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-killer-expert-6-6: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-jigsaw9-expert: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-jigsaw9-expert: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-256-jigsaw9-expert: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-classic9-normal: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-classic9-normal: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-classic9-normal: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-classic9-master: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-classic9-master: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-classic9-master: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-classic9-nightmare: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-classic9-nightmare: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-classic9-nightmare: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-killer-hard: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-killer-hard: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-killer-hard: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-killer-expert-0-6: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-killer-expert-0-6: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-killer-expert-0-6: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-killer-expert-6-6: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-killer-expert-6-6: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-killer-expert-6-6: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-jigsaw9-expert: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-jigsaw9-expert: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-64-jigsaw9-expert: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-classic9-normal: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-classic9-normal: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-classic9-normal: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-classic9-master: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-classic9-master: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-classic9-master: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-classic9-nightmare: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-classic9-nightmare: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-classic9-nightmare: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-killer-hard: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen passed",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-killer-hard: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-killer-hard: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-killer-expert-0-6: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-killer-expert-0-6: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-killer-expert-0-6: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-killer-expert-6-6: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-killer-expert-6-6: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-killer-expert-6-6: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-jigsaw9-expert: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-jigsaw9-expert: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-128-jigsaw9-expert: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-classic9-normal: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-classic9-normal: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-classic9-normal: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-classic9-master: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-classic9-master: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-classic9-master: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-classic9-nightmare: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-classic9-nightmare: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-classic9-nightmare: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-killer-hard: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-killer-hard: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-killer-hard: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-killer-expert-0-6: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-killer-expert-0-6: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-killer-expert-0-6: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-killer-expert-6-6: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-killer-expert-6-6: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-killer-expert-6-6: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-jigsaw9-expert: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-jigsaw9-expert: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry cap-none-jigsaw9-expert: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-4-classic9-nightmare: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-4-classic9-nightmare: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-4-classic9-nightmare: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-4-diagonalX-nightmare: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-4-diagonalX-nightmare: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-4-diagonalX-nightmare: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-4-jigsaw9-nightmare: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-4-jigsaw9-nightmare: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-4-jigsaw9-nightmare: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-classic9-nightmare-0-6: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-classic9-nightmare-0-6: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-classic9-nightmare-0-6: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-classic9-nightmare-6-6: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-classic9-nightmare-6-6: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-classic9-nightmare-6-6: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-diagonalX-nightmare-0-4: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-diagonalX-nightmare-0-4: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-diagonalX-nightmare-0-4: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-diagonalX-nightmare-4-4: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-diagonalX-nightmare-4-4: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-diagonalX-nightmare-4-4: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-diagonalX-nightmare-8-4: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-diagonalX-nightmare-8-4: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-diagonalX-nightmare-8-4: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-0-1: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-0-1: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-0-1: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-1-2: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-1-2: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-1-2: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-3-2: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen passed",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-3-2: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-3-2: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-5-1: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-5-1: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-5-1: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-6-2: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-6-2: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-6-2: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-8-2: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-8-2: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-8-2: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-10-1: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen FAILED",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-10-1: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-10-1: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-11-1: one executed attempt, admitted under MS18b-host-active, payload exit 0",
+      "ok": true,
+      "detail": "admitted under MS18b-host-active; strict screen passed",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-11-1: the started attempt's transcript shows exit 0 and DIAGNOSTICS",
+      "ok": true,
+      "detail": "exit 0, diagnostics PASS",
+      "kind": "correctness"
+    },
+    {
+      "label": "entry window-6-jigsaw9-nightmare-11-1: the ledger matches the plan (identity, setting, span, checks)",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "cell R5 classic9/normal: every setting merged, 12 rows each, keys equal the manifest",
+      "ok": true,
+      "detail": "",
+      "kind": "completeness"
+    },
+    {
+      "label": "cell R5 classic9/master: every setting merged, 12 rows each, keys equal the manifest",
+      "ok": true,
+      "detail": "",
+      "kind": "completeness"
+    },
+    {
+      "label": "cell R5 classic9/nightmare: every setting merged, 12 rows each, keys equal the manifest",
+      "ok": true,
+      "detail": "",
+      "kind": "completeness"
+    },
+    {
+      "label": "cell R5 killer/hard: every setting merged, 12 rows each, keys equal the manifest",
+      "ok": true,
+      "detail": "",
+      "kind": "completeness"
+    },
+    {
+      "label": "cell R5 killer/expert: every setting merged, 12 rows each, keys equal the manifest",
+      "ok": true,
+      "detail": "",
+      "kind": "completeness"
+    },
+    {
+      "label": "cell R5 jigsaw9/expert: every setting merged, 12 rows each, keys equal the manifest",
+      "ok": true,
+      "detail": "",
+      "kind": "completeness"
+    },
+    {
+      "label": "cell R9 classic9/nightmare: every setting merged, 12 rows each, keys equal the manifest",
+      "ok": true,
+      "detail": "",
+      "kind": "completeness"
+    },
+    {
+      "label": "cell R9 diagonalX/nightmare: every setting merged, 12 rows each, keys equal the manifest",
+      "ok": true,
+      "detail": "",
+      "kind": "completeness"
+    },
+    {
+      "label": "cell R9 jigsaw9/nightmare: every setting merged, 12 rows each, keys equal the manifest",
+      "ok": true,
+      "detail": "",
+      "kind": "completeness"
+    },
+    {
+      "label": "360 of the intended 288 + 72 outcomes are recorded (30 logical cells)",
+      "ok": true,
+      "detail": "360 recorded; 0 cell(s) incomplete or defective",
+      "kind": "completeness"
+    },
+    {
+      "label": "one source, tool and Node identity in every ledger, equal to the plan",
+      "ok": true,
+      "detail": "source 1, tool 1, node 1",
+      "kind": "correctness"
+    },
+    {
+      "label": "no entry has more than two admission attempts",
+      "ok": true,
+      "detail": "",
+      "kind": "correctness"
+    },
+    {
+      "label": "every plan entry has a ledger (an unexecuted gap is not a pass)",
+      "ok": true,
+      "detail": "0 entries without a ledger",
+      "kind": "completeness"
+    }
+  ],
+  "discord": null
+}

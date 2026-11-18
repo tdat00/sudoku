@@ -1,0 +1,243 @@
+{
+  "task": "MS18b cap-256-classic9-nightmare",
+  "payload": [
+    "node",
+    "tests\\soak.js",
+    "--variant=classic9",
+    "--level=nightmare",
+    "--count=12",
+    "--seed=20260101",
+    "--no-gate",
+    "--shallow-cap=256",
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS18b\\cap-256\\classic9-nightmare.json"
+  ],
+  "wrapper": "launch.cjs (MS18b, adapted from MS18a Q1)",
+  "wrapperStartedAt": "2026-11-18T19:47:07.266+07:00",
+  "node": "v26.13.0",
+  "host": "CPC-ledat-4UIQ7",
+  "screen": {
+    "intervals": 5,
+    "intervalMs": 1000,
+    "meanMax": 0.5,
+    "peakMax": 1
+  },
+  "policy": "MS18b-host-active",
+  "environmentLabel": "shared-slot, CLI-host-active; not strict-quiet-machine timing",
+  "locks": {
+    "foreign": {
+      "path": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-timing.lock",
+      "present": false
+    },
+    "own": {
+      "path": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-sudoku.lock",
+      "present": true,
+      "modified": "2026-11-18T19:47:07.171+07:00",
+      "content": "3808|MS18b cap-256-classic9-nightmare|2026-11-18T12:47:07.1610929Z"
+    },
+    "ownMatchesTask": true
+  },
+  "logicalCpus": 16,
+  "counterSource": "os.cpus() cumulative times (user, nice, sys, idle, irq), idle share of the total",
+  "intervals": [
+    {
+      "index": 1,
+      "start": "2026-11-18T19:47:08.750+07:00",
+      "end": "2026-11-18T19:47:09.764+07:00",
+      "idleDelta": 15282,
+      "totalDelta": 16374,
+      "busyFraction": 0.06669109563942832,
+      "busyCores": 1.0670575302308531
+    },
+    {
+      "index": 2,
+      "start": "2026-11-18T19:47:09.764+07:00",
+      "end": "2026-11-18T19:47:10.764+07:00",
+      "idleDelta": 15593,
+      "totalDelta": 16030,
+      "busyFraction": 0.027261384903306318,
+      "busyCores": 0.4361821584529011
+    },
+    {
+      "index": 3,
+      "start": "2026-11-18T19:47:10.764+07:00",
+      "end": "2026-11-18T19:47:11.764+07:00",
+      "idleDelta": 15469,
+      "totalDelta": 16094,
+      "busyFraction": 0.03883434820429976,
+      "busyCores": 0.6213495712687962
+    },
+    {
+      "index": 4,
+      "start": "2026-11-18T19:47:11.764+07:00",
+      "end": "2026-11-18T19:47:12.766+07:00",
+      "idleDelta": 15672,
+      "totalDelta": 16033,
+      "busyFraction": 0.022516060624961032,
+      "busyCores": 0.3602569699993765
+    },
+    {
+      "index": 5,
+      "start": "2026-11-18T19:47:12.766+07:00",
+      "end": "2026-11-18T19:47:13.751+07:00",
+      "idleDelta": 15156,
+      "totalDelta": 15847,
+      "busyFraction": 0.043604467722597295,
+      "busyCores": 0.6976714835615567
+    }
+  ],
+  "meanBusyCores": 0.6365035427026967,
+  "maxBusyCores": 1.0670575302308531,
+  "ready": false,
+  "reasons": [
+    "mean 0.637 busy cores is above 0.5",
+    "maximum 1.067 busy cores is above 1"
+  ],
+  "admitted": true,
+  "admissionHolds": [],
+  "admissionReason": "every admission condition of MS18b-host-active holds; the strict screen FAILED and is recorded unchanged",
+  "lockRecheck": {
+    "foreign": {
+      "path": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-timing.lock",
+      "present": false
+    },
+    "own": {
+      "path": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-sudoku.lock",
+      "present": true,
+      "modified": "2026-11-18T19:47:07.171+07:00",
+      "content": "3808|MS18b cap-256-classic9-nightmare|2026-11-18T12:47:07.1610929Z"
+    },
+    "ownMatchesTask": true
+  },
+  "hostObservation": {
+    "expected": {
+      "pid": 1968,
+      "name": "copilot.exe",
+      "parent": 18780,
+      "created": "2026-11-13T19:26:33.6916441+07:00",
+      "exe": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe"
+    },
+    "observed": {
+      "pid": 1968,
+      "processName": "copilot",
+      "created": "2026-11-13T19:26:33.6916441+07:00",
+      "path": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe",
+      "cimName": "copilot.exe",
+      "cimParent": 18780,
+      "cimExe": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe",
+      "cimCreated": "2026-11-13T19:26:33.6916440+07:00"
+    },
+    "inBothSnapshots": true,
+    "cpuSeconds": 0.921875,
+    "cpuSecondsPerSecond": 0.16099807893817675,
+    "note": "an observation of the confirmed instance only; it is not subtracted from the aggregate screen"
+  },
+  "processWindow": {
+    "a": {
+      "startedAt": "2026-11-18T19:47:08.020+07:00",
+      "endedAt": "2026-11-18T19:47:08.749+07:00",
+      "ok": true,
+      "processes": 294
+    },
+    "b": {
+      "startedAt": "2026-11-18T19:47:13.751+07:00",
+      "endedAt": "2026-11-18T19:47:14.470+07:00",
+      "ok": true,
+      "processes": 294
+    },
+    "seconds": 5.726,
+    "consumerLimitPerSecond": 0.5
+  },
+  "processContext": {
+    "note": "CPU seconds gained per process instance (pid + creation date) between the two snapshots, from the kernel + user times of Win32_Process; the launch chain is instrumentation; protected, system and transient processes may be partly unattributed and this inventory is not claimed to explain the aggregate busy cores; the snapshot window and the five intervals are not synchronized",
+    "busiest": [
+      {
+        "pid": 1968,
+        "name": "copilot.exe",
+        "cpuSeconds": 0.922,
+        "perSecond": 0.161,
+        "host": true,
+        "launchChain": false,
+        "newInWindow": false
+      },
+      {
+        "pid": 5632,
+        "name": "MsMpEng.exe",
+        "cpuSeconds": 0.719,
+        "perSecond": 0.126,
+        "host": false,
+        "launchChain": false,
+        "newInWindow": false
+      },
+      {
+        "pid": 28832,
+        "name": "powershell.exe",
+        "cpuSeconds": 0.609,
+        "perSecond": 0.106,
+        "host": false,
+        "launchChain": true,
+        "newInWindow": true
+      },
+      {
+        "pid": 4,
+        "name": "System",
+        "cpuSeconds": 0.234,
+        "perSecond": 0.041,
+        "host": false,
+        "launchChain": false,
+        "newInWindow": false
+      },
+      {
+        "pid": 5284,
+        "name": "Microsoft.DevCenter.DevBoxAgent.exe",
+        "cpuSeconds": 0.234,
+        "perSecond": 0.041,
+        "host": false,
+        "launchChain": false,
+        "newInWindow": false
+      },
+      {
+        "pid": 3236,
+        "name": "svchost.exe",
+        "cpuSeconds": 0.094,
+        "perSecond": 0.016,
+        "host": false,
+        "launchChain": false,
+        "newInWindow": false
+      },
+      {
+        "pid": 15252,
+        "name": "conhost.exe",
+        "cpuSeconds": 0.078,
+        "perSecond": 0.014,
+        "host": false,
+        "launchChain": true,
+        "newInWindow": true
+      },
+      {
+        "pid": 5452,
+        "name": "MsSense.exe",
+        "cpuSeconds": 0.063,
+        "perSecond": 0.011,
+        "host": false,
+        "launchChain": false,
+        "newInWindow": false
+      }
+    ],
+    "launchChain": [
+      27916,
+      9608,
+      28832,
+      3808,
+      31440,
+      6536,
+      15252
+    ],
+    "unobservable": 0,
+    "unmatched": 0
+  },
+  "readinessSeconds": 7.209,
+  "payloadStartedAt": "2026-11-18T19:47:14.479+07:00",
+  "payloadEndedAt": "2026-11-18T19:47:33.772+07:00",
+  "payloadExit": 0,
+  "payloadSeconds": 19.293
+}

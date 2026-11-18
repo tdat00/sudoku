@@ -1,0 +1,49 @@
+PASS the policy of this task is MS18b-host-active and the label is the descriptive one
+PASS the thresholds are the original ones (mean 0.5, max 1.0, five one-second intervals, 0.5 CPU-s/s)
+PASS the confirmed host is PID 1968, parent 18780, the confirmed creation time
+PASS raw screen fails (mean 1.048, max 1.43), confirmed host, nothing else: admitted, strict false
+PASS the strict verdict keeps its reasons and numbers when admitted
+PASS strict screen passes: admitted, strict true
+PASS another process at 0.49 CPU-s per second is below the limit: admitted
+PASS the launch chain at 3 CPU-s is instrumentation: admitted
+PASS a process without a CPU counter is a recorded limitation, not zero and not a hold
+PASS the unobservable counter is counted
+PASS a foreign timing lock at the start
+PASS a foreign timing lock before the payload
+PASS our lock naming another task
+PASS our lock gone before the payload
+PASS no recheck of the locks before the payload
+PASS another process at exactly 0.5 CPU-s per second
+PASS PID 17588 (the other copilot host) has no exemption
+PASS a heavy process that started inside the window
+PASS another PID observed as the host
+PASS the right PID with another creation time
+PASS a wrong parent PID
+PASS a wrong executable
+PASS a missing host
+PASS no host identity supplied
+PASS the host missing from the second snapshot
+PASS the host in the snapshots with another creation time
+PASS no CPU observation of the host
+PASS an invalid counter interval
+PASS fewer than five intervals
+PASS missing process snapshots
+PASS the old MS18a policy name is an unknown policy here
+PASS an unknown policy
+PASS without a policy the failed strict screen is not admitted
+PASS without a policy a passing strict screen is admitted
+PASS reportVerdict: admitted under the policy, strict failed, exit 0 is acceptable
+PASS reportVerdict says the strict screen FAILED
+PASS reportVerdict: exit 0 with a failed strict screen and no policy
+PASS reportVerdict: policy named but admitted false, exit 0
+PASS reportVerdict: policy named, no admitted field, exit 0
+PASS reportVerdict: admitted without the environment label
+PASS reportVerdict: admitted with a non-zero payload exit
+PASS reportVerdict: admitted, payload not run (no exit)
+PASS reportVerdict: the old MS18a policy name
+PASS reportVerdict: another policy name
+PASS reportVerdict: a strict pass under the policy
+PASS reportVerdict: a strict pass without a policy, exit 0
+PASS reportVerdict: no record
+
+47 cases, 47 pass, 0 fail

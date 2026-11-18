@@ -1,0 +1,67 @@
+$ node tests\soak.js --variant=classic9 --level=normal --count=12 --seed=20260101 --no-gate --shallow-cap=128 --json=..\docs\difficulty-v3\evidence\MS18b\cap-128\classic9-normal.json
+TASK MS18b cap-128-classic9-normal
+STRICT SCREEN NOT READY: mean 0.622, max 1.071 busy cores of 16 (cap-128-classic9-normal.json)
+POLICY MS18b-host-active ADMITTED: every admission condition of MS18b-host-active holds; the strict screen FAILED and is recorded unchanged
+LABEL shared-slot, CLI-host-active; not strict-quiet-machine timing
+START 2026-11-18T20:11:41.787+07:00
+Sudoku Generator soak test  (node v26.13.0, seed 20260101, 12 puzzles in 3.7 s)
+
+Calibration in force (score bands, lower bound of each level, the same on every board):
+  veryEasy 0 | easy 45 | normal 180 | hard 400 | expert 700 | master 1000 | nightmare 1500 | hell1 2400 | hell2 3600
+Technique weights: nakedSingle 1, hiddenSingleBox 1.25, hiddenSingleLine 1.5, pointing 40, boxLine 50, nakedPair 120, hiddenPair 145, nakedTriple 180, lawOfLeftovers 200, hiddenTriple 220, nakedQuad 260, hiddenQuad 300, xWing 320, skyscraper 330, twoStringKite 340, remotePairs 350, simpleColouring 360, emptyRectangle 380, finnedXWing 400, swordfish 420, finnedSwordfish 480, jellyfish 520, xyWing 650, xyzWing 750, wxyzWing 800, wWing 850, uniqueRectangle 900, bugPlusOne 920, xyChain 1000, forcingChain 1100, alsXz 1250, sueDeCoq 1300, forcingChainLong 1400, nishio 1700, nishioDeep 2600, cageCombo 40, ruleOf45 260, cageSplit 520, ineqChain 40, minMaxForcing 180
+Shallow-search allowance: 128 full ratings (--shallow-cap)
+
+== classic9 (81 cells) ==
+requested     veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2    n    hit  samples  ms p50     p95     max  budget
+normal               .          .         12          .          .          .          .          .          .   12    83%     31.3     197    1205    1205150 SLOW
+exact: 10 of 12 (83.3%)
+
+group of the hardest technique per requested level (share of puzzles):
+  normal     subset 100%
+
+Score histogram (the bands of every board), all puzzles, by requested level:
+bin            veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2   all
+0-45                  .          .          .          .          .          .          .          .          .      0
+45-180                .          .          .          .          .          .          .          .          .      0
+180-400               .          .         12          .          .          .          .          .          .     12 ##############################
+400-700               .          .          .          .          .          .          .          .          .      0
+700-1000              .          .          .          .          .          .          .          .          .      0
+1000-1500             .          .          .          .          .          .          .          .          .      0
+1500-2400             .          .          .          .          .          .          .          .          .      0
+2400-3600             .          .          .          .          .          .          .          .          .      0
+3600-5400             .          .          .          .          .          .          .          .          .      0
+5400+                 .          .          .          .          .          .          .          .          .      0
+
+Invariants over 12 puzzles:
+  I1 ok
+  I2 ok
+  I3 ok
+  I4 ok
+  I5 ok
+  I6 ok
+  I7 ok
+
+classic9 hit rate per level: normal 83%
+RESULT: FAIL (classic9 below 90%: normal)
+
+Difficulty diagnostics (docs/difficulty-v3/evidence/MS18b/cap-128/classic9-normal.json): 12 of 12 requests recorded; the diagnostic solves took 0.0 s after the generation and the checks
+
+== classic9/normal: 12 requests, 0 errors, 0 unrated, 12 solved in band ==
+  old hits 10/12 (83%), qualified hits 10/12 (83%), shallow 2/12 (17%; 12 with a derived verdict); exact flag against the derived verdict: 0 disagreements
+  sampled reference: ok 2, vacuous 0, error 0, skipped 0, notSelected 10, notRun 0; final path: ok 12, mismatch 0, error 0, notRun 0
+  work: ok 12, mismatch 0, unavailable 0; local searches ended by shallow 3, ratings 0, proposals 24
+    full ratings (n=12): min 3, p10 4, p50 66, p90 367, max 565, upper median 66
+  cohort exact (old hits): 10 puzzles, peak hiddenPair 7, nakedTriple 3
+    raw position (n=10): min 0.273, p10 0.295, p50 0.409, p90 0.677, max 0.677, upper median 0.409
+    adjusted position (n=10): min 0.084, p10 0.113, p50 0.253, p90 0.592, max 0.592, upper median 0.253
+    adjusted undefined: -
+  cohort all in band: 12 puzzles, peak hiddenPair 7, nakedTriple 3, nakedPair 2
+    raw position (n=12): min 0.182, p10 0.182, p50 0.386, p90 0.614, max 0.677, upper median 0.386
+    adjusted position (n=12): min -0.037, p10 -0.035, p50 0.222, p90 0.51, max 0.592, upper median 0.222
+    adjusted undefined: -
+  forcing-chain steps (0 of 12 rated paths): length -; per-puzzle maximum -
+  nishio steps (0 of 12 rated paths): depth -; per-puzzle maximum -
+
+DIAGNOSTICS: PASS (request errors 0, invariant violations 0, check errors 0, reference errors 0, final-path errors 0, final-path mismatches 0, work unavailable 0)
+END 2026-11-18T20:11:46.075+07:00
+exit=0 seconds=4.288

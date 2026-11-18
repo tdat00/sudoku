@@ -380,14 +380,14 @@ No permission here carries to a new acquisition route, changed selection rule or
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted (evidence only; orchestrator template/contract review, SA1 cross-review resumes at MS18c). Both rule winners equal the values in force: **R5 256 and C = 4 reconfirmed**, so no owner decision is needed. Complete coverage 288 + 72 = 360 outcomes; no QUESTION was raised; the MS18b-host-active readiness contract was applied with 0 holds |
+| Start | 2026-11-18 19:20:23 (+07:00), base `393775a1` (pack-only on accepted `484b8a52`; production/soak bytes = MS17b `57c1b10`); explicit shared-slot grant in the dispatch |
+| End | Locked commands 19:46:15-20:49:07; final report 20:55:27; orchestrator review 20:56-20:58 (locked re-runs about 20:57); commit about 20:59 |
+| Duration | About 1 h 35 min developer (no question waits); orchestrator review about 3 min; 44 locked commands in `docs/difficulty-v3/evidence/MS18b/lock-log.jsonl`, largest at most 0.478 of its bound, smallest gap between locks 15.010 s |
+| Model | claude-sonnet-5.5 (developer); gpt-6-astra (SA2 preparation); claude-opus-5.5 (orchestrator) |
+| Token usage | Developer: 160 model calls; 61,301,067 input tokens (60,681,740 cache reads); 277,291 output tokens. SA2 preparation (19:05-19:19): 12 calls; 3,198,524 input (3,141,672 cache reads); 34,377 output |
+| AI credits | about 1,039 (developer); about 768 (SA2 preparation) |
+| Verification | Developer: 30 logical cells (R5 6 cells x 64/128/256/none; R9 3 Nightmare cells x C4/C6), 360 of 360 outcomes, every command exit 0 with DIAGNOSTICS PASS; helpers task-owned, tested without generation (47/47, 64/64, 53/53; r1 reporter 59/59), frozen `helpers-sha256.txt` before the first timed command and `helpers-sha256-r1.txt` after the reporter revision (same result on the same ledgers); host PID 1968 creation time verified, PID 17588 no exemption; six fingerprints identical at start and end (Generator `274067a0...`, Player `5e55cec6...`, replay `ff55cbce...`, hash `b1c78ecb...`, soak source `85537bbd...`, tool `efff9dcd...`); 256/C4 rows reproduce MS18a puzzle hashes 72/72 and 36/36 (informational). Orchestrator: independent recount from the 44 raw ledgers (360 unique tags, indexes 0..11 in all 30 cells, 0 errors, per-cell exact/shallow/upper-median full ratings equal to the developer tables); R5 rule re-derived (64 loses classic9 Normal 11->10 and Nightmare 12->11; 128 loses Normal 11->10; 256 loses none and lowers Jigsaw 9 Expert 1,215 -> 1,104, so 256 is the smallest eligible cap); C rule re-derived (36/36 vs 20/36, no tie); locked re-runs of the two decisive cells cap-128 classic9 Normal (4.1 s) and cap-64 classic9 Nightmare (21.7 s) reproduce 24 of 24 rows (10/12 and 11/12 exact); `git diff 484b8a52` outside `tasks/`, `docs/` and `generator/tests/artifacts/` empty; `limits-v3.md` edits confined to section 3/5 recheck records (section 1 untouched); CI `generator-suites.sh check` passed (4,784 of 4,784) |
+| Acceptance | MS18b-B01, B02, T01-T05 met (developer evidence `docs/difficulty-v3/evidence/MS18b/evidence.md`, AC mapping section 4; final-recheck sections in `shallow-cap-2026-11-13.md` and `chain-window-2026-11-15.md`; disposition in `limits-v3.md`) |
+| Issues & resolutions | R5 table (exact/12, upper median full ratings; classic9 Normal, Master, Nightmare, Killer Hard, Expert, Jigsaw 9 Expert): none 11/66, 12/4, 12/49, 0/581, 0/2314, 11/1215; 256 11/66, 12/4, 12/49, 0/581, 0/2314, 11/1104; 128 10/66, 12/4, 12/49, 0/570, 0/2314, 11/754; 64 10/66, 12/4, 11/49, 0/503, 0/2255, 11/434. C table: C4 12+12+12 = 36/36, C6 2+12+6 = 20/36. Killer Hard/Expert 0/12 exact, 12/12 shallow at every cap (S-OD7, MS18c). Generation time over the six R5 cells 371.4 / 388.6 / 410.9 / 423.1 s at 64/128/256/none; C6 about 3.8x C4 (descriptive, host-active). Admission: 44 of 44 admitted at attempt 1, 0 holds/re-asks/gaps/reruns; raw strict screen failed 40, passed 4. Developer disclosures: unlocked actions limited to file-only preparation and two reporter runs (20:33 dry run on partial data, final run); reporter revision r1 (trailing space; incomplete evidence exit 4 instead of 1) refrozen. Gaps: twelve requests per cell, no repeat, no strict-quiet pass, so no GQ/GP conclusion |
+| Handoff | To MS18c: R5 256 and C = 4 reconfirmed on accepted source (no owner decision); unchanged accepted source, quick totals (Generator 4,784, Player 2,981), fingerprints and projections from MS17b; MS18b host-active readiness executed (0 holds) - readiness for MS18c/MS18d must be settled in their own dispatch contracts; new MS18b items (R5/C reconfirmed, Killer Hard/Expert 0/12 at all four caps, R5 and C6 cost observations) to MS18c/d/e; inherited items MS18a-Q1-HOST, MS18a-Q2-ADMISSION, S-AV14, S-AV25/S-AV15 (GD Hell 1 and confusion matrix), MS17b-GD21-PROCESS, S-AV36-S-AV39, MS15b-GP-J/GP-U, MS15b-Q6, MS16-Q6, MS18a zero-exact/loss record and earlier S-AV items unchanged |

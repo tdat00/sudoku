@@ -116,3 +116,30 @@ One literal, `generator/js/engine/digger.js` line 653: `const SHALLOW_SEARCH_DEF
 to `9a833d93…`; reverting the literal in memory reproduces the first, so the ledgers were generated from the same source
 as the final one except for that literal. The commands, shards, exit codes, times and lock waits are in
 [evidence/MS05r4/evidence.md](evidence/MS05r4/evidence.md) and `runs.jsonl`.
+
+## Final recheck (MS18b, 2026-11-18): the same rule on the complete catalogue
+
+The task text above is history and stays as measured. MS18b repeated the R5 experiment on the final candidate (the accepted MS17b source `57c1b10`; rating
+version 3; soak `sourceHash` `85537bbd...`, `toolHash` `efff9dcd...`, Node v26.13.0; **the production defaults are still 256 and C 4** and no override other than the
+compared `--shallow-cap` is used): the same six cells, the same twelve requests per cell (tags `variant:level:index`, base seed 20260101, derived pipeline seeds), the
+same four settings, **24 logical cells, 288 fresh requests**, run as 28 locked commands (whole cells and absolute-index shards, jobs 1) under the named policy
+`MS18b-host-active` (every timing is "shared-slot, CLI-host-active; not strict-quiet-machine timing"). The commands, ledgers, transcripts, readiness records, the lock
+log and the generated decision packet are in [evidence/MS18b/](evidence/MS18b/evidence.md) (`decision-packet.md`, `selection.json`). The rule is the one of
+this record, applied literally: every finite cap's exact count in every cell must be at least none's, and at least one cell's upper median (sorted index 6 of the twelve
+`fullRatings`, all requests and attempts) must be strictly smaller than none's; the smallest eligible cap wins, otherwise none.
+
+| Cell (exact of 12 / upper median of full ratings) | none | 256 | 128 | 64 |
+|---|---|---|---|---|
+| classic9 Normal | 11 / 66 | 11 / 66 | **10** / 66 | **10** / 66 |
+| classic9 Master | 12 / 4 | 12 / 4 | 12 / 4 | 12 / 4 |
+| classic9 Nightmare | 12 / 49 | 12 / 49 | 12 / 49 | **11** / 49 |
+| Killer Hard | 0 / 581 | 0 / 581 | 0 / 570 | 0 / 503 |
+| Killer Expert | 0 / 2,314 | 0 / 2,314 | 0 / 2,314 | 0 / 2,255 |
+| Jigsaw 9 Expert | 11 / 1,215 | 11 / **1,104** | 11 / 754 | 11 / 434 |
+
+**Result: 256 is reconfirmed.** Cap 64 loses exact hits against none in classic9 Normal (request 11) and classic9 Nightmare (request 2), and cap 128 in classic9 Normal
+(request 11), so neither is eligible; cap 256 loses none and strictly lowers the median in Jigsaw 9 Expert (1,215 to 1,104), so it is eligible and the smallest eligible cap: the
+rule winner equals the value in force, nothing is proposed to the owner, and no default, source or fixture was edited. Killer Hard and Expert are 0 of 12 exact at every setting (all
+eight attempts in each request, 12 of 12 shallow, as at the original measurement): a cell with 0 exact at none and at the cap has no hit-count loss, so the cells stay in
+every setting. The generation of the six cells (sums over the twelve requests; shared machine, descriptive) is 371.4, 388.6, 410.9 and 423.1 s at 64, 128, 256 and none. The 256 rows
+reproduce MS18a's puzzles in all 72 requests. This is one factor at a time: it says nothing about the joint behaviour of two changed defaults.

@@ -1,0 +1,61 @@
+PASS the upper median of twelve values is the sorted index 6 (7 of 1..12), not the average 6.5
+PASS MS05r4 as written: 64 and 128 lose hits at classic9 nightmare, 256 reduces its median: winner 256
+PASS 256 is the in-force value: disposition same
+PASS the smallest eligible finite cap wins (64 and 128 and 256 all eligible: 64)
+PASS a changed winner is an owner decision pending
+PASS 64 with a hit loss is skipped, the next eligible (128 with its own hits kept) wins
+PASS no finite cap qualifies on complete valid evidence (no strict reduction, or a hit loss): none
+PASS the legitimate winner none against the in-force 256 is an owner decision pending
+PASS an equal median is not a strict reduction
+PASS Killer Hard 0 exact at none and at 256: no hit loss, the median reduction there makes 256 eligible
+PASS zero-exact cells never disqualify a cap by themselves; a loss elsewhere does
+PASS a missing (setting, cell) makes R5 undetermined: winner null, never none
+PASS an undetermined choice has the disposition undetermined
+PASS a cap with a hit loss in a complete pair is still known ineligible; missing evidence is not determinable
+PASS a missing none cell leaves every cap undetermined for that cell
+PASS the upper median is computed from all twelve rows, not the exact-only cohort (3000, 3000)
+PASS it is the sorted index 6 of the twelve
+PASS an error row is a miss that stays in the twelve with its work (hits 0, errors 1, median 40)
+PASS a request whose work is unavailable has no statistics (not a zero)
+PASS fewer than twelve rows have no statistics
+PASS C4 36/36 against C6 24/36: C4 wins (MS07c)
+PASS 0/36 against 0/36 is a tie: C6, a changed winner (never reconfirmed C4)
+PASS equal totals 35 and 35 with different cells: tie, C6
+PASS C6 with more exact hits wins
+PASS C6 36/36 against C4 35/36: C6
+PASS a missing C6 cell: undetermined, totals of the incomplete variant are null, no winner
+PASS reconfirmation: 360 outcomes, R5 256 and C4, both same, no owner question
+PASS reconfirmation: every reporter check passes
+PASS reconfirmation: no Discord question
+PASS the packet states the status, the 24 + 6 rows and the label
+PASS the packet is CRLF only
+PASS the packet has no trailing whitespace
+PASS a complete sound run exits 0
+PASS changed R5 (64) and changed C (tie, 6): complete, owner decision pending for both
+PASS the Vietnamese question follows the template with the data
+PASS the packet names the tie as a changed winner and the stop status
+PASS no eligible cap on complete evidence: winner none, owner decision pending (C4 same)
+PASS a missing shard: recorded below 360, the cell is incomplete with its exact indexes 6..11
+PASS R5 is undetermined (no winner, not none) while C stays complete and valid
+PASS the status is undetermined / incomplete and no Discord question is made
+PASS the missing entry is not a pass
+PASS the packet says UNDETERMINED and lists the missing evidence
+PASS incomplete evidence with nothing defective exits 4 (not 1)
+PASS a changed C winner is shown as owner decision pending although the milestone is incomplete
+PASS no Discord question without complete validated data
+PASS two holds without a ledger are a gap of the experiment and the milestone is incomplete
+PASS a gap after two holds exits 4 (an incomplete milestone, nothing defective)
+PASS a ledger that says another shallowCap is a defect: that cell is not merged, R5 undetermined
+PASS a defective ledger exits 1
+PASS a request error with its work is a miss inside the fixed twelve: valid, errors 1, not erased
+PASS a request whose work is unavailable is a defect (never a zero): the cell has no statistics
+PASS a row outside its span is a merge defect: never merged, no winner
+PASS shards of mixed cutoffs never merge (chainShortMax 4 inside a C6 cell)
+PASS a ledger of another source is a defect and the identity check fails
+PASS two attempts that both started the payload are not accepted (a payload is never rerun)
+PASS a failed correctness check on otherwise complete data exits 1
+PASS the held attempt is not the measurement: the started attempt (admission2) is read
+PASS the commit list shows every distinct commit with its ledger count
+PASS two commits are both listed
+
+59 cases, 59 pass, 0 fail
