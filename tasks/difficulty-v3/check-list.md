@@ -6,7 +6,7 @@ one band target through generation, the expanded solver, and rating/cache versio
 executable files are written for serial dispatch; review follows the S-OD4 matrix below.
 Only the orchestrator changes Done marks, Execution logs and the execution summary.
 **Authority:** `docs/difficulty-v3/clarifications-resolved.md` Parts F/G (AC01 and acceptance),
-owner acceptance, 2026-11-12 11:50; Part H, PR-S1/PR-S2, CV6-03 to CV6-05, RP-01, JF-01, GC-01, JF-02 and S-OD1 through S-OD12 also bind.
+owner acceptance, 2026-11-12 11:50; Part H, PR-S1/PR-S2, CV6-03 to CV6-05, RP-01, JF-01, GC-01, JF-02 and S-OD1 through S-OD13 also bind.
 S-OD3/S-OD4 supersede the earlier performance-only recovery stops, not correctness or evidence integrity.
 **Traceability:** [accepted report](../../docs/difficulty-v3/report-detailed.md), R1-R24;
 [answers](../../docs/difficulty-v3/clarifications-resolved.md), Parts A-H, PR-S1/PR-S2, CV6-03 to CV6-05, RP-01, JF-01, GC-01 and JF-02;
@@ -114,7 +114,7 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [ ] | MS18 | MS18a-MS18e | Final evidence (parent) | MS17b | split | Evidence/release | M18 | 43-47 |
 | [x] | MS18a | [MS18a](MS18a-final-matched-soak.md) | Matched final soak | MS17b | S, 25-35 min | Evidence | M18a | 43 |
 | [x] | MS18b | [MS18b](MS18b-recheck-cap-and-window.md) | Cap/window final rechecks | MS18a | S, 25-40 min | Evidence | M18b | 44 |
-| [ ] | MS18c | [MS18c](MS18c-qualify-and-publish-offers.md) | Qualify and publish offers | MS18b; resolve MS18c-Q1/Q2 before dispatch | M, 35-50 min | Qualification | M18c | 45 |
+| [ ] | MS18c | [MS18c](MS18c-qualify-and-publish-offers.md) | Qualify and publish offers | MS18b; S-OD13 Stage 1 then joint SA1/SA2 ceilings before Stage 3 | M, 35-50 min | Qualification | M18c | 45 |
 | [ ] | MS18d | [MS18d](MS18d-performance-and-final-hashes.md) | Final GP preflight/performance/hashes | MS18c | M, 40-55 min + GP/GG | Evidence | M18d | 46 |
 | [ ] | MS18e | [MS18e](MS18e-release-evidence-closure.md) | Final correctness/items/workflows and PR CI | MS18d | M, 40-60 min + GD/deep/CI | Release evidence/CI | M18 | 47 |
 
@@ -191,10 +191,11 @@ these commits also contain evidence, helpers and notes, not only pack files.
 M17 remains complete. MS17a (`5b94904`), MS16
 (`d41a6dd`), MS15b (`8b26e83`), MS15a (`b958a58`, SA1 accepted), MS14c (`6a9fbf6`),
 MS14b (`0e3a0c4`), MS13c (`9d58d86`) and resolved JF-02/S-OD12 (A + S0) remain prior
-boundaries. Next: **MS18c -> MS18d -> MS18e**, one developer at a time, but **MS18c's
-full dispatch is held for its explicitly listed Q1/Q2 decisions**. The brief is
-prepared, not a permission for the developer to choose a measurement policy or run
-an unbounded qualifier. SA1 is the cross-reviewer.
+boundaries. Next: **MS18c -> MS18d -> MS18e**, one developer at a time. **S-OD13 resolves
+Q1/Q2 policy; MS18c Stage 1 is file-only preparation and MUST STOP.** GQ/production
+work remains held for **joint SA1/SA2 approval of the source-bound per-cell numerical
+plan** and explicit Stage 3 release. The developer chooses no ceiling. SA1 remains
+the final cross-reviewer.
 **MS18a and MS18b receive orchestrator template/contract review; SA1 cross-review is
 at MS18c.** No extra analyst review gate is added. A specific unresolved question still
 goes through the orchestrator and the QUESTION pause.
@@ -323,30 +324,43 @@ totals **371.4/388.6/410.9/423.1 s** and C6 **526.1 vs C4 139.3 s (3.8x)** are
 descriptive GS cost observations, not GQ/GP verdicts or command bounds. Keep all
 MS18a and older items in MS18c's complete handoff.
 
-**MS18c pre-dispatch questions at `14d8c903`:**
+**S-OD13 — owner, Discord author `amicably8850`, 2026-11-18 21:31:46 (+07:00):**
 
-- **MS18c-Q1 (open):** approve a uniform final qualification environment. Proposed
-  host-active GQ keeps actual raw p95/budgets/jobs/seeds/guard unchanged; alternatively
-  arrange the whole matrix outside the active CLI on an approved quiet environment.
-  The host cannot be quiesced here; 4/44 strict passes do not prove mathematical
-  impossibility, but neither do lucky windows establish a uniform quiet regime.
-  MS18a/b's descriptive exception is not inherited.
-- **MS18c-Q2 (open):** decide the complete execution route. One cell is indivisible in
-  the current CLI, its possible 60-request second round is serial, and a valid
-  100-request cell at 8 s/request can need **560 s plus overhead**. Old six-cell
-  projections were 556-4032 s; current-source generation-only indicators also warn
-  against a blanket <=450 s claim. Options in the leaf: retain 450/540 with honest
-  partial evidence/publication blocked; authorize Fable to specify a GQ-only longer
-  bounded route with numeric ceilings and SA1 review; or authorize a separate reviewed
-  bounded qualification tooling/protocol task if 540 must remain absolute.
+> Q1: A. Q2: chọn phương án B nhưng giao SA-Opus và SA-Astra chọn mức trần, không cần thông qua Fable.
 
-The leaf contains Vietnamese owner/Fable questions, code anchors, numerical evidence
-and the post-decision bounded plan. **Neither proposal is approved here.** No GQ,
-publication or silent scheduler/sharding/ceiling edit before recorded answers and the
-corresponding pack amendment/prerequisite. S-OD7 and (c1) already settle the zero-exact
-cells' offer rules; CV6-05 is a conditional later Fable decision, not a present budget
-choice. The old "1-12 h" allowance is not a verified full-matrix bound, and waiting on
-the same process does not reset its 540 s deadline.
+- **Q1-A approved:** explicit **`MS18c-GQ-host-active`** admission. Actual raw p95,
+  2/10/30 s budgets, jobs 4, 40/100 seeds and 120000 ms generation guard remain
+  binding. No subtraction/relaxation; additional-consumer hold and one >=60 s
+  re-ask only for a verified unstarted eligible hold remain.
+- **Q2-B approved, numbers delegated:** a GQ-only longer bounded command route,
+  with numeric authority **jointly SA1/Opus + SA2/Astra, not Fable or the developer**.
+  The qualifier/scheduler/protocol do not change. No numeric ceiling was selected
+  by the owner; the old six projections and 560 s example are not approved limits.
+
+**Three stages, explicit stops:** Stage 1 produces a file-only 135-row preflight,
+source hashes, candidate derivations/unknowns and the outer-deadline audit, then stops.
+Stage 2 requires both analysts' explicit approval of the exact source-bound per-cell
+plan; the pack author/orchestrator records it in an immutable pack manifest.
+Only explicit Stage 3/slot release permits compatibility/supervisor implementation
+and then approved GQ cells. No generator, probe, live admission sample or production
+edit in Stage 1; no developer-selected ceiling, even for an apparently fast cell.
+
+**SA2 ceiling proposal P1 (not yet jointly approved):** H=60 s, conservative
+request-turnaround bounds B4/B1 including post-generation validation, and
+**P=H+10*B4+60*B1**, no early-stop credit. Round P up to 30 s as A; A<=450 keeps
+T=540, otherwise propose T=round-up-30(1.25*A), with **A<=9600 / T<=12000 s**,
+GQ only. Unknown/unsupported/above-envelope cells are unadmitted, not assigned the
+maximum. The leaf specifies 1.5x observed-maximum candidates, labelled concurrency
+proxies, guard/validation gaps, joint approval and examples that grant no launch.
+Other gates remain **450/540**. Retained outer waits can total 2400 s; proposal
+outer budget **T+2700 s** reaches 14700 s at the envelope maximum. The inherited
+`spawnSync` 1800 s timeout must be audited/replaced, never silently kill a valid child.
+
+The prepared questions and verbatim answer are archived with S-OD13. S-OD7 and (c1)
+still settle the zero-exact offer rules. **CV6-05's separate conditional Normal-budget
+delegation to Fable is unchanged**; it is not the GQ ceiling authority. The old 1-12 h
+range is not a verified full-matrix total, and reading a running command does not
+reset its approved deadline. No partial publication or GP waiver follows.
 
 Write/read back bounded plans before phases and format owned helpers before their
 freeze; no post-freeze source adjustment disguised as housekeeping. **S-OD12/S0**
@@ -376,6 +390,7 @@ accepted. The owner-ordered pause commit `a7f6660` was not green; preserve it as
 | S-OD10 (JF-01 / S-AV35) | Owner, Discord, 2026-11-16 22:20 (+07:00): "Chọn A." One-off MS12/Jellyfish corpus route: classic9 seed 4242, ascending indices 0-19,999 (<=20,000), original givens, level null and `testkit-4242-<index>` provenance; reuse/materialize the prefix once and account for construction. Player replay chunks <=64, <=400 hints/puzzle, eight-minute tool deadline, credible <=450 s admission, 540 s process ceiling and existing locks/15 s gaps. Stop acquisition after the first chunk supplies a verified source, publish/check it, then require all 37 GH checks and final quick/CI gates. At exhaustion or inability to stay within bounds, report completed/incomplete ranges and stop. No automatic expansion, additional Generator discovery or reset of B's ceiling; no other ID/task inherits it. GH acceptance, finders, priors, availability and tests stay unchanged. |
 | S-OD11 (GC-01 / S-AV36) | Owner, Discord, 2026-11-17 04:30 (+07:00): "GC-01: chọn A." Bounded grouped attempt first for both forcing IDs, initially 4,096 additional nodes and 50,000 shared construction/search units. Only a local work/node cap permits short-only complete-singleton fallback with `workLimit:null`, the same caller-clamped short window and the same parent budget. No reset or fallback for parent exhaustion, cancellation/errors, completed negatives or window rejection. The fallback certifies a singleton-graph minimum, not a grouped minimum. `forcingChainLong` stays bounded with no fallback/second allowance; incomplete construction/minimum returns null. IR54 is preserved; option B is not approved. Record both phases and total cost, retain R10's once-only own-new-limit rule and all proof/E/GH/quick/CI/qualification gates. No numeric adjustment or availability guarantee follows. Finish accepted/committed MS14a, then MS13c -> MS14b -> MS14c; no change to MS14a. S-AV36 stays open for measurements/cost/audit, not for another GC-01 answer. |
 | S-OD12 (JF-02 A + S0) | Owner, Discord, 2026-11-17 13:46 (+07:00): "tôi chọn A và S0". Retroactively approve retention of MS13c's verified Jellyfish source `testkit-4242-8657`, snapshot and all acquisition records, for MS13c only. Explicitly preserve that the scan lacked authorization when performed; S-OD10 did not authorize it. No further scan, unused quota, budget reset or gate waiver. **S0 keeps case-by-case permission; the proposed standing S1 rule is not approved.** Ordinary B/IR72 acquisition remains unchanged; every future exception/expansion needs separate prior owner authorization. The owner hold is resolved, but reviewed fixes and final GH/both quick sets/CI still precede MS13c acceptance/commit and later dispatch. S-OD11, cost items and final qualification/performance obligations are unchanged. |
+| S-OD13 (MS18c-Q1/Q2) | Owner, Discord author `amicably8850`, **2026-11-18 21:31:46 (+07:00)**: **"Q1: A. Q2: chọn phương án B nhưng giao SA-Opus và SA-Astra chọn mức trần, không cần thông qua Fable."** Q1-A approves declared host-active GQ with actual raw p95/budgets/jobs/seeds/120000 ms guard unchanged, the existing additional-consumer hold and one >=60 s re-ask before payload start only. Q2-B permits GQ-only longer bounded commands; **SA1/Opus and SA2/Astra jointly choose and approve numerical per-cell limits, not Fable/developer**. Stage 1 file-only preflight stops for Stage 2 joint approval before Stage 3. No numeric value is approved by this owner answer; P1 remains SA2's proposal. Other gates keep 450/540; no scheduler/protocol/offer/partial-publication/acquisition waiver. |
 
 The following are serial ownership transfers, not permission for parallel edits:
 
@@ -545,6 +560,9 @@ This replaces conflicting performance-only stops throughout the active pack; arc
 completed logs describe their own historical decisions. The 540-second process ceiling, <=450-second
 compound projection, one locked command and 15-second gap are unchanged. Stop an overlong command;
 do not confuse that with stopping the task for an owner decision.
+**Later narrow exception, S-OD13:** only GQ cells with a source-bound per-cell plan
+jointly approved by SA1/SA2 use their approved A/T instead of 450/540. The common
+helper and all non-GQ limits remain unchanged; S-OD13 does not itself assign numbers.
 
 - **Owner stop:** invalid/non-unique puzzle, unsound deduction, incorrect exact flag/warning,
   lost/corrupted or misrepresented evidence, or work requiring a change to a recorded decision.
@@ -662,11 +680,11 @@ If a complete bounded route is still unavailable, report the final gap and leave
 release unsatisfied; any later proposal to change the recorded rule goes through the orchestrator,
 not an implementer's exception. No request to Fable is initiated by this ruling.
 
-**Final-dispatch follow-up, 2026-11-18 (`14d8c903`):** MS18c-Q1/Q2 now explicitly
-request readiness/execution decisions on the current evidence before full dispatch.
-They do not retroactively alter this historical ruling, relabel the old six cells,
-authorize a higher ceiling or make an incomplete matrix publishable. The pending
-questions and proposed choices are in the MS18c brief; the orchestrator routes them.
+**Final-dispatch follow-up, 2026-11-18:** S-OD13 answers MS18c-Q1/Q2: declared
+host-active GQ and a GQ-only longer route with **joint SA1/SA2 numerical authority**.
+The old six observations remain historical; no outcome is relabelled. The Stage 1
+preflight and Stage 2 joint approval must precede any GQ-specific higher limit;
+no early-stop credit, scheduler change or incomplete publication is authorized.
 
 **CV6-05: S-AV01's three fixed endings.** Nobody now edits, skips or wraps the Normal CV6
 assertion. It is manual, outside the quick set and CI, and its honest red outcome blocks no
@@ -894,6 +912,12 @@ MS17b freezes the actual new-pattern limits with v3.
 
 ## 4. Decisions taken
 
+**S-OD13, 2026-11-18 21:31:46 (+07:00):** Q1-A and Q2-B are owner-approved,
+with GQ ceiling authority delegated **jointly to SA1/Opus and SA2/Astra, not Fable**.
+The canonical verbatim owner record and section 2 govern. Stage 1 is file-only;
+the exact per-cell numeric plan needs both approvals before Stage 3. P1 is only
+a proposal; all non-GQ ceilings and the qualification/offer predicates are unchanged.
+
 No implementer chooses an alternative from the original reports.
 
 | Question IDs | Accepted decision |
@@ -1043,11 +1067,13 @@ not retroactive extension of MS18a's ruling. Read the MS18b leaf before running;
 raw numerical screen below remains recorded, not silently turned into a quiet pass.
 The later GQ/GP readiness contract still needs its own dispatch disposition.
 
-**MS18c preparation at `14d8c903`:** its Q1/Q2 are open. The old strict screen is not
-silently replaced for GQ and no host-active/long-command option is approved by this
-checklist. Resolve the uniform measurement condition and executable bounded route
-before dispatch, then bind the recorded answer into the brief. The shared helper below
-remains unchanged until any explicitly approved task-specific alternative exists.
+**MS18c / S-OD13:** Q1-A explicitly approves **`MS18c-GQ-host-active`**, with the raw
+strict screen retained separately and actual p95 binding. Q2-B delegates numeric
+GQ ceilings jointly to SA1/SA2. Stage 1 is file-only and stops; no GQ before the
+exact Stage 2 plan is approved and Stage 3 released. The proposal is not permission
+to launch. The shared helper below remains the unchanged 540 s helper for non-GQ
+work; only a task-owned approved GQ supervisor may use approved per-cell longer
+limits, with the same locks, gaps and owned-process cleanup.
 
 - Obtain the normal shared slot/mutex and establish that no foreign timing-lock holder or
   known foreign CPU-heavy job is active. Never delete another lock, kill another session's
@@ -1290,7 +1316,7 @@ It does not broaden output-change, finder-activation or fixture-update authority
 | GS window | MS07c, repeated MS18b | Three Nightmare cells x C4/C6, 12 requests each; more exact hits, tie 6. |
 | GS Hell 1 pilot | MS07b; MS07c repeats only if default C changes | `node tests\soak.js --variant=classic9 --level=hell1 --from=0 --count=2 --total-count=2 --seed=20260101 --no-gate --json=..\docs\difficulty-v3\evidence\<task>\hell1-pilot.json`; exact two-request shard (bare --count=2 runs at least five at HEAD). Jobs 1/no --jobs; 540 s ceiling. Project unchanged 20-request GD/40-request GQ cost; pilot is not selection evidence. |
 | GS-after | MS18a | All 17 original cells; current vs old reference-qualified cohorts, not old score-only exactness. |
-| GQ-final | MS18c after MS18b reconfirmation (done) and recorded MS18c-Q1/Q2 disposition | Q135/jobs 4 protocol; bounded route/measurement contract explicitly approved first; archive v2 then publish complete live table/support arrays together; no tuning or implicit waiver. |
+| GQ-final | MS18c after MS18b reconfirmation (done), S-OD13, file-only preflight and joint SA1/SA2 cell-ceiling approval | Q135/jobs 4 protocol; `MS18c-GQ-host-active`, actual raw p95 unchanged; approved source-bound per-cell A/T and audited outer waits before Stage 3; archive v2 then publish complete table/support arrays; no tuning or implicit waiver. |
 
 GD: per-puzzle I5 and `digLevel` correctness contracts must pass; performance/availability failures
 are recorded and routed under S-OD4, not repaired by lowering assertions. GQ worker errors or missing replies fail the run; hidden verdicts

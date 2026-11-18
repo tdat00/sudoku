@@ -2,12 +2,12 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS18b accepted; resolve MS18c-Q1/Q2 below and record the executable contract before dispatch |
+| Depends on | MS18b accepted; S-OD13 recorded; Stage 1 preflight, then joint SA1/SA2 numeric approval before Stage 3 |
 | Accepted base | `14d8c903` (MS18b); runtime candidate remains `57c1b10`, R5 256 / C4 reconfirmed |
 | Size / active time | Medium; 35-50 minutes plus GQ |
 | Owner / milestone | Qualification/publication; M18c |
-| Authority / review | R24/R21, AUTH-S1, SA1-Q-S5, S-OD4 (c1), S-OD7/S-OD8, CV6-05; SA1 cross-review |
-| Status | Pack prepared; full execution/publication dispatch BLOCKED pending MS18c-Q1/Q2, not delegated to developer assumptions |
+| Authority / review | R24/R21, AUTH-S1, SA1-Q-S5, S-OD4 (c1), S-OD7/S-OD8/S-OD13, CV6-05; joint ceiling approval and SA1 cross-review |
+| Status | Stage 1 FILE-ONLY preparation ready; SA2 ceiling proposal P1 awaits SA1; no GQ before joint Stage 2 approval |
 
 ## Goal & business context
 
@@ -43,18 +43,25 @@ Use `evidence/MS18b/evidence.md`, `decision-packet.md`, `selection.json` and the
 | S-OD7 Killer Hard/Expert | **Already decided.** Withhold until later calibration; no in-v3 weight change. Keep both in GQ and preserve raw verdicts. |
 | S-OD4 (c1), large-board Nightmare/Hell availability | **Already decided.** Apply final qualification without exception; no permission to retain a failing offer is pending. |
 | S-OD11/S-OD12 and earlier acquisition/limit questions | **Resolved.** Preserve their dispositions; no new scan/limit permission transfers here. |
-| **MS18c-Q1: final qualification measurement environment** | **Open before GQ.** MS18a/b's descriptive host-active exception does not authorize a GQ timing gate. Options below. |
-| **MS18c-Q2: complete qualification execution route** | **Open before full dispatch.** Current 450 s admission/540 s process-tree ceiling and indivisible cell protocol do not supply a credible complete 135-cell route. Options below. |
+| **MS18c-Q1: final qualification measurement environment** | **Resolved by S-OD13: A.** Declared host-active GQ; actual raw p95 and the full qualification contract remain binding. |
+| **MS18c-Q2: complete qualification execution route** | **Resolved by S-OD13: B, with numeric authority delegated jointly to SA1/Opus and SA2/Astra, not Fable.** Per-cell ceilings are not yet approved; Stage 1 must stop for Stage 2. |
 | CV6-05 Greater-Than Normal fallback contract | **Conditional later, not an unconditional start dependency.** Only if final Normal qualifies and its final-source CV6 still fails: return numbers to Fable under the already recorded delegation, before MS18d. No budget value selected now. |
 | A variant with no qualified/offered level, unexpected publication incompatibility | **Conditional blocker if observed.** No invented passing level or silent population change. Assign the compatibility decision/fix through the orchestrator. |
 
-Thus the index's former "MS18b + owner actions" does **not** mean an unanswered R5/C
-decision. It now names Q1/Q2 explicitly. This preparation requests decisions; it does
-not record either option as approved. Do not dispatch a developer to discover these
-same two policy questions by running. A separately assigned read-only preparation is
-not permission for GQ, publication or a qualifier/tool change. Record the owner/Fable
-answers and amend this pack to the chosen executable contract first; SA1 retains
-cross-review of MS18c's code, protocol/evidence and publication.
+Thus no R5/C or Q1/Q2 owner choice remains open. **Numerical authority is delegated,
+not exercised yet**: the developer cannot choose a ceiling. Dispatch Stage 1 only;
+its completion is a hard stop, not permission for GQ or production edits.
+SA1 and SA2 must jointly approve the source-bound per-cell plan before Stage 3;
+SA1 also retains the normal final code/evidence/publication cross-review.
+
+**S-OD13 — owner, Discord author `amicably8850`, 2026-11-18 21:31:46 (+07:00):**
+
+> Q1: A. Q2: chọn phương án B nhưng giao SA-Opus và SA-Astra chọn mức trần, không cần thông qua Fable.
+
+The verbatim answer and prepared questions are archived in
+`docs/difficulty-v3/clarifications-resolved.md`, S-OD13. **SA-Opus = SA1; SA-Astra =
+SA2. No Fable approval is required for these ceilings.** CV6-05's separate conditional
+Normal-budget delegation to Fable is unaffected.
 
 ### Baseline identities
 
@@ -77,7 +84,7 @@ Rating/cache **3**, history/worker wire **1**, grouped proof **2**, catalogue/GH
 **180**, in the established shard order. Maintain counts/projections only by the
 existing quick rule after actual relevant verification; no membership/factor change.
 
-## MS18c-Q1 — uniform GQ readiness: decision required
+## MS18c-Q1 — uniform GQ readiness: S-OD13 selects A
 
 The named Copilot host **PID 1968**, created
 **2026-11-13T19:26:33.6916441+07:00**, cannot be made quiescent while this orchestration
@@ -90,40 +97,37 @@ incomplete; these facts do not prove that the CLI alone consumes all non-idle CP
 It would be inaccurate to say the numerical screen can **never** pass: four did.
 But the available environment is not host-quiescent, and occasional lucky windows or
 retry-until-green do not establish a uniform strict-quiet 135-cell measurement regime.
-**The current GQ readiness contract is not executable as a promised complete run on
-this session without a decision.** Do not quietly inherit MS18b's descriptive-only
-admission or claim that waiting on an async command removes the host.
+S-OD13 now explicitly approves the declared condition; this is not silent inheritance
+of MS18b's descriptive-only exception. Waiting asynchronously does not remove the host.
 
-Choose and record one uniform condition before the first GQ cell:
+**Binding GQ policy identity: `MS18c-GQ-host-active`.** At Stage 3:
 
-- **A — approve declared host-active GQ on this machine** (recommended, not approved): use the verified
-  named-host/no-other-heavy-job admission, raw five-interval screen recorded separately,
-  unchanged >=0.5 CPU-s/s additional-consumer hold, no OS-service/tree exemption,
-  and at most one >=60 s fresh-slot re-ask for a verified **unstarted** eligible hold.
-  Use a new explicit GQ policy identity and cell-aware attempt records. **Actual raw
-  generation p95 remains binding**, with the original 2/10/30 s budgets, jobs 4,
-  40/100 seeds and 120000 ms request guard. No subtraction, scaling, relaxed budget,
-  CPU-based miss waiver or selection of faster repeats. Unlike GS, these times would
-  decide offers under the approved declared environment, not merely be descriptive.
-- **B — require strict-quiet GQ outside the active orchestration host**: arrange an
-  external run while the CLI/agents are actually stopped, or a separately approved
-  quiet runner. Freeze a compatible source/Node/machine/protocol and run the entire
-  matrix under that one environment; no mixed-machine merge or claimed equivalence
-  of MS18a/b timing. This does not by itself solve Q2's per-command limit.
+- Obtain the explicit shared slot. Verify the named host instance, own mutex and
+  absence of a foreign timing lock before sampling and immediately before the payload.
+  Keep the raw five one-second CPU intervals and original mean <=0.5 / max <=1.0
+  strict-screen result as `ready`, separately from named-policy `admitted`.
+- Keep the **>=0.5 CPU-s per elapsed second** additional-consumer hold and the
+  verified per-instance process observations. No OS-service, all-`copilot` or host-tree
+  exemption. Known foreign heavy work still blocks; missing required counters or
+  identity is not idle. Ordinary identified launcher/sampler work is instrumentation.
+- One >=60 s fresh-slot re-ask is permitted only for a verified **unstarted** eligible
+  additional-consumer hold: at most two attempts per fixed GQ cell/configuration
+  across restarts, distinct immutable attempt records, no quota reset or payload
+  rerun. A second eligible hold stays an unexecuted gap while other approved cells
+  may continue. Unknown/mixed reasons, identity/evidence defects or a purported hold
+  after payload start retain their existing stop rules.
+- **Actual raw generation p95 is binding:** 2/10/30 s budgets, jobs 4, 40/100 seeds,
+  the 120000 ms generation guard and hit predicates are unchanged. No CPU subtraction,
+  normalization, budget relaxation, miss waiver or faster-repeat selection. Record
+  the declared host-active environment on every cell. These times decide offers;
+  they are not merely descriptive GS timings or strict-quiet measurements.
 
-Neither is authorized by this text. A gives no GP waiver; MS18d still needs its own
-declared measurement contract. The same chosen condition must be settled for the
-conditional CV6 timing in this task, with its unchanged assertion, before it runs.
+The same declared environment supplies the previously specified conditional CV6
+readiness in this task, with its original assertion and ordinary **450/540** command
+limits. The **GQ-only longer watchdog may not be used for CV6**. No GP timing or
+command-limit waiver follows; MS18d retains its own contract.
 
-**Vietnamese question for owner/Fable — Q1:**
-
-> GQ dùng p95 để quyết định mức được cung cấp. CLI PID 1968 không thể nghỉ khi phiên
-> còn hoạt động; MS18b trượt màn CPU-idle 40/44 lần, nhưng không có job nặng khác.
-> Chọn **A**: cho phép GQ trên máy đang chạy CLI, ghi rõ môi trường và dùng nguyên
-> p95 thực đo/ngưỡng 2/10/30 giây, jobs=4, không trừ CPU hay nới chuẩn; hay **B**:
-> dừng phiên/đổi sang runner yên tĩnh và đo toàn bộ 135 ô ở đó? Chưa chạy GQ.
-
-## MS18c-Q2 — command bounds and the complete matrix: decision required
+## MS18c-Q2 — S-OD13 selects B; ceilings require joint SA1/SA2 approval
 
 ### What the current qualifier actually does
 
@@ -185,78 +189,177 @@ Do not use C6's diagnostic costs as the production C4 basis. MS07e's 129 complet
 cell commands summed to **1523.033 s**, but omit six cells and predate S3; neither
 that total nor its early-stopped outcomes bounds the final matrix.
 
-### Decision options — no implementation or ceiling change approved yet
+### Chosen route and authority
 
-- **A — retain all current 450/540 rules:** execute only cells with individually
-  credible bounds after Q1 is settled; keep every other cell named/unexecuted.
-  This authorizes **partial evidence only** where necessary, not full MS18c acceptance,
-  final publication or release. The owner must understand that a complete route is
-  not presently established; no hidden verdict is inferred from inability to run.
-- **B — authorize Fable to specify a GQ-only longer bounded command route**
-  (recommended if retaining the current qualifier): define numeric per-cell admission
-  and process-tree ceilings from the complete preflight, with SA1 review **before**
-  any over-540 execution. Keep the existing scheduler, seeds, request guard, jobs,
-  p95 budgets and whole-cell records. Other gates keep 450/540. This preserves current
-  qualification timing semantics better than silently restarting worker pools.
-  No numerical higher ceiling is pre-authorized here; the chosen plan must state it.
-- **C — if 540 must remain absolute and complete GQ is required:** authorize a
-  **separate Fable-designed, SA1-reviewed bounded qualification route/tooling task**.
-  It must settle checkpoint/worker lifecycle, cold/warm timing, early-stop/in-flight
-  accounting, source identities and checked merging before collection. Do not claim
-  that fresh-worker batching is already timing-equivalent or invent a `--from` route.
-  No request-count, hit-rate or p95-budget relaxation is implied.
+The owner selected **B**, retaining the current whole-cell qualifier and scheduler.
+**SA1/Opus and SA2/Astra jointly choose the per-cell admission and process-tree
+ceilings. Fable is not an approver for this route.** Options A/C were not selected.
+There is no permission to change seeds, jobs, the serial-round behavior, request
+guard, p95 budgets, hit predicates or the complete 135-cell publication rule.
 
-Q1 and Q2 are separate choices: accepting host-active timing does not permit a longer
-command. Conversely, extending a watchdog does not approve the measurement environment.
-An inserted tool/protocol task must be accepted and the dispatch base/brief updated
-before MS18c resumes. The current no-new-tooling/no-early-credit rules remain in force
-until an explicit recorded decision supersedes them.
+S-OD13 authorizes the exceptional **GQ-only** route, not a particular number.
+The proposal P1 below is **SA2's proposal for SA1 review**, not joint approval and
+not a developer launch setting. Other gates remain at 450/540, including CV6, E,
+GH, GD, GP and quick tests.
 
-**Vietnamese question for owner/Fable — Q2:**
+### Ceiling proposal P1 — concrete envelope, awaiting SA1
 
-> GQ hiện không resume được một ô; vòng 60 bổ sung chạy nối tiếp. Ví dụ 8 giây/lượt:
-> (40/4 + 60) x 8 = 560 giây, vượt trần 540; sáu ô cũ chưa chạy có
-> dự toán 556–4032 giây. Chọn **A** giữ trần, chấp nhận chỉ có dữ liệu một phần và
-> chưa xuất bản; **B** giao Fable chốt trần lệnh riêng, hữu hạn cho GQ, SA1 duyệt
-> trước khi chạy (giữ nguyên 120 giây/lượt, jobs=4 và ngưỡng p95); hay **C** giữ
-> 540 nhưng cho phép task công cụ/protocol chia nhỏ có kiểm chứng trước GQ?
+All quantities below are **seconds**, not request budgets.
 
-### Bounded execution plan after the decisions
+1. Retain the scheduler-aware model **P_i = H_i + 10 x B4_i + 60 x B1_i** for every
+   cell: full first round plus possible full serial second round, no early-stop credit.
+   B4/B1 cover a worker's complete request turnaround, **including post-generation
+   validation and reply/IPC**, at the corresponding concurrency. Use **H = 60 s**
+   for candidate startup/readiness/publication overhead; if the evidence cannot
+   support that allowance, flag it for the analysts rather than lower it to fit.
+2. Where compatible whole-turnaround observations exist, candidate
+   **B_j = ceil(1.5 x observed maximum_j)**, never a mean or p95. Record sample/source/
+   route/guard/concurrency and why the observation applies. With only generation
+   times, report those maxima separately: **no automatic zero validation allowance**.
+   A candidate `ceil(1.5 x generationMax_j + V_j)` needs an explicitly justified
+   conservative post-generation bound V_j approved by both analysts.
+3. If jobs-4 evidence is absent but a valid whole-request B1 is available, expose
+   **4 x B1** only as a labelled contention-proxy candidate, not a jobs-4 measurement
+   or automatically approved bound. A guard-based alternative likewise needs an
+   explicit overshoot allowance D_j and validation/reply bound V_j:
+   **B_j = 120 + D_j + V_j**. The cooperative generation guard alone bounds neither
+   its overshoot nor the unguarded post-generation work. Neither 120 nor 130 is a
+   universal substitute for missing observations; do not clamp a larger estimate to 120.
+4. Define **R30(x) = 30 x ceil(x / 30)**. Candidate admission bound
+   **A_i = R30(P_i)**. If **A_i <=450**, retain **T_i = 540**. If
+   **450 < A_i <=9600**, propose **T_i = R30(1.25 x A_i)**: a 25% watchdog reserve
+   beyond the already margin-bearing admission bound. Proposed absolute envelope:
+   **A_i <=9600 s (160 min), T_i <=12000 s (200 min)**, GQ only.
+5. Unknown/non-finite/non-positive/unsupported bounds or **A_i >9600** are **unadmitted**, not
+   clamped, assigned the envelope maximum, or marked hidden. They remain in the
+   135-row plan with explicit gaps. A changed envelope or exceptional per-cell
+   derivation needs a new joint SA1/SA2 decision before execution; never a developer
+   adjustment after a slow result.
 
-1. Write/read back a **135-row preflight**, one row for every manifest cell, before
-   the first GQ command. Record source-qualified observations, sample count, route,
-   worker concurrency, bounds for each phase, overhead, margin, output paths and
-   `admissible / unexecuted / unknown`; unknown is not zero. No new generation pilot
-   is authorized merely to fill a planning gap.
-2. With the current scheduler, use **P = H + 10 x B4 + 60 x B1** when expansion is
-   possible: H covers loading/readiness/publication, B4/B1 are conservative bounds
-   on one request **including post-generation validation** at the corresponding
-   concurrency, with a stated variance margin. A generation-only GS mean/max is
-   not B4/B1. Do not omit the serial round because a cell probably fails or passes
-   round 1. Any approved alternative from Q2 must replace this formula explicitly.
-3. Under unchanged rules admit only **P <=450 s**, one complete cell per invocation,
-   with the **540 s limit covering launcher, qualifier and all workers**. Jobs 4 are
-   the qualifier's own pool, not permission for four simultaneous qualifier commands.
-   No compound matrix command, detached workers or parent-only timeout.
-4. The **1–12 h** number is a historical total planning allowance, **not** a per-command
-   limit or a verified completion promise. Sum the actual accepted P values and add
-   inter-command gaps/admission waits; list unbounded cells separately. Even
-   135 x 450 s is **16.875 h**, plus at least 134 x 15 s (**0.558 h**) in gaps.
-   A credible full-matrix total is not available until the missing route/bounds are
-   settled; do not fit projections to the 12 h label.
-5. Run each admitted command attached and monitored. If a tool wait returns before
-   completion, read the **same running process**, without rerunning or resetting its
-   deadline. Waiting asynchronously does **not** extend 540 s. At that ceiling,
-   the unchanged helper kills the owned process tree; retain logs and mark the cell
-   failed/incomplete, not hidden. No automatic payload retry, partial-row stitching,
-   shorter seed batch or larger guard follows. Report, continue only independently
-   authorized safe work, and leave the publication gate unsatisfied for any gap.
-6. If Q2-B/C is approved, implement only its explicitly assigned route first; still
-   retain finite projections/deadlines, the same raw generation clocks and honest
-   failure handling. Do not mistake the illustrative formula or the proposed option
-   above for approval of a new ceiling. Audit **every outer wrapper/agent wait
-   deadline** too: an inherited `spawnSync` timeout must not unexpectedly kill the
-   approved child, and a longer tool wait must not silently bypass its watchdog.
+The envelope is deliberately large enough to consider a full guard-scale 100-request
+cell without pretending that 540 s covers it. It is not a forecast that every cell
+needs hours, proof that all cells fit, or a product/request-budget increase.
+Illustrative arithmetic only, **not approved cells or assumptions**:
+
+| H | B4 | B1 | P | Rounded admission A | Process-tree T |
+|---:|---:|---:|---:|---:|---:|
+| 60 | 4 | 2 | 220 | 240 | 540 |
+| 60 | 8 | 8 | 620 | 630 | 810 |
+| 60 | 40 | 40 | 2860 | 2880 | 3600 |
+| 60 | 130 | 130 | 9160 | 9180 | 11490 |
+
+The 130 s row illustrates why this envelope was proposed; **it does not assert a
+ten-second overshoot/validation bound**. Stage 1 must expose missing evidence, and
+Stage 2 must justify the actual numbers. Approving this general formula alone would
+still not approve any of the 135 cells.
+
+### Three-stage flow and mandatory stops
+
+**Stage 1 — FILE-ONLY developer preflight, then stop.**
+
+- Allowed now: read the accepted records/code, compute source/tool/attempt-policy
+  identities, inspect static Node/machine metadata, create a task-owned read-only
+  planner and fake-data tests, and produce **exactly 135 rows** under
+  `docs/difficulty-v3/evidence/MS18c/preflight/` (`gq-cells.json`, `gq-cells.md` and
+  input/hash/outer-deadline audit records). Helpers belong only in this task's
+  `generator/tests/artifacts/difficulty-v3/MS18c/` directory.
+- **No puzzle generation, GQ/probe/pilot, live admission samples/no-op campaign,
+  production/compatibility/test-suite/qualifier edit, archive/publication or long-run
+  helper implementation.** Loading declarations for metadata is not permission to
+  call a generator, solver or uniqueness checker. Stage 1 uses ordinary 450/540
+  protection if a metadata command's cost is unknown or possibly above ten seconds.
+- Each row records key/board/default attempts/budget, jobs 4, seed base 20260601,
+  40+60 protocol, every evidence path/hash/sample count/source/configuration/clock,
+  compatible versus merely indicative observations, candidate H/B4/B1/P/A/T,
+  assumptions, missing data and `candidate / unknown / outside proposed envelope`.
+  Candidate numbers are **not approvals**; keep unknowns null with reasons.
+  Do not use C6/other-cap data as a default-C4/256 measurement or another board as
+  an unexplained proxy. Retain generation-only clocks as generation-only.
+- Fake-data checks cover rounding/boundaries, unknown/invalid inputs remaining
+  unadmitted, generation-only data lacking V, correct 135-key coverage and no
+  `approved:true` status generated by the planner. They run no solver or payload.
+- Audit the complete deadline chain described below, report the sum of supported
+  candidate P values and waits separately, list unresolved cells, format/hash the
+  outputs and helper bytes, and **return to the orchestrator and STOP**.
+  Do not continue into compatibility work or GQ because all candidate numbers happen
+  to fit. No new generation is allowed to fill an unknown.
+
+**Stage 2 — SA2 + SA1 joint decision, not a developer phase.**
+
+- Both analysts review the exact preflight hash/source/machine/defaults and the
+  proposed rule. They resolve or reject each H/B4/B1 derivation and explicitly
+  approve **P_i, A_i and T_i per cell**, or mark that cell unadmitted. No response,
+  general formula agreement or one analyst's acceptance is not joint cell approval.
+- Record both approvals and rationale; the pack author/orchestrator publishes an
+  immutable source-bound manifest, for example
+  `tasks/difficulty-v3/MS18c-gq-approved-ceilings.json`, in a pack commit. It lists
+  all 135 cells, approved/unadmitted status, exact input hashes/machine/Node/policy,
+  numeric bounds, outer budgets and the real approval references. **That file does
+  not exist or confer authority merely because its name appears here.**
+- Unknown/unbounded cells require an explicit analyst disposition. Safe approved
+  cells may be authorized while others stay unadmitted, but full publication remains
+  blocked by any missing cell. No hidden verdict, extra probe or tooling/protocol
+  change follows from an unadmitted row. Fable is not required for these ceilings.
+- The orchestrator relays **both** approval and the explicit Stage 3/slot release.
+  The developer never writes its own approval, changes the committed limits or
+  chooses a ceiling from P1's examples.
+
+**Stage 3 — implement the approved supervision/compatibility, then GQ.**
+
+- Only after the Stage 2 relay may the original implementation steps below begin.
+  Preserve the shared `Invoke-Dv3Node` for non-GQ work. A task-owned
+  **GQ-specific** supervisor reads the committed approved cell record, verifies its
+  identity and builds only that cell's unchanged `qualify.js --jobs=4` payload.
+  No free-form timeout override or use for CV6/quick/E/GP.
+- Before any real GQ, test approval lookup/rejection, units, deadline arithmetic,
+  admission holds and owned process-tree cleanup using fake clocks/short-lived
+  stand-ins, not long generation trials. Format/freeze helpers. Recheck all bound
+  inputs after compatibility edits: an engine/tool/attempt-policy/default/Node/
+  machine change needs a Stage 2 compatibility/reapproval record before GQ. Unrelated
+  UI/test/doc edits outside those inputs do not invalidate GQ-bound approval; their
+  separate E/quick identity and verification obligations still apply.
+- Run **one complete cell per attached supervised invocation**, no compound matrix,
+  detached workers, seed splitting or deadline reset. T_i starts when the owned Node
+  launcher starts after lock acquisition and covers readiness, qualifier and workers.
+  Keep the >=15 s gaps and approved Q1 admission behavior. Wait/read the same process;
+  a returned tool wait is not a fresh command.
+- At T_i, terminate the **owned process tree**, retain logs/output and report a
+  failed/incomplete cell, never a hidden verdict. No automatic payload retry or
+  higher timeout. If a completed invocation exceeds approved A_i, retain the result
+  but return to Stage 2 before further GQ launches; finish only independent offline
+  work meanwhile. A valid p95 miss **within** the command bound is an ordinary hidden
+  result and does not trigger a new ceiling question.
+- At any unresolved gap the full publication gate remains unsatisfied. The 1-12 h
+  figure is still historical planning context, not a promised total or per-command
+  timeout: sum the actual approved projections plus gaps/waits and report unknowns.
+
+### Outer waits and `spawnSync` audit — part of Stage 2 approval
+
+The accepted MS18b `drive.cjs` uses **`spawnSync(... timeout: 1800000)`** (1800 s).
+It cannot be copied unchanged for a longer approved cell. The existing wrapper can
+also wait up to **1200 s** for a foreign lock and then up to **1200 s** in the shared
+helper for acquisition: do not budget only one wait if both are retained.
+
+P1 proposes an outer per-attempt envelope **O_i = T_i + 2400 + 300 seconds**:
+up to two 20-minute acquisition waits plus 300 s for release settling, ordinary/re-ask
+spacing, wrapper startup, output and cleanup. At proposed maximum T=12000,
+**O=14700 s (4 h 5 min)**. This is **not** permission to hold the timing lock before
+launch for that duration or to run the qualifier past T_i. Audit all actual wait paths;
+if they need more than this allowance, Stage 2 must settle them first.
+
+Prefer one directly supervised PowerShell invocation per cell, without a redundant
+`spawnSync` matrix wrapper. If retained, every outer process/agent transport deadline
+that can kill the invocation must be >= its approved O_i, or absent with the finite
+inner watchdog and reliable owned-tree cleanup still in force. A `spawnSync` timeout
+that kills only its immediate PowerShell child is not sufficient cleanup.
+
+The orchestrator must confirm that the owning agent/tool can remain attached and be
+monitored for that envelope before releasing a long cell; unavailable/unknown runtime
+support is a blocker, not a reason to detach workers. Tool **initial waits** may be
+600 s followed by reads of the same shell ID: they are response windows, not the
+process-tree limit and not permission to restart the clock. Record actual acquisition,
+readiness, payload and overall durations separately. A wrapper deadline defect returns
+to the analysts; it never becomes a puzzle miss or a silent retry.
 
 ## Inputs & context
 
@@ -272,8 +375,8 @@ mixed records. Captured request errors/timeouts remain misses; worker/IPC loss i
 Only after complete validation derive offered arrays, preserving global level order and S-OD7.
 Use r5p's **board-default attempts**, never an explicit eight-attempt qualifier override.
 
-**Timed-run readiness:** use only the recorded Q1/Q2 disposition, after this brief is
-amended to it. Until then no host-active GQ waiver, new qualification sharding, scheduler
+**Timed-run readiness:** S-OD13 approves `MS18c-GQ-host-active`; numeric execution still
+requires the exact Stage 2 joint approval. No new qualification sharding, scheduler
 change or altered jobs/40-100 protocol is authorized. Keep observations/waits separate
 from raw request times. Plans precede phases, owned helpers are formatted before
 freezing, and S-OD12/S0 plus the QUESTION pause remain binding.
@@ -331,21 +434,23 @@ Reconcile all inherited availability items (including S-OD7's Killer disposition
 Nightmare/hell1) with final verdicts. A hidden verdict needs no calibration to be legitimate.
 Route remaining cost findings to MS18d; include the complete item list for MS18e.
 
-**Q-MS07e-2 / S-AV27 — six unexecuted cells, unchanged launch rule.** MS07e's section 4
+**Q-MS07e-2 / S-AV27 — six historically unexecuted cells.** MS07e's section 4
 left mega12/hell1 (556 s), mega16/nightmare (1,246 s), mega16/hell1 (1,808 s),
 greaterThan/expert (919 s), greaterThan/hell1 (3,957 s) and butterfly/hell1 (4,032 s)
 unexecuted; those are that source's projections, not measured qualification verdicts.
 SA2 routed them here without reopening MS07e or requesting a rule amendment. Reassess
 using authorized final-source evidence, including the first round at four workers, any possible
-60-request **serial** second round, startup and variance margin. Launch only at a credible
-<=450 s projection under the unchanged 540 s ceiling. Protocol-proved early stopping within
-a run is still valid, but no early-stop credit, changed jobs, scheduler repair or new evidence/
-tooling class is authorized for planning. Keep all six cells in the required final matrix.
+60-request **serial** second round, startup and variance margin. **S-OD13 now permits
+the GQ-only joint-approved A_i/T_i route** in place of the old 450/540 limit for those
+cells actually approved at Stage 2. Until that approval, no GQ launch is permitted.
+Protocol-proved early stopping within a run is still valid, but no advance early-stop
+credit, changed jobs, scheduler repair or new evidence class is authorized.
+Keep all six cells in the required final matrix.
 If a complete bounded route remains unavailable, continue safe work and report an unsatisfied
 publication gate; do not infer hidden verdicts, discard cells or publish a partial matrix.
-That is the unchanged disposition, not a complete-execution plan. Q2 now brings the
-final route decision to the owner/Fable **before** dispatch rather than leaving these
-known gaps for a developer to rediscover.
+The owner's route decision is recorded; **SA1 and SA2**, not Fable or the developer,
+must settle each numeric bound before launch. The complete-publication requirement
+and honest-gap disposition are unchanged.
 
 ### CV6-05 — the three fixed S-AV01 endings, before MS18d timing
 
@@ -479,8 +584,8 @@ population distinct. The final reply and MS18e handoff include:
 
 | Item | Disposition / owner |
 |---|---|
-| MS18a-Q1-HOST, MS18a-Q2-ADMISSION | Original failed strict screen/attribution limits and two service holds resolved at attempt 2, no gap/rerun. Q1 here decides final measurement use; retain history for MS18e. |
-| **MS18b-HOST-ACTIVE** | 44 commands, strict failed 40/passed 4, zero holds/re-asks/gaps, incomplete attribution. No existing GQ/GP waiver; Q1 and MS18e audit. |
+| MS18a-Q1-HOST, MS18a-Q2-ADMISSION | Original failed strict screen/attribution limits and two service holds resolved at attempt 2, no gap/rerun. S-OD13 explicitly approves final GQ use of the declared environment; retain history for MS18e. |
+| **MS18b-HOST-ACTIVE** | 44 commands, strict failed 40/passed 4, zero holds/re-asks/gaps, incomplete attribution. Its original GS exception did not transfer automatically; S-OD13 now authorizes GQ, not a GP waiver. MS18e audit. |
 | **MS18b-R5-C result** | 256/C4 reconfirmed on 360 outcomes, no owner action. Preserve 1215 -> 1104 witness and 36 -> 20 C comparison; no joint-default experiment or retune. |
 | MS18b Killer zero-exact observations | Hard/Expert 0/12 at each of four caps, same keys not 48 independent seeds; S-AV05/06 and S-OD7 apply. This task measures both and separately withholds them. |
 | MS18b measured R5/C costs | Six-cell generation 371.4/388.6/410.9/423.1 s at 64/128/256/none; C6 526.1 vs C4 139.3 s (3.8x). Descriptive GS, not GQ/GP or an admission bound; MS18d/e. |
@@ -492,7 +597,7 @@ population distinct. The final reply and MS18e handoff include:
 | S-AV28-S-AV30, MS18a `greaterThan:expert:0`, S-AV18-S-AV23 | Prior source/sample-specific availability/target effects; reconcile with final verdicts, retain historical losses, do not generalize a 12-request cohort. |
 | S-AV36-S-AV39, S-AV31/S-AV33/S-AV34 | Construction/seeded/synthetic/repository/whole-generation populations and frozen finder limits remain separate. This task supplies availability, MS18d costs, MS18e audit. |
 | MS15b-GP-J / MS15b-GP-U; S-AV38 | ALS 37-cell record: one full, one pilot-only, 35 unmeasured; distinct from grouped 50-cell incomplete GP. Final GP remains MS18d. |
-| **MS18c-Q1 / MS18c-Q2** | Open readiness/execution decisions recorded above; no developer default or waiver. Retain the answer, resulting contract and any unexecuted cells in the final audit. |
+| **MS18c-Q1 / MS18c-Q2 / S-OD13** | Owner selects A/B and delegates numeric ceilings jointly to SA1/SA2. Stage 1 preflight and Stage 2 per-cell approval remain; P1 is a proposal, no developer default. Retain approvals, bound misses and unexecuted cells for MS18e. |
 
 Standing quick cost, earlier resolved decisions and withdrawn S-AV16/S-AV17 findings
 retain their recorded dispositions. Name new actual offer losses, time misses or
@@ -501,9 +606,11 @@ unexecuted populations; a named item never substitutes for complete publication.
 ## Files to create/modify
 
 - Evidence/MS18c and final qualification JSON under docs/difficulty-v3.
-- Task-owned read-only planning, admitted-launch, validation/reporting and existing
-  bounded-E helpers under `generator/tests/artifacts/difficulty-v3/MS18c/`, only after
-  the decisions are recorded. Do not copy MS18b's cap/window attempt key for GQ:
+- **Stage 1 only:** the file-only preflight/planner/tests and its outputs at the paths
+  above; no source, live runner, qualification or publication changes.
+- **Stage 3 after joint approval:** task-owned admitted-launch, validation/reporting
+  and existing bounded-E helpers under `generator/tests/artifacts/difficulty-v3/MS18c/`.
+  Do not copy MS18b's cap/window attempt key for GQ:
   use variant/level and the frozen qualifier/source/protocol/jobs/seed/attempt-policy
   identity, with separate attempts only before any payload start.
 - New `docs/difficulty-v3/qualification-v2.md`; live qualification.md; notes with every removed level.
@@ -527,9 +634,10 @@ unexecuted populations; a named item never substitutes for complete publication.
 
 ## Implementation steps
 
-0. **Do not begin full dispatch until Q1/Q2 are answered and the approved contract is
-   incorporated.** Any prerequisite implementation/tooling task is separately accepted.
-   Then read back plans for each phase, confirm identities/slot, and format before freezes.
+0. **Stage 1 is file-only and ends at the mandatory stop. Stage 2 belongs jointly to
+   SA1/SA2. Only explicit Stage 3 release permits steps 1-6 below.** The owner policy
+   is already recorded; no numerical ceiling is chosen by the developer. Read back
+   each phase plan, confirm approved inputs/slot and format before freezes.
 1. Finish the narrowly coupled compatibility logic/tests on controlled hidden-level fixtures, without
    pruning live offers. Then freeze candidate/defaults and archive v2 before any live-table change.
 2. Preflight every intended cell, collect all 135 complete cells under the approved
@@ -572,13 +680,13 @@ unexecuted populations; a named item never substitutes for complete publication.
 | MS18c-T02 | Live product offers equal support lists and withhold Killer Hard/Expert under S-OD7; raw qualification verdicts and v2 archive unchanged; no algorithm/weight tuning |
 | MS18c-T03 | Hidden-level diagnostics restore arrays, recipes unchanged, both quick sets pass |
 | MS18c-T04 | (c1) covers every board/level, fallbacks miss, S-OD7 and all six Q-MS07e-2 cells are accounted for, stored hidden requests show the note, Player imports remain compatible, all items reconcile, and S-AV01's CV6-05 disposition precedes MS18d timing |
-| MS18c-T05 | Q1/Q2 approved before execution; full per-cell preflight and immutable admission/run records; no unsupported resume, false hidden verdict or timeout reset |
+| MS18c-T05 | S-OD13 enforced; Stage 1 stops; exact per-cell A/T/source plan jointly approved by SA1/SA2 before Stage 3; immutable records and audited outer deadlines |
 | MS18c-T06 | Pre-publication checked merge has zero invalid puzzles; source/publication compatibility proved; final source-aware E/GH/quick/CI closure and SA1 review complete |
 
 ## Test plan and gates
 
-Generator payload examples, **not launch authorization**: only after Q1/Q2 disposition
-and a credible admitted whole-cell plan, then every Q cell:
+Generator payload examples, **not launch authorization**: only after Stage 2 joint
+cell approval, tested Stage 3 supervision and explicit release, then each approved Q cell:
 
 ```powershell
 node tests\qualify.js --variant=classic4 --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS18c\qualification\classic4-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS18c\qualification\classic4-veryEasy.md
@@ -598,11 +706,11 @@ not acceptance. No whole Greater-Than corpus or other CV6/I5 selector is added h
 Hand this record and its identity to MS18e for coverage reconciliation; any later changed
 contract/fingerprint requires the normal compatibility/replacement handling.
 
-GQ jobs 4; the bounded-plan section above governs projections and actual waits.
-The current <=450 s admission/540 s process-tree ceiling remains unless a recorded
-Q2 decision explicitly replaces it for an assigned GQ route. The historical 1-12 h
-allowance does not establish a full-matrix bound or extend any command's deadline.
-Announce/read back the plan, obtain the slot and record the approved Q1 condition.
+GQ jobs 4; the staged plan above governs projections, approvals and actual waits.
+GQ uses **only its committed, jointly approved A_i/T_i**, never P1's candidate numbers
+or a developer-selected fallback. Non-GQ work retains 450/540. The historical 1-12 h
+allowance does not establish a full-matrix bound or extend any deadline.
+Announce/read back the approved plan, obtain the slot and record the S-OD13 condition.
 A slow cell without an approved bounded route is a named
 availability item; continue safe cells and independent audit work, never invent a hidden verdict
 or a new tooling class. **Do not publish an incomplete matrix.** The final record must say if
@@ -628,9 +736,11 @@ for an assigned compatibility fix; never invent a qualified level.
 
 Review: SA1 cross-review. Correctness/evidence corruption or changing a recorded decision
 stops; time/availability is a named numerical item, not an owner stop or offer waiver.
-Q1/Q2 are explicit pre-dispatch decisions, not implicit performance exceptions.
-Until a recorded replacement is approved, use `Invoke-Dv3Node` for every possibly
->10-second payload, <=540 s; preserve GQ jobs 4 and the current bounded quick manifest.
+S-OD13 resolves Q1/Q2 policy; Stage 2 numeric approval is still an explicit stop,
+not an implicit performance exception. No GQ before both analysts approve the exact
+cell plan and the orchestrator releases Stage 3. Use the approved GQ-only supervisor
+for those cells; all other possibly >10-second work uses `Invoke-Dv3Node`, <=540 s.
+Preserve GQ jobs 4 and the current bounded quick manifest.
 Any authorized new suite owns its r6c CI group/manifest entry.
 No new slow-cell evidence/tooling class is authorized by this prepared brief.
 Return all item dispositions to MS18d/MS18e and never

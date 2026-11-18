@@ -18,6 +18,9 @@ under the same parent budget/window; IR54 is preserved and the long ID remains b
 JF-02 is archived with the owner's direct Discord answer on 2026-11-17 at 13:46 (+07:00),
 S-OD12: A + S0, retroactive approval for MS13c's completed Jellyfish acquisition only;
 the lack of authorization at execution time remains explicit, and no standing S1 rule is approved.
+MS18c-Q1/Q2 are resolved by the owner's Discord answer on 2026-11-18 at 21:31:46 (+07:00),
+S-OD13: host-active GQ, and a GQ-only longer bounded command route whose ceilings are chosen
+jointly by SA-Opus (SA1) and SA-Astra (SA2), not Fable. Numeric ceilings still need that joint approval.
 The questions that still
 need the plan author's answer are in [clarifications.md](clarifications.md); when one is answered, it moves here.
 
@@ -2522,6 +2525,62 @@ cost/coverage gaps, final qualification or final performance requirements.
 
 ---
 
+## MS18c-Q1/Q2 / S-OD13 — GQ environment and ceiling authority
+
+The detailed questions and evidence were prepared in the MS18c task brief at `25bba461`.
+The following is that pack's prepared Vietnamese wording, not a reconstruction of the
+Discord question post. The owner's response below is recorded verbatim.
+
+### MS18c-Q1 — uniform qualification environment
+
+> GQ dùng p95 để quyết định mức được cung cấp. CLI PID 1968 không thể nghỉ khi phiên
+> còn hoạt động; MS18b trượt màn CPU-idle 40/44 lần, nhưng không có job nặng khác.
+> Chọn **A**: cho phép GQ trên máy đang chạy CLI, ghi rõ môi trường và dùng nguyên
+> p95 thực đo/ngưỡng 2/10/30 giây, jobs=4, không trừ CPU hay nới chuẩn; hay **B**:
+> dừng phiên/đổi sang runner yên tĩnh và đo toàn bộ 135 ô ở đó? Chưa chạy GQ.
+
+### MS18c-Q2 — complete bounded qualification route
+
+> GQ hiện không resume được một ô; vòng 60 bổ sung chạy nối tiếp. Ví dụ 8 giây/lượt:
+> (40/4 + 60) x 8 = 560 giây, vượt trần 540; sáu ô cũ chưa chạy có
+> dự toán 556–4032 giây. Chọn **A** giữ trần, chấp nhận chỉ có dữ liệu một phần và
+> chưa xuất bản; **B** giao Fable chốt trần lệnh riêng, hữu hạn cho GQ, SA1 duyệt
+> trước khi chạy (giữ nguyên 120 giây/lượt, jobs=4 và ngưỡng p95); hay **C** giữ
+> 540 nhưng cho phép task công cụ/protocol chia nhỏ có kiểm chứng trước GQ?
+
+### Owner answer — S-OD13
+
+**Owner, Discord author `amicably8850`, 2026-11-18 21:31:46 (+07:00), relayed by
+the orchestrator:**
+
+> Q1: A. Q2: chọn phương án B nhưng giao SA-Opus và SA-Astra chọn mức trần, không cần thông qua Fable.
+
+English: Q1 selects A. Q2 selects B, but assigns SA-Opus and SA-Astra to choose
+the ceiling level; no approval through Fable is needed.
+
+Binding scope:
+
+- **Q1-A:** declared host-active GQ with a new explicit GQ policy identity. Actual raw
+  p95 is binding, with the unchanged 2/10/30 s budgets, jobs 4, 40/100 seeds and
+  120000 ms generation guard. No CPU subtraction, normalization or relaxed offer rule.
+  Keep the additional-consumer hold and one >=60 s fresh-slot re-ask for a verified
+  unstarted eligible hold; no payload retry or OS-service/tree exemption.
+- **Q2-B:** a **GQ-only** longer, finite command route. **SA1 (Opus) and SA2 (Astra)
+  jointly choose and approve the numbers**, not the developer and not Fable. The
+  proposal that assigned this route to Fable is superseded by this explicit delegation.
+  No numerical ceiling was chosen by the owner in this answer.
+- The task pack separates a file-only 135-row preflight, a mandatory joint
+  numeric/source-plan approval stop, and execution only after that approval. A proposed
+  ceiling is not an approved one. Unknown/unbounded cells remain unadmitted until
+  both analysts settle a credible finite bound; no guessed hidden verdict or incomplete
+  publication follows.
+- The qualifier, scheduler, full 135-cell protocol, generation guard, budgets, seeds,
+  attempts, hit predicates and raw clocks remain unchanged. Other gates keep 450 s
+  admission / 540 s process-tree limits. No general GP, GD, CV6, E or quick timeout
+  increase and no new acquisition route is authorized.
+- CV6-05's separate conditional Normal-budget delegation to Fable is unchanged.
+  S-OD7, S-OD12/S0, correctness stops, full-scope publication and SA1 review still bind.
+
 ## Owner decisions — current resume register
 
 This register is a navigation aid, not a rewrite of the questions or answers above. The later decision governs
@@ -2546,6 +2605,7 @@ where an earlier recovery/process rule conflicts. The pause commit is a historic
 | S-OD10 | Owner, 2026-11-16 22:20 (+07:00), Discord: "Chọn A."; JF-01. One-off MS12/Jellyfish acquisition exception: classic9 test-kit seed 4242, indices 0-19,999 (at most 20,000), ascending; unchanged original givens, level null and non-numeric `testkit-4242-<index>` provenance. Reuse givens or materialize the prefix once, accounting for construction; never regenerate it per chunk. Existing Player replay tool, chunks <=64, <=400 hints/puzzle, eight-minute tool deadline, credible <=450 s admission, 540 s process ceiling, locking/15 s gaps. Stop acquisition after the first chunk supplies a verified source, publish/check it, then require all 37 GH checks and final quick/CI gates. At exhaustion or inability to remain within bounds, report completed/incomplete ranges and stop. No automatic corpus/Generator expansion, no option B, no discovery-budget reset or permission for another ID/task. GH's real normal-hint contract, finders, priors, availability and tests remain unchanged. S-AV35: MS12 completion and MS18e audit. |
 | S-OD11 | Owner, 2026-11-17 04:30 (+07:00), Discord: "GC-01: chọn A."; GC-01. Option A is binding: bounded grouped attempt first, initially 4,096 additional nodes and 50,000 shared construction/search units. Only a local work/node cap permits `forcingChain` to discard grouped scratch and run the complete singleton search with no local work cap, under the same caller-clamped short window and parent budget; no budget reset or fallback for parent exhaustion, cancellation/errors, completed negatives or window rejection. Its minimum is certified in the complete singleton graph, not the abandoned grouped graph. `forcingChainLong` stays on the bounded grouped route, with no fallback/second allowance; incomplete construction/minimum returns null. IR54 is preserved. Record both phases and total cost; R10's once-only own-new-limit adjustment and all proof/E/GH/quick/CI/qualification gates remain. No numeric adjustment or availability guarantee is made by this answer. Finish accepted/committed MS14a before MS13c, then MS14b/MS14c; no change to MS14a. S-AV36: policy resolved, measurements/cost/audit still open. |
 | S-OD12 | Owner, 2026-11-17 13:46 (+07:00), Discord: "tôi chọn A và S0"; JF-02. **A + S0:** approve retention of MS13c's verified Jellyfish source `testkit-4242-8657`, snapshot and complete acquisition records retroactively for MS13c only, explicitly preserving that the scan lacked authorization when performed. No further scan, acquisition-budget reset, unused quota, finder/prior/target change or GH/quick/release waiver. Case-by-case permission remains; S1 is not approved. Ordinary B/IR72 source acquisition remains available, but any future exception/expansion needs separate prior owner authorization; neither S-OD10 nor S-OD12 is inherited by another task/ID. Resolve the authorization hold, then finish the reviewed fixes and final GH/both quick sets/CI before MS13c acceptance/commit. S-OD11, S-OD4 and the final qualification/performance obligations remain unchanged. |
+| S-OD13 | Owner, Discord author `amicably8850`, **2026-11-18 21:31:46 (+07:00)**: **"Q1: A. Q2: chọn phương án B nhưng giao SA-Opus và SA-Astra chọn mức trần, không cần thông qua Fable."** MS18c-Q1-A approves declared host-active GQ with raw p95/budgets/jobs/seeds/120000 ms guard unchanged, the existing additional-consumer hold and one >=60 s re-ask only before payload start. MS18c-Q2-B approves a GQ-only longer bounded command route; **SA1/Opus and SA2/Astra jointly choose and approve the numerical per-cell limits, not Fable or the developer**. File-only preflight precedes a hard joint-approval stop; no numerical ceiling is pre-approved by this owner answer. Other gates keep 450/540; no scheduler/protocol/offer-rule change, partial publication, acquisition permission or general timing waiver follows. CV6-05's separate conditional Fable delegation remains. |
 
 **Q-MS07e-2 — pack-author ruling (SA2, 2026-11-15), not another owner decision:** no change to
 the projection rule and no speculative one-off launch of the six unexecuted cells. Route
@@ -2558,6 +2618,12 @@ remain valid during execution, but no advance early-stop credit, scheduler fix, 
 new tooling/evidence class or new request to Fable is authorized. A remaining gap leaves final
 publication/release unsatisfied and any proposed rule change belongs to the orchestrator's
 recorded-decision route. S-OD7/S-OD8 do not alter this qualification rule.
+
+**Later GQ-only supersession, S-OD13:** the owner has now approved the longer bounded
+GQ route with numerical limits chosen jointly by SA1/SA2. Only exact per-cell joint
+approval replaces the old GQ admission/process ceilings. The historical six cells,
+no-early-credit rule, protocol, other gates and complete-publication requirement
+remain; the developer may not infer a number from the delegation.
 
 Current post-MS07e dispatch: **MS08a -> MS07f -> MS08b**, then the remaining serial index.
 The completed report and earlier dispatch history below are not rewritten as though these
