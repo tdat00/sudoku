@@ -7,7 +7,7 @@
 | Size / active time | Medium; 35-50 minutes plus GQ |
 | Owner / milestone | Qualification/publication; M18c |
 | Authority / review | R24/R21, AUTH-S1, SA1-Q-S5, S-OD4 (c1), S-OD7/S-OD8/S-OD13/S-OD14, CV6-05; joint ceiling/recovery approval and SA1 cross-review |
-| Status | Q3 resolved by S-OD14; Stage 1 remains FILE-ONLY, then STOP; Stage 3 still awaits joint Stage 2 binding and explicit release |
+| Status | Stage 1 complete; Stage 2 bindings published; await SA1 final confirmation and orchestrator preparation release, then supervisor/canary review gates |
 
 ## Goal & business context
 
@@ -44,16 +44,19 @@ Use `evidence/MS18b/evidence.md`, `decision-packet.md`, `selection.json` and the
 | S-OD4 (c1), large-board Nightmare/Hell availability | **Already decided.** Apply final qualification without exception; no permission to retain a failing offer is pending. |
 | S-OD11/S-OD12 and earlier acquisition/limit questions | **Resolved.** Preserve their dispositions; no new scan/limit permission transfers here. |
 | **MS18c-Q1: final qualification measurement environment** | **Resolved by S-OD13: A.** Declared host-active GQ; actual raw p95 and the full qualification contract remain binding. |
-| **MS18c-Q2: complete qualification execution route** | **Resolved by S-OD13: B.** SA1/Opus and SA2/Astra have agreed the structural rule/table below; the source-bound 135-cell manifest still requires Stage 2 approval. |
+| **MS18c-Q2: complete qualification execution route** | **Resolved by S-OD13: B.** Both analysts approve all 135 source-bound P/A/T/O assignments in `MS18c-gq-approved-ceilings.json`; the Stage 2 record and Stage 3 release/review gates below govern execution. |
 | **MS18c-Q3: one recovery payload relaunch** | **Resolved by S-OD14: B**, owner at 2026-11-18 23:05:53 (+07:00). The owner-answer precondition is satisfied; each actual recovery still needs the separate prior joint diagnosis/authorization below. |
 | CV6-05 Greater-Than Normal fallback contract | **Conditional later, not an unconditional start dependency.** Only if final Normal qualifies and its final-source CV6 still fails: return numbers to Fable under the already recorded delegation, before MS18d. No budget value selected now. |
 | A variant with no qualified/offered level, unexpected publication incompatibility | **Conditional blocker if observed.** No invented passing level or silent population change. Assign the compatibility decision/fix through the orchestrator. |
 
-No R5/C or Q1/Q2 owner choice remains open. **The numerical method is now jointly
-agreed, not a developer choice**, but a per-cell/source-bound launch manifest does
-not yet exist. Dispatch Stage 1 only; its completion is a hard stop, not permission
-for GQ or production edits. Q3 is now answered and recorded as **S-OD14**; Stage 3
-still needs Stage 2 binding approval and explicit release. SA1 retains final review.
+No R5/C or Q1/Q2 owner choice remains open. **The numerical method and all 135
+source-bound assignments are jointly approved, not a developer choice.** Stage 1
+has finished and stopped; its original pending rows and reports stay unchanged.
+The pack-only approved manifest is separate. Q3 is answered as **S-OD14**.
+Publication of the manifest alone releases neither implementation nor GQ:
+SA1's final confirmation of this convergence and the orchestrator's explicit
+preparation release precede Stage 3. Supervisor review and the canary pause follow
+before the remaining cells. SA1 retains final review.
 
 **S-OD13 — owner, Discord author `amicably8850`, 2026-11-18 21:31:46 (+07:00):**
 
@@ -84,6 +87,78 @@ Rating/cache **3**, history/worker wire **1**, grouped proof **2**, catalogue/GH
 (34 unscoped) remain. CI projections are **170/70/70/50/330/30/80/90**, Player job
 **180**, in the established shard order. Maintain counts/projections only by the
 existing quick rule after actual relevant verification; no membership/factor change.
+
+## Stage 2 binding and convergence
+
+The Stage 1 developer finished and stopped at **`42e0d239`**. Both analysts
+independently checked the 135 rows, identities and arithmetic, and reproduced the
+21/21 fake-data checks and byte-identical planner output at that base. No generation
+or GQ was run. The immutable inputs are:
+
+| Preflight file | SHA-256 |
+|---|---|
+| `gq-cells.json` | `fc9263a21471012eb40fe48c1bc7f2d0009b1fe8d76d945e0a1e74d21546802f` |
+| `gq-cells.md` | `50eaffee7f306f1d68d91ad71cf2476249bb9a2ef4cf0b813600a312214045db` |
+| `hash-audit.json` | `485fcbef6e825a857decb57647cd37cad8885cf50be8b9cccdd64266a5c13e11` |
+| `helpers-sha256.txt` | `317f09004205c91a11f03b25e7f86c542d890dc7f2665ba59cf6f89eb54f5168` |
+
+All four live under `docs\difficulty-v3\evidence\MS18c\preflight\`.
+All **18 / 63 / 54** assignments in the 2/10/30-second classes are approved;
+P/A/T/O and the source/tool/attempt-policy/Node/machine identities are unchanged.
+The 135-row authority is **`tasks\difficulty-v3\MS18c-gq-approved-ceilings.json`**,
+not the Stage 1 planner output. Its full identity objects and per-file hashes bind
+every row. The original Stage 1 monitor/test result is historical, not proof of
+the strengthened Stage 3 monitor below.
+
+### MS18c-S2-SA1-20261118
+
+Source: SA1/Opus's independent Stage 2 response, relayed verbatim by the orchestrator
+to SA2 at **2026-11-18T23:49:00.299+07:00**:
+
+> APPROVE all 135 cells as bound in the preflight, with the conditions below.
+
+Those conditions are adopted here: R's lower timing bound; the full host tuple;
+bounded readiness; frozen inputs and per-cell premises; the full manifest; Job
+Object/detachment stand-ins; supervisor review; one original-cell canary and its
+file-only review; complete checked qualification before publication. This is the
+actual conditional binding approval, not a claim that the later supervisor or
+final-convergence review has already occurred.
+
+### MS18c-S2-SA2-20261118
+
+SA2/Astra, in response to that relay:
+
+> APPROVE all 135 numerical/source bindings. Accept SA1's conditions (a)-(f),
+> including R <= W-Q <= 60. Replace my earlier upper-bound-only W-Q ruling.
+
+The previous algebraic upper bound was sufficient for the ceiling calculation,
+but insufficient to validate timing provenance. Q is inside W and cannot consume
+the pre-creation interval R. A lower-bound failure is invalid timing, not negative
+physical overhead to accept or subtract. Preserve the record and stop for joint
+review, including whether the request clocks were affected. Negative Q-S alone
+still passes; neither residual is clamped. No P/A/T/O or p95 rule changes.
+
+The remaining convergence dispositions are:
+
+| Item | Accepted contract |
+|---|---|
+| (b) Host | Pin exact .NET StartTime and CIM UTC creation time truncated to microseconds, plus PID/parent/executable/CIM name; ignore .NET ProcessName. Own-supervisor adoption uses explicitly sourced CIM UTC microseconds. |
+| (c) Readiness | Each PowerShell/CIM query <=15 s; additionally the cumulative T-start-to-qualifier-create preflight is <=45 s, leaving 15 s inside H for other overhead. A timeout is an unstarted hold, not an eligible additional-consumer re-ask by itself. H remains monitored, not a proven OS scheduling maximum. |
+| (d) Canary | `classic4/veryEasy` is the first of the original 135, with the full unchanged protocol and ordinary counters/ceilings. Pause for SA1's file-only check before the remaining 134. It is not a pilot, extra sample or later repeat. |
+| (e) Freeze | Freeze the 46 engine files, exact ordered `SOURCE_FILES` declaration, both qualifier files, all policy files, Node and machine. Recompute before every admission. HEAD stays at the base or pack-only descendants throughout GQ; permitted unhashed compatibility/helper edits remain uncommitted until the normal task acceptance boundary. |
+| (f) Manifest | Include the epoch, every cell's premises/bounds, all constants/monitor limits/full identities/host parameters, the four preflight hashes, base `42e0d239`, S-OD13/S-OD14 and both approval references. |
+
+The epoch named for the orchestrator's explicit assignment in the release is
+**`MS18c-GQ-20261118-01`**. Merely writing that name neither starts an epoch's
+payload nor grants the developer permission to allocate/reset one. The orchestrator
+adopts this exact value in its release; all later limit/helper/authorization
+revisions retain its counters. SA1's final confirmation and the explicit release
+are still pending when this convergence is published.
+
+**Envelope accounting correction:** sums P/A/T exclude acquisition and gap
+allowances; the summed **O already includes 2700 s per initial admission**. None
+is a runtime forecast or includes separately needed re-ask/recovery attempts.
+Preserve the Stage 1 files rather than rewriting their historical wording.
 
 ## MS18c-Q1 — uniform GQ readiness: S-OD13 selects A
 
@@ -128,6 +203,28 @@ The same declared environment supplies the previously specified conditional CV6
 readiness in this task, with its original assertion and ordinary **450/540** command
 limits. The **GQ-only longer watchdog may not be used for CV6**. No GP timing or
 command-limit waiver follows; MS18d retains its own contract.
+
+**Stage 2 host binding:** require PID **1968**, exact .NET StartTime
+**`2026-11-13T19:26:33.6916441+07:00`**, CIM CreationDate truncated to microseconds
+and normalized to UTC **`2026-11-13T12:26:33.691644Z`**, parent **18780**,
+executable **`C:\Users\ledat\AppData\Local\Microsoft\WinGet\Links\copilot.exe`**
+and CIM name **`copilot.exe`**. Check both timestamp sources independently; do not
+compare their seventh fractional digit or infer a new instance from .NET's renamed
+`ProcessName`. Missing/mismatching required fields block admission. A new host
+instance needs the orchestrator's recorded full-tuple re-confirmation, never an
+automatic PID/name substitution or broad exemption.
+
+Complete Add-Type compilation and identity recomputation **before admission
+sampling**, under the applicable lock and outer deadline; no such CPU work during
+another payload. Do not retain three independent 30-second readiness calls.
+Every PowerShell/CIM query has **<=15 s** timeout and the supervisor also enforces
+the **cumulative 45 s** T-start-to-qualifier-create preflight limit, including
+sampling and startup. That reserves 15 s of H for other overhead, but the actual
+**R<=W-Q<=60** check remains mandatory. A timeout produces an immutable unstarted
+hold with its actual reason, releases the slot, and starts no qualifier.
+It is not a verified additional-consumer hold and therefore grants no automatic
+second admission or recovery. Missing-counter/identity/unknown reasons retain
+their review stop. No sampling loop or timeout reset.
 
 ## MS18c-Q2 — S-OD13 selects B; ceilings require joint SA1/SA2 approval
 
@@ -260,6 +357,10 @@ Keep the qualifier and its raw output unchanged. Define, in seconds:
 - **W:** the supervisor's monotonic T-clock, from creation of the owned Node launcher
   after lock acquisition until the owned payload tree has exited. It includes
   readiness, launch/loading and final output, but not acquisition waits or gaps.
+- **R:** the same supervisor monotonic clock's elapsed interval from T-start to
+  the qualifier-creation boundary, before qualifier execution. Record that boundary,
+  not a delayed observer/IPC receipt. R must be finite and satisfy **0<=R<=W**;
+  its provenance and clock alignment are proved with the Stage 3 stand-ins.
 
 Before any next cell, require:
 
@@ -267,12 +368,23 @@ Before any next cell, require:
    not only timeout outcomes. D is an overshoot allowance, not a new request guard.
 2. The actual protocol/structural counts: at most **5 slow outcomes with no stop**,
    at most **9 at a first-round stop**, and at most **6 in total if round 2 ran**,
-   with at most 5 in round 1 before expansion. Validate all existing round/key/seed/
-   hit/summary requirements too; the merger's broader generic in-flight allowance
-   does not replace the stronger single-cell/serial-round premise.
-3. **Q-S <= V+epsilon = 11 s**, **W-Q <= H = 60 s**, and **W <= A_i**.
-   Reject invalid timing/record data. Preserve negative residuals as recorded;
-   never clamp or subtract them from request times.
+   with at most 5 in round 1 before expansion. Require the cell record's
+   **cellCount, budget (milliseconds) and attempts** to equal the manifest row.
+   Invoke existing canonical validation, including `qualificationRecords.checkCell`
+   with manifest-derived expectations, and validate all header/round/key/seed/hit/
+   summary requirements. The reference monitor's optional validation callback is
+   not a substitute for this mandatory runtime validation.
+3. **Q-S <= V+epsilon = 11 s**, **R <= W-Q <= H = 60 s**, and **W <= A_i**.
+   Reject invalid timing/record data. Negative Q-S stays recorded and passes its
+   upper-bound check; **W-Q<R, including any negative W-Q, is invalid timing**.
+   Preserve both residuals without clamping, subtraction or p95 adjustment.
+
+This Stage 2 provenance check supersedes the earlier upper-only W-Q rule.
+Stage 3 must revise the reference monitor/tests before any real cell: preserve
+the original Stage 1 helper bytes/logs, freeze the corrected Stage 3 revision,
+test missing/nonfinite/negative R, equality and either side of R/60, and show that
+negative Q-S still passes. The old 21/21 result is not claimed for these new checks.
+Also test the three per-cell premise mismatches and compulsory canonical validation.
 
 Q-S is an **aggregate net residual**, not a validation timer. It includes
 post-`started` startup: the four worker forks plus `engineInfo()` Git calls/hashing,
@@ -454,9 +566,9 @@ is blocked** by the gap; it is not a hidden qualification verdict.
 
 ### Three-stage flow and mandatory stops
 
-**Stage 1 — FILE-ONLY developer preflight, then stop.**
+**Stage 1 — completed FILE-ONLY developer preflight; historical scope and stop.**
 
-- Allowed now: read the accepted records/code, compute source/tool/attempt-policy
+- Allowed in Stage 1: read the accepted records/code, compute source/tool/attempt-policy
   identities, inspect static Node/machine metadata, create a task-owned read-only
   planner and fake-data tests, and produce **exactly 135 rows** under
   `docs/difficulty-v3/evidence/MS18c/preflight/` (`gq-cells.json`, `gq-cells.md` and
@@ -502,14 +614,15 @@ is blocked** by the gap; it is not a hidden qualification verdict.
   constants, numeric bounds, outer budgets and **both real approval references**.
   Include **S-OD14** and the recovery counters/path/authorization contract before
   marking Stage 3 ready. The orchestrator assigns the stable qualification epoch.
-  **That file does
-  not exist or confer authority merely because its name appears here.**
+  The published binding and real approval references are recorded above; its
+  existence in HEAD and unchanged blob must still be checked. A path name or a
+  developer-generated plan alone is not authority.
 - Unresolved protocol/identity/capability facts require an explicit analyst disposition. Safe approved
   cells may be authorized while others stay unadmitted, but full publication remains
   blocked by any missing cell. No hidden verdict, extra probe or tooling/protocol
   change follows from an unadmitted row. Fable is not required for these ceilings.
-- Q3's owner-answer precondition is satisfied by S-OD14, but Stage 2 binding review
-  is still mandatory. The developer may not fill in either binding approvals or
+- Q3's owner-answer precondition is satisfied by S-OD14; the binding review above
+  is complete, subject to its stated gates. The developer may not fill in either binding approvals or
   a future case-specific recovery authorization.
 - The orchestrator relays **both** binding approval and explicit
   Stage 3/slot/GQ-window release under the S-OD13/S-OD14 contract.
@@ -528,14 +641,34 @@ is blocked** by the gap; it is not a hidden qualification verdict.
   admission holds and owned process-tree cleanup using fake clocks/short-lived
   stand-ins, not long generation trials. Format/freeze helpers. Recheck all bound
   inputs after compatibility edits: an engine/tool/attempt-policy/default/Node/
-  machine change needs a Stage 2 compatibility/reapproval record before GQ. Unrelated
+  machine or `SOURCE_FILES` declaration change needs Stage 2 reapproval before GQ. Unrelated
   UI/test/doc edits outside those inputs do not invalidate GQ-bound approval; their
-  separate E/quick identity and verification obligations still apply.
+  separate E/quick identity and verification obligations still apply. Keep these
+  authorized working-tree edits uncommitted through GQ: HEAD must remain the base
+  or pack-only descendants, with every intervening commit checked, not just its
+  net diff. Record actual HEAD/dirty metadata; never retag a result.
+- Before the first real cell, run the focused `variants-registry` size-parity gate.
+  SA1's MS07e built-model records and unchanged variants corroborate the rows;
+  current focused verification and every completed cell's manifest-premise check
+  still apply. Node is the exact approved `C:\Program Files\nodejs\node.exe`,
+  v26.13.0; CI's Node 24 is not a reason to switch it.
 - Include focused fake-data recovery checks: live-run adoption; complete/hidden
   record refusal; unchanged counters across restarts/aliases; missing/edited/unclaimed
   authorization refused; separate slot-2 admission budget; a late primary record
   blocking relaunch; partial files preserved; and permanent gap after recovery failure.
-  These are Stage 3 checks, not added work for the running Stage 1 developer.
+  These are Stage 3 checks, not a rewrite of the completed Stage 1 record.
+- **STOP for SA1 supervisor review before the first real cell.** Supply the
+  implemented supervisor/monitor/journal, frozen helper hashes, focused gates,
+  and short-lived capability/adoption/timing stand-in evidence. A failed
+  containment/detachment/identity proof blocks GQ; no uncontained fallback.
+- After that acceptance and a separate orchestrator GQ-window GO, run
+  **`classic4/veryEasy` only**, as the first full-protocol original cell, then
+  **STOP again for SA1's file-only check** of the run directory, journal, monitor
+  and acceptance receipt. Preserve its result, including a valid hidden verdict;
+  never rerun it in the remaining 134. A hold/fault/unresolved review keeps this
+  gate closed; use the existing admission/S-OD14 rules, not another canary.
+  The orchestrator records the continuation after SA1 accepts it. Monitor or
+  evidence failures still require joint review, not an SA1-only waiver.
 - Run **one complete cell per supervised payload**, no compound matrix, independently
   detached workers, seed splitting or deadline reset. The supervisor owns wall-clock
   T/O deadlines, Q1 admission and the >=15 s gap. T starts at creation of the owned
@@ -551,6 +684,21 @@ is blocked** by the gap; it is not a hidden qualification verdict.
 - At any unresolved gap the full publication gate remains unsatisfied. The 1-12 h
   figure is still historical planning context, not a promised total or per-command
   timeout: sum the actual approved projections plus gaps/waits and report unknowns.
+
+### Exact Stage 3 preparation release text
+
+For the orchestrator to relay **only after SA1's final AGREE on this convergence**;
+this text in the pack is not itself a release:
+
+> Assign epoch `MS18c-GQ-20261118-01` and release MS18c Stage 3 preparation only
+> against the committed approved-ceilings manifest. Complete unhashed compatibility
+> work and focused gates, supervision, S-OD14 journaling, the corrected monitor and
+> stand-in proofs; freeze helpers. STOP for SA1's supervisor review. Only a separate
+> orchestrator GQ-window GO releases `classic4/veryEasy`, once, under the full
+> original protocol. STOP for SA1's file-only canary acceptance before the remaining
+> 134. No completed-record reruns; S-OD14 governs eligible faults. Archive v2 before
+> replacement. Publish only after the complete 135-cell merge has
+> `totals.invalid === 0`; then E/GH, both quick sets, CI and final SA1 review.
 
 ### Outer waits and `spawnSync` audit — agreed
 
@@ -592,8 +740,16 @@ detach only this bounded supervisor, never uncontained workers.
   not hold another handle open and thereby defeat kill-on-close.
   Descendant qualifier/workers stay in that job. Job containment is not a CPU-time
   limit: T is elapsed wall time. Failed job setup means no payload start, not an
-  uncontained fallback. Test supervisor loss and grandchild cleanup with short-lived
-  owned stand-ins before any GQ.
+  uncontained fallback. Before any GQ, prove actual nested-job compatibility with
+  a short-lived Node parent that forks four Node children, like the qualifier.
+  Verify all belong to the supervisor's job and all exit on normal completion,
+  T expiry and supervisor loss, including Node's own nested child jobs.
+- Prove actual detached stand-in survival after its launching sub-agent has
+  completed, then adoption by the orchestrator/another agent using durable status.
+  The orchestrator coordinates that handoff; do not infer survival from a single
+  continuing shell's read. Record host-job membership/nesting and the launch
+  method. Survival after the **main CLI session ends is not required** and must
+  not be claimed from this narrower proof; session loss follows S-OD14.
 - The supervisor itself verifies the committed contract, identities and Q1 admission,
   enforces the >=15 s gap and any eligible >=60 s re-ask spacing, owns the mutex,
   and enforces T/O. An admission hold releases the slot, writes an unstarted outcome
@@ -602,8 +758,12 @@ detach only this bounded supervisor, never uncontained workers.
 - Write stdout/stderr, events and all results to project files, not a live shell pipe.
   Atomically maintain a status file containing **run/cell/attempt IDs, supervisor PID
   and process creation time, job identity, approval-manifest blob, input identities,
-  policy/method, state, T/O start/deadline information, output paths and final status**.
+  policy/method, state, T/O start/deadline information, R's creation boundary,
+  output paths and final status**.
   Keep an immutable event/attempt history as well as the latest status.
+  For own-supervisor PID/creation matching, name **CIM CreationDate, UTC,
+  truncated to microseconds** as the source/precision and unit-test the recorded
+  host values and PID-reuse rejection. Do not mix it with .NET's extra fractional digit.
   The GQ node T-clock excludes acquisition/gap time; expose that distinction.
 - Before starting another supervisor for a cell, inspect prior status/records.
   A live matching supervisor is **adopted**, not relaunched. A completed record is
@@ -691,10 +851,24 @@ both diagnosis approvals, the unique claim for that slot, an unused payload-laun
 opportunity and the correctly remaining admission ordinal.
 An untracked, changed, staged-new, incomplete or self-approved manifest is not authority.
 
-Recompute **qualifier, engine and attempt-policy identities** at launch and match
-the manifest, including Node/machine/defaults and the single-cell protocol. Do these
-checks before the payload (before the quiet/admission sampling where they consume CPU),
-not as hashing work during another active cell.
+Recompute **qualifier, engine and attempt-policy identities before every admission**,
+including an eligible re-ask or authorized recovery, and match the manifest's full
+objects, Node executable/version, machine/defaults and single-cell protocol.
+Also freeze the **exact ordered `SOURCE_FILES` declaration in `node-runner.js`**:
+its raw CRLF declaration bytes from `const SOURCE_FILES = [` through `];`
+(inclusive, no following newline) are **1988 bytes**,
+SHA-256 **`33d0cf43adf0a99471193bf5d2024173fc4a57f87ae0a48a9730bae25efefff4`**.
+Its 64 entries and the resulting 46 engine files are in the manifest.
+Missing input files fail closed, even though the qualifier's legacy loader skips them.
+Check ancestry from **`42e0d239bc8b9b8bd66a2d868ccc8601d8b0d5e4`** and
+pack-only changes in every intervening commit. An application/helper commit or
+changed frozen input before GQ completion requires re-derived rows and joint
+Stage 2 reapproval; it is not excused by an unchanged net diff or a reverted edit.
+Authorized unhashed UI/locale/test/helper working-tree edits are distinct from
+committed ancestry and do not by themselves change the qualified source.
+Do these checks before admission sampling, never during an active payload.
+Preserve the frozen Stage 1 preflight; its `--check` is tied to its recorded HEAD,
+not a command to rewrite it to every pack descendant.
 
 Build the payload from the approved entry: one variant, one level, **`--jobs=4`**,
 default early stop and the fixed per-slot/per-admission output-path template.
@@ -941,7 +1115,7 @@ population distinct. The final reply and MS18e handoff include:
 | S-AV28-S-AV30, MS18a `greaterThan:expert:0`, S-AV18-S-AV23 | Prior source/sample-specific availability/target effects; reconcile with final verdicts, retain historical losses, do not generalize a 12-request cohort. |
 | S-AV36-S-AV39, S-AV31/S-AV33/S-AV34 | Construction/seeded/synthetic/repository/whole-generation populations and frozen finder limits remain separate. This task supplies availability, MS18d costs, MS18e audit. |
 | MS15b-GP-J / MS15b-GP-U; S-AV38 | ALS 37-cell record: one full, one pilot-only, 35 unmeasured; distinct from grouped 50-cell incomplete GP. Final GP remains MS18d. |
-| **MS18c-Q1 / MS18c-Q2 / S-OD13** | Owner selects A/B; SA1/SA2 agreed the structural rule/table and monitor at the 22:42 relay. Stage 1 still stops for Stage 2 source/manifest binding. Retain approvals, assumption/bound breaches and gaps for MS18e. |
+| **MS18c-Q1 / MS18c-Q2 / S-OD13** | Owner selects A/B; Stage 1 has stopped and both analysts approve all 135 bindings. The committed manifest, strengthened R monitor, capability proofs, supervisor review and canary pause govern Stage 3. Retain approvals, assumption/bound breaches and gaps for MS18e. |
 | **MS18c-Q3 / S-OD14 recovery** | Owner selects B at 23:05:53 (+07:00). The owner-answer gate is satisfied; actual recovery needs prior joint diagnosis/committed one-use authorization, separate counters, immutable paths and proof no live/complete primary remains. Failed recovery is a permanent gap. |
 
 Standing quick cost, earlier resolved decisions and withdrawn S-AV16/S-AV17 findings
@@ -979,15 +1153,18 @@ unexecuted populations; a named item never substitutes for complete publication.
 
 ## Implementation steps
 
-0. **Stage 1 remains file-only and ends at the mandatory stop. Stage 2 belongs jointly
-   to SA1/SA2. S-OD14 satisfies the Q3 owner-answer gate, not Stage 2 or the explicit
-   Stage 3 release that permits steps 1-6 below.** S-OD13 and the class rule are
-   recorded; no numerical ceiling is chosen by the developer. Read back
+0. **Stage 1 is complete and stopped. The published Stage 2 binding belongs jointly
+   to SA1/SA2. S-OD14 satisfies the Q3 owner-answer gate, not the explicit
+   preparation/canary/continuation releases that govern steps 1-6 below.**
+   No numerical ceiling is chosen by the developer. Read back
    each phase plan, confirm approved inputs/slot and format before freezes.
 1. Finish the narrowly coupled compatibility logic/tests on controlled hidden-level fixtures, without
    pruning live offers. Then freeze candidate/defaults and archive v2 before any live-table change.
-2. Preflight every intended cell, collect all 135 complete cells under the approved
-   bounded route, merge/check before support publication, and require zero invalid puzzles.
+2. Implement/freeze supervision and pass the focused gates and stand-in proofs.
+   Stop for SA1 supervisor review, then the orchestrator's canary/window GO.
+   Run `classic4/veryEasy` once and stop for SA1's file-only acceptance; only then
+   collect the remaining 134 under the approved bounded route. Preflight every
+   admission, merge/check before support publication, and require zero invalid puzzles.
    Distinguish protocol-proved hidden verdicts from failures, holds and unexecuted cells.
 3. Update live report and exact matching product support arrays together; record every
    addition/removal and S-OD7's separate Killer withholding without altering the raw GQ verdicts.
@@ -1090,8 +1267,10 @@ for an assigned compatibility fix; never invent a qualified level.
 Review: SA1 cross-review. Correctness/evidence corruption or changing a recorded decision
 stops; time/availability is a named numerical item, not an owner stop or offer waiver.
 S-OD13 resolves Q1/Q2 policy and the analysts have agreed the structural rule.
-S-OD14 resolves Q3's owner choice; Stage 2 binding and the orchestrator's release
-remain explicit gates, not performance exceptions. Recovery is never automatic:
+S-OD14 resolves Q3's owner choice; the published Stage 2 binding and the orchestrator's
+staged releases remain explicit gates, not performance exceptions. The stronger
+R<=W-Q<=60 provenance check, supervisor review and canary pause apply.
+Recovery is never automatic:
 its separate prior joint authorization is mandatory. Use the approved GQ-only supervisor
 for those cells; all other possibly >10-second work uses `Invoke-Dv3Node`, <=540 s.
 Preserve GQ jobs 4 and the current bounded quick manifest.

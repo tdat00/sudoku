@@ -114,7 +114,7 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [ ] | MS18 | MS18a-MS18e | Final evidence (parent) | MS17b | split | Evidence/release | M18 | 43-47 |
 | [x] | MS18a | [MS18a](MS18a-final-matched-soak.md) | Matched final soak | MS17b | S, 25-35 min | Evidence | M18a | 43 |
 | [x] | MS18b | [MS18b](MS18b-recheck-cap-and-window.md) | Cap/window final rechecks | MS18a | S, 25-40 min | Evidence | M18b | 44 |
-| [ ] | MS18c | [MS18c](MS18c-qualify-and-publish-offers.md) | Qualify and publish offers | MS18b; S-OD13/S-OD14; file-only Stage 1 then joint Stage 2 binding and Stage 3 release | M, 35-50 min | Qualification | M18c | 45 |
+| [ ] | MS18c | [MS18c](MS18c-qualify-and-publish-offers.md) | Qualify and publish offers | MS18b; S-OD13/S-OD14; Stage 2 bindings published; staged release, supervisor and canary reviews | M, 35-50 min | Qualification | M18c | 45 |
 | [ ] | MS18d | [MS18d](MS18d-performance-and-final-hashes.md) | Final GP preflight/performance/hashes | MS18c | M, 40-55 min + GP/GG | Evidence | M18d | 46 |
 | [ ] | MS18e | [MS18e](MS18e-release-evidence-closure.md) | Final correctness/items/workflows and PR CI | MS18d | M, 40-60 min + GD/deep/CI | Release evidence/CI | M18 | 47 |
 
@@ -191,15 +191,18 @@ these commits also contain evidence, helpers and notes, not only pack files.
 M17 remains complete. MS17a (`5b94904`), MS16
 (`d41a6dd`), MS15b (`8b26e83`), MS15a (`b958a58`, SA1 accepted), MS14c (`6a9fbf6`),
 MS14b (`0e3a0c4`), MS13c (`9d58d86`) and resolved JF-02/S-OD12 (A + S0) remain prior
-boundaries. Next: **MS18c -> MS18d -> MS18e**, one developer at a time. **S-OD13 resolves
-Q1/Q2 policy; MS18c Stage 1 is file-only preparation and MUST STOP.** The structural
-rule is now jointly agreed, but GQ/production work remains held for **joint Stage 2
-source/manifest binding**, then explicit Stage 3 release. **S-OD14 now satisfies
-Q3's owner-answer gate**; it does not release Stage 3 or pre-approve any actual recovery.
-The developer chooses no ceiling or recovery authorization. SA1 remains
-the final cross-reviewer.
+boundaries. Next: **MS18c -> MS18d -> MS18e**, one developer at a time. **MS18c
+Stage 1 finished and stopped at `42e0d239`; both analysts approve all 135 Stage 2
+bindings.** `MS18c-gq-approved-ceilings.json` contains the separate immutable
+authority; the Stage 1 pending rows/reports stay unchanged. Await **SA1 final
+confirmation of the convergence and the orchestrator's Stage 3 preparation
+release**. Before real GQ: capability/focused gates, SA1 supervisor review, then a
+separate canary/window GO; after `classic4/veryEasy`, stop for SA1's file-only
+acceptance before the other 134. **S-OD14 satisfies Q3's owner-answer gate**, not
+any actual recovery approval. The developer chooses no ceiling, epoch reset or
+recovery authorization. SA1 remains the final cross-reviewer.
 **MS18a and MS18b receive orchestrator template/contract review; SA1 cross-review is
-at MS18c.** No extra analyst review gate is added. A specific unresolved question still
+at MS18c**, including its now-agreed supervisor and canary checkpoints. A specific unresolved question still
 goes through the orchestrator and the QUESTION pause.
 
 MS17b's final records are `docs/difficulty-v3/evidence/MS17b/evidence.md`, especially
@@ -353,26 +356,47 @@ This is a universal structural worst-case argument under monitored allowances,
 **not advance credit for a predicted early stop**. Actual early-stop proof still
 applies. 9600/12000 remain outer caps, never default cell settings; other gates
 remain **450/540**. No cell lacks a class because a pilot is missing.
-Stage 1 records all 135 keys/classes/identities and audits premises/deadlines, then
-**STOP**. Stage 2 jointly approves the exact source-bound committed manifest; no
-developer approval or timeout choice.
+Stage 1 recorded all 135 keys/classes/identities and audited premises/deadlines,
+then **stopped**. Both analysts approve all 135 P/A/T/O assignments in the exact
+source-bound **`MS18c-gq-approved-ceilings.json`**. The leaf records the actual
+approvals **MS18c-S2-SA1-20261118 / MS18c-S2-SA2-20261118**, the four preflight
+hashes and the convergence accepting SA1's conditions. Epoch
+**`MS18c-GQ-20261118-01`** is for explicit orchestrator assignment in the release;
+no developer allocation/reset, approval or timeout choice.
 
 The monitor checks **every request ms<=130000**, the structural slow counts
 (<=5 with no stop, <=9 at first-round stop, <=6 total if round 2 ran), and
-**Q-S<=11, W-Q<=60, W<=A** using unrounded Q and monotonic W. S simulates
+**Q-S<=11, R<=W-Q<=60, W<=A** using unrounded Q and monotonic W/R. R is the
+T-start-to-qualifier-create interval, finite and 0<=R<=W. S simulates
 index-order generation with four workers ready together, then the serial round.
 Q-S includes post-started forks/Git/hash work, validation/IPC and rescheduling;
-it is not a per-request V measurement. Preserve negatives; invalid data or a breach
-returns to joint review before another cell. The qualifier and raw p95 stay unchanged.
+it is not a per-request V measurement. Negative Q-S is retained and passes;
+**W-Q<R, including negative W-Q, is invalid timing** and stops subsequent GQ for
+joint review of provenance and possibly affected request clocks. Preserve all
+raw values, never clamp/subtract. This supersedes SA2's earlier upper-only ruling;
+Stage 3 corrects/freezes the monitor/tests while retaining the historical Stage 1
+bytes and 21/21 log. Require each cell's count/budget/attempts to equal its row,
+plus canonical `checkCell` and header/protocol validation.
+
+Freeze the exact `SOURCE_FILES` declaration and all engine/tool/policy/Node/machine
+inputs before **every admission**, not just the first payload. HEAD remains at
+`42e0d239` or pack-only descendants throughout GQ; authorized unhashed compatibility
+and helper working-tree edits await the normal task acceptance commit. Changes
+to frozen inputs or code commits need re-derived rows and joint reapproval.
+Pin the full host tuple in the manifest: exact .NET StartTime, CIM UTC creation
+to microseconds, PID/parent/executable/CIM name; .NET ProcessName is ignored.
+Readiness queries are <=15 s each and the cumulative pre-qualifier T-clock limit
+is 45 s, with H still checked at 60. Timeouts are unstarted holds, not eligible
+CPU re-asks by themselves. Compile/hash before admission sampling.
 
 **MS18c-Q3 resolved by S-OD14 — owner, Discord `amicably8850`,
 2026-11-18 23:05:53 (+07:00), verbatim:**
 
 > Q3: chọn B
 
-The owner-answer precondition is satisfied. **Stage 1 continues file-only and stops;
-Stage 2 joint binding/release is still required.** No Stage 1 files/helpers need
-changing because of this decision. S-OD14 permits only one prior-joint-authorized
+The owner-answer precondition is satisfied. **Stage 1 has stopped; the published
+Stage 2 binding still requires the staged releases/reviews above.** The original
+S-OD14 answer did not expand Stage 1 or require changes to its files. S-OD14 permits only one prior-joint-authorized
 recovery per GQ cell after T-kill, worker/supervisor fault or session loss, with no
 complete record, unchanged qualified source/seed/protocol and every trace preserved.
 A live supervisor is adopted; a complete record (including valid early stop, hidden
@@ -414,7 +438,7 @@ Discord HTTP poller and lightweight 30-minute HTTP report are explicit operation
 exceptions, not permission for report computation. No during-payload CPU sampler.
 Verify that the approval manifest exists in HEAD and its working-tree `git hash-object`
 equals the committed blob, with both approval references; diff-only misses untracked
-files. Recompute qualifier/engine/attempt-policy identities at launch. Refuse nondefault
+files. Recompute all frozen identities before each admission. Refuse nondefault
 early-stop, probes, multi-cell lists and timeout overrides. The inherited 1800 s
 `spawnSync` timeout cannot govern these runs; the maximum current O is 7200 s.
 
@@ -452,7 +476,7 @@ accepted. The owner-ordered pause commit `a7f6660` was not green; preserve it as
 | S-OD10 (JF-01 / S-AV35) | Owner, Discord, 2026-11-16 22:20 (+07:00): "Chọn A." One-off MS12/Jellyfish corpus route: classic9 seed 4242, ascending indices 0-19,999 (<=20,000), original givens, level null and `testkit-4242-<index>` provenance; reuse/materialize the prefix once and account for construction. Player replay chunks <=64, <=400 hints/puzzle, eight-minute tool deadline, credible <=450 s admission, 540 s process ceiling and existing locks/15 s gaps. Stop acquisition after the first chunk supplies a verified source, publish/check it, then require all 37 GH checks and final quick/CI gates. At exhaustion or inability to stay within bounds, report completed/incomplete ranges and stop. No automatic expansion, additional Generator discovery or reset of B's ceiling; no other ID/task inherits it. GH acceptance, finders, priors, availability and tests stay unchanged. |
 | S-OD11 (GC-01 / S-AV36) | Owner, Discord, 2026-11-17 04:30 (+07:00): "GC-01: chọn A." Bounded grouped attempt first for both forcing IDs, initially 4,096 additional nodes and 50,000 shared construction/search units. Only a local work/node cap permits short-only complete-singleton fallback with `workLimit:null`, the same caller-clamped short window and the same parent budget. No reset or fallback for parent exhaustion, cancellation/errors, completed negatives or window rejection. The fallback certifies a singleton-graph minimum, not a grouped minimum. `forcingChainLong` stays bounded with no fallback/second allowance; incomplete construction/minimum returns null. IR54 is preserved; option B is not approved. Record both phases and total cost, retain R10's once-only own-new-limit rule and all proof/E/GH/quick/CI/qualification gates. No numeric adjustment or availability guarantee follows. Finish accepted/committed MS14a, then MS13c -> MS14b -> MS14c; no change to MS14a. S-AV36 stays open for measurements/cost/audit, not for another GC-01 answer. |
 | S-OD12 (JF-02 A + S0) | Owner, Discord, 2026-11-17 13:46 (+07:00): "tôi chọn A và S0". Retroactively approve retention of MS13c's verified Jellyfish source `testkit-4242-8657`, snapshot and all acquisition records, for MS13c only. Explicitly preserve that the scan lacked authorization when performed; S-OD10 did not authorize it. No further scan, unused quota, budget reset or gate waiver. **S0 keeps case-by-case permission; the proposed standing S1 rule is not approved.** Ordinary B/IR72 acquisition remains unchanged; every future exception/expansion needs separate prior owner authorization. The owner hold is resolved, but reviewed fixes and final GH/both quick sets/CI still precede MS13c acceptance/commit and later dispatch. S-OD11, cost items and final qualification/performance obligations are unchanged. |
-| S-OD13 (MS18c-Q1/Q2) | Owner, Discord author `amicably8850`, **2026-11-18 21:31:46 (+07:00)**: **"Q1: A. Q2: chọn phương án B nhưng giao SA-Opus và SA-Astra chọn mức trần, không cần thông qua Fable."** Q1-A approves declared host-active GQ with raw p95/budgets/jobs/seeds/120000 ms guard unchanged and the existing unstarted-hold re-ask. Q2-B delegates GQ-only finite ceilings **jointly to SA1/Opus and SA2/Astra, not Fable/developer**. The analysts' 22:42 structural agreement still needs exact Stage 2 source/manifest binding. Q3's later recovery exception is S-OD14 below. Other gates keep 450/540; no scheduler/protocol/offer/partial-publication/acquisition waiver. The owner's original statement selected no number itself. |
+| S-OD13 (MS18c-Q1/Q2) | Owner, Discord author `amicably8850`, **2026-11-18 21:31:46 (+07:00)**: **"Q1: A. Q2: chọn phương án B nhưng giao SA-Opus và SA-Astra chọn mức trần, không cần thông qua Fable."** Q1-A approves declared host-active GQ with raw p95/budgets/jobs/seeds/120000 ms guard unchanged and the existing unstarted-hold re-ask. Q2-B delegates GQ-only finite ceilings **jointly to SA1/Opus and SA2/Astra, not Fable/developer**. The 22:42 structural agreement is now bound by both analysts' 135-row Stage 2 manifest and its staged release/review conditions. Q3's later recovery exception is S-OD14 below. Other gates keep 450/540; no scheduler/protocol/offer/partial-publication/acquisition waiver. The owner's original statement selected no number itself. |
 | S-OD14 (MS18c-Q3) | Owner, Discord author `amicably8850`, **2026-11-18 23:05:53 (+07:00)**, verbatim **"Q3: chọn B"**. At most one GQ recovery relaunch per cell after T-kill, worker/supervisor fault or session loss, only with no complete record and prior **joint SA1/SA2 diagnosis/approval**. Same qualified source/seed/protocol; all traces remain; no completed-record rerun, correctness erasure or faster-result selection. Adopt a live supervisor. Primary/recovery slots and their admission budgets are explicit and durable; a committed one-use case authorization is required before slot 2. Failure/exhaustion of recovery is a permanent gap; no third run or implicit reset. This satisfies the Q3 owner-answer gate, not Stage 2 binding or actual recovery approval. |
 
 The following are serial ownership transfers, not permission for parallel edits:
@@ -977,12 +1001,14 @@ MS17b freezes the actual new-pattern limits with v3.
 
 **S-OD13, 2026-11-18 21:31:46 (+07:00):** Q1-A and Q2-B are owner-approved,
 with GQ ceiling authority delegated **jointly to SA1/Opus and SA2/Astra, not Fable**.
-The canonical verbatim owner record and section 2 govern. Stage 1 is file-only;
-the structural numerical rule is now agreed, but its exact source/manifest binding
-needs both approvals. **S-OD14 records Q3-B at 23:05:53 (+07:00):** one recovery
+The canonical verbatim owner record and section 2 govern. Stage 1 has finished
+file-only and stopped; both analysts approve the exact 135-row manifest, with
+the strengthened R monitor, full identity freeze and supervisor/canary review
+conditions in the leaf. **S-OD14 records Q3-B at 23:05:53 (+07:00):** one recovery
 opportunity only after prior joint diagnosis/committed case authorization, separate
-counters and preserved traces. The owner-answer gate is satisfied; Stage 2 and
-explicit release remain. All non-GQ ceilings and qualification predicates are unchanged.
+counters and preserved traces. The owner-answer gate is satisfied; final convergence
+confirmation and explicit staged releases remain. All non-GQ ceilings and
+qualification predicates are unchanged.
 
 No implementer chooses an alternative from the original reports.
 
@@ -1134,8 +1160,9 @@ raw numerical screen below remains recorded, not silently turned into a quiet pa
 The later GQ/GP readiness contract still needs its own dispatch disposition.
 
 **MS18c / S-OD13:** Q1-A explicitly approves **`MS18c-GQ-host-active`**, raw p95
-binding. SA1/SA2's structural contract is agreed; Stage 1 is file-only and stops.
-Stage 3 needs the exact Stage 2 committed binding and explicit release; **S-OD14**
+binding. Stage 1 has stopped and all 135 Stage 2 bindings are approved.
+Stage 3 needs the unchanged committed manifest, final confirmation and explicit
+staged releases/reviews (supervisor, then one original-cell canary); **S-OD14**
 has satisfied Q3's owner-answer gate but pre-approves no individual recovery.
 The approved detached GQ supervisor owns admission/gaps/T/O and job-contained workers;
 agent replacement adopts it rather than relaunching. The leaf's GQ-window whitelist,
