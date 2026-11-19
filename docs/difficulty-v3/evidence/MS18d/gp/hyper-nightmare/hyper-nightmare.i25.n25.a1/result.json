@@ -1,0 +1,76 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hyper-nightmare.i25.n25.a1",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "hyper",
+    "level": "nightmare",
+    "targetMs": 10000
+  },
+  "task": "MS18d GP record hyper-nightmare.i25.n25 a1",
+  "startedAtMs": 1795107480192,
+  "outcome": "success",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-recorder",
+    "outcome": "success",
+    "complete": true,
+    "controllerExit": 0,
+    "kinds": [],
+    "problems": [],
+    "cli": {
+      "exit": 0,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=0 seconds=58.649",
+      "exit": 0
+    },
+    "ledger": {
+      "chunkId": "hyper-nightmare.i25.n25",
+      "requests": 25,
+      "sha256": "42e80a02ef271a2810b42f470c47d3def3095d09639e5d39f17dc371016d59ca"
+    }
+  },
+  "cli": {
+    "exit": 0,
+    "signal": null
+  },
+  "tee": {
+    "pid": 27960,
+    "processExit": 0,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=0 seconds=58.649",
+    "exit": 0
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 218,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 93000,
+      "systemMicros": 390000
+    },
+    "tee": {
+      "userMicros": 15000,
+      "systemMicros": 93000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 0,
+  "finishedAtMs": 1795107548608
+}

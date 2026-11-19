@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=hyper-nightmare.i0.n25 --out=..\docs\difficulty-v3\evidence\MS18d\gp\hyper-nightmare\hyper-nightmare.i0.n25.a1\ledger.json
+ms18d-gp-recorder-start chunk=hyper-nightmare.i0.n25 i0=0 n=25 seedBase=7000
+ms18d-gp-ledger-complete chunk=hyper-nightmare.i0.n25 bytes=19575 sha256=392e02ce65fce833090aaa82f6ca79cfcfa03219d83f449ad538ca2dac97912c
+exit=0 seconds=85.208

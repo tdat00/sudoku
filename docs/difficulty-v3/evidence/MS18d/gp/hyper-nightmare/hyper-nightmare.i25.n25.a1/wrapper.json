@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record hyper-nightmare.i25.n25 a1",
+  "runId": "hyper-nightmare.i25.n25.a1",
+  "cell": "hyper/nightmare",
+  "payload": "gp-recorder",
+  "chunkId": "hyper-nightmare.i25.n25",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/hyper-nightmare/hyper-nightmare.i25.n25.a1",
+  "requestedAt": "2026-11-19T23:58:00.054+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795107464347,
+    "lastCheckMs": 1795107479872,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-19T23:58:00.192+07:00",
+  "finished": "2026-11-19T23:59:08.639+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2922,
+    "cheapCheckMs": 128,
+    "ageMs": 139,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-19T23:59:08.640+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

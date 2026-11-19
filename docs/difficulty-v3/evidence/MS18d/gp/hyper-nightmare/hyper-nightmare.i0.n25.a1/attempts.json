@@ -1,0 +1,19 @@
+{
+  "schema": "ms18d-c-attempts-1",
+  "chunkId": "hyper-nightmare.i0.n25",
+  "runs": [],
+  "admissions": 0,
+  "payloads": 0,
+  "problems": [],
+  "reasons": [],
+  "ruling": null,
+  "rulingsJournal": {
+    "path": "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+    "commit": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+    "baseCommit": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+    "entryCount": 2,
+    "sha256": "405ce7ab316b7a6c29b1ad3012f923318f59d98d9a0a1c8351bff9bfc0a6a69f",
+    "baseSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "decision": "allow"
+}

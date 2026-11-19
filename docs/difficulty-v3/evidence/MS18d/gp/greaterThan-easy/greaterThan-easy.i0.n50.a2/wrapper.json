@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record greaterThan-easy.i0.n50 a2",
+  "runId": "greaterThan-easy.i0.n50.a2",
+  "cell": "greaterThan/easy",
+  "payload": "gp-recorder",
+  "chunkId": "greaterThan-easy.i0.n50",
+  "attempt": 2,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/greaterThan-easy/greaterThan-easy.i0.n50.a2",
+  "requestedAt": "2026-11-20T00:48:30.406+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795110494724,
+    "lastCheckMs": 1795110510240,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 269
+  },
+  "startedAtFromChild": "2026-11-20T00:48:30.530+07:00",
+  "finished": "2026-11-20T00:48:42.055+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 3385,
+    "cheapCheckMs": 120,
+    "ageMs": 130,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T00:48:42.056+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

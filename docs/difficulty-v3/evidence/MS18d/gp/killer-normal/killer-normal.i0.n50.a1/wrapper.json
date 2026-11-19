@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record killer-normal.i0.n50 a1",
+  "runId": "killer-normal.i0.n50.a1",
+  "cell": "killer/normal",
+  "payload": "gp-recorder",
+  "chunkId": "killer-normal.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/killer-normal/killer-normal.i0.n50.a1",
+  "requestedAt": "2026-11-20T00:34:59.208+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795109683495,
+    "lastCheckMs": 1795109699013,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 269
+  },
+  "startedAtFromChild": "2026-11-20T00:34:59.878+07:00",
+  "finished": "2026-11-20T00:35:43.574+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 3200,
+    "cheapCheckMs": 126,
+    "ageMs": 136,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T00:35:43.575+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

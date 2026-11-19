@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record jigsaw9-hard.i0.n50 a1",
+  "runId": "jigsaw9-hard.i0.n50.a1",
+  "cell": "jigsaw9/hard",
+  "payload": "gp-recorder",
+  "chunkId": "jigsaw9-hard.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/jigsaw9-hard/jigsaw9-hard.i0.n50.a1",
+  "requestedAt": "2026-11-20T00:14:30.450+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795108454725,
+    "lastCheckMs": 1795108470270,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 272
+  },
+  "startedAtFromChild": "2026-11-20T00:14:30.588+07:00",
+  "finished": "2026-11-20T00:14:44.054+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2982,
+    "cheapCheckMs": 128,
+    "ageMs": 138,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T00:14:44.055+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

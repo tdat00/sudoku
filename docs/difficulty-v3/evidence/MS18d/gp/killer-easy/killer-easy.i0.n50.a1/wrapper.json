@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record killer-easy.i0.n50 a1",
+  "runId": "killer-easy.i0.n50.a1",
+  "cell": "killer/easy",
+  "payload": "gp-recorder",
+  "chunkId": "killer-easy.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/killer-easy/killer-easy.i0.n50.a1",
+  "requestedAt": "2026-11-20T00:32:16.764+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795109521071,
+    "lastCheckMs": 1795109536591,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-20T00:32:16.892+07:00",
+  "finished": "2026-11-20T00:32:27.485+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2902,
+    "cheapCheckMs": 124,
+    "ageMs": 134,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T00:32:27.486+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

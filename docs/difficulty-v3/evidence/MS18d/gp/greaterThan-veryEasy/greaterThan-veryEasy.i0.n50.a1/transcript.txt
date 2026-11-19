@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=greaterThan-veryEasy.i0.n50 --out=..\docs\difficulty-v3\evidence\MS18d\gp\greaterThan-veryEasy\greaterThan-veryEasy.i0.n50.a1\ledger.json
+ms18d-gp-recorder-start chunk=greaterThan-veryEasy.i0.n50 i0=0 n=50 seedBase=7000
+ms18d-gp-ledger-complete chunk=greaterThan-veryEasy.i0.n50 bytes=21865 sha256=1eaceed34f67b65192913e7a90570048b94bb7df3621c5136b7aab4f3bdb01e0
+exit=0 seconds=1.168

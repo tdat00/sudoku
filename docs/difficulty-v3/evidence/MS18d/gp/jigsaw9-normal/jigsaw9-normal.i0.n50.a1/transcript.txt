@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=jigsaw9-normal.i0.n50 --out=..\docs\difficulty-v3\evidence\MS18d\gp\jigsaw9-normal\jigsaw9-normal.i0.n50.a1\ledger.json
+ms18d-gp-recorder-start chunk=jigsaw9-normal.i0.n50 i0=0 n=50 seedBase=7000
+ms18d-gp-ledger-complete chunk=jigsaw9-normal.i0.n50 bytes=21769 sha256=6fc973808098dee162ea87fa49656fb5d583403c175a42a148079e33bf3bc9cb
+exit=0 seconds=3.302

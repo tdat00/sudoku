@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "greaterThan-easy.i0.n50.a1",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "greaterThan",
+    "level": "easy",
+    "targetMs": 700
+  },
+  "task": "MS18d GP record greaterThan-easy.i0.n50 a1",
+  "startedAtMs": 1795110057136,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "additional-consumer: process 13104 (powershell.exe) gained 0.900 CPU-s per elapsed second"
+  ],
+  "heldAt": "readiness",
+  "eligibleReAsk": true,
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 156000,
+      "systemMicros": 390000
+    }
+  },
+  "finishedAtMs": 1795110065793
+}
