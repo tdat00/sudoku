@@ -2,11 +2,12 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS18c accepted |
+| Depends on | MS18c accepted at `e0596801`; acceptance recorded by `34ebc3fc`; owner MS18d-Q1 and reviewed per-cell admission before timed work |
+| Accepted base | `e0596801cf95d79761073a344ffc2e60f7764c8f`; pack-only acceptance descendant `34ebc3fcb36aa97361b9da18c1e63903128bf747` |
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
-| Authority | R24/R21; CV6-05 final Normal contract handoff |
-| Status | Not started |
+| Authority | R24/R21, FS23, S-OD4; S-AV01 not offered; S-OD13 is GQ-only, not a GP waiver |
+| Status | READY FOR PHASE A FILE-ONLY PREFLIGHT; GP/profile held for owner MS18d-Q1 and bounded admission; Sohei Hell 2 already exceeds the mean-alert limit |
 
 ## Goal & business context
 
@@ -17,22 +18,43 @@ puzzle hashes after publication. A hash-only pass is not a timing gate.
 
 In: published qualification-derived target rule, full GP, full GG check and evidence.
 Out: performance-driven algorithm tuning, arbitrary target relaxation, canonical hash rewriting.
-AGENTS/checklist; no Git/pack/log edits; shared-machine slot/locks and timed-run readiness
-follow check-list section 7.
+AGENTS/checklist; no developer Git writes, pack edits or task-log edits. The
+orchestrator owns implementation commits and dispatch. All local Node commands
+and timed work use `Invoke-Dv3Node`, ordinary **450 s projected / 540 s hard**,
+with shared slot/locks and task-owned transcripts. No GQ watchdog, warmup, pilot,
+unsupported split, permanent perf-tool edit or new slow-cell evidence class.
 
 ## Inputs & context
 
-**MS18c post-GQ handoff, 2026-11-19 (not dispatch permission):** both analysts
-accepted all **135** GQ records, **79 offered / 56 hidden**, measured at `ed2fe50c`,
-dirty, sources `0ca29eaeebc295b6`, under the declared host-active policy. Its
-orchestrator checkpoints **A `6a473f7a` / B `387a4c8d`** are complete; publication
-sources are **`75b0955e3e356bd1`**. MS18c still must finish step-5 compatibility,
-manual/E/quick/CI closure and final review before this task starts.
+**MS18c is accepted**, not a pending prerequisite. SA1 FINAL ACCEPT/C1 and the
+orchestrator's exact-closure-head local checks are recorded in the MS18c leaf and
+check-list. A **`6a473f7a`**, B **`387a4c8d`**, closure **`e0596801`** remain
+distinct. GQ is **135/135**, **79 offered / 56 hidden**, measured at `ed2fe50c`,
+dirty, sources **`0ca29eaeebc295b6`** under the declared host-active policy.
+The publication/accepted producer is **`75b0955e3e356bd1`**; no generator
+algorithm/default/limit changed in closure. All **2,201** frozen GQ files and
+**591** final `-b` entries were verified. Do not edit any accepted MS18c evidence.
 The single authoritative merged input is
 **`docs\difficulty-v3\evidence\MS18c\merge\qualification-v3.json`**, not a
 top-level duplicate. Preserve its measured source metadata and the A/B support-only
 publication proof; a publication-only source-hash change is not permission to retag
 GQ or manufacture a new measurement.
+
+| Bound input at the accepted base | SHA-256 / identity |
+|---|---|
+| `merge\qualification-v3.json` raw bytes | `b8e546fc0ba5bd1f79f408984bf3bf8f82559305ea6bd63cbe6dc53beff0df04` |
+| `generator\tests\perf.js` raw bytes | `7395472b46bcfe7f93f805efc1fc4747003da43e2fa53645ec0ae6a25e8f9a60` |
+| `generator\tests\fixtures\perf-helper.js` raw bytes, before target updates | `d64f8b3c207f94fb8c2ce614c480ca06d96f5d9015e66ca6368bba43b59b1724` |
+| `generator\tests\fixtures\tool-records.js` raw bytes | `eec5e268287f0543fb3e1677b293b64c75618d68f50e7f176573dbb1729367c6` |
+| Accepted E hash-family source identity | `1032ab2f510fe2b9ed1bac744f534d5cfee7e039f456fc56d3e19682d53158a0` |
+
+These are different identities/recipes, not interchangeable hashes. Read the five
+accepted quick/manual/E identities in MS18c's acceptance note. The starting
+quick counts are **4,807 Generator / 2,981 Player**, 55/32 suites, timings
+547.6/118.7 s. Manual `variants` is already **285/285**; five other manual suites
+and `perf`, including the extra-regions cross-level hit-share risk, belong to
+MS18e. No full manual rerun is added here. MS18c's matching-head condition was
+**local**; no remote CI pass was supplied or inferred.
 
 **Step-5 target-table alignment is not target recalibration.** The joint MS18c
 ruling nulls the 39 newly hidden `PERF_TARGETS` positions and design 9.1 entries,
@@ -49,8 +71,12 @@ MS18c separately records a stricter 2,122-pair comparator and its exact selectio
 rule. Preserve/reconcile definitions, keys, counts and both source identities
 before quantitative attribution. This is a source-specific engine-cost signal,
 not jobs-1 GP, identical-puzzle proof, a target adjustment or an extra profiling/
-GQ campaign. Use existing records and this task's already authorized GP/profile
-scope/bounds. IR17 is also carried because classic9 Nightmare remains offered;
+GQ campaign. Closure additionally measured **mega16-replay 331.6 s versus 118 s
+at MS07f**, above a **300 s projection** but inside 450, and identified **17 offered
+cells above their existing performance targets**. Keep the replay pair's request/
+source/clock separate from GQ/GP cohorts and from the 17 target calculations.
+Use existing records and this task's already authorized GP/profile scope/bounds.
+IR17 is also carried because classic9 Nightmare remains offered;
 the old 430.5 s GD observation is not a new whole-command bound or a GD assignment here.
 
 R24, verbatim:
@@ -63,46 +89,206 @@ nearest-rank percentile. The full intended matrix is perfTools.cells() after fin
 Every offered level must have a documented performance target; do not omit a newly offered cell.
 Aggregate success requires >=90% of these cells meeting their target, not 90% of chosen requests.
 Individual misses remain visible. A crash/missing result is not merely a slow cell.
-The existing perf CLI uses strict `p95 < target`; qualification uses `p95 <= budget`. Preserve that
-distinction rather than silently making a boundary miss pass.
+The intended matrix is **79 cells / 3,950 requested generations**. A complete
+>=90% result needs **at least 72 of 79 cells**, and every cell must first have a
+complete 50-run result. Do not use a rounded printed percentage or a completed-only
+denominator. Missing/unadmitted cells make the full GP result **incomplete**, even
+if a numerical lower bound on successes already exceeds 90%.
+The perf CLI uses strict **`p95 < target`**; qualification uses **`p95 <= budget`**.
+There is **no `SG_TIME_FACTOR` multiplication of CLI GP targets**.
 
-**Timed-run readiness:** the owner confirmed all Pentomino tasks stopped at 16:42 (+07:00)
-on 2026-11-18; no new pause request is needed. Before each timed cell, including the
-separately owned S-AV11 profile, apply check-list section 7's quiet-machine precondition.
-Keep its observations/waits outside the tool's request times; no warmup, timing correction,
-new split or retry-to-pass follows. Plans precede phases, owned helpers are formatted before
-freezing, and S-OD12/S0 plus the QUESTION pause remain binding.
+## Dispatch boundary and owner action
 
-Allowed target rule from perf-helper: keep an existing target while qualification p95 meets it;
-for a new/outgrown target use ceil(3*qualification p95), never below the preceding applicable target
-or above the qualification budget. The v2 Easy-from-Normal migration does not remap unchanged v3
-bands. Record old/new target, qualifying p95, previous target and budget before GP; never change a
-target because GP failed. Any genuinely undefined target-policy case is a blocker, not an omitted cell.
+Only **Phase A, file-only preflight**, is ready for dispatch now. The MS18c
+acceptance prerequisite is recorded, but **no GP or S-AV11 timed payload is released**.
+Return the complete preflight/target proposal to the orchestrator and stop.
+Phase B target/docs/GG work and Phase C timing require their separate releases.
 
-**CV6-05 / S-AV01 precondition:** MS18c's accepted fixed ending is **"not offered"**:
-Normal has 40/40 hits but p95 10,192.4051 ms > 10,000 ms. Confirm that ending in the
-checked merge/publication handoff before timing. The Fable trigger did not occur;
-no Normal-only target or CV6 budget change is assigned. A hidden Normal cell follows
-the ordinary offered performance manifest; its fixed diagnostic seed is retained
-elsewhere. The following alternatives are decision history, not current work:
-if Normal qualifies but its
-final-source CV6 still fails, the plan author decides the conditional fallback contract once on
-MS18c's data, before GP: one millisecond base for `BUDGET_MS.normal` and the same base for its
-GP target if present, no more than 10,000 ms, machine scaling left to `SG.test.timeLimit`.
-The assigned step changes the test, matching GP target, `generator/design.md` section 9.1
-(the `greaterThan` Normal cell) and both developer guides together.
-Until that decision the CV6 base remains 700 ms and ordinary GP rules stand; do not choose a value
-here or use GP results to fit it. A recorded common Normal base governs that cell rather than
-being immediately replaced by the generic `ceil(3*p95)` rule above. Other cells' rules are unchanged.
-If final-source CV6 passed, S-AV01 closes with that measurement; keep any historical red outcome honest.
+### MS18d-Q1 — OWNER: final performance measurement environment
+
+**Prepared, unanswered; send through the orchestrator to the owner, not Fable.**
+S-OD13 explicitly authorized host-active **GQ**, not GP. All **140** MS18c raw
+strict screens failed; the resident CLI host was PID **1968**, .NET StartTime
+`2026-11-13T19:26:33.6916441+07:00`, CIM UTC microseconds
+`2026-11-13T12:26:33.691644Z`, parent **18780**,
+`C:\Users\ledat\AppData\Local\Microsoft\WinGet\Links\copilot.exe`.
+This is recorded history, not a new liveness check or a GP exception. Reconfirm
+the actual instance before any new admission; do not exempt all Copilot processes.
+The 140 failures do not prove a strict sample can never pass. This question asks
+for an explicit measurement-regime decision, not a waiver inferred from history
+or an owner stop for one ordinary environmental hold.
+
+Choose **one policy for the whole new GP matrix and the separately recorded S-AV11 profile**:
+
+- **A — explicitly authorize `MS18d-GP-host-active`.** Keep the raw five-interval
+  strict screen and `ready` separate from named-policy `admitted`. Verify the named
+  host, own/foreign locks and per-instance counters; hold for any additional
+  consumer at **>=0.5 CPU-s per elapsed second**, unknown/invalid required facts,
+  or known foreign heavy work. No service/whole-process-tree exemption.
+  The requested grant includes **one >=60 s fresh-slot re-ask only after a verified
+  unstarted additional-consumer hold**, maximum two admission attempts per immutable
+  cell/protocol identity. A second hold is an unexecuted gap, not a failed/hidden cell.
+  No sampling loop, payload retry or quota reset.
+- **B — retain the strict-quiet policy without exception.** The orchestrator must
+  supply a credibly quiet execution window/environment, with five one-second
+  intervals **mean <=0.5 / max <=1.0 busy logical cores**, valid counters and no
+  known foreign heavy work. A check after a wait must be fresh. Do not hunt lucky
+  windows/retry until green; holds return to the orchestrator. Any different
+  machine/Node is explicitly recorded and kept uniform for the whole GP matrix.
+
+For **both** choices: actual observed times and the **pre-GP-fixed** targets remain
+binding; serial jobs 1, **50 runs**, trace summary, warmup 0, `7000+i*101`,
+strict `p95 < target`, the full intended denominator and ordinary **450/540**
+protection are unchanged. No CPU subtraction, target inflation from GP results,
+faster-repeat selection, new guard, new split or GQ watchdog follows. S-OD14's
+one-recovery permission was **GQ-only** and is not inherited.
+
+**The scope limit matters:** even option A does not admit Sohei Hell 2:
+its existing FS23 mean alert is **485.597 s >450**, before setup/margin.
+It stays in the 79-cell denominator as unmeasured unless a separately authorized,
+credible bounded route exists. A readiness decision neither extends a deadline
+nor makes an incomplete GP gate pass. No automatic second owner question/tooling
+task is raised merely for that cost finding; FS23 already specifies its disposition.
+
+**Owner-ready Vietnamese wording:**
+
+> **MS18d-Q1 — môi trường đo GP:** S-OD13 chỉ cho phép GQ host-active, chưa cho GP.
+> Anh chọn **A**: cho GP và profile S-AV11 chạy theo chính sách
+> `MS18d-GP-host-active`, vẫn lưu màn hình strict; chặn tiến trình khác dùng
+> >=0,5 CPU-s/s, chỉ hỏi lại một lần sau >=60 s cho CPU hold chưa chạy payload;
+> hay **B**: giữ máy thật yên theo strict và bố trí phiên/máy phù hợp?
+> Cả hai giữ 50 mẫu/ô, jobs 1, trace summary, warmup 0, seed và target chốt trước
+> khi đo; không trừ CPU, không chọn lần chạy nhanh hơn, không nới 450/540.
+> Riêng Sohei Hell 2 đã có cảnh báo 485,597 s >450 nên chưa được chạy; chọn A
+> không cấp thêm thời gian, và còn thiếu ô thì không công bố GP hoàn tất.
+
+Record the verbatim answer and task-scoped policy before Phase C. Until then:
+metadata/planning only in Phase A; no live readiness/no-op campaign, pilot or
+timed measurement to choose the policy. Phase B's non-GP functional work may be
+separately released after its review without pretending Q1 is answered.
+
+### Readiness and runtime obligations once released
+
+- Obtain the orchestrator's shared window and normal mutex for **each** cell;
+  Pentomino was already stopped by the owner, so do not ask for that pause again.
+  Reconfirm no new competing work. Keep actual release/acquisition times and the
+  **>=15 s gap**, with observations after acquisition and immediately before payload.
+- Use a task-owned bounded admission/transcript wrapper, not edits to the shared
+  helper or accepted MS18c helpers. Reuse/copy reviewed mechanics into **MS18d-owned**
+  paths; do not recreate/write MS18c's deleted `.last-release` or accepted records.
+  Bound each PowerShell/CIM query at <=15 s and readiness at <=45 s; a timeout
+  is an unstarted hold, never evidence of idle. Include setup/readiness in the
+  whole-command projection and 540 s protection.
+- Declare the timed window: no other agent generation, tests, hashing, formatting
+  or analysis during the payload, including sub-ten-second commands. Only minimal
+  supervision/status reads and the already-declared negligible control-plane HTTP
+  poller/report are allowed. No optional CPU sampler inside the measured cohort.
+- One fresh CLI process, **one cell**, one contiguous **50-run** `measure` call;
+  no warmup/prefetch, process-priority change, internal restart or independently
+  detached payload. Audit any wrapper/tool wait so it does not truncate the
+  existing 540 s envelope or leave an orphan. Status reads reset no deadline.
+- Freeze sources, targets, policy, Node/machine, selected request and output identity
+  before the first timing and verify them before each admission. Never mix policies,
+  machines, targets or producer versions into one claimed final matrix.
+- A complete legitimate `MISS` is retained, never repeated for speed. A crash,
+  timeout, compromised window or missing result is **incomplete**, not a slow-cell
+  pass/fail record; preserve traces and use the existing evidence-failure routing.
+  No automatic GP recovery grant or cherry-picking is supplied here.
+
+## Qualification-derived targets — before GP, not after it
+
+The existing target rule is already authorized. For each offered cell in global
+level order, with raw GQ p95 **q** and board budget **b** (both milliseconds):
+
+- If the existing positive target **t** is not outgrown (**q<=t**), **keep t**.
+- Otherwise propose **`min(b, max(previousApplicableTarget, ceil(3*q)))`**;
+  the preceding applicable target is the already selected target of the previous
+  offered level of that variant (0 if none). Hidden/null entries are not candidates.
+- The keep rule takes precedence: do not cascade increases into the **62** cells
+  whose existing target still meets GQ, or enforce new global monotonicity on them.
+  Do not repeat v2's Easy-from-Normal migration on unchanged v3 bands.
+
+The accepted input gives these **17** proposed changes. Phase A must reproduce them
+file-only and show q, old target, predecessor, unclamped ceil and budget for every
+row; the orchestrator reviews the complete table before Phase B writes it.
+
+| Cell | GQ p95 ms | Old target ms | Proposed target ms |
+|---|---:|---:|---:|
+| classic4/veryEasy | 10.1122 | 10 | 31 |
+| classic6/veryEasy | 12.9032 | 10 | 39 |
+| classic9/easy | 780.3884 | 150 | 2342 |
+| classic9/normal | 875.5958 | 150 | 2627 |
+| classic9/expert | 440.7861 | 400 | 1323 |
+| classic9/nightmare | 2792.0346 | 2500 | 8377 |
+| mega12/nightmare | 6280.4697 | 3000 | 18842 |
+| mega16/hell2 | 25239.0671 | 10000 | 30000 |
+| diagonalX/nightmare | 5368.3201 | 3000 | 10000 |
+| hyper/normal | 524.3035 | 200 | 1573 |
+| hyper/nightmare | 8503.0273 | 3000 | 10000 |
+| jigsaw9/easy | 634.7225 | 350 | 1905 |
+| jigsaw9/hell2 | 6102.2380 | 5000 | 10000 |
+| killer/normal | 1808.2659 | 700 | 5425 |
+| sohei/hell2 | 27155.5581 | 20000 | 30000 |
+| butterfly/nightmare | 16120.4641 | 8000 | 30000 |
+| wordoku/easy | 973.6330 | 250 | 2921 |
+
+These are a rule-derived target proposal, **not launch permission or GP results**.
+Keep all 56 hidden positions absent and all public support arrays unchanged.
+Never adjust a target after seeing GP. Any genuinely undefined/mismatching policy
+case is a QUESTION, not permission to omit a cell or choose an easier budget.
+Update `PERF_TARGETS`, design 9.1 and both developer guides together in Phase B.
+The separate manual-suite `BUDGET_MS`/CV6 assertions remain unchanged; distinguish
+their retained contracts from updated GP targets instead of silently weakening
+them. No Normal-specific contract is reopened.
+
+**CV6-05 / S-AV01 is settled: "not offered".** Normal has 40/40 hits but p95
+10,192.4051 ms >10,000 ms. It is not in the 79-cell GP population; the Fable trigger
+did not occur. Keep its null public target, original 700 ms manual CV6 contract
+and fixed diagnostic seed 4. No Normal run, new budget or contract step is assigned.
 S-AV16/S-AV17 are withdrawn current-source items, not outstanding pool regressions on this source.
 
 GG retains all 26 combinations x 20 fixed seeds, including now-hidden requests through the MS03d
 diagnostic guard. Record fresh complete shards for current source/helper identity; compare only.
-Anchors verified at `c9935cd`: `generator/tests/fixtures/perf-helper.js:47-53`
-(`p95 budgets in milliseconds`), `:77-89` (`function cells`), `:113-135` (`function measure`);
-`generator/tests/perf.js:455-476` (`if (plan.mode !== 'timing') return runHashes`).
-Find these quotes after later tooling changes.
+### Current code/command audit — accepted `e0596801`
+
+| Anchor | Actual contract |
+|---|---|
+| `perf-helper.js:36,57,80` | Nine columns; now 79 positive target entries; `cells()` intersects targets with current published support |
+| `perf-helper.js:95,116` | Nearest-rank percentile; `measure()` runs one synchronous serial cohort, seeds `seedBase+i*101`, trace summary by default, returns `times` in memory |
+| `perf.js:118,436,471-524` | Argument parsing and timing route; `--runs=50 --warmup=0 --seed=7000 --gate --ascii`, one selected variant/level; strict unrounded comparison |
+| `perf.js:157,165,250` | Engine loader and hash-mode identity; `--hash-list` is file-only; hash identity includes normalized engine/helper/tool text |
+| `pipeline.js:138,168` | `run()` drives `runSteps`; absent caller budget remains `budget || null` |
+| `replay-fixtures.js:218` | Exports `loadFixtures`/`nodeEnv`; guarded CLI main, suitable for a file-only metadata loader |
+
+Important consequences:
+
+- **Do not `require('perf.js')` for metadata:** its final `main()` call is
+  unconditional. Use the existing `loadFixtures` API with the needed fixture
+  scripts, `--hash-list`, or read the bytes; never accidentally launch default GP.
+- Timing mode has **no `--json`, `--from`, resume, timing-ledger merge or `--jobs`
+  option**. Jobs 1 is inherent, not a CLI flag. Hash selectors shard **hashes only**.
+  No `--quick`, `--alloc`, seed/count split or arbitrary preload is permitted here.
+- `measure()` passes no caller budget, and the pipeline keeps it null. **Do not
+  import GQ's 120000 ms request guard or its structural ceiling formula into GP.**
+  Existing internal work caps remain; the whole-command 540 s watchdog is the
+  backstop. Adding a per-request timeout would change the experiment.
+- Stock timing output contains **rounded** p50/p95/max/mean and the exact
+  internally computed `ok`/`MISS` decision. Raw per-request `times` exist only in
+  memory; the CLI does not persist them or per-request `stats`. Record that
+  limitation, not invented zeros, raw outcomes or fake precision. This brief
+  assigns no new timing capture mode or perf/measure patch.
+- Preserve stdout/stderr/exit/argv/source/policy metadata for every unique run.
+  A complete single-cell header, row and terminal **1-of-1 or 0-of-1** result on
+  the 50-run invocation establish completion under the unchanged tool. Use its
+  **unrounded verdict**, not a comparison of rounded printed p95/target.
+  Exit 1 plus a complete `MISS` is a performance miss; exit 1 without a complete
+  record, a timeout or crash is incomplete. Never treat either as the other.
+  `measure()` does not catch generation errors and continue like GQ's per-request
+  recorder; do not insert zero-time/error rows, skip seeds or patch that behavior.
+- A task-owned file-only reporter may aggregate these transcripts, checking exact
+  cell/source/target/policy agreement and the 79-key population. It does not
+  create a new measurement, reconstruct raw times, merge percentiles or select
+  repeats. Keep a complete-result count separately from the success count.
 
 ### PR-S2 remarks — performance evidence, unchanged scope
 
@@ -115,12 +301,19 @@ new scope, cap, budget, performance target or generator change.
   single recorded Jigsaw request (`jigsaw9`, Expert, seed 1111; 325.313 s in MS05b3).
   Expert is now hidden by qualification: retain this assigned diagnostic request
   under a restored diagnostic-only support guard, never a public re-offer or changed seed.
+  The original `jigsaw.test.js` recipe is **trace off**, no variant-option or
+  max-attempt override: `700 + 4*100 + 11 = 1111`, size-default **8** attempts.
+  Current anchors are `generatePuzzle` at **804** and `puzzleRun` at **814-820**.
+  Do not substitute GP's summary trace or recovery-profile's one-attempt mode.
   Use the existing pipeline stage timings/recording facilities, retaining the request's trace/options
   and the measured source identity. Keep this identified diagnostic separate from the unchanged
   50-run GP populations, seeds, warmup and aggregate. Until the profile identifies its stage, do not
   describe the historical 325 s as a dig cost. If the delay no longer reproduces, say so rather than
   assigning a cause to the old run. Use the existing lock/projection/guard rules; no guard is raised
   and no broad search for more outliers or new profiling tool is authorized by this remark.
+  The old **325.313 s is not a current-source admission bound**; the stage/cause
+  remains unknown. Phase A reports its available basis or explicit unknown;
+  no profile launches without a defensible <=450 s whole-command plan and Q1 release.
 - **Existing request counters:** where per-request records are already written, retain the existing
   `stats` counters, including `samples`, `attempts` and `oracleCalls`, with the source/request/default
   metadata. Preserve their actual scope and available values; do not replace missing data with zero
@@ -135,6 +328,29 @@ be implemented as part of this performance task.
 
 ### Mandatory preflight before any GP invocation (FS23)
 
+**File-only pack-author check, no GP/pilot run:** all 79 offered GQ cells have 40
+outcomes. The arithmetic mean alerts sum to **3803.9658065 s**, excluding setup,
+readiness, variance and gaps; this is **not a GP runtime forecast**. Largest alerts:
+
+| Cell | GQ mean ms | `50*mean/1000` seconds |
+|---|---:|---:|
+| sohei/hell2 | 9711.9411975 | **485.597059875** |
+| butterfly/nightmare | 6068.4327875 | 303.421639375 |
+| mega12/hell2 | 4774.1268125 | 238.706340625 |
+| butterfly/hell2 | 4499.643625 | 224.982181250 |
+| greaterThan/hell2 | 4498.4928800 | 224.924644000 |
+| mega16/hell2 | 4119.4028300 | 205.970141500 |
+| samurai/master | 4115.6179625 | 205.780898125 |
+
+**MS18d-GP-BOUND-sohei-hell2** is already an unadmitted mean-alert item:
+485.597 s >450 even before allowances. Thirteen cells also have
+`50*observed GQ maximum >450 s`; those maxima are descriptive, not future bounds.
+Do not promote the other **78** cells to "safe" because their means are below
+450. Each still needs a source-qualified whole-command planning basis, explicit
+setup/readiness/variance margin and an orchestrator-reviewed admission.
+An unsupported or unknown estimate stays unadmitted; do not invent a multiplier
+just to fit a ceiling or add a pilot to obtain one.
+
 The final GQ record already has raw `cells[].requests[].ms` for this candidate. First project
 every final offered cell as `50 * mean(requests.ms)`, retaining errors in the observed times and
 requiring complete, finite, non-negative data. Use the arithmetic mean, not a mean of shard
@@ -142,52 +358,130 @@ percentiles. Retain the GQ source identity, actual sample count, mean/p50 and pr
 Enumerate **all final offered cells from the published support arrays**, including any awaiting
 a new performance target; do not let an absent old PERF_TARGETS entry hide a cell.
 
-GQ uses trace off/jobs 4 and different seeds; GP uses trace summary/jobs 1. This is a conservative
-scheduling alert, not an equality or a claimed GP result. Flag every projected total >450 seconds,
-leaving startup/variance margin below the 540-second ceiling. Report the full table and flagged
+GQ uses trace off/jobs 4 and different seeds; GP uses trace summary/jobs 1.
+The mean calculation is a **scheduling alert, not a conservative upper bound**,
+an equality or a claimed GP result. Flag every mean alert >450 seconds, then keep
+separate the reviewed admission projection with startup/readiness/variance margin
+within 450 and the hard 540-second ceiling. Report the full table and flagged
 cells to the orchestrator **before the first GP command**, not only when one times out.
 Missing/inapplicable GQ data also blocks this preflight; it is not a zero-millisecond estimate.
 
-If a cell is flagged, do not launch that unsafe command. Under S-OD4 create a named final-cost
+If a cell is flagged or lacks an admissible whole-command basis, do not launch it.
+Under S-OD4 create a named final-cost
 item and continue other credibly bounded cells; there is no automatic new tooling task/evidence
 class. This task does not own `perf.js`/`measure` changes or an unsupported CLI. Keep every
 flagged cell in the intended denominator and mark its measurement incomplete, not passed.
 Do not compute a complete >=90% verdict from only the cells that finished.
 `--seed=9525 --runs=25` is not a valid split: it adds a cold start and printed percentiles cannot
 be merged. A separately decided protocol change would need its own authorization; preserve
-50 raw outcomes, seeds, percentiles and cold/warm semantics unless that decision says otherwise.
+50 original requests, seeds, percentile computation and cold/warm semantics unless
+that decision says otherwise. Do not claim raw per-request GP storage that the
+stock CLI does not provide.
 
 Implement a read-only task-owned `project-gp.js` in the artifact directory below. It accepts
-`--qualification=<file> --json=<file>`, loads the normal engine via the existing replay-fixture
-Node loader, reads published `difficultySupport`, and joins each `(variant,level)` to the
+`--qualification=<file> --json=<file>`, loads declarations via
+**`replay-fixtures.loadFixtures`**, reads published `difficultySupport` independently
+of `PERF_TARGETS`, and joins each `(variant,level)` to the
 validated final qualification requests. It generates no puzzles and mutates no support array.
-Write `{qualificationHash, qualificationEngine, publishedCells, projections, flagged}` with
-the fields above, stable cell order and CRLF; print the flagged list. Exit 2 for missing/invalid
+Write `{qualificationHash, qualificationEngine, publishedCells, projections, flagged,
+targetProposal, inputs}` with the fields above, stable cell order and CRLF.
+Include full request count/mean/p50/p95/max, the mean alert, current target,
+formula/predecessor/budget/proposed target, source/tool/Node/machine identities,
+and any distinct proposed admission basis/margin or explicit unknown. Bind the
+accepted qualification SHA and the documented support-only publication proof;
+do not reject or retag it merely because producer 75b differs from measured 0ca.
+Require all **79** published keys to have the expected offered GQ records/targets,
+keep hidden cells absent and preserve all current target/null positions.
+The helper emits **no timing/admission approval**.
+
+Print the flagged/unknown list. Exit 2 for missing/invalid
 input, 1 when complete projections flag any cell, 0 otherwise. Exit 1 prevents those commands,
 not the rest of the task; retain the named items and intended matrix. Missing/corrupt qualification
-input must be resolved, never guessed as a zero-cost cell.
+input must be resolved, never guessed as a zero-cost cell. Phase A also writes a
+short protocol/deadline/readiness audit and the S-AV11/cost-item dispositions, then
+**STOP** for the orchestrator; it does not proceed automatically into target
+edits or timed work when arithmetic is green.
 
 ## Files to create/modify
 
-- Evidence/MS18d, new docs/difficulty-v3/performance-v3.md, notes.
+- Only MS18d-owned evidence/artifacts; preserve every MS18c record and inventory.
+  Final report: `docs\difficulty-v3\performance-v3.md`, with actual completeness,
+  declared environment, target arithmetic, source/machine and all item dispositions.
 - Task-owned read-only `generator/tests/artifacts/difficulty-v3/MS18d/project-gp.js` and
-  `docs/difficulty-v3/evidence/MS18d/gp-preflight.json`; no permanent new perf tool in this scope.
+  synthetic tests; `docs/difficulty-v3/evidence/MS18d/gp-preflight.json`, its
+  target/protocol/admission audit and frozen helper/output hashes. No generation
+  in Phase A and no permanent new perf tool in this scope.
+- After release only: task-owned bounded admission/transcript and file-only
+  aggregation helpers, per-cell readiness/command records under
+  `evidence\MS18d\gp\<variant>-<level>\<run-id>\`, S-AV11 records under
+  `evidence\MS18d\s-av11\`, and complete GG ledgers under `evidence\MS18d\hashes\`.
+  Never overwrite a run or write inside the accepted MS18c trees.
 - `generator/tests/fixtures/perf-helper.js` PERF_TARGETS only if the documented qualification rule
   requires it; corresponding Generator design 9.1 and both developer guides.
-- No production code, regression.js or other expected fixture.
+- Clarify GP-target versus retained manual-CV6 wording if needed, without changing
+  a manual `BUDGET_MS`, test threshold, seed or population.
+- No production code, `perf.js`/`measure` behavior, `regression.js`, replay/help
+  expectations or other canonical fixture. All Git/PR actions stay orchestrator-owned.
 
 ## Implementation steps
 
-0. Check MS18c's CV6-05 disposition/contract handoff, then run the complete GQ-derived preflight
-   before timing. Record flagged cells as named cost items;
-   continue safe cells without new tooling, relaxed guards or a false complete-matrix claim.
-1. Enumerate final intended cells; apply only qualification-authorized target updates with arithmetic.
-2. Measure every cell, save stdout/exit/time/source/seed metadata and all misses.
-3. Aggregate the complete matrix against >=90%; do not relax targets after seeing GP.
-4. Fresh-record every GG identity and complete check-only merge.
-5. Run bounded quick coverage if target/docs changed; reconcile inherited/new cost items, including
-   S-AV01's not-offered ending, **MS18c-GQ-ENGINE-COST**, IR17 and checkpoint
-   large-board findings. No algorithm repair or unauthorized budget change here.
+### Phase A — ready now, FILE-ONLY, then STOP
+
+1. Read the accepted MS18c handoff, bind the input/source hashes, current 79 public
+   cells/targets, Node/machine and S-AV01/S-OD7 dispositions. Keep the 50-cell
+   MS13c and 37-cell MS15b histories separate from this final 79-cell population.
+2. Implement/test the read-only preflight and reproduce the full 79-row table,
+   17 target proposals, Sohei mean alert and distinct per-cell admission bases/
+   unknowns. Include the S-AV11 original tuple, unknown/current basis and cost-item
+   reconciliation. Format/freeze the helper and outputs; do not mutate sources,
+   targets, offers, old records or global settings in this phase.
+3. Audit the stock CLI, clocks, output limitations and full deadline chain.
+   Record MS18d-Q1 as unanswered. No live sampling/no-op campaign, generation,
+   pilot, GP, S-AV11 or GG generation. **Return to the orchestrator and STOP.**
+
+### Phase B — target/document update and functional evidence, explicit release
+
+4. After the orchestrator verifies Phase A, apply **only** the rule-derived 17
+   targets (or return any mismatch as a QUESTION), with design 9.1 and both
+   developer guides. Freeze the complete target table and source identities
+   **before GP**; keep every other positive target and all hidden/null cells.
+5. Test metadata/target consistency and capture final hash-family identity.
+   Re-record all **520** GG keys in existing bounded hash shards and merge-check
+   against unchanged expectations. Target literals change the hash-family identity
+   even though they are not puzzle-generation code. Keep all 26 combinations,
+   hidden diagnostic requests and original seeds. No canonical update flag.
+   This is functional/hash evidence, **not GP**. Its ordinary shared-slot/bound
+   rules still apply. It may be separately released while Q1 timing remains held.
+
+### Phase C — timed GP/profile, separate owner-policy and admission release
+
+6. Require the recorded **owner answer to MS18d-Q1**, frozen targets/inputs and
+   the orchestrator's declared timing window and reviewed per-cell admission plans.
+   Choose no policy/ceiling yourself. The mere absence of a mean alert is not GO.
+7. Run each admitted GP cell once as a full 50-request original CLI invocation.
+   Retain complete `MISS` results. Do not start Sohei Hell 2 or any other
+   unsupported/unbounded cell under unchanged estimates. Record these in the
+   intended denominator with a named unmeasured reason and no fabricated verdict.
+8. Run only the already-assigned S-AV11 fixed profile if its own current-source
+   bounded plan is approved. Keep its trace-off/default-attempt request, restored
+   diagnostic guard, stage data and limitations separate from GP.
+
+### Phase D — aggregate and close honestly
+
+9. Validate all transcripts/cell keys/source/target/policy/Node/machine bindings.
+   **79 complete results and >=72 successes** are required for a complete pass.
+   Missing cells leave the result incomplete, not a pass of a reduced matrix.
+   Record every timing miss, error, compromised run, hold and unmeasured item.
+10. Finish applicable guide/count/fingerprint changes before both complete bounded
+    quick sets; maintain CI metadata/projections by the existing rule. Any
+    unexpected output change is a QUESTION before corrective/canonical writes.
+    No automatic replay-wire/analysis/help rewrite or extra generation campaign.
+11. Return the complete GP status, final 520-key check and inherited/new item
+    register for **orchestrator review**. Include S-AV01 not offered, S-OD7,
+    closed S-AV27, IR17, **MS18c-GQ-ENGINE-COST**, **MS18d-GP-BOUND-sohei-hell2**,
+    S-AV11 and the older source-qualified S-AV31/S-AV33/S-AV34/S-AV36-S-AV39 /
+    MS15b-GP-J/U records. S-OD4 permits continued safe work after cost findings,
+    not an incomplete/failing gate labelled green. No developer commit/push.
 
 ## Acceptance criteria — Business
 
@@ -200,55 +494,77 @@ input must be resolved, never guessed as a zero-cost cell.
 
 | ID | Criterion |
 |---|---|
-| MS18d-T01 | Every cell has 50 outcomes with seed/warmup/trace/percentile protocol preserved |
-| MS18d-T02 | Complete >=90% aggregate and every individual miss/error recorded |
+| MS18d-T01 | Every measured cell completes the unchanged serial 50-run CLI protocol; missing cells are explicit, not substituted, split or retried |
+| MS18d-T02 | Complete GP pass only with all 79 cells measured and at least 72 meeting strict unrounded p95 < target; all misses/errors/unknowns retained |
 | MS18d-T03 | Fresh complete 520-key GG matches; any target changes follow only the documented rule |
 | MS18d-T04 | Full preflight precedes timing; every >450-second projection has an explicit item/outcome, and missing/corrupt input is not hidden |
+| MS18d-T05 | Phase A stops; owner MS18d-Q1 answered and recorded before GP/profile; declared policy, fresh per-cell readiness, ordinary deadlines and window integrity preserved |
+| MS18d-T06 | All 17 target updates derive from frozen GQ before GP; 62 retained targets/56 hidden positions unchanged; no manual-CV6 or output-fixture relaxation |
+| MS18d-T07 | Stock CLI limitations reported honestly: no timing JSON/resume/jobs flag or inherited GQ guard; complete MISS distinguished from crash/timeout and rounded output from exact verdict |
 
 ## Test plan and gates
 
-From Generator, preflight first (read-only, expected under a second; create the named artifact
-driver before this command). Do not start a flagged cell; other bounded cells may proceed:
+**Phase A only is ready.** From Generator, create and fake-test the named file-only
+driver, load the shared helper without modifying it, then preflight:
 
 ```powershell
-node tests\artifacts\difficulty-v3\MS18d\project-gp.js --qualification=..\docs\difficulty-v3\evidence\MS18c\merge\qualification-v3.json --json=..\docs\difficulty-v3\evidence\MS18d\gp-preflight.json
+Set-Location Q:\git\sudoku\generator
+. .\tests\artifacts\difficulty-v3\MS18c\invoke-dv3node.ps1
+Invoke-Dv3Node -Task MS18d-preflight -AllowExit1 -NodeArgs @('tests\artifacts\difficulty-v3\MS18d\project-gp.js', '--qualification=..\docs\difficulty-v3\evidence\MS18c\merge\qualification-v3.json', '--json=..\docs\difficulty-v3\evidence\MS18d\gp-preflight.json')
 ```
 
-Test its arithmetic with synthetic 40- and 100-request rows, a missing offered cell, duplicate
-cell, non-finite/negative/missing ms, and a 10,000 ms mean => 500-second flagged projection.
-No real generation is needed to validate this preflight. Then first GP cell and each final
-`SG.fixtures.perfTools.cells()` cell:
+`-AllowExit1` preserves the known mean-alert outcome, not acceptance of an unsafe
+command. Test synthetic 40/100-request inputs, every invalid/missing/duplicate
+key, nonfinite/negative ms, a 10,000 ms mean ->500 s flag, exact 450 boundary,
+and unflagged-but-unadmitted status. Test target keep/equality/update, predecessor
+floor/cap, hidden-null exclusion and no cascade into kept cells. Prove metadata
+loading does not call `measure`/pipeline/generation or `perf.js`'s main.
+
+After Q1/release, fake-data tests of admission/reporting cover valid/missing
+counters, host/lock mismatch, eligible hold/re-ask without payload, complete
+`MISS` versus crash, duplicate/mixed/missing cell results and **71/79 not passing
+merely because a displayed percentage rounds to 90**. Do not test these policies
+with real GP/pilots before release.
+
+**Later payload examples, not current authorization.** A task-owned readiness
+wrapper under `Invoke-Dv3Node` must build this unchanged GP argv for one admitted
+cell after fresh sampling; a direct command alone does not satisfy readiness:
 
 ```powershell
 node tests\perf.js --variant=classic4 --level=veryEasy --runs=50 --warmup=0 --seed=7000 --gate --ascii
-node tests\perf.js --hash-key=classic4/veryEasy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS18d\hashes\classic4-veryEasy-00.json
-node tests\perf.js --hash-merge=..\docs\difficulty-v3\evidence\MS18d\hashes --check-hashes
+Invoke-Dv3Node -Task MS18d-GG -NodeArgs @('tests\perf.js', '--hash-key=classic4/veryEasy', '--hash-from=0', '--hash-count=5', '--hash-record=..\docs\difficulty-v3\evidence\MS18d\hashes\classic4-veryEasy-00.json')
+Invoke-Dv3Node -Task MS18d-GG-merge -NodeArgs @('tests\perf.js', '--hash-merge=..\docs\difficulty-v3\evidence\MS18d\hashes', '--check-hashes')
 ```
 
 Persist each command's transcript under evidence/MS18d with its exit code. Complete all E hash
-identities before merge; no --update-hashes. Jobs 1/no --jobs. Use the recorded per-cell preflight
-projections, not an assumed 1-540-second allowance; summed projections give the GP planning total.
-GG is approximately 10-90 minutes. **Announce the plan, obtain the shared slot and record
-each timed cell's quiet-machine precondition.** Include any in-command readiness work in
+identities before merge; no --update-hashes. Jobs 1/no --jobs. Use the separately
+reviewed per-cell admission projections, not the raw mean alerts or an assumed
+1-540-second allowance. The historical duration estimates are not bounds.
+**Announce the plan, obtain the shared slot and record
+each timed cell's owner-approved readiness policy and observations.** Include in-command readiness in
 the admission projection. Enforce the 540-second process ceiling; do not silently split runs
 with changed cold/warm timing semantics. If no authorized safe route exists, retain a named
 unmeasured-cost item and the incomplete aggregate rather than create another tooling task.
-If files changed: Generator `--suite=perf-tooling,smoke,help` and both quick sets.
+For target/docs changes: focused Generator `--suite=perf-tooling,smoke,help`,
+then both complete bounded quick sets on the final fingerprints, all through
+`Invoke-Dv3Node`. Add no suite or CI membership change for task-owned fake tests.
 
 ## Definition of done & handoff
 
-Return preflight/projections, intended/completed cell coverage, target arithmetic, the actual
-aggregate verdict (incomplete where appropriate), complete GG evidence and the cumulative item list.
+Return the recorded Q1 decision/policy, full preflight and distinct admission
+bases, intended/completed cell coverage, immutable target arithmetic/source tuple,
+all raw transcripts and the actual aggregate verdict (incomplete where appropriate),
+complete GG evidence and the cumulative item list.
 S-OD4 allows continuing after a performance miss, not claiming a failed release gate passed.
 Any proposed change to a recorded performance contract still needs its owner/delegated decision
-(including the specific CV6-05 Normal route above); an authorized
+(not an inherited S-OD13/S-OD14 grant); an authorized
 implementation change invalidates affected final evidence.
 
 ## Resume rules — S-OD4
 
 Review: orchestrator only. Correctness/evidence corruption or changing a recorded decision stops;
 performance findings remain named numerical items with actual failed/incomplete verdicts.
-Use `Invoke-Dv3Node` for all possibly >10-second payloads, <=540 s; do not invent another evidence
+Use `Invoke-Dv3Node` for all local Node/timed work, <=540 s; do not invent another evidence
 class/tooling task for a slow cell. If docs/targets change, verify the current bounded quick manifest.
 Return the complete inherited/new item list to MS18e; no suite addition is authorized here.
 

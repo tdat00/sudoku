@@ -115,7 +115,7 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [x] | MS18a | [MS18a](MS18a-final-matched-soak.md) | Matched final soak | MS17b | S, 25-35 min | Evidence | M18a | 43 |
 | [x] | MS18b | [MS18b](MS18b-recheck-cap-and-window.md) | Cap/window final rechecks | MS18a | S, 25-40 min | Evidence | M18b | 44 |
 | [ ] | MS18c | [MS18c](MS18c-qualify-and-publish-offers.md) | Qualify and publish offers | GQ accepted; A `6a473f7a` / B `387a4c8d` complete; step-5 population ruling AGREE/resume and final closure | M + bounded manual/E/quick/CI | Qualification | M18c | 45 |
-| [ ] | MS18d | [MS18d](MS18d-performance-and-final-hashes.md) | Final GP preflight/performance/hashes | MS18c | M, 40-55 min + GP/GG | Evidence | M18d | 46 |
+| [ ] | MS18d | [MS18d](MS18d-performance-and-final-hashes.md) | Final GP preflight/performance/hashes | MS18c accepted `e0596801`; Phase A file-only; owner MS18d-Q1 and reviewed admission before GP/profile | M, 40-55 min + GP/GG | Evidence | M18d | 46 |
 | [ ] | MS18e | [MS18e](MS18e-release-evidence-closure.md) | Final correctness/items/workflows and PR CI | MS18d | M, 40-60 min + GD/deep/CI | Release evidence/CI | M18 | 47 |
 
 S/M/L mean approximately 100-300 / 300-800 / 800-1,600 changed lines including tests, excluding bulky
@@ -213,7 +213,21 @@ remain immutable; 79 offers are published, sources **`75b0955e3e356bd1`**.
 Developer **`5fe8b2d2`** completed the closure. A/B and the 418-file closure commit
 (33 modified / 385 new, `.last-release` excluded/deleted) remain distinct; no raw
 measurement is retagged. All implementation/closure commits were orchestrator-owned.
-Next is **MS18d preparation**, with its own readiness contract before any timed work.
+Acceptance is recorded in **`34ebc3fc`**. **MS18d Phase A is ready for file-only
+preflight** on closure base `e0596801`; GP/profile timing is **not released**.
+Its leaf contains the prepared, unanswered **OWNER question MS18d-Q1**:
+explicit new task-scoped host-active GP permission, or a credible strict-quiet
+window/environment. S-OD13/S-OD14 grant neither GP readiness nor GP recovery.
+Do not route this owner decision to Fable or infer it from the local CI acceptance.
+
+The final intended GP population is **79 cells / 3,950 requests**; a complete
+>=90% result needs all 79 measured and **>=72 successes**. Phase A must reproduce
+the 17 qualification-derived target proposals and the complete mean-alert table,
+audit the actual CLI/deadline/readiness contract, then **STOP** for the orchestrator.
+Targets/GG functional work may be separately released after review; timing also
+requires the recorded Q1 answer and per-cell whole-command admission.
+The stock timing CLI has no JSON/resume/jobs option and no inherited GQ 120 s
+request guard. Keep its exact `ok`/`MISS` verdict distinct from rounded display.
 
 **Step-5 ruling (2026-11-19, 07:58 relay):** cases 1-3 use original fixed
 diagnostic corpora, counts, seeds, indexes and thresholds, with per-call restoring
@@ -571,7 +585,7 @@ The following are serial ownership transfers, not permission for parallel edits:
 | Qualifier/record helper/suite | MS05r2 predicate, MS05r5p default-contract header/tests, MS07d merger; MS07e/MS18c use it |
 | Cache/history/version | MS05r5p recorded-attempt replay/intent handoff only (no version or history migration); MS17a history marker; MS17b rating/cache/reference freeze |
 | Live qualification table, v2 archive, support lists | MS18c only |
-| Qualification-authorized performance targets | MS18d under the existing rule; CV6-05's conditional final Normal contract is decided through MS18c and implemented in one assigned step before MS18d timing, never after GP |
+| Qualification-authorized performance targets | MS18d's 17 rule-derived updates before GP, with 62 existing positive targets retained and all 56 hidden positions absent. S-AV01 is settled not offered; no Fable/Normal budget step. No target fitting after GP or implicit manual-CV6 assertion change. |
 | Regression/replay fixtures and `player/js/ui/help-examples.js` | behavior owner using its gate; recovery final GG/GR/pins exclusively MS05r6a, r6b checks current merges; no recovery GH or separate fixture writer |
 | Standing quick cost, AGENTS quick comments and both developer-guide testing paragraphs | MS05r6b before final quick freeze; actual cost data afterwards in the separate report, acknowledged with combined acceptance. MS07f owns S-OD8's before/after per-app costs and guide/design tier descriptions; no unrelated AGENTS edit |
 | `.github/scripts/generator-suites.sh`, both workflows and bounded CI manifest | MS05r6c first; each later suite-adding task owns its group/membership update; MS07f owns S-OD8's tier move. From MS10a, every remaining task that owns quick verification also owns bounded timing/projection metadata maintenance under "Maintaining CI quick projections" below, even without adding a suite; no other ownership expands. MS18e owns the final-tree audit and v3 PR CI |
@@ -758,6 +772,7 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | S-AV26 classic9 Hell 1 cost (indication) | MS07b pilot: about 5 s per request against the 2.5 s design budget; two requests only; related to S-AV19 | MS07e, MS18d |
 | S-AV27 qualification second round on one worker | **Final execution gap closed by MS18c under S-OD13:** all six old unexecuted cells ran and are hidden on time; all 135 records accepted. The scheduler is unchanged: MS07d's `round2-workers.txt` still establishes the possible 60 serial second-round requests. Final expansions were hyper/Expert 53, flower/Nightmare 50 and wordoku/Normal 46 requests. Preserve MS07e's incomplete old-source checkpoint and mixed-concurrency caveat; GQ is not jobs-1 GP timing and receives no time normalization | Closed final-GQ gap; timing/cost caveat to MS18d, MS18e audit |
 | MS18c-GQ-ENGINE-COST | **Open.** SA1's matching-outcome ratios are about 1.13 overall and 2-6.6x in named cells; the leaf separately retains SA2's explicit 2,122-pair comparator (1.1240), not a merged cohort. Accepted closure adds **mega16-replay 331.6 s versus 118 s at MS07f**, above its **300 s projection** but inside 450, and **17 offered GQ cells above current design 9.1 targets**. Preserve source/case/clock/cohort distinctions. These are not GP results or permission to normalize times, retune, relax budgets or repeat GQ. Reconcile under existing MS18d cost/preflight scope | MS18d; MS18e audit |
+| MS18d-GP-BOUND-sohei-hell2 | **Unadmitted mean alert, not a GP measurement.** Accepted GQ: n=40, mean **9711.9411975 ms**, `50*mean/1000 = 485.597059875 s >450`, before setup/readiness/variance. Keep the cell in the 79-cell GP denominator; no shorter cohort, GQ watchdog, pilot or extended deadline. Other 78 mean-unflagged cells still need credible reviewed whole-command plans. Q1's environment answer cannot waive this bound; an unmeasured cell leaves the full GP gate incomplete | MS18d current-source admission/report; MS18e audit |
 | IR17 final carry | Classic9 Nightmare remains offered. The older `00647f9` GD batch cost **430.5 s**; **449 s is not a reusable bound**. Require current-source conservative whole-command admission under unchanged 450/540 protection, with honest named incomplete coverage if not admissible | MS18c handoff; remaining GD and final audit MS18e |
 | S-AV28 Easy availability | MS07e GQ: diagonalX Easy 28/40, hyper 29/40, samurai 10/22, sohei 4/18, butterfly 1/15, flower 0/14 (current offers lose Easy on six variants); 40/40 elsewhere | MS18c |
 | S-AV29 Greater-Than Master time | MS07e GQ: 40/40 hits but p95 14.5 s over the 10 s budget (heavy tail; the cell took 35.3 s against a 27.5 s projection): hidden by time | MS18c, MS18d |
@@ -1118,7 +1133,7 @@ No implementer chooses an alternative from the original reports.
 | SA1 IR02 / IR04, implementation review 2026-11-14 | Binding B1 is copied into MS05b3: live mega CV3, no record provider/replay entry point/reuse code or edits to the deep tool/fixture/SOURCE_FILES. r6a/r6b check both currentMatches hashes explicitly; retain only a proved exact-diff non-generation-file mismatch, else execute their named MEGA-REFRESH step. Original hashes/records remain untouched. |
 | FS12-FS16 / FS20 implementation dispositions; CV6-05 sign handoff | `acceptReveal` receives current/next exact flags. A cells guided winner refused by the apply table ends that pass; local acceptance retains `next.score < spec.max`. MS06c1 transports null/inert metadata with no production draw; MS06c2 draws once and activates all candidate-comparing stages. The real `signs` strategy receives but ignores `options.target`; `digger-target` proves its originating target reaches the selected result. No partial intermediate policy, sign comparator, new RNG stream or post-exact polishing. |
 | FS17-FS19 implementation dispositions | Supplemental soundness inputs concatenate the complete existing seeded random population. MS07b keeps coupled registration/help and records a two-request non-vacuous Hell 1 pilot; MS07c owns the cutoff CLI/GP-cost and repeats the pilot only if C changes. GD/GQ planning uses these actuals without extending the 540-second ceiling. |
-| FS23, updated by S-OD4 | MS18d projects every final offered GP cell from GQ raw means before timing. A >450-second projection stops that command and becomes a named final-cost item; continue safe cells. No automatic tooling task, unsupported seed split, merged p95s, fewer requests or changed cold/warm protocol. Report an incomplete matrix honestly. |
+| FS23, updated by S-OD4 | MS18d computes `50*mean` for every final offered GQ cell as an alert, not a guaranteed GP bound. Sohei Hell 2 is already **485.597 s >450**; the other 78 are not automatically admitted. Require separate current-source whole-command planning bases/margins, then continue only reviewed bounded cells after Q1 release. No automatic tooling task, unsupported split, merged p95s, shorter cohort or changed cold/warm protocol. Intended denominator stays 79; missing cells mean incomplete. |
 | FS25/FS26, updated by S-OD4 | Anchor I5/CV6 filters with `> `; selected total 1. b3 preserves 2/3 requests and eager aggregate API. No mega16 Nightmare deferral: use the approved per-request deep route when needed. Other unsafe commands are recorded with full populations as named items, not passed coverage or owner stops solely for time. |
 | FS27/FS28, updated by S-OD3/S-OD4 | r4's original-limit preflights are retained failures answered by CV6-03. r6a persists G13 first, rechecks approved replacement contracts and records 520/5/14 E/pins; r6b audits full quick/GD/deep evidence; r6c closes CI inside the combined commit. |
 | FS29/FS31 | r3 owns work-schema and explicit/implicit no-allowance premises, running every MS05b1 pipeline case. r4 repeats widened locked checks, returns premise fixes to r3 and records only genuine data pins. r6a owns that reviewed list; no contractual failure is reclassified to pass. |
@@ -1235,6 +1250,16 @@ The current continuation freezes those files, then uses **`Invoke-Dv3Node` for
 all Node and timed work**, ordinary 450/540, under the leaf's A/B checkpoints.
 The shared helper below remains unchanged; no global timeout, product-budget or
 GP timing waiver follows from the GQ permission.
+
+**MS18d dispatch after MS18c acceptance:** only file-only Phase A is ready.
+**MS18d-Q1 is an unanswered owner decision**, prepared in the leaf, not permission
+to reuse `MS18c-GQ-host-active`. The leaf offers A (explicit `MS18d-GP-host-active`,
+raw timing/targets unchanged and a narrowly bounded unstarted CPU-hold re-ask)
+or B (retain the strict-quiet condition in a credible window/environment).
+No GP/S-AV11 payload or live readiness campaign before that recorded decision
+and explicit dispatch. Ordinary 450/540, all 50 requests, trace/seeds, target
+freeze and full-matrix completeness remain in either case. The baseline screen
+below still applies; a proposed policy is not an implemented exemption.
 
 - Obtain the normal shared slot/mutex and establish that no foreign timing-lock holder or
   known foreign CPU-heavy job is active. Never delete another lock, kill another session's
@@ -1467,7 +1492,7 @@ It does not broaden output-change, finder-activation or fixture-update authority
 | Standing quick cost / FS30 | MS05r6b | Per-app measured process-wall sum/max and shard/test counts, fixed source/Node/factor and actual final coverage. Correct AGENTS/guides before freeze; fill report afterwards. If Generator stays above about 5 minutes, MS07e proposes named generation-heavy quick-to-manual moves; no automatic move. |
 | CI tiers | MS05r6c; later suite owners; MS18e final | Both workflows run the bounded quick manifest in jobs <=30 minutes, with deep evidence explicitly replaced by the reviewed offline records. No SG_TIME_FACTOR or timeout raise; no silent manual/deep catch-all. |
 | GP-cost | MS07c, MS08a/b/c, MS09a/b, MS10a/b, MS11a/b/c, MS12, MS13c, MS14b, MS15b, MS16 | `node tests\pattern-cost.js --ids=<owned-ids> --runs=20 --json=<owned-evidence>`; real positive/negative cases, work/cap/latency records, no timing assertion in quick tests. MS07c owns the split-ID recording moved from MS07b. MS16 owns this cost gate, not a new whole-generation GP campaign; carry MS15b-GP-J/GP-U to the final owners below. |
-| GP | MS13c and MS15b affected cells; MS18d entire final offered matrix | `node tests\perf.js --variant=<id> --level=<level> --runs=50 --warmup=0 --seed=7000 --gate`; final aggregate >=90%, all misses visible. Project before launch. Unsafe commands become named cost items, not automatic new tooling tasks; continue other cells without claiming an incomplete matrix passed. |
+| GP | MS13c/MS15b histories; MS18d final 79-cell matrix | After owner MS18d-Q1 and reviewed admission: unchanged serial `node tests\perf.js --variant=<id> --level=<level> --runs=50 --warmup=0 --seed=7000 --gate --ascii` under the protected readiness wrapper. All 79 complete and >=72 strict p95<target successes for a complete pass. Keep exact tool verdicts, rounded-output limits and every miss/error/hold visible. Sohei Hell 2 is unadmitted at 485.597 s mean alert; no subset aggregate, implicit GQ guard/limit or retry permission. |
 | GS cap | MS05r4 (absorbed MS05d), repeated MS18b | Six cells x 64/128/256/none, 12 requests each, seed 20260101: 288 primary requests. r4 selected 256; the final changed winner needs the recorded owner decision. Closure diagnostics never become selecting cells. |
 | Mega hell1 / final deep | MS07b extends r5m; MS18e final-source closure | MS07b preserves fourteen additional hell1 occurrences/relations under the same quick/deep rule. Final current-source inventory: 28 Nightmare/hell1 occurrences, one per locked request. MS18e's offered mega CV3 cells run live, one locked cell at a time as in B1, with deep occurrence ids only as cross-references; no CV3 record-provider/reuse route, deep generation in CI or blanket per-technique deep rerun. |
 | GS-CV6 / GD-CV6 | MS05e, historical experiment closed/set aside | Preserve literal Normal 300-319/7000-7039 and Easy/Hard/Expert 300-319 comparisons, tried pools 4/8/16 and the 18 CV6/I5 selector outcomes. CV6-05 restores the first-allowed pass and keeps the failed candidate's evidence, not its algorithm. No repeat for this answer; subsequent tasks use the restored baseline and their own authorized evidence. |
