@@ -6,7 +6,16 @@ acceptance closure **`b3144fcf`**, 2026-11-19.
 
 ## Release boundary
 
-**Current campaign halt:** B1 `a2e6423a`, checkpoint `4db0114e`, 22 successful
+**Second halt, current:** the real B2 mega16-easy a2 acquired the slot and
+created its folder, then held before readiness/payload because C-log line 24's
+no-acquisition event has no `finished`. Both admissions are used; no a3 or
+relabelled a2 is authorized. Follow
+**[MS18d-epoch3-release-history-repair.md](MS18d-epoch3-release-history-repair.md)**.
+The history-reader repair/tests may be prepared under the lock. A new reviewed
+B3 is required for deployment, and **MS18d-Q2 needs the owner** for any third
+admission. Checkpoint the a2 folder/log unchanged. No real continuation meanwhile.
+
+**Earlier epoch-1 halt, historical:** B1 `a2e6423a`, checkpoint `4db0114e`, 22 successful
 chunks plus mega16-easy a1 and a zero-admission a2 pre-window hold.
 Follow **[MS18d-epoch2-transport-repair.md](MS18d-epoch2-transport-repair.md)**:
 SA2 concurs with SA1 on fix (b) and a single declared second transport epoch.

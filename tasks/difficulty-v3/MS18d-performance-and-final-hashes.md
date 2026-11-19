@@ -7,7 +7,7 @@
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
 | Authority | R24/R21, FS23, S-OD4, S-OD15 A; S-AV01 not offered; S-OD13 remains GQ-only |
-| Status | C2 paused after 22 successful chunks; epoch-1 checkpoint `4db0114e`; scoped transport repair/dual-epoch merger assigned; no resume before reviewed B2 record and live journal validation |
+| Status | C2 paused again after B2 mega16-easy a2 acquisition hold; two admissions used/no payload; release-history repair and new B3 needed; MS18d-Q2 owner decision pending for any third admission |
 
 ## Goal & business context
 
@@ -146,7 +146,17 @@ There is **no `SG_TIME_FACTOR` multiplication of CLI GP targets**.
 
 ## Dispatch boundary and owner action
 
-**Current halt/ruling:** B1 is **`a2e6423a`**, original base record **`f7f56cbb`**,
+**Current second halt:** reviewed B2 **`b6de2c46`** / H2 **`bd6949ef`**,
+declaration **`42533fcc`**, produced a real a2 control-hold at acquisition,
+exit 64, no readiness or payload. C-log line 24 is a typed no-acquisition
+pre-window event; `release-history.js` wrongly requires its `finished`.
+Preserve/checkpoint the a2 folder and log. Both admissions are used: a1 was a
+legitimate CPU hold, a2 the tooling defect. Do not retry/relabel a2.
+**`MS18d-epoch3-release-history-repair.md`** assigns the semantic reader fix,
+requires a new B3 rather than amended B2, and contains the exact **MS18d-Q2**
+owner question for a one-use a3. Current limits remain two; no live continuation.
+
+**Earlier epoch-1 halt/ruling, historical:** B1 is **`a2e6423a`**, original base record **`f7f56cbb`**,
 checkpoint **`4db0114e`**. Preserve 22 successful chunks (19 cells / 950
 requests), mega16-easy's eligible unstarted a1 and its no-folder a2 watch give-up.
 The R2 freshness loop starves on its own full rechecks; it is not a GP timeout.

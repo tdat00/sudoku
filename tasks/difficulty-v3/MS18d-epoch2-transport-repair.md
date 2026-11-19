@@ -1,5 +1,13 @@
 # MS18d — Named epoch-2 transport repair and continuation
 
+**Later halt:** B2 `b6de2c46` / H2 `bd6949ef` and declaration `42533fcc` were
+reviewed and used. The subsequent real mega16-easy **a2 created its folder**
+and held at acquisition on the release-history defect; its admission is now
+consumed. **Do not follow the older a2 resume instruction below again.**
+`MS18d-epoch3-release-history-repair.md` is the current ruling: checkpoint a2,
+preserve all data, prepare the semantic reader repair and await the owner's
+decision on an exceptional third admission. B2/its record remain immutable.
+
 **Joint ruling:** SA2 concurs with SA1's independent analysis: **fix (b)** and
 **identity option (i), one declared second epoch**, preserving every completed
 record. This is a narrow R3 compatibility amendment, **not an owner question**:

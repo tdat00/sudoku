@@ -22,6 +22,17 @@ AGENTS/checklist; CRLF, both guide languages; no Git writes.
 
 ## Inputs & context
 
+**Current second-halt audit:** retain both mega16-easy hold folders and C-log
+lines 23-25. The first is a genuine CPU hold; the second is an acquisition
+hold caused by classifying a no-acquisition pre-window row as a release.
+No payload ran, but both admissions are consumed. Audit the checkpoint and
+`MS18d-epoch3-release-history-repair.md`; no a3 is authorized without the owner
+decision on MS18d-Q2. A later B3 must preserve B1/B2 records and explicitly
+declare any approved single-slot/manifest exception, never retag or relabel.
+Without that exception the cell remains incomplete and the original 79-cell
+gate cannot be reported passed. This is not permission for release with a
+reduced denominator or for retrying any measured payload.
+
 Final invariants: rating/cache 3, history/wire 1, 40 IDs/34 unscoped, two uniqueness IDs, fixed weights/
 bands, selected cap/C and frozen pattern limits. Exact means canonical solved/in-band/required;
 legacy history/imports remain honest. Complete final 135-cell qualification and >=90% performance

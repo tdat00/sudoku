@@ -1,5 +1,12 @@
 # MS18d — C1 readiness, hold rulings and host rebinding
 
+**Current second-halt addendum:** `MS18d-epoch3-release-history-repair.md`.
+The real mega16-easy a2 folder now exists and consumes the second admission,
+although it held at acquisition before a payload. Existing F3 cannot grant
+an a3. The owner must explicitly decide MS18d-Q2 before any such exception;
+no relabelling, folder deletion or counter reset is permitted. Preserve/checkpoint
+the evidence and keep the line stopped while the reviewed repair is prepared.
+
 Supporting specification of `MS18d-phase-c-admission.md` and the R24 leaf.
 **C0/C0b baseline: `56b97b2671a55c3cafefdbb999ad12c277fc0770`.**
 SA1 **ACCEPT WITH CONDITIONS F1-F6; C1 released now**, relayed 2026-11-19.

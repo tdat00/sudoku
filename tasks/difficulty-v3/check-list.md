@@ -1265,7 +1265,25 @@ Poller paused during payloads; progress reports/checkpoints only between chunks,
 after cleanup and before the next fresh checks. Phase D's non-pack docs edits
 follow the final campaign merge, not a mid-campaign path exception.
 
-**MS18d-C2-TRANSPORT-WATCH — paused, narrow repair assigned.** B1 **`a2e6423a`**,
+**MS18d-C2-RELEASE-HISTORY — current halt; MS18d-Q2 pending.**
+The first repair was reviewed/committed as B2 **`b6de2c46`**, H2 **`bd6949ef`**,
+record **`42533fcc`**. Its mega16-easy a2 now has a real folder and held at
+acquisition: `release-history.js::fromLog` treated C-log line 24's
+`pre-window-hold` as a release and required `finished`. The fail-closed
+acquisition decision is correct on that input; repair the typed history
+classification in both readers, not the log or the safety threshold.
+Checkpoint the a2 folder and append-only C log now, unchanged.
+
+Two admissions have been used, zero payloads: **a1 was the genuine EventLog
+CPU hold, a2 the reader defect**. Existing F3 cannot authorize a3.
+**MS18d-Q2 reserves S-OD16 for the actual owner answer; no grant is recorded.**
+The exact Vietnamese A/B question and conditional B3 plan are in
+`MS18d-epoch3-release-history-repair.md`. Keep the line paused. A new B3, never
+an amended B2, is required if the repair is deployed. An owner-approved third
+slot, if granted, must be explicit and one-use; no relabelled second admission,
+global cap increase, fourth admission, payload repeat or denominator reduction.
+
+**MS18d-C2-TRANSPORT-WATCH — first repair completed, now historical.** B1 **`a2e6423a`**,
 base record **`f7f56cbb`**, immutable epoch-1 checkpoint **`4db0114e`**:
 22 successful chunks / 19 cells / 950 requests; 92 chunks remain.
 The mega16-easy a1 is an eligible unstarted consumer hold; a2's 1203 s
