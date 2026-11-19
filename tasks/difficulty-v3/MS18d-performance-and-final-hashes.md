@@ -7,7 +7,7 @@
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
 | Authority | R24/R21, FS23, S-OD4; S-AV01 not offered; S-OD13 is GQ-only, not a GP waiver |
-| Status | Phase A accepted/committed; Phase B released but paused for the pin ruling below pending SA1 concurrence/orchestrator resume; Phase C NOT released, Q1 unanswered |
+| Status | Phase A accepted/committed; Phase B resumed with SA1's GG/CV6 conditions (2026-11-19 11:33 relay); Phase C NOT released, Q1 unanswered |
 
 ## Goal & business context
 
@@ -65,11 +65,42 @@ Normal and Wordoku/Normal to their offered Easy levels, with the original five-r
 smoke protocol. They are not GP measurements or changes to the complete 50-run GP
 matrix/seeds, fixed diagnostics or regression recipes.
 
-Carry **MS18c-GQ-ENGINE-COST** into the existing cost analysis: SA1's reported
-matching-outcome ratios are about 1.13 overall and 2-6.6x in several named cells;
-MS18c separately records a stricter 2,122-pair comparator and its exact selection
-rule. Preserve/reconcile definitions, keys, counts and both source identities
-before quantitative attribution. This is a source-specific engine-cost signal,
+Carry **MS18c-GQ-ENGINE-COST** into the existing cost analysis. **SA2's pooled
+strict comparator remains primary:** 2,122 matched request pairs, ordinary pooled
+median **1.1240344349341411** (1.1240). Its pairing requires the same cell/key/
+index/seed and every recorded request field except `ms`, with positive old time;
+there is no >50 ms filter or minimum per-cell cohort. For an even pooled count,
+the ordinary median averages the two middle ratios.
+
+**SA1's separate statistic is now precisely defined and reproduced**, following
+the orchestrator's **2026-11-19T11:33:33.392+07:00** clarification:
+
+1. Within each cell, pair requests whose **seed, hit, achieved, score, solved,
+   approximate, exact and valid** fields all match.
+2. Keep a pair only when **both old and new `ms` are strictly >50**.
+3. Keep a cell only with **at least five** such pairs: **51 eligible cells**.
+4. For each eligible cell take the **lower median** of its `new.ms/old.ms`
+   ratios; then take the **lower median of those 51 cell values**. Lower median
+   means sorted index `floor((n-1)/2)`, not the average of two middle values.
+
+The overall result is **1.1284579100925456** (1.1285), not a pooled per-request
+median. SA1 reran it under the lock; SA2 independently reproduced it file-only
+from the immutable MS07e/MS18c records, without a new measurement.
+
+| SA1 cell | Pairs kept / matching before the >50 ms filter | Per-cell lower median |
+|---|---:|---:|
+| mega16/Expert | 27 / 29 | 6.5559 |
+| jigsaw9/Expert | 11 / 15 | 5.0815 |
+| sohei/Master | 5 / 5 | 4.3160 |
+| mega12/Expert | 11 / 18 | 2.6858 |
+| diagonalX/Expert | 5 / 8 | 2.1076 |
+
+This corrects the pack's earlier description of SA1's figure as a "median
+per-request ratio" and its consequent "not reproduced" statement. Preserve the
+frozen Phase-A report as history; carry this clarified definition in the current
+handoff rather than rewriting the old report. The two statistics have different
+filters and weighting and must remain separate, with SA2 primary. This affects
+no target, admission, verdict or Phase-B permission. It is an engine-cost signal,
 not jobs-1 GP, identical-puzzle proof, a target adjustment or an extra profiling/
 GQ campaign. Closure additionally measured **mega16-replay 331.6 s versus 118 s
 at MS07f**, above a **300 s projection** but inside 450, and identified **17 offered
@@ -103,9 +134,10 @@ There is **no `SG_TIME_FACTOR` multiplication of CLI GP targets**.
 **25/25** freeze entries, bound identities, the 79-row table, 62 retained targets
 and 17 proposals (**11 ceil(3q), six budget-capped**), and **29/29** locked tests.
 Sohei Hell 2 is the only mean alert above 450 s; **all 79 GP cells and the S-AV11
-tuple remain unadmitted**. The strict 2,122-pair cost comparator reproduces;
-SA1's separately quoted figures do not. Keep that distinction, not a causal/
-admission claim based on the unreproduced figures.
+tuple remain unadmitted**. The primary strict 2,122-pair comparator reproduces.
+SA1's subsequently clarified filtered cell-median statistic also reproduces as
+defined above; Phase A's earlier non-reproduction note used the wrong description.
+Neither comparison is a causal proof or a command-admission bound.
 
 Phase-A disclosures remain: one unlocked `node --version`; nine own gaps of
 **14.2-14.9 s** from the wrapper bug, subsequently fixed. Preserve those records
@@ -115,8 +147,9 @@ kill, and possible stale lock after `stop_powershell`.
 
 The orchestrator **released Phase B**, which started at **11:08:38 (+07:00)** and
 stopped for the target-pin QUESTION before any edit/Node run (clean at 11:10:57).
-The ruling below is the narrow scope amendment for SA1 cross-review and
-orchestrator resume. **Phase C is NOT released**; owner **MS18d-Q1 remains
+The orchestrator relayed **SA1 CONCURS WITH CONDITIONS** and resumed Phase B
+at the 11:33 update. The two GG/CV6 conditions below are binding; this pack update
+does not add another pause. **Phase C is NOT released**; owner **MS18d-Q1 remains
 unanswered on Discord**, per the 2026-11-19 11:11 relay. No GP/S-AV11 run,
 pilot or live readiness campaign follows from Phase B.
 
@@ -259,8 +292,8 @@ them. No Normal-specific contract is reopened.
 
 ### Phase B target-pin QUESTION — ruling A, 2026-11-19
 
-**SA2 approves option A as a narrow, coupled expectation update**, for SA1
-cross-review and orchestrator resume. It implements the already authorized 17
+**Option A is concurred with by SA1 and Phase B has resumed**, subject to the
+GG/CV6 conditions below. It is a narrow, coupled expectation update implementing the already authorized 17
 target changes; it is not permission to weaken a test or update other pins.
 Options B (leave a knowingly obsolete pin failing) and C (drop value checking)
 are rejected.
@@ -321,6 +354,16 @@ map is expressly assigned; no other ownership expands.
   from the CLI GP `PERF_TARGETS`. No manual budget, hit/soundness threshold,
   seed, population, tier or factor changes. Greater-Than Normal's 700 ms
   contract is not reopened.
+  **SA1's concrete documentation condition is required:** list every retained
+  manual budget that numerically differs from the new 9.1 GP target, with both
+  values and its statistic, in those design sections, **both developer guides**
+  and the Phase-B handoff. Do not stop at a generic disclaimer or the examples
+  in the original question. See the complete current mismatch inventory below.
+  Existing CV6 titles saying **"design.md 9.1 budget of N" refer to retained N**,
+  not the recalibrated GP target. **No manual-CV6 title, `BUDGET_MS`, threshold or
+  factor edit.** The already approved quick target-pin test rename is separate.
+  A later live MS18e failure against retained N is an honest S-OD4 outcome, not
+  authority to align its budget with GP.
 - **Freeze before GG:** retain a complete **135-position** target snapshot
   (79 active / 56 absent), the exact 17-diff map and all source identities
   under new Phase-B evidence. Preserve Phase A's original preflight, helpers,
@@ -350,6 +393,15 @@ map is expressly assigned; no other ownership expands.
   actual lock releases/acquisitions**; all gaps count where they fall within
   an outer command. No overlapping children, unbounded compound or assumption
   that all 104 fit because their old generation sum was 399 s.
+  **SA1's GG pass condition:** a real shard counts only with **exit 0 AND its
+  complete five-key ledger**, with the exact selected keys and current identity.
+  **Only the complete 104-ledger check-only merge, exit 0 with all 520 unchanged
+  expected hashes matching, can pass GG**; individual successful recording commands are not that pass.
+  **STOP + QUESTION** on any nonzero exit, signal/kill, missing/partial ledger
+  or merge mismatch. Do not classify one as a GP `MISS`, retry, regenerate a
+  replacement or otherwise continue dependent GG work without a ruling.
+  Keep the failed shard's partial transcript and ledger. This applies to real
+  GG work, not the predeclared expected failures of isolated wrapper stand-ins.
 - **Move the incremental transcript repair ahead of the first long GG compound.**
   It is in scope as a task-owned wrapper repair, not a perf/measure change.
   Preserve output durably as it arrives, keep partial output on timeout/kill,
@@ -379,6 +431,41 @@ Phase A still **25/25**. Record changed identities and the one test rename in
 the Phase-B handoff. **No GP, S-AV11, pilot, live timing-admission campaign or
 Phase-C release** is granted by this ruling. Q1 remains unanswered, all 79 cells
 remain unadmitted, and the Sohei Hell 2 hold is unchanged.
+
+### Retained manual budgets versus the new GP table — documentation, not edits to tests
+
+The following are **base milliseconds**, before the manual test's existing
+`SG.test.timeLimit` factor. GP uses its unscaled p95 target; classic9's
+`difficulty.test.js` check is a **median** gate and keeps its existing middle-index
+calculation, not GP's percentile/cohort. The columns compare two retained/different
+contracts, **not an instruction to replace the manual number**.
+
+| Manual suite / row | Statistic | Retained manual ms | New 9.1 GP comparison ms |
+|---|---|---:|---:|
+| killer / normal | manual CV6 p95 | 700 | 5425 |
+| jigsaw / easy | manual CV6 p95 | 350 | 1905 |
+| jigsaw / hell2 | manual CV6 p95 | 5000 | 10000 |
+| wordoku / easy | manual CV6 p95 | 250 | 2921 |
+| extra-regions / normal | manual CV6 p95, common larger-row budget | 200 | **1573** = max(diagonalX 200, hyper 1573) |
+| extra-regions / nightmare | manual CV6 p95, common larger-row budget | 3000 | **10000** = max(diagonalX 10000, hyper 10000) |
+| difficulty / classic9 easy | manual median | 150 | 2342 |
+| difficulty / classic9 normal | manual median | 150 | 2627 |
+| difficulty / classic9 expert | manual median | 600 | 1323 |
+| difficulty / classic9 nightmare | manual median | 2500 | 8377 |
+
+The six variant-specific p95 rows cover **seven** recalibrated GP cells because
+extra-regions shares the larger diagonalX/hyper row; the four classic9 median
+rows are listed separately. At the approved targets these are all numerical
+mismatches among the offered comparison rows of the named suites. No new
+Greater-Than offered-row mismatch occurs. Hidden rows have **no GP target**, not
+zero, and retain their existing manual constants/registration disposition; do
+not invent a numeric comparison or re-enable a hidden public timing case.
+
+Verify this inventory from the unchanged manual declarations and the frozen
+target plan when writing the design/guides/handoff. A later source difference
+must be reported, not silently handled by changing an assertion. The existing
+manual suite titles, thresholds, seeds, counts and public/diagnostic boundaries
+all remain as accepted.
 
 **CV6-05 / S-AV01 is settled: "not offered".** Normal has 40/40 hits but p95
 10,192.4051 ms >10,000 ms. It is not in the 79-cell GP population; the Fable trigger
@@ -649,6 +736,8 @@ edits or timed work when arithmetic is green.
 | MS18d-T07 | Stock CLI limitations reported honestly: no timing JSON/resume/jobs flag or inherited GQ guard; complete MISS distinguished from crash/timeout and rounded output from exact verdict |
 | MS18d-T08 | Scoped target pin preserves OLD and all 79 exact values via 17 frozen overrides; counts/hidden positions/cells comparison unchanged, one test renamed and none added/removed; exact-ms documentation and distinct manual-CV6 wording |
 | MS18d-T09 | Versioned append-as-arriving transcript wrapper/short stand-ins preserve partial failures and exit semantics, cleanup and >=15 s gaps; Phase-A 25-entry freeze remains intact; Phase B grants no GP/profile permission |
+| MS18d-T10 | Every real GG shard has exit 0 plus five exact ledger keys; full 104-ledger check-only merge is the only GG pass; nonzero/signal/kill/missing/partial/mismatch stops for QUESTION without an automatic retry |
+| MS18d-T11 | Design 15.1/15.5, both developer guides and handoff enumerate retained manual versus GP budgets, including shared extra-regions and classic9 median rows; no manual title/budget/threshold/factor changed |
 
 ## Test plan and gates
 

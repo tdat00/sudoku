@@ -115,7 +115,7 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [x] | MS18a | [MS18a](MS18a-final-matched-soak.md) | Matched final soak | MS17b | S, 25-35 min | Evidence | M18a | 43 |
 | [x] | MS18b | [MS18b](MS18b-recheck-cap-and-window.md) | Cap/window final rechecks | MS18a | S, 25-40 min | Evidence | M18b | 44 |
 | [x] | MS18c | [MS18c](MS18c-qualify-and-publish-offers.md) | Qualify and publish offers | GQ accepted; A `6a473f7a` / B `387a4c8d` complete; step-5 population ruling AGREE/resume and final closure | M + bounded manual/E/quick/CI | Qualification | M18c | 45 |
-| [ ] | MS18d | [MS18d](MS18d-performance-and-final-hashes.md) | Final GP preflight/performance/hashes | Phase A `602af371` accepted; Phase B released, pin amendment awaiting concurrence/resume; Phase C held for Q1/admission | M, 40-55 min + GP/GG | Evidence | M18d | 46 |
+| [ ] | MS18d | [MS18d](MS18d-performance-and-final-hashes.md) | Final GP preflight/performance/hashes | Phase A `602af371` accepted; Phase B resumed with SA1's GG/CV6 conditions; Phase C held for Q1/admission | M, 40-55 min + GP/GG | Evidence | M18d | 46 |
 | [ ] | MS18e | [MS18e](MS18e-release-evidence-closure.md) | Final correctness/items/workflows and PR CI | MS18d | M, 40-60 min + GD/deep/CI | Release evidence/CI | M18 | 47 |
 
 S/M/L mean approximately 100-300 / 300-800 / 800-1,600 changed lines including tests, excluding bulky
@@ -227,15 +227,19 @@ Do not route this owner decision to Fable or infer it from the local CI acceptan
 
 The final intended GP population is **79 cells / 3,950 requests**; a complete
 >=90% result needs all 79 measured and **>=72 successes**. Phase A reproduced
-the 17 proposals, Sohei's sole 485.597 s mean flag and the strict 2,122-pair /
-1.1240 comparator; SA1's separate quoted figures were not reproduced.
+the 17 proposals, Sohei's sole 485.597 s mean flag and the **primary** strict
+2,122-pair pooled median **1.1240**. SA1's definition, clarified in the 11:33
+relay, also reproduces: pair matching outcome fields within cells, keep both
+times >50 ms and cells with >=5 retained pairs, then lower median per cell and
+lower median over **51 cells =1.1285**. The earlier "not reproduced" statement
+used the wrong description; preserve its frozen Phase-A record as history.
 All 79 GP cells and S-AV11 remain unadmitted. Targets/GG functional work is Phase B;
 timing also
 requires the recorded Q1 answer and per-cell whole-command admission.
 The stock timing CLI has no JSON/resume/jobs option and no inherited GQ 120 s
 request guard. Keep its exact `ok`/`MISS` verdict distinct from rounded display.
 
-**MS18d Phase-B pin ruling (SA2, for SA1 concurrence/resume): option A.**
+**MS18d Phase-B pin ruling: option A, concurred with by SA1; Phase B resumed.**
 The quick `manual-corpus.test.js` target-value pin may change to a literal frozen
 17-entry expected override map plus unchanged `OLD` fallback. Check all 79
 values, exactly 17 used changes / 62 retained, 56 hidden / 39 removed / 17 never
@@ -251,6 +255,18 @@ and >=15 s actual gaps; no automatic stale-real-lock deletion. GG keeps the
 104 five-seed shards / 520 keys, conservative whole-command <=450 and hard 540,
 no update flag. Hash-family identity changes; replay is expected unchanged but
 must be recomputed. Phase B grants no GP/profile permission; Q1 is still pending.
+
+**SA1's binding conditions, relayed 2026-11-19 11:33:** real GG shards need
+exit 0 **and** complete five-key ledgers; only the full 104-ledger check-only
+merge with all 520 expected hashes matching passes GG. A nonzero exit,
+signal/kill, missing/partial ledger or merge mismatch is **STOP + QUESTION**,
+never a GP MISS or an automatic retry/replacement; keep partial evidence.
+In design 15.1/15.5, both developer guides and the Phase-B handoff enumerate
+every retained manual-versus-GP budget mismatch, including extra-regions'
+larger-row rule and classic9's **median** gates. Legacy CV6 titles mean their
+retained N; no manual title/budget/threshold/factor edit or later automatic
+alignment after a live MS18e failure. The MS18d leaf gives the full ten-row
+numeric inventory and distinguishes hidden rows with no GP target.
 
 **Step-5 ruling (2026-11-19, 07:58 relay):** cases 1-3 use original fixed
 diagnostic corpora, counts, seeds, indexes and thresholds, with per-call restoring
@@ -794,7 +810,7 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | S-AV25 Hell 1 exactness | MS07b: 0 of 14 mega Hell 1 records and 0 of 2 classic9 pilot requests exact (in band, shallow); SA1 expects the classic9 Hell 1 GD batch (at least 90 % exact) to fail at MS07e | MS07e, MS18c |
 | S-AV26 classic9 Hell 1 cost (indication) | MS07b pilot: about 5 s per request against the 2.5 s design budget; two requests only; related to S-AV19 | MS07e, MS18d |
 | S-AV27 qualification second round on one worker | **Final execution gap closed by MS18c under S-OD13:** all six old unexecuted cells ran and are hidden on time; all 135 records accepted. The scheduler is unchanged: MS07d's `round2-workers.txt` still establishes the possible 60 serial second-round requests. Final expansions were hyper/Expert 53, flower/Nightmare 50 and wordoku/Normal 46 requests. Preserve MS07e's incomplete old-source checkpoint and mixed-concurrency caveat; GQ is not jobs-1 GP timing and receives no time normalization | Closed final-GQ gap; timing/cost caveat to MS18d, MS18e audit |
-| MS18c-GQ-ENGINE-COST | **Open.** SA1's matching-outcome ratios are about 1.13 overall and 2-6.6x in named cells; the leaf separately retains SA2's explicit 2,122-pair comparator (1.1240), not a merged cohort. Accepted closure adds **mega16-replay 331.6 s versus 118 s at MS07f**, above its **300 s projection** but inside 450, and **17 offered GQ cells above current design 9.1 targets**. Preserve source/case/clock/cohort distinctions. These are not GP results or permission to normalize times, retune, relax budgets or repeat GQ. Reconcile under existing MS18d cost/preflight scope | MS18d; MS18e audit |
+| MS18c-GQ-ENGINE-COST | **Open; comparator definitions resolved. Primary SA2:** 2,122 strict matched pairs, ordinary pooled median **1.1240**. **Separate SA1:** equal seed/hit/achieved/score/solved/approximate/exact/valid within a cell, both times >50 ms, >=5 pairs/cell; lower median of each cell's ratios then lower median of **51 cell medians =1.1285**, reproduced after the 11:33 clarification. Not a pooled statistic or a new timing run. Closure also records **mega16-replay 331.6 s vs118 s at MS07f**, above its 300 s projection but inside 450, and 17 offered GQ cells above the pre-update targets. Preserve source/clock/cohort distinctions; no GP verdict, normalization, retune, budget waiver or GQ repeat follows | MS18d; MS18e audit |
 | MS18d-GP-BOUND-sohei-hell2 | **Unadmitted mean alert, not a GP measurement.** Accepted GQ: n=40, mean **9711.9411975 ms**, `50*mean/1000 = 485.597059875 s >450`, before setup/readiness/variance. Keep the cell in the 79-cell GP denominator; no shorter cohort, GQ watchdog, pilot or extended deadline. Other 78 mean-unflagged cells still need credible reviewed whole-command plans. Q1's environment answer cannot waive this bound; an unmeasured cell leaves the full GP gate incomplete | MS18d current-source admission/report; MS18e audit |
 | IR17 final carry | Classic9 Nightmare remains offered. The older `00647f9` GD batch cost **430.5 s**; **449 s is not a reusable bound**. Require current-source conservative whole-command admission under unchanged 450/540 protection, with honest named incomplete coverage if not admissible | MS18c handoff; remaining GD and final audit MS18e |
 | S-AV28 Easy availability | MS07e GQ: diagonalX Easy 28/40, hyper 29/40, samurai 10/22, sohei 4/18, butterfly 1/15, flower 0/14 (current offers lose Easy on six variants); 40/40 elsewhere | MS18c |

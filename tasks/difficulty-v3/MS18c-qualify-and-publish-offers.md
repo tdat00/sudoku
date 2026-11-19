@@ -292,22 +292,33 @@ in v2 too. Keep historical sources, machines, cohorts and their actual verdicts 
 | **MS18c-GQ-ENGINE-COST** | **Open to MS18d; MS18e audits.** Preserve the source-qualified matched-outcome cost comparison below. No new GQ, algorithm tuning, target fitting, budget relaxation or attribution-based time subtraction. |
 | **Close misses, plain notes** | Greater-Than Normal as above; diagonalX/Expert **37/40**, p95 **11,795.9214 ms** against 10,000. Both are hidden without an early stop. Neither is an owner/Fable question or a reason to choose a faster repeat. |
 
-For **MS18c-GQ-ENGINE-COST**, SA1 reports a median per-request new/old time ratio
-of about **1.13 overall** on matching recorded outcomes, with approximately
-**6.6x mega16/Expert, 5.1x jigsaw9/Expert, 4.3x sohei/Master, 2.7x mega12/Expert and
-2.1x diagonalX/Expert**. This is an engine-cost investigation signal, not a GP
-measurement, identical-puzzle proof or a controlled causal attribution.
-
-Keep the comparison definition explicit. SA2's separate stricter file-only check
+For **MS18c-GQ-ENGINE-COST**, **SA2's pooled strict comparator remains primary**.
+Its file-only check
 (same key/index/seed and **every recorded request field except `ms`, including
-score**, old time positive) has **2,122 pairs**, median ratio **1.1240**; its five
-cell cohorts respectively have **29/15/5/18/8 pairs**, medians
+score**, old time positive) has **2,122 pairs**, ordinary pooled median ratio
+**1.1240344349341411** (1.1240; average of the two middle ratios for even N).
+For mega16/Expert, jigsaw9/Expert, sohei/Master, mega12/Expert and diagonalX/Expert,
+the cohorts respectively have **29/15/5/18/8 pairs**, medians
 **6.5530 / 4.7940 / 4.3160 / 2.6429 / 2.2272**. Do not silently combine these
-cohort definitions or present the stricter check as reproduction of SA1's exact
-filter. MS18d retains/reconciles the pair-selection rules, keys, counts and source
-identities in its existing cost analysis. This does **not** hold publication or
-authorize another timing campaign/tooling class; existing GP/profile bounds and
-targets remain. No environment normalization of GQ follows.
+per-cell summaries into a different purported pooled statistic.
+
+**Clarification relayed 2026-11-19 11:33 (+07:00):** the earlier pack description
+of SA1's figure as a "median per-request ratio" was wrong. SA1 pairs within a
+cell on equal **seed/hit/achieved/score/solved/approximate/exact/valid**, keeps pairs
+with **both times >50 ms**, and keeps cells with **>=5 retained pairs**.
+It then takes each cell's **lower median** ratio, followed by the **lower median
+of the 51 eligible cell medians**: **1.1284579100925456** (1.1285). Lower median
+is sorted index `floor((n-1)/2)`. The five named cells retain **27/29, 11/15, 5/5,
+11/18 and 5/8** pairs and give **6.5559 / 5.0815 / 4.3160 / 2.6858 / 2.1076**.
+SA1 reran this under the lock and SA2 independently reproduced it file-only.
+Phase A's earlier non-reproduction note concerned the misdescribed statistic;
+keep that frozen report as history rather than editing it retrospectively.
+
+MS18d retains both definitions, keys/counts and source identities, with SA2's
+pooled result primary and SA1's filtered cell-weighted result separate. Neither
+is GP, identical-puzzle proof or controlled causal attribution. The clarification
+changes no qualification, target, admission or Phase-B permission, and grants no
+extra timing campaign, tooling class or environment normalization.
 
 ### Orchestrator TSV disclosure
 
