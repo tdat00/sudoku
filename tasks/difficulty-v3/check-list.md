@@ -200,12 +200,20 @@ at **`ed2fe50c`, dirty**, sources **`0ca29eaeebc295b6`**: 4,313 outcomes,
 960 journal events bind the original manifest; all raw strict screens failed under
 the explicitly declared **host-active** policy. No new GQ or record retagging.
 
+**MS18c is ACCEPTED at `e0596801cf95d79761073a344ffc2e60f7764c8f`.**
+SA1 gave FINAL ACCEPT with C1; C1 is complete and verified. The exact-head local
+identity/CI checks passed with a clean tree, as the orchestrator relayed at
+**2026-11-19 09:57 (+07:00)**. No push/remote CI run is claimed.
+The index checkbox, Execution log and summary row are deliberately left for the
+orchestrator; this acceptance record does not fill them.
+
 **Checkpoint A `6a473f7a` and B `387a4c8d` are complete.** The frozen inventory
 and official **`evidence\MS18c\merge\qualification-v3.json` / `merge\table.md`**
 remain immutable; 79 offers are published, sources **`75b0955e3e356bd1`**.
-The same developer **`5fe8b2d2`** is in step 5 and awaits **SA1 final AGREE on the
-new population ruling and orchestrator resume**, not another merge or A/B run.
-All implementation/closure commits remain orchestrator-owned; no developer Git writes.
+Developer **`5fe8b2d2`** completed the closure. A/B and the 418-file closure commit
+(33 modified / 385 new, `.last-release` excluded/deleted) remain distinct; no raw
+measurement is retagged. All implementation/closure commits were orchestrator-owned.
+Next is **MS18d preparation**, with its own readiness contract before any timed work.
 
 **Step-5 ruling (2026-11-19, 07:58 relay):** cases 1-3 use original fixed
 diagnostic corpora, counts, seeds, indexes and thresholds, with per-call restoring
@@ -224,17 +232,32 @@ Offered-target arithmetic stays MS18d. The recovery-profile guard/dependency-has
 repair is in scope: G13 remains Samurai/Nightmare/42; record old/new toolHash and
 restore support on success/failure, retagging nothing.
 
-The leaf requires before/after `--list-tests` reconciled with pre-B populations,
+The accepted leaf includes before/after `--list-tests` reconciled with pre-B populations,
 `closure\population-map.json` / `.md`, and sandbox proofs of guard use/restoration,
 no unsupported-level error/normalization, original seeds and Killer's nine fixed
-levels. Fix adapters, not generic `lazyCorpus` semantics. Live runs of the five
-variant suites stay MS18e; only verification is pending there, not assertion design.
+levels. C1 explicitly accounts for the extra-regions classic9 public control's
+removed Hell 1 **seed 707 / index 7**, leaving seven original-index seeds; the
+record is `closure\population-map.md:176`. Live runs of the five variant suites
+and `perf` stay MS18e, especially the unchanged extra-regions cross-level hit share.
+Only live verification is pending there, not assertion design.
 
-The continuation also owns the **complete bounded `variants` manual suite**,
-MS05b3 population audit and fixed diagnostic guards, then final-source E/GH,
-guides/counts, both bounded quick sets, CI and SA1 final review. All Node and timed
-continuation commands use **`Invoke-Dv3Node`**, ordinary **450/540**, not the GQ
-watchdog. Neither A nor B is full MS18c acceptance; MS18d waits for that final closure.
+Accepted closure: **manual `variants` 285/285 in 18 shards; E 5/14/520 unchanged;
+GH 40/40; Generator quick 4,807/4,807, 55 suites, 547.6 s; Player 2,981/2,981,
+32 suites, 118.7 s**. All **591 `-b` manifest entries** (47 helpers / 544 outputs)
+are verified and tracked, and all **2,201** frozen GQ files re-verified.
+The five final fingerprints are recorded in the MS18c acceptance note.
+
+On clean closure HEAD `e0596801`, the orchestrator's locked local
+`identities-now.cjs`, `generator-quick.selftest.js` (**50/50**) and
+`generator-quick.js check` all exited 0. Every Generator quick test is in exactly
+one shard. Group budgets **1260/1260/420/450 s** remain below 1800; Player
+**720 <= 900 s**. SA1's matching-head condition was **local**, not GitHub CI;
+no quick rerun or push was required, and no remote pass is inferred.
+
+Accepted disclosures stay in MS18c's evidence: approximately 20 unlocked sub-second
+file-only Node calls, one `Set-Content` scratch, one `.Replace` rewrite, 294 `.log`
+files force-added at A, the moved `-` TSV and the dated quick-cost document left
+unchanged. They grant no new exception. **S-OD13 remains GQ-only, not a GP waiver.**
 **MS18a and MS18b receive orchestrator template/contract review; SA1 cross-review is
 at MS18c**, including its now-agreed supervisor and canary checkpoints. A specific unresolved question still
 goes through the orchestrator and the QUESTION pause.
@@ -734,7 +757,7 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | S-AV25 Hell 1 exactness | MS07b: 0 of 14 mega Hell 1 records and 0 of 2 classic9 pilot requests exact (in band, shallow); SA1 expects the classic9 Hell 1 GD batch (at least 90 % exact) to fail at MS07e | MS07e, MS18c |
 | S-AV26 classic9 Hell 1 cost (indication) | MS07b pilot: about 5 s per request against the 2.5 s design budget; two requests only; related to S-AV19 | MS07e, MS18d |
 | S-AV27 qualification second round on one worker | **Final execution gap closed by MS18c under S-OD13:** all six old unexecuted cells ran and are hidden on time; all 135 records accepted. The scheduler is unchanged: MS07d's `round2-workers.txt` still establishes the possible 60 serial second-round requests. Final expansions were hyper/Expert 53, flower/Nightmare 50 and wordoku/Normal 46 requests. Preserve MS07e's incomplete old-source checkpoint and mixed-concurrency caveat; GQ is not jobs-1 GP timing and receives no time normalization | Closed final-GQ gap; timing/cost caveat to MS18d, MS18e audit |
-| MS18c-GQ-ENGINE-COST | **Open.** SA1 reports matched recorded-outcome median new/old time ratio about **1.13 overall**, with about **6.6x mega16/Expert, 5.1x jigsaw9/Expert, 4.3x sohei/Master, 2.7x mega12/Expert, 2.1x diagonalX/Expert**. The leaf separately records SA2's strictly defined 2,122-pair comparator (median 1.1240) and per-cell counts/ratios; do not silently combine cohorts. Preserve/reconcile definitions, keys and source identities within existing MS18d analysis. Engine-cost signal, not controlled causal attribution, a GP result or permission to normalize GQ/retune/rerun | MS18d; MS18e audit |
+| MS18c-GQ-ENGINE-COST | **Open.** SA1's matching-outcome ratios are about 1.13 overall and 2-6.6x in named cells; the leaf separately retains SA2's explicit 2,122-pair comparator (1.1240), not a merged cohort. Accepted closure adds **mega16-replay 331.6 s versus 118 s at MS07f**, above its **300 s projection** but inside 450, and **17 offered GQ cells above current design 9.1 targets**. Preserve source/case/clock/cohort distinctions. These are not GP results or permission to normalize times, retune, relax budgets or repeat GQ. Reconcile under existing MS18d cost/preflight scope | MS18d; MS18e audit |
 | IR17 final carry | Classic9 Nightmare remains offered. The older `00647f9` GD batch cost **430.5 s**; **449 s is not a reusable bound**. Require current-source conservative whole-command admission under unchanged 450/540 protection, with honest named incomplete coverage if not admissible | MS18c handoff; remaining GD and final audit MS18e |
 | S-AV28 Easy availability | MS07e GQ: diagonalX Easy 28/40, hyper 29/40, samurai 10/22, sohei 4/18, butterfly 1/15, flower 0/14 (current offers lose Easy on six variants); 40/40 elsewhere | MS18c |
 | S-AV29 Greater-Than Master time | MS07e GQ: 40/40 hits but p95 14.5 s over the 10 s budget (heavy tail; the cell took 35.3 s against a 27.5 s projection): hidden by time | MS18c, MS18d |

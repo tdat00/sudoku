@@ -7,7 +7,102 @@
 | Size / active time | Medium; continuation includes bounded manual/E/quick/CI work; no whole-phase duration claim |
 | Owner / milestone | Qualification/publication; M18c |
 | Authority / review | R24/R21, AUTH-S1, SA1-Q-S5, S-OD4 (c1), S-OD7/S-OD8/S-OD13/S-OD14, CV6-05; joint ceiling/recovery approval and SA1 cross-review |
-| Status | GQ accepted and A/B complete; step 5 population ruling below awaits SA1 final AGREE and orchestrator resume; manual/E/quick/CI closure remains |
+| Status | ACCEPTED at `e0596801cf95d79761073a344ffc2e60f7764c8f`: SA1 FINAL ACCEPT, C1 completed/verified and exact-head local closure checks passed; no remote CI claim |
+
+## Acceptance record — 2026-11-19
+
+The orchestrator's **2026-11-19T09:57:44.992+07:00** handoff records **SA1 FINAL
+ACCEPT with condition C1**, followed by verified completion of C1 and the
+matching-head local checks below. **MS18c is accepted.** Its historical plans,
+questions and release stops below are now provenance, not instructions to repeat work.
+The Execution log, index checkbox and orchestrated summary row remain for the
+orchestrator to fill; this acceptance note does not edit them.
+
+| Boundary | Commit / disposition |
+|---|---|
+| Pre-publication checkpoint A | `6a473f7a` — frozen GQ evidence, checked merge, helpers/compatibility and v2 archive |
+| Publication checkpoint B | `387a4c8d` — support arrays and live report together, 79 offers |
+| Accepted closure | **`e0596801cf95d79761073a344ffc2e60f7764c8f`** — 418 files (33 modified, 385 new); `.last-release` excluded and then deleted; clean tree at acceptance |
+| Measured/publication source | GQ remains `ed2fe50c`, dirty, `0ca29eaeebc295b6`; publication producer remains `75b0955e3e356bd1`; no record retagging |
+
+**C1 is complete.** `evidence\MS18c\closure\population-map.md:176` explicitly
+records the extra-regions classic9 public-support control: seven offered levels
+VeryEasy through Nightmare, removal of Hell 1 **seed 707 / original index 7**,
+and unchanged `700 + global level index` seeds for the seven retained levels.
+It is a public control, not a fixed diagnostic cohort. This is population
+accounting, not a changed assertion or a new generation run. The orchestrator
+verified that only C1 files changed after 09:47; no quick rerun was a condition.
+
+Final evidence is `evidence\MS18c\closure\item-register.md`, the population map,
+`closure\final\`, `closure\ci\` and the **`-b`** manifests (not the superseded `-a`
+versions). All **591** entries are verified and tracked: 47 helpers + 544 outputs.
+SA2 independently rechecked the hashes and tracked membership when recording this acceptance.
+
+| Final inventory | SHA-256 |
+|---|---|
+| `helpers-sha256-b.txt` | `dbe22dcd94ae64281240d5a98782094890b6831efdb93afbf2addffb53930d13` |
+| `outputs-sha256-b.txt` | `6624eaff0df4b64d1af1f0fcda4681bc48126d11b69099ea45fea7b491646687` |
+| `format-check-b.txt` | `620d54f482ee47d50dfeeec8b0b71732f37bc01f9ab33ac738e9622077e23386` |
+
+### Accepted gates and identities
+
+| Gate | Accepted result |
+|---|---|
+| GQ / frozen inventory | 135/135 cells; 79 offered, 56 hidden; 27 retained request timeouts, zero invalid/gaps/recoveries; **2,201/2,201** frozen files re-verified |
+| Complete manual `variants` | **285/285**, 18 disjoint whole-test shards |
+| E | **5 wires / 14 analyses / 520 hashes unchanged**, complete check-only merges |
+| GH | **40/40**, check-only |
+| Generator quick | **4,807/4,807**, 55 suites, **547.6 s** across four group commands |
+| Player quick | **2,981/2,981**, 32 suites, **118.7 s** |
+
+| Accepted identity | Value |
+|---|---|
+| Generator quick | `fc31c9db8a2cea17e480f5130d531042a4c073bc4dd0d2c97296afc6a6079ac2` |
+| Player quick | `4c21573fbc00ca82a4e6d0a15bf6e8201be84940d00f87840a49e2046bd3d25a` |
+| Generator with manual trees | `13cd63bfb0f5af687bc8e841d522cc7f216aa116125394b33fbc32a53ab1ef3f` |
+| E replay | `1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc` |
+| E hash | `1032ab2f510fe2b9ed1bac744f534d5cfee7e039f456fc56d3e19682d53158a0` |
+
+**Matching-head means the local MS18c closure check here, not remote PR CI.**
+The orchestrator ran the following under `Invoke-Dv3Node` on exact HEAD
+**`e0596801`**, with the tree clean; all exited **0**:
+
+1. `identities-now.cjs`: all five values equal the accepted evidence above.
+2. `.github\scripts\generator-quick.selftest.js`: **50 checks, zero failures**.
+3. `.github\scripts\generator-quick.js check`: Generator **4,807/4,807** in exactly
+   one shard each; Player **2,981**. Group budgets are **1260 / 1260 / 420 / 450 s**
+   of 1800; Player **720 s** within its actual **900 s** workflow limit.
+
+Quick sets were **not rerun** after C1/commit, as SA1 explicitly clarified they
+were not an acceptance condition. Their matching final identities and the local
+exact-commit checks above are the accepted proof. No push or remote workflow run
+is claimed; MS18e retains its matching final-head remote CI/audit obligations.
+
+### Accepted disclosures and downstream ownership
+
+SA1 accepted the recorded deviations: about **20 unlocked sub-second file-only
+Node calls**, one `Set-Content` scratch file, one `.Replace` rewrite, the
+**294 `.log` files force-added at A**, the moved stray `-` TSV, and leaving
+`recovery-quick-cost.md` as its dated historical record. Keep the original
+disclosures/evidence; this grants no standing exception to later invocation/edit rules.
+
+Final items: **S-AV01 not offered; S-AV05/06 under S-OD7; S-AV27 closed; IR17
+carried; MS18c-GQ-ENGINE-COST open to MS18d**. The cost item additionally records
+the fixed mega16 replay shard at **331.6 s**, versus **118 s at MS07f** (about
+2.8x), above its **300 s projection** but inside 450 s, and **17 offered GQ cells**
+above their current design 9.1 performance targets. These are source-qualified
+observations, not GP results or permission to retune/relax/repeat qualification.
+
+Live **killer, jigsaw, greater-than, extra-regions, wordoku and `perf`** validation
+remains MS18e; implementations/populations are resolved, not their live outcomes.
+The principal named risk is the **extra-regions cross-level hit-share assertion**,
+which retains its full original diagnostic population, including hidden levels.
+Keep its original threshold; do not infer a live pass from sandbox/listing checks.
+
+MS18d may be prepared/dispatched only after this acceptance is recorded. It must
+establish its own timed-work readiness: **S-OD13's host-active GQ grant is not a GP
+waiver**. No further MS18c generation, gate rerun or frozen-evidence edit follows
+from this acceptance record.
 
 ## Goal & business context
 
@@ -63,12 +158,12 @@ has finished and stopped; its original pending rows and reports stay unchanged.
 The pack-only approved manifest is separate. Q3 is answered as **S-OD14**.
 The GQ execution phase has now finished and both analysts give **SET ACCEPT**.
 The historical staging/supervision contract below remains the provenance of those
-runs, not permission to repeat them. The current action is the **post-GQ continuation**
-below, only after SA1's final AGREE on this pack and the orchestrator's release.
+runs, not permission to repeat them. The **post-GQ continuation**
+below is now completed and accepted as recorded at the top of this brief.
 The official merge and checkpoints **A `6a473f7a` / B `387a4c8d`** are now complete;
 79 offers are published, with publication sources **`75b0955e3e356bd1`**.
-Resume at step 5 only after the new population ruling's final AGREE/release.
-Do not repeat the merge, A/B commits or GQ. SA1 retains final task review.
+The closure commit is **`e0596801`**, with SA1 final acceptance/C1 and the local
+matching-head checks recorded above. Do not repeat step 5, the merge, A/B or GQ.
 
 **S-OD13 — owner, Discord author `amicably8850`, 2026-11-18 21:31:46 (+07:00):**
 
