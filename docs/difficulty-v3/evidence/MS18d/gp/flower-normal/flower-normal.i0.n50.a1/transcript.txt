@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=flower-normal.i0.n50 --out=..\docs\difficulty-v3\evidence\MS18d\gp\flower-normal\flower-normal.i0.n50.a1\ledger.json
+ms18d-gp-recorder-start chunk=flower-normal.i0.n50 i0=0 n=50 seedBase=7000
+ms18d-gp-ledger-complete chunk=flower-normal.i0.n50 bytes=21794 sha256=0453734565886fdd484576770c8f4348a331d1bf08780899219252945c4283d7
+exit=0 seconds=20.916

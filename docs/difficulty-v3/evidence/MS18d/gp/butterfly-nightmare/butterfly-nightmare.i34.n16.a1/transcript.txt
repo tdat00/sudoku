@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=butterfly-nightmare.i34.n16 --out=..\docs\difficulty-v3\evidence\MS18d\gp\butterfly-nightmare\butterfly-nightmare.i34.n16.a1\ledger.json
+ms18d-gp-recorder-start chunk=butterfly-nightmare.i34.n16 i0=34 n=16 seedBase=10434
+ms18d-gp-ledger-complete chunk=butterfly-nightmare.i34.n16 bytes=18863 sha256=d76e82705578b968b17b12b332c15710969ca82200235b2e0c219f7c2ff4b6ff
+exit=0 seconds=90.716

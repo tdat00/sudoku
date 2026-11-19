@@ -1,0 +1,2 @@
+ms18d-gp-recorder-start chunk=butterfly-nightmare.i17.n17 i0=17 n=17 seedBase=8717
+ms18d-gp-ledger-complete chunk=butterfly-nightmare.i17.n17 bytes=18942 sha256=cfd02ba052a2396067e00dc1b45f3934fb5cd622be69b9af54dcac119003da5c

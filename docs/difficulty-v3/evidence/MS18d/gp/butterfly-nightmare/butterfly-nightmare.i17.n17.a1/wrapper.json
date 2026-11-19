@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record butterfly-nightmare.i17.n17 a1",
+  "runId": "butterfly-nightmare.i17.n17.a1",
+  "cell": "butterfly/nightmare",
+  "payload": "gp-recorder",
+  "chunkId": "butterfly-nightmare.i17.n17",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/butterfly-nightmare/butterfly-nightmare.i17.n17.a1",
+  "requestedAt": "2026-11-20T03:39:38.677+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795120762980,
+    "lastCheckMs": 1795120778503,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-20T03:39:38.806+07:00",
+  "finished": "2026-11-20T03:41:32.387+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 3086,
+    "cheapCheckMs": 126,
+    "ageMs": 136,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T03:41:32.388+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

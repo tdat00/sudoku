@@ -1,0 +1,76 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795122870263,
+  "startedAtMs": 1795122870398,
+  "lockAcquiredAtMs": 1795122870311,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795122854569,
+    "lastCheckMs": 1795122870088,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 269,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 135,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795122639167,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 231231,
+  "reasons": [],
+  "decision": "proceed",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 24996,
+    "task": "MS18d GP record flower-hell2.i0.n25 a1",
+    "controllerPid": 17904,
+    "controllerParentPid": 24996,
+    "wrapperPid": 24996
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\lock-log.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-b\\lock-log.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\lock-log.jsonl",
+      "present": true,
+      "skippedLines": [
+        24
+      ],
+      "skippedEvents": [
+        {
+          "line": 24,
+          "type": "pre-window-hold",
+          "heldAt": "foreign-lock-watch",
+          "runId": "mega16-easy.i0.n50.a2",
+          "at": "2026-11-19T19:09:20.061+07:00"
+        }
+      ]
+    }
+  ]
+}

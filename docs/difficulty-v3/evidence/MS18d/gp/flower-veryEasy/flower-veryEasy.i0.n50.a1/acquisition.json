@@ -1,0 +1,76 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795121994373,
+  "startedAtMs": 1795121994502,
+  "lockAcquiredAtMs": 1795121994414,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795121978647,
+    "lastCheckMs": 1795121994192,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 267,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 129,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795121740578,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 253924,
+  "reasons": [],
+  "decision": "proceed",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 17684,
+    "task": "MS18d GP record flower-veryEasy.i0.n50 a1",
+    "controllerPid": 29008,
+    "controllerParentPid": 17684,
+    "wrapperPid": 17684
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\lock-log.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-b\\lock-log.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\lock-log.jsonl",
+      "present": true,
+      "skippedLines": [
+        24
+      ],
+      "skippedEvents": [
+        {
+          "line": 24,
+          "type": "pre-window-hold",
+          "heldAt": "foreign-lock-watch",
+          "runId": "mega16-easy.i0.n50.a2",
+          "at": "2026-11-19T19:09:20.061+07:00"
+        }
+      ]
+    }
+  ]
+}

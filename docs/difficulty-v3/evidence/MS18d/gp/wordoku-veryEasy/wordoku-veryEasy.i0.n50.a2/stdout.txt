@@ -1,0 +1,2 @@
+ms18d-gp-recorder-start chunk=wordoku-veryEasy.i0.n50 i0=0 n=50 seedBase=7000
+ms18d-gp-ledger-complete chunk=wordoku-veryEasy.i0.n50 bytes=21837 sha256=107ffec5f50c7a287778e86d58b3c889eedfcd8c7719b4d65cf5c1dd65a91946

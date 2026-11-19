@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "wordoku-veryEasy.i0.n50.a1",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "wordoku",
+    "level": "veryEasy",
+    "targetMs": 100
+  },
+  "task": "MS18d GP record wordoku-veryEasy.i0.n50 a1",
+  "startedAtMs": 1795123805115,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "additional-consumer: process 30416 (1ESDevBoxHibernationDelayAgent.exe) gained 0.508 CPU-s per elapsed second"
+  ],
+  "heldAt": "readiness",
+  "eligibleReAsk": true,
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 140000,
+      "systemMicros": 281000
+    }
+  },
+  "finishedAtMs": 1795123813755
+}
