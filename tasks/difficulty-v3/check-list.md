@@ -6,7 +6,7 @@ one band target through generation, the expanded solver, and rating/cache versio
 executable files are written for serial dispatch; review follows the S-OD4 matrix below.
 Only the orchestrator changes Done marks, Execution logs and the execution summary.
 **Authority:** `docs/difficulty-v3/clarifications-resolved.md` Parts F/G (AC01 and acceptance),
-owner acceptance, 2026-11-12 11:50; Part H, PR-S1/PR-S2, CV6-03 to CV6-05, RP-01, JF-01, GC-01, JF-02 and S-OD1 through S-OD15 also bind.
+owner acceptance, 2026-11-12 11:50; Part H, PR-S1/PR-S2, CV6-03 to CV6-05, RP-01, JF-01, GC-01, JF-02 and S-OD1 through S-OD18 also bind.
 S-OD3/S-OD4 supersede the earlier performance-only recovery stops, not correctness or evidence integrity.
 **Traceability:** [accepted report](../../docs/difficulty-v3/report-detailed.md), R1-R24;
 [answers](../../docs/difficulty-v3/clarifications-resolved.md), Parts A-H, PR-S1/PR-S2, CV6-03 to CV6-05, RP-01, JF-01, GC-01 and JF-02;
@@ -666,6 +666,9 @@ accepted. The owner-ordered pause commit `a7f6660` was not green; preserve it as
 | S-OD13 (MS18c-Q1/Q2) | Owner, Discord author `amicably8850`, **2026-11-18 21:31:46 (+07:00)**: **"Q1: A. Q2: chọn phương án B nhưng giao SA-Opus và SA-Astra chọn mức trần, không cần thông qua Fable."** Q1-A approves declared host-active GQ with raw p95/budgets/jobs/seeds/120000 ms guard unchanged and the existing unstarted-hold re-ask. Q2-B delegates GQ-only finite ceilings **jointly to SA1/Opus and SA2/Astra, not Fable/developer**. The 22:42 structural agreement is now bound by both analysts' 135-row Stage 2 manifest and its staged release/review conditions. Q3's later recovery exception is S-OD14 below. Other gates keep 450/540; no scheduler/protocol/offer/partial-publication/acquisition waiver. The owner's original statement selected no number itself. |
 | S-OD14 (MS18c-Q3) | Owner, Discord author `amicably8850`, **2026-11-18 23:05:53 (+07:00)**, verbatim **"Q3: chọn B"**. At most one GQ recovery relaunch per cell after T-kill, worker/supervisor fault or session loss, only with no complete record and prior **joint SA1/SA2 diagnosis/approval**. Same qualified source/seed/protocol; all traces remain; no completed-record rerun, correctness erasure or faster-result selection. Adopt a live supervisor. Primary/recovery slots and their admission budgets are explicit and durable; a committed one-use case authorization is required before slot 2. Failure/exhaustion of recovery is a permanent gap; no third run or implicit reset. This satisfies the Q3 owner-answer gate, not Stage 2 binding or actual recovery approval. |
 | S-OD15 (MS18d-Q1) | **A recorded**, owner `amicably8850`, Discord `ai-agent-session2` / channel **1571779348573323334**, message **1572872444602228798**, **2026-11-19T07:13:33.350Z** (14:13:33.350 +07:00). The sole selector/verbatim answer is in section 4. Keep raw strict CPU results distinct from `MS18d-GP-host-active` admission and its single eligible >=60 s re-ask per frozen chunk. "100% resource" means task-priority scheduling within existing rules, not relaxed 450/540/gaps/locks, concurrent timed work or GP recovery. C0/C0b tooling and C1/C2 reviews still apply; R24 separately supplies the raw-ledger chunk route. |
+| S-OD16 (MS18d-Q2) | **A recorded**, owner `amicably8850`, Discord channel **1571779348573323334**, answer message **1573108143389675704**, **2026-11-19T22:50:08.320Z** (05:50:08.320 +07:00), verbatim **"Q2=A, Q3=A, Q4=A"**, explicitly bound by its `Q2=` label to question message 1572977124476846204 (re-asked in 1573095012768682146). Grants exactly one exceptional a3 admission for chunk `mega16-easy.i0.n50` (queue position 23), under `MS18d-epoch4-b4-spec.md` (`b367e865`) and its SA1 conditions. Selector and verbatim record are in section 4. |
+| S-OD17 (MS18d-Q3) | **A recorded**, same owner message **1573108143389675704** and time, explicitly bound by its `Q3=` label to question message 1573015595836907673. Grants exactly one exceptional a3 for chunk `hyper-hard.i0.n50` (queue position 41) under the same B4 spec. |
+| S-OD18 (MS18d-Q4) | **A recorded**, same owner message **1573108143389675704** and time, explicitly bound by its `Q4=` label to question message 1573073374584774872. Grants exactly one exceptional a3 for chunk `butterfly-master.i0.n50` (queue position 97) under the same B4 spec. Final S = [Q2, Q3, Q4], m = 3. No a4, borrowing, gate exemption or change to targets/protocol; F3 keeps `allowAttempt:2`. |
 
 The following are serial ownership transfers, not permission for parallel edits:
 
@@ -1455,6 +1458,27 @@ No implementer chooses an alternative from the original reports.
 
 Tool CLI/ledger names below are implementation contracts of this pack, not new scoring policies.
 The first three groups keep production generation, scoring, orders, support lists and stored data unchanged.
+
+### S-OD16 / S-OD17 / S-OD18 — MS18d-Q2/Q3/Q4 owner-choice records
+
+**The following JSON lines are the sole selectors and verbatim owner records.** One owner
+message answers all three questions, each explicitly by its own label, so none is a bare "A".
+Final subset **S = [Q2, Q3, Q4]** in that order, **m = 3**, governed by
+`MS18d-epoch4-b4-spec.md` (`b367e865`) and its SA1 conditions. Each V2
+`admissionExceptions[].ownerDecision.ref` cites the commit that adds these lines.
+
+```text
+S-OD16 {"question":"MS18d-Q2","choice":"A","owner":"amicably8850","answeredAt":"2026-11-19T22:50:08.320Z","source":{"channel":"ai-agent-session2","channelId":"1571779348573323334","messageId":"1573108143389675704"},"answer":"Q2=A, Q3=A, Q4=A","binding":"Q2=A","questionMessageId":"1572977124476846204","reAskMessageId":"1573095012768682146","chunkId":"mega16-easy.i0.n50","cell":"mega16/easy","queuePosition":23}
+S-OD17 {"question":"MS18d-Q3","choice":"A","owner":"amicably8850","answeredAt":"2026-11-19T22:50:08.320Z","source":{"channel":"ai-agent-session2","channelId":"1571779348573323334","messageId":"1573108143389675704"},"answer":"Q2=A, Q3=A, Q4=A","binding":"Q3=A","questionMessageId":"1573015595836907673","reAskMessageId":"1573095012768682146","chunkId":"hyper-hard.i0.n50","cell":"hyper/hard","queuePosition":41}
+S-OD18 {"question":"MS18d-Q4","choice":"A","owner":"amicably8850","answeredAt":"2026-11-19T22:50:08.320Z","source":{"channel":"ai-agent-session2","channelId":"1571779348573323334","messageId":"1573108143389675704"},"answer":"Q2=A, Q3=A, Q4=A","binding":"Q4=A","questionMessageId":"1573073374584774872","reAskMessageId":"1573095012768682146","chunkId":"butterfly-master.i0.n50","cell":"butterfly/master","queuePosition":97}
+```
+
+- Each A grants exactly one a3 (`runId "<chunk>.a3"`, `attempt:3`, `maxAdmissions:3`,
+  `maxPayloads:1`) for its chunk only. The a3 needs its own proven-unstarted holds and C-log
+  records. An a3 hold or failure is terminal and needs its own line-only disposition.
+- Unchanged: the wide gate (`55c4e867`), targets, protocol, seeds, the 450/540 bounds and locks,
+  `slotPolicy.chunkAttempts:2` and F3 `allowAttempt:2`. `final.m1` is used once, after all three
+  a3s settle.
 
 ## 5. Business traceability
 
