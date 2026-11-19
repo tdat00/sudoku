@@ -163,8 +163,13 @@ releases **C0b**, the raw-time recorder/manifest/merger and stand-ins.
 **2026-11-19T07:13:33.350Z**; C1's owner-answer gate is resolved.
 The extra "100% resource" clause is a scheduling allocation, not permission to
 change caps/gaps/locks, run concurrent timed workloads or relax re-asks;
-the supporting plan records the full resource ruling for SA1 cross-review.
+the supporting plan records the full resource ruling now concurred with by SA1.
 The S1 message is now an informational status update, not another gate.
+It was posted as message **1572878023034675262** in channel
+**1571779348573323334**, at **about 14:37 +07:00**, and is recorded in S-OD15.
+SA1 concurs with `e4cd92d6` and the resource interpretation, with **R1-R6**
+binding in the R24 leaf: exact merger exits/folders, campaign-base ancestry,
+immutable-history counts, executed-byte/Node-flag identity and final attribution.
 Timing remains **C2**, after tooling review/freeze and fresh per-chunk admission.
 All **79** cells have conditional numerical plans: **114 commands**, maximum
 P **448 s**. S-AV11 remains held for lack of its separate current-tuple bound.
@@ -260,9 +265,9 @@ verdict. A readiness decision never extends a deadline or makes a partial gate p
 > Riêng Sohei Hell 2 đã có cảnh báo 485,597 s >450 nên chưa được chạy; chọn A
 > không cấp thêm thời gian, và còn thiếu ô thì không công bố GP hoàn tất.
 
-**S-OD15's one-line selector now records the answer.** Post the updated S1
-Vietnamese status message from `MS18d-r24-request-ledger.md`; its delivery
-receipt is information, not a new approval condition. C0/C0b remain tooling-only
+**S-OD15's one-line selector now records the answer and delivered S1 notice.**
+Preserve the receipt before the future campaign base B is frozen; it is
+information, not another owner approval. C0/C0b remain tooling-only
 releases. C1 can implement selected A after its existing dependencies; the
 selected launcher and recorder still need review/freeze before C2.
 The resource clause does not authorize parallel GP, shorter gaps or new retries.
@@ -291,6 +296,15 @@ The resource clause does not authorize parallel GP, shorter gaps or new retries.
 - Freeze sources, targets, policy, Node/machine, selected request and output identity
   before the first timing and verify them before each admission. Never mix policies,
   machines, targets or producer versions into one claimed final matrix.
+- **R3:** record base commit B after final tooling/manifest freeze and before
+  the first real chunk. Preserve actual ledger HEADs; B/descendants are valid
+  only when `git diff --name-only B <HEAD>` lists exact campaign-output paths
+  or pack files under `tasks/difficulty-v3/`, with all content identities unchanged.
+  **R4:** reconstruct attempts/payloads from immutable run folders and the
+  append-only C lock-log, not a mutable counter file or current-HEAD namespace.
+- The Discord background poller stays paused during GP payloads. Reports,
+  one-shot communication and permitted checkpoints are **between chunks only**,
+  after G5 proves no payload alive and before fresh checks for the next chunk.
 - A complete legitimate `MISS` is retained, never repeated for speed. A crash,
   timeout, compromised window or missing result is **incomplete**, not a slow-cell
   pass/fail record; preserve traces and use the existing evidence-failure routing.
@@ -922,6 +936,12 @@ edits or timed work when arithmetic is green.
   check-only cell/matrix merger, typed G3 adapters and fake/file-only tests in
   the same `phase-c/` trees, exactly under `MS18d-r24-request-ledger.md`.
   No real generation or new live sampling is authorized by this tooling release.
+- **Phase D, not C0b:** update Generator design **9.1's status text** and
+  `docs/difficulty-v3/performance-v3.md` to attribute final GP numbers to the
+  task-owned R24 recorder calling `perfTools.measure`, not `perf.js` stdout.
+  Correct coupled final-GP wording in both developer guides if present.
+  Make these non-pack document edits after the campaign's final merge and
+  before final quick fingerprints; no target/budget/test-threshold change.
 - `generator/tests/fixtures/perf-helper.js` PERF_TARGETS only if the documented qualification rule
   requires it; corresponding Generator design 9.1 and both developer guides.
 - **Phase-B pin amendment:** the single target-value test/local expectation in
@@ -993,11 +1013,19 @@ edits or timed work when arithmetic is green.
 ### Phase D — aggregate and close honestly
 
 9. Validate all transcripts/cell keys/source/target/policy/Node/machine bindings.
+   **Only the final all-79 check-only merge is required**; do not automatically
+   schedule selected-cell merges. Any optional one uses its exact frozen R2
+   folder and a bounded locked run between payloads. Validate every recorded
+   HEAD's R3 ancestry/paths, unchanged content identities and empty R5 flags.
    **79 complete results and >=72 successes** are required for a complete pass.
    Missing cells leave the result incomplete, not a pass of a reduced matrix.
    Record every timing miss, error, compromised run, hold and unmeasured item.
-10. Finish applicable guide/count/fingerprint changes before both complete bounded
-    quick sets; maintain CI metadata/projections by the existing rule. Any
+10. After the final campaign merge, apply **R6**: design 9.1 status and the final
+    performance report name the **task-owned R24 recorder invoking unchanged
+    `perfTools.measure`**, not `perf.js` output, as this campaign's source.
+    Record actual completeness/chunks/cold starts and outcomes, not planned totals.
+    Finish applicable coupled guide/count/fingerprint changes before both complete
+    bounded quick sets; maintain CI metadata/projections by the existing rule. Any
     unexpected output change is a QUESTION before corrective/canonical writes.
     No automatic replay-wire/analysis/help rewrite or extra generation campaign.
 11. Return the complete GP status, final 520-key check and inherited/new item
@@ -1037,6 +1065,9 @@ edits or timed work when arithmetic is green.
 | MS18d-T15 | S-OD15's single selector governs A/B without inherited GP permission; all 79 row plans and the held S-AV11 tuple retain their status, limits and evidence; candidate/source-transfer assumptions are explicitly reviewed, not promoted by arithmetic or Q1 alone |
 | MS18d-T16 | C0b uses the exact perf loader and one measure call/chunk; 114 immutable raw ledgers cover all 3,950 indices; check-only merge computes sorted[24]/[47]/[49], strict p95<target and the complete >=72/79 gate, rejecting gaps/duplicates/mixed identities |
 | MS18d-T17 | All 35 extra cold starts and tie-inclusive upper-tail flags disclosed without sample removal; A attempt limits are per chunk; S1 is an informational status update, not a new owner question or acknowledgement gate |
+| MS18d-T18 | R1 merger exits 0/1/2/3 have exact complete-result/zero-stderr semantics; R2 uses exact manifest-declared cell/all-79 directories; only final all-79 merge is required, optional cell merges are not automatic |
+| MS18d-T19 | R3 records B after notice/tooling freeze; each ledger HEAD is B/allowed descendant with unchanged content identities; R4 derives quotas from immutable folders plus append-only C log, never a mutable counter or HEAD reset |
+| MS18d-T20 | R5 hashes captured executed contents and records identical empty execArgv/NODE_OPTIONS with pre-spawn rejection; R6 Phase D design/report attribution names the R24 recorder/measure API; poller/reporting boundaries preserved |
 
 ## Test plan and gates
 
@@ -1096,7 +1127,9 @@ bases, intended/completed cell coverage, immutable target arithmetic/source tupl
 all raw transcripts and the actual aggregate verdict (incomplete where appropriate),
 complete GG evidence and the cumulative item list.
 Include the S-OD15 record/resource ruling, S1 delivery status, C0/C0b/C1 reviews,
-114-chunk manifest, raw ledgers/receipts and all 79 actual outcomes. Preserve
+campaign B/recorded-HEAD proofs, 114-chunk manifest with exact merge directories,
+immutable-history quota evidence, executed-byte/empty-flag bindings,
+raw ledgers/receipts and the one required all-79 merge. Preserve
 the bound items' closed planning history and still-unadmitted S-AV11 tuple.
 Only the complete raw-time merge, not a finished scheduler queue, closes GP.
 Include the closed deep-public-registration item, seven-removal map and bounded

@@ -254,7 +254,15 @@ Book **~3 h 26 min mean-based / ~7 h 55 min reserved** for all GP, before
 tooling/review, first pre-window, CPU holds and slot waits; B's quiet-window wait
 would additionally be unknown. **35 extra cold starts** are disclosed and flagged
 without dropping samples. Rounded CLI summaries are not merged.
-S1 is now an informational status update to the owner, not a new permission gate.
+S1 was posted as **1572878023034675262** in channel **1571779348573323334**,
+at **about 14:37 +07:00**, and is recorded below before campaign B is frozen.
+It is a status update, not another permission gate. SA1 concurs with conditions
+**R1-R6**: exact merger exits/directories, base-B lineage with stable content
+identities, counts derived from immutable history, executed-byte/empty-Node-flag
+binding and Phase D attribution. Only the **final all-79 merge** is required;
+do not add 79 automatic cell merges (~21 min beyond the generation booking).
+Keep the background poller paused during payloads; report/checkpoint between
+chunks only, with no payload alive and fresh checks before the next.
 
 **MS18d Phase-B pin ruling: option A, concurred with by SA1; Phase B resumed.**
 The quick `manual-corpus.test.js` target-value pin may change to a literal frozen
@@ -868,7 +876,7 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | MS18d-GP-BOUND-sohei-hell2 | **Closed as a planning obstruction through R24, not a GP measurement/pass.** Preserve n=40, mean **9711.9411975 ms**, mean alert **485.597059875 s**: its monolithic command remains unadmitted. The frozen raw-ledger route is **6 chunks (9,9,8,8,8,8)**, P **435,435,394,394,394,394 s**, sum **2446 s**. Fifty original indices, source/policy and targets remain; extra cold starts disclosed. Actual execution still needs reviewed tooling and fresh per-chunk admission | MS18d R24 recording/actual outcome; MS18e audit |
 | MS18d-GP-BOUND-REMAINDER | **Closed as the other sixteen monolithic planning obstructions through R24**, not timing passes. Together with Sohei, the 17 cells have **52 frozen balanced chunks / 19023 s**, maximum P **448 s**, in `MS18d-r24-request-ledger.md`. All 79 use the same raw-time recorder; 114 commands, 3,950 indices, 35 extra cold starts. Missing/failed chunks remain incomplete; no rounded-percentile merge, arbitrary repartition, retry or limit increase | MS18d R24 recording/true aggregate; MS18e audit |
 | MS18d-C0-G1-G5 | **Open implementation/review gate; C0 accepted with C0-1..C0-6 conditions.** Add the bounded 15.3 s lock-free pre-window, PID+creation identity, separate zero-byte stderr gate, exact Git-status allowlist, no periodic payload work and generic transport with per-payload G3. S-OD15 A resolves the answer gate, not required tooling review or actual admission | MS18d C0/C1 release gates; MS18e evidence audit |
-| MS18d-C0b-R24 | **Open, tooling-only release.** Task-owned exact-loader recorder, frozen 114-chunk manifest and check-only raw-time merger, one record type for all 79 cells. Fake/file-only tests and SA1 review before real measure calls. Per-chunk attempts, complete source/seed/target/Node/machine/HEAD identity, strict unrounded gate and cold-start flags required; no pipeline/perf-tool patch or canonical update | MS18d C0b/C2 gate; MS18e raw-ledger audit |
+| MS18d-C0b-R24 | **Open implementation/review gate; SA1 concurs with R1-R6.** Exact-loader recorder hashes executed contents, records empty Node flags, and uses the frozen 114-chunk manifest plus exact merge directories. R1 merger exits 0/1/2/3 require explicit completion semantics. Actual HEAD may advance from campaign B only through allowed pack/output commits with all content identities unchanged. R4 derives per-chunk counts from immutable run folders/C log. Only the final all-79 merge is required; R6 attributes final numbers to the recorder/measure API, not stock stdout. No real recording before tooling review/admission | MS18d C0b/C2 gate; MS18e raw-ledger audit |
 | MS18d-DEEP-PUBLIC-REGISTRATIONS | **CLOSED on file evidence (`50903182`, recorded at `b3144fcf`).** Quick inventory unchanged at 4807; SG_DEEP listing 4835 -> 4828, seven removals/no additions: mega 12 -> 9, multigrid 16 -> 12. Seven-entry GQ map and 63-file audit retained, no other positive. Eleven budget contrasts, mega12 Nightmare's 3000 ms base, fixed diagnostics and E/GG recipes unchanged. No live deep run or timing claim | Closed Phase-B repair; MS18e final-source prerequisite audit |
 | IR17 final carry | Classic9 Nightmare remains offered. The older `00647f9` GD batch cost **430.5 s**; **449 s is not a reusable bound**. Require current-source conservative whole-command admission under unchanged 450/540 protection, with honest named incomplete coverage if not admissible | MS18c handoff; remaining GD and final audit MS18e |
 | S-AV28 Easy availability | MS07e GQ: diagonalX Easy 28/40, hyper 29/40, samurai 10/22, sohei 4/18, butterfly 1/15, flower 0/14 (current offers lose Easy on six variants); 40/40 elsewhere | MS18c |
@@ -1182,11 +1190,12 @@ MS17b freezes the actual new-pattern limits with v3.
 
 **The following JSON line is the sole selector and verbatim owner record.**
 The owner answered **A**, **2026-11-19T07:13:33.350Z**
-(14:13:33.350 +07:00). `r24Notice` is a later status-update receipt, not another
-approval/precondition; leave it null until the orchestrator actually posts it.
+(14:13:33.350 +07:00). `r24Notice` now records the delivered status update,
+not another approval. Its reported **about 14:37 +07:00** time is approximate;
+no seconds or author identity for that separate notice are invented.
 
 ```text
-S-OD15 {"choice":"A","owner":"amicably8850","answeredAt":"2026-11-19T07:13:33.350Z","source":{"channel":"ai-agent-session2","channelId":"1571779348573323334","messageId":"1572872444602228798"},"answer":"MS18d-Q1: chọn A. Máy tính hiện 100% allocate cho task này, hãy sử dụng 100% resource.","r24Notice":null}
+S-OD15 {"choice":"A","owner":"amicably8850","answeredAt":"2026-11-19T07:13:33.350Z","source":{"channel":"ai-agent-session2","channelId":"1571779348573323334","messageId":"1572872444602228798"},"answer":"MS18d-Q1: chọn A. Máy tính hiện 100% allocate cho task này, hãy sử dụng 100% resource.","r24Notice":{"channelId":"1571779348573323334","messageId":"1572878023034675262","sentAtApprox":"2026-11-19 14:37 +07:00","textRef":"e4cd92d6:MS18d-r24-request-ledger.md lines 298-316, lightly formatted"}}
 ```
 
 - **If choice is A**, select exactly **`MS18d-GP-host-active`** in
@@ -1203,7 +1212,7 @@ S-OD15 {"choice":"A","owner":"amicably8850","answeredAt":"2026-11-19T07:13:33.35
   current state: **A is recorded**. C0/C0b fake-data tooling is separately
   released, and actual C2 still needs the implementation/review/admission gates.
 
-**Extra-clause ruling for SA1 cross-review:** "100% resource" dedicates the machine
+**Extra-clause ruling, concurred with by SA1:** "100% resource" dedicates the machine
 and prioritizes this task; it does not change A into a new measurement policy.
 Keep 450/540, foreign-lock/wait checks, >=15 s gaps/pre-windows and A's
 additional-consumer/re-ask rules. No other workload runs with a timed chunk,
@@ -1215,9 +1224,10 @@ remain serial. The supporting plan gives the precise bounded-pure-check exceptio
 No further owner question is needed for this conservative interpretation;
 relaxing a numeric/protocol rule would require an explicit new decision.
 
-Post the updated **S1 Vietnamese status message** in
-`MS18d-r24-request-ledger.md`; it informs, not asks for approval, and is not a
-precondition on A. This R24 route, not the resource clause, supplies the
+The updated **S1 Vietnamese status message** from
+`MS18d-r24-request-ledger.md` has been posted and its reference is recorded
+**before freezing campaign base B**. It informs, not asks for approval, and
+does not create another owner-answer gate. This R24 route, not the resource clause, supplies the
 17 cells' bounded chunk plans and per-chunk attempt accounting.
 Neither choice waives C0/C0b/C1 review, row-basis approval, clean frozen inputs,
 S-AV11's missing bound, 450/540 or the complete
@@ -1225,6 +1235,19 @@ S-AV11's missing bound, 450/540 or the complete
 timed payload; changing this line later cannot reset quotas or mix a matrix.
 The entry in section 2 and the task leaves reference this line, never a second
 mutable choice.
+
+**R3 campaign provenance:** after final tooling/manifest freeze, the orchestrator
+records B before the first real chunk. B is not assigned prematurely in this
+pack. Every ledger keeps its actual HEAD; require B/descendant ancestry and
+`git diff --name-only B <HEAD>` limited to exact C0-4 campaign-output paths and
+`tasks/difficulty-v3/`, with all content/environment identities unchanged.
+R2 makes output-directory membership literal/frozen, including the final
+`gp/all-79/<run-id>/`. R4 reconstructs admission/payload counts from immutable
+run folders and the append-only C log, never a mutable counter or current HEAD.
+No evidence checkpoint may rewrite earlier records or reset quotas.
+Poller paused during payloads; progress reports/checkpoints only between chunks,
+after cleanup and before the next fresh checks. Phase D's non-pack docs edits
+follow the final campaign merge, not a mid-campaign path exception.
 
 **S-OD13, 2026-11-18 21:31:46 (+07:00):** Q1-A and Q2-B are owner-approved,
 with GQ ceiling authority delegated **jointly to SA1/Opus and SA2/Astra, not Fable**.

@@ -15,6 +15,8 @@ frozen request-chunk manifest and check-only merger, as specified in
 SA2 accepts O1: `ad7d30e3`'s blanket single-command prohibition was too broad
 under owner-accepted R24/FS23. The new route supersedes only that restriction;
 it changes no target, request count, per-command ceiling or readiness policy.
+SA1 now concurs with `e4cd92d6` subject to **R1-R6** in that supporting spec;
+those conditions supersede the earlier identical-HEAD/folder/counter wording.
 The orchestrator owns commits and dispatch. Phase B received **SA1 ACCEPT WITH
 CONDITIONS**; its three record-only additions/refreeze are committed at
 **`b3144fcf`**, not implementation rework. Do not edit or overwrite the frozen
@@ -37,14 +39,16 @@ All references to the answer in this plan and the parent leaf resolve to that
 line; dated Phase-A/B descriptions remain history. Before the first timed
 payload, the orchestrator replaces that one line with A or B, the verbatim
 answer and its owner/time/channel reference. This has now been done for A.
-`r24Notice` records delivery of the S1 **status update**, not another permission
-or a precondition on the recorded answer. A missing/invalid/PENDING owner choice
-would still block C1/live work; an undelivered informational notice is not that.
+`r24Notice` now records the delivered S1 **status update**: message
+**1572878023034675262**, channel **1571779348573323334**, at **about 14:37 +07:00**.
+It is not another owner permission. Record this receipt before the future
+campaign base B is frozen, as R3 requires. A missing/invalid/PENDING owner choice
+would still block C1/live work; the current choice is A.
 An answer with different conditions requires a reviewed amendment, not a guessed
 mapping to A/B. After timing starts the selected policy is frozen for the matrix;
 editing the selector cannot reset attempts, authorize retries or mix policies.
 
-### S-OD15 extra clause — resource/scheduling ruling for SA1 cross-review
+### S-OD15 extra clause — resource/scheduling ruling, concurred with by SA1
 
 The owner said **"Máy tính hiện 100% allocate cho task này, hãy sử dụng 100%
 resource."** Read this with the explicit **choice A**: dedicate the machine and
@@ -308,7 +312,10 @@ Implement and test SA1's G1-G5 gaps with the already relayed C0-1..C0-6 addition
 2. **G2, logs and paths:** read **A, B and C** release logs, plus any explicitly
    supplied coordinator release evidence. Write each real command's metadata,
    transcript and PID/result records under
-   **`evidence\MS18d\gp\<variant>-<level>\<run-id>\`**. A new append-only
+   its **exact manifest-declared directory**. Chunk/selected-cell runs use
+   **`evidence\MS18d\gp\<variant>-<level>\<run-id>\`**; R2's final aggregate merge
+   uses one declared **`evidence\MS18d\gp\all-79\<run-id>\`**. These path shapes
+   are not an allowlist: literal frozen membership is required. A new append-only
    `phase-c\lock-log.jsonl` may index those records. It never writes into A/B.
    Record a conservative verified release observation after helper return;
    do not label it an exact removal timestamp if the helper does not expose one.
@@ -323,13 +330,26 @@ Implement and test SA1's G1-G5 gaps with the already relayed C0-1..C0-6 addition
    The Phase-B record now accounts for **eight** nonzero exits: six with an error
    field and two allowed exit-1 development failures, not six total. An error-free
    wrapper record is not proof that a helper test passed; retain that distinction.
-4. **G4, source binding:** bind actual HEAD, source/tool cleanliness, the full
-   E hash identity **344afdec...**, target table **3d0bffdb...**, Node and machine.
+   **R1's merger exits:** 0 complete pass; 1 only with the terminal complete
+   machine-readable numeric MISS/gate-failure line and zero stderr; 2
+   incomplete/invalid input; 3 caught unexpected top-level exception.
+   An uncaught Node exception's default exit 1 must never become a GP MISS.
+4. **G4/R3, source binding:** record campaign base **B** before the first real
+   chunk, after final tooling/manifest freeze and the already-recorded notice.
+   Each actual HEAD must be B or a descendant; `git diff --name-only B <HEAD>`
+   may list only the exact C0-4 campaign-output paths or `tasks/difficulty-v3/`.
+   Keep all content/environment identities equal: E hash **344afdec...**,
+   executed/loaded source manifest, table **3d0bffdb...**, chunk manifest,
+   helpers, Node, machine and policy. R5 additionally requires empty Node flags.
+   The production transport refuses `NODE_OPTIONS` before spawning its Node
+   chain; the recorder records empty `process.execArgv` and `NODE_OPTIONS`.
+   Do not silently clear inherited options or hash different bytes from those executed.
+   Permitted committed checkpoints do not authorize a changed immutable input.
    Before timing, all executable helpers, source, targets and pack decisions
    must be committed/frozen by the orchestrator. Report raw Git status as well
    as the explicitly reviewed clean-input check. **C0-4's exact allowlist:**
-   only **`??` new files directly inside campaign-declared**
-   `docs/difficulty-v3/evidence/MS18d/gp/<variant>-<level>/<run-id>/` directories,
+   only **`??` new files directly inside exact R2 manifest-declared** recording/
+   selected-cell/final-merge directories, including its one `gp/all-79/<run-id>/`,
    and **` M`** of the **already committed**
    `docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl`, whose committed
    content is an exact prefix of its working content. Account only for declared
@@ -338,6 +358,9 @@ Implement and test SA1's G1-G5 gaps with the already relayed C0-1..C0-6 addition
    evidence exemption; no changing an earlier output or accepted input.
    Keep `rawClean` and `reviewedClean` distinct, with all raw status retained.
    Freeze helper hashes separately from E's recipe before every admission.
+   Do not require identical HEADs across chunks or retag earlier records:
+   validate every recorded HEAD against B and the unchanged content identities.
+   Uncommitted pack/helper edits remain disallowed by C0-4.
 5. **G5, orphan barrier:** durably record the actual command PID, owner/parent
    provenance and spawn identity/time window, not just the tee PID. After any
    tee outcome, including its early death or exit 0, positively confirm the
@@ -382,6 +405,9 @@ and distinguished from real GP evidence.
 Also cover the 15.3 s pre-window/restarts/give-up, zero-byte stderr rule,
 the exact status allowlist/prefix, event-driven transport and a non-CLI payload
 using its own G3 contract without a transport change.
+R1-R5 add the merger's exact exits/result line, manifest-only merge folders,
+permitted versus forbidden B descendants, immutable-history count derivation,
+single-read executed-byte hashing and rejection of Node flags/options.
 
 Use isolated short-deadline stand-ins for kill tests, not a killed real shared
 PowerShell wrapper. Clean up only owned test processes/files, preserve review
@@ -444,6 +470,10 @@ anything sampled before a lock wait is stale.
 For a one-chunk cell this is the original cell-level accounting. The profile
 remains one separate request unit if S-AV11's bound is ever approved.
 S-OD13 and S-OD14 grant neither GP deadline extensions nor GP recovery.
+**R4:** derive counts from immutable run folders and the append-only C lock-log,
+not a mutable counter file. Cross-check/deduplicate evidence by chunk/attempt
+identity anchored to B; missing/ambiguous history holds, never resets to zero.
+Merge runs do not consume GP chunk attempts. HEAD checkpoints do not reset them.
 
 ## C2 — exact execution, batching and acceptance
 
@@ -480,8 +510,11 @@ Never use `stop_powershell` as routine completion/timeout handling.
 
 During the declared timed window all other agents suspend generation, tests,
 hashing, formatting and analysis, including short commands. Only required minimal
-transport/deadline/exit/cleanup checks remain. The orchestrator pauses optional pollers/reports;
-no optional CPU sampler is inserted into the measured cohort. Known
+transport/deadline/exit/cleanup checks remain. The orchestrator keeps the
+background Discord poller paused during payloads. Progress reports, one-shot
+message checks and permitted checkpoints occur **only between chunks with no
+payload alive**, after G5 and before the next fresh pre-window/binding/readiness.
+No optional CPU sampler is inserted into the measured cohort. Known
 interference during it makes the raw run compromised, not CPU-adjusted.
 
 **Actual final GP uses C0b's typed recorder/merge predicates.** A recorder needs
@@ -526,14 +559,17 @@ Missing/held/compromised cells leave GP incomplete regardless of a subset rate.
 
 ## Wall-time booking and remaining blockers
 
-The R24 plan covers **all 79 cells / 114 commands / 113 gaps**, with **35 extra
+The R24 plan covers **all 79 cells / 114 measurement commands / 113 gaps**, with **35 extra
 cold process starts** disclosed, not extra generations. See its verified booking:
 mean-based arithmetic **12372.8658065 s (~3 h 26 min)**; reserved
 **28490.9 s (~7 h 55 min)**. Use the approximately eight-hour reservation under
 **A**, not a guaranteed GP forecast. **B** has the same execution booking once
 a credible quiet window is supplied; that wait is unknown.
 The first pre-window, tooling/review/report work, CPU holds and foreign waits
-are additional. The old 62-cell / 2 h 25 min booking is superseded, not a final
+are additional. **Only one final all-79 merge is required**, adding its locked
+invocation/gap and reviewed file-only projection. Selected-cell merges are
+optional/predeclared, not automatic: all 79 would add roughly 21 minutes not
+included in the generation booking. The old 62-cell / 2 h 25 min booking is superseded, not a final
 matrix estimate.
 
 The structural 17-row obstruction is resolved by R24, not by larger limits or
@@ -549,3 +585,7 @@ request ledgers and admission/transcript/PID/exit records, cold-start disclosure
 and the true aggregate status. Phase D's
 complete Generator/Player quick sets still run on their final fingerprints;
 this metadata/tooling work is no replacement for them.
+**R6:** Phase D's design 9.1 status and final performance report attribute GP
+numbers to the task-owned R24 recorder calling `perfTools.measure`, not to
+`perf.js` stdout. Finish these non-pack document edits after the campaign's
+final merge, before final quick fingerprints.

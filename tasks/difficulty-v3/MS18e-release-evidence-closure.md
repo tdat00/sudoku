@@ -43,14 +43,26 @@ proof. A complete MISS is not a crash, but an exit-1 code alone proves neither.
 R24 resolves the prior 17 monolithic holds: **all 79 cells have plans, 114
 commands / 3,950 indices**, 62 one-chunk cells and 17 cells with 52 chunks.
 The bound items close as planning obstructions, not GP passes. S-AV11 remains held.
-Require each immutable raw ledger/exit-0 receipt and one source/seed/target/
-plan/helper/HEAD/Node/machine/policy identity; reject gaps, duplicates, partial/
-failed chunks and changed ranges. Only the complete check-only merge of raw
+Require each immutable raw ledger/exit-0 receipt and unchanged source/seed/target/
+plan/helper/executed-content/Node/machine/policy identities and empty R5 flags.
+Preserve actual HEADs: each must be campaign B or an allowed descendant under
+R3's exact campaign-output/pack path rule, not necessarily the same HEAD.
+Reject gaps, duplicates, partial/failed chunks and changed ranges. Only the complete check-only merge of raw
 times establishes p50/p95/max **sorted[24]/[47]/[49]**, strict p95<target and
 **79 complete cells / >=72 successes**, never merged chunk percentiles.
 Audit **35 extra cold starts**, per-cell k-1 and tie-inclusive upper-tail flags;
 retain all samples and real MISS verdicts. A finished queue or recorder exit 0
 is not a GP pass. S1 is an informational status update, not another owner gate.
+Its delivery (message **1572878023034675262**, about **14:37 +07:00**) is recorded
+before B. R4 counts come from immutable run folders and the append-only C log.
+Audit R1's complete result line and **0 pass / 1 complete numerical failure /
+2 incomplete-invalid / 3 caught exception** distinction, with zero stderr for
+accepted pass/MISS outcomes. Merge outputs must use exact R2 manifest folders.
+Only the final all-79 merge is required; optional cell merges are not missing
+coverage. Progress reports/checkpoints were between chunks, poller paused for
+payloads. Phase D's design 9.1 status and final performance report must attribute
+the numbers to the task-owned R24 recorder calling `perfTools.measure`, not
+`perf.js` output; preserve valid recorded campaign provenance after later docs edits.
 Never fill a missing result from GQ/GG, a subset percentage or an old profile,
 or release incomplete GP as though R24 had passed without an owner decision.
 
