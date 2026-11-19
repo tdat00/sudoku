@@ -24,9 +24,8 @@
   const KIND_DIAG = 'diag';
   const KIND_WINDOW = 'window';
 
-  /** Both boards offer every level, hell2 included (measured: `node tests/qualify.js`). */
-  const LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
-    'hell2'];
+  /** Levels both boards offer (final qualification, docs/difficulty-rating/qualification.md). */
+  const LEVELS = ['veryEasy', 'normal', 'hard', 'master', 'nightmare', 'hell2'];
 
   function fail(code, args) {
     return new SG.errors.GenerationError(code, args);

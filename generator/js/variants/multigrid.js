@@ -317,19 +317,12 @@
     }, extra);
   }
 
-  /**
-   * Levels each board is offered: all nine, hell2 included (measured: `node tests/qualify.js`; the top tiers
-   * come from the fast proposal dig refined into the band). A missed level still returns a valid puzzle,
-   * flagged 'difficulty.approximate'.
-   */
-  const STANDARD_LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
-    'hell2'];
-
   const DEFINITIONS = [
-    definition('samurai', STANDARD_LEVELS),
-    definition('sohei', STANDARD_LEVELS),
-    definition('butterfly', STANDARD_LEVELS),
-    definition('flower', STANDARD_LEVELS, { clueFloorScale: FLOWER_CLUE_FLOOR_SCALE })
+    definition('samurai', ['veryEasy', 'normal', 'hard', 'expert', 'master']),
+    definition('sohei', ['veryEasy', 'normal', 'hard', 'expert', 'master', 'hell2']),
+    definition('butterfly', ['veryEasy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell2']),
+    definition('flower', ['veryEasy', 'normal', 'hard', 'master', 'hell2'],
+      { clueFloorScale: FLOWER_CLUE_FLOOR_SCALE })
   ];
 
   /** Locale strings in the shape the locale packs merge; both languages carry exactly the same keys. */

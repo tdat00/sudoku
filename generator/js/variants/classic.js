@@ -50,13 +50,13 @@
    * The levels each board offers are measured, not assumed (`node tests/qualify.js`,
    * docs/difficulty-rating/qualification.md). classic4: a 4x4 board never needs more than singles. classic6:
    * puzzles either need singles only or jump straight to a fish or subset worth a hard score. classic9:
-   * everything up to hell1 (hell2 was reached in 7 of 23).
+   * everything up to nightmare (hell1 and hell2 are hidden by the final qualification).
    */
   const DEFINITIONS = [
     definition('classic4', 2, 2, ['veryEasy']),
     definition('classic6', 2, 3, ['veryEasy', 'hard']),
-    definition('classic9', 3, 3, ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare',
-      'hell1'], fastSeedDiagonalBoxes)
+    definition('classic9', 3, 3, ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare'],
+      fastSeedDiagonalBoxes)
   ];
 
   // Skipping known ids keeps a second load of this file harmless.
