@@ -100,3 +100,37 @@ keys exactly once, recorded from the current sources; all 520 puzzles unchanged"
    `--list-tests` children and restored. No GP, no S-AV11, no pilot, no timed measurement, no deep execution, no
    canonical-update flag, no edit under `tasks\`.
 4. The 63-file audit is a grep-and-read pass (the grep tool), not a script.
+
+## SA1 acceptance conditions (added after commit `50903182`; a record only, no rework)
+
+1. **Two identity moves the section "Identities" above does not list.** As reported by SA1, not recomputed by me
+   (this follow-up runs no Node outside the lock-wrapped format check and freeze tools):
+   - Player quick fingerprint `4c21573f` -> `aa352658`. Cause (SA1): only the two developer-guide edits
+     (`DEVELOPERGUIDE.md`, `DEVELOPERGUIDE.vn.md`), which are Player quick inputs.
+   - Generator with-manual fingerprint `13cd63bf` -> `176f9c95`. Cause: the same Phase B edits that moved the
+     Generator quick fingerprint (`perf-helper.js`, `design.md`, the guides, and the `manual-corpus`, `mega` and
+     `multigrid` test files); nothing under `generator\tests\manual\` was edited.
+   - Phase D obligation: run BOTH complete quick sets (Generator and Player) on the final fingerprints; these
+     intermediate values are not the final ones.
+2. **Eight nonzero exits in `lock-log.jsonl`, not six.** Six carry an `error` field (listed below). Two more exited 1
+   with exit 1 allowed (`-Expect 0,1`), so the wrapper logged no `error`; both are development failures, not
+   results:
+   - `MS18d-B format check (dev 1)`, asked 2026-11-19T12:27:40.485+07:00, finished 12:27:40.813+07:00, exit 1,
+     transcript `transcripts/dev-format-check-1.txt` ("checked 42 files, 10 with problems": lines over 110
+     characters in my helpers, fixed afterwards).
+   - `MS18d-B test-run-gg (dev 1)`, asked 2026-11-19T12:39:01.715+07:00, finished 12:39:09.059+07:00, exit 1,
+     transcript `transcripts/dev-test-run-gg-1.txt` (9 passed, 1 failed: a wrong message regex in my own test,
+     fixed; the dev 2 run passed 10/10).
+
+   The six with an `error` field: tee tests 11:44:03 (`dev-test-tee-append-1.txt`),
+   wrapper tests 11:44:46 (`dev-test-run-locked-1.txt`), freeze tests 11:48:02 (`dev-test-freeze-targets-1.txt`),
+   freeze targets 11:48:35 exit 2 (`dev-freeze-targets-1.txt`), compare listings 12:25:02
+   (`compare-listings-1.txt`), test-run-locked (final) 12:31:19 (its transcript, named `final-test-run-locked.txt`
+   in the log record, was renamed `final-test-run-locked-1-failed-race.txt`). From now on exit 1 is allowed only
+   where it has a defined meaning, together with the G3 check; `-Expect 0,1` is not used in this follow-up.
+3. **MS18d-DEEP-PUBLIC-REGISTRATIONS is closed on this file evidence**: `deep-registration/comparison.json`
+   (`pass`: quick inventory identical at 4807 tests; `SG_DEEP=1` listing 4835 -> 4828, 7 removed, 0 added; mega
+   12 -> 9 and multigrid 16 -> 12), the four `--list-tests` listings beside it, `audit-63-files.md` (the two
+   named positives only) and the two guard lines in `mega.test.js` and `multigrid.test.js` (commit `50903182`).
+   Closing it does not imply a live deep run: none was made (listing only), and no timing claim is made for any
+   deep registration.
