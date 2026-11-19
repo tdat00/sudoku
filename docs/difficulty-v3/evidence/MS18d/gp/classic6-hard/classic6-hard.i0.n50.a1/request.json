@@ -1,0 +1,259 @@
+{
+  "schema": "ms18d-c-request-1",
+  "runId": "classic6-hard.i0.n50.a1",
+  "task": "MS18d GP record classic6-hard.i0.n50 a1",
+  "standin": false,
+  "profile": "gp-recorder",
+  "allowExit1": false,
+  "cell": {
+    "variant": "classic6",
+    "level": "hard",
+    "targetMs": 350
+  },
+  "runDir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\gp\\classic6-hard\\classic6-hard.i0.n50.a1",
+  "repo": "Q:\\git\\sudoku",
+  "command": {
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\record-gp.js",
+      "--plan=docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\gp-chunk-manifest.json",
+      "--chunk=classic6-hard.i0.n50",
+      "--out=..\\docs\\difficulty-v3\\evidence\\MS18d\\gp\\classic6-hard\\classic6-hard.i0.n50.a1\\ledger.json"
+    ]
+  },
+  "requestedAt": "2026-11-19T18:26:47.858+07:00",
+  "wrapperPid": 7324,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "startedAtMs": 1795087591751,
+    "firstCheckMs": 1795087591755,
+    "lastCheckMs": 1795087607298,
+    "requiredWindowMs": 15300,
+    "maxIntervalAllowedMs": 1000,
+    "intervalMs": 250,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 270,
+    "windowSightings": 0,
+    "restartCount": 0,
+    "restarts": [],
+    "giveUpSeconds": 1199.9643412,
+    "gaveUp": false,
+    "notBeforeMs": 1795087595882
+  },
+  "releaseSources": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\lock-log.jsonl",
+      "kind": "log",
+      "required": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-b\\lock-log.jsonl",
+      "kind": "log",
+      "required": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\lock-log.jsonl",
+      "kind": "log",
+      "required": false
+    }
+  ],
+  "cLedger": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\lock-log.jsonl",
+  "expected": {
+    "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+    "identities": {
+      "hashIdentity": "344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1",
+      "replayIdentity": "1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc",
+      "sources": "75b0955e3e356bd1"
+    },
+    "tableSha256": "3d0bffdb19cc8d0e4c2495163858bfcbf3fd6e3d8567f4718dc722a23746963a",
+    "node": "v26.13.0",
+    "machine": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    }
+  },
+  "helpers": {
+    "manifestFile": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\helpers-c1b-sha256.txt",
+    "manifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03",
+    "required": [
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\acquisition.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\attempts.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\check-format.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\classify.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\common.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\controller.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\fake-controller.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\fake-gp.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\fake-writer.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\journals.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\ledger-schema.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\loader.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\make-chunk-manifest.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\merge-core.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\merge-gp.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\owned-processes.ps1",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\payload-gp.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\payloads.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\plan-data.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\readiness-core.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\readiness-probe.ps1",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\readiness.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\record-gp.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\release-history.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\run-locked-c.ps1",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\run-node-c.ps1",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\run-ps-test.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\slot-watch.ps1",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\source-binding.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\source-io.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\standin-gp.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\standin-payload-classifier.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\standin-readiness.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\standin-world.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\stock-fixtures.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\tee-c.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\test-controller.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\test-owned-processes.ps1",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\test-plan.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\test-readiness.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\test-recorder-merge.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\test-run-locked-c.ps1",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\test-slot-watch.ps1",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\test-units.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\validate-journals.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\project-gp.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-b\\append-writer.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-b\\tee-append.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-b\\fake-child.js",
+      "generator\\tests\\artifacts\\difficulty-v3\\MS18c\\invoke-dv3node.ps1",
+      "docs\\difficulty-v3\\evidence\\MS18d\\phase-b\\targets-frozen-final.json",
+      "docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\gp-chunk-manifest.json"
+    ],
+    "repoRoot": "Q:\\git\\sudoku"
+  },
+  "powershell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+  "ownedProcesses": "Q:\\git\\sudoku\\generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\owned-processes.ps1",
+  "chunk": {
+    "chunkId": "classic6-hard.i0.n50",
+    "cell": "classic6/hard",
+    "variant": "classic6",
+    "level": "hard",
+    "target": 350,
+    "matrixIndex": 2,
+    "route": "C",
+    "k": 1,
+    "chunkIndex": 0,
+    "i0": 0,
+    "n": 50,
+    "seedBase": 7000,
+    "seeds": [
+      7000,
+      7101,
+      7202,
+      7303,
+      7404,
+      7505,
+      7606,
+      7707,
+      7808,
+      7909,
+      8010,
+      8111,
+      8212,
+      8313,
+      8414,
+      8515,
+      8616,
+      8717,
+      8818,
+      8919,
+      9020,
+      9121,
+      9222,
+      9323,
+      9424,
+      9525,
+      9626,
+      9727,
+      9828,
+      9929,
+      10030,
+      10131,
+      10232,
+      10333,
+      10434,
+      10535,
+      10636,
+      10737,
+      10838,
+      10939,
+      11040,
+      11141,
+      11242,
+      11343,
+      11444,
+      11545,
+      11646,
+      11747,
+      11848,
+      11949
+    ],
+    "projectionSeconds": 80
+  },
+  "attempt": 1,
+  "plan": {
+    "file": "docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\gp-chunk-manifest.json",
+    "rawSha256": "a8e58a729d7df496ae694693a3899236c1abf6aed65a0bfd773f0f262eba0ba5",
+    "manifestSha256": "b92e09bb8c299b8b8ff1330d7ef3845ebcca18dddf71135005e765081cb4618f"
+  },
+  "policy": {
+    "selector": "S-OD15",
+    "choice": "A",
+    "name": "MS18d-GP-host-active",
+    "owner": "amicably8850",
+    "answeredAt": "2026-11-19T07:13:33.350Z",
+    "source": {
+      "channelId": "1571779348573323334",
+      "messageId": "1572872444602228798"
+    },
+    "answerRef": "S-OD15 of tasks/difficulty-v3/check-list.md (MS18d-Q1 answer A, host-active)",
+    "r24Notice": {
+      "channelId": "1571779348573323334",
+      "messageId": "1572878023034675262",
+      "sentAtApprox": "2026-11-19 14:37 +07:00",
+      "textRef": "e4cd92d6:MS18d-r24-request-ledger.md lines 298-316"
+    }
+  },
+  "readiness": {
+    "powershell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+    "probeScript": "Q:\\git\\sudoku\\generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\readiness-probe.ps1",
+    "logicalCpus": 16,
+    "policy": {
+      "selector": "S-OD15",
+      "choice": "A",
+      "name": "MS18d-GP-host-active",
+      "owner": "amicably8850",
+      "answeredAt": "2026-11-19T07:13:33.350Z",
+      "source": {
+        "channelId": "1571779348573323334",
+        "messageId": "1572872444602228798"
+      },
+      "answerRef": "S-OD15 of tasks/difficulty-v3/check-list.md (MS18d-Q1 answer A, host-active)",
+      "r24Notice": {
+        "channelId": "1571779348573323334",
+        "messageId": "1572878023034675262",
+        "sentAtApprox": "2026-11-19 14:37 +07:00",
+        "textRef": "e4cd92d6:MS18d-r24-request-ledger.md lines 298-316"
+      }
+    }
+  }
+}

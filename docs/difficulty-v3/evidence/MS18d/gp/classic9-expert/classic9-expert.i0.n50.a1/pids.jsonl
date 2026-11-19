@@ -1,0 +1,5 @@
+{"role":"controller","pid":24636,"ppid":27264,"beforeMs":1795087845794,"afterMs":1795087845927}
+{"role":"tee","pid":8544,"ppid":24636,"beforeMs":1795087854554,"afterMs":1795087854569}
+{"role":"command","pid":10196,"ppid":8544,"beforeMs":1795087854642,"afterMs":1795087854659,"startedAtIso":"2026-11-19T11:30:54.659Z","argv":["C:\\Program Files\\nodejs\\node.exe","tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\record-gp.js","--plan=docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\gp-chunk-manifest.json","--chunk=classic9-expert.i0.n50","--out=..\\docs\\difficulty-v3\\evidence\\MS18d\\gp\\classic9-expert\\classic9-expert.i0.n50.a1\\ledger.json"]}
+{"event":"command-exit","atMs":1795087860935,"code":0,"signal":null}
+{"event":"tee-exit","atMs":1795087860939,"stdoutBytes":215,"stderrBytes":0,"cpuUserMicros":46000,"cpuSystemMicros":62000}

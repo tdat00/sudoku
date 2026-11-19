@@ -1,0 +1,2060 @@
+{
+  "schema": "ms18d-c-snapshot-1",
+  "ok": true,
+  "error": null,
+  "queryStartMs": 1795087889384,
+  "queryEndMs": 1795087889573,
+  "takenAtMs": 1795087889478,
+  "selfPid": 11004,
+  "selfCreatedMs": 1795087888819,
+  "host": {
+    "found": true,
+    "pid": 1968,
+    "parentPid": 18780,
+    "name": "copilot.exe",
+    "exePath": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe",
+    "netStartUtc": "2026-11-13T12:26:33.6916441Z",
+    "cimCreationUtc": "2026-11-13T12:26:33.691644Z",
+    "displayName": "copilot.exe.old-25148-1794809773310",
+    "error": null
+  },
+  "processes": [
+    {
+      "pid": 0,
+      "ppid": 0,
+      "name": "System Idle Process",
+      "createdMs": 1794405221996,
+      "cpuMs": 9604564000
+    },
+    {
+      "pid": 4,
+      "ppid": 0,
+      "name": "System",
+      "createdMs": 1794405221996,
+      "cpuMs": 29124375
+    },
+    {
+      "pid": 236,
+      "ppid": 4,
+      "name": "Secure System",
+      "createdMs": 1794405217564,
+      "cpuMs": 0
+    },
+    {
+      "pid": 276,
+      "ppid": 4,
+      "name": "Registry",
+      "createdMs": 1794405217582,
+      "cpuMs": 44531.25
+    },
+    {
+      "pid": 1160,
+      "ppid": 4,
+      "name": "smss.exe",
+      "createdMs": 1794405222001,
+      "cpuMs": 3031.25
+    },
+    {
+      "pid": 1420,
+      "ppid": 1408,
+      "name": "csrss.exe",
+      "createdMs": 1794405231048,
+      "cpuMs": 121453.125
+    },
+    {
+      "pid": 1492,
+      "ppid": 1408,
+      "name": "wininit.exe",
+      "createdMs": 1794405231295,
+      "cpuMs": 2500
+    },
+    {
+      "pid": 1500,
+      "ppid": 1484,
+      "name": "csrss.exe",
+      "createdMs": 1794405231300,
+      "cpuMs": 30484.375
+    },
+    {
+      "pid": 1564,
+      "ppid": 1484,
+      "name": "winlogon.exe",
+      "createdMs": 1794405231319,
+      "cpuMs": 390.625
+    },
+    {
+      "pid": 1636,
+      "ppid": 1492,
+      "name": "services.exe",
+      "createdMs": 1794405231374,
+      "cpuMs": 2368562.5
+    },
+    {
+      "pid": 1644,
+      "ppid": 1492,
+      "name": "LsaIso.exe",
+      "createdMs": 1794405231407,
+      "cpuMs": 56500
+    },
+    {
+      "pid": 1664,
+      "ppid": 1492,
+      "name": "lsass.exe",
+      "createdMs": 1794405231411,
+      "cpuMs": 3561671.875
+    },
+    {
+      "pid": 1828,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232175,
+      "cpuMs": 688937.5
+    },
+    {
+      "pid": 1864,
+      "ppid": 1492,
+      "name": "fontdrvhost.exe",
+      "createdMs": 1794405232194,
+      "cpuMs": 62.5
+    },
+    {
+      "pid": 1868,
+      "ppid": 1564,
+      "name": "fontdrvhost.exe",
+      "createdMs": 1794405232194,
+      "cpuMs": 0
+    },
+    {
+      "pid": 1960,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232235,
+      "cpuMs": 3003968.75
+    },
+    {
+      "pid": 2020,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232266,
+      "cpuMs": 233390.625
+    },
+    {
+      "pid": 1312,
+      "ppid": 1564,
+      "name": "LogonUI.exe",
+      "createdMs": 1794405232355,
+      "cpuMs": 172984.375
+    },
+    {
+      "pid": 1304,
+      "ppid": 1564,
+      "name": "dwm.exe",
+      "createdMs": 1794405232357,
+      "cpuMs": 245171.875
+    },
+    {
+      "pid": 2072,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232523,
+      "cpuMs": 554515.625
+    },
+    {
+      "pid": 2080,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232523,
+      "cpuMs": 5968.75
+    },
+    {
+      "pid": 2136,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232530,
+      "cpuMs": 106062.5
+    },
+    {
+      "pid": 2144,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232530,
+      "cpuMs": 1828.125
+    },
+    {
+      "pid": 2268,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232550,
+      "cpuMs": 3437.5
+    },
+    {
+      "pid": 2276,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232550,
+      "cpuMs": 7031.25
+    },
+    {
+      "pid": 2292,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232556,
+      "cpuMs": 163171.875
+    },
+    {
+      "pid": 2396,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232592,
+      "cpuMs": 6500
+    },
+    {
+      "pid": 2408,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232596,
+      "cpuMs": 67859.375
+    },
+    {
+      "pid": 2476,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232613,
+      "cpuMs": 264718.75
+    },
+    {
+      "pid": 2484,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232613,
+      "cpuMs": 112234.375
+    },
+    {
+      "pid": 2496,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232615,
+      "cpuMs": 2625
+    },
+    {
+      "pid": 2520,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232620,
+      "cpuMs": 232468.75
+    },
+    {
+      "pid": 2560,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232622,
+      "cpuMs": 19828.125
+    },
+    {
+      "pid": 2616,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232628,
+      "cpuMs": 494765.625
+    },
+    {
+      "pid": 2748,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405232645,
+      "cpuMs": 2625
+    },
+    {
+      "pid": 3048,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405235916,
+      "cpuMs": 1291484.375
+    },
+    {
+      "pid": 3236,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236003,
+      "cpuMs": 8363281.25
+    },
+    {
+      "pid": 3316,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236009,
+      "cpuMs": 225234.375
+    },
+    {
+      "pid": 3432,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236042,
+      "cpuMs": 3781.25
+    },
+    {
+      "pid": 3440,
+      "ppid": 1636,
+      "name": "vmms.exe",
+      "createdMs": 1794405236045,
+      "cpuMs": 35609.375
+    },
+    {
+      "pid": 3504,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236077,
+      "cpuMs": 166640.625
+    },
+    {
+      "pid": 3552,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236099,
+      "cpuMs": 2500
+    },
+    {
+      "pid": 3640,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236119,
+      "cpuMs": 9913093.75
+    },
+    {
+      "pid": 3728,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236143,
+      "cpuMs": 101609.375
+    },
+    {
+      "pid": 3736,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236144,
+      "cpuMs": 10515.625
+    },
+    {
+      "pid": 3748,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236144,
+      "cpuMs": 22961687.5
+    },
+    {
+      "pid": 3760,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236148,
+      "cpuMs": 59937.5
+    },
+    {
+      "pid": 3908,
+      "ppid": 4,
+      "name": "Memory Compression",
+      "createdMs": 1794405236174,
+      "cpuMs": 246671.875
+    },
+    {
+      "pid": 3972,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236182,
+      "cpuMs": 3718.75
+    },
+    {
+      "pid": 4032,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236208,
+      "cpuMs": 5734.375
+    },
+    {
+      "pid": 4040,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236209,
+      "cpuMs": 4421.875
+    },
+    {
+      "pid": 3084,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236265,
+      "cpuMs": 7656.25
+    },
+    {
+      "pid": 3700,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236292,
+      "cpuMs": 17093.75
+    },
+    {
+      "pid": 3388,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236346,
+      "cpuMs": 3296.875
+    },
+    {
+      "pid": 4104,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236351,
+      "cpuMs": 5703.125
+    },
+    {
+      "pid": 4112,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236351,
+      "cpuMs": 6390.625
+    },
+    {
+      "pid": 4204,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236375,
+      "cpuMs": 4890.625
+    },
+    {
+      "pid": 4264,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236394,
+      "cpuMs": 3875
+    },
+    {
+      "pid": 4288,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236397,
+      "cpuMs": 1945953.125
+    },
+    {
+      "pid": 4508,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236524,
+      "cpuMs": 4877250
+    },
+    {
+      "pid": 4516,
+      "ppid": 1636,
+      "name": "vmcompute.exe",
+      "createdMs": 1794405236525,
+      "cpuMs": 953.125
+    },
+    {
+      "pid": 4588,
+      "ppid": 1636,
+      "name": "spoolsv.exe",
+      "createdMs": 1794405236534,
+      "cpuMs": 22218.75
+    },
+    {
+      "pid": 4604,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236675,
+      "cpuMs": 23453.125
+    },
+    {
+      "pid": 5220,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236705,
+      "cpuMs": 241625
+    },
+    {
+      "pid": 5232,
+      "ppid": 1636,
+      "name": "InventoryService.exe",
+      "createdMs": 1794405236707,
+      "cpuMs": 597546.875
+    },
+    {
+      "pid": 5244,
+      "ppid": 1636,
+      "name": "JetBrains.Etw.Collector.Host.exe",
+      "createdMs": 1794405236708,
+      "cpuMs": 609.375
+    },
+    {
+      "pid": 5252,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236708,
+      "cpuMs": 33500
+    },
+    {
+      "pid": 5260,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236708,
+      "cpuMs": 773531.25
+    },
+    {
+      "pid": 5268,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236708,
+      "cpuMs": 454406.25
+    },
+    {
+      "pid": 5276,
+      "ppid": 1636,
+      "name": "EpmService.exe",
+      "createdMs": 1794405236709,
+      "cpuMs": 2188890.625
+    },
+    {
+      "pid": 5284,
+      "ppid": 1636,
+      "name": "Microsoft.DevCenter.DevBoxAgent.exe",
+      "createdMs": 1794405236710,
+      "cpuMs": 2615546.875
+    },
+    {
+      "pid": 5308,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236713,
+      "cpuMs": 2828.125
+    },
+    {
+      "pid": 5328,
+      "ppid": 1636,
+      "name": "WaAppAgent.exe",
+      "createdMs": 1794405236716,
+      "cpuMs": 524593.75
+    },
+    {
+      "pid": 5340,
+      "ppid": 1636,
+      "name": "MpDefenderCoreService.exe",
+      "createdMs": 1794405236717,
+      "cpuMs": 286437.5
+    },
+    {
+      "pid": 5352,
+      "ppid": 1636,
+      "name": "MsRdcWebRTCSvc.exe",
+      "createdMs": 1794405236718,
+      "cpuMs": 968.75
+    },
+    {
+      "pid": 5368,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236719,
+      "cpuMs": 1593.75
+    },
+    {
+      "pid": 5380,
+      "ppid": 1636,
+      "name": "RhService.exe",
+      "createdMs": 1794405236720,
+      "cpuMs": 765.625
+    },
+    {
+      "pid": 5408,
+      "ppid": 1636,
+      "name": "sqlwriter.exe",
+      "createdMs": 1794405236723,
+      "cpuMs": 968.75
+    },
+    {
+      "pid": 5444,
+      "ppid": 1636,
+      "name": "MpDlpService.exe",
+      "createdMs": 1794405236728,
+      "cpuMs": 7646656.25
+    },
+    {
+      "pid": 5452,
+      "ppid": 1636,
+      "name": "MsSense.exe",
+      "createdMs": 1794405236728,
+      "cpuMs": 59346671.875
+    },
+    {
+      "pid": 5536,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236740,
+      "cpuMs": 750
+    },
+    {
+      "pid": 5568,
+      "ppid": 1636,
+      "name": "WindowsAzureGuestAgent.exe",
+      "createdMs": 1794405236744,
+      "cpuMs": 1711078.125
+    },
+    {
+      "pid": 5580,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236744,
+      "cpuMs": 35703.125
+    },
+    {
+      "pid": 5592,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236745,
+      "cpuMs": 7609.375
+    },
+    {
+      "pid": 5632,
+      "ppid": 1636,
+      "name": "MsMpEng.exe",
+      "createdMs": 1794405236751,
+      "cpuMs": 80874515.625
+    },
+    {
+      "pid": 6232,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236919,
+      "cpuMs": 16171.875
+    },
+    {
+      "pid": 6384,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405236967,
+      "cpuMs": 130984.375
+    },
+    {
+      "pid": 7712,
+      "ppid": 5268,
+      "name": "AggregatorHost.exe",
+      "createdMs": 1794405237376,
+      "cpuMs": 8125
+    },
+    {
+      "pid": 7852,
+      "ppid": 1828,
+      "name": "WmiPrvSE.exe",
+      "createdMs": 1794405237459,
+      "cpuMs": 2432250
+    },
+    {
+      "pid": 6468,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405237969,
+      "cpuMs": 2265.625
+    },
+    {
+      "pid": 8836,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405238777,
+      "cpuMs": 31343.75
+    },
+    {
+      "pid": 9356,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405240427,
+      "cpuMs": 70328.125
+    },
+    {
+      "pid": 9380,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405240429,
+      "cpuMs": 2606546.875
+    },
+    {
+      "pid": 9756,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405240532,
+      "cpuMs": 3562.5
+    },
+    {
+      "pid": 10032,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405240661,
+      "cpuMs": 7656.25
+    },
+    {
+      "pid": 10172,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405240730,
+      "cpuMs": 7031.25
+    },
+    {
+      "pid": 9904,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405240968,
+      "cpuMs": 5984.375
+    },
+    {
+      "pid": 10268,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405241021,
+      "cpuMs": 3359.375
+    },
+    {
+      "pid": 10928,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405242528,
+      "cpuMs": 15906.25
+    },
+    {
+      "pid": 11032,
+      "ppid": 5340,
+      "name": "DefenderAiPlatformHost.exe",
+      "createdMs": 1794405242656,
+      "cpuMs": 78.125
+    },
+    {
+      "pid": 8816,
+      "ppid": 2292,
+      "name": "taskhostw.exe",
+      "createdMs": 1794405243333,
+      "cpuMs": 656828.125
+    },
+    {
+      "pid": 10096,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405244319,
+      "cpuMs": 2654593.75
+    },
+    {
+      "pid": 7376,
+      "ppid": 5388,
+      "name": "RDFirstPartyService.exe",
+      "createdMs": 1794405245940,
+      "cpuMs": 18937.5
+    },
+    {
+      "pid": 10608,
+      "ppid": 7376,
+      "name": "conhost.exe",
+      "createdMs": 1794405245954,
+      "cpuMs": 312.5
+    },
+    {
+      "pid": 8940,
+      "ppid": 1828,
+      "name": "WmiPrvSE.exe",
+      "createdMs": 1794405246447,
+      "cpuMs": 3439015.625
+    },
+    {
+      "pid": 9840,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405246581,
+      "cpuMs": 11734.375
+    },
+    {
+      "pid": 11524,
+      "ppid": 9840,
+      "name": "MoUsoCoreWorker.exe",
+      "createdMs": 1794405246936,
+      "cpuMs": 362203.125
+    },
+    {
+      "pid": 12260,
+      "ppid": 5452,
+      "name": "SenseDlpProcessor.exe",
+      "createdMs": 1794405249322,
+      "cpuMs": 630078.125
+    },
+    {
+      "pid": 7628,
+      "ppid": 5452,
+      "name": "SenseDlpService.exe",
+      "createdMs": 1794405249737,
+      "cpuMs": 7548406.25
+    },
+    {
+      "pid": 13220,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405254934,
+      "cpuMs": 3156.25
+    },
+    {
+      "pid": 3144,
+      "ppid": 7628,
+      "name": "SenseTracer.exe",
+      "createdMs": 1794405255767,
+      "cpuMs": 3298890.625
+    },
+    {
+      "pid": 4524,
+      "ppid": 1636,
+      "name": "Microsoft.Management.Services.CloudManagedDesktop.Agent.exe",
+      "createdMs": 1794405363600,
+      "cpuMs": 3405171.875
+    },
+    {
+      "pid": 10948,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405369733,
+      "cpuMs": 4071218.75
+    },
+    {
+      "pid": 8876,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405370050,
+      "cpuMs": 74765.625
+    },
+    {
+      "pid": 9412,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405370399,
+      "cpuMs": 555375
+    },
+    {
+      "pid": 10280,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405370559,
+      "cpuMs": 9921.875
+    },
+    {
+      "pid": 3128,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794405837165,
+      "cpuMs": 11265.625
+    },
+    {
+      "pid": 5464,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794406228498,
+      "cpuMs": 322734.375
+    },
+    {
+      "pid": 8760,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794411091790,
+      "cpuMs": 2640.625
+    },
+    {
+      "pid": 6988,
+      "ppid": 11476,
+      "name": "csrss.exe",
+      "createdMs": 1794439961159,
+      "cpuMs": 676578.125
+    },
+    {
+      "pid": 2756,
+      "ppid": 11476,
+      "name": "winlogon.exe",
+      "createdMs": 1794439961192,
+      "cpuMs": 5203.125
+    },
+    {
+      "pid": 6072,
+      "ppid": 2756,
+      "name": "fontdrvhost.exe",
+      "createdMs": 1794439962040,
+      "cpuMs": 250
+    },
+    {
+      "pid": 9652,
+      "ppid": 2756,
+      "name": "dwm.exe",
+      "createdMs": 1794439962056,
+      "cpuMs": 574031.25
+    },
+    {
+      "pid": 11360,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794439963195,
+      "cpuMs": 14031.25
+    },
+    {
+      "pid": 6432,
+      "ppid": 5444,
+      "name": "DlpUserAgent.exe",
+      "createdMs": 1794439963398,
+      "cpuMs": 13296.875
+    },
+    {
+      "pid": 12988,
+      "ppid": 5632,
+      "name": "DefenderSessionHelper.exe",
+      "createdMs": 1794439963441,
+      "cpuMs": 125
+    },
+    {
+      "pid": 10936,
+      "ppid": 2056,
+      "name": "conhost.exe",
+      "createdMs": 1794439963551,
+      "cpuMs": 62.5
+    },
+    {
+      "pid": 5928,
+      "ppid": 2056,
+      "name": "Microsoft.DevCenter.DevBoxUserTaskExecutor.exe",
+      "createdMs": 1794439964088,
+      "cpuMs": 21843.75
+    },
+    {
+      "pid": 8748,
+      "ppid": 2616,
+      "name": "sihost.exe",
+      "createdMs": 1794439964888,
+      "cpuMs": 276593.75
+    },
+    {
+      "pid": 10884,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794439964929,
+      "cpuMs": 64546.875
+    },
+    {
+      "pid": 3684,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794439964962,
+      "cpuMs": 3062.5
+    },
+    {
+      "pid": 12892,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794439965002,
+      "cpuMs": 29500
+    },
+    {
+      "pid": 12684,
+      "ppid": 2292,
+      "name": "taskhostw.exe",
+      "createdMs": 1794439965045,
+      "cpuMs": 118906.25
+    },
+    {
+      "pid": 3572,
+      "ppid": 3460,
+      "name": "explorer.exe",
+      "createdMs": 1794439965343,
+      "cpuMs": 737328.125
+    },
+    {
+      "pid": 6904,
+      "ppid": 8748,
+      "name": "ShellHost.exe",
+      "createdMs": 1794439965405,
+      "cpuMs": 6578.125
+    },
+    {
+      "pid": 7252,
+      "ppid": 8748,
+      "name": "CrossDeviceResume.exe",
+      "createdMs": 1794439965651,
+      "cpuMs": 5921.875
+    },
+    {
+      "pid": 12188,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794439967258,
+      "cpuMs": 5937.5
+    },
+    {
+      "pid": 14604,
+      "ppid": 1828,
+      "name": "SearchHost.exe",
+      "createdMs": 1794439967883,
+      "cpuMs": 32640.625
+    },
+    {
+      "pid": 14628,
+      "ppid": 1828,
+      "name": "StartMenuExperienceHost.exe",
+      "createdMs": 1794439967896,
+      "cpuMs": 24953.125
+    },
+    {
+      "pid": 14904,
+      "ppid": 1828,
+      "name": "WidgetBoard.exe",
+      "createdMs": 1794439968215,
+      "cpuMs": 22562.5
+    },
+    {
+      "pid": 15080,
+      "ppid": 1828,
+      "name": "RuntimeBroker.exe",
+      "createdMs": 1794439968381,
+      "cpuMs": 31640.625
+    },
+    {
+      "pid": 15092,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794439968388,
+      "cpuMs": 4906.25
+    },
+    {
+      "pid": 14812,
+      "ppid": 1828,
+      "name": "WidgetService.exe",
+      "createdMs": 1794439969144,
+      "cpuMs": 15062.5
+    },
+    {
+      "pid": 15804,
+      "ppid": 14604,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1794439969778,
+      "cpuMs": 119968.75
+    },
+    {
+      "pid": 15908,
+      "ppid": 15804,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1794439969901,
+      "cpuMs": 3062.5
+    },
+    {
+      "pid": 15988,
+      "ppid": 1828,
+      "name": "MicrosoftStartFeedProvider.exe",
+      "createdMs": 1794439970014,
+      "cpuMs": 29953.125
+    },
+    {
+      "pid": 15440,
+      "ppid": 15804,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1794439970503,
+      "cpuMs": 6281.25
+    },
+    {
+      "pid": 15472,
+      "ppid": 15804,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1794439970503,
+      "cpuMs": 22875
+    },
+    {
+      "pid": 15588,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794439970536,
+      "cpuMs": 5156.25
+    },
+    {
+      "pid": 9292,
+      "ppid": 15804,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1794439970689,
+      "cpuMs": 1765.625
+    },
+    {
+      "pid": 16596,
+      "ppid": 15804,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1794439970917,
+      "cpuMs": 31140.625
+    },
+    {
+      "pid": 17104,
+      "ppid": 1828,
+      "name": "UserOOBEBroker.exe",
+      "createdMs": 1794439973317,
+      "cpuMs": 140.625
+    },
+    {
+      "pid": 10548,
+      "ppid": 3700,
+      "name": "ctfmon.exe",
+      "createdMs": 1794439974675,
+      "cpuMs": 59000
+    },
+    {
+      "pid": 9712,
+      "ppid": 3700,
+      "name": "TabTip.exe",
+      "createdMs": 1794439974689,
+      "cpuMs": 18734.375
+    },
+    {
+      "pid": 14468,
+      "ppid": 1828,
+      "name": "TextInputHost.exe",
+      "createdMs": 1794439979559,
+      "cpuMs": 47203.125
+    },
+    {
+      "pid": 19696,
+      "ppid": 3572,
+      "name": "SecurityHealthSystray.exe",
+      "createdMs": 1794439993581,
+      "cpuMs": 1484.375
+    },
+    {
+      "pid": 19868,
+      "ppid": 1636,
+      "name": "SecurityHealthService.exe",
+      "createdMs": 1794439993616,
+      "cpuMs": 43562.5
+    },
+    {
+      "pid": 19784,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794439994712,
+      "cpuMs": 499500
+    },
+    {
+      "pid": 16812,
+      "ppid": 2292,
+      "name": "taskhostw.exe",
+      "createdMs": 1794440039923,
+      "cpuMs": 4109.375
+    },
+    {
+      "pid": 20828,
+      "ppid": 1828,
+      "name": "ShellExperienceHost.exe",
+      "createdMs": 1794440074822,
+      "cpuMs": 1281.25
+    },
+    {
+      "pid": 20348,
+      "ppid": 1828,
+      "name": "RuntimeBroker.exe",
+      "createdMs": 1794440075267,
+      "cpuMs": 3625
+    },
+    {
+      "pid": 21876,
+      "ppid": 1828,
+      "name": "AppActions.exe",
+      "createdMs": 1794440094893,
+      "cpuMs": 15078.125
+    },
+    {
+      "pid": 16128,
+      "ppid": 3572,
+      "name": "UniKeyNT.exe",
+      "createdMs": 1794440111132,
+      "cpuMs": 15906.25
+    },
+    {
+      "pid": 244,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794440141647,
+      "cpuMs": 4109.375
+    },
+    {
+      "pid": 13720,
+      "ppid": 1828,
+      "name": "dllhost.exe",
+      "createdMs": 1794440141980,
+      "cpuMs": 328.125
+    },
+    {
+      "pid": 16676,
+      "ppid": 20956,
+      "name": "Code.exe",
+      "createdMs": 1794440153818,
+      "cpuMs": 902640.625
+    },
+    {
+      "pid": 20844,
+      "ppid": 16676,
+      "name": "Code.exe",
+      "createdMs": 1794440154079,
+      "cpuMs": 640.625
+    },
+    {
+      "pid": 22516,
+      "ppid": 16676,
+      "name": "Code.exe",
+      "createdMs": 1794440154208,
+      "cpuMs": 159703.125
+    },
+    {
+      "pid": 17964,
+      "ppid": 16676,
+      "name": "Code.exe",
+      "createdMs": 1794440154222,
+      "cpuMs": 99156.25
+    },
+    {
+      "pid": 16980,
+      "ppid": 16676,
+      "name": "Code.exe",
+      "createdMs": 1794440154520,
+      "cpuMs": 4667093.75
+    },
+    {
+      "pid": 20812,
+      "ppid": 16676,
+      "name": "Code.exe",
+      "createdMs": 1794440156137,
+      "cpuMs": 2487031.25
+    },
+    {
+      "pid": 2988,
+      "ppid": 16676,
+      "name": "Code.exe",
+      "createdMs": 1794440156753,
+      "cpuMs": 2844468.75
+    },
+    {
+      "pid": 15624,
+      "ppid": 16676,
+      "name": "Code.exe",
+      "createdMs": 1794440156778,
+      "cpuMs": 1343437.5
+    },
+    {
+      "pid": 15716,
+      "ppid": 16676,
+      "name": "Code.exe",
+      "createdMs": 1794440156968,
+      "cpuMs": 1133718.75
+    },
+    {
+      "pid": 8136,
+      "ppid": 20812,
+      "name": "copilot-runtime.exe",
+      "createdMs": 1794440160087,
+      "cpuMs": 722578.125
+    },
+    {
+      "pid": 4156,
+      "ppid": 8136,
+      "name": "conhost.exe",
+      "createdMs": 1794440160107,
+      "cpuMs": 1640.625
+    },
+    {
+      "pid": 10144,
+      "ppid": 15716,
+      "name": "Code.exe",
+      "createdMs": 1794440166491,
+      "cpuMs": 26875
+    },
+    {
+      "pid": 5820,
+      "ppid": 15716,
+      "name": "Code.exe",
+      "createdMs": 1794440167900,
+      "cpuMs": 38093.75
+    },
+    {
+      "pid": 11676,
+      "ppid": 3572,
+      "name": "AlertusDesktopAlert.exe",
+      "createdMs": 1794440196057,
+      "cpuMs": 102296.875
+    },
+    {
+      "pid": 21976,
+      "ppid": 14904,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1794440392717,
+      "cpuMs": 155250
+    },
+    {
+      "pid": 444,
+      "ppid": 21976,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1794440392757,
+      "cpuMs": 3390.625
+    },
+    {
+      "pid": 18868,
+      "ppid": 21976,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1794440392943,
+      "cpuMs": 35421.875
+    },
+    {
+      "pid": 20932,
+      "ppid": 21976,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1794440392951,
+      "cpuMs": 56250
+    },
+    {
+      "pid": 20668,
+      "ppid": 1828,
+      "name": "RuntimeBroker.exe",
+      "createdMs": 1794440393059,
+      "cpuMs": 2125
+    },
+    {
+      "pid": 6420,
+      "ppid": 21976,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1794440393121,
+      "cpuMs": 4203.125
+    },
+    {
+      "pid": 20144,
+      "ppid": 21976,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1794440393269,
+      "cpuMs": 1921.875
+    },
+    {
+      "pid": 15136,
+      "ppid": 21976,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1794440393332,
+      "cpuMs": 210750
+    },
+    {
+      "pid": 4820,
+      "ppid": 1636,
+      "name": "wslservice.exe",
+      "createdMs": 1794442240788,
+      "cpuMs": 1612750
+    },
+    {
+      "pid": 17060,
+      "ppid": 15716,
+      "name": "Code.exe",
+      "createdMs": 1794443214077,
+      "cpuMs": 33546.875
+    },
+    {
+      "pid": 19420,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794472488699,
+      "cpuMs": 5234.375
+    },
+    {
+      "pid": 6604,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794473033769,
+      "cpuMs": 15296.875
+    },
+    {
+      "pid": 9912,
+      "ppid": 2292,
+      "name": "RDMonitoringAgentLauncher.exe",
+      "createdMs": 1794478158289,
+      "cpuMs": 625
+    },
+    {
+      "pid": 22736,
+      "ppid": 9912,
+      "name": "conhost.exe",
+      "createdMs": 1794478158302,
+      "cpuMs": 87062.5
+    },
+    {
+      "pid": 12688,
+      "ppid": 9912,
+      "name": "MonAgentLauncher.exe",
+      "createdMs": 1794478158737,
+      "cpuMs": 93.75
+    },
+    {
+      "pid": 5688,
+      "ppid": 12688,
+      "name": "conhost.exe",
+      "createdMs": 1794478158748,
+      "cpuMs": 3437.5
+    },
+    {
+      "pid": 15316,
+      "ppid": 12688,
+      "name": "MonAgentHost.exe",
+      "createdMs": 1794478158783,
+      "cpuMs": 250
+    },
+    {
+      "pid": 4696,
+      "ppid": 15316,
+      "name": "MonAgentManager.exe",
+      "createdMs": 1794478158937,
+      "cpuMs": 65046.875
+    },
+    {
+      "pid": 11076,
+      "ppid": 4696,
+      "name": "MonAgentCore.exe",
+      "createdMs": 1794478159538,
+      "cpuMs": 4653953.125
+    },
+    {
+      "pid": 7220,
+      "ppid": 1636,
+      "name": "Microsoft.Management.Services.IntuneWindowsAgent.exe",
+      "createdMs": 1794546699793,
+      "cpuMs": 2681281.25
+    },
+    {
+      "pid": 1608,
+      "ppid": 16676,
+      "name": "cmd.exe",
+      "createdMs": 1794572710994,
+      "cpuMs": 31.25
+    },
+    {
+      "pid": 12876,
+      "ppid": 1608,
+      "name": "cmd.exe",
+      "createdMs": 1794572711031,
+      "cpuMs": 78.125
+    },
+    {
+      "pid": 2680,
+      "ppid": 12876,
+      "name": "conhost.exe",
+      "createdMs": 1794572711050,
+      "cpuMs": 46.875
+    },
+    {
+      "pid": 17760,
+      "ppid": 1828,
+      "name": "OpenConsole.exe",
+      "createdMs": 1794572711102,
+      "cpuMs": 383781.25
+    },
+    {
+      "pid": 6552,
+      "ppid": 1828,
+      "name": "WindowsTerminal.exe",
+      "createdMs": 1794572711266,
+      "cpuMs": 10630906.25
+    },
+    {
+      "pid": 1012,
+      "ppid": 12876,
+      "name": "agency.exe",
+      "createdMs": 1794572791627,
+      "cpuMs": 226031.25
+    },
+    {
+      "pid": 25976,
+      "ppid": 1012,
+      "name": "agency.exe",
+      "createdMs": 1794572793640,
+      "cpuMs": 4343.75
+    },
+    {
+      "pid": 18780,
+      "ppid": 1012,
+      "name": "copilot.exe",
+      "createdMs": 1794572793655,
+      "cpuMs": 31.25
+    },
+    {
+      "pid": 6616,
+      "ppid": 25976,
+      "name": "conhost.exe",
+      "createdMs": 1794572793655,
+      "cpuMs": 15.625
+    },
+    {
+      "pid": 1968,
+      "ppid": 18780,
+      "name": "copilot.exe",
+      "createdMs": 1794572793691,
+      "cpuMs": 256577953.125
+    },
+    {
+      "pid": 25712,
+      "ppid": 23536,
+      "name": "rdpclipcdv.exe",
+      "createdMs": 1794598105778,
+      "cpuMs": 28140.625
+    },
+    {
+      "pid": 10252,
+      "ppid": 23536,
+      "name": "rdpvchost.exe",
+      "createdMs": 1794598105839,
+      "cpuMs": 1718.75
+    },
+    {
+      "pid": 20772,
+      "ppid": 25712,
+      "name": "rdpinputcdv.exe",
+      "createdMs": 1794598106327,
+      "cpuMs": 1250
+    },
+    {
+      "pid": 24684,
+      "ppid": 15716,
+      "name": "Code.exe",
+      "createdMs": 1794615398260,
+      "cpuMs": 2406.25
+    },
+    {
+      "pid": 2636,
+      "ppid": 15716,
+      "name": "Code.exe",
+      "createdMs": 1794615398288,
+      "cpuMs": 3031.25
+    },
+    {
+      "pid": 26556,
+      "ppid": 2636,
+      "name": "Code.exe",
+      "createdMs": 1794615398664,
+      "cpuMs": 562.5
+    },
+    {
+      "pid": 3088,
+      "ppid": 1636,
+      "name": "RDAgentBootLoader.exe",
+      "createdMs": 1794693774892,
+      "cpuMs": 826031.25
+    },
+    {
+      "pid": 22780,
+      "ppid": 3088,
+      "name": "WindowsUpdateExtension.exe",
+      "createdMs": 1794693779307,
+      "cpuMs": 13750
+    },
+    {
+      "pid": 22288,
+      "ppid": 22780,
+      "name": "conhost.exe",
+      "createdMs": 1794693779325,
+      "cpuMs": 2218.75
+    },
+    {
+      "pid": 4372,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794729329660,
+      "cpuMs": 1531.25
+    },
+    {
+      "pid": 26120,
+      "ppid": 5452,
+      "name": "SenseTVM.exe",
+      "createdMs": 1794731885337,
+      "cpuMs": 252718.75
+    },
+    {
+      "pid": 7388,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794733063457,
+      "cpuMs": 1875
+    },
+    {
+      "pid": 11108,
+      "ppid": 20812,
+      "name": "Code.exe",
+      "createdMs": 1794791338383,
+      "cpuMs": 9078.125
+    },
+    {
+      "pid": 12204,
+      "ppid": 16676,
+      "name": "cmd.exe",
+      "createdMs": 1794809749662,
+      "cpuMs": 62.5
+    },
+    {
+      "pid": 7828,
+      "ppid": 12204,
+      "name": "cmd.exe",
+      "createdMs": 1794809749705,
+      "cpuMs": 109.375
+    },
+    {
+      "pid": 20260,
+      "ppid": 7828,
+      "name": "conhost.exe",
+      "createdMs": 1794809749725,
+      "cpuMs": 46.875
+    },
+    {
+      "pid": 11536,
+      "ppid": 1828,
+      "name": "OpenConsole.exe",
+      "createdMs": 1794809749780,
+      "cpuMs": 73250
+    },
+    {
+      "pid": 26488,
+      "ppid": 7828,
+      "name": "copilot.exe",
+      "createdMs": 1794810078557,
+      "cpuMs": 62.5
+    },
+    {
+      "pid": 17588,
+      "ppid": 26488,
+      "name": "copilot.exe",
+      "createdMs": 1794810078594,
+      "cpuMs": 23420875
+    },
+    {
+      "pid": 15324,
+      "ppid": 1828,
+      "name": "explorer.exe",
+      "createdMs": 1794811262562,
+      "cpuMs": 2765.625
+    },
+    {
+      "pid": 2104,
+      "ppid": 1828,
+      "name": "ApplicationFrameHost.exe",
+      "createdMs": 1794811264889,
+      "cpuMs": 1781.25
+    },
+    {
+      "pid": 4400,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794811265327,
+      "cpuMs": 1687.5
+    },
+    {
+      "pid": 13168,
+      "ppid": 3572,
+      "name": "SnippingTool.exe",
+      "createdMs": 1794811644962,
+      "cpuMs": 3437.5
+    },
+    {
+      "pid": 3584,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1794923449351,
+      "cpuMs": 1046.875
+    },
+    {
+      "pid": 11396,
+      "ppid": 5452,
+      "name": "SenseNDR.exe",
+      "createdMs": 1794935345754,
+      "cpuMs": 1601437.5
+    },
+    {
+      "pid": 9340,
+      "ppid": 7628,
+      "name": "SenseCE.exe",
+      "createdMs": 1794953068613,
+      "cpuMs": 315750
+    },
+    {
+      "pid": 15680,
+      "ppid": 7628,
+      "name": "SenseCE.exe",
+      "createdMs": 1794953070497,
+      "cpuMs": 859.375
+    },
+    {
+      "pid": 21916,
+      "ppid": 12260,
+      "name": "SenseCE.exe",
+      "createdMs": 1794953314143,
+      "cpuMs": 546.875
+    },
+    {
+      "pid": 4612,
+      "ppid": 1636,
+      "name": "OfficeClickToRun.exe",
+      "createdMs": 1794981837820,
+      "cpuMs": 40093.75
+    },
+    {
+      "pid": 16584,
+      "ppid": 4612,
+      "name": "AppVShNotify.exe",
+      "createdMs": 1794981878696,
+      "cpuMs": 109.375
+    },
+    {
+      "pid": 13368,
+      "ppid": 1636,
+      "name": "SearchIndexer.exe",
+      "createdMs": 1794981908815,
+      "cpuMs": 140187.5
+    },
+    {
+      "pid": 34480,
+      "ppid": 2756,
+      "name": "LogonUI.exe",
+      "createdMs": 1795016689990,
+      "cpuMs": 406.25
+    },
+    {
+      "pid": 21324,
+      "ppid": 1828,
+      "name": "WmiPrvSE.exe",
+      "createdMs": 1795041725996,
+      "cpuMs": 380312.5
+    },
+    {
+      "pid": 11444,
+      "ppid": 19348,
+      "name": "msedge.exe",
+      "createdMs": 1795046310316,
+      "cpuMs": 61156.25
+    },
+    {
+      "pid": 31944,
+      "ppid": 11444,
+      "name": "msedge.exe",
+      "createdMs": 1795046310412,
+      "cpuMs": 265.625
+    },
+    {
+      "pid": 29980,
+      "ppid": 11444,
+      "name": "msedge.exe",
+      "createdMs": 1795046310634,
+      "cpuMs": 593.75
+    },
+    {
+      "pid": 20316,
+      "ppid": 11444,
+      "name": "msedge.exe",
+      "createdMs": 1795046310640,
+      "cpuMs": 8671.875
+    },
+    {
+      "pid": 20148,
+      "ppid": 11444,
+      "name": "msedge.exe",
+      "createdMs": 1795046310747,
+      "cpuMs": 640.625
+    },
+    {
+      "pid": 32196,
+      "ppid": 11444,
+      "name": "msedge.exe",
+      "createdMs": 1795046310946,
+      "cpuMs": 562.5
+    },
+    {
+      "pid": 5468,
+      "ppid": 11444,
+      "name": "msedge.exe",
+      "createdMs": 1795046311052,
+      "cpuMs": 7765.625
+    },
+    {
+      "pid": 2672,
+      "ppid": 11444,
+      "name": "cmd.exe",
+      "createdMs": 1795046311268,
+      "cpuMs": 31.25
+    },
+    {
+      "pid": 12572,
+      "ppid": 2672,
+      "name": "conhost.exe",
+      "createdMs": 1795046311326,
+      "cpuMs": 46.875
+    },
+    {
+      "pid": 23032,
+      "ppid": 2672,
+      "name": "mpextms.exe",
+      "createdMs": 1795046311457,
+      "cpuMs": 2906.25
+    },
+    {
+      "pid": 13660,
+      "ppid": 11444,
+      "name": "msedge.exe",
+      "createdMs": 1795046311875,
+      "cpuMs": 10718.75
+    },
+    {
+      "pid": 29320,
+      "ppid": 11444,
+      "name": "msedge.exe",
+      "createdMs": 1795046312223,
+      "cpuMs": 12968.75
+    },
+    {
+      "pid": 9180,
+      "ppid": 11444,
+      "name": "msedge.exe",
+      "createdMs": 1795046312438,
+      "cpuMs": 4750
+    },
+    {
+      "pid": 9420,
+      "ppid": 11444,
+      "name": "msedge.exe",
+      "createdMs": 1795046312467,
+      "cpuMs": 765.625
+    },
+    {
+      "pid": 29684,
+      "ppid": 11444,
+      "name": "msedge.exe",
+      "createdMs": 1795046316063,
+      "cpuMs": 3468.75
+    },
+    {
+      "pid": 4020,
+      "ppid": 11444,
+      "name": "msedge.exe",
+      "createdMs": 1795046319245,
+      "cpuMs": 671.875
+    },
+    {
+      "pid": 21612,
+      "ppid": 11444,
+      "name": "cmd.exe",
+      "createdMs": 1795046319392,
+      "cpuMs": 46.875
+    },
+    {
+      "pid": 30168,
+      "ppid": 21612,
+      "name": "conhost.exe",
+      "createdMs": 1795046319408,
+      "cpuMs": 62.5
+    },
+    {
+      "pid": 18328,
+      "ppid": 11444,
+      "name": "msedge.exe",
+      "createdMs": 1795046319414,
+      "cpuMs": 328.125
+    },
+    {
+      "pid": 30360,
+      "ppid": 21612,
+      "name": "MsMmrHost.exe",
+      "createdMs": 1795046319480,
+      "cpuMs": 31.25
+    },
+    {
+      "pid": 5320,
+      "ppid": 30040,
+      "name": "OneDrive.exe",
+      "createdMs": 1795049713816,
+      "cpuMs": 22000
+    },
+    {
+      "pid": 27788,
+      "ppid": 30040,
+      "name": "OneDrive.Sync.Service.exe",
+      "createdMs": 1795049714505,
+      "cpuMs": 21484.375
+    },
+    {
+      "pid": 17692,
+      "ppid": 5320,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1795049717679,
+      "cpuMs": 7718.75
+    },
+    {
+      "pid": 29984,
+      "ppid": 17692,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1795049717733,
+      "cpuMs": 265.625
+    },
+    {
+      "pid": 26892,
+      "ppid": 1636,
+      "name": "FileSyncHelper.exe",
+      "createdMs": 1795049717745,
+      "cpuMs": 703.125
+    },
+    {
+      "pid": 29352,
+      "ppid": 17692,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1795049717984,
+      "cpuMs": 718.75
+    },
+    {
+      "pid": 26824,
+      "ppid": 17692,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1795049717993,
+      "cpuMs": 1578.125
+    },
+    {
+      "pid": 20364,
+      "ppid": 17692,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1795049718055,
+      "cpuMs": 375
+    },
+    {
+      "pid": 24332,
+      "ppid": 17692,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1795049718182,
+      "cpuMs": 562.5
+    },
+    {
+      "pid": 27944,
+      "ppid": 17692,
+      "name": "msedgewebview2.exe",
+      "createdMs": 1795049718216,
+      "cpuMs": 546.875
+    },
+    {
+      "pid": 6512,
+      "ppid": 5328,
+      "name": "WaSecAgentProv.exe",
+      "createdMs": 1795075021132,
+      "cpuMs": 109.375
+    },
+    {
+      "pid": 21124,
+      "ppid": 6512,
+      "name": "conhost.exe",
+      "createdMs": 1795075021152,
+      "cpuMs": 15.625
+    },
+    {
+      "pid": 22784,
+      "ppid": 1636,
+      "name": "NisSrv.exe",
+      "createdMs": 1795082674083,
+      "cpuMs": 23125
+    },
+    {
+      "pid": 27368,
+      "ppid": 2292,
+      "name": "BackgroundDownload.exe",
+      "createdMs": 1795086627613,
+      "cpuMs": 205468.75
+    },
+    {
+      "pid": 31980,
+      "ppid": 5452,
+      "name": "SenseIR.exe",
+      "createdMs": 1795087206675,
+      "cpuMs": 218.75
+    },
+    {
+      "pid": 31396,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1795087514328,
+      "cpuMs": 78.125
+    },
+    {
+      "pid": 31068,
+      "ppid": 1636,
+      "name": "svchost.exe",
+      "createdMs": 1795087850564,
+      "cpuMs": 31.25
+    },
+    {
+      "pid": 21272,
+      "ppid": 1828,
+      "name": "WmiPrvSE.exe",
+      "createdMs": 1795087850680,
+      "cpuMs": 62.5
+    },
+    {
+      "pid": 32868,
+      "ppid": 1968,
+      "name": "pwsh.exe",
+      "createdMs": 1795087866725,
+      "cpuMs": 859.375
+    },
+    {
+      "pid": 32544,
+      "ppid": 32868,
+      "name": "conhost.exe",
+      "createdMs": 1795087866739,
+      "cpuMs": 15.625
+    },
+    {
+      "pid": 10516,
+      "ppid": 32868,
+      "name": "pwsh.exe",
+      "createdMs": 1795087867265,
+      "cpuMs": 937.5
+    },
+    {
+      "pid": 19516,
+      "ppid": 10516,
+      "name": "pwsh.exe",
+      "createdMs": 1795087867827,
+      "cpuMs": 6453.125
+    },
+    {
+      "pid": 13528,
+      "ppid": 1828,
+      "name": "vdsldr.exe",
+      "createdMs": 1795087881063,
+      "cpuMs": 31.25
+    },
+    {
+      "pid": 11768,
+      "ppid": 1636,
+      "name": "vds.exe",
+      "createdMs": 1795087881106,
+      "cpuMs": 109.375
+    },
+    {
+      "pid": 19600,
+      "ppid": 1636,
+      "name": "TrustedInstaller.exe",
+      "createdMs": 1795087882084,
+      "cpuMs": 109.375
+    },
+    {
+      "pid": 18120,
+      "ppid": 1828,
+      "name": "TiWorker.exe",
+      "createdMs": 1795087882148,
+      "cpuMs": 1328.125
+    },
+    {
+      "pid": 23192,
+      "ppid": 19516,
+      "name": "node.exe",
+      "createdMs": 1795087887097,
+      "cpuMs": 375
+    },
+    {
+      "pid": 11004,
+      "ppid": 23192,
+      "name": "pwsh.exe",
+      "createdMs": 1795087888819,
+      "cpuMs": 859.375
+    },
+    {
+      "pid": 19392,
+      "ppid": 11004,
+      "name": "conhost.exe",
+      "createdMs": 1795087888841,
+      "cpuMs": 31.25
+    }
+  ]
+}

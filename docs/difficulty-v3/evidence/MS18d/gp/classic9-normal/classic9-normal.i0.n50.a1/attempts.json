@@ -1,0 +1,19 @@
+{
+  "schema": "ms18d-c-attempts-1",
+  "chunkId": "classic9-normal.i0.n50",
+  "runs": [],
+  "admissions": 0,
+  "payloads": 0,
+  "problems": [],
+  "reasons": [],
+  "ruling": null,
+  "rulingsJournal": {
+    "path": "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+    "commit": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+    "baseCommit": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+    "entryCount": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "baseSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "decision": "allow"
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record classic4-veryEasy.i0.n50 a1",
+  "runId": "classic4-veryEasy.i0.n50.a1",
+  "cell": "classic4/veryEasy",
+  "payload": "gp-recorder",
+  "chunkId": "classic4-veryEasy.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1",
+  "requestedAt": "2026-11-19T18:25:27.653+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795087511543,
+    "lastCheckMs": 1795087527080,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-19T18:25:27.788+07:00",
+  "finished": "2026-11-19T18:25:37.838+07:00",
+  "releaseObservedAt": "2026-11-19T18:25:37.839+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

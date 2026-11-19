@@ -1,0 +1,2 @@
+ms18d-gp-recorder-start chunk=classic4-veryEasy.i0.n50 i0=0 n=50 seedBase=7000
+ms18d-gp-ledger-complete chunk=classic4-veryEasy.i0.n50 bytes=21862 sha256=60ab03daa610d9e1488613c69731608cb1f3f2774cda683780a8c8ac520860ab
