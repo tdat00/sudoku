@@ -1,0 +1,8 @@
+$ node tests\artifacts\difficulty-v3\MS18d\check-format.js
+generator/tests/artifacts/difficulty-v3/MS18d/check-format.js: line 4 has 111 characters; line 5 has 112 characters; line 6 has 111 characters; line 8 has 111 characters; line 77 has 111 characters
+generator/tests/artifacts/difficulty-v3/MS18d/cost-compare.js: line 12 has 111 characters; line 16 has 111 characters; line 22 has 111 characters; line 60 has 113 characters; line 102 has 117 characters; line 114 has 120 characters; ...
+generator/tests/artifacts/difficulty-v3/MS18d/project-gp.js: line 13 has 111 characters; line 224 has 112 characters; line 232 has 112 characters; line 276 has 111 characters; line 518 has 114 characters
+generator/tests/artifacts/difficulty-v3/MS18d/run-locked.ps1: line 3 has 111 characters
+generator/tests/artifacts/difficulty-v3/MS18d/test-preflight.js: line 96 has 112 characters; line 97 has 111 characters; line 183 has 113 characters; line 233 has 117 characters; line 247 has 115 characters; line 356 has 111 characters; ...
+checked 8 files, 5 with problems
+exit=1 seconds=0.099

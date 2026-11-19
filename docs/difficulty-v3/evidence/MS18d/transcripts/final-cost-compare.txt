@@ -1,0 +1,11 @@
+$ node tests\artifacts\difficulty-v3\MS18d\cost-compare.js --old=..\docs\difficulty-v3\qualification-checkpoint-2026-11-15.json --new=..\docs\difficulty-v3\evidence\MS18c\merge\qualification-v3.json --json=..\docs\difficulty-v3\evidence\MS18d\gq-engine-cost.json
+old MS07e sources 029720df77c6c12a (rating v2), 129 shards, 129 cells
+new sources 0ca29eaeebc295b6 (ed2fe50c, dirty true, rating v3), 135 cells
+strict        2122 pairs in  96 cells, median 1.124; mega16/expert 29/6.553, jigsaw9/expert 15/4.794, sohei/master 5/4.316, mega12/expert 18/2.6429, diagonalX/expert 8/2.2272
+outcomeScore  2122 pairs in  96 cells, median 1.124; mega16/expert 29/6.553, jigsaw9/expert 15/4.794, sohei/master 5/4.316, mega12/expert 18/2.6429, diagonalX/expert 8/2.2272
+outcome       4090 pairs in 128 cells, median 1.3313; mega16/expert 39/6.553, jigsaw9/expert 28/5.3675, sohei/master 40/4.1631, mega12/expert 40/2.7728, diagonalX/expert 35/3.3674
+seed          4185 pairs in 129 cells, median 1.3398; mega16/expert 40/6.5544, jigsaw9/expert 34/5.8774, sohei/master 40/4.1631, mega12/expert 40/2.7728, diagonalX/expert 40/3.4194
+quoted: SA1 about 1.13 overall, mega16/expert 6.6, jigsaw9/expert 5.1, sohei/master 4.3, mega12/expert 2.7, diagonalX/expert 2.1; SA2 2122 pairs, median 1.124, mega16/expert 29/6.553, jigsaw9/expert 15/4.794, sohei/master 5/4.316, mega12/expert 18/2.6429, diagonalX/expert 8/2.2272
+strict rule reproduces the leaf totals and cohorts: true
+wrote docs/difficulty-v3/evidence/MS18d/gq-engine-cost.json
+exit=0 seconds=0.249

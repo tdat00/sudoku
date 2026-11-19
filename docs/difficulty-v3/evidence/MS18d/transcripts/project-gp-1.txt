@@ -1,0 +1,113 @@
+$ node tests\artifacts\difficulty-v3\MS18d\project-gp.js --qualification=..\docs\difficulty-v3\evidence\MS18c\merge\qualification-v3.json --json=..\docs\difficulty-v3\evidence\MS18d\gp-preflight.json
+MS18d GP preflight: read-only, no timing or admission approval
+qualification docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json sha256 b8e546fc0ba5bd1f79f408984bf3bf8f82559305ea6bd63cbe6dc53beff0df04 (accepted base)
+GQ measured sources 0ca29eaeebc295b6; tree sources now 75b0955e3e356bd1 (publication, accepted)
+Node v26.13.0; AMD EPYC 7763 64-Core Processor, 16 logical, 64 GB, win32 10.0.26300; same machine class as GQ: true
+published cells 79; GP protocol 79 cells x 50 = 3950 requests, at least 72 successes
+
+cell                     n       mean       p50    p95 (q)        max   alert s target   pred ceil3q budget  proposed
+classic4/veryEasy       40     1.9594    0.8954    10.1122    12.9531     0.098     10      0     31   2000  31 (ceil3q)
+classic6/veryEasy       40     2.6344    1.5014    12.9032    13.8671     0.132     10      0     39   2000  39 (ceil3q)
+classic6/hard           40   105.3108   64.6925   321.2095   399.0431     5.266    350     39    964   2000  keep
+classic9/veryEasy       40     4.1892    2.6101    18.0743    19.8093     0.209     60      0     55  10000  keep
+classic9/easy           40   354.4735  218.4696   780.3884  1318.7190    17.724    150     60   2342  10000  2342 (ceil3q)
+classic9/normal         40   398.3673  398.2207   875.5958   952.5775    19.918    150   2342   2627  10000  2627 (ceil3q)
+classic9/hard           40    66.3703   33.7814   256.0389   493.1213     3.319    400   2627    769  10000  keep
+classic9/expert         40   114.5702   38.9743   440.7861   544.8815     5.729    400    400   1323  10000  1323 (ceil3q)
+classic9/master         40   149.5074  113.7322   351.9134   468.8741     7.475    900   1323   1056  10000  keep
+classic9/nightmare      40  1088.8949  941.8817  2792.0346  3228.1024    54.445   2500    900   8377  10000  8377 (ceil3q)
+mega12/veryEasy         40     8.3244    6.2568    25.0184    26.8378     0.416    400      0     76  30000  keep
+mega12/easy             40    17.9278   11.8780    48.6071    53.8743     0.896   1000    400    146  30000  keep
+mega12/normal           40    31.0556   22.0446    70.2291   127.5042     1.553   1000   1000    211  30000  keep
+mega12/hard             40    90.0248   53.7559   219.9961   372.2446     4.501   3000   1000    660  30000  keep
+mega12/expert           40   624.9998  246.5182  2592.9769  7953.7019    31.250   3000   3000   7779  30000  keep
+mega12/master           40   289.8169  210.8869   841.9312  1112.9419    14.491   3000   3000   2526  30000  keep
+mega12/nightmare        40  2807.4630 2356.3226  6280.4697  8736.1104   140.373   3000   3000  18842  30000  18842 (ceil3q)
+mega12/hell2            40  4774.1268 5289.1353  9459.1886 11526.3005   238.706  16000  18842  28378  30000  keep
+mega16/veryEasy         40    15.0782   12.5978    36.8126    39.7954     0.754   1500      0    111  30000  keep
+mega16/easy             40    24.5015   20.0249    56.4618    61.4999     1.225   4000   1500    170  30000  keep
+mega16/normal           40    43.2464   38.9147    89.5037   134.6989     2.162   4000   4000    269  30000  keep
+mega16/hard             40   529.7419  361.1461  1715.2888  2023.2603    26.487  10000   4000   5146  30000  keep
+mega16/master           40  2123.6773 1817.2125  5528.2588  6384.3164   106.184  10000  10000  16585  30000  keep
+mega16/hell2            40  4119.4028 1592.5674 25239.0671 43048.0792   205.970  10000  10000  75718  30000  30000 (budget)
+diagonalX/veryEasy      40     4.3263    2.7111    18.1067    19.6909     0.216     80      0     55  10000  keep
+diagonalX/normal        40    48.0498   21.7763   189.9598   399.7115     2.402    200     80    570  10000  keep
+diagonalX/hard          40    27.6988   23.0243    76.5739    98.2527     1.385    500    200    230  10000  keep
+diagonalX/master        40   200.8866   94.2850   662.9567   914.6799    10.044   1200    500   1989  10000  keep
+diagonalX/nightmare     40  2079.5597 1719.0385  5368.3201  7414.5825   103.978   3000   1200  16105  10000  10000 (budget)
+diagonalX/hell2         40  1100.9426  342.5132  2887.0696  3373.9294    55.047   3000  10000   8662  10000  keep
+hyper/veryEasy          40     4.4851    2.8225    18.0367    19.3498     0.224     80      0     55  10000  keep
+hyper/normal            40   201.7639  128.2160   524.3035   805.5777    10.088    200     80   1573  10000  1573 (ceil3q)
+hyper/hard              40    34.6847   23.3619    80.1618   138.8270     1.734    500   1573    241  10000  keep
+hyper/master            40   243.6770  195.9561   507.0018  1545.0021    12.184   1200    500   1522  10000  keep
+hyper/nightmare         40  2691.3292 1830.6205  8503.0273 11272.8636   134.566   3000   1200  25510  10000  10000 (budget)
+hyper/hell2             40  1944.9204 1481.6247  4838.1594  6729.4190    97.246   5000  10000  14515  10000  keep
+jigsaw9/veryEasy        40    21.7610   14.7281    54.2844    74.0841     1.088    150      0    163  10000  keep
+jigsaw9/easy            40   193.1273   69.9216   634.7225   768.6908     9.656    350    150   1905  10000  1905 (ceil3q)
+jigsaw9/normal          40    80.9938   47.3663   225.2274   413.6342     4.050    350   1905    676  10000  keep
+jigsaw9/hard            40    80.1715   69.1395   144.9141   160.6444     4.009    900    350    435  10000  keep
+jigsaw9/master          40   699.3136  502.2500  1742.2121  2719.9330    34.966   2000    900   5227  10000  keep
+jigsaw9/hell2           40  3286.5239 2978.6974  6102.2380  9904.8754   164.326   5000   2000  18307  10000  10000 (budget)
+killer/veryEasy         40     5.4472    3.2354    21.8626    25.5256     0.272    300      0     66  10000  keep
+killer/easy             40    18.6310   12.8891    39.0628    64.8644     0.932    700    300    118  10000  keep
+killer/normal           40   565.7753  369.4359  1808.2659  2252.0779    28.289    700    700   5425  10000  5425 (ceil3q)
+greaterThan/veryEasy    40    28.2855   24.4367    54.0895    55.2629     1.414    300      0    163  10000  keep
+greaterThan/easy        40    48.4274   36.4243    92.0121   112.6005     2.421    700    300    277  10000  keep
+greaterThan/hard        40   726.7220  163.2679  2832.4741  3213.7686    36.336   6000    700   8498  10000  keep
+greaterThan/master      40  1965.0822  979.1050  5952.2994  7828.2704    98.254  10000   6000  17857  10000  keep
+greaterThan/hell2       40  4498.4929 3830.2362  8826.2361 19426.6270   224.925  10000  10000  26479  10000  keep
+samurai/veryEasy        40    20.8009   16.8204    46.6892    49.7793     1.040   3000      0    141  30000  keep
+samurai/normal          40   371.8868  231.4172   837.0937  2718.3111    18.594   8000   3000   2512  30000  keep
+samurai/hard            40   259.6802  166.3303   886.5133  1142.9887    12.984  20000   8000   2660  30000  keep
+samurai/expert          40  1084.2117  512.7572  4030.8085  9047.9127    54.211  20000  20000  12093  30000  keep
+samurai/master          40  4115.6180 1651.5367  6686.7277 66790.9568   205.781  20000  20000  20061  30000  keep
+sohei/veryEasy          40    15.9125   13.6450    40.9578    44.3980     0.796   3000      0    123  30000  keep
+sohei/normal            40   730.9518  212.6812  3725.2219  9022.8878    36.548   8000   3000  11176  30000  keep
+sohei/hard              40   209.6472  134.8213   516.3258   606.0797    10.482  20000   8000   1549  30000  keep
+sohei/expert            40  1092.9038  307.9285  7013.1940 13851.4877    54.645  20000  20000  21040  30000  keep
+sohei/master            40  1584.3722  952.2020  4697.8951  8092.3715    79.219  20000  20000  14094  30000  keep
+sohei/hell2             40  9711.9412 6287.2200 27155.5581 41652.8343   485.597  20000  20000  81467  30000  30000 (budget)  FLAGGED
+butterfly/veryEasy      40    10.0426    7.4502    28.9470    34.3091     0.502   1000      0     87  30000  keep
+butterfly/normal        40   195.4233   97.9472  1041.8416  1486.7430     9.771   3000   1000   3126  30000  keep
+butterfly/hard          40    98.1881   83.1098   211.0418   309.2124     4.909   8000   3000    634  30000  keep
+butterfly/expert        40  1288.4963  330.4227  4440.7484  4966.2758    64.425   8000   8000  13323  30000  keep
+butterfly/master        40   322.0707  272.0867   728.3479   948.0175    16.104   8000   8000   2186  30000  keep
+butterfly/nightmare     40  6068.4328 3935.7604 16120.4641 21241.2245   303.422   8000   8000  48362  30000  30000 (budget)
+butterfly/hell2         40  4499.6436 3409.5322 10951.9404 14259.1274   224.982  15000  30000  32856  30000  keep
+flower/veryEasy         40    11.7476    8.9194    33.5013    35.3335     0.587   3000      0    101  30000  keep
+flower/normal           40   273.0860  134.8944   766.8224  2033.1040    13.654   8000   3000   2301  30000  keep
+flower/hard             40   278.9645  159.5153   515.6041  3523.2231    13.948  20000   8000   1547  30000  keep
+flower/master           40   530.6888  429.1758  1068.8657  2364.3572    26.534  20000  20000   3207  30000  keep
+flower/hell2            40  3298.5427 1183.5646  9075.4496 13936.7153   164.927  20000  20000  27227  30000  keep
+wordoku/veryEasy        40     5.4497    3.7002    18.4295    21.3596     0.272    100      0     56  10000  keep
+wordoku/easy            40   345.7236  211.3426   973.6330  1338.2495    17.286    250    100   2921  10000  2921 (ceil3q)
+wordoku/hard            40    78.1739   39.8837   283.2620   710.1285     3.909    600   2921    850  10000  keep
+wordoku/expert          40   139.8632   84.8384   392.5801   599.3611     6.993    600    600   1178  10000  keep
+wordoku/master          40   158.5352  142.3250   344.9143   437.3951     7.927   1500    600   1035  10000  keep
+wordoku/nightmare       40   691.5737  549.5550  1323.0135  4217.0411    34.579   1500   1500   3970  10000  keep
+
+target proposal: 79 cells, 62 kept, 17 changed
+  classic4/veryEasy     q     10.1122      10 ->     31  (ceil3q)
+  classic6/veryEasy     q     12.9032      10 ->     39  (ceil3q)
+  classic9/easy         q    780.3884     150 ->   2342  (ceil3q)
+  classic9/normal       q    875.5958     150 ->   2627  (ceil3q)
+  classic9/expert       q    440.7861     400 ->   1323  (ceil3q)
+  classic9/nightmare    q   2792.0346    2500 ->   8377  (ceil3q)
+  mega12/nightmare      q   6280.4697    3000 ->  18842  (ceil3q)
+  mega16/hell2          q  25239.0671   10000 ->  30000  (budget)
+  diagonalX/nightmare   q   5368.3201    3000 ->  10000  (budget)
+  hyper/normal          q    524.3035     200 ->   1573  (ceil3q)
+  hyper/nightmare       q   8503.0273    3000 ->  10000  (budget)
+  jigsaw9/easy          q    634.7225     350 ->   1905  (ceil3q)
+  jigsaw9/hell2         q   6102.2380    5000 ->  10000  (budget)
+  killer/normal         q   1808.2659     700 ->   5425  (ceil3q)
+  sohei/hell2           q  27155.5581   20000 ->  30000  (budget)
+  butterfly/nightmare   q  16120.4641    8000 ->  30000  (budget)
+  wordoku/easy          q    973.6330     250 ->   2921  (ceil3q)
+sum of the mean alerts 3803.9658065 s (not a GP runtime forecast)
+largest mean alerts: sohei/hell2 485.597 s; butterfly/nightmare 303.422 s; mega12/hell2 238.706 s; butterfly/hell2 224.982 s; greaterThan/hell2 224.925 s; mega16/hell2 205.970 s; samurai/master 205.781 s
+cells with 50 x observed GQ max above 450 s (13, descriptive only): mega12/hell2, mega16/hell2, hyper/nightmare, jigsaw9/hell2, greaterThan/hell2, samurai/expert, samurai/master, sohei/normal, sohei/expert, sohei/hell2, butterfly/nightmare, butterfly/hell2, flower/hell2
+FLAGGED (mean alert above 450 s): sohei/hell2 n=40 mean 9711.9411975 ms alert 485.597059875 s
+UNKNOWN whole-command planning basis (unadmitted, not approved): 78 cells without a mean alert, plus every flagged cell
+wrote docs/difficulty-v3/evidence/MS18d/gp-preflight.json
+exit=1 seconds=0.603

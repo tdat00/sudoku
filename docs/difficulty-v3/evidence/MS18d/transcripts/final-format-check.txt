@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS18d\check-format.js ..\docs\difficulty-v3\evidence\MS18d\format-check.txt
+checked 24 files, 0 with problems
+exit=0 seconds=0.106
