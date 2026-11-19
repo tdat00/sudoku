@@ -60,3 +60,34 @@ before then.
 Carried into `MS18d-C2-EXTERNAL-CONSUMERS`: the consumer list (EventLog, Dnscache, Intune
 PowerShell, SenseIR PowerShell, BackgroundDownload, MsMpEng), the gate change at chunk 98, and
 the wait and expiry counts.
+
+## Exact MS18d-Q4 wording
+
+Verbatim copy, archived on SA2's ruling before B4, of the owner question as posted. The text was read
+back from the Discord API, not reconstructed. The Discord message remains the provenance source; this
+pack copy is the authoritative wording record for `questionWording` (S-OD18).
+
+- Channel `ai-agent-session2` / `1571779348573323334`, message **`1573073374584774872`**, author `AI-Agents` (bot),
+  posted **2026-11-19T20:31:58.791Z** (03:31:58.791 +07:00).
+- `content` SHA-256 (UTF-8 bytes of the API `content` string, LF line breaks, no trailing newline): `3f96aa3d29674375cdbd52532c2275ae030ea7b8ec1a7783bc36f21e89b123f7`.
+- `content` length: 889 characters. Lines below are joined with this file's line endings; the hash
+  applies to the LF form.
+
+````text
+**[Sudoku difficulty-v3] ❓ CÂU HỎI CHO ANH — MS18d-Q4 (riêng butterfly-master.i0.n50)**
+
+Hai lượt admission đều bị giữ hợp lệ (BackgroundDownload ở lượt 1, MsMpEng ở lượt 2); chưa chạy payload nào.
+- Lượt 2 đã chờ đủ 300 giây và qua gate mới.
+- Không phải lỗi công cụ; hai lượt vẫn được tính.
+
+Anh chọn **Q4=A**: cho đúng **một admission `.a3` riêng cho đoạn này**.
+- Lượt này chạy cuối, sau 17 đoạn còn lại và sau khi B4 được kiểm thử/review.
+- Giữ hai lượt cũ, 50 mẫu, seed/trace/target, jobs 1, chính sách CPU/khóa và giới hạn 450/540 giây.
+- Tối đa một payload, không đo lại, không `.a4`.
+
+Hay **Q4=B**: không thêm lượt, ô này thiếu dữ liệu và GP không đủ 79 ô?
+
+Q4 độc lập với Q2/Q3; phê duyệt câu trước không tự áp dụng sang câu này. Anh trả lời **Q4=A** hoặc **Q4=B**.
+
+_(Đang chờ cả 3 câu: Q2 — mega16-easy, Q3 — hyper-hard, Q4 — butterfly-master. Mỗi câu trả lời A hoặc B riêng.)_
+````
