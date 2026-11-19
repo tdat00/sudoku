@@ -261,12 +261,20 @@ exit 0 **and** complete five-key ledgers; only the full 104-ledger check-only
 merge with all 520 expected hashes matching passes GG. A nonzero exit,
 signal/kill, missing/partial ledger or merge mismatch is **STOP + QUESTION**,
 never a GP MISS or an automatic retry/replacement; keep partial evidence.
-In design 15.1/15.5, both developer guides and the Phase-B handoff enumerate
+In design 15.1/15.2, both developer guides and the Phase-B handoff enumerate
 every retained manual-versus-GP budget mismatch, including extra-regions'
 larger-row rule and classic9's **median** gates. Legacy CV6 titles mean their
 retained N; no manual title/budget/threshold/factor edit or later automatic
-alignment after a live MS18e failure. The MS18d leaf gives the full ten-row
-numeric inventory and distinguishes hidden rows with no GP target.
+alignment after a live MS18e failure. **SA2's inventory ruling B (for SA1
+cross-review) keeps eleven contrasts: ten manual plus one separately labelled
+deep-only row**:
+`BOARDS.mega12.budgets.nightmare` remains **3000 ms** before the factor, while
+its GP target is **18842 ms**. Its 20-seed p95 assertion runs only with
+`SG_DEEP=1`, not ordinary quick/CI. Keep it in the documents/freeze-checker
+inventory and MS18e handoff; a time-only failure is retained, never aligned or
+waived. No mega test/budget/title/seed/tier edit or new run is assigned.
+The earlier design 15.5 reference was wrong (browser checklist); use actual
+15.1/15.2 locations. Hidden rows still have no GP target, not zero.
 
 **Step-5 ruling (2026-11-19, 07:58 relay):** cases 1-3 use original fixed
 diagnostic corpora, counts, seeds, indexes and thresholds, with per-call restoring

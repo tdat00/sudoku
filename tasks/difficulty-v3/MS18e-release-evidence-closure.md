@@ -65,6 +65,22 @@ MS18d's rule; two declared public smoke replacements are Greater-Than Normal ->
 Easy and Wordoku Normal -> Easy. Neither substitutes for fixed diagnostic Normal
 requests, the three hard event ratios or GG/GR recipes.
 
+**Retained deep budget, MS18d inventory ruling B (2026-11-19):** the documented
+retained-versus-GP inventory has ten manual rows and one **SG_DEEP-only** row.
+In `generator\tests\suites\mega.test.js`,
+`BOARDS.mega12.budgets.nightmare` stays **3000 ms** before
+`SG.test.timeLimit`, versus the new GP target **18842 ms**. The existing deep
+case uses seeds **1..20** and sorted **`times[18]`** for p95; ordinary quick/CI
+exclude the full-attempt Nightmare/Hell 1 cases through `QUICK_LEVELS`.
+Retain this distinction in the already-planned deep audit; it is not a new
+selector/population assignment or a reason to run the branch in quick/CI.
+A live time-only failure is an honest **failed S-OD4 result**, with its source,
+selector, factor, measurements and exit retained. Do not align the 3000 to
+18842, change its title/threshold/requests/tier, skip it or claim the gate passed.
+Other hit-rate/availability results keep their own status; correctness/uniqueness/
+unsoundness and evidence failures still block. No separate deep compatibility
+or completeness requirement is waived.
+
 Also audit the recovery-profile scope repair: **G13 = Samurai/Nightmare/42**,
 existing mode-specific attempts/budgets unchanged, support restored and the newly
 loaded `tool-records.js` covered by the reported old/new toolHash. Retag no older

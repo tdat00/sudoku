@@ -348,17 +348,24 @@ map is expressly assigned; no other ownership expands.
   Keep MS18c's alignment-only statement as dated history and describe the new
   MS18d qualification-derived update accurately. **This is not a GP measurement
   or a Chrome/reference-machine performance pass.**
-- **CV6 wording:** update design **15.1/15.5** and the relevant sentence in
+- **CV6/deep wording:** update design **15.1** and **15.2** (the `manual-corpus`
+  row and clearly labelled retained-budget note), plus the relevant text in
   **both developer guides**, distinguishing the manual suites' retained
-  `BUDGET_MS` contracts (with their existing `SG.test.timeLimit` application)
+  `BUDGET_MS` and the separate deep-only `BOARDS` contract (with their existing
+  `SG.test.timeLimit` application)
   from the CLI GP `PERF_TARGETS`. No manual budget, hit/soundness threshold,
   seed, population, tier or factor changes. Greater-Than Normal's 700 ms
   contract is not reopened.
-  **SA1's concrete documentation condition is required:** list every retained
-  manual budget that numerically differs from the new 9.1 GP target, with both
+  **SA1's concrete documentation condition, extended by ruling B below, is
+  required:** list every identified retained manual/deep budget that numerically
+  differs from the new 9.1 GP target, with both
   values and its statistic, in those design sections, **both developer guides**
   and the Phase-B handoff. Do not stop at a generic disclaimer or the examples
   in the original question. See the complete current mismatch inventory below.
+  **Section 15.5 is the manual browser checklist, not this budget discussion**;
+  the earlier 15.1/15.5 pack reference was mistaken. Do not insert unrelated CV6
+  text there merely to follow that stale reference, or claim the quick
+  `manual-corpus` test executes the mega deep gate.
   Existing CV6 titles saying **"design.md 9.1 budget of N" refer to retained N**,
   not the recalibrated GP target. **No manual-CV6 title, `BUDGET_MS`, threshold or
   factor edit.** The already approved quick target-pin test rename is separate.
@@ -432,13 +439,24 @@ the Phase-B handoff. **No GP, S-AV11, pilot, live timing-admission campaign or
 Phase-C release** is granted by this ruling. Q1 remains unanswered, all 79 cells
 remain unadmitted, and the Sohei Hell 2 hold is unchanged.
 
-### Retained manual budgets versus the new GP table — documentation, not edits to tests
+### Retained manual/deep budgets versus the new GP table — documentation, not edits to tests
 
-The following are **base milliseconds**, before the manual test's existing
+**SA2 inventory ruling B, 2026-11-19, for SA1 cross-review/orchestrator relay:**
+keep **eleven** documented contrasts:
+the ten manual rows below **plus one separately labelled SG_DEEP-only row**.
+The ten-row list in `9ab6cd4b` was correct for its manual subset but incomplete
+for retained deep coverage. Do not remove the valid mega row from the design,
+either guide or the Phase-B freeze checker's documented list to force a count
+of ten. This is a documentation/inventory clarification, not an eighteenth
+target change or permission to edit a test.
+
+The following are **base milliseconds**, before each retained check's existing
 `SG.test.timeLimit` factor. GP uses its unscaled p95 target; classic9's
 `difficulty.test.js` check is a **median** gate and keeps its existing middle-index
 calculation, not GP's percentile/cohort. The columns compare two retained/different
-contracts, **not an instruction to replace the manual number**.
+contracts, **not an instruction to replace the retained number**.
+
+**Manual retained thresholds (ten rows):**
 
 | Manual suite / row | Statistic | Retained manual ms | New 9.1 GP comparison ms |
 |---|---|---:|---:|
@@ -456,16 +474,60 @@ contracts, **not an instruction to replace the manual number**.
 The six variant-specific p95 rows cover **seven** recalibrated GP cells because
 extra-regions shares the larger diagonalX/hyper row; the four classic9 median
 rows are listed separately. At the approved targets these are all numerical
-mismatches among the offered comparison rows of the named suites. No new
+mismatches among the offered comparison rows of those named manual suites. No new
 Greater-Than offered-row mismatch occurs. Hidden rows have **no GP target**, not
 zero, and retain their existing manual constants/registration disposition; do
 not invent a numeric comparison or re-enable a hidden public timing case.
 
-Verify this inventory from the unchanged manual declarations and the frozen
+**Non-manual, deep-only retained threshold (one additional row):**
+
+| Retained check / row | Statistic / execution tier | Retained base ms | New 9.1 GP target ms |
+|---|---|---:|---:|
+| `suites\mega.test.js` / mega12 Nightmare | `SG_DEEP=1` only: p95 of 20 seeds, sorted `times[18]` | **3000** | **18842** |
+
+Verified anchors are `BOARDS.mega12.budgets.nightmare` at **62-77**, the
+`SG_DEEP=1` branch at **1112-1138**, and `QUICK_LEVELS` at **42** / its use at
+**729** (locate by symbol/title if lines move). The deep test is
+**"20 seeds, hit rate and p95 time against section 9.1"**: seeds **1..20**,
+trace off, existing 120000 ms request budget, unchanged hit-rate and p95
+assertions. It applies **`SG.test.timeLimit(3000)`**, not 18842.
+Its legacy title "against section 9.1" likewise names this retained deep
+contract, not the newly recalibrated GP target.
+Nightmare/Hell 1 full-attempt requests are excluded from `QUICK_LEVELS`;
+neither ordinary quick runs nor CI executes this row. Do not call it a manual
+suite, add it to quick/CI, or confuse it with the separate quick smoke limits.
+The unoffered mega16 rows have no GP target; no numeric zero comparison is implied.
+
+Keep the eleventh row in the **design 15.1/15.2 documentation, both developer
+guides, `freeze-targets.js`'s documented inventory and Phase-B handoff**, with
+its deep-only label. The `manual-corpus` suite description must still accurately
+describe that quick test's actual checks; the retained-budget inventory is
+documentation, not a claim that the quick test runs this deep branch.
+The complete inventory may sit in 15.1 with a scoped cross-reference from 15.2;
+the long numeric list need not be duplicated inside the quick-suite table row.
+
+For MS18e's already-planned deep validation, a timing-only failure against the
+retained 3000 ms base is an **honest S-OD4 failed result**, not authority to
+realign it to 18842, relax/skip/rename/move the test or claim its gate passed.
+Retain source, selector, original request population, time factor, actual
+measurements, exit and named disposition. Availability/hit-rate findings keep
+their own real status; correctness/uniqueness/unsoundness or evidence failures
+retain their blocking rules. This note grants **no new SG_DEEP run or population
+expansion** and waives no separate deep selection/compatibility requirement.
+
+The developer's reported tee **8/8**, wrapper **9/9** and target-freeze **5/5**
+checks are provisional pre-format evidence in this question, not a GG pass.
+Keep existing outputs; finish the helpers' format pass before final freezing
+and re-run the affected helper checks with honest identities/new evidence.
+Do not delete or retag preliminary records. Focused/GG work remains governed by
+the existing release, bounds and STOP/QUESTION rules; no Phase-C permission follows.
+
+Verify this inventory from the unchanged manual/deep declarations and the frozen
 target plan when writing the design/guides/handoff. A later source difference
 must be reported, not silently handled by changing an assertion. The existing
-manual suite titles, thresholds, seeds, counts and public/diagnostic boundaries
-all remain as accepted.
+manual/deep titles, thresholds, budgets, seeds, counts, time factors and
+public/diagnostic/tier boundaries all remain as accepted. In particular,
+**`mega.test.js` is not assigned any edit by this ruling**.
 
 **CV6-05 / S-AV01 is settled: "not offered".** Normal has 40/40 hits but p95
 10,192.4051 ms >10,000 ms. It is not in the 79-cell GP population; the Fable trigger
@@ -646,8 +708,8 @@ edits or timed work when arithmetic is green.
   requires it; corresponding Generator design 9.1 and both developer guides.
 - **Phase-B pin amendment:** the single target-value test/local expectation in
   `generator/tests/suites/manual-corpus.test.js`, exactly as ruled above;
-  Generator design **15.1/15.5** and the coupled CV6 wording in both developer
-  guides. No change to `manual/perf.test.js`'s consistency test or other pins.
+  Generator design **15.1/15.2** and the coupled manual/deep budget wording in
+  both developer guides. No change to `manual/perf.test.js`'s consistency test or other pins.
 - Clarify GP-target versus retained manual-CV6 wording if needed, without changing
   a manual `BUDGET_MS`, test threshold, seed or population.
 - No production code, `perf.js`/`measure` behavior, `regression.js`, replay/help
@@ -737,7 +799,7 @@ edits or timed work when arithmetic is green.
 | MS18d-T08 | Scoped target pin preserves OLD and all 79 exact values via 17 frozen overrides; counts/hidden positions/cells comparison unchanged, one test renamed and none added/removed; exact-ms documentation and distinct manual-CV6 wording |
 | MS18d-T09 | Versioned append-as-arriving transcript wrapper/short stand-ins preserve partial failures and exit semantics, cleanup and >=15 s gaps; Phase-A 25-entry freeze remains intact; Phase B grants no GP/profile permission |
 | MS18d-T10 | Every real GG shard has exit 0 plus five exact ledger keys; full 104-ledger check-only merge is the only GG pass; nonzero/signal/kill/missing/partial/mismatch stops for QUESTION without an automatic retry |
-| MS18d-T11 | Design 15.1/15.5, both developer guides and handoff enumerate retained manual versus GP budgets, including shared extra-regions and classic9 median rows; no manual title/budget/threshold/factor changed |
+| MS18d-T11 | Design 15.1/15.2, both developer guides and handoff enumerate eleven retained-versus-GP contrasts: ten manual rows plus the separately labelled SG_DEEP-only mega12 Nightmare 3000 vs18842; no manual/deep title/budget/threshold/factor/tier changed |
 
 ## Test plan and gates
 
