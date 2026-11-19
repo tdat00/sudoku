@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\check-format.js --outputs ..\docs\difficulty-v3\evidence\MS18d\phase-c\outputs-c1-sha256.txt
+checked 1447 files, 0 with problems
+exit=0 seconds=1.310

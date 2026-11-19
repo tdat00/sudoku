@@ -27,6 +27,8 @@ const path = require('path');
 const plan = require('./plan-data.js');
 const { sha256 } = require('./common.js');
 const { MARKER, START, validateLedgerShape, IDENTITY_METHOD } = require('./ledger-schema.js');
+const rcore = require('./readiness-core.js');
+const journals = require('./journals.js');
 const { campaignDiffViolations, LEDGER } = require('./source-binding.js');
 
 const RECORDER_REL = 'tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\record-gp.js';
@@ -37,7 +39,118 @@ function frozenRecorderArgs(planRel, slot) {
   return [RECORDER_REL, '--plan=' + planRel, '--chunk=' + slot.chunkId, '--out=' + out];
 }
 
-const same = (a, b) => plan.canonicalJson(a) === plan.canonicalJson(b);
+// a value that is not plain JSON data (a missing member, say) is a difference, never an exception
+const same = (a, b) => {
+  try {
+    return plan.canonicalJson(a) === plan.canonicalJson(b);
+  } catch (err) {
+    return false;
+  }
+};
+
+const OWNED_ROLES = ['wrapper', 'controller', 'readiness-probe'];
+
+/**
+ * The host binding an admission used (pack section "Host-binding journal"): the id, tuple and journal
+ * reference it recorded must be an entry of the COMMITTED journal at merge time, the very one in force at
+ * that admission (the last of the `entryCount` entries it saw), and the journal it saw must be a line prefix
+ * of the committed one (append-only). The binding approved FOR THAT ADMISSION is judged, not the latest
+ * host: a later rebinding retags and rejects no earlier record. `chain` = { entries, lines, problems }.
+ */
+function bindingProblems(input, chain) {
+  const p = [];
+  const ref = input.binding;
+  if (!chain || chain.problems.length > 0 || chain.entries.length === 0) {
+    return ['the committed host-binding journal is empty or invalid'];
+  }
+  if (!ref || typeof ref.bindingId !== 'string' || !ref.journal ||
+    !Number.isInteger(ref.journal.entryCount) || !ref.evidence || ref.evidence.verified !== true) {
+    return ['the record names no verified host binding of the journal'];
+  }
+  const index = chain.entries.findIndex((e) => e.bindingId === ref.bindingId);
+  if (index < 0) {
+    return ['the host binding ' + ref.bindingId + ' is not in the committed journal (unapproved)'];
+  }
+  if (!same(journals.bindingTuple(chain.entries[index]), input.expected)) {
+    p.push('the host tuple is not the one approved by entry ' + ref.bindingId);
+  }
+  const n = ref.journal.entryCount;
+  if (index !== n - 1) p.push('the host binding was not the one in force at admission');
+  if (n > chain.lines.length || journals.digestLines(chain.lines.slice(0, n)) !== ref.journal.sha256) {
+    p.push('the journal the admission saw is not a prefix of the committed journal');
+  }
+  if (!same(ref.host, chain.entries[index].host)) p.push('the recorded host differs from the journal entry');
+  return p;
+}
+
+/**
+ * F6 and C1: the admission of a real recorder run must carry a COMPLETE, ADMITTED policy A readiness record,
+ * and the retained raw data must give the same decision again: readiness.json (cited by size-exact SHA-256),
+ * the two snapshots it cites, the host binding in force (one of the recorded bindings), the run's own
+ * wrapper, controller and probe processes, the time since the call. Problems, [] when it holds.
+ */
+function readinessProblems(run, admission, request, pidRows, ctx) {
+  const p = [];
+  const bad = (text) => p.push('readiness: ' + text);
+  const sum = admission && admission.readiness;
+  if (!sum || sum.schema !== rcore.SCHEMA || sum.required !== true || sum.ran !== true) {
+    bad('admission.json carries no readiness record of a run');
+    return p;
+  }
+  if (sum.complete !== true || sum.admitted !== true || sum.eligibleReAsk === true) {
+    bad('the record is not a complete admitted one');
+  }
+  const bytes = run.bytes('readiness.json');
+  if (bytes === null || sum.sha256 !== sha256(bytes)) {
+    bad('readiness.json is missing or not the cited bytes');
+    return p;
+  }
+  const rec = run.json('readiness.json').value;
+  if (!rec || rec.schema !== 'ms18d-c-readiness-record-1' || !rec.inputs || !rec.decision) {
+    bad('readiness.json is not a readiness record');
+    return p;
+  }
+  const snapshot = (name) => {
+    const ref = rec.snapshots && rec.snapshots[name];
+    const b = ref && typeof ref.file === 'string' ? run.bytes(ref.file) : null;
+    if (b === null || sha256(b) !== ref.sha256) {
+      bad('the ' + name + ' snapshot is missing or not the cited bytes');
+      return null;
+    }
+    return run.json(ref.file).value;
+  };
+  const before = snapshot('before');
+  const after = snapshot('after');
+  if (!before || !after) return p;
+  const input = rec.inputs;
+  if (!ctx.doc.policy || ctx.doc.policy.choice !== rcore.POLICY.choice) bad('the manifest policy is not A');
+  bindingProblems(input, ctx.bindingJournal).forEach(bad);
+  if (input.logicalCpus !== ctx.doc.environment.machine.logicalProcessors) {
+    bad('another logical processor count');
+  }
+  const controller = (pidRows || []).filter((x) => x && x.role === 'controller')[0];
+  (input.owned || []).forEach((o) => {
+    if (OWNED_ROLES.indexOf(o.role) === -1) bad('an excluded process has the role ' + o.role);
+    if (o.role === 'wrapper' && (!request || o.pid !== request.wrapperPid)) {
+      bad('the wrapper is not the run\'s');
+    }
+    if (o.role === 'controller' && (!controller || o.pid !== controller.pid)) {
+      bad('the controller is not the run\'s');
+    }
+    if (o.role === 'readiness-probe' && ![before, after].some((s) => s.selfPid === o.pid &&
+      s.selfCreatedMs === o.createdMs)) bad('a probe process is not that of a snapshot');
+  });
+  const again = JSON.parse(JSON.stringify(rcore.decideReadiness({ policy: ctx.doc.policy,
+    expected: input.expected, bindingSource: input.bindingSource, logicalCpus: input.logicalCpus,
+    readings: input.readings, before, after, owned: input.owned, budget: input.budget })));
+  if (!same(again, rec.decision)) bad('the recorded decision is not the one the retained data give');
+  if (again.complete !== true || again.admitted !== true) bad('the retained data do not admit the run');
+  if (!admission || !(admission.callToSpawnMs <= rcore.LIMITS.callToSpawnMs) ||
+    admission.lateStart !== false) {
+    bad('more than 60 s between the call and the payload');
+  }
+  return p;
+}
 
 /** One run folder read as bytes and parsed JSON: { dir, files, subdirs, text(name), json(name), bytes }. */
 function readRunFolder(dirAbs) {
@@ -94,8 +207,21 @@ function judgeRun(run, ctx) {
   const wrapper = run.json('wrapper.json');
   const ledgerBytes = run.bytes('ledger.json');
   const r = result.value;
-  if (r && r.outcome === 'control-hold' && r.payloadStarted === false && ledgerBytes === null &&
-    problems.length === 0) {
+  // F5: a hold is a control-hold that started no payload and left no payload sign at all: no tee/command
+  // record, no transcript, stdout, stderr or ledger. (A wrapper.json that says `foreign-lock-watch` and is
+  // the only file of the folder is the shape of a watch give-up and counts as a hold too.)
+  const payloadSigns = ['transcript.txt', 'stdout.txt', 'stderr.txt', 'ledger.json']
+    .filter((n) => run.files.indexOf(n) !== -1);
+  const pidRows = run.rows('pids.jsonl') || [];
+  const payloadRows = pidRows.filter((x) => x && (x.role === 'tee' || x.role === 'command' ||
+    x.event === 'command-exit' || x.event === 'tee-exit'));
+  if (r && r.outcome === 'control-hold' && r.payloadStarted === false && payloadSigns.length === 0 &&
+    payloadRows.length === 0 && problems.length === 0) {
+    return { status: 'hold', problems: [] };
+  }
+  const wv = wrapper.value;
+  if (!result.present && wv && wv.outcome === 'control-hold' && wv.heldAt === 'foreign-lock-watch' &&
+    run.files.length === 1 && run.files[0] === 'wrapper.json' && problems.length === 0) {
     return { status: 'hold', problems: [] };
   }
   [['result.json', result], ['wrapper.json', wrapper]].forEach(([name, parsed]) => {
@@ -135,13 +261,16 @@ function judgeRun(run, ctx) {
   if (!admission || admission.decision !== 'proceed') bad('admission.json: not proceed');
   if (!acquisition || acquisition.decision !== 'proceed') bad('acquisition.json: not proceed');
   if (!binding || binding.ok !== true) bad('binding.json: not ok');
-
   const request = run.json('request.json').value;
+  // F6: a complete A readiness record, re-decided here from the retained raw data
+  readinessProblems(run, admission, request, pidRows, ctx).forEach(bad);
+
   if (!request) bad('request.json is missing or not JSON');
   else {
     if (request.profile !== 'gp-recorder' || request.standin !== false || request.allowExit1 !== false) {
       bad('request.json: not a real recorder request');
     }
+    if (request.command && request.command.exec !== undefined) bad('request.json: command.exec is set');
     if (!request.plan || request.plan.manifestSha256 !== doc.manifestSha256) bad('request.json: plan');
     if (!same(request.chunk, chunk)) bad('request.json: the chunk differs from the manifest');
     if (request.attempt !== slot.attempt || request.runId !== slot.runId) bad('request.json: slot');
@@ -293,7 +422,8 @@ function evaluate(input) {
       doc.runSlots.filter((s) => s.role === 'chunk' && s.chunkId === chunk.chunkId).forEach((slot) => {
         const run = input.runFolders.get(slot.dir) || null;
         list.push({ slot, verdict: judgeRun(run, { doc, slot, chunk, expectedIdentity: input.expectedIdentity,
-          base: input.base, checkHead: input.checkHead, realRun: input.realRun, planRel: input.planRel }) });
+          base: input.base, checkHead: input.checkHead, realRun: input.realRun, planRel: input.planRel,
+          bindingJournal: input.bindingJournal }) });
       });
       verdicts.set(chunk.chunkId, list);
     });

@@ -17,6 +17,7 @@ const plan = require('./plan-data.js');
 const loader = require('./loader.js');
 const ledger = require('./ledger-schema.js');
 const { chunkAttempts } = require('./attempts.js');
+const journals = require('./journals.js');
 const standin = require('./standin-gp.js');
 const { sha256 } = require('./common.js');
 
@@ -396,8 +397,10 @@ async function attemptTests() {
     'wrapper.json': { chunkId: CHUNK, outcome }, 'admission.json': { decision: 'proceed' },
     'result.json': { outcome, payloadStarted: true }, 'transcript.txt': '$ node x\n',
     'pids.jsonl': '{"role":"tee"}\n' });
+  // the committed rulings journal as journals.rulingsState reads it (the text is the committed text at HEAD)
+  const rulingsState = (text) => journals.rulingsState(() => text, 'a'.repeat(40), null);
   const input = (over) => Object.assign({ baseDir: gpDir, chunkId: CHUNK, runId: 'now',
-    ledgerFile: at('att', 'c.jsonl'), nowMs: 10000000 }, over || {});
+    ledgerFile: at('att', 'c.jsonl'), rulings: rulingsState(''), nowMs: 10000000 }, over || {});
   const clearRuns = () => {
     for (const name of fs.readdirSync(gpDir)) {
       fs.rmSync(path.join(gpDir, name), { recursive: true, force: true });
@@ -509,6 +512,131 @@ async function attemptTests() {
     const a = chunkAttempts(input());
     assert.strictEqual(a.admissions, 0);
     assert.strictEqual(a.decision, 'allow', a.reasons.join());
+  });
+
+  // ---- F1, F2, F3 (SA1): the pre-window hold, the sign of a payload, the committed rulings -------------
+  // the held run is released at 1,000,000 ms, `asked` is at 1,001,000 ms: a ruling dated 1,000,500 is current
+  const ruling = (over) => JSON.stringify(Object.assign({ chunkId: CHUNK, heldRunId: 'cell-x.i0.n50.a1',
+    allowAttempt: 2, ref: 'SA2 ruling 1', at: new Date(1000500).toISOString() }, over || {})) + '\n';
+  const asked = (text, over) => chunkAttempts(input(Object.assign({ rulings: rulingsState(text),
+    nowMs: 1000000 + 1000 }, over || {})));
+  const freshHold = (extra) => {
+    clearRuns();
+    heldRun('cell-x.i0.n50.a1', extra);
+    fs.writeFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a1'));
+  };
+
+  await test('F1: a pre-window-hold line of the C log names no folder and consumes no admission', () => {
+    clearRuns();
+    fs.writeFileSync(at('att', 'c.jsonl'), JSON.stringify({ schema: 'ms18d-c-run-1', type: 'pre-window-hold',
+      chunkId: CHUNK, attempt: 1, runId: 'cell-x.i0.n50.a1', outcome: 'pre-window-hold' }) + '\r\n');
+    const a = chunkAttempts(input());
+    assert.strictEqual(a.admissions, 0);
+    assert.deepStrictEqual(a.problems, []);
+    assert.strictEqual(a.decision, 'allow', a.reasons.join());
+    // the same line without its type would be a log line whose folder is gone (a problem)
+    fs.writeFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a1'));
+    assert.strictEqual(chunkAttempts(input()).decision, 'refuse');
+  });
+
+  await test('F2/F5: a stdout, stderr or ledger file is a sign of a payload, as a transcript is', () => {
+    ['stdout.txt', 'stderr.txt', 'ledger.json'].forEach((name) => {
+      clearRuns();
+      run('cell-x.i0.n50.a1', { 'request.json': request(), 'wrapper.json': { chunkId: CHUNK },
+        'result.json': { outcome: 'control-hold', payloadStarted: false }, [name]: 'x' });
+      fs.writeFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a1'));
+      const a = chunkAttempts(input());
+      assert.ok(a.problems.some((p) => /records show one/.test(p)), name + ': ' + a.problems.join());
+      assert.strictEqual(a.decision, 'refuse', name);
+    });
+  });
+
+  await test('F3: a committed ruling for an unstarted hold allows attempt 2 (no 60 s, no eligibility)',
+    () => {
+      freshHold();
+      const a = asked(ruling());
+      assert.strictEqual(a.decision, 'allow', a.reasons.join());
+      assert.strictEqual(a.ruling.ref, 'SA2 ruling 1');
+      assert.strictEqual(a.rulingsJournal.entryCount, 1, 'the journal reference is recorded');
+      assert.strictEqual(asked('').decision, 'refuse', 'no ruling = no re-ask of a plain hold');
+    });
+
+  await test('F3: only the matching chunk and held run: another chunk, run or attempt is not covered', () => {
+    freshHold();
+    [{ chunkId: 'other.i0.n25' }, { heldRunId: 'cell-x.i0.n50.a2' }].forEach((over) => {
+      assert.strictEqual(asked(ruling(over)).decision, 'refuse', JSON.stringify(over));
+    });
+  });
+
+  await test('F3: never after a started payload and never beyond two admissions', () => {
+    clearRuns();
+    startedRun('cell-x.i0.n50.a1', 'stop');
+    fs.writeFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a1', { controllerOutcome: 'stop' }));
+    const started = asked(ruling());
+    assert.strictEqual(started.decision, 'refuse');
+    assert.ok(started.reasons.some((r) => /payload-already-started/.test(r)));
+    freshHold();
+    heldRun('cell-x.i0.n50.a2');
+    fs.appendFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a2'));
+    const third = asked(ruling() + ruling({ heldRunId: 'cell-x.i0.n50.a2' }), { runId: 'third' });
+    assert.strictEqual(third.decision, 'refuse');
+    assert.ok(third.reasons.some((r) => /at most two/.test(r)));
+  });
+
+  await test('F3: a stale ruling (before the release) or a prospective one (after now) is no authority',
+    () => {
+    freshHold();
+    const stale = asked(ruling({ at: new Date(999000).toISOString() }));
+    assert.strictEqual(stale.decision, 'refuse');
+    assert.ok(stale.reasons.some((r) => /the ruling is stale/.test(r)), stale.reasons.join());
+    const prospective = asked(ruling({ at: new Date(1002000).toISOString() }));
+    assert.strictEqual(prospective.decision, 'refuse');
+    assert.ok(prospective.reasons.some((r) => /the ruling is prospective/.test(r)),
+      prospective.reasons.join());
+    assert.strictEqual(asked(ruling({ at: new Date(1000000).toISOString() })).decision, 'allow',
+      'dated at the release itself is current');
+    assert.strictEqual(asked(ruling({ at: new Date(1001000).toISOString() })).decision, 'allow',
+      'dated at now itself is current');
+    // an eligible hold needs no ruling: a stale one does not stand in the way once the 60 s have passed
+    freshHold({ eligibleReAsk: true });
+    const eligible = asked(ruling({ at: new Date(999000).toISOString() }), { nowMs: 1000000 + 60000 });
+    assert.strictEqual(eligible.decision, 'allow', eligible.reasons.join());
+    assert.strictEqual(eligible.ruling, null);
+  });
+
+  await test('F3: an absent, malformed, contradictory or not exactly shaped journal is a problem', () => {
+    freshHold();
+    ['{broken\n', ruling({ allowAttempt: 3 }), ruling({ ref: '' }), ruling({ at: undefined }),
+      ruling({ heldRunId: undefined }), ruling({ at: 'soon' }), ruling({ extra: 1 }),
+      ruling() + ruling({ ref: 'again' })].forEach((text) => {
+      const a = asked(text);
+      assert.strictEqual(a.decision, 'refuse', text);
+      assert.ok(a.problems.some((p) => /the rulings journal: ruling line/.test(p)),
+        text + ' ' + a.problems.join());
+    });
+    const none = chunkAttempts(input({ rulings: null, nowMs: 1001000 }));
+    assert.strictEqual(none.decision, 'refuse', 'no journal read = no ruling and no allowance');
+    assert.ok(none.problems.some((p) => /no committed rulings journal was read/.test(p)));
+    assert.strictEqual(asked('').decision, 'refuse', 'an empty journal rules nothing');
+    const keptBase = journals.rulingsState((args) => (args[1].startsWith('b') ? ruling() : ruling() +
+      ruling({ chunkId: 'c2' })), 'a'.repeat(40), 'b'.repeat(40));
+    assert.ok(keptBase.ok, 'an appended journal keeps the base version as a prefix');
+    const rewritten = journals.rulingsState(
+      (args) => (args[1].startsWith('b') ? ruling({ ref: 'x' }) : ruling()), 'a'.repeat(40), 'b'.repeat(40));
+    assert.strictEqual(rewritten.ok, false);
+    assert.ok(/does not keep the version committed at the base/.test(rewritten.problems.join()));
+    assert.strictEqual(chunkAttempts(input({ rulings: rewritten, nowMs: 1001000 })).decision, 'refuse');
+  });
+
+  await test('F3: the rulings and host-binding journals are the pack files, read by the same code', () => {
+    assert.strictEqual(journals.RULINGS_REL, 'tasks/difficulty-v3/MS18d-gp-rulings.jsonl');
+    assert.strictEqual(journals.BINDINGS_REL, 'tasks/difficulty-v3/MS18d-gp-host-bindings.jsonl');
+    assert.strictEqual(journals.EVIDENCE_DIR, 'tasks/difficulty-v3/MS18d-gp-host-evidence/');
+    const src = fs.readFileSync(path.join(__dirname, 'controller.js'), 'utf8');
+    assert.ok(/journalsMod\.rulingsState\(io\.git, head, base\)/.test(src),
+      'the controller reads the committed text');
+    const payload = fs.readFileSync(path.join(__dirname, 'payload-gp.js'), 'utf8');
+    assert.ok(!/rulingsFile|readRulings/.test(payload));
   });
 }
 

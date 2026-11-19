@@ -1,0 +1,64 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795084654156,
+  "startedAtMs": 1795084654231,
+  "lockAcquiredAtMs": 1795084654161,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795084638656,
+    "lastCheckMs": 1795084653956,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 75,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795083755154,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 899077,
+  "reasons": [],
+  "decision": "proceed",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 30260,
+    "task": "stand-in stop-wrong-count",
+    "controllerPid": 6304,
+    "controllerParentPid": 30260,
+    "wrapperPid": 30260
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-rSjWc3\\stop-wrong-count\\logs\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-rSjWc3\\stop-wrong-count\\logs\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-rSjWc3\\stop-wrong-count\\logs\\c.jsonl",
+      "present": true
+    }
+  ]
+}

@@ -57,7 +57,9 @@ function describeRun(dir, problems) {
     (wrapper && wrapper.chunkId) || null;
   const pids = pidsOf(path.join(dir, 'pids.jsonl'));
   const hasPayloadRecord = pids.some((r) => r && (r.role === 'tee' || r.role === 'command'));
-  const hasTranscript = fs.existsSync(path.join(dir, 'transcript.txt'));
+  // a transcript, a stream or a ledger is a sign of a payload (F2/F5): an uncertain start is never unstarted
+  const hasTranscript = ['transcript.txt', 'stdout.txt', 'stderr.txt', 'ledger.json']
+    .some((name) => fs.existsSync(path.join(dir, name)));
   const admitted = !!(admission && admission.decision === 'proceed');
   let payloadStarted;
   if (result) {
@@ -78,7 +80,15 @@ function describeRun(dir, problems) {
 
 /**
  * `input`: { baseDir (gp/<cell>), chunkId, runId (the run being prepared, skipped), ledgerFile (the C lock
- * log) | null, nowMs }. Returns { schema, chunkId, runs, admissions, payloads, problems, decision, reasons }.
+ * log) | null, rulings (journals.rulingsState: the COMMITTED journal at the admitted HEAD) | null, nowMs }.
+ * Returns { schema, chunkId, runs, admissions, payloads, problems, ruling, rulingsJournal, decision,
+ * reasons }.
+ * F3: a committed ruling line {chunkId, heldRunId, allowAttempt: 2, ref, at} is honoured only for a chunk
+ * with ONE admission that started no payload (so never after a started payload and never beyond two
+ * admissions), and only while it is neither stale (dated before the verified release of the hold it rules
+ * on) nor prospective (dated after now); it stands in for the eligible-hold and 60 s conditions of a
+ * re-ask. A journal that is absent, malformed, contradictory or does not keep its base version is a
+ * problem, not authority.
  */
 function chunkAttempts(input) {
   const problems = [];
@@ -96,8 +106,16 @@ function chunkAttempts(input) {
   if (input.ledgerFile && fs.existsSync(input.ledgerFile)) {
     const parsed = readJsonl(input.ledgerFile);
     parsed.problems.forEach((p) => problems.push('the C lock log: ' + p));
-    parsed.entries.forEach((e) => { if (e.value && e.value.chunkId === input.chunkId) rows.push(e.value); });
+    // F1: a pre-window hold created no folder and consumed no admission
+    parsed.entries.forEach((e) => {
+      if (e.value && e.value.chunkId === input.chunkId && e.value.type !== 'pre-window-hold') {
+        rows.push(e.value);
+      }
+    });
   }
+  const rulings = input.rulings || { entries: [], problems: ['no committed rulings journal was read'],
+    reference: null };
+  rulings.problems.forEach((p) => problems.push('the rulings journal: ' + p));
   const runIdOf = (row) => path.posix.basename(String(row.runDir || '').replace(/\\/g, '/'));
   rows.forEach((row) => {
     const id = runIdOf(row);
@@ -121,20 +139,35 @@ function chunkAttempts(input) {
   const admissions = runs.length;
   const payloads = runs.filter((r) => r.payloadStarted).length;
   const reasons = [];
+  let ruling = null;
   if (problems.length > 0) reasons.push('attempt-records-inconsistent');
   if (payloads >= 1) reasons.push('chunk-payload-already-started: no retry and no replacement');
   if (admissions >= MAX_ADMISSIONS) reasons.push('chunk-admissions-used: at most two per chunk');
   else if (admissions === 1 && payloads === 0) {
     const last = runs[0];
-    if (!last.eligibleReAsk) reasons.push('the earlier admission was not an eligible unstarted hold');
-    else if (!(last.releaseMs && input.nowMs - last.releaseMs >= REASK_WAIT_MS)) {
-      reasons.push('a re-ask needs at least 60 s after the verified release of the earlier admission');
+    const named = rulings.entries.filter((r) => r.chunkId === input.chunkId &&
+      r.heldRunId === last.runId)[0];
+    let notAuthority = null;
+    if (named) {
+      const at = parseIsoMs(named.at);
+      if (!(last.releaseMs && at >= last.releaseMs)) {
+        notAuthority = 'the ruling is stale: dated before the verified release of the hold it rules on';
+      } else if (at > input.nowMs) notAuthority = 'the ruling is prospective: dated after now';
+      else ruling = named;
+    }
+    // F3: a valid committed ruling for this held run stands in for the eligible-hold and 60 s conditions
+    if (!ruling) {
+      if (!last.eligibleReAsk) reasons.push('the earlier admission was not an eligible unstarted hold');
+      else if (!(last.releaseMs && input.nowMs - last.releaseMs >= REASK_WAIT_MS)) {
+        reasons.push('a re-ask needs at least 60 s after the verified release of the earlier admission');
+      }
+      if (notAuthority && reasons.length > 0) reasons.push(notAuthority);
     }
   }
   return { schema: 'ms18d-c-attempts-1', chunkId: input.chunkId, runs: runs.map((r) => ({ runId: r.runId,
     admitted: r.admitted, payloadStarted: r.payloadStarted, eligibleReAsk: r.eligibleReAsk,
-    outcome: r.outcome })), admissions, payloads, problems, reasons,
-  decision: reasons.length === 0 ? 'allow' : 'refuse' };
+    outcome: r.outcome })), admissions, payloads, problems, reasons, ruling,
+  rulingsJournal: rulings.reference, decision: reasons.length === 0 ? 'allow' : 'refuse' };
 }
 
 module.exports = { chunkAttempts, MAX_ADMISSIONS, REASK_WAIT_MS };

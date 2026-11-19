@@ -158,9 +158,13 @@ const recorder = {
       }
       if (!chunk || !same(chunk, request.chunk)) problems.push('the request chunk is not the planned entry');
       const attempts = chunkAttempts({ baseDir: path.dirname(path.resolve(request.runDir)),
-        chunkId: request.chunk.chunkId, runId: request.runId, ledgerFile: ctx.cLedger, nowMs: ctx.nowMs });
+        chunkId: request.chunk.chunkId, runId: request.runId, ledgerFile: ctx.cLedger,
+        rulings: ctx.journals ? ctx.journals.rulings : null, nowMs: ctx.nowMs });
       records['attempts.json'] = attempts;
       if (attempts.decision !== 'allow') attempts.reasons.forEach((r) => problems.push('attempts: ' + r));
+      if (request.attempt === 1 && attempts.admissions >= 1) {
+        problems.push('attempt 1 although another run folder of the chunk exists');
+      }
       if (request.attempt === 2 && attempts.admissions < 1) problems.push('attempt 2 without an attempt 1');
     }
     records['plan-check.json'] = { schema: 'ms18d-c-plan-check-1', ok: problems.length === 0, problems,

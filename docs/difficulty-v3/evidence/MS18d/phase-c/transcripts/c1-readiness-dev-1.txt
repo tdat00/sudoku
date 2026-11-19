@@ -1,0 +1,58 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\test-readiness.js
+ok   binding: the initial record alone is the binding in force; the pack record is optional
+ok   binding: the LAST verified rebinding line is in force and every one stays allowed
+ok   binding: a line that is not JSON, not a binding, or without ref and at is never skipped
+ok   binding: the initial record must itself be valid
+ok   host: the exact instance verifies; the display name is never compared
+ok   host: a missing process is `absent`; no binding is `unbound`
+ok   host: every fact is compared on its own: a different one is a replaced instance
+ok   host: a fact the probe could not read (null) or an error is `unreadable`, never verified
+ok   host: the name and path compare without case (Windows), the times exactly
+ok   counters: five valid intervals give the busy cores of each; mean, max and ready
+ok   counters: busy cores sum over the logical processors, with no normalisation
+ok   ready: mean <= 0.5 and max <= 1.0 are inclusive, unrounded
+ok   counters: the interval clock must say 900..1600 ms (the bounds are valid, outside is not)
+ok   counters: a wrong processor count, a missing reading or a broken counter is invalid, not idle
+ok   consumers: a quiet table has none; every process of the table was observed
+ok   consumers: >= 0.5 CPU-s per elapsed second is a consumer, exactly 0.5 included, 0.4999 not
+ok   consumers: ONLY the host itself, the idle process and this run's own processes are excluded
+ok   consumers: the host's descendants and other Copilot/OS processes are NOT exempt
+ok   consumers: a process is told apart by PID plus creation time: a reused PID is a NEW process
+ok   consumers: a process that appeared in the window is judged on its CPU over the whole window
+ok   consumers: a process that vanished is recorded, never classified or invented
+ok   consumers: unknown data is invalid: no creation or CPU time, a CPU time that went backwards
+ok   consumers: an unusable snapshot, or a window shorter than the intervals, is invalid
+ok   decision: a quiet run is ready, admitted, complete, not an eligible hold
+ok   decision: ready and admitted are kept apart: a busy host admits under A without being `ready`
+ok   decision: the other direction: ready does not admit when a consumer is present
+ok   decision: an additional consumer ONLY is an eligible re-ask (complete, not admitted)
+ok   decision: a mixed hold is never eligible: a consumer AND a replaced host
+ok   decision: a replaced, absent or half-replaced host holds without eligibility
+ok   decision: the tooling does not rebind: a replaced host is held again and again
+ok   decision: bad facts hold with no eligibility: counters, snapshot, host binding, timeout, policy
+ok   decision: both queries must be recorded
+ok   decision: the limits are the ones of the pack
+ok   runtime: readiness is required for every real recorder run and where asked
+ok   runtime: a corrupt rebinding record holds (never skipped, never the initial one)
+ok   runtime: a REAL run takes the frozen probe and binding files and no fixture
+ok   runtime: a quiet stand-in run is admitted; the wrapper, the controller and the probes are owned
+ok   runtime: a rebinding line recorded by the pack is the binding in force
+ok   runtime: a replaced host holds until a verified rebinding is recorded; nothing is written
+ok   runtime: an additional consumer, and only that, is an eligible hold
+ok   runtime: a query that fails or times out is a hold that is not an eligible re-ask
+ok   runtime: counters that cannot be read, or a readiness over 45 s, hold
+ok   runtime: a missing binding file, a policy other than A, a missing probe: holds
+ok   controller: an admitted readiness: every record is written, the payload runs
+ok   controller: a busy host with no additional consumer is admitted under A (ready is false)
+ok   controller: an additional consumer is a hold with NO payload and an eligible re-ask
+ok   controller: the 0.5 CPU-s/s boundary: exactly 0.5 holds, 0.4999 proceeds
+ok   controller: a replaced host holds with no payload, no eligibility and no rebinding
+ok   controller: a consumer together with a replaced host is mixed: not eligible
+ok   controller: a failed or timed-out query is a hold, never idle, never eligible
+ok   controller: more than 45 s of readiness is a hold
+ok   controller: more than 60 s since the call holds rather than starting late (limit shortened here)
+ok   controller: a real recorder run without a configured readiness is held, not started
+ok   controller: an earlier hold (source binding) means no sampling at all
+ok   controller: policy B (strict-quiet) is not built: a hold
+55 passed, 0 failed
+exit=0 seconds=8.358

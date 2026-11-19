@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\check-format.js
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-run-locked-c.ps1: line 1026 has 111 characters
+checked 731 files, 1 with problems
+exit=1 seconds=0.494

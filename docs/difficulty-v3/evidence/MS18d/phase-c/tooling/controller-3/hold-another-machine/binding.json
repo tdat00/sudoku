@@ -1,0 +1,64 @@
+{
+  "schema": "ms18d-c-binding-1",
+  "ok": false,
+  "problems": [
+    "machine cpu Other differs from AMD EPYC 7763 64-Core Processor"
+  ],
+  "head": {
+    "actual": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "base": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "descendant": true,
+    "diff": {
+      "paths": [],
+      "violations": []
+    },
+    "ok": true
+  },
+  "status": {
+    "rawText": [],
+    "rawClean": true,
+    "reviewedClean": true,
+    "entries": [],
+    "allowed": [],
+    "violations": []
+  },
+  "identities": {
+    "hashIdentity": "H",
+    "replayIdentity": "R",
+    "sources": "S"
+  },
+  "table": {
+    "sha256": "TABLE",
+    "expected": "TABLE"
+  },
+  "cell": {
+    "key": "classic4/veryEasy",
+    "target": 31,
+    "expected": 31
+  },
+  "node": {
+    "actual": "v26.13.0",
+    "expected": "v26.13.0"
+  },
+  "machine": {
+    "actual": {
+      "cpu": "Other",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    },
+    "expected": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    }
+  },
+  "helpers": {
+    "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-rSjWc3\\manifest.txt",
+    "entries": 45,
+    "mismatches": [],
+    "missing": [],
+    "sha256": "d7dd731a708b05700c0dd679afb214ddc28f622ba60eb8f983f14b40f2c5d539"
+  }
+}

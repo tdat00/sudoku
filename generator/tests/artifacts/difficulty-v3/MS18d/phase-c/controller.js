@@ -44,8 +44,46 @@ const { collectReleases } = require('./release-history.js');
 const { decideAcquisition } = require('./acquisition.js');
 const { bindSource, declaredRunDirs } = require('./source-binding.js');
 const { payloadFor, boundedResult } = require('./payloads.js');
+const { readinessRequired, runReadiness } = require('./readiness.js');
+const { LIMITS: READINESS_LIMITS } = require('./readiness-core.js');
+const journalsMod = require('./journals.js');
 
 const EXIT = { HOLD: 64, STOP: 65, BARRIER: 66, ERROR: 67 };
+
+/** The committed journals at the admitted HEAD: { head, base, rulings, hostBinding } (journals.js). */
+function loadJournals(io, head, base) {
+  try {
+    return { head, base: base || null, rulings: journalsMod.rulingsState(io.git, head, base),
+      hostBinding: journalsMod.hostBindingState(io.git, head, base) };
+  } catch (err) {
+    const problem = ['the journals could not be read: ' + err.message];
+    return { head, base: base || null,
+      rulings: { ok: false, entries: [], problems: problem, reference: null },
+      hostBinding: { ok: false, current: null, expected: null, reference: null, problems: problem } };
+  }
+}
+
+/** What journals.json says: the references and problems of both journals (never their raw lines). */
+function journalRecord(j) {
+  return { schema: 'ms18d-c-journals-1', head: j.head, base: j.base,
+    rulings: { ok: j.rulings.ok, reference: j.rulings.reference, problems: j.rulings.problems },
+    hostBinding: { ok: j.hostBinding.ok, reference: j.hostBinding.reference,
+      problems: j.hostBinding.problems } };
+}
+
+/** What admission.json says of the readiness: the verdicts and the references to its retained records. */
+function readinessSummary(required, readiness, reasons) {
+  if (!required) return null;
+  if (!readiness) {
+    return { schema: 'ms18d-c-readiness-1', required: true, ran: false, complete: false, ready: false,
+      admitted: false, eligibleReAsk: false, kind: 'hold', reasons };
+  }
+  const d = readiness.decision;
+  return { schema: d.schema, required: true, ran: true, policy: d.policy, complete: d.complete,
+    ready: d.ready, admitted: d.admitted, eligibleReAsk: d.eligibleReAsk, kind: d.kind,
+    binding: readiness.record.inputs.binding,
+    file: 'readiness.json', sha256: readiness.sha256, reasons: d.reasons.map((r) => r.kind + ': ' + r.text) };
+}
 
 const REAL_GP = path.resolve(__dirname, '..', '..', '..', '..', '..', '..', 'docs', 'difficulty-v3',
   'evidence', 'MS18d', 'gp');
@@ -96,15 +134,19 @@ function readLockState() {
   return state;
 }
 
-function fixtureIo(file) {
+function fixtureIo(file, base) {
   const f = JSON.parse(fs.readFileSync(file, 'utf8'));
   return {
     git: (args) => {
       if (args[0] === 'rev-parse') return f.head + '\n';
       if (args[0] === 'status') return f.statusPorcelainZ || '';
       if (args[0] === 'show') {
-        const text = f.committed && f.committed[args[1].replace(/^HEAD:/, '')];
-        if (text === undefined) throw new Error('not committed');
+        // `<ref>:<path>`: the committed files at HEAD, or at the campaign base when the fixture has them
+        const m = /^([^:]+):(.*)$/.exec(args[1]);
+        const atBase = m && m[1] !== 'HEAD' && m[1] === base && m[1] !== f.head && f.committedBase;
+        const map = atBase ? f.committedBase : f.committed;
+        const text = map && m && map[m[2]];
+        if (text === undefined || text === null) throw new Error('not committed');
         return text;
       }
       if (args[0] === 'merge-base') {
@@ -238,7 +280,8 @@ async function main(argv) {
     if (request.bindingFixture && request.standin !== true) {
       throw new Error('a binding fixture is for stand-ins only');
     }
-    const io = request.bindingFixture ? fixtureIo(request.bindingFixture)
+    const io = request.bindingFixture
+      ? fixtureIo(request.bindingFixture, request.expected && request.expected.base)
       : require('./source-io.js').liveIo(request.repo);
     const ledgerRuns = [];
     if (request.cLedger && fs.existsSync(request.cLedger)) {
@@ -266,30 +309,80 @@ async function main(argv) {
     if (planProblems.length > 0) binding.ok = false;
     writeJsonExclusive(file('binding.json'), binding);
 
+    // the committed journals of the pack (F3 rulings, the host-binding journal), read at the admitted HEAD
+    // and checked against the version committed at the campaign base; only after the source binding held
+    let journals = null;
+    if (binding.ok) {
+      journals = loadJournals(io, binding.head && binding.head.actual,
+        request.expected && request.expected.base);
+      writeJsonExclusive(file('journals.json'), journalRecord(journals));
+    }
+
     // the payload type's own checks of its plan and of the attempts of its unit (R4), recorded before the
     // admission
     let extra = { ok: true, problems: [] };
     if (payload.extraChecks) {
-      extra = payload.extraChecks(request, { runDir, cLedger: request.cLedger || null, nowMs: Date.now() });
+      extra = payload.extraChecks(request, { runDir, cLedger: request.cLedger || null, nowMs: Date.now(),
+        journals });
       Object.keys(extra.records || {}).forEach((name) => writeJsonExclusive(file(name), extra.records[name]));
     }
 
-    // the final lock recheck, immediately before the payload
+    // C1: the readiness of policy A, only when every earlier check holds (sampling after the source hashing
+    // of the binding, inside the held lock); a real recorder run without a configured readiness is a hold
+    const needsReadiness = readinessRequired(request, payload);
+    let readiness = null;
+    const readinessReasons = [];
+    if (needsReadiness && binding.ok && extra.ok) {
+      if (!request.readiness) {
+        readinessReasons.push('readiness is not configured for this run (a real recorder run needs it)');
+      } else {
+        readiness = await runReadiness({ request, controllerPid: process.pid, requestedAtMs,
+          binding: journals && journals.hostBinding });
+        const rec = readiness.record;
+        const beforeSha = readiness.before ? writeJsonExclusive(file('readiness-before.json'),
+          readiness.before) : null;
+        const afterSha = readiness.after ? writeJsonExclusive(file('readiness-after.json'),
+          readiness.after) : null;
+        rec.snapshots = { before: beforeSha ? { file: 'readiness-before.json', sha256: beforeSha } : null,
+          after: afterSha ? { file: 'readiness-after.json', sha256: afterSha } : null };
+        readiness.sha256 = writeJsonExclusive(file('readiness.json'), rec);
+        if (!readiness.decision.admitted) {
+          readiness.decision.reasons.forEach((r) => readinessReasons.push(r.kind + ': ' + r.text));
+        }
+      }
+    }
+
+    // the final lock recheck, immediately before the payload, and the time since the call
     const recheck = readLockState();
     const stable = recheck.sharedPresent && recheck.raw === lock.raw && !recheck.timingPresent;
+    const callToSpawnMs = Number.isFinite(requestedAtMs) ? Date.now() - requestedAtMs : null;
+    // 60 s between the call and the payload; a stand-in may shorten it to test the hold
+    const callLimitMs = request.standin === true && Number.isFinite(request.callToSpawnLimitMs)
+      ? request.callToSpawnLimitMs : READINESS_LIMITS.callToSpawnMs;
+    const late = callToSpawnMs === null || callToSpawnMs > callLimitMs;
     const admission = { schema: 'ms18d-c-admission-1', acquisition: acquisition.decision, binding: binding.ok,
       payloadChecks: extra.ok, finalLockRecheck: { stable, sharedPresent: recheck.sharedPresent,
         timingPresent: recheck.timingPresent },
-      readiness: null,
-      note: 'CPU readiness is C1 work; C0 admits on acquisition, binding and the lock recheck only' };
-    admission.decision = acquisition.decision === 'proceed' && binding.ok && extra.ok && stable
-      ? 'proceed' : 'hold';
+      readiness: readinessSummary(needsReadiness, readiness, readinessReasons),
+      callToSpawnMs, callToSpawnLimitMs: callLimitMs, lateStart: late };
+    const readinessOk = !needsReadiness || (readiness !== null && readiness.decision.admitted);
+    admission.decision = acquisition.decision === 'proceed' && binding.ok && extra.ok && stable &&
+      readinessOk && !late ? 'proceed' : 'hold';
     writeJsonExclusive(file('admission.json'), admission);
     if (admission.decision !== 'proceed') {
       const reasons = [].concat(binding.ok ? [] : binding.problems, extra.ok ? [] : extra.problems,
-        stable ? [] : ['the lock changed before the payload']);
-      return finish({ outcome: 'control-hold', payloadStarted: false, reasons, heldAt: 'binding' },
-        EXIT.HOLD);
+        readinessReasons, stable ? [] : ['the lock changed before the payload'],
+        late ? ['more than 60 s since the call: ' + callToSpawnMs + ' ms'] : []);
+      const eligible = !!readiness && readiness.decision.eligibleReAsk === true && binding.ok && extra.ok &&
+        stable && !late;
+      let heldAt = 'binding';
+      if (binding.ok && extra.ok) {
+        if (!readinessOk) heldAt = 'readiness';
+        else if (!stable) heldAt = 'lock-recheck';
+        else heldAt = 'late-start';
+      }
+      return finish({ outcome: 'control-hold', payloadStarted: false, reasons, heldAt,
+        eligibleReAsk: eligible }, EXIT.HOLD);
     }
 
     // the payload, through the tee: from here to the close event of the tee nothing runs but the event wait

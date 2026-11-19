@@ -18,6 +18,7 @@ const { sha256, machineFacts, CRLF } = require('./common.js');
 const { buildLedger, IDENTITY_METHOD } = require('./ledger-schema.js');
 const { frozenRecorderArgs, expectedIdentityOf } = require('./merge-core.js');
 const { manifestText } = require('./make-chunk-manifest.js');
+const { readinessRecord } = require('./standin-readiness.js');
 
 const RUN_BASE = 'docs/difficulty-v3/evidence/MS18d/gp';
 const PLAN_REL = 'docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\gp-chunk-manifest.json';
@@ -162,7 +163,7 @@ function writeRunFolder(repoRoot, made, slot, o) {
   };
   const request = emit('request.json', {
     schema: 'ms18d-c-request-1', runId: slot.runId, task: 'fixture', standin: o.standin === true,
-    profile: 'gp-recorder', allowExit1: false, runDir: dir, repo: repoRoot,
+    profile: 'gp-recorder', allowExit1: false, runDir: dir, repo: repoRoot, wrapperPid: 5000,
     command: { args: frozenRecorderArgs(made.planRel, slot) },
     plan: { file: made.planRel, rawSha256: made.rawSha256, manifestSha256: doc.manifestSha256 },
     chunk, attempt: slot.attempt, policy: doc.policy, expected: { base }
@@ -170,7 +171,20 @@ function writeRunFolder(repoRoot, made, slot, o) {
   const acquisition = emit('acquisition.json', { decision: 'proceed' });
   const binding = emit('binding.json', { ok: true, head: { actual: head, base, descendant: true,
     diff: { paths: [], violations: [] }, ok: true } });
-  const admission = emit('admission.json', { decision: 'proceed' });
+  // C1/F6: a complete admitted readiness record with its raw snapshots, re-decidable by the merger
+  const rr = readinessRecord(o.readiness);
+  const beforeBytes = emit('readiness-before.json', rr.before);
+  const afterBytes = emit('readiness-after.json', rr.after);
+  rr.record.snapshots = {
+    before: beforeBytes ? { file: 'readiness-before.json', sha256: sha256(beforeBytes) } : null,
+    after: afterBytes ? { file: 'readiness-after.json', sha256: sha256(afterBytes) } : null };
+  const readinessBytes = emit('readiness.json', rr.record);
+  const d = rr.decision;
+  const admission = emit('admission.json', { decision: 'proceed', callToSpawnMs: 9000, lateStart: false,
+    readiness: { schema: 'ms18d-c-readiness-1', required: true, ran: true, policy: d.policy,
+      complete: d.complete, ready: d.ready, admitted: d.admitted, eligibleReAsk: d.eligibleReAsk,
+      kind: d.kind, binding: rr.record.inputs.binding, file: 'readiness.json',
+      sha256: readinessBytes ? sha256(readinessBytes) : null, reasons: [] } });
   const sha = (b) => (b === null ? null : sha256(b));
   const helperSha = o.helper ? o.helper.sha256 : '9'.repeat(64);
   const identity = JSON.parse(JSON.stringify(expectedIdentityOf(doc, helperSha, base)));
@@ -194,7 +208,7 @@ function writeRunFolder(repoRoot, made, slot, o) {
       start + '\r\n' + marker + '\r\n');
   }
   if (!omit.has('stderr.txt')) writeText(dir, 'stderr.txt', o.raw && o.raw['stderr.txt'] || '');
-  const rows = [{ role: 'controller', pid: 10 }, { role: 'tee', pid: 11 }, { role: 'command', pid: 12 },
+  const rows = [{ role: 'controller', pid: 5001 }, { role: 'tee', pid: 11 }, { role: 'command', pid: 12 },
     { event: 'command-exit', code: 0, signal: null },
     { event: 'tee-exit', stdoutBytes: 100, stderrBytes: 0 }];
   const rowText = (mutate['pids.jsonl'] ? mutate['pids.jsonl'](rows) : rows).map((r) => JSON.stringify(r))

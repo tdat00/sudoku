@@ -64,7 +64,9 @@ function Wait-SlotQuiet {
     [int]$MaxIntervalMs = 1000, [long]$NotBeforeMs = 0, [string]$TempDir = $env:TEMP)
   if ($script:UseRealWatch) { return & $realWatch @PSBoundParameters }
   $script:WatchCalls.Add([pscustomobject]@{ WindowSeconds = $WindowSeconds; GiveUpSeconds = $GiveUpSeconds
-      NotBeforeMs = $NotBeforeMs })
+      NotBeforeMs = $NotBeforeMs
+      RunFolders = @(Get-ChildItem -LiteralPath $script:RunsRoot -Directory -Recurse `
+          -ErrorAction SilentlyContinue).Count })
   $t = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
   return [pscustomobject][ordered]@{
     schema = 'ms18d-c-watch-1'; startedAtMs = $t - 15400; firstCheckMs = $t - 15400; lastCheckMs = $t - 10
@@ -86,6 +88,7 @@ function Test-Case([string]$name, [scriptblock]$body) {
   } catch {
     $script:failed += $name
     Write-Host "FAIL ${name}: $($_.Exception.Message)"
+    Write-Host "     $($_.ScriptStackTrace -replace "`r?`n", ' | ')"
   }
 }
 function Assert([bool]$condition, [string]$message) {
@@ -269,7 +272,7 @@ Test-Case 'a slot found busy at the request, and a start over 2 s late, is held 
   Assert (-not (Test-Path "$($r.RunDir)\transcript.txt")) 'no payload ran'
 }
 
-Test-Case 'a watch that gives up is a control-hold: no request, no helper, nothing started' {
+Test-Case 'a watch that gives up writes NO run folder: one pre-window-hold line, nothing started (F1)' {
   New-World | Out-Null
   [IO.File]::WriteAllText($timingLock, 'foreign')
   $script:UseRealWatch = $true
@@ -279,13 +282,33 @@ Test-Case 'a watch that gives up is a control-hold: no request, no helper, nothi
     $script:WatchGiveUpSeconds = 1200
     Remove-Item -LiteralPath $timingLock -ErrorAction SilentlyContinue
   }
-  Assert ($r.Outcome -eq 'control-hold' -and $null -eq $r.Exit) "outcome $($r.Outcome)"
-  Assert ((Test-Path "$($r.RunDir)\watch.json") -and
-    -not (Test-Path "$($r.RunDir)\request.json")) 'no request'
-  $rec = @(Get-Ledger)[0]
-  Assert ($rec.outcome -eq 'control-hold' -and $rec.heldAt -eq 'foreign-lock-watch' -and
-    $rec.watch.gaveUp) 'ledger'
+  Assert ($r.Outcome -eq 'control-hold' -and $null -eq $r.Exit -and $null -eq $r.RunDir) `
+    "outcome $($r.Outcome)"
+  Assert (-not (Test-Path "$script:RunsRoot\classic4-veryEasy")) 'no run folder exists'
+  Assert (-not (Test-Path $script:RunsRoot) -or @(Get-ChildItem $script:RunsRoot -Recurse).Count -eq 0) `
+    'nothing'
+  $rows = @(Get-Ledger)
+  Assert ($rows.Count -eq 1) "ledger lines $($rows.Count)"
+  Assert ($rows[0].type -eq 'pre-window-hold' -and $rows[0].outcome -eq 'pre-window-hold' -and
+    $rows[0].heldAt -eq 'foreign-lock-watch' -and $rows[0].watch.gaveUp) 'the typed ledger line'
   Assert (-not (Test-Path $sharedLock)) 'the shared lock was never taken'
+  Assert ($null -eq (Get-LastReleaseC) -or (Get-LastReleaseC) -lt (Get-Date).AddMinutes(-20)) `
+    'a pre-window hold is not a release: the gap clock does not move'
+}
+
+Test-Case 'F1: the run folder is created only AFTER the quiet window; the folder of a refusal never is' {
+  New-World | Out-Null
+  $r = Start-Gp 'f1a'
+  Assert ($script:WatchCalls[0].RunFolders -eq 0) 'no folder existed while the watch ran'
+  Assert (Test-Path "$($r.RunDir)\watch.json") 'the watch record is kept in the folder created afterwards'
+  New-World | Out-Null
+  $keep = $script:HelperManifest
+  try {
+    $script:HelperManifest = [pscustomobject]@{ File = $manifestFile; Sha256 = ('0' * 64); Required = @() }
+    Assert-Throws { Start-Gp 'f1b' } 'not the reviewed one' 'a refusal'
+  } finally { $script:HelperManifest = $keep }
+  Assert ($script:WatchCalls.Count -eq 0) 'the watch was never reached'
+  Assert (-not (Test-Path $script:RunsRoot)) 'no folder and no run base'
 }
 
 Test-Case 'a wrong helper manifest stops before the lock: tampered, unlisted, not the reviewed one' {
@@ -441,10 +464,106 @@ Test-Case 'C0-6: a ledger-writing payload runs on the same transport with its ow
   } finally { $script:PayloadExit1.Remove('standin-ledger') }
 }
 
+# ---- committed journals for the pre-flight (F1/F3/C1): a fake Git whose `show` serves two maps, the texts
+# committed at HEAD and at the campaign base B (a test mutates the maps; the working tree is never consulted)
+$script:Committed = @{}
+$script:CommittedBase = @{}
+$script:FixtureDoc = $null
+
+# A fake Git reader: HEAD, whether the base is its ancestor, the changed names, whether the pack files are
+# tracked, and the committed texts of `git show <ref>:<path>` (HEAD's own map, any other ref reads the base's)
+function New-FakeGit([string]$Head, [bool]$Descendant, [string[]]$Names, [bool]$Tracked,
+  [hashtable]$Show = $script:Committed, [hashtable]$ShowBase = $script:CommittedBase) {
+  return {
+    param([string[]]$a)
+    if ($a[0] -eq 'rev-parse') {
+      return [pscustomobject]@{ Exit = $(if ($Head) { 0 } else { 1 }); Out = $Head }
+    }
+    if ($a[0] -eq 'merge-base') {
+      return [pscustomobject]@{ Exit = $(if ($Descendant) { 0 } else { 1 }); Out = '' }
+    }
+    if ($a -contains 'diff') { return [pscustomobject]@{ Exit = 0; Out = ($Names -join "`n") } }
+    if ($a[0] -eq 'cat-file') {
+      return [pscustomobject]@{ Exit = $(if ($Tracked) { 0 } else { 1 }); Out = '' }
+    }
+    if ($a[0] -eq 'show') {
+      $colon = $a[1].IndexOf(':')
+      $map = $(if ($a[1].Substring(0, $colon) -eq $Head) { $Show } else { $ShowBase })
+      $rel = $a[1].Substring($colon + 1)
+      if ($map.ContainsKey($rel)) { return [pscustomobject]@{ Exit = 0; Out = [string]$map[$rel] } }
+      return [pscustomobject]@{ Exit = 128; Out = '' }
+    }
+    return [pscustomobject]@{ Exit = 2; Out = 'unexpected' }
+  }.GetNewClosure()
+}
+
+# Sets one committed text (HEAD, and the base too with -AlsoBase) and, in a stand-in world, rewrites the
+# binding fixture so that the controller reads the same committed state
+function Set-Committed([string]$Rel, [string]$Text, [switch]$AlsoBase) {
+  $script:Committed[$Rel] = $Text
+  if ($AlsoBase) { $script:CommittedBase[$Rel] = $Text }
+  if ($script:FixtureDoc) {
+    [IO.File]::WriteAllText($script:StandinFixture, ($script:FixtureDoc | ConvertTo-Json -Depth 8))
+  }
+}
+
+# Runs `$Body` over empty committed journals and a fake Git (no stand-in world): the maps and the reader are
+# always restored
+function Invoke-WithFakeJournals([scriptblock]$Body) {
+  $keep = @{ Git = $script:GitOverride; Committed = $script:Committed; Base = $script:CommittedBase }
+  $script:Committed = @{ $script:RulingsRel = ''; $script:HostBindingsRel = '' }
+  $script:CommittedBase = @{ $script:RulingsRel = ''; $script:HostBindingsRel = '' }
+  $script:GitOverride = New-FakeGit ('a' * 40) $true @() $true $script:Committed $script:CommittedBase
+  try { & $Body } finally {
+    $script:GitOverride = $keep.Git
+    $script:Committed = $keep.Committed
+    $script:CommittedBase = $keep.Base
+  }
+}
+
+function Get-TextSha256([string]$Text) {
+  $bytes = [Text.Encoding]::UTF8.GetBytes(($Text -replace '^\uFEFF', '').Replace("`r`n", "`n"))
+  $hex = [BitConverter]::ToString([Security.Cryptography.SHA256]::HashData($bytes)).Replace('-', '')
+  return $hex.ToLowerInvariant()
+}
+
+# One host-binding journal line and its evidence file, for the facts of a host (Get-HostFactsC shape)
+function New-BindingLine([string]$Id, $Replaces, $Facts, [hashtable]$Over = @{}) {
+  $hostObject = [ordered]@{ pid = [int]$Facts.pid; dotNetStartTime = [string]$Facts.netStartUtc
+    cimCreationDateUtcMicroseconds = [string]$Facts.cimCreationUtc; parentPid = [int]$Facts.parentPid
+    executablePath = [string]$Facts.exePath }
+  foreach ($k in @($Over.Keys | Where-Object { $_ -like 'host.*' })) {
+    $hostObject[$k.Substring(5)] = $Over[$k]
+  }
+  $text = ([ordered]@{ schema = 'ms18d-c-host-observation-1'; ok = $true; host = $hostObject } |
+      ConvertTo-Json -Depth 4) + "`n"
+  $entry = [ordered]@{ bindingId = $Id; replaces = $Replaces; host = $hostObject
+    observedAt = '2026-01-02T10:00:00.000+07:00'
+    evidence = [ordered]@{ file = "$($script:EvidenceDirRel)$Id.json"; sha256 = (Get-TextSha256 $text) }
+    ref = "SA2 ruling $Id"; at = '2026-01-02T10:05:00.000+07:00' }
+  foreach ($k in @($Over.Keys | Where-Object { $_ -notlike 'host.*' })) { $entry[$k] = $Over[$k] }
+  return [pscustomobject]@{ Line = ($entry | ConvertTo-Json -Depth 5 -Compress); File = $entry.evidence.file
+    Text = $text }
+}
+
+# Commits a binding chain: lines in order (each a New-BindingLine result) and their evidence files
+function Set-CommittedBindings($Lines, [switch]$AlsoBase) {
+  $joined = @($Lines | ForEach-Object { $_.Line }) -join "`n"
+  $text = $(if (@($Lines).Count -eq 0) { '' } else { $joined + "`n" })
+  foreach ($l in @($Lines)) { Set-Committed $l.File $l.Text -AlsoBase:$AlsoBase }
+  Set-Committed $script:HostBindingsRel $text -AlsoBase:$AlsoBase
+}
+
+function New-RulingLine([string]$Chunk, [string]$Held, [hashtable]$Over = @{}) {
+  $r = Merge-Keys ([ordered]@{ chunkId = $Chunk; heldRunId = $Held; allowAttempt = 2; ref = 'SA2 ruling'
+      at = (Get-Date).AddMinutes(-5).ToString($stamp) }) $Over
+  return ($r | ConvertTo-Json -Compress)
+}
+
 function New-StandinWorld([string]$Name, [string]$Campaign = '') {
   $dir = "$scratch\$Name"
   $sha = (Get-FileHash -LiteralPath $manifestFile -Algorithm SHA256).Hash.ToLowerInvariant()
-  $nodeArgs = @("$tools\standin-world.js", "--repo=$dir")
+  $nodeArgs = @("$tools\standin-world.js", "--repo=$dir", "--wrapper-pid=$PID")
   if ($Campaign) { $nodeArgs += @("--campaign=$Campaign", "--helper-sha=$sha") }
   $json = & node @nodeArgs
   if ($LASTEXITCODE -ne 0) { throw "standin-world.js failed for $Name" }
@@ -454,7 +573,8 @@ function New-StandinWorld([string]$Name, [string]$Campaign = '') {
 # Runs `$Body` over a stand-in world (a fake repository with a fake generator project and a reduced chunk
 # manifest): the wrapper settings are switched to it and always restored.
 function Invoke-InStandinWorld($World, [scriptblock]$Body) {
-  $keep = @{ Repo = $script:RunRepo; Runs = $script:RunsRoot; Expected = $script:Expected }
+  $keep = @{ Repo = $script:RunRepo; Runs = $script:RunsRoot; Expected = $script:Expected
+    Git = $script:GitOverride; Committed = $script:Committed; Base = $script:CommittedBase }
   $script:RunRepo = $World.repo
   $script:RunsRoot = "$($World.repo)\docs\difficulty-v3\evidence\MS18d\gp"
   $script:Expected = [ordered]@{
@@ -469,18 +589,30 @@ function Invoke-InStandinWorld($World, [scriptblock]$Body) {
     $targets[$p.Name] = [int]$p.Value
     $positions += [ordered]@{ key = $p.Name; target = [int]$p.Value }
   }
-  $fx = [ordered]@{
+  # the committed journals of the world (one host binding in force, no ruling), read by the wrapper through
+  # a fake Git and by the controller through the fixture: both see the same maps
+  $script:Committed = @{}
+  foreach ($p in $World.journals.committed.PSObject.Properties) {
+    $script:Committed[$p.Name] = [string]$p.Value
+  }
+  $script:CommittedBase = $script:Committed.Clone()
+  $script:GitOverride = New-FakeGit $World.head $true @() $true $script:Committed $script:CommittedBase
+  $script:FixtureDoc = [ordered]@{
     head = $World.head; statusPorcelainZ = ''; identities = $script:Expected.identities
     table = [ordered]@{ sha256 = $World.expected.tableSha256; positions = $positions; targets = $targets }
     machine = $World.expected.machine; node = $World.expected.node
-    committed = [ordered]@{}; workingFiles = [ordered]@{}
+    committed = $script:Committed; committedBase = $script:CommittedBase; workingFiles = [ordered]@{}
   }
   $script:StandinFixture = "$($World.repo)\binding-fixture.json"
-  [IO.File]::WriteAllText($script:StandinFixture, ($fx | ConvertTo-Json -Depth 8))
+  [IO.File]::WriteAllText($script:StandinFixture, ($script:FixtureDoc | ConvertTo-Json -Depth 8))
   try { & $Body } finally {
     $script:RunRepo = $keep.Repo
     $script:RunsRoot = $keep.Runs
     $script:Expected = $keep.Expected
+    $script:GitOverride = $keep.Git
+    $script:Committed = $keep.Committed
+    $script:CommittedBase = $keep.Base
+    $script:FixtureDoc = $null
   }
 }
 
@@ -524,7 +656,8 @@ function Start-StandinRecorder($World, [string]$ChunkId, [int]$Attempt = 1) {
 
 function Start-StandinMerge($World, [string]$Scope = 'all-79') {
   return Invoke-MergeLocked -Scope $Scope -CampaignBase $World.base -Standin `
-    -BindingFixture $script:StandinFixture -CommandArgs (Get-StandinMergeArgs $World $Scope)
+    -BindingFixture $script:StandinFixture -CommandArgs (Get-StandinMergeArgs $World $Scope) `
+    -ExtraRequest @{ bindingJournalText = [string]$script:Committed[$script:HostBindingsRel] }
 }
 
 Test-Case 'R24 recorder through wrapper, controller, tee and recorder: ledger, receipts, accounting' {
@@ -561,7 +694,7 @@ Test-Case 'R24 recorder through wrapper, controller, tee and recorder: ledger, r
   }
 }
 
-Test-Case 'R4 through the wrapper: a chunk whose payload started is never run again (a control-hold)' {
+Test-Case 'R4/F2 through the wrapper: a chunk whose payload started never runs again; no folder is made' {
   New-World | Out-Null
   $w = New-StandinWorld 'rw2'
   Invoke-InStandinWorld $w {
@@ -569,17 +702,11 @@ Test-Case 'R4 through the wrapper: a chunk whose payload started is never run ag
     $first = Start-StandinRecorder $w $id
     Assert ($first.Outcome -eq 'success') 'attempt 1'
     Set-LedgerOld
-    $second = Start-StandinRecorder $w $id 2
-    Assert ($second.Outcome -eq 'control-hold' -and $second.Exit -eq 64) "outcome $($second.Outcome)"
-    $att = Read-Json "$($second.RunDir)\attempts.json"
-    Assert ($att.decision -eq 'refuse' -and $att.payloads -eq 1 -and $att.admissions -eq 1) 'accounting'
-    $why = (Read-Json "$($second.RunDir)\result.json").reasons -join ' '
-    Assert ($why -match 'chunk-payload-already-started') "reasons: $why"
-    Assert (-not (Test-Path "$($second.RunDir)\transcript.txt") -and
-      -not (Test-Path "$($second.RunDir)\ledger.json")) 'no payload started'
+    Assert-Throws { Start-StandinRecorder $w $id 2 } 'not an unstarted control-hold' 'a second attempt'
+    Assert (-not (Test-Path "$script:RunsRoot\fakea-easy\$id.a2")) 'no second folder: the slot is not spent'
+    Assert-Throws { Start-StandinRecorder $w $id 1 } 'a run is never overwritten' 'attempt 1 again'
     $rows = @(Get-Ledger)
-    Assert ($rows.Count -eq 2 -and $rows[1].attempt -eq 2 -and
-      $rows[1].outcome -eq 'control-hold') 'ledger rows'
+    Assert ($rows.Count -eq 1 -and $rows[0].attempt -eq 1 -and $rows[0].outcome -eq 'success') 'ledger rows'
   }
 }
 
@@ -613,7 +740,7 @@ Test-Case 'final-matrix refusals before anything starts: unknown chunk, undeclar
     Assert-Throws { Invoke-RecorderLocked -ChunkId 'fakea-easy.i0.n50' -CampaignBase $w.base `
         -CommandArgs @('x') } 'frozen command line only' 'a real run with its own command line'
     Assert-Throws { Invoke-RecorderLocked -ChunkId 'fakea-easy.i0.n50' -CampaignBase $w.base } `
-      'must require the frozen chunk manifest' 'a helper manifest that does not list the plan'
+      'needs the reviewed helper manifest hash' 'a real run without the reviewed manifest hash'
     Assert (@(Get-Ledger).Count -eq 0 -and
       -not (Test-Path "$script:RunsRoot\fakea-easy")) 'nothing started'
   }
@@ -654,6 +781,566 @@ Test-Case 'R1 through the wrapper: incomplete input is exit 2: a STOP that keeps
     $report = Read-Json "$dir\report.json"
     Assert ($report.complete -eq $false -and $null -eq $report.resultLine) 'the incomplete report is kept'
     Assert ((Get-Content "$dir\stdout.txt" -Raw) -match 'ms18d-gp-merge-incomplete') 'the transcript is kept'
+  }
+}
+
+function Write-Row([string]$Log, $Row) {
+  [IO.File]::AppendAllText($Log, (($Row | ConvertTo-Json -Compress -Depth 4) + "`r`n"))
+}
+
+# A copy of an ordered base with the keys of $Over replaced or added
+function Merge-Keys($Base, $Over) {
+  $out = [ordered]@{}
+  foreach ($k in $Base.Keys) { $out[$k] = $Base[$k] }
+  foreach ($k in $Over.Keys) { $out[$k] = $Over[$k] }
+  return $out
+}
+
+Test-Case 'F1: every pre-flight refusal of a REAL call comes before any folder, log line, watch or lock' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'pf1'
+  $planHash = (Get-FileHash -LiteralPath (Join-Path $script:Ms18dRoot $script:PlanFileRel)).Hash
+  $plus = "$scratch\manifest-plus-plan.txt"
+  [IO.File]::WriteAllLines($plus,
+    @([IO.File]::ReadAllLines($manifestFile)) + @("$planHash  $script:PlanFileRel"))
+  $plusSha = (Get-FileHash -LiteralPath $plus).Hash.ToLowerInvariant()
+  $saved = @{ Manifest = $script:HelperManifest; Git = $script:GitOverride }
+  $id = 'fakea-easy.i0.n50'
+  Invoke-InStandinWorld $w {
+    $good = New-FakeGit $w.base $true @() $true
+    $orig = $script:Committed.Clone()
+    $restore = {
+      $script:Committed.Clear()
+      $script:CommittedBase.Clear()
+      foreach ($k in $orig.Keys) { $script:Committed[$k] = $orig[$k]; $script:CommittedBase[$k] = $orig[$k] }
+    }
+    $refuse = {
+      param([string]$pattern, [string]$what, [hashtable]$more = @{})
+      Assert-Throws { Invoke-RecorderLocked -ChunkId $id -CampaignBase $w.base @more } $pattern $what
+      Assert (-not (Test-Path "$script:RunsRoot\fakea-easy")) "$what : no folder"
+      Assert (@(Get-Ledger).Count -eq 0 -and -not (Test-Path $sharedLock)) "$what : no log line, no lock"
+      Assert ($script:WatchCalls.Count -eq 0) "$what : the watch was never reached"
+    }
+    try {
+      $script:HelperManifest = [pscustomobject]@{ File = $plus; Sha256 = $plusSha; Required = @() }
+      $script:GitOverride = $good
+      & $refuse 'ExecOverride is for stand-ins only' '-ExecOverride on a real run' @{ ExecOverride = 'node' }
+      & $refuse 'binding fixture is for stand-ins only' 'a binding fixture on a real run' @{
+        BindingFixture = $script:StandinFixture }
+      $script:HelperManifest = [pscustomobject]@{ File = $plus; Sha256 = $null; Required = @() }
+      & $refuse 'needs the reviewed helper manifest hash' 'no reviewed manifest hash'
+      $script:HelperManifest = [pscustomobject]@{ File = $plus; Sha256 = ('0' * 64); Required = @() }
+      & $refuse 'not the reviewed one' 'a manifest that is not the reviewed one'
+      $script:HelperManifest = [pscustomobject]@{ File = $manifestFile
+        Sha256 = (Get-FileHash -LiteralPath $manifestFile).Hash.ToLowerInvariant(); Required = @() }
+      & $refuse 'not in the manifest: docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest.json' `
+        'a manifest that does not list the plan'
+      $script:HelperManifest = [pscustomobject]@{ File = $plus; Sha256 = $plusSha; Required = @() }
+      Assert-Throws { Invoke-RecorderLocked -ChunkId $id -CampaignBase 'main' } '40 hex' 'an undeclared base'
+      Assert-Throws { Invoke-RecorderLocked -ChunkId $id } '40 hex' 'no base'
+      $script:GitOverride = New-FakeGit '' $true @() $true
+      & $refuse 'HEAD cannot be read' 'unreadable HEAD'
+      $script:GitOverride = New-FakeGit ('c' * 40) $false @() $true
+      & $refuse 'neither the campaign base' 'a HEAD that is not a descendant of B'
+      $script:GitOverride = New-FakeGit ('c' * 40) $true @('generator/tests/artifacts/x.js') $true
+      & $refuse 'changed since the campaign base: generator/tests/artifacts/x.js' 'a changed helper since B'
+      $script:GitOverride = New-FakeGit $w.base $true @() $false
+      & $refuse 'phase-c/lock-log.jsonl is not tracked at HEAD' 'a C lock log that is not tracked'
+      & $refuse 'MS18d-gp-host-bindings.jsonl is not tracked at HEAD' 'a host-binding journal not tracked'
+      & $refuse 'MS18d-gp-rulings.jsonl is not tracked at HEAD' 'a rulings journal not tracked'
+      $script:GitOverride = $good
+      # the committed host-binding journal: an empty or invalid one means no binding, with no fall-back
+      $dead = [ordered]@{ pid = 2147483000; parentPid = 1; netStartUtc = '2026-01-01T00:00:00.0000000Z'
+        cimCreationUtc = '2026-01-01T00:00:00.000000Z'; exePath = 'C:\fake\copilot.exe' }
+      $first = New-BindingLine 'host-1' $null $dead
+      Set-CommittedBindings @($first) -AlsoBase
+      & $refuse 'the bound host process 2147483000 is not running' 'a host that is not the bound one'
+      Set-Committed $script:HostBindingsRel '' -AlsoBase
+      & $refuse 'host-binding journal is empty: no host binding is configured' 'an empty journal'
+      Set-Committed $script:HostBindingsRel "{broken`n" -AlsoBase
+      & $refuse 'binding line 1 is not JSON' 'a corrupt journal'
+      $odd = New-BindingLine 'host-1' $null $dead @{ extra = 1 }
+      Set-Committed $script:HostBindingsRel ($odd.Line + "`n") -AlsoBase
+      & $refuse 'binding line 1 is not valid' 'an unknown member'
+      $other = New-BindingLine 'host-2' 'wrong' $dead
+      Set-CommittedBindings @($first, $other) -AlsoBase
+      & $refuse 'binding line 2 is not valid \(.*replaces' 'a broken chain'
+      Set-CommittedBindings @($first) -AlsoBase
+      $script:Committed.Remove($first.File)
+      & $refuse 'host-evidence/host-1.json is not committed at HEAD' 'evidence that is not committed'
+      Set-Committed $first.File ($first.Text + ' ')
+      & $refuse 'is not the cited bytes' 'evidence that is not the cited one'
+      & $restore
+      # the version at B must stay an exact line prefix of the committed one (append-only)
+      Set-CommittedBindings @($first)
+      $rewritten = New-BindingLine 'host-1' $null $dead @{ ref = 'other' }
+      $script:CommittedBase[$script:HostBindingsRel] = $rewritten.Line + "`n"
+      $script:GitOverride = New-FakeGit ('c' * 40) $true @() $true
+      & $refuse 'does not keep the version committed at the campaign base' 'a rewritten base line'
+      $script:GitOverride = $good
+      & $restore
+      Set-Committed $script:RulingsRel "{broken`n" -AlsoBase
+      & $refuse 'ruling line 1 is not JSON' 'a corrupt rulings journal'
+      & $restore
+    } finally {
+      $script:HelperManifest = $saved.Manifest
+      $script:GitOverride = $saved.Git
+    }
+  }
+}
+
+Test-Case 'F1: the campaign head check passes at B, at an allowed descendant, with a tracked C log' {
+  $base = 'b' * 40
+  $dirs = @('docs/difficulty-v3/evidence/MS18d/gp/fakea-easy')
+  $script:GitOverride = New-FakeGit $base $true @() $true
+  try {
+    Assert (@(Get-CampaignHeadProblemsC -Base $base -DeclaredDirs $dirs).Count -eq 0) 'HEAD is B'
+    $names = @('tasks/difficulty-v3/check-list.md', 'tasks/difficulty-v3/MS18d-gp-rulings.jsonl',
+      'docs/difficulty-v3/evidence/MS18d/gp/fakea-easy/x.a1/ledger.json'.Replace('/x.a1', ''),
+      'docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl')
+    $script:GitOverride = New-FakeGit ('c' * 40) $true $names $true
+    $p = @(Get-CampaignHeadProblemsC -Base $base -DeclaredDirs $dirs)
+    Assert ($p.Count -eq 0) "an allowed descendant: $($p -join '; ')"
+    foreach ($bad in @('docs/difficulty-v3/evidence/MS18d/gp/fakea-easy/sub/ledger.json',
+        'docs/difficulty-v3/evidence/MS18d/gp/other/ledger.json', 'tasks/difficulty-v3/../x',
+        'docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest.json')) {
+      $script:GitOverride = New-FakeGit ('c' * 40) $true @($bad) $true
+      Assert (@(Get-CampaignHeadProblemsC -Base $base -DeclaredDirs $dirs).Count -eq 1) "refused: $bad"
+    }
+  } finally { $script:GitOverride = $null }
+}
+
+Test-Case 'F1: a stale shared lock (its owner is gone) is reported at once, never deleted, never waited out' {
+  New-World | Out-Null
+  $p = Start-Process -FilePath 'node' -ArgumentList '-e', '0' -PassThru -WindowStyle Hidden
+  $null = $p.WaitForExit(10000)
+  [IO.File]::WriteAllText($sharedLock, "$($p.Id)|stand-in task|2026-01-01T00:00:00.000Z")
+  $watch = $script:WatchCalls.Count
+  Assert-Throws { Start-Gp 'f1stale' } 'looks stale.*NOT deleted' 'a stale lock'
+  Assert (Test-Path $sharedLock) 'the lock file is still there'
+  Assert ($script:WatchCalls.Count -eq $watch -and -not (Test-Path $script:RunsRoot)) 'no wait, no folder'
+  Assert (@(Get-Ledger).Count -eq 0) 'nothing recorded'
+  [IO.File]::WriteAllText($sharedLock, "$PID|a live owner|2026-01-01T00:00:00.000Z")
+  Assert (-not (Get-StaleSharedLockC)) 'a live owner is not stale'
+  Remove-Item -LiteralPath $sharedLock
+}
+
+# C1: the live host against the binding in force, with an idle node process as a stand-in for the host
+Test-Case 'C1: the wrapper pre-flight verifies the live host instance fact by fact, from the journal' {
+  $host1 = Start-Process -FilePath 'node' -ArgumentList '-e', 'setInterval(()=>{},1000)' -PassThru `
+    -WindowStyle Hidden
+  $script:started.Add($host1)
+  Start-Sleep -Milliseconds 700
+  $facts = Get-HostFactsC -ProcessId $host1.Id
+  Assert ($facts.found -and $facts.netStartUtc -match '\.\d{7}Z$' -and
+    $facts.cimCreationUtc -match '\.\d{6}Z$') "the facts: $($facts | ConvertTo-Json -Compress)"
+  $working = "$scratch\hb-working"
+  Invoke-WithFakeJournals {
+    $line1 = New-BindingLine 'host-1' $null $facts
+    Set-CommittedBindings @($line1) -AlsoBase
+    Assert (@(Get-HostProblemsC).Count -eq 0) 'the exact instance verifies'
+    # every bound fact on its own: a different parent, executable, .NET start time (a restart or a reused PID)
+    # or CIM creation time is a different instance; the ProcessName is never matched
+    $overs = @(@{ key = 'parentPid'; over = @{ 'host.parentPid' = [int]($facts.parentPid + 1) } },
+      @{ key = 'exePath'; over = @{ 'host.executablePath' = 'C:\other\node.exe' } },
+      @{ key = 'netStartUtc'; over = @{ 'host.dotNetStartTime' = '2020-01-01T00:00:00.0000000Z' } },
+      @{ key = 'cimCreationUtc'
+        over = @{ 'host.cimCreationDateUtcMicroseconds' = '2020-01-01T00:00:00.000000Z' } })
+    foreach ($case in $overs) {
+      Set-CommittedBindings @((New-BindingLine 'host-1' $null $facts $case.over)) -AlsoBase
+      $p = @(Get-HostProblemsC)
+      Assert ($p.Count -eq 1 -and $p[0] -match "the host's $($case.key) differs") `
+        "$($case.key) : $($p -join '; ')"
+    }
+    $renamed = New-BindingLine 'host-1' $null $facts @{ 'host.processName' = 'copilot.exe.old-1' }
+    Set-CommittedBindings @($renamed) -AlsoBase
+    Assert (@(Get-HostProblemsC).Count -eq 0) 'a ProcessName that differs is no difference'
+    $dead = New-BindingLine 'host-1' $null $facts @{ 'host.pid' = ($host1.Id + 1000000) }
+    Set-CommittedBindings @($dead) -AlsoBase
+    Assert ((@(Get-HostProblemsC) -join ' ') -match 'is not running') 'an absent host'
+    # an unapproved rebinding (a working-tree line that is not committed) changes nothing: still held
+    New-Item -ItemType Directory -Force -Path "$working\tasks\difficulty-v3" | Out-Null
+    $line2 = New-BindingLine 'host-2' 'host-1' $facts
+    $workingFile = "$working\tasks\difficulty-v3\MS18d-gp-host-bindings.jsonl"
+    [IO.File]::WriteAllText($workingFile, $dead.Line + "`n" + $line2.Line + "`n")
+    Assert ((@(Get-HostProblemsC) -join ' ') -match 'is not running') 'an uncommitted rebinding: no authority'
+    # the approved rebinding: appended and committed by the pack authors; the prior entry is retained
+    $committedBefore = [string]$script:Committed[$script:HostBindingsRel]
+    Set-CommittedBindings @($dead, $line2)
+    Assert (([string]$script:Committed[$script:HostBindingsRel]).StartsWith($committedBefore)) 'append-only'
+    Assert (@(Get-HostProblemsC -Base ('b' * 40)).Count -eq 0) 'the approved rebinding is in force'
+    $script:CommittedBase[$script:HostBindingsRel] = $dead.Line.Replace('host-1', 'host-X') + "`n"
+    Assert-Throws { Get-HostProblemsC -Base ('b' * 40) } `
+      'does not keep the version committed at the campaign base' 'a rewritten base'
+    # a real restart of the host: the bound process ends, and nothing rebinds on its own
+    $host1.Kill()
+    $null = $host1.WaitForExit(5000)
+    $workingBefore = [IO.File]::ReadAllText($workingFile)
+    $headBefore = [string]$script:Committed[$script:HostBindingsRel]
+    Assert ((@(Get-HostProblemsC) -join ' ') -match 'is not running') 'the host ended: held, no rebinding'
+    Assert ([string]$script:Committed[$script:HostBindingsRel] -eq $headBefore -and
+      [IO.File]::ReadAllText($workingFile) -eq $workingBefore) 'the tooling wrote nothing'
+  }
+}
+
+Test-Case 'C1: the probe returns the host facts and a process table with cumulative CPU times' {
+  $s = Get-SnapshotC -HostPid $PID -TimeoutSeconds 15
+  Assert ($s.ok -and $s.selfPid -eq $PID -and $s.processes.Count -gt 10) 'a usable table'
+  Assert ($s.host.found -and $s.host.pid -eq $PID -and $s.host.netStartUtc -match '\.\d{7}Z$') `
+    'the host block'
+  Assert ($s.takenAtMs -ge $s.queryStartMs -and $s.takenAtMs -le $s.queryEndMs -and
+    ($s.queryEndMs - $s.queryStartMs) -lt 15000) 'one bounded query'
+  $row = @($s.processes | Where-Object { $_.pid -eq $PID })[0]
+  Assert ($row.createdMs -eq $s.selfCreatedMs -and $row.cpuMs -gt 0) 'this probe is told apart by pid+time'
+  Assert (@($s.processes | Where-Object { $null -eq $_.createdMs -or $null -eq $_.cpuMs }).Count -eq 0) `
+    'no gaps'
+  $none = Get-HostFactsC -ProcessId 2147483000
+  Assert ($none.found -eq $false) 'an absent process is found = false'
+}
+
+Test-Case 'C1: a host observation has the shape of a journal entry, and a journal made of it verifies' {
+  $obs = Get-HostObservationC -ProcessId $PID
+  Assert ($obs.ok -eq $true -and $obs.schema -eq 'ms18d-c-host-observation-1' -and
+    $obs.problems.Count -eq 0) "the observation: $($obs | ConvertTo-Json -Compress -Depth 4)"
+  $h = $obs.host
+  $order = 'pid,dotNetStartTime,cimCreationDateUtcMicroseconds,parentPid,executablePath'
+  Assert ((@($h.Keys) -join ',') -eq $order) 'the five bound facts, in the journal order'
+  Assert ($h.pid -eq $PID -and $h.dotNetStartTime -match '\.\d{7}[+-]\d\d:\d\d$' -and
+    $h.cimCreationDateUtcMicroseconds -match '\.\d{6}Z$' -and $h.parentPid -gt 0 -and $h.executablePath) `
+    'seven-digit .NET start time with its offset, six-digit UTC CIM time, parent, executable'
+  Assert ($obs.observedAt -match '^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}[+-]\d\d:\d\d$') `
+    'the instant has a zone'
+  Assert ($null -ne $obs.diagnostics.displayName -and $obs.diagnostics.probePid -eq $PID) 'the diagnostics'
+  # the observation file and the host member make a journal entry the wrapper's reader accepts and verifies
+  $text = ($obs | ConvertTo-Json -Depth 5) + "`n"
+  $evidence = [ordered]@{ file = "$($script:EvidenceDirRel)obs-1.json"; sha256 = (Get-TextSha256 $text) }
+  $entry = [ordered]@{ bindingId = 'obs-1'; replaces = $null; host = $h; observedAt = $obs.observedAt
+    evidence = $evidence; ref = 'a test observation'; at = $obs.observedAt }
+  Invoke-WithFakeJournals {
+    Set-Committed $script:HostBindingsRel (($entry | ConvertTo-Json -Depth 5 -Compress) + "`n")
+    Set-Committed $entry.evidence.file $text
+    $problems = @(Get-HostProblemsC)
+    Assert ($problems.Count -eq 0) "the observed host verifies: $($problems -join '; ')"
+  }
+  $gone = Get-HostObservationC -ProcessId 2147483000
+  Assert ($gone.ok -eq $false -and $null -eq $gone.host -and
+    ($gone.problems -join ' ') -match 'not running') 'an absent host: ok = false, no host member'
+}
+
+# F2/F3/F4: the line rules, over folders and C log lines made by hand in a stand-in world; the files these
+# tests leave in the kept evidence folder end with CRLF like every other record
+function Write-TestFile([string]$Path, [string]$Text) {
+  [IO.File]::WriteAllText($Path, $Text + "`r`n")
+}
+
+function New-ChunkFolder([string]$Cell, [string]$Name, [hashtable]$Files) {
+  $dir = "$script:RunsRoot\$Cell\$Name"
+  New-Item -ItemType Directory -Force -Path $dir | Out-Null
+  foreach ($k in $Files.Keys) {
+    $text = $(if ($Files[$k] -is [string]) { $Files[$k] } else { $Files[$k] | ConvertTo-Json -Depth 5 })
+    Write-TestFile "$dir\$k" $text
+  }
+  return $dir
+}
+
+function Assert-AttemptThrows([string]$Pattern, [string]$What, [int]$Attempt = 2) {
+  Assert-Throws { Assert-AttemptC -ChunkId 'fakea-easy.i0.n50' -Attempt $Attempt -CellDir 'fakea-easy' } `
+    $Pattern $What
+}
+
+Test-Case 'F2: the attempt is checked before the folder exists (attempt 1 needs none, 2 only a1)' {
+  New-World | Out-Null
+  $c = 'fakea-easy.i0.n50'
+  $keepWait = $script:ReAskWaitSeconds
+  $old = (Get-Date).AddMinutes(-10).ToString($stamp)
+  Invoke-WithFakeJournals {
+    try {
+      Assert-AttemptC -ChunkId $c -Attempt 1 -CellDir 'fakea-easy'
+      Assert-AttemptThrows 'exactly its attempt 1 folder' 'no a1'
+      $held = @{ 'request.json' = @{ chunk = @{ chunkId = $c } }; 'wrapper.json' = @{ chunkId = $c
+          releaseObservedAt = $old; finished = $old }
+        'result.json' = @{ outcome = 'control-hold'; payloadStarted = $false; eligibleReAsk = $true } }
+      $dir = New-ChunkFolder 'fakea-easy' "$c.a1" $held
+      Assert-AttemptThrows 'run folder of the chunk exists' 'a1 exists' 1
+      Assert-AttemptC -ChunkId $c -Attempt 2 -CellDir 'fakea-easy'
+      # a folder that merely NAMES the chunk (a different folder name) is a folder of the chunk too
+      New-ChunkFolder 'fakea-easy' 'odd-name' @{ 'request.json' = @{ chunk = @{ chunkId = $c } } } | Out-Null
+      Assert-AttemptThrows 'exactly its attempt 1 folder' 'two folders'
+      Remove-Item "$script:RunsRoot\fakea-easy\odd-name" -Recurse -Force
+      # each sign of a payload makes the hold a started run
+      foreach ($sign in @('transcript.txt', 'stdout.txt', 'stderr.txt', 'ledger.json')) {
+        [IO.File]::WriteAllText("$dir\$sign", 'x')
+        Assert-AttemptThrows 'not an unstarted control-hold' $sign
+        Remove-Item "$dir\$sign"
+      }
+      [IO.File]::WriteAllText("$dir\pids.jsonl", '{"role":"tee","pid":1}' + "`r`n")
+      Assert-AttemptThrows 'not an unstarted control-hold' 'a tee record'
+      [IO.File]::WriteAllText("$dir\pids.jsonl", '{"role":"controller","pid":1}' + "`r`n")
+      Assert-AttemptC -ChunkId $c -Attempt 2 -CellDir 'fakea-easy'
+      # not eligible: no ruling, no re-ask
+      $held['result.json'] = @{ outcome = 'control-hold'; payloadStarted = $false; eligibleReAsk = $false }
+      Write-TestFile "$dir\result.json" ($held['result.json'] | ConvertTo-Json)
+      Assert-AttemptThrows 'not an eligible re-ask and no valid committed ruling' 'not eligible'
+      # a payload that started (the result says so)
+      Write-TestFile "$dir\result.json" (@{ outcome = 'stop'; payloadStarted = $true } | ConvertTo-Json)
+      Assert-AttemptThrows 'not an unstarted control-hold' 'started'
+      # eligible but under 60 s: the release is 1 s ago
+      $now = (Get-Date).AddSeconds(-1).ToString($stamp)
+      Write-TestFile "$dir\result.json" (@{ outcome = 'control-hold'; payloadStarted = $false
+          eligibleReAsk = $true } | ConvertTo-Json)
+      Write-TestFile "$dir\wrapper.json" (@{ chunkId = $c; releaseObservedAt = $now } | ConvertTo-Json)
+      Assert-AttemptThrows 'needs 60 s' 'under 60 s'
+    } finally { $script:ReAskWaitSeconds = $keepWait }
+  }
+}
+
+Test-Case 'F3: only a committed, current ruling stands in for the eligibility and the 60 s' {
+  New-World | Out-Null
+  Invoke-WithFakeJournals {
+    $c = 'fakea-easy.i0.n50'
+    $released = (Get-Date).AddMinutes(-10)
+    $dir = New-ChunkFolder 'fakea-easy' "$c.a1" @{ 'request.json' = @{ chunk = @{ chunkId = $c } }
+      'wrapper.json' = @{ chunkId = $c; releaseObservedAt = $released.ToString($stamp) }
+      'result.json' = @{ outcome = 'control-hold'; payloadStarted = $false; eligibleReAsk = $false } }
+    $line = { param($over) New-RulingLine $c "$c.a1" $over }
+    Assert-AttemptThrows 'no valid committed ruling' 'no ruling'
+    # a line that exists only in the working tree is nothing: only the committed text is read
+    $working = "$scratch\f3-working"
+    New-Item -ItemType Directory -Force -Path "$working\tasks\difficulty-v3" | Out-Null
+    [IO.File]::WriteAllText("$working\tasks\difficulty-v3\MS18d-gp-rulings.jsonl", (& $line @{}) + "`n")
+    Assert-AttemptThrows 'no valid committed ruling' 'an uncommitted ruling'
+    # committed, after the release of the hold and not in the future
+    Set-Committed $script:RulingsRel ((& $line @{}) + "`n")
+    Assert-AttemptC -ChunkId $c -Attempt 2 -CellDir 'fakea-easy'
+    Assert-AttemptC -ChunkId $c -Attempt 2 -CellDir 'fakea-easy' -Base ('b' * 40)
+    # stale (before the release of the hold) and prospective (in the future) are no authority
+    Set-Committed $script:RulingsRel ((& $line @{ at = $released.AddMinutes(-10).ToString($stamp) }) + "`n")
+    Assert-AttemptThrows 'no valid committed ruling' 'a stale ruling'
+    Set-Committed $script:RulingsRel ((& $line @{ at = (Get-Date).AddHours(1).ToString($stamp) }) + "`n")
+    Assert-AttemptThrows 'no valid committed ruling' 'a prospective ruling'
+    Set-Committed $script:RulingsRel ((& $line @{ heldRunId = "$c.a2" }) + "`n")
+    Assert-AttemptThrows 'no valid committed ruling' 'a ruling of another run'
+    # malformed or contradictory journals are errors, never skipped
+    foreach ($bad in @(@("{broken`n", 'ruling line 1 is not JSON'),
+        @(((& $line @{ allowAttempt = 3 }) + "`n"), 'ruling line 1 is not exactly'),
+        @(((& $line @{ ref = '' }) + "`n"), 'ruling line 1 is not exactly'),
+        @(((& $line @{ at = 't' }) + "`n"), 'ruling line 1 is not exactly'),
+        @(((& $line @{ extra = 1 }) + "`n"), 'ruling line 1 is not exactly'),
+        @(((& $line @{}) + "`n" + (& $line @{ ref = 'again' }) + "`n"), 'ruling line 2 repeats'))) {
+      Set-Committed $script:RulingsRel $bad[0]
+      Assert-AttemptThrows $bad[1] $bad[1]
+    }
+    # append-only: the version committed at the campaign base must stay an exact line prefix
+    Set-Committed $script:RulingsRel ((& $line @{}) + "`n")
+    $script:CommittedBase[$script:RulingsRel] = (& $line @{ ref = 'rewritten' }) + "`n"
+    Assert-Throws { Assert-AttemptC -ChunkId $c -Attempt 2 -CellDir 'fakea-easy' -Base ('b' * 40) } `
+      'does not keep the version committed at the campaign base' 'a rewritten base line'
+    $script:CommittedBase[$script:RulingsRel] = ''
+    # an eligible hold needs no ruling (a stale one does not stand in the way) once the 60 s have passed
+    Write-TestFile "$dir\result.json" (@{ outcome = 'control-hold'; payloadStarted = $false
+        eligibleReAsk = $true } | ConvertTo-Json)
+    Set-Committed $script:RulingsRel ((& $line @{ at = $released.AddMinutes(-10).ToString($stamp) }) + "`n")
+    Assert-AttemptC -ChunkId $c -Attempt 2 -CellDir 'fakea-easy'
+  }
+}
+
+Test-Case 'F4: the line stops after anything but a success (or the own chunk re-ask after an eligible hold)' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'fr4'
+  Invoke-InStandinWorld $w {
+    $row = { param($over) Write-Row $script:LogC (Merge-Keys ([ordered]@{ schema = 'ms18d-c-run-1'
+          payload = 'gp-recorder'; runId = 'x'; chunkId = 'fakea-easy.i0.n50'; attempt = 1; scope = $null
+          outcome = 'success'; controllerOutcome = 'success'; eligibleReAsk = $false }) $over) }
+    $open = { param($c, $a) Assert-LineOpenC -ChunkId $c -Attempt $a }
+    $b = 'fakeb-easy.i0.n25'
+    $a = 'fakea-easy.i0.n50'
+    & $open $a 1
+    & $row @{ runId = "$a.a1" }
+    & $open $b 1
+    Write-Row $script:LogC ([ordered]@{ schema = 'ms18d-c-run-1'; type = 'pre-window-hold'
+        payload = 'gp-recorder'; chunkId = $b; attempt = 1; outcome = 'pre-window-hold' })
+    Write-Row $script:LogC ([ordered]@{ schema = 'ms18d-c-run-1'; payload = 'gp-cell'; runId = 'q'
+        outcome = 'gp-miss' })
+    & $open $b 1
+    # a stop, a plain hold or a miss blocks every further call, whichever chunk
+    foreach ($o in @(@{ outcome = 'stop'; controllerOutcome = 'stop' },
+        @{ outcome = 'control-hold'; controllerOutcome = 'control-hold' }, @{ outcome = 'miss' })) {
+      $stopped = "$a.a1.stopped"
+      & $row (@{ runId = $stopped } + $o)
+      Assert-Throws { & $open $b 1 } 'the line is stopped.*run .*stopped ended with' "after $($o.outcome)"
+      Assert-Throws { & $open $a 2 } 'the line is stopped' "even the same chunk after $($o.outcome)"
+      # a ruling that is only in the working tree (never committed) opens nothing
+      New-Item -ItemType Directory -Force -Path "$($w.repo)\tasks\difficulty-v3" | Out-Null
+      [IO.File]::WriteAllText("$($w.repo)\tasks\difficulty-v3\MS18d-gp-rulings.jsonl",
+        (New-RulingLine $a $stopped) + "`n")
+      Assert-Throws { & $open $b 1 } 'the line is stopped' "an uncommitted ruling after $($o.outcome)"
+      # a committed ruling covering that run (chunk or scope, held run) opens it again
+      Set-Committed $script:RulingsRel ((New-RulingLine $a $stopped) + "`n")
+      & $open $b 1
+      Set-Committed $script:RulingsRel ''
+      $lines = @([IO.File]::ReadAllLines($script:LogC))
+      [IO.File]::WriteAllLines($script:LogC, $lines[0..($lines.Count - 2)])
+    }
+    # an eligible hold: only the chunk's own attempt 2 may follow
+    & $row @{ runId = "$b.a1"; chunkId = $b; outcome = 'control-hold'; controllerOutcome = 'control-hold'
+      eligibleReAsk = $true }
+    Assert-Throws { & $open $a 1 } 'only attempt 2 of fakeb-easy.i0.n25 may follow' `
+      'another chunk after an eligible hold'
+    Assert-Throws { & $open $b 1 } 'only attempt 2' 'its own attempt 1 again'
+    & $open $b 2
+    # the re-ask succeeded: open again
+    & $row @{ runId = "$b.a2"; chunkId = $b; attempt = 2 }
+    & $open $a 1
+    # a second hold of the same chunk is not an eligible re-ask any more
+    & $row @{ runId = "$b.a2x"; chunkId = $b; attempt = 2; outcome = 'control-hold'
+      controllerOutcome = 'control-hold'; eligibleReAsk = $true }
+    Assert-Throws { & $open $a 1 } 'the line is stopped' 'a hold of the re-ask itself'
+    # a merge that was not a success stops the line too; a ruling by scope covers it
+    Write-Row $script:LogC ([ordered]@{ schema = 'ms18d-c-run-1'; payload = 'gp-merge'; runId = 'final.m1'
+        scope = 'all-79'; attempt = $null; outcome = 'miss'; controllerOutcome = 'miss' })
+    $rulingLines = (New-RulingLine $b "$b.a2x"), (New-RulingLine 'all-79' 'final.m1')
+    Set-Committed $script:RulingsRel (($rulingLines -join "`n") + "`n")
+    & $open $a 1
+    # a log line that is not JSON is never skipped
+    [IO.File]::AppendAllText($script:LogC, "{broken`r`n")
+    Assert-Throws { & $open $a 1 } 'is not JSON' 'a corrupt C lock log'
+  }
+}
+
+Test-Case 'C1 through the wrapper: a consumer hold is eligible, re-ask after 60 s, other chunks wait (F4)' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'rr1'
+  $keepWait = $script:ReAskWaitSeconds
+  Invoke-InStandinWorld $w {
+    $cfg = { param($fixture) [ordered]@{ fixture = $fixture; logicalCpus = 16; powershell = 'pwsh'
+        probeScript = 'unused' } }
+    $a = 'fakea-easy.i0.n50'
+    $b = 'fakeb-easy.i0.n25'
+    try {
+      $script:StandinReadiness = & $cfg $w.readinessFixtures.consumer
+      $first = Start-StandinRecorder $w $a
+      Assert ($first.Outcome -eq 'control-hold' -and $first.Exit -eq 64) "outcome $($first.Outcome)"
+      $res = Read-Json "$($first.RunDir)\result.json"
+      Assert ($res.heldAt -eq 'readiness' -and $res.eligibleReAsk -eq $true -and
+        -not $res.payloadStarted) 'eligible'
+      $adm = Read-Json "$($first.RunDir)\admission.json"
+      Assert ($adm.readiness.admitted -eq $false -and $adm.readiness.eligibleReAsk -eq $true -and
+        $adm.readiness.complete -eq $true) 'the readiness record says so'
+      foreach ($n in 'readiness.json', 'readiness-before.json', 'readiness-after.json') {
+        Assert (Test-Path "$($first.RunDir)\$n") "kept $n"
+      }
+      Assert (-not (Test-Path "$($first.RunDir)\transcript.txt")) 'no payload ran'
+      $row = @(Get-Ledger)[0]
+      Assert ($row.eligibleReAsk -eq $true -and $row.outcome -eq 'control-hold') 'the C log row says eligible'
+      Assert-Throws { Start-StandinRecorder $w $b } 'only attempt 2 of fakea-easy.i0.n50 may follow' `
+        'another chunk waits'
+      Assert-Throws { Start-StandinRecorder $w $a 2 } 'needs 60 s' 'the re-ask is not yet allowed'
+      # the 60 s: the wrapper's own wait is shortened for the test, the controller reads the old C log
+      $script:ReAskWaitSeconds = 2
+      Start-Sleep -Seconds 3
+      Set-LedgerOld
+      $script:StandinReadiness = & $cfg $w.readinessFixtures.quiet
+      $again = Start-StandinRecorder $w $a 2
+      Assert ($again.Outcome -eq 'success' -and $again.Exit -eq 0) "re-ask outcome $($again.Outcome)"
+      $att = Read-Json "$($again.RunDir)\attempts.json"
+      Assert ($att.admissions -eq 1 -and $att.payloads -eq 0 -and $att.decision -eq 'allow') 'the accounting'
+      $adm2 = Read-Json "$($again.RunDir)\admission.json"
+      Assert ($adm2.readiness.admitted -eq $true -and $adm2.readiness.ready -eq $true) 'admitted'
+      $next = $null
+      Set-LedgerOld
+      $next = Start-StandinRecorder $w $b
+      Assert ($next.Outcome -eq 'success') 'the line is open again after a success'
+    } finally {
+      $script:StandinReadiness = $null
+      $script:ReAskWaitSeconds = $keepWait
+    }
+  }
+}
+
+Test-Case 'C1 through the wrapper: a replaced host holds with no eligibility; a committed ruling reopens' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'rr2'
+  Invoke-InStandinWorld $w {
+    $a = 'fakea-easy.i0.n50'
+    $b = 'fakeb-easy.i0.n25'
+    $cfg = { param($fixture) [ordered]@{ fixture = $fixture; logicalCpus = 16; powershell = 'pwsh'
+        probeScript = 'unused' } }
+    try {
+      $script:StandinReadiness = & $cfg $w.readinessFixtures.replaced
+      $first = Start-StandinRecorder $w $a
+      Assert ($first.Outcome -eq 'control-hold') "outcome $($first.Outcome)"
+      $res = Read-Json "$($first.RunDir)\result.json"
+      Assert ($res.eligibleReAsk -eq $false -and ($res.reasons -join ' ') -match 'host:') 'not eligible'
+      Assert-Throws { Start-StandinRecorder $w $b } 'the line is stopped' 'the line is stopped'
+      Assert-Throws { Start-StandinRecorder $w $a 2 } 'the line is stopped' 'the same chunk, no ruling'
+      # a ruling in the working tree only is nothing; the committed line (dated after the hold) reopens it
+      Start-Sleep -Seconds 1
+      Set-LedgerOld
+      $script:StandinReadiness = & $cfg $w.readinessFixtures.quiet
+      New-Item -ItemType Directory -Force -Path "$($w.repo)\tasks\difficulty-v3" | Out-Null
+      [IO.File]::WriteAllText("$($w.repo)\tasks\difficulty-v3\MS18d-gp-rulings.jsonl",
+        (New-RulingLine $a "$a.a1" @{ at = (Get-Date).ToString($stamp) }) + "`n")
+      Assert-Throws { Start-StandinRecorder $w $a 2 } 'the line is stopped' 'an uncommitted ruling'
+      $ruled = New-RulingLine $a "$a.a1" @{ ref = 'SA2 ruling after a verified rebinding'
+        at = (Get-Date).ToString($stamp) }
+      Set-Committed $script:RulingsRel ($ruled + "`n")
+      $again = Start-StandinRecorder $w $a 2
+      Assert ($again.Outcome -eq 'success') "the ruled attempt 2: $($again.Outcome)"
+      $att = Read-Json "$($again.RunDir)\attempts.json"
+      Assert ($att.ruling.ref -like 'SA2 ruling*' -and $att.decision -eq 'allow') 'the ruling was honoured'
+    } finally { $script:StandinReadiness = $null }
+  }
+}
+
+Test-Case 'C1 through the wrapper: a renamed binary is no hold; a restart or reused PID holds until rebound' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'rr3'
+  Invoke-InStandinWorld $w {
+    $a = 'fakea-easy.i0.n50'
+    $b = 'fakeb-easy.i0.n25'
+    $cfg = { param($fixture) [ordered]@{ fixture = $fixture; logicalCpus = 16; powershell = 'pwsh'
+        probeScript = 'unused' } }
+    try {
+      # an update renamed the running binary (ProcessName and the CIM name changed): every bound fact holds
+      $script:StandinReadiness = & $cfg $w.readinessFixtures.renamed
+      $first = Start-StandinRecorder $w $a
+      Assert ($first.Outcome -eq 'success') "a ProcessName-only rename: $($first.Outcome)"
+      $adm = Read-Json "$($first.RunDir)\admission.json"
+      $b1 = $adm.readiness.binding
+      Assert ($b1.bindingId -eq 'host-1' -and $b1.journal.entryCount -eq 1 -and
+        $b1.evidence.verified -eq $true -and $adm.readiness.admitted) 'the binding is recorded'
+      # the same PID with another creation time is another instance: a hold, never eligible, never rebound
+      Set-LedgerOld
+      $script:StandinReadiness = & $cfg $w.readinessFixtures.restarted
+      $held = Start-StandinRecorder $w $b
+      Assert ($held.Outcome -eq 'control-hold') "a restarted host: $($held.Outcome)"
+      $res = Read-Json "$($held.RunDir)\result.json"
+      Assert ($res.eligibleReAsk -eq $false -and $res.heldAt -eq 'readiness' -and
+        ($res.reasons -join ' ') -match 'host: .*(netStartUtc|cimCreationUtc) differs') 'a replaced host'
+      Assert ([string]$script:Committed[$script:HostBindingsRel] -match '"host-1"' -and
+        [string]$script:Committed[$script:HostBindingsRel] -notmatch 'host-2') 'nothing rebound on its own'
+      # without a committed ruling the line stays stopped, whichever chunk or attempt is asked
+      Assert-Throws { Start-StandinRecorder $w $b 2 } 'the line is stopped' 'the line stays stopped'
+      # the approved rebinding: the pack authors append host-2 (replacing host-1), the ruling reopens the line
+      $facts = [ordered]@{ pid = 4242; parentPid = 4000; netStartUtc = '2026-01-05T00:00:00.5000000Z'
+        cimCreationUtc = '2026-01-05T00:00:00.500000Z'; exePath = 'C:\fake\copilot.exe' }
+      $second = New-BindingLine 'host-2' 'host-1' $facts
+      $one = ([string]$script:Committed[$script:HostBindingsRel]).TrimEnd("`n")
+      Set-Committed $second.File $second.Text
+      Set-Committed $script:HostBindingsRel ($one + "`n" + $second.Line + "`n")
+      Start-Sleep -Seconds 1
+      $ruled = New-RulingLine $b "$b.a1" @{ at = (Get-Date).ToString($stamp) }
+      Set-Committed $script:RulingsRel ($ruled + "`n")
+      Set-LedgerOld
+      $again = Start-StandinRecorder $w $b 2
+      Assert ($again.Outcome -eq 'success') "the rebound host: $($again.Outcome)"
+      $adm2 = Read-Json "$($again.RunDir)\admission.json"
+      $b2 = $adm2.readiness.binding
+      Assert ($b2.bindingId -eq 'host-2' -and $b2.journal.entryCount -eq 2 -and
+        $adm2.readiness.admitted -eq $true) 'host-2 is the recorded binding'
+      $att = Read-Json "$($again.RunDir)\attempts.json"
+      Assert ($att.admissions -eq 1 -and $att.payloads -eq 0) 'a rebinding resets no attempt count'
+    } finally { $script:StandinReadiness = $null }
   }
 }
 

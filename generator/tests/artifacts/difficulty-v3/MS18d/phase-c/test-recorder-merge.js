@@ -48,7 +48,9 @@ function newWorld(options) {
   const g = standin.makeFakeProject(repo, o.project);
   const helper = standin.makeHelperManifest(repo);
   const made = standin.makeFakeManifest(repo, { cellMergeSlots: o.cellMergeSlots, rows: o.rows });
-  return { repo, g, helper, made, doc: made.doc, callsLog: path.join(repo, 'calls.log') };
+  // the committed host-binding journal the synthetic readiness records were made against
+  const journalWorld = require('./standin-readiness.js').journalWorld({});
+  return { repo, g, helper, made, doc: made.doc, callsLog: path.join(repo, 'calls.log'), journalWorld };
 }
 
 const slotOf = (w, chunkId, attempt) => w.doc.runSlots.filter((s) => s.role === 'chunk' &&
@@ -346,7 +348,8 @@ function mergeRequestFile(w, scope, over) {
     runDir: dir, repo: w.repo,
     plan: { file: w.made.planRel, rawSha256: w.made.rawSha256, manifestSha256: doc.manifestSha256 }, scope,
     gate: doc.gate, helpers: { manifestFile: w.helper.file, manifestSha256: w.helper.sha256,
-      required: w.helper.required, repoRoot: w.repo }, expected: { base: standin.BASE } }, over || {}),
+      required: w.helper.required, repoRoot: w.repo }, expected: { base: standin.BASE },
+    bindingJournalText: w.journalWorld.committed[require('./journals.js').BINDINGS_REL] }, over || {}),
   null, 2));
   return { dir, slot };
 }
@@ -833,7 +836,8 @@ async function mergerTests() {
     const folders = core.collectRunFolders(w.doc, { type: 'all' }, fsio);
     const input = (planRel) => ({ doc: w.doc, scope: { type: 'all' }, runFolders: folders.folders,
       expectedIdentity: core.expectedIdentityOf(w.doc, w.helper.sha256, standin.BASE), base: standin.BASE,
-      checkHead: () => ({ ok: true, problems: [] }), realRun: true, planRel });
+      checkHead: () => ({ ok: true, problems: [] }), realRun: true, planRel,
+      bindingJournal: require('./standin-readiness.js').journalWorld({}).chain() });
     assert.strictEqual(core.evaluate(input(w.made.planRel)).complete, true);
     const wrong = core.evaluate(input('docs\\other.json'));
     assert.strictEqual(wrong.complete, false);
@@ -1013,9 +1017,242 @@ async function classifierTests() {
   });
 }
 
+// ---------------------------------------------------------------------------------------------------------
+// F5 and F6 (SA1): what a hold is, the command.exec rule, and the readiness record the merger re-decides
+// ---------------------------------------------------------------------------------------------------------
+
+async function readinessMergeTests() {
+  const rd = require('./standin-readiness.js');
+  const REBOUND = { pid: 5555, parentPid: 4001, dotNetStartTime: '2026-02-02T07:00:00.1111111+07:00',
+    cimCreationDateUtcMicroseconds: '2026-02-02T00:00:00.111111Z' };
+  const bystander = '310:' + (rd.T0 - 7e6);
+  const A64x = 'a'.repeat(64);
+  const mutate = (file, fn) => ({ mutate: { [file]: (o) => { fn(o); return o; } } });
+  const B = 'fakeb-easy.i0.n25';
+  const campaignWith = (w, damage) => {
+    const chunk = {};
+    chunk['fakeb-easy.i25.n25'] = Object.assign({ helper: w.helper }, damage || {});
+    writeCampaign(w, { times: lowTimes, chunk });
+  };
+  // a merge run folder never keeps an earlier report: the test removes it to merge the same world again
+  const forget = (w) => fs.rmSync(path.join(w.repo, w.doc.runSlots.filter((s) => s.role === 'final-merge')[0]
+    .dir, 'report.json'), { force: true });
+  const second = (w) => standin.writeRunFolder(w.repo, w.made, slotOf(w, B, 2),
+    { helper: w.helper, times: lowTimes(chunkOf(w, B)) });
+  const refused = (w, pattern, what) => {
+    const r = runMerge(w, 'all-79');
+    assert.strictEqual(r.status, 2, what + ': ' + r.stdout.split('\n').slice(-5).join('|'));
+    assert.strictEqual(r.hasResultLine, false);
+    assert.ok(pattern.test(r.stdout), what + ': ' + r.stdout.split('\n').filter((l) => /^problem/.test(l))
+      .slice(0, 3).join(' | '));
+  };
+
+  // F5: a folder counts as a hold only if it left no sign of a payload
+  const holdWith = (w, name, text) => {
+    const dir = standin.writeHoldFolder(w.repo, slotOf(w, B, 1));
+    if (name) fs.writeFileSync(path.join(dir, name), text);
+    return dir;
+  };
+  for (const [name, text] of [['stdout.txt', 'x'], ['stderr.txt', 'x'], ['transcript.txt', 'x'],
+    ['ledger.json', '{}'], ['pids.jsonl', '{"role":"tee","pid":1}\r\n'],
+    ['pids.jsonl', '{"role":"command","pid":2}\r\n'], ['pids.jsonl', '{"event":"command-exit","code":0}\r\n'],
+    ['pids.jsonl', '{"event":"tee-exit","stderrBytes":0}\r\n']]) {
+    await test('F5: a control-hold with a payload sign is not a hold but a failed run: ' + name + ' ' +
+      text.slice(0, 22).trim(), () => {
+      const w = newWorld();
+      writeCampaign(w, { times: lowTimes, chunk: { [B]: { skip: true } } });
+      holdWith(w, name, text);
+      second(w);
+      refused(w, /a complete run follows a run that failed/, name);
+    });
+  }
+
+  await test('F5: a control-hold with only the controller\'s own pid record is a hold', () => {
+    const w = newWorld();
+    writeCampaign(w, { times: lowTimes, chunk: { [B]: { skip: true } } });
+    holdWith(w, 'pids.jsonl', '{"role":"controller","pid":5001}\r\n');
+    second(w);
+    const r = runMerge(w, 'all-79');
+    assert.strictEqual(r.status, 0, r.stdout);
+    assert.strictEqual(r.report.cells[1].chunks[0].holds, 1);
+  });
+
+  await test('F5: a wrapper.json saying only foreign-lock-watch is a hold; with a file beside it, no', () => {
+    const w = newWorld();
+    writeCampaign(w, { times: lowTimes, chunk: { [B]: { skip: true } } });
+    const dir = path.join(w.repo, slotOf(w, B, 1).dir);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, 'wrapper.json'), JSON.stringify({ schema: 'ms18d-c-run-1',
+      outcome: 'control-hold', heldAt: 'foreign-lock-watch' }));
+    second(w);
+    const r = runMerge(w, 'all-79');
+    assert.strictEqual(r.status, 0, r.stdout);
+    assert.strictEqual(r.report.cells[1].chunks[0].holds, 1);
+    fs.writeFileSync(path.join(dir, 'watch.json'), '{}');
+    forget(w);
+    refused(w, /a complete run follows a run that failed/, 'a wrapper-only hold plus another file');
+  });
+
+  await test('F5: a real run whose request has command.exec is rejected (the tee executable)', () => {
+    const w = newWorld();
+    campaignWith(w, mutate('request.json', (o) => { o.command.exec = 'node'; }));
+    refused(w, /request\.json: command\.exec is set/, 'command.exec');
+  });
+
+  // F6: the admission carries a complete A readiness record the merger decides again
+  const refusals = [
+    ['no readiness record in admission.json', mutate('admission.json', (o) => { delete o.readiness; }),
+      /admission\.json carries no readiness record/],
+    ['a readiness record that did not run', mutate('admission.json', (o) => { o.readiness.ran = false; }),
+      /carries no readiness record of a run/],
+    ['a readiness record that is not complete', mutate('admission.json', (o) => {
+      o.readiness.complete = false;
+    }), /not a complete admitted one/],
+    ['a readiness record that is an eligible hold', mutate('admission.json', (o) => {
+      o.readiness.eligibleReAsk = true;
+    }), /not a complete admitted one/],
+    ['a cited readiness.json that is another file', mutate('admission.json', (o) => {
+      o.readiness.sha256 = A64x;
+    }), /readiness\.json is missing or not the cited bytes/],
+    ['a missing readiness.json', { omit: ['readiness.json'] }, /readiness\.json is missing or not the cited/],
+    ['a missing first snapshot', { omit: ['readiness-before.json'] },
+      /first snapshot|before snapshot is missing|before snapshot/],
+    ['a missing second snapshot', { omit: ['readiness-after.json'] }, /after snapshot is missing/],
+    ['a decision that is not the one the data give', mutate('readiness.json', (o) => {
+      o.decision.counters.mean = 0;
+    }), /recorded decision is not the one the retained data give/],
+    ['a second snapshot changed after the decision', mutate('readiness-after.json', (o) => {
+      o.processes.filter((p) => p.pid === 310)[0].cpuMs += 100000;
+    }), /recorded decision is not the one the retained data give/],
+    ['an additional consumer in the retained data (honestly recorded)', {
+      readiness: { snapshotOptions: { rates: { [bystander]: 0.9 } } } }, /not a complete admitted one/],
+    ['a replaced host (honestly recorded)', { readiness: { snapshotOptions: {
+      hostFacts: rd.hostFacts(Object.assign({}, rd.HOST, { pid: 1 })) } } }, /not a complete admitted one/],
+    ['a host tuple that is not the one the journal approved', mutate('readiness.json', (o) => {
+      o.inputs.expected.pid = 99;
+    }), /host tuple is not the one approved by entry host-1/],
+    ['a host binding id that is not in the committed journal (unapproved)', mutate('readiness.json', (o) => {
+      o.inputs.binding.bindingId = 'host-9';
+    }), /host binding host-9 is not in the committed journal \(unapproved\)/],
+    ['a binding that was not the one in force at admission', mutate('readiness.json', (o) => {
+      o.inputs.binding.journal.entryCount = 2;
+    }), /was not the one in force at admission/],
+    ['a journal digest that is no prefix of the committed journal', mutate('readiness.json', (o) => {
+      o.inputs.binding.journal.sha256 = A64x;
+    }), /not a prefix of the committed journal/],
+    ['a binding whose evidence is not recorded as verified', mutate('readiness.json', (o) => {
+      o.inputs.binding.evidence.verified = false;
+    }), /names no verified host binding/],
+    ['a recorded host that differs from the journal entry', mutate('readiness.json', (o) => {
+      o.inputs.binding.host.pid = 77;
+    }), /recorded host differs from the journal entry/],
+    ['a readiness record that names no binding at all', mutate('readiness.json', (o) => {
+      delete o.inputs.binding;
+    }), /names no verified host binding/],
+    ['another logical processor count', mutate('readiness.json', (o) => {
+      o.inputs.logicalCpus = 8;
+    }), /another logical processor count/],
+    ['an excluded wrapper that is not the run\'s', mutate('readiness.json', (o) => {
+      o.inputs.owned.filter((x) => x.role === 'wrapper')[0].pid = 1;
+    }), /the wrapper is not the run's/],
+    ['an excluded controller that is not the run\'s', mutate('readiness.json', (o) => {
+      o.inputs.owned.filter((x) => x.role === 'controller')[0].pid = 1;
+    }), /the controller is not the run's/],
+    ['an excluded process of another role', mutate('readiness.json', (o) => {
+      o.inputs.owned.push({ role: 'bystander', pid: 310, createdMs: rd.T0 - 7e6 });
+    }), /an excluded process has the role bystander/],
+    ['an excluded probe that is no snapshot\'s', mutate('readiness.json', (o) => {
+      o.inputs.owned.push({ role: 'readiness-probe', pid: 31, createdMs: 1 });
+    }), /a probe process is not that of a snapshot/],
+    ['more than 60 s between the call and the payload', mutate('admission.json', (o) => {
+      o.callToSpawnMs = 60001;
+    }), /more than 60 s between the call and the payload/],
+    ['a late start recorded', mutate('admission.json', (o) => { o.lateStart = true; }),
+      /more than 60 s between the call and the payload/],
+    ['a readiness over the 45 s budget', { readiness: { input: { budget: { elapsedMs: 45001,
+      queryDurationsMs: [600, 650] } } } }, /not a complete admitted one/]
+  ];
+  for (const [name, damage, pattern] of refusals) {
+    await test('F6: the merger rejects ' + name, () => {
+      const w = newWorld();
+      campaignWith(w, damage);
+      refused(w, pattern, name);
+    });
+  }
+
+  await test('F6: policy A admits a busy host (ready false) and the merge passes: ready is no verdict',
+    () => {
+    const w = newWorld();
+    campaignWith(w, { readiness: { input: { readings: rd.readings(16, [3, 3, 3, 3, 3]) } } });
+    const r = runMerge(w, 'all-79');
+    assert.strictEqual(r.status, 0, r.stdout.split('\n').slice(-5).join('|'));
+  });
+
+  await test('F6: an approved rebinding is judged for ITS admissions; earlier ledgers stay valid', () => {
+    const w = newWorld();
+    const jw = rd.journalWorld({ bindings: [{}, { host: REBOUND }] });
+    const tuple2 = jw.hostBinding().expected;
+    const text2 = jw.committed[require('./journals.js').BINDINGS_REL];
+    // one chunk was admitted after the rebinding (binding host-2), the others before it (host-1)
+    campaignWith(w, { readiness: { world: jw, snapshotOptions: { binding: tuple2 },
+      input: { expected: tuple2, bindingSource: 'journal entry host-2' } } });
+    refused(w, /host binding host-2 is not in the committed journal \(unapproved\)/,
+      'the rebinding is not committed');
+    forget(w);
+    const ok = runMerge(w, 'all-79', { request: { bindingJournalText: text2 } });
+    assert.strictEqual(ok.status, 0, ok.stdout.split('\n').slice(-5).join('|'));
+    forget(w);
+    // the committed journal must still hold the prior entry first: a journal that dropped host-1 rejects
+    const dropped = text2.split('\n').filter(Boolean).slice(1).join('\n') + '\n';
+    const bad = runMerge(w, 'all-79', { request: { bindingJournalText: dropped } });
+    assert.strictEqual(bad.status, 2);
+    assert.ok(/replaces host-1|host-binding journal is empty or invalid/.test(bad.stdout), bad.stdout);
+  });
+
+  await test('F6: an empty, invalid or missing host-binding journal makes the merge invalid (exit 2)', () => {
+    for (const text of ['', '{broken\n', '\n\n']) {
+      const w = newWorld();
+      campaignWith(w, {});
+      const r = runMerge(w, 'all-79', { request: { bindingJournalText: text } });
+      assert.strictEqual(r.status, 2, JSON.stringify(text));
+      assert.ok(/host-binding journal is empty or invalid/.test(r.stdout), r.stdout);
+      assert.strictEqual(r.hasResultLine, false);
+    }
+  });
+
+  await test('F6: a REAL merge reads the journal at HEAD: base prefix and evidence digests checked', () => {
+    const jr = require('./journals.js');
+    const jw = rd.journalWorld({ bindings: [{}, { host: REBOUND }], baseBindings: 1 });
+    const mergeGp = require('./merge-gp.js');
+    const ctx = (base) => ({ standin: false, request: {}, base });
+    const read = (world, extra) => {
+      const git = (args) => {
+        if (args[0] === 'rev-parse') return rd.HEAD + '\n';
+        return world.git(args);
+      };
+      return mergeGp.bindingJournalOf(ctx(extra === undefined ? rd.BASE : extra), git, null);
+    };
+    assert.strictEqual(read(jw).entries.length, 2);
+    const rewritten = rd.journalWorld({ bindings: [{}, { host: REBOUND }], baseBindings: 1 });
+    rewritten.committedBase[jr.BINDINGS_REL] = rewritten.committedBase[jr.BINDINGS_REL]
+      .replace('host-1', 'host-X');
+    assert.throws(() => read(rewritten), /does not keep the version committed at the base/);
+    const noEvidence = rd.journalWorld({ bindings: [{}, { host: REBOUND }], baseBindings: 1 });
+    delete noEvidence.committed[jr.EVIDENCE_DIR + 'host-1.json'];
+    assert.throws(() => read(noEvidence),
+      /host-binding evidence is invalid: .*host-1\.json is not committed/);
+    const wrongBytes = rd.journalWorld({ bindings: [{}, { host: REBOUND }], baseBindings: 1 });
+    wrongBytes.committed[jr.EVIDENCE_DIR + 'host-2.json'] += ' ';
+    assert.throws(() => read(wrongBytes), /not the cited bytes/);
+    const empty = rd.journalWorld({ bindings: [], baseBindings: 0 });
+    assert.throws(() => read(empty), /empty or invalid/);
+  });
+}
+
 async function main() {
   await recorderTests();
   await mergerTests();
+  await readinessMergeTests();
   await classifierTests();
 }
 

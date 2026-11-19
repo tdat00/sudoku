@@ -27,6 +27,7 @@ const fs = require('fs');
 const path = require('path');
 const plan = require('./plan-data.js');
 const core = require('./merge-core.js');
+const journals = require('./journals.js');
 const { sha256, CRLF } = require('./common.js');
 const { gitReader } = require('./source-io.js');
 const { LEDGER } = require('./source-binding.js');
@@ -167,25 +168,66 @@ function writeReport(file, report) {
   }
 }
 
+/**
+ * The host-binding journal as committed at the merge HEAD (a stand-in request may carry its own text): the
+ * entries and lines the admissions' binding references are checked against; Invalid when it is absent, empty
+ * or not a valid append-only chain. The journal is read only from the committed state.
+ */
+function bindingJournalOf(ctx, git, deps) {
+  if (deps && deps.bindingJournal) return deps.bindingJournal;
+  let text = null;
+  if (ctx.standin && typeof ctx.request.bindingJournalText === 'string') {
+    text = ctx.request.bindingJournalText;
+  } else {
+    let head;
+    try {
+      head = String(git(['rev-parse', 'HEAD'])).trim();
+    } catch (err) {
+      throw new Invalid('HEAD cannot be read: ' + err.message);
+    }
+    // the committed journal must keep its version at B as a line prefix, and every entry's evidence must be
+    // committed with the cited digest
+    const j = journals.loadJournal({ git, head, base: ctx.base, rel: journals.BINDINGS_REL,
+      parse: journals.parseBindings });
+    if (j.problems.length > 0) {
+      throw new Invalid('the host-binding journal is invalid at HEAD: ' + j.problems[0]);
+    }
+    const bad = [];
+    j.entries.forEach((e) => journals.evidenceProblems(git, head, e).forEach((p) => bad.push(p)));
+    if (bad.length > 0) throw new Invalid('the host-binding evidence is invalid: ' + bad[0]);
+    if (j.entries.length === 0) throw new Invalid('the host-binding journal is empty or invalid: no entry');
+    return { entries: j.entries, lines: j.lines, problems: [] };
+  }
+  const lines = journals.linesOf(text);
+  const parsed = journals.parseBindings(lines);
+  if (parsed.problems.length > 0 || parsed.entries.length === 0) {
+    throw new Invalid('the host-binding journal is empty or invalid: ' + (parsed.problems[0] || 'no entry'));
+  }
+  return { entries: parsed.entries, lines, problems: [] };
+}
+
 /** Runs the merge. `deps.git` replaces the Git reader and `deps.out` the stdout writer (stand-in tests). */
 function main(argv, deps) {
   const out = (deps && deps.out) || ((text) => process.stdout.write(text + '\n'));
   let ctx;
+  let bindingJournal;
+  let git;
   try {
     ctx = prepare(parseArgs(argv));
+    git = (deps && deps.git) || gitReader(ctx.repo);
+    bindingJournal = bindingJournalOf(ctx, git, deps);
   } catch (err) {
     if (!(err instanceof Invalid)) throw err;
     out('ms18d-gp-merge-invalid ' + err.message);
     return EXIT.INVALID;
   }
-  const git = (deps && deps.git) || gitReader(ctx.repo);
   const ledgerPath = (deps && deps.ledger) || LEDGER;
   const scope = ctx.args.scopeObject;
   const folders = core.collectRunFolders(ctx.doc, scope, repoFs(ctx.repo));
   const headChecker = core.makeHeadChecker(git, ctx.base, ctx.doc, ledgerPath);
   const evaluation = core.evaluate({ doc: ctx.doc, scope, runFolders: folders.folders,
     expectedIdentity: core.expectedIdentityOf(ctx.doc, ctx.helperSha, ctx.base), base: ctx.base,
-    checkHead: headChecker, realRun: !ctx.standin, planRel: ctx.args.plan });
+    checkHead: headChecker, realRun: !ctx.standin, planRel: ctx.args.plan, bindingJournal });
   folders.problems.forEach((p) => evaluation.problems.push(p));
   if (folders.problems.length > 0) evaluation.complete = false;
 
@@ -243,4 +285,4 @@ if (require.main === module) {
   process.exitCode = guarded(process.argv.slice(2));
 }
 
-module.exports = { main: guarded, prepare, parseArgs, resultLine, EXIT, RESULT };
+module.exports = { main: guarded, prepare, parseArgs, resultLine, bindingJournalOf, EXIT, RESULT };

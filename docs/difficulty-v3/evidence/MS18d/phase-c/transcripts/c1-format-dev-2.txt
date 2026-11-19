@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\check-format.js
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-readiness.js: line 734 has 111 characters
+checked 737 files, 1 with problems
+exit=1 seconds=0.460

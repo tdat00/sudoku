@@ -1,0 +1,36 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "stand-in c2",
+  "runId": "c2",
+  "cell": "",
+  "payload": "generic",
+  "chunkId": null,
+  "attempt": null,
+  "scope": null,
+  "standin": true,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-4/runs14/generic/c2",
+  "requestedAt": "2026-11-19T17:41:02.069+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795084846665,
+    "lastCheckMs": 1795084862055,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 260
+  },
+  "startedAtFromChild": null,
+  "finished": "2026-11-19T17:41:02.169+07:00",
+  "releaseObservedAt": "2026-11-19T17:41:02.169+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

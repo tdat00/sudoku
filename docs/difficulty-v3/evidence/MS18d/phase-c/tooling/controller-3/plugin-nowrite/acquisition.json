@@ -1,0 +1,64 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795084683888,
+  "startedAtMs": 1795084683958,
+  "lockAcquiredAtMs": 1795084683893,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795084668388,
+    "lastCheckMs": 1795084683688,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 70,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795083784885,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 899073,
+  "reasons": [],
+  "decision": "proceed",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 30260,
+    "task": "stand-in plugin-nowrite",
+    "controllerPid": 34436,
+    "controllerParentPid": 30260,
+    "wrapperPid": 30260
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-rSjWc3\\plugin-nowrite\\logs\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-rSjWc3\\plugin-nowrite\\logs\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-rSjWc3\\plugin-nowrite\\logs\\c.jsonl",
+      "present": true
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\check-format.js --outputs ..\docs\difficulty-v3\evidence\MS18d\phase-c\outputs-c1-sha256.txt
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-4/runs28/fakea-easy/fakea-easy.i0.n50.a1/request.json: no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-4/runs28/fakea-easy/fakea-easy.i0.n50.a1/result.json: no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-4/runs28/fakea-easy/fakea-easy.i0.n50.a1/wrapper.json: no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-4/runs29/fakea-easy/fakea-easy.i0.n50.a1/request.json: no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-4/runs29/fakea-easy/fakea-easy.i0.n50.a1/result.json: no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-4/runs29/fakea-easy/fakea-easy.i0.n50.a1/wrapper.json: no final newline
+checked 1434 files, 6 with problems
+exit=1 seconds=1.248

@@ -1,0 +1,67 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795084672385,
+  "startedAtMs": 1795084672458,
+  "lockAcquiredAtMs": 1795084672390,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795084656885,
+    "lastCheckMs": 1795084672185,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 73,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795083773383,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 899075,
+  "reasons": [
+    "the-lock-is-not-held-by-the-wrapper",
+    "the-controller-is-not-a-child-of-the-wrapper"
+  ],
+  "decision": "hold",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 30260,
+    "task": "stand-in lock-parent",
+    "controllerPid": 32456,
+    "controllerParentPid": 30260,
+    "wrapperPid": 30261
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-rSjWc3\\lock-parent\\logs\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-rSjWc3\\lock-parent\\logs\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-rSjWc3\\lock-parent\\logs\\c.jsonl",
+      "present": true
+    }
+  ]
+}

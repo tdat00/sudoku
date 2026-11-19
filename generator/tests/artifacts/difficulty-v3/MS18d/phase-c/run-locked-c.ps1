@@ -76,9 +76,20 @@ $script:WatchGiveUpSeconds = 1200
 $script:WatchIntervalMs = 250
 $script:ReleaseWaitSeconds = 3
 $script:Stamp = 'yyyy-MM-ddTHH:mm:ss.fffzzz'
+# C1/F-series: the pack files the wrapper reads (committed by the pack authors, never written here), the
+# probe, the frozen initial host binding and the Git reader (a scriptblock a stand-in test may replace)
+$script:LedgerRel = 'docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl'
+$script:RulingsRel = 'tasks/difficulty-v3/MS18d-gp-rulings.jsonl'
+$script:HostBindingsRel = 'tasks/difficulty-v3/MS18d-gp-host-bindings.jsonl'
+$script:EvidenceDirRel = 'tasks/difficulty-v3/MS18d-gp-host-evidence/'
+$script:ProbeScript = "$script:ToolsC\readiness-probe.ps1"
+$script:ReAskWaitSeconds = 60
+$script:GitOverride = $null
+$script:StandinReadiness = $null
 . $script:HelperPath
 . "$script:ToolsC\owned-processes.ps1"
 . "$script:ToolsC\slot-watch.ps1"
+. $script:ProbeScript
 
 function Read-JsonLines {
   param([string]$File)
@@ -87,6 +98,22 @@ function Read-JsonLines {
   foreach ($line in [IO.File]::ReadAllLines($File)) {
     if ($line.Trim() -eq '') { continue }
     try { $rows += ($line | ConvertFrom-Json -DateKind String) } catch { }
+  }
+  return $rows
+}
+
+# Like Read-JsonLines, but a line that is not JSON is an error: a record that cannot be read is never skipped.
+function Read-JsonLinesStrict {
+  param([string]$File)
+  if (-not (Test-Path -LiteralPath $File)) { return @() }
+  $rows = @()
+  $n = 0
+  foreach ($line in [IO.File]::ReadAllLines($File)) {
+    $n++
+    if ($line.Trim() -eq '') { continue }
+    try { $rows += ($line | ConvertFrom-Json -DateKind String) } catch {
+      throw "MS18d-C: line $n of $File is not JSON; nothing is skipped"
+    }
   }
   return $rows
 }
@@ -122,12 +149,377 @@ function Get-SlotStateC {
   }
 }
 
+# ---- F1: the pre-flight. Everything below can be refused WITHOUT creating a run folder: a folder created
+# before a refusal or a lock watch is a spent admission of its chunk (the merger would read it as a started
+# payload and the cell could never be merged).
+
+# A Git command on the repository of the run, as { Exit, Out } with the RAW standard output (a stand-in test
+# may replace the reader). Read-only commands only.
+function Invoke-GitC {
+  param([string[]]$GitArgs)
+  if ($script:GitOverride) { return & $script:GitOverride $GitArgs }
+  $si = [Diagnostics.ProcessStartInfo]::new('git')
+  $si.UseShellExecute = $false
+  $si.CreateNoWindow = $true
+  $si.RedirectStandardOutput = $true
+  $si.RedirectStandardError = $true
+  $si.StandardOutputEncoding = [Text.Encoding]::UTF8
+  foreach ($a in (@('-C', $script:RunRepo, '--no-pager') + $GitArgs)) { $si.ArgumentList.Add($a) }
+  $p = [Diagnostics.Process]::Start($si)
+  $errTask = $p.StandardError.ReadToEndAsync()
+  $out = $p.StandardOutput.ReadToEnd()
+  $p.WaitForExit()
+  return [pscustomobject]@{ Exit = $p.ExitCode; Out = $out; Err = $errTask.Result }
+}
+
+# A shared lock whose owner process is gone: reported at once (never deleted here, never waited out); $null
+# when the lock is absent or its owner lives (or cannot be told).
+function Get-StaleSharedLockC {
+  $lock = Join-Path $env:TEMP 'dv3-sudoku.lock'
+  if (-not (Test-Path -LiteralPath $lock)) { return $null }
+  try {
+    $stream = [IO.File]::Open($lock, [IO.FileMode]::Open, [IO.FileAccess]::Read, [IO.FileShare]::ReadWrite)
+    try { $text = (New-Object IO.StreamReader($stream)).ReadToEnd() } finally { $stream.Dispose() }
+    $parts = $text.Split('|')
+    if ($parts.Count -ge 2 -and $parts[0] -match '^\d+$') {
+      if (-not (Get-Process -Id ([int]$parts[0]) -ErrorAction SilentlyContinue)) {
+        return ("the shared lock dv3-sudoku.lock names process $($parts[0]) ($($parts[1])), which is gone. " +
+          'It looks stale. It is NOT deleted here: report it to the orchestrator.')
+      }
+    }
+  } catch { }
+  return $null
+}
+
+# R3 before a real run: HEAD is the campaign base B or a descendant whose diff since B lists only the run
+# directories the manifest declares (literal), the C lock log and the pack files; and the C lock log is
+# tracked at HEAD (committed empty before B: an untracked first append would fail every later binding).
+function Get-CampaignHeadProblemsC {
+  param([string]$Base, [string[]]$DeclaredDirs)
+  $problems = @()
+  $head = Invoke-GitC @('rev-parse', 'HEAD')
+  $headId = $head.Out.Trim()
+  if ($head.Exit -ne 0 -or $headId -notmatch '^[0-9a-f]{40}$') { return @('HEAD cannot be read') }
+  if ($headId -ne $Base) {
+    $anc = Invoke-GitC @('merge-base', '--is-ancestor', $Base, $headId)
+    if ($anc.Exit -ne 0) {
+      return @("HEAD $headId is neither the campaign base $Base nor a descendant of it")
+    }
+    $diff = Invoke-GitC @('-c', 'core.quotepath=false', 'diff', '--name-only', $Base, $headId)
+    if ($diff.Exit -ne 0) { return @('git diff against the campaign base failed') }
+    foreach ($raw in ($diff.Out -split "`n")) {
+      $file = $raw.Trim().Replace('\', '/')
+      if ($file -eq '') { continue }
+      $inPack = $file.StartsWith('tasks/difficulty-v3/') -and (@($file.Split('/')) -notcontains '..')
+      $slash = $file.LastIndexOf('/')
+      $dir = $(if ($slash -ge 0) { $file.Substring(0, $slash) } else { '' })
+      $name = $file.Substring($slash + 1)
+      $inRun = ($DeclaredDirs -contains $dir) -and ($name -match '^(?!\.+$)[A-Za-z0-9._-]+$')
+      if (-not $inPack -and -not $inRun -and $file -ne $script:LedgerRel) {
+        $problems += "changed since the campaign base: $file"
+      }
+    }
+  }
+  foreach ($tracked in @($script:LedgerRel, $script:RulingsRel, $script:HostBindingsRel)) {
+    $at = Invoke-GitC @('cat-file', '-e', "HEAD:$tracked")
+    if ($at.Exit -ne 0) {
+      $problems += "$tracked is not tracked at HEAD: commit it (empty) before the campaign base"
+    }
+  }
+  return $problems
+}
+
+# The literal run directories of the manifest, repository-relative with '/'.
+function Get-DeclaredDirsC {
+  param($PlanDoc)
+  return @($PlanDoc.runSlots | ForEach-Object { ([string]$_.dir).Replace('\', '/').TrimEnd('/') } |
+      Select-Object -Unique)
+}
+
+# ---- the committed journals of the pack (journals.js is the authority; this is the pre-flight's own
+# reading). Only the COMMITTED text at HEAD is read (`git show`), never the working file, and it must keep the
+# version committed at the campaign base B as an exact line prefix (append-only). Both throw on anything
+# unusable.
+function Get-CommittedTextC([string]$Ref, [string]$Rel) {
+  $r = Invoke-GitC @('show', "${Ref}:$Rel")
+  if ($r.Exit -ne 0) { return $null }
+  return [string]$r.Out
+}
+
+function Split-JournalLinesC([string]$Text) {
+  return @(($Text -replace '^\uFEFF', '') -split "`n" | ForEach-Object { $_.TrimEnd("`r") } |
+      Where-Object { $_.Trim() -ne '' })
+}
+
+function Get-JournalLinesC([string]$Rel, [string]$Base) {
+  $head = (Invoke-GitC @('rev-parse', 'HEAD')).Out.Trim()
+  if ($head -notmatch '^[0-9a-f]{40}$') { throw 'MS18d-C: HEAD cannot be read' }
+  $text = Get-CommittedTextC $head $Rel
+  if ($null -eq $text) { throw "MS18d-C: $Rel is not committed at HEAD" }
+  $lines = @(Split-JournalLinesC $text)
+  if ($Base) {
+    $baseText = Get-CommittedTextC $Base $Rel
+    if ($null -eq $baseText) { throw "MS18d-C: $Rel is not committed at the campaign base" }
+    $before = @(Split-JournalLinesC $baseText)
+    for ($i = 0; $i -lt $before.Count; $i++) {
+      if ($i -ge $lines.Count -or $lines[$i] -ne $before[$i]) {
+        throw "MS18d-C: $Rel does not keep the version committed at the campaign base"
+      }
+    }
+  }
+  return [pscustomobject]@{ Head = $head; Lines = $lines }
+}
+
+$script:ZoneInstant = '(Z|[+-]\d{2}:\d{2})$'
+function ConvertTo-InstantC([string]$Text) {
+  $when = [DateTimeOffset]::MinValue
+  $culture = [Globalization.CultureInfo]::InvariantCulture
+  if ($Text -match $script:ZoneInstant -and
+    [DateTimeOffset]::TryParse($Text, $culture, [Globalization.DateTimeStyles]::None, [ref]$when)) {
+    return $when
+  }
+  return $null
+}
+
+# F3: one JSON object per line {chunkId, heldRunId, allowAttempt: 2, ref, at}; empty = no rulings.
+function Get-RulingsC([string]$Base) {
+  $out = @()
+  $seen = @{}
+  $n = 0
+  foreach ($line in (Get-JournalLinesC $script:RulingsRel $Base).Lines) {
+    $n++
+    try {
+      $v = $line | ConvertFrom-Json -DateKind String
+    } catch { throw "MS18d-C: ruling line $n is not JSON" }
+    $names = @($v.PSObject.Properties.Name)
+    $exact = $names.Count -eq 5 -and @('chunkId', 'heldRunId', 'allowAttempt', 'ref', 'at' |
+        Where-Object { $names -contains $_ }).Count -eq 5
+    $ok = $exact -and ($v.chunkId -is [string]) -and $v.chunkId -and ($v.heldRunId -is [string]) -and
+      $v.heldRunId -and ($v.allowAttempt -isnot [string]) -and ($v.allowAttempt -eq 2) -and
+      ($v.ref -is [string]) -and $v.ref -and ($v.at -is [string]) -and $null -ne (ConvertTo-InstantC $v.at)
+    if (-not $ok) {
+      throw "MS18d-C: ruling line $n is not exactly {chunkId, heldRunId, allowAttempt: 2, ref, at}"
+    }
+    $id = "$($v.chunkId)|$($v.heldRunId)"
+    if ($seen.ContainsKey($id)) { throw "MS18d-C: ruling line $n repeats $id" }
+    $seen[$id] = $true
+    $out += $v
+  }
+  return $out
+}
+
+# F4: the line stops after any outcome that is not a success, except the chunk's own eligible re-ask. A
+# recorder or merge run of the C log that ended otherwise blocks every further real call until a ruling line
+# covers that run (chunkId or scope, heldRunId); after an eligible hold only that chunk's attempt 2 may
+# follow. Throws with the blocking runs; nothing is started.
+function Assert-LineOpenC {
+  param([string]$ChunkId, [int]$Attempt, [string]$Base = '')
+  $rows = @(Read-JsonLinesStrict -File $script:LogC | Where-Object {
+      $_.schema -eq 'ms18d-c-run-1' -and $_.type -ne 'pre-window-hold' -and
+      (@('gp-recorder', 'gp-merge') -contains $_.payload) })
+  $rulings = @(Get-RulingsC $Base)
+  $blocked = @()
+  for ($i = 0; $i -lt $rows.Count; $i++) {
+    $row = $rows[$i]
+    if ($row.outcome -eq 'success') { continue }
+    $covered = @($rulings | Where-Object { $_.heldRunId -eq $row.runId -and
+        ($_.chunkId -eq $row.chunkId -or $_.chunkId -eq $row.scope) }).Count -gt 0
+    if ($covered) { continue }
+    $next = $(if ($i + 1 -lt $rows.Count) { $rows[$i + 1] } else { $null })
+    $eligible = ($row.controllerOutcome -eq 'control-hold') -and ($row.eligibleReAsk -eq $true) -and
+      ($row.attempt -eq 1)
+    if ($eligible -and $null -ne $next -and $next.chunkId -eq $row.chunkId -and $next.attempt -eq 2) {
+      continue
+    }
+    if ($eligible -and $null -eq $next) {
+      if ($row.chunkId -eq $ChunkId -and $Attempt -eq 2) { continue }
+      $blocked += "run $($row.runId) is an eligible hold: only attempt 2 of $($row.chunkId) may follow it"
+      continue
+    }
+    $blocked += "run $($row.runId) ended with $($row.outcome)"
+  }
+  if ($blocked.Count -gt 0) {
+    throw ('MS18d-C: the line is stopped (' + ($blocked -join '; ') + '). Every further real call is ' +
+      'refused until a ruling line covers each of these runs. Nothing was started.')
+  }
+}
+
+# F2: the attempt is checked BEFORE the folder exists. Attempt 1: no folder of the chunk may exist. Attempt
+# 2: exactly the folder `<chunk>.a1`, a control-hold that started no payload and left no tee/command record,
+# transcript, stdout, stderr or ledger, and either a committed ruling for it or `eligibleReAsk: true` with
+# at least 60 s since its verified release. (The controller's own check inside the lock stays authoritative.)
+function Assert-AttemptC {
+  param([string]$ChunkId, [int]$Attempt, [string]$CellDir, [string]$Base = '')
+  $cellRoot = Join-Path $script:RunsRoot $CellDir
+  $mine = @()
+  if (Test-Path -LiteralPath $cellRoot) {
+    foreach ($d in (Get-ChildItem -LiteralPath $cellRoot -Directory)) {
+      $says = $false
+      foreach ($f in @('request.json', 'wrapper.json')) {
+        $p = Join-Path $d.FullName $f
+        if ((Test-Path -LiteralPath $p) -and ((Get-Content -LiteralPath $p -Raw) -match
+            ('"chunkId":\s*"' + [regex]::Escape($ChunkId) + '"'))) { $says = $true }
+      }
+      if ($d.Name.StartsWith("$ChunkId.") -or $says) { $mine += $d }
+    }
+  }
+  if ($Attempt -eq 1) {
+    if ($mine.Count -gt 0) {
+      $names = ($mine | ForEach-Object Name) -join ', '
+      throw ("MS18d-C: attempt 1 of $ChunkId, but a run folder of the chunk exists ($names). " +
+        'Nothing was started.')
+    }
+    return
+  }
+  if ($mine.Count -ne 1 -or $mine[0].Name -ne "$ChunkId.a1") {
+    throw "MS18d-C: attempt 2 of $ChunkId needs exactly its attempt 1 folder. Nothing was started."
+  }
+  $dir = $mine[0].FullName
+  $held = $mine[0].Name
+  $readOne = {
+    param($name)
+    $p = Join-Path $dir $name
+    if (-not (Test-Path -LiteralPath $p)) { return $null }
+    try {
+      return (Get-Content -LiteralPath $p -Raw | ConvertFrom-Json -DateKind String)
+    } catch { return $null }
+  }
+  $result = & $readOne 'result.json'
+  $wrapper = & $readOne 'wrapper.json'
+  $signs = @('transcript.txt', 'stdout.txt', 'stderr.txt', 'ledger.json') |
+    Where-Object { Test-Path -LiteralPath (Join-Path $dir $_) }
+  $payloadRows = @(Read-JsonLinesStrict -File (Join-Path $dir 'pids.jsonl') | Where-Object {
+      $_.role -eq 'tee' -or $_.role -eq 'command' -or $_.event -eq 'command-exit' -or
+      $_.event -eq 'tee-exit' })
+  $unstarted = $null -ne $result -and $result.outcome -eq 'control-hold' -and
+    $result.payloadStarted -eq $false -and @($signs).Count -eq 0 -and $payloadRows.Count -eq 0
+  if (-not $unstarted) {
+    throw "MS18d-C: attempt 2 of ${ChunkId}: $held is not an unstarted control-hold. Nothing was started."
+  }
+  $released = $null
+  foreach ($name in @('releaseObservedAt', 'finished')) {
+    $when = [DateTimeOffset]::MinValue
+    if ($wrapper -and $wrapper.$name -and [DateTimeOffset]::TryParse([string]$wrapper.$name, [ref]$when)) {
+      $released = $when
+      break
+    }
+  }
+  # F3: a committed ruling for this held run stands in for the eligibility and the 60 s, unless it is stale
+  # (dated before the release of the hold) or prospective (dated after now)
+  $ruling = @(Get-RulingsC $Base | Where-Object { $_.chunkId -eq $ChunkId -and $_.heldRunId -eq $held })
+  $authority = $false
+  if ($ruling.Count -gt 0) {
+    $at = ConvertTo-InstantC ([string]$ruling[0].at)
+    $authority = $null -ne $released -and $at -ge $released -and $at -le [DateTimeOffset]::Now
+  }
+  if ($authority) { return }
+  if ($result.eligibleReAsk -ne $true) {
+    throw ("MS18d-C: attempt 2 of ${ChunkId}: $held is not an eligible re-ask and no valid committed " +
+      'ruling covers it.')
+  }
+  if ($null -eq $released -or ([DateTimeOffset]::Now - $released).TotalSeconds -lt $script:ReAskWaitSeconds) {
+    throw "MS18d-C: attempt 2 of ${ChunkId} needs $($script:ReAskWaitSeconds) s after the release of $held."
+  }
+}
+
+# C1: the host binding in force: the LAST entry of the committed host-binding journal (append-only chain,
+# evidence committed with its digest). An empty or invalid journal means NO host binding is configured: it
+# throws, and nothing falls back to a host approved earlier. The tooling never writes the journal.
+function Get-HostBindingC([string]$Base = '') {
+  $j = Get-JournalLinesC $script:HostBindingsRel $Base
+  if ($j.Lines.Count -eq 0) {
+    throw 'MS18d-C: the host-binding journal is empty: no host binding is configured'
+  }
+  $allowed = @('bindingId', 'replaces', 'host', 'observedAt', 'evidence', 'ref', 'at')
+  $hostKeys = @('pid', 'dotNetStartTime', 'cimCreationDateUtcMicroseconds', 'parentPid', 'executablePath',
+    'processName')
+  $prior = $null
+  $seen = @{}
+  $n = 0
+  $entry = $null
+  foreach ($line in $j.Lines) {
+    $n++
+    try {
+      $e = $line | ConvertFrom-Json -DateKind String
+    } catch { throw "MS18d-C: binding line $n is not JSON" }
+    $h = $e.host
+    $bad = @()
+    if (@($e.PSObject.Properties.Name | Where-Object { $allowed -notcontains $_ }).Count -gt 0) {
+      $bad += 'a member'
+    }
+    if ($e.bindingId -notmatch '^[A-Za-z0-9][A-Za-z0-9._-]*$') { $bad += 'bindingId' }
+    if ($seen.ContainsKey([string]$e.bindingId)) { $bad += 'a repeated bindingId' }
+    if ($null -ne $prior -and [string]$e.replaces -ne $prior) { $bad += 'replaces' }
+    if ($null -eq $prior -and $null -ne $e.replaces) { $bad += 'replaces (the first is null)' }
+    $hostMembers = $(if ($null -ne $h) { @($h.PSObject.Properties.Name) } else { @() })
+    if ($null -eq $h -or @($hostMembers | Where-Object { $hostKeys -notcontains $_ }).Count -gt 0) {
+      $bad += 'host'
+    } else {
+      if (($h.pid -isnot [int] -and $h.pid -isnot [long]) -or $h.pid -le 4 -or
+        ($h.parentPid -isnot [int] -and $h.parentPid -isnot [long]) -or $h.parentPid -lt 0) { $bad += 'pids' }
+      if ([string]$h.dotNetStartTime -notmatch '^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{7}(Z|[+-]\d\d:\d\d)$' -or
+        $null -eq (ConvertTo-InstantC ([string]$h.dotNetStartTime))) { $bad += 'dotNetStartTime' }
+      if ([string]$h.cimCreationDateUtcMicroseconds -notmatch '^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{6}Z$') {
+        $bad += 'cimCreationDateUtcMicroseconds'
+      }
+      if (-not $h.executablePath) { $bad += 'executablePath' }
+    }
+    $seenAt = ConvertTo-InstantC ([string]$e.observedAt)
+    $madeAt = ConvertTo-InstantC ([string]$e.at)
+    if ($null -eq $seenAt -or $null -eq $madeAt -or $madeAt -lt $seenAt) { $bad += 'times' }
+    if ($e.evidence.file -ne "$script:EvidenceDirRel$($e.bindingId).json" -or
+      [string]$e.evidence.sha256 -notmatch '^[0-9a-f]{64}$') { $bad += 'evidence' }
+    if (-not $e.ref -or $e.ref -isnot [string]) { $bad += 'ref' }
+    if ($bad.Count -gt 0) { throw "MS18d-C: binding line $n is not valid ($($bad -join ', '))" }
+    $seen[[string]$e.bindingId] = $true
+    $prior = [string]$e.bindingId
+    $entry = $e
+  }
+  $text = Get-CommittedTextC $j.Head $entry.evidence.file
+  if ($null -eq $text) { throw "MS18d-C: $($entry.evidence.file) is not committed at HEAD" }
+  $normalized = ($text -replace '^\uFEFF', '').Replace("`r`n", "`n")
+  $sha = [BitConverter]::ToString([Security.Cryptography.SHA256]::HashData(
+      [Text.Encoding]::UTF8.GetBytes($normalized))).Replace('-', '').ToLowerInvariant()
+  if ($sha -ne $entry.evidence.sha256) { throw "MS18d-C: $($entry.evidence.file) is not the cited bytes" }
+  $net = (ConvertTo-InstantC ([string]$entry.host.dotNetStartTime)).UtcDateTime.ToString(
+    "yyyy-MM-dd'T'HH:mm:ss.fffffff'Z'", [Globalization.CultureInfo]::InvariantCulture)
+  return [pscustomobject]@{ Entry = $entry; Pid = [int]$entry.host.pid; ParentPid = [int]$entry.host.parentPid
+    NetStartUtc = $net; CimCreationUtc = [string]$entry.host.cimCreationDateUtcMicroseconds
+    ExePath = [string]$entry.host.executablePath }
+}
+
+# The live host instance against the binding in force, fact by fact (PID, parent, executable, the .NET start
+# time at 100 ns, the CIM creation at 6 digits). ProcessName and the CIM name are diagnostic only: an update
+# may rename a running binary (`copilot.exe.old-...`) and that is no changed instance.
+function Get-HostProblemsC([string]$Base = '') {
+  $b = Get-HostBindingC $Base
+  $facts = Get-HostFactsC -ProcessId $b.Pid
+  if (-not $facts.found) {
+    return @("the bound host process $($b.Pid) is not running: a replaced host needs a verified rebinding")
+  }
+  $problems = @()
+  $pairs = @(@('pid', $b.Pid), @('parentPid', $b.ParentPid), @('netStartUtc', $b.NetStartUtc),
+    @('cimCreationUtc', $b.CimCreationUtc))
+  foreach ($pair in $pairs) {
+    if ([string]$facts[$pair[0]] -ne [string]$pair[1]) {
+      $problems += "the host's $($pair[0]) differs: bound $($pair[1]), found $($facts[$pair[0]])"
+    }
+  }
+  if ([string]$facts.exePath -ne $b.ExePath) {
+    $problems += "the host's exePath differs: bound $($b.ExePath), found $($facts.exePath)"
+  }
+  return $problems
+}
+
 # Problems of the frozen helper manifest ("<sha256>  <path relative to the repository>" lines), [] when it
 # holds.
 function Test-HelperManifestC {
+  param([switch]$Real)
   $m = $script:HelperManifest
   $problems = @()
   if (-not (Test-Path -LiteralPath $m.File)) { return @("the helper manifest $($m.File) does not exist") }
+  # F1: a real run names the reviewed hash; the recorder alone would refuse it after its payload started
+  if ($Real -and -not $m.Sha256) { $problems += 'a real run needs the reviewed helper manifest hash' }
   if ($m.Sha256) {
     $actual = (Get-FileHash -LiteralPath $m.File -Algorithm SHA256).Hash.ToLowerInvariant()
     if ($actual -ne $m.Sha256.ToLowerInvariant()) {
@@ -150,10 +542,24 @@ function Test-HelperManifestC {
       $problems += "helper bytes differ from the manifest: $rel"
     }
   }
-  foreach ($req in $m.Required) {
+  $wanted = @($m.Required)
+  if ($Real) { $wanted += @(Get-RealRequiredC) }
+  foreach ($req in $wanted) {
     if ($listed -notcontains $req.Replace('\', '/')) { $problems += "not in the manifest: $req" }
   }
   return $problems
+}
+
+# What a real run's helper manifest must list: the plan, the shared helper, the targets and every file of
+# this folder (the manifest is made by the freeze from exactly that).
+function Get-RealRequiredC {
+  $req = @($script:PlanFileRel.Replace('\', '/'),
+    'generator/tests/artifacts/difficulty-v3/MS18c/invoke-dv3node.ps1',
+    'docs/difficulty-v3/evidence/MS18d/phase-b/targets-frozen-final.json')
+  foreach ($f in (Get-ChildItem -LiteralPath $script:ToolsC -File)) {
+    $req += ('generator/tests/artifacts/difficulty-v3/MS18d/phase-c/' + $f.Name)
+  }
+  return $req
 }
 
 # The record of a run (wrapper.json and one line of the Phase C ledger); `Hold` runs have no controller
@@ -227,25 +633,47 @@ function Invoke-PayloadLocked {
   if (-not $Standin -and $CampaignBase -notmatch '^[0-9a-f]{40}$') {
     throw 'MS18d-C: a real run needs the campaign base commit B the orchestrator declared (40 hex digits)'
   }
+  # F1: -ExecOverride reaches the tee's executable and the merger never checks it: stand-ins only
+  if ($ExecOverride -and -not $Standin) { throw 'MS18d-C: -ExecOverride is for stand-ins only' }
+  if ($BindingFixture -and -not $Standin) { throw 'MS18d-C: a binding fixture is for stand-ins only' }
   $runDir = Join-Path (Join-Path $script:RunsRoot $cellDir) $RunId
   if (Test-Path -LiteralPath $runDir) {
     throw "MS18d-C: the run directory $runDir exists; a run is never overwritten"
   }
-  $manifestProblems = @(Test-HelperManifestC)
+  $manifestProblems = @(Test-HelperManifestC -Real:(-not $Standin))
   if ($manifestProblems.Count -gt 0) {
     throw ('MS18d-C hold before the lock (the helpers are not frozen as reviewed): ' +
       ($manifestProblems -join '; '))
   }
-  if ($finalMatrix -and -not $Standin) {
-    $required = @($script:HelperManifest.Required | ForEach-Object { $_.Replace('/', '\') })
-    if ($required -notcontains $script:PlanFileRel) {
-      throw "MS18d-C: the helper manifest must require the frozen chunk manifest $script:PlanFileRel"
+  if (-not $Standin) {
+    $pair = $PayloadRequest['declaredDirs']
+    $headProblems = @(Get-CampaignHeadProblemsC -Base $CampaignBase -DeclaredDirs @($pair))
+    if ($headProblems.Count -gt 0) {
+      throw ('MS18d-C hold before the lock (the campaign base): ' + ($headProblems -join '; '))
     }
   }
-  New-Item -ItemType Directory -Force -Path $runDir | Out-Null
+  if ($finalMatrix) {
+    # F4 and F2, then (a recorder) the live host against its binding: all before any folder exists
+    $unit = [string]$PayloadRequest['scope']
+    if ($PayloadRequest['chunk']) { $unit = $PayloadRequest['chunk'].chunkId }
+    Assert-LineOpenC -ChunkId $unit -Attempt ([int]$PayloadRequest['attempt']) -Base $CampaignBase
+    if ($Profile -eq 'gp-recorder') {
+      Assert-AttemptC -ChunkId $unit -Attempt ([int]$PayloadRequest['attempt']) -CellDir $cellDir `
+        -Base $CampaignBase
+      if (-not $Standin) {
+        $hostProblems = @(Get-HostProblemsC -Base $CampaignBase)
+        if ($hostProblems.Count -gt 0) {
+          throw ('MS18d-C hold before the lock (the host instance): ' + ($hostProblems -join '; '))
+        }
+      }
+    }
+  }
+  $stale = Get-StaleSharedLockC
+  if ($stale) { throw "MS18d-C: $stale Nothing was started." }
 
   # the lock watch during the gap wait: both lock files at least once a second for the 15.3 s right before
-  # the call
+  # the call. NO run folder exists yet: a watch that gives up must not leave a folder the merger would read
+  # as a started payload (F1)
   $last = Get-LastReleaseC
   $notBefore = 0
   if ($null -ne $last) {
@@ -254,25 +682,34 @@ function Invoke-PayloadLocked {
   }
   $watch = Wait-SlotQuiet -WindowSeconds ($script:GapSeconds + $script:GapMarginSeconds) `
     -GiveUpSeconds $script:WatchGiveUpSeconds -IntervalMs $script:WatchIntervalMs -NotBeforeMs $notBefore
-  Write-OwnedJson -Path (Join-Path $runDir 'watch.json') -Object $watch
   if ($watch.gaveUp) {
+    # one C-log line typed `pre-window-hold`: no folder, no admission consumed (attempts.js ignores it)
     $record = [ordered]@{
-      schema = 'ms18d-c-run-1'; task = $Task; runId = $RunId; cell = $Cell; payload = $Profile
+      schema = 'ms18d-c-run-1'; type = 'pre-window-hold'; task = $Task; runId = $RunId; cell = $Cell
+      payload = $Profile
       chunkId = $(if ($PayloadRequest['chunk']) { $PayloadRequest['chunk'].chunkId } else { $null })
       attempt = $PayloadRequest['attempt']; scope = $PayloadRequest['scope']
-      standin = [bool]$Standin; runDir = $runDir; outcome = 'control-hold'; heldAt = 'foreign-lock-watch'
+      standin = [bool]$Standin; outcome = 'pre-window-hold'; heldAt = 'foreign-lock-watch'
+      at = [DateTimeOffset]::Now.ToString($script:Stamp)
       reasons = @('a lock of another job did not leave a 15.3 s quiet window within the bounded wait')
       watch = [ordered]@{ startedAtMs = $watch.startedAtMs; lastCheckMs = $watch.lastCheckMs
         checks = $watch.checks; restartCount = $watch.restartCount; giveUpSeconds = $watch.giveUpSeconds
         gaveUp = $true }
       problems = @()
     }
-    Write-RunRecord -Record $record -RunDir $runDir
+    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $script:LogC) | Out-Null
+    [IO.File]::AppendAllText($script:LogC, (($record | ConvertTo-Json -Depth 6 -Compress) + "`r`n"))
     Write-Host ("LOCKED-C ${Task}: outcome=control-hold (the slot was never quiet for 15.3 s within " +
-      "$($watch.giveUpSeconds) s)")
-    return [pscustomobject]@{ Outcome = 'control-hold'; Exit = $null; RunDir = $runDir; Result = $null
+      "$($watch.giveUpSeconds) s; no run folder)")
+    return [pscustomobject]@{ Outcome = 'control-hold'; Exit = $null; RunDir = $null; Result = $null
       Record = $record }
   }
+  # the quiet window is proved: only now does the run folder exist
+  if (Test-Path -LiteralPath $runDir) {
+    throw "MS18d-C: the run directory $runDir exists; a run is never overwritten"
+  }
+  New-Item -ItemType Directory -Force -Path $runDir | Out-Null
+  Write-OwnedJson -Path (Join-Path $runDir 'watch.json') -Object $watch
 
   # the request: instant and slot state, then the record the controller reads
   $asked = [DateTimeOffset]::Now
@@ -307,7 +744,19 @@ function Invoke-PayloadLocked {
     powershell = (Get-Process -Id $PID).Path; ownedProcesses = "$script:ToolsC\owned-processes.ps1"
   }
   foreach ($k in $PayloadRequest.Keys) {
-    if (@('cellInfo', 'frozenArgs') -notcontains $k) { $request[$k] = $PayloadRequest[$k] }
+    if (@('cellInfo', 'frozenArgs', 'declaredDirs') -notcontains $k) { $request[$k] = $PayloadRequest[$k] }
+  }
+  # C1: the readiness of policy A. A real recorder run always carries it (frozen paths; the controller holds
+  # a real recorder run without it); a stand-in carries one only when a test configures it
+  if ($Profile -eq 'gp-recorder') {
+    if (-not $Standin) {
+      $request.readiness = [ordered]@{
+        powershell = $request.powershell; probeScript = $script:ProbeScript
+        logicalCpus = $script:Expected.machine.logicalProcessors; policy = $PayloadRequest['policy']
+      }
+    } elseif ($script:StandinReadiness) {
+      $request.readiness = $script:StandinReadiness
+    }
   }
   if ($BindingFixture) { $request.bindingFixture = $BindingFixture }
   foreach ($k in $ExtraRequest.Keys) { $request[$k] = $ExtraRequest[$k] }
@@ -407,6 +856,7 @@ function Invoke-PayloadLocked {
     releaseObservedAt = $(if ($observed) { $observed.ToString($script:Stamp) } else { $null })
     releaseVerified = [bool]$observed; releaseExact = $false; exit = $exitCode
     controllerOutcome = $(if ($result) { $result.outcome } else { $null })
+    eligibleReAsk = [bool]($result -and $result.eligibleReAsk -eq $true)
     barrierVerdict = $barrier.verdict; helperNote = $helperNote; outcome = $outcome; problems = $problems
   }
   Write-RunRecord -Record $record -RunDir $runDir
@@ -479,6 +929,7 @@ function Invoke-RecorderLocked {
   $out = '..\' + ($slot[0].dir -replace '/', '\') + '\ledger.json'
   $payload = [ordered]@{
     chunk = $c; attempt = $Attempt; plan = $plan.Info; policy = $plan.Doc.policy
+    declaredDirs = @(Get-DeclaredDirsC -PlanDoc $plan.Doc)
     cellInfo = [ordered]@{ variant = [string]$c.variant; level = [string]$c.level; targetMs = [int]$c.target }
     frozenArgs = @($script:RecorderRel, "--plan=$($script:PlanFileRel)", "--chunk=$ChunkId", "--out=$out")
   }
@@ -516,6 +967,7 @@ function Invoke-MergeLocked {
     requiredSuccesses = [int]$plan.Doc.gate.requiredSuccesses }
   $payload = [ordered]@{
     scope = $Scope; plan = $plan.Info; policy = $plan.Doc.policy; gate = $gate
+    declaredDirs = @(Get-DeclaredDirsC -PlanDoc $plan.Doc)
     cellInfo = $null
     frozenArgs = @($script:MergeRel, "--plan=$($script:PlanFileRel)", "--scope=$Scope", "--out=$out")
   }

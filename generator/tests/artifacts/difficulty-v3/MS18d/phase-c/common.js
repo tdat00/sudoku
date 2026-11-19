@@ -61,16 +61,21 @@ function appendJsonl(file, value) {
   }
 }
 
-/** A new JSON file (pretty, CRLF), created exclusively and flushed: an earlier record is kept. */
+/**
+ * A new JSON file (pretty, CRLF), created exclusively and flushed: an earlier record is kept. Returns the
+ * SHA-256 of the bytes written (what a later record may cite).
+ */
 function writeJsonExclusive(file, value) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
+  const bytes = Buffer.from(CRLF(JSON.stringify(value, null, 2)) + '\r\n', 'utf8');
   const fd = fs.openSync(file, 'wx');
   try {
-    fs.writeSync(fd, CRLF(JSON.stringify(value, null, 2)) + '\r\n');
+    fs.writeSync(fd, bytes);
     fs.fsyncSync(fd);
   } finally {
     fs.closeSync(fd);
   }
+  return sha256(bytes);
 }
 
 /** The non-blank lines of a JSON-lines file: { entries: [{ line, value }], problems: [text] }. */
