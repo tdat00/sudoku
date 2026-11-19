@@ -44,6 +44,33 @@ the one MS07f replay test containing both fixed mega16 requests; replace only
 invalidated coverage under the existing identity/compatibility rules. Remaining
 GD/deep and the three MS07f `perf` ratio cases still belong here.
 
+**MS18c step-5 population ruling:** implementation and assertion semantics are
+settled there, not deferred here. Killer/Jigsaw/Greater-Than/extra-regions retain
+their constant pre-B nine-level diagnostic corpora; Wordoku retains eight.
+Killer must not derive diagnostic membership from its now-three-level public
+support list. Aggregate/soundness/trend/witness assertions retain original
+thresholds, options, seeds, ordering and derived-state RNG; hidden builds use
+per-call guards restoring the exact public support array. Public per-level
+CV3/I5-hit/budget registrations alone follow the published offers, with removals
+and original indexes recorded in
+**`evidence\MS18c\closure\population-map.json` / `.md`**.
+
+MS18c verifies before/after registration inventories and scripted/sandbox request
+plans without live generation of these five suites. **Their live execution remains
+this task's bounded GD work**, not an assertion-repair assignment. Do not treat
+sandbox success as real threshold coverage or silently rescale/remove a later
+failing original assertion. Reconcile every public removal and retained diagnostic.
+The target table has 39 hidden positions nulled, offered targets unchanged until
+MS18d's rule; two declared public smoke replacements are Greater-Than Normal ->
+Easy and Wordoku Normal -> Easy. Neither substitutes for fixed diagnostic Normal
+requests, the three hard event ratios or GG/GR recipes.
+
+Also audit the recovery-profile scope repair: **G13 = Samurai/Nightmare/42**,
+existing mode-specific attempts/budgets unchanged, support restored and the newly
+loaded `tool-records.js` covered by the reported old/new toolHash. Retag no older
+record; apply the existing identity/compatibility rules to any retained deep/profile
+coverage. This ruling adds no new profile/search campaign or timing waiver.
+
 R20, verbatim:
 
 > Record every reclassification, the old and v3 labels/requiredness, and the causing technique in

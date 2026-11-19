@@ -24,14 +24,24 @@ follow check-list section 7.
 
 **MS18c post-GQ handoff, 2026-11-19 (not dispatch permission):** both analysts
 accepted all **135** GQ records, **79 offered / 56 hidden**, measured at `ed2fe50c`,
-dirty, sources `0ca29eaeebc295b6`, under the declared host-active policy. MS18c still
-must finish its official merge, orchestrator pre-publication/publication checkpoints,
-compatibility/manual/E/quick/CI closure and final review before this task starts.
-The single authoritative merged input will be
+dirty, sources `0ca29eaeebc295b6`, under the declared host-active policy. Its
+orchestrator checkpoints **A `6a473f7a` / B `387a4c8d`** are complete; publication
+sources are **`75b0955e3e356bd1`**. MS18c still must finish step-5 compatibility,
+manual/E/quick/CI closure and final review before this task starts.
+The single authoritative merged input is
 **`docs\difficulty-v3\evidence\MS18c\merge\qualification-v3.json`**, not a
 top-level duplicate. Preserve its measured source metadata and the A/B support-only
 publication proof; a publication-only source-hash change is not permission to retag
 GQ or manufacture a new measurement.
+
+**Step-5 target-table alignment is not target recalibration.** The joint MS18c
+ruling nulls the 39 newly hidden `PERF_TARGETS` positions and design 9.1 entries,
+preserving all 79 offered target values. Its existing perf consistency assertion
+stays unchanged. Use that explicit published-only baseline here; do not reinsert
+hidden targets. The two manual warn-only smoke selections change from Greater-Than/
+Normal and Wordoku/Normal to their offered Easy levels, with the original five-run
+smoke protocol. They are not GP measurements or changes to the complete 50-run GP
+matrix/seeds, fixed diagnostics or regression recipes.
 
 Carry **MS18c-GQ-ENGINE-COST** into the existing cost analysis: SA1's reported
 matching-outcome ratios are about 1.13 overall and 2-6.6x in several named cells;

@@ -114,7 +114,7 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [ ] | MS18 | MS18a-MS18e | Final evidence (parent) | MS17b | split | Evidence/release | M18 | 43-47 |
 | [x] | MS18a | [MS18a](MS18a-final-matched-soak.md) | Matched final soak | MS17b | S, 25-35 min | Evidence | M18a | 43 |
 | [x] | MS18b | [MS18b](MS18b-recheck-cap-and-window.md) | Cap/window final rechecks | MS18a | S, 25-40 min | Evidence | M18b | 44 |
-| [ ] | MS18c | [MS18c](MS18c-qualify-and-publish-offers.md) | Qualify and publish offers | GQ 135/135 jointly accepted; continuation AGREE/release, frozen merge, orchestrator A/B checkpoints and final closure | M + bounded manual/E/quick/CI | Qualification | M18c | 45 |
+| [ ] | MS18c | [MS18c](MS18c-qualify-and-publish-offers.md) | Qualify and publish offers | GQ accepted; A `6a473f7a` / B `387a4c8d` complete; step-5 population ruling AGREE/resume and final closure | M + bounded manual/E/quick/CI | Qualification | M18c | 45 |
 | [ ] | MS18d | [MS18d](MS18d-performance-and-final-hashes.md) | Final GP preflight/performance/hashes | MS18c | M, 40-55 min + GP/GG | Evidence | M18d | 46 |
 | [ ] | MS18e | [MS18e](MS18e-release-evidence-closure.md) | Final correctness/items/workflows and PR CI | MS18d | M, 40-60 min + GD/deep/CI | Release evidence/CI | M18 | 47 |
 
@@ -200,15 +200,35 @@ at **`ed2fe50c`, dirty**, sources **`0ca29eaeebc295b6`**: 4,313 outcomes,
 960 journal events bind the original manifest; all raw strict screens failed under
 the explicitly declared **host-active** policy. No new GQ or record retagging.
 
-Await **SA1 final AGREE on the leaf's combined continuation and the orchestrator's
-release** to the same developer **`5fe8b2d2`**. First freeze every file under
-`runs\` and `qualification\` to **`outputs-sha256-gq.txt`**. Official merge outputs
-are only **`evidence\MS18c\merge\qualification-v3.json`** and **`merge\table.md`**.
-Require exit 0, explicit zero invalid, the documented per-request errors and
-agreement with all receipts. The **orchestrator**, not the developer, commits
-checkpoint **A** (pre-publication evidence/helpers/compat/v2/merge), then **B**
-(support-array-only diff **and** the live report together); later closure commits
-remain orchestrator-owned. No Git writes by the developer.
+**Checkpoint A `6a473f7a` and B `387a4c8d` are complete.** The frozen inventory
+and official **`evidence\MS18c\merge\qualification-v3.json` / `merge\table.md`**
+remain immutable; 79 offers are published, sources **`75b0955e3e356bd1`**.
+The same developer **`5fe8b2d2`** is in step 5 and awaits **SA1 final AGREE on the
+new population ruling and orchestrator resume**, not another merge or A/B run.
+All implementation/closure commits remain orchestrator-owned; no developer Git writes.
+
+**Step-5 ruling (2026-11-19, 07:58 relay):** cases 1-3 use original fixed
+diagnostic corpora, counts, seeds, indexes and thresholds, with per-call restoring
+guards. Killer's corpus is a **constant pre-B nine-level list**, not live
+`DEF.difficultySupport`; Jigsaw/Greater-Than/extra-regions keep nine, Wordoku eight.
+Public per-level CV3/I5-hit/budget registrations alone filter published offers,
+with every removal recorded and original seed indexes preserved. No rescaling,
+assertion removal, unsupported-level crash or unresolved-policy handoff.
+
+**Case 4 is data alignment:** retain the `perf.test.js` consistency assertion
+unchanged; null exactly the 39 newly hidden `PERF_TARGETS` cells and matching
+design 9.1 cells, leaving all 79 offered targets unchanged. Explicit public
+`PERF_CELLS` substitutions are **Greater-Than Normal -> Easy** and **Wordoku
+Normal -> Easy**, not changes to fixed diagnostics/GG/GR or a Normal budget.
+Offered-target arithmetic stays MS18d. The recovery-profile guard/dependency-hash
+repair is in scope: G13 remains Samurai/Nightmare/42; record old/new toolHash and
+restore support on success/failure, retagging nothing.
+
+The leaf requires before/after `--list-tests` reconciled with pre-B populations,
+`closure\population-map.json` / `.md`, and sandbox proofs of guard use/restoration,
+no unsupported-level error/normalization, original seeds and Killer's nine fixed
+levels. Fix adapters, not generic `lazyCorpus` semantics. Live runs of the five
+variant suites stay MS18e; only verification is pending there, not assertion design.
 
 The continuation also owns the **complete bounded `variants` manual suite**,
 MS05b3 population audit and fixed diagnostic guards, then final-source E/GH,

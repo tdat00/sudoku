@@ -3,11 +3,11 @@
 | Header | Value |
 |---|---|
 | Depends on | MS18b; completed Stage 1-3 GQ and joint SET ACCEPT; SA1 final AGREE on this continuation and orchestrator release |
-| Accepted base | MS18b `14d8c903`; GQ measured at `ed2fe50c`, dirty, sources `0ca29eaeebc295b6`; R5 256 / C4 unchanged |
+| Accepted base | GQ measured at `ed2fe50c`, dirty, sources `0ca29eaeebc295b6`; checkpoint A `6a473f7a`, B `387a4c8d`; publication sources `75b0955e3e356bd1`; R5 256 / C4 unchanged |
 | Size / active time | Medium; continuation includes bounded manual/E/quick/CI work; no whole-phase duration claim |
 | Owner / milestone | Qualification/publication; M18c |
 | Authority / review | R24/R21, AUTH-S1, SA1-Q-S5, S-OD4 (c1), S-OD7/S-OD8/S-OD13/S-OD14, CV6-05; joint ceiling/recovery approval and SA1 cross-review |
-| Status | GQ 135/135 jointly SET ACCEPT; freeze/official merge, two provenance commits and compatibility/validation closure remain; await continuation release |
+| Status | GQ accepted and A/B complete; step 5 population ruling below awaits SA1 final AGREE and orchestrator resume; manual/E/quick/CI closure remains |
 
 ## Goal & business context
 
@@ -65,7 +65,10 @@ The GQ execution phase has now finished and both analysts give **SET ACCEPT**.
 The historical staging/supervision contract below remains the provenance of those
 runs, not permission to repeat them. The current action is the **post-GQ continuation**
 below, only after SA1's final AGREE on this pack and the orchestrator's release.
-No official merge or live publication has yet occurred. SA1 retains final task review.
+The official merge and checkpoints **A `6a473f7a` / B `387a4c8d`** are now complete;
+79 offers are published, with publication sources **`75b0955e3e356bd1`**.
+Resume at step 5 only after the new population ruling's final AGREE/release.
+Do not repeat the merge, A/B commits or GQ. SA1 retains final task review.
 
 **S-OD13 — owner, Discord author `amicably8850`, 2026-11-18 21:31:46 (+07:00):**
 
@@ -231,6 +234,10 @@ frozen trees; preserve its provenance. Do not rename/move any primary run eviden
 
 ### Combined continuation sequence — exact paths and commit ownership
 
+**Current position:** steps 1-4 completed at A/B; retain them as provenance, not
+repeat work. The developer's step-5 QUESTION is settled by the joint ruling below,
+subject to SA1 final AGREE on this amendment and the orchestrator's resume.
+
 **All top-level Node commands and all timed continuation work use
 `Invoke-Dv3Node`, including file-only Node merge/validation/inventory commands.**
 Use ordinary **<=450 s projected / 540 s hard** protection, the shared slot and
@@ -305,6 +312,9 @@ runners and workflow limits. The GQ environment permission is not a GP timing wa
    recipes explicitly. Standard public generation uses published offers and retains
    unsupported-level refusal coverage. Fixed diagnostic requests are not pruned,
    normalized to another level, re-indexed or exposed in public menus.
+   The detailed **step-5 population ruling below is binding**: fixed original
+   corpora for diagnostic/cross-level assertions, published-only public
+   registrations, and data-only performance-table alignment.
 
    In particular, Greater-Than's current nine-level assertions at
    **`generator\tests\manual\greater-than.test.js:782,805`**, registration at
@@ -373,6 +383,219 @@ runners and workflow limits. The GQ environment permission is not a GP timing wa
    changes. These checkpoint commits do not check off MS18c. Final SA1 review,
    matching-head CI and orchestrator acceptance must complete before MS18d starts.
    SA2's current and later task-pack commits contain **pack files only**.
+
+## Step 5 joint population ruling — 2026-11-19
+
+Authority: the orchestrator's **2026-11-19T07:58:15.855+07:00** relay records SA1
+and SA2 agreement on cases 1-3 and recovery-profile scope. For case 4, **SA2 adopts
+SA1's data-conformance rule and the two explicit public smoke-cell substitutions**.
+This supersedes SA2's earlier proposal to retain hidden targets and rewrite the
+consistency assertion. There is one rule below, not an implementer choice.
+SA1's final AGREE on this amendment and the orchestrator's resume still precede
+implementation; the same developer **`5fe8b2d2`** continues without Git writes.
+
+### Public registrations versus fixed diagnostic corpora
+
+The five suites are **killer, jigsaw, greater-than, extra-regions and wordoku**.
+Their corpus membership remains exactly its **pre-B** definition:
+
+| Suite | Fixed diagnostic ladder |
+|---|---|
+| Killer, Jigsaw, Greater-Than, extra-regions | `veryEasy, easy, normal, hard, expert, master, nightmare, hell1, hell2` |
+| Wordoku | `veryEasy, easy, normal, hard, expert, master, nightmare, hell1` — eight, not nine |
+
+**Killer must stop taking its corpus levels from live `DEF.difficultySupport`
+(currently line 23).** Replace that corpus definition with its constant pre-B
+nine-level list. Do not assign those nine levels back to the product definition.
+The other four fixed ladders remain unchanged. Preserve every original count,
+level index, seed, variant option, trace mode, selection order and derived-state
+RNG recipe; do not extend a smaller witness to a new larger population.
+
+Build a now-hidden diagnostic level only inside a **per-call
+`withRequestedLevel` restoring guard**, including any normalization before the
+pipeline call. Restore the exact previous support array on success, error or
+validation failure. Do not hold an entire suite's public support open or expose
+diagnostic levels in menus. Keep corpora lazy; listing/registration is not a
+generation campaign.
+
+**Per-level public tests** (CV3, per-level I5 hit-rate and generation-budget checks)
+register only for the published offers. Filter registrations/views, **not the
+fixed diagnostic corpus**. Use original global difficulty indexes for seeds and
+predicates, never the positions in the filtered offer list. Unsupported-level
+refusals cover the complement of published support in the full nine-level
+catalogue, including levels outside Wordoku's diagnostic ladder.
+Cross-level engine/soundness/witness assertions still read their original full
+diagnostic populations, not a truncated public view.
+
+The generic **`SG.test.lazyCorpus` callback contract does not change**: its index
+belongs to the supplied key array. Correct original-global-index handling in the
+manual builders/adapters and their request plans, not by changing the shared
+generic helper or weakening its tests.
+The five suite adapters' corpus/read/all request plans therefore use their fixed
+nine/eight-level diagnostic keys, while registration plans use published offers.
+The generic **`variants`** adapter keeps its own public-support population; do not
+globally force all six adapters onto a nine-level corpus.
+
+### Case 1 — A: unchanged absolute-count witness populations
+
+Retain the original Greater-Than **Normal/Hard/Master 20+10+10 = 40** requests for
+`used > 30`, with the same seeds and threshold. `withSign > 50`,
+`withSigns > 50`, `ineqChain > 50` and the other original technique-count checks
+retain their original cohorts and thresholds even when a smaller population
+might happen to satisfy them. No proportional rescaling, dropping or vacuous pass.
+
+Preserve the soundness corpus's original **first-100/even-index selection**, its
+30 dense-model cases and derived `900+i` state seeds/order. Do not filter the
+public ladder first and thereby change those selections or RNG indexes.
+
+### Case 2 — A: unchanged ladder/trend and hybrid witnesses
+
+Greater-Than clue/sign/score trends keep the original ladder, **VeryEasy/Easy**
+anchors and original three-easiest versus three-hardest groups. Do not redefine
+those groups as the first/last retained offers.
+
+Extra-regions keeps the original fixed ladder for its cited trend/extra-unit/
+hybrid witness checks. `li >= 2` still means the original Normal-and-up indexes;
+the hybrid remains **9*8 = 72** requests, with **(9-2)*8 = 56** Normal-and-up
+requests, unchanged options/alternation, `50000+100*originalIndex+i` seeds and
+**0.7** requirements. Its fixed Easy anchor does not disappear because Easy is
+hidden publicly. Elsewhere, genuine per-offered-level registrations still use
+the public rule above and original indexes.
+
+### Case 3 — A: unchanged hidden-level diagnostic dependencies
+
+Killer's nine-level corpus remains available to diagnostic consumers, including:
+
+- the **12 Hard + 8 Master** soundness puzzles, five positions per puzzle and
+  three techniques, with unchanged `MIN_FIRINGS` **100/100/30**, derived RNG and order;
+- `corpusOf('master')[0]` and `corpusOf('hard')[0]`, their original seed-1 requests;
+- Hard/Master layout checks (**20+8** requests and the unchanged uniqueness share);
+- the original whole-corpus cage-technique use/soundness assertions and thresholds.
+
+Wordoku's `puzzleRun().normal[2]` remains **Normal, seed 302**, with its original
+placement/options, trace and assertions. No substitution with an offered level.
+Preserve the other already-required fixed diagnostics: mega16 Nightmare
+**478576959**, mega16 Hell 1 **2422420669**, classic9 Hell 1 **3** and
+Greater-Than Normal **4**, with their original tiers/timeouts.
+
+### Case 4 — keep the consistency assertion; align public performance data
+
+**Keep `manual\perf.test.js`'s existing consistency test (currently lines 45-57)
+unchanged**, including its coverage assertions. Do not replace it with a weaker
+metadata test or delete failing assertions. The data contract is "one target per
+offered cell; null means not offered":
+
+1. In **`generator\tests\fixtures\perf-helper.js`**, change exactly the **39 newly
+   hidden** cells' `PERF_TARGETS` row arguments from their old positive targets
+   to **`null`**. Keep the 17 previously absent cells absent. The existing `row()`
+   omits null-valued keys, so there are **79 positive active targets and 56
+   not-offered positions** in the 135-cell layout. Do not retain hidden positive
+   entries, set them to zero, change `cells()` to conceal them or change any
+   **offered** target value.
+2. Make the same 39 cells **not offered** in **`generator/design.md` section 9.1**,
+   using its existing missing/null table notation and explaining that it is not
+   a numerical zero. All offered numbers stay unchanged. Keep both guide
+   languages consistent where they describe this table or its population.
+   Preserve the old values in checkpoint B/history and in the population map.
+   This is population alignment, **not target recalibration**: MS18d alone owns
+   later offered-target arithmetic under its existing rule.
+3. Make these **exact** substitutions in the warn-only **`PERF_CELLS`** list:
+
+   | Removed public smoke cell | Replacement |
+   |---|---|
+   | `greaterThan/normal` | `greaterThan/easy` |
+   | `wordoku/normal` | `wordoku/easy` |
+
+   Both are the nearest offered levels, easier on a tie. Record both changes
+   explicitly; do **not** leave them as named unresolved MS18d selections or
+   silently skip them. This is a declared **public smoke selection** change, not
+   normalization of a fixed diagnostic request. Keep **19 unique smoke cells**,
+   `PERF_RUNS=5`, the existing `7000+i*101` seeds/trace, targets and warn-only
+   behavior unchanged. Do not claim that either hidden Normal measurement now passes.
+
+No changes to `TARGET_LEVELS`, the 520-key regression recipes/expected hashes,
+the E/GH populations, the three hard event-cost ratio assertions or any fixed
+diagnostic request follow. In particular, Greater-Than Normal's **CV6 base remains
+700 ms**; a null public performance cell is not a new millisecond contract or a
+Fable trigger. No manual suite's `BUDGET_MS` value changes: hidden public budget
+registrations are explicitly removed/mapped, not given different assertions.
+
+In addition to preserving the test, independently verify the exact active cell
+set against **published registry support**, not against `cells()`/`PERF_TARGETS`
+as their own oracle: all 79 offered keys exactly once with unchanged positive
+targets, no hidden key, and every smoke key active. This check is metadata-only.
+
+### Recovery-profile scope — approved narrow diagnostic-identity repair
+
+The current edits to **`tests\fixtures\recovery-profile.js`** and
+**`tests\difficulty-recovery.js`**, with their focused tests, are in scope.
+Guard `caseOf`'s store normalization, `prepare`'s normalization and the execution/
+validation in `profile`. **G13 stays Samurai/Nightmare/42**, never silently Master.
+No case's variant, level, seed, options or existing mode-specific attempts/budgets
+change (profile's explicit one attempt versus diagnostic's original size default).
+
+Loading **and hashing `tests\fixtures\tool-records.js`** as a tooling dependency
+is the honest identity change; do not add it to application/qualifier engine
+lists or change a production algorithm. Record **old and new `toolHash`** by the
+tool's actual recipe, with source identity and the precise code/dependency diff.
+Retag no existing record or fixture. Reconcile older evidence under the existing
+source/tool identity and exact-diff compatibility rules; no blanket reuse claim,
+profile rerun, new corpus/search or new timing budget is authorized here.
+Keep focused proof that the original request survives normalization and that the
+support array is restored on success and failure. List this repair in the
+population map.
+
+### Verification and ownership — implement now, no unresolved handoff
+
+Before E/final quick/CI closure:
+
+1. Save **`--list-tests` before and after** for the five suites and the affected
+   public performance registrations, through `Invoke-Dv3Node`, without running
+   those suites. Reconcile against the **pre-B checkpoint A `6a473f7a`** population
+   as well as the current pre-edit inventory: Killer already shrank at B, so a
+   current-only baseline cannot hide its lost registrations. Use existing
+   inventories/read-only reference sources or the sandbox; no checkout/Git write
+   or old-source generation is authorized.
+2. Write **`evidence\MS18c\closure\population-map.json`** and **`.md`**. For every
+   removed public registration record old/new selector or stable ID, variant,
+   level, original index, seed range/recipe, count, relevant options/trace and
+   its GQ verdict. Classify retained fixed diagnostics separately. Include the
+   two public smoke substitutions, all 39 target removals/old values, refusal
+   complements and the recovery-profile/toolHash change. No unexplained inventory
+   delta, silently missing case, rescaled threshold or relabelled historical pass.
+3. Run **sandbox/scripted-pipeline probes**, not live generation, proving:
+   - each hidden diagnostic build is inside the per-call guard and preserves its
+     actual request tuple; no unsupported-level error or silent normalization;
+   - exact support-array restoration after each successful/throwing call, while
+     unguarded public hidden requests still refuse;
+   - original-index seeds and derived selection/state ordering survive public
+     filtering; fix the `manual-corpus` adapters without weakening seed mutation probes;
+   - Killer exposes all **nine fixed diagnostic levels** but only its three
+     published public levels; Wordoku's diagnostic ladder stays **eight**;
+   - the original case-1/2/3 request plans, counts and literal assertions remain,
+     including the Killer soundness/layout and Wordoku Normal witnesses;
+   - the unchanged perf consistency assertion and independent active-matrix/data
+     checks pass, with exactly the two declared smoke substitutions;
+   - G13 remains Samurai/Nightmare/42 with the original mode-specific attempts and
+     restoring guards, including error paths; the CLI hashes its newly loaded helper.
+4. Record selected/result IDs, command exits, helper/source identities and the
+   before/after population reconciliation. **No unresolved assertion semantics
+   or known empty-corpus/unsupported-level crash may be handed to MS18e.**
+   A population map is not permission to leave impossible assertions on truncated data.
+
+Cases 1-3 are **A**, with the public-registration split; **B's rescaling/deletion
+of population-dependent diagnostic assertions and C's unresolved-assertion
+deferral are rejected**. The map may say
+**"policy/implementation resolved; live validation pending MS18e"**, never that
+the original real thresholds passed on sandbox data.
+
+Live execution of **killer, jigsaw, greater-than, extra-regions and wordoku** remains
+MS18e's existing bounded GD work. This ruling adds no live run of those five or
+the `perf` timing/ratio suites to MS18c. It leaves MS18c's complete bounded
+`variants` suite and final E/GH/quick/CI obligations intact. All local Node/timed
+commands still use `Invoke-Dv3Node` and ordinary **450/540**, not the GQ watchdog.
+Keep real later failures as failures under the existing correctness/availability
+rules; no future threshold change is pre-approved.
 
 ## Historical Stage 2 binding and convergence
 
@@ -1449,11 +1672,26 @@ unexecuted populations; a named item never substitutes for complete publication.
   diagnostic requests and public refusal coverage. Existing reader path remains.
 - `generator/tests/manual/greater-than.test.js` and other variant-specific manual
   files identified by the MS05b3 audit: only coupled published-support assertions,
-  public-population registration and seed-preserving compatibility. No altered
+  public-population registration and the step-5 fixed diagnostic/public split.
+  This explicitly includes Killer's constant nine-level corpus and Wordoku's
+  unchanged eight-level corpus. No altered
   invariant/hit/time threshold, retained-cell count, fixed diagnostic recipe or
   Normal `BUDGET_MS` change.
-- Generator design 5.1/15.4 and both user/developer guides in EN/VI: actual availability,
+- `generator/tests/suites/manual-corpus.test.js` and its necessary adapter/probes:
+  original-index request plans, inventory reconciliation and guard/restoration
+  checks under the step-5 rule; no change to generic `SG.test.lazyCorpus` semantics.
+- `generator/tests/fixtures/perf-helper.js`: **only 39 hidden target row arguments
+  to null**; `generator/design.md` section 9.1 follows. `generator/tests/manual/perf.test.js`:
+  **only the two declared public smoke substitutions** and any directly necessary
+  explanatory wording; the existing consistency assertion and all timing/ratio/
+  regression assertions remain unchanged. No offered target recalibration.
+- `generator/tests/fixtures/recovery-profile.js`, `generator/tests/difficulty-recovery.js`
+  and `generator/tests/suites/recovery-profile.test.js`: the approved restoring
+  diagnostic guards, honest loaded-helper/toolHash identity and focused request/
+  restoration coverage; no changed case, mode, budget, algorithm or old evidence.
+- Generator design 5.1/9.1/15.4 and both user/developer guides in EN/VI: actual availability,
   qualifications versus S-OD7 withholding, relevant behavior and current test counts.
+  Section 9.1's step-5 change removes hidden targets only; it selects no new offered budget.
 - Fresh E records and check-only GH/quick/CI evidence as above; no canonical expectation
   write or permanent qualifier/scheduler/protocol edit without its explicit decision/task.
 - Only if CV6-05's conditional final decision is actually needed and recorded: an orchestrator-assigned
@@ -1465,7 +1703,9 @@ unexecuted populations; a named item never substitutes for complete publication.
 ## Implementation steps
 
 The **combined continuation sequence above is authoritative**; GQ is finished,
-not work to repeat. In order:
+not work to repeat. Steps 1-3 below are already complete at A/B and remain for
+audit; **current resume is steps 4-6 under the joint step-5 ruling**, after final
+AGREE/release:
 
 1. Freeze every existing run/qualification file before the official merge.
 2. Merge to the exact `evidence\MS18c\merge\` pair and validate exit, zero invalid,
@@ -1500,12 +1740,15 @@ not work to repeat. In order:
 | MS18c-T08 | Recovery only by committed prior joint authorization: one slot 2, separate bounded admissions, immutable paths and complete-record/live-run refusal; failed recovery remains a permanent gap |
 | MS18c-T09 | Post-GQ inventory covers every frozen run/qualification file; exact merge output pair passes all receipt/request checks; separate orchestrator A/B commits preserve measured identity and publish arrays/report atomically |
 | MS18c-T10 | Complete bounded final `variants` manual-suite accounting and MS05b3 population audit; fixed diagnostic seeds/tiers/assertions preserved; authoritative heartbeat semantics, TSV disclosure and all item dispositions recorded |
+| MS18c-T11 | Step-5 split implemented and sandbox/inventory verified: original nine/eight-level diagnostic corpora, published-only public registrations with original indexes, unchanged aggregate thresholds; no unresolved assertion handoff |
+| MS18c-T12 | Perf consistency assertion unchanged; exactly 39 hidden targets/table cells removed with 79 offered values unchanged; two explicit Easy smoke substitutions; recovery-profile G13 identity/restoration and old/new toolHash recorded without retagging |
 
 ## Test plan and gates
 
-**Current continuation only, after final AGREE/release and the GQ file freeze.**
-No new **GQ** generation/probe command is authorized: all 135 GQ cells already exist.
-From Generator, the exact official merge command is:
+**Current resume is step 5's inventory/sandbox/compatibility work**, then the
+already assigned final gates. No new GQ generation/probe command is authorized.
+The following official merge command is **historical: it ran before checkpoint A**.
+Do not rerun it against the published source or overwrite its accepted outputs:
 
 ```powershell
 Set-Location Q:\git\sudoku\generator
