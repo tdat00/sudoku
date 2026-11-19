@@ -1,7 +1,8 @@
 # MS18d — Conditional Q2=A: one a3 in a separate B4
 
-**Conditional developer specification, SA2 ruling for SA1 concurrence,
-2026-11-19. MS18d-Q2 is unanswered; no a3 is authorized by this file.**
+**Conditional developer specification, SA2 ruling incorporating SA1's
+22:20 +07:00 pre-review conditions, 2026-11-19. MS18d-Q2 is unanswered;
+no a3 is authorized by this file.**
 Read `MS18d-epoch3-release-history-repair.md` first. B3 fixes only history
 and permits the other 91 chunks after its review/record/F4 gates, without
 changing V1 or the two-admission cap. Do **not** fold this exception into B3
@@ -16,9 +17,13 @@ even if the owner answers A before B3 is committed.
    retaining every outcome and any required later F4 dispositions.
    This is one declared deferral of mega16/easy, not outcome-based reordering
    or permission to replace a slow/failed request.
-3. Checkpoint those immutable outputs/C log. Under the lock, between timed
-   chunks only, implement/test/review the narrow exception and freeze a new
-   **B4/H4** descendant. No B3 amendment, old-folder rewrite or retagging.
+3. **Only after all other 91 chunks are disposed and their immutable outputs/
+   C log are checkpointed**, implement/test/review the exception under the
+   lock and freeze a new **B4/H4** descendant. **No B4 implementation, test
+   or freeze starts during those 91 chunks, including between their calls.**
+   B4 edits would dirty the B3 tree and fail its pre-folder status check;
+   developer work must not overlap timing. No B3 amendment, old-folder
+   rewrite or retagging.
 4. Commit a separate **`tasks\difficulty-v3\MS18d-gp-campaign-base-4.jsonl`**
    declaration and transition proof, validate committed journals/identities,
    then run **only `mega16-easy.i0.n50.a3`** under B4, with fresh admission.
@@ -99,6 +104,21 @@ The original `final.m1` directory is unchanged. Freeze **both** manifest
 files in H4; require the correct one in each historical/request binding.
 V2's authorization metadata is not authority for any unlisted chunk or slot.
 
+**Validator boundary:** the byte-identical recorder calls
+`plan.verifyManifest(doc)`. Keep `plan-data.js` **pure, with no file I/O**.
+It validates V2's own structure/canonical hash and existing internal
+range/seed/count invariants: schema v2, well-formed parent fields, exactly
+the one named exception, one appended slot equal to that exception,
+`chunkAttempts:2`, and 230 slots. It does **not** read V1 to establish a
+cross-file equality claim.
+
+The **exact canonical V1->V2 delta** specified above is proven by
+`test-epoch4-proof.js` and independently rechecked by the merger, which reads
+both manifest files and their raw/canonical identities. H4 pins V2's exact
+bytes before any admission. A self-consistent V2 with an unauthorized
+baseline change must fail that proof/merge even if its own structural checks
+pass; neither a declaration nor the structural validator replaces this proof.
+
 ## Accounting: one narrow exception at every boundary
 
 Do not merely widen a CLI enum or set `MAX_ADMISSIONS=3`. Change these coupled
@@ -106,7 +126,7 @@ boundaries together, without changing any timed recorder/engine code:
 
 | Helper | Required behavior |
 |---|---|
-| `plan-data.js` | Continue validating V1 unchanged. Validate V2 only as the exact parent-bound delta above; reject another exception, owner choice, third slot, changed number or duplicate directory. Keep the normal cap 2. |
+| `plan-data.js` | Continue validating V1 unchanged. Purely validate V2's own structure/hash/invariants and its single named exception/slot as specified above; no V1 file read. Exact parent-to-child equality is the proof/merger's responsibility. Keep the normal cap 2. |
 | `attempts.js` | Accept the verified manifest/exception binding explicitly. For this exact a3 only, require the two distinct original `.a1/.a2` folders and matching C-log records, both proved unstarted holds with no payload artifacts/uncertainty; count both as consumed. Permit the third once, with zero earlier payloads and no previous a3 folder/admission. All other chunks keep cap 2. The controller may exclude only its own newly allocated run folder, never an old a3 being reused. |
 | `payload-gp.js` | Bind the request to V2's exact slot, chunk, helper/base and owner exception; pass that validated binding to attempt accounting. A numeric `attempt:3` alone is never permission. After excluding its current allocated slot, a3 requires exactly the two validated prior admissions, not a generic `admissions >= 1`. |
 | `run-locked-c.ps1` | Mirror the same checks **before creating the folder**, and retain authoritative in-lock checks. Only the named owner-bound V2 slot may pass an expanded enum. Select the frozen V2 path/Required entry for B4. Preserve expensive pre-watch/cheap post-watch ordering; do not introduce another freshness loop defect. |
@@ -151,6 +171,16 @@ The new V2 manifest, H4 freeze, transition data/proof/transcripts and declared
 campaign outputs are the corresponding evidence additions. `tasks\difficulty-v3\`
 remains the pack-only declaration/decision path, not executable override code.
 
+**Step-4 transition rule:** `manifestTransition` currently rejects added
+non-test entries and admits arbitrary `test-*`/`standin-*` names. Neither
+default is correct for H3->H4. Give **step 4 an explicit exact-path policy**:
+only the six named production entries and four named existing test entries
+may change; only `test-epoch4-proof.js` and the one V2 manifest path may be
+added. The V2 manifest is the **sole added non-helper entry**. No removal,
+rename, extra test/stand-in or other data-file addition is implicit.
+Do not widen earlier epoch rules. The recorded transition proof must still
+enumerate the actual old/new hashes; an allowlist is not a substitute for it.
+
 All other H3 entries remain byte-identical, particularly **`record-gp.js`,
 the ledger schema, `release-history.js`, `acquisition.js`, `source-binding.js`,
 readiness, journals, controller, tee, owned-processes, slot-watch**, and
@@ -172,6 +202,14 @@ and R3 base**, and the final merge against B4/H4/V2. Prove both the exact
 manifest delta and B3->B4 helper/path diff; do not retag an old ledger or
 pretend the plan SHA never changed.
 
+In particular, resolve the verified epoch **before** `judgeRun` compares
+`request.plan.manifestSha256`/raw SHA or constructs
+`frozenRecorderArgs(planRel, slot)`: epochs **1–3 use V1's original path and
+hashes; epoch 4 uses V2's path and hashes**. Do not select an epoch solely
+from an untrusted request's plan path or compare all requests to the final
+merge's V2 `doc`. Old command arguments and ledgers remain byte-identical;
+the final merge itself is bound to B4/H4/V2.
+
 The append-only, never-edited **base-4 record** follows base-3's record/proof
 pattern, adding V1/V2 parent/current identities and the exact
 `admissionException`/owner-decision binding. It must name B3/H3, B1 campaign
@@ -188,17 +226,25 @@ B3 may not be omitted just because its measured code equals B1's.
 Use the existing bounded file-only/stand-in suites under the lock, not a
 trial real admission. Add focused cases that fail without the implementation:
 
-- V1 still refuses a3. V2 without the actual A binding, with B/null/wrong
-  owner data, wrong parent/hash/slot or an altered workload is rejected.
+- V1 still refuses a3. V2 structural/hash/slot errors fail the pure validator;
+  missing/wrong A authority or an unauthorized cross-file parent/workload
+  delta fails its binding/proof/merge checks, including a structurally valid
+  altered V2 with a freshly recomputed canonical hash.
+- Test step 4's exact transition policy: the six named production changes,
+  four named existing tests, added proof test and added V2 path are allowed;
+  other production changes, arbitrary `test-*`/`standin-*`, other data
+  additions, removals/renames and changes to V1 are rejected.
 - Exactly the two preserved unstarted holds plus the correct binding permit
   this a3 through wrapper, controller and merger; every other chunk's a3
   and every a4 refuse.
 - Missing/contradictory prior records, any prior payload artifact, an existing
   a3 directory, duplicate success or started/partial replacement refuses.
-  A third eligible hold still cannot authorize a fourth.
+  An eligible CPU hold on **a3 still stops F4**, including for the final
+  merge until its own line-only disposition, and a4 remains refused.
 - Unmodified mixed-epoch retained ledgers validate only against their exact
   tuples; tampered/cross-paired identities and any retained-hold-to-success
-  reclassification fail.
+  reclassification fail. Test the original V1 request path/arguments/hashes
+  for epochs 1–3, V2 for epoch 4, and rejection of swapped paths or hashes.
 - One successful stand-in a3 supplies the original 50 requests exactly once;
   held/failed a3 leaves the cell incomplete. Check all-79 completeness and
   >=72 strict p95 successes separately; no default pass or missing-sample fill.

@@ -2,7 +2,8 @@
 
 **Campaign paused pending B3 review/freeze and the joint F4 disposition below.
 No retry or third admission is authorized.**
-SA2 ruling for SA1 concurrence, updated 2026-11-19 after the B3 preparation:
+SA2 ruling, with **SA1 concurrence received at 22:20 +07:00, 2026-11-19**,
+and the additional B3 test condition recorded below:
 
 - **Keep the writer as built: `at`, no `finished`.** A no-lock event is not a
   release. This supersedes item 4 of the earlier ruling.
@@ -17,8 +18,8 @@ SA2 ruling for SA1 concurrence, updated 2026-11-19 after the B3 preparation:
   check-only merge; mega16/easy stays incomplete and the 79/79 gate fails.
 
 The owner decides whether a3 exists, not whether already-authorized unrelated
-chunks can continue after a safe technical repair. SA1 concurrence and the
-orchestrator's committed disposition remain required; this pack amendment is
+chunks can continue after a safe technical repair. The orchestrator's committed
+disposition and the review/re-freeze gates remain required; this pack amendment is
 not a claim that the prepared B3 code has passed its final review.
 
 ## Facts and evidence disposition
@@ -137,7 +138,7 @@ admission, global cap increase or extra measured sample is authorized by F3.
 ## F4 disposition
 
 **SA2 approves a line-release-only disposition for**
-**`mega16-easy.i0.n50.a2`**, conditional on **explicit SA1 concurrence**.
+**`mega16-easy.i0.n50.a2`**. **SA1 explicitly CONCURS**, as recorded below.
 The evidence is the immutable `ed95a1f0` a2 folder/C log and the repair proof:
 two admissions, zero payloads; a1 was the genuine CPU hold, a2 the history
 defect. **The hold stays a hold and both admissions remain spent.**
@@ -145,14 +146,15 @@ defect. **The hold stays a hold and both admissions remain spent.**
 The orchestrator alone appends and commits the usual F3 shape:
 
 ```json
-{"chunkId":"mega16-easy.i0.n50","heldRunId":"mega16-easy.i0.n50.a2","allowAttempt":2,"ref":"tasks/difficulty-v3/MS18d-gp-campaign-base-3.jsonl","at":"<actual joint-disposition timestamp with timezone>"}
+{"chunkId":"mega16-easy.i0.n50","heldRunId":"mega16-easy.i0.n50.a2","allowAttempt":2,"ref":"tasks/difficulty-v3/MS18d-gp-campaign-base-3.jsonl","at":"<actual append time in +07:00>"}
 ```
 
 This is a **template, not an actual journal entry**. The cited base-3 record
 must contain a `lineDisposition` naming this run, `purpose:"line-release-only"`,
 this SA2 ruling, explicit SA1 concurrence and the exact retained evidence.
-Use the real timestamp after the outcome and agreement; commit that record
-and the appended ruling before any resumed call. Preserve the journal prefix.
+Use the **real append time in +07:00**, after the outcome and agreement and
+never in the future; commit that record, its proof and the appended ruling
+before any resumed call. Preserve the journal prefix.
 
 `allowAttempt:2` is the fixed schema value, **not** permission to reuse a2
 or create a3. F2 still refuses this chunk. The line only releases F4 for
@@ -164,6 +166,37 @@ by its actual a2 in the log; it needs no second covering ruling.
 The disposition applies whether Q2 is **pending, A or B**. It is not a blanket
 ruling for future failures: each later non-success still follows F1-F6.
 An a3 requires the separate owner decision and B4, not this line.
+
+## SA1 concurrence and B3 test condition
+
+**SA1 (SA-Opus), message received 2026-11-19 at 22:20 +07:00, reviewed
+`a36a73a2` and explicitly CONCURRED** with the exact F3 template/ref above,
+line release only, both admissions spent and no new admission authorized.
+He also concurred with `at`/false flags/no `finished`, history-only B3/V1/cap 2,
+the other 91 chunks in order, separate B4/a3 last, and reserving `final.m1`
+while Q2 is pending. This is the durable concurrence the base-3 record's
+`lineDisposition` may cite together with this SA2 ruling and the
+**`ed95a1f0` C-log lines 23–25 and corresponding immutable hold folders**.
+
+SA1 reported read-only verification of the F3 shape in both parsers and a
+git-override simulation over the real log/folders: F4 opens for mega16-normal
+and mega16-hard a1; F2 still refuses mega16-easy a1/a2 and allows normal a1.
+`attempts.js` refuses at two admissions independently of the ruling.
+These observations support the ruling, **not final B3 code acceptance**.
+
+**Required before B3 release:** the prepared tree lacks the automated
+line-only regression required above. The developer must add it using the
+actual lines 23–25 shape and template ruling in an isolated stand-in:
+
+- the next ordinary chunk passes F4 but still faces all ordinary admission
+  checks; a remaining failed predicate cannot be bypassed by the ruling;
+- mega16-easy **a1, a2 and a3 all refuse**, with no new folder/admission.
+
+Use the already permitted test paths; do not broaden B3's production scope.
+Retain the transcript, re-freeze H3 after this test addition, and obtain SA1's
+final code/identity acceptance. The old reported H3 digest below is **not**
+the post-regression release identity. The orchestrator then commits base-3,
+proof and the ruling line before live validation/resume.
 
 ## Identity and release sequence
 
@@ -179,7 +212,7 @@ The epoch-3 record must name its predecessor B2, B1 campaign root, new
 checkpoint, helper identity, exact changed files, retained evidence, owner
 decision (where applicable), immutable inherited counts and resume disposition.
 
-The prepared H3 is reported as
+The **pre-regression** prepared H3 was reported as
 **`7d14b13f89d1ce2cb4b922fd6e194dac8fb35162f27ab97c2f7b0833e0f7eb97`**,
 55 entries: 46 unchanged, four changed production helpers
 (`release-history.js`, `run-locked-c.ps1`, `merge-core.js`, `merge-gp.js`),
