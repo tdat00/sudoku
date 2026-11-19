@@ -115,7 +115,7 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [x] | MS18a | [MS18a](MS18a-final-matched-soak.md) | Matched final soak | MS17b | S, 25-35 min | Evidence | M18a | 43 |
 | [x] | MS18b | [MS18b](MS18b-recheck-cap-and-window.md) | Cap/window final rechecks | MS18a | S, 25-40 min | Evidence | M18b | 44 |
 | [x] | MS18c | [MS18c](MS18c-qualify-and-publish-offers.md) | Qualify and publish offers | GQ accepted; A `6a473f7a` / B `387a4c8d` complete; step-5 population ruling AGREE/resume and final closure | M + bounded manual/E/quick/CI | Qualification | M18c | 45 |
-| [ ] | MS18d | [MS18d](MS18d-performance-and-final-hashes.md) | Final GP preflight/performance/hashes | MS18c accepted `e0596801`; Phase A file-only; owner MS18d-Q1 and reviewed admission before GP/profile | M, 40-55 min + GP/GG | Evidence | M18d | 46 |
+| [ ] | MS18d | [MS18d](MS18d-performance-and-final-hashes.md) | Final GP preflight/performance/hashes | Phase A `602af371` accepted; Phase B released, pin amendment awaiting concurrence/resume; Phase C held for Q1/admission | M, 40-55 min + GP/GG | Evidence | M18d | 46 |
 | [ ] | MS18e | [MS18e](MS18e-release-evidence-closure.md) | Final correctness/items/workflows and PR CI | MS18d | M, 40-60 min + GD/deep/CI | Release evidence/CI | M18 | 47 |
 
 S/M/L mean approximately 100-300 / 300-800 / 800-1,600 changed lines including tests, excluding bulky
@@ -213,21 +213,44 @@ remain immutable; 79 offers are published, sources **`75b0955e3e356bd1`**.
 Developer **`5fe8b2d2`** completed the closure. A/B and the 418-file closure commit
 (33 modified / 385 new, `.last-release` excluded/deleted) remain distinct; no raw
 measurement is retagged. All implementation/closure commits were orchestrator-owned.
-Acceptance is recorded in **`34ebc3fc`**. **MS18d Phase A is ready for file-only
-preflight** on closure base `e0596801`; GP/profile timing is **not released**.
-Its leaf contains the prepared, unanswered **OWNER question MS18d-Q1**:
+Acceptance is recorded in **`34ebc3fc`**. **MS18d Phase A is accepted and committed
+at `602af371`**: all 25 frozen entries/identities verified, 79 rows with 62 kept
+targets and 17 rule-derived updates (11 ceil / six cap), 29/29 locked tests.
+One unlocked `node --version` and nine own gaps of 14.2-14.9 s are retained
+deviations; the gap bug was fixed, not its history. No generation or GP ran.
+The orchestrator released Phase B, which paused before any edit/Node run for the
+target-pin QUESTION. **Phase C and S-AV11 remain NOT released**.
+Its leaf contains the sent, still-unanswered **OWNER question MS18d-Q1**:
 explicit new task-scoped host-active GP permission, or a credible strict-quiet
 window/environment. S-OD13/S-OD14 grant neither GP readiness nor GP recovery.
 Do not route this owner decision to Fable or infer it from the local CI acceptance.
 
 The final intended GP population is **79 cells / 3,950 requests**; a complete
->=90% result needs all 79 measured and **>=72 successes**. Phase A must reproduce
-the 17 qualification-derived target proposals and the complete mean-alert table,
-audit the actual CLI/deadline/readiness contract, then **STOP** for the orchestrator.
-Targets/GG functional work may be separately released after review; timing also
+>=90% result needs all 79 measured and **>=72 successes**. Phase A reproduced
+the 17 proposals, Sohei's sole 485.597 s mean flag and the strict 2,122-pair /
+1.1240 comparator; SA1's separate quoted figures were not reproduced.
+All 79 GP cells and S-AV11 remain unadmitted. Targets/GG functional work is Phase B;
+timing also
 requires the recorded Q1 answer and per-cell whole-command admission.
 The stock timing CLI has no JSON/resume/jobs option and no inherited GQ 120 s
 request guard. Keep its exact `ok`/`MISS` verdict distinct from rounded display.
+
+**MS18d Phase-B pin ruling (SA2, for SA1 concurrence/resume): option A.**
+The quick `manual-corpus.test.js` target-value pin may change to a literal frozen
+17-entry expected override map plus unchanged `OLD` fallback. Check all 79
+values, exactly 17 used changes / 62 retained, 56 hidden / 39 removed / 17 never
+offered and the independent registry/`cells()` set. Rename that one test; add/
+remove none. **The separate `manual/perf.test.js` consistency assertion stays
+unchanged.** Update design 15.1 and the exact-ms target/CV6 wording, not any
+manual budget, canonical puzzle/replay/help expectation or other pin.
+
+Phase B must fix/test the append-as-arriving transcript wrapper **before long
+GG compounds**, on new `MS18d\phase-b\` helper/evidence paths, preserving all
+Phase-A files/manifests. Retain kill partials, real exit/failure state, cleanup
+and >=15 s actual gaps; no automatic stale-real-lock deletion. GG keeps the
+104 five-seed shards / 520 keys, conservative whole-command <=450 and hard 540,
+no update flag. Hash-family identity changes; replay is expected unchanged but
+must be recomputed. Phase B grants no GP/profile permission; Q1 is still pending.
 
 **Step-5 ruling (2026-11-19, 07:58 relay):** cases 1-3 use original fixed
 diagnostic corpora, counts, seeds, indexes and thresholds, with per-call restoring

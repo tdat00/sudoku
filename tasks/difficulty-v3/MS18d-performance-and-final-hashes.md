@@ -3,11 +3,11 @@
 | Header | Value |
 |---|---|
 | Depends on | MS18c accepted at `e0596801`; acceptance recorded by `34ebc3fc`; owner MS18d-Q1 and reviewed per-cell admission before timed work |
-| Accepted base | `e0596801cf95d79761073a344ffc2e60f7764c8f`; pack-only acceptance descendant `34ebc3fcb36aa97361b9da18c1e63903128bf747` |
+| Accepted base | MS18c `e0596801`; acceptance `34ebc3fc`; MS18d Phase A `602af371` (25/25 freeze entries, 29/29 tests) |
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
 | Authority | R24/R21, FS23, S-OD4; S-AV01 not offered; S-OD13 is GQ-only, not a GP waiver |
-| Status | READY FOR PHASE A FILE-ONLY PREFLIGHT; GP/profile held for owner MS18d-Q1 and bounded admission; Sohei Hell 2 already exceeds the mean-alert limit |
+| Status | Phase A accepted/committed; Phase B released but paused for the pin ruling below pending SA1 concurrence/orchestrator resume; Phase C NOT released, Q1 unanswered |
 
 ## Goal & business context
 
@@ -99,14 +99,30 @@ There is **no `SG_TIME_FACTOR` multiplication of CLI GP targets**.
 
 ## Dispatch boundary and owner action
 
-Only **Phase A, file-only preflight**, is ready for dispatch now. The MS18c
-acceptance prerequisite is recorded, but **no GP or S-AV11 timed payload is released**.
-Return the complete preflight/target proposal to the orchestrator and stop.
-Phase B target/docs/GG work and Phase C timing require their separate releases.
+**Phase A is complete at `602af371`**, 28 files. The orchestrator verified all
+**25/25** freeze entries, bound identities, the 79-row table, 62 retained targets
+and 17 proposals (**11 ceil(3q), six budget-capped**), and **29/29** locked tests.
+Sohei Hell 2 is the only mean alert above 450 s; **all 79 GP cells and the S-AV11
+tuple remain unadmitted**. The strict 2,122-pair cost comparator reproduces;
+SA1's separately quoted figures do not. Keep that distinction, not a causal/
+admission claim based on the unreproduced figures.
+
+Phase-A disclosures remain: one unlocked `node --version`; nine own gaps of
+**14.2-14.9 s** from the wrapper bug, subsequently fixed. Preserve those records
+as deviations; do not relabel them >=15 s or inherit an exception. The audit also
+identified exit-1 MISS/crash ambiguity, loss of a buffered transcript on a 540 s
+kill, and possible stale lock after `stop_powershell`.
+
+The orchestrator **released Phase B**, which started at **11:08:38 (+07:00)** and
+stopped for the target-pin QUESTION before any edit/Node run (clean at 11:10:57).
+The ruling below is the narrow scope amendment for SA1 cross-review and
+orchestrator resume. **Phase C is NOT released**; owner **MS18d-Q1 remains
+unanswered on Discord**, per the 2026-11-19 11:11 relay. No GP/S-AV11 run,
+pilot or live readiness campaign follows from Phase B.
 
 ### MS18d-Q1 — OWNER: final performance measurement environment
 
-**Prepared, unanswered; send through the orchestrator to the owner, not Fable.**
+**Sent through the orchestrator to the owner; unanswered, not a Fable question.**
 S-OD13 explicitly authorized host-active **GQ**, not GP. All **140** MS18c raw
 strict screens failed; the resident CLI host was PID **1968**, .NET StartTime
 `2026-11-13T19:26:33.6916441+07:00`, CIM UTC microseconds
@@ -208,9 +224,9 @@ level order, with raw GQ p95 **q** and board budget **b** (both milliseconds):
   whose existing target still meets GQ, or enforce new global monotonicity on them.
   Do not repeat v2's Easy-from-Normal migration on unchanged v3 bands.
 
-The accepted input gives these **17** proposed changes. Phase A must reproduce them
-file-only and show q, old target, predecessor, unclamped ceil and budget for every
-row; the orchestrator reviews the complete table before Phase B writes it.
+The accepted input gives these **17** changes, now reproduced by the committed
+Phase A file-only preflight, with q, old target, predecessor, unclamped ceil and
+budget. Phase B writes exactly this reviewed table, not a new calibration choice.
 
 | Cell | GQ p95 ms | Old target ms | Proposed target ms |
 |---|---:|---:|---:|
@@ -240,6 +256,129 @@ Update `PERF_TARGETS`, design 9.1 and both developer guides together in Phase B.
 The separate manual-suite `BUDGET_MS`/CV6 assertions remain unchanged; distinguish
 their retained contracts from updated GP targets instead of silently weakening
 them. No Normal-specific contract is reopened.
+
+### Phase B target-pin QUESTION — ruling A, 2026-11-19
+
+**SA2 approves option A as a narrow, coupled expectation update**, for SA1
+cross-review and orchestrator resume. It implements the already authorized 17
+target changes; it is not permission to weaken a test or update other pins.
+Options B (leave a knowingly obsolete pin failing) and C (drop value checking)
+are rejected.
+
+There are **two distinct assertions**:
+
+- **Keep `generator\tests\manual\perf.test.js:52-60` unchanged**: the existing
+  table/offered-level/positive-target consistency assertion does not pin old
+  numbers and remains valid.
+- **Update only the affected quick target-value test** in
+  **`generator\tests\suites\manual-corpus.test.js:781`**. Its old "79 unchanged
+  targets" expectation was correct for MS18c's alignment-only step, not for
+  MS18d's now-authorized recalibration. The permission below applies to this
+  quick test and its local expectation/comment, not the manual consistency test,
+  smoke test, corpus assertions or canonical puzzle/replay/help fixtures.
+
+Exact constraints on the quick pin:
+
+1. **Keep the `OLD` table's values unchanged**, including its nulls. It remains
+   the historical basis for 39 removed and 17 never-offered positions.
+2. Add a local **literal 17-entry expected-target map** whose key set and values
+   equal the frozen Phase-A proposals / table above. Do not derive expected
+   values from the live `PERF_TARGETS`, `cells()`, edited design table or the same
+   runtime implementation being checked.
+3. For **every** offered cell assert `[key, target]` equals the explicit override
+   when that key exists, otherwise the original `OLD` entry. Assert all 17
+   override keys are offered and actually used, each is a positive integer and
+   a real change from OLD; **exactly 17 updated / 62 retained**. A map-length
+   assertion alone is insufficient if an entry can be hidden or unused.
+4. Preserve all existing **15 variants, 79 active, 56 hidden, 39 removed /
+   17 never-offered** checks, hidden-key absence, positivity and the exact
+   `cells()`/independently enumerated registry-support comparison. No skip,
+   narrowed loop, removed assertion or target tolerance.
+5. Retitle **that `it` only** to describe "62 unchanged and 17 recalibrated
+   (MS18d)". Keep the enclosing describe and sibling smoke test unchanged unless
+   an actual further need is separately assigned. Record the one old/new full
+   test name; **no test added/removed and no CI membership/count change**.
+   Update `generator/design.md` **15.1** to describe the actual check.
+
+The no-canonical-fixture rule still bars `regression.js`, wire/analysis/help
+expectations and unrelated test pins. This one expected **performance-target**
+map is expressly assigned; no other ownership expands.
+
+### Confirmed Phase B plan and required safeguards
+
+- **Target/data/docs:** change only the 17 reviewed target literals and directly
+  related header prose. Design **9.1** may display seconds with up to **three
+  decimals**, provided conversion is exact to the integer millisecond:
+  e.g. `< 2.342 s` = 2342 ms, `< 30 s` = 30000 ms; `< 31 ms` and `< 0.031 s`
+  are equivalent. Do not round 2.342 to 2.3, change strict `<` to `<=`, change
+  any of the 62 retained values, or replace hidden `—` cells with zero.
+  Keep MS18c's alignment-only statement as dated history and describe the new
+  MS18d qualification-derived update accurately. **This is not a GP measurement
+  or a Chrome/reference-machine performance pass.**
+- **CV6 wording:** update design **15.1/15.5** and the relevant sentence in
+  **both developer guides**, distinguishing the manual suites' retained
+  `BUDGET_MS` contracts (with their existing `SG.test.timeLimit` application)
+  from the CLI GP `PERF_TARGETS`. No manual budget, hit/soundness threshold,
+  seed, population, tier or factor changes. Greater-Than Normal's 700 ms
+  contract is not reopened.
+- **Freeze before GG:** retain a complete **135-position** target snapshot
+  (79 active / 56 absent), the exact 17-diff map and all source identities
+  under new Phase-B evidence. Preserve Phase A's original preflight, helpers,
+  transcripts, hashes and disclosures unchanged; do not rerun it over the new
+  target data and overwrite its baseline.
+- **Identity expectations, verified not assumed:** the producer remains
+  **`75b0955e3e356bd1`**. The E hash-family identity **must change** from
+  `1032ab2f510fe2b9ed1bac744f534d5cfee7e039f456fc56d3e19682d53158a0`
+  because its recipe includes `perf-helper.js`. Replay **should remain**
+  `1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc`:
+  neither that fixture, these guides/tests nor task-owned wrappers are in the
+  replay source recipe. Recompute both; an unexpected change is a QUESTION.
+  Do not retag or mix the old hash ledgers into the new hash-family merge.
+  Accepted wire/analysis evidence is retained only after exact replay identity
+  verification; no rerecording merely for a new task ID. Quick/manual fingerprints
+  change with the target/test/design/guide edits and belong to final Phase D.
+- **Focused checks:** run **`perf-tooling,smoke,help,manual-corpus`** under the
+  lock after these edits. Verify every new target against frozen Phase A and
+  the independent expected map. A failure is not acceptance, and the final
+  complete quick sets remain Phase D's obligation.
+- **GG:** the existing **104 five-seed shards** cover the same 520 fixed keys.
+  Retain their requests, diagnostics and expected hashes; merge-check only,
+  **no update flag**. The approximately 399 s prior total / 30 s maximum shard
+  are compatible-source observations, **not a bound**. Plan each sequential
+  compound conservatively at **<=450 s including all child startup, I/O and
+  any internal sleeps**, with the hard 540 s envelope. Keep **>=15 s between
+  actual lock releases/acquisitions**; all gaps count where they fall within
+  an outer command. No overlapping children, unbounded compound or assumption
+  that all 104 fit because their old generation sum was 399 s.
+- **Move the incremental transcript repair ahead of the first long GG compound.**
+  It is in scope as a task-owned wrapper repair, not a perf/measure change.
+  Preserve output durably as it arrives, keep partial output on timeout/kill,
+  and preserve real exit/signal/error semantics. A killed run has no fabricated
+  completion/exit-0 marker. Do not let a tee or caught PowerShell exception mask
+  a nonzero result and allow dependent work to continue.
+- **Version the repair:** use new helpers under
+  **`generator\tests\artifacts\difficulty-v3\MS18d\phase-b\`**, including the
+  incremental tee and its invoking wrapper/tests; use new transcripts/lock log/
+  freezes under **`docs\difficulty-v3\evidence\MS18d\phase-b\`**. Keep the six
+  Phase-A helper files and all 25 frozen entries byte-identical. Carry the last
+  known release across the log boundary; a new filename is not a gap reset.
+  Existing `hashes\` is the new GG ledger folder, not a Phase-A output.
+- **Short stand-ins only for wrapper verification:** normal success, nonzero
+  exit, spawn failure and kill mid-output; show bytes exist **before** child
+  completion and remain afterwards, with no false completed result. Verify
+  owned child/grandchild cleanup and the actual >=15 s gap. Keep the real
+  `Invoke-Dv3Node` parent alive when killing an owned fake child; forced-parent-
+  loss tests use isolated project-local test lock/state or explicit orchestrator
+  coordination. A stale **real shared lock** is reported for orchestrator-only
+  verified cleanup (correct instance dead, no owned process alive), never
+  automatically deleted by age/PID alone or treated as a foreign lock to remove.
+  The shared helper/540 s contract is unchanged.
+
+After focused/GG checks, freeze the **new** Phase-B helpers/outputs and re-verify
+Phase A still **25/25**. Record changed identities and the one test rename in
+the Phase-B handoff. **No GP, S-AV11, pilot, live timing-admission campaign or
+Phase-C release** is granted by this ruling. Q1 remains unanswered, all 79 cells
+remain unadmitted, and the Sohei Hell 2 hold is unchanged.
 
 **CV6-05 / S-AV01 is settled: "not offered".** Normal has 40/40 hits but p95
 10,192.4051 ms >10,000 ms. It is not in the 79-cell GP population; the Fable trigger
@@ -418,6 +557,10 @@ edits or timed work when arithmetic is green.
   Never overwrite a run or write inside the accepted MS18c trees.
 - `generator/tests/fixtures/perf-helper.js` PERF_TARGETS only if the documented qualification rule
   requires it; corresponding Generator design 9.1 and both developer guides.
+- **Phase-B pin amendment:** the single target-value test/local expectation in
+  `generator/tests/suites/manual-corpus.test.js`, exactly as ruled above;
+  Generator design **15.1/15.5** and the coupled CV6 wording in both developer
+  guides. No change to `manual/perf.test.js`'s consistency test or other pins.
 - Clarify GP-target versus retained manual-CV6 wording if needed, without changing
   a manual `BUDGET_MS`, test threshold, seed or population.
 - No production code, `perf.js`/`measure` behavior, `regression.js`, replay/help
@@ -425,7 +568,7 @@ edits or timed work when arithmetic is green.
 
 ## Implementation steps
 
-### Phase A — ready now, FILE-ONLY, then STOP
+### Phase A — completed at `602af371`; historical file-only scope
 
 1. Read the accepted MS18c handoff, bind the input/source hashes, current 79 public
    cells/targets, Node/machine and S-AV01/S-OD7 dispositions. Keep the 50-cell
@@ -441,9 +584,12 @@ edits or timed work when arithmetic is green.
 
 ### Phase B — target/document update and functional evidence, explicit release
 
-4. After the orchestrator verifies Phase A, apply **only** the rule-derived 17
+4. Phase A is verified and Phase B released; after the pin-ruling concurrence/
+   resume, apply **only** the rule-derived 17
    targets (or return any mismatch as a QUESTION), with design 9.1 and both
-   developer guides. Freeze the complete target table and source identities
+   developer guides and the single coupled quick pin under option A above.
+   Prepare/test the versioned incremental wrapper before long GG work.
+   Freeze the complete target table and source identities
    **before GP**; keep every other positive target and all hidden/null cells.
 5. Test metadata/target consistency and capture final hash-family identity.
    Re-record all **520** GG keys in existing bounded hash shards and merge-check
@@ -501,11 +647,14 @@ edits or timed work when arithmetic is green.
 | MS18d-T05 | Phase A stops; owner MS18d-Q1 answered and recorded before GP/profile; declared policy, fresh per-cell readiness, ordinary deadlines and window integrity preserved |
 | MS18d-T06 | All 17 target updates derive from frozen GQ before GP; 62 retained targets/56 hidden positions unchanged; no manual-CV6 or output-fixture relaxation |
 | MS18d-T07 | Stock CLI limitations reported honestly: no timing JSON/resume/jobs flag or inherited GQ guard; complete MISS distinguished from crash/timeout and rounded output from exact verdict |
+| MS18d-T08 | Scoped target pin preserves OLD and all 79 exact values via 17 frozen overrides; counts/hidden positions/cells comparison unchanged, one test renamed and none added/removed; exact-ms documentation and distinct manual-CV6 wording |
+| MS18d-T09 | Versioned append-as-arriving transcript wrapper/short stand-ins preserve partial failures and exit semantics, cleanup and >=15 s gaps; Phase-A 25-entry freeze remains intact; Phase B grants no GP/profile permission |
 
 ## Test plan and gates
 
-**Phase A only is ready.** From Generator, create and fake-test the named file-only
-driver, load the shared helper without modifying it, then preflight:
+**Current work is the released Phase B, after the pin-ruling concurrence/resume.**
+The following is the **completed Phase-A command**, retained as history; do not
+overwrite its frozen output using the post-update target table:
 
 ```powershell
 Set-Location Q:\git\sudoku\generator
