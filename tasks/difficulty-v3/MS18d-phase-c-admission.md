@@ -8,18 +8,26 @@ acceptance closure **`b3144fcf`**, 2026-11-19.
 
 **C0 is released now: Q1-independent G1-G5 transport, source binding and result
 classification, in versioned Phase-C copies, with stand-in tests and SA1 review.**
+SA1 accepts C0 with the additive **C0-1..C0-6** conditions below and accepts the
+C1 specification. **C0b is also released now**, Q1-independent raw-time recorder,
+frozen request-chunk manifest and check-only merger, as specified in
+[MS18d-r24-request-ledger.md](MS18d-r24-request-ledger.md).
+SA2 accepts O1: `ad7d30e3`'s blanket single-command prohibition was too broad
+under owner-accepted R24/FS23. The new route supersedes only that restriction;
+it changes no target, request count, per-command ceiling or readiness policy.
 The orchestrator owns commits and dispatch. Phase B received **SA1 ACCEPT WITH
 CONDITIONS**; its three record-only additions/refreeze are committed at
 **`b3144fcf`**, not implementation rework. Do not edit or overwrite the frozen
 Phase-A/B helpers, records or accepted GG ledgers.
 
-**C1 is NOT released until S-OD15 selects A or B:** only then build the selected
-readiness launcher/CPU-policy variant and admission integration. Test it with
-stand-ins and obtain review before a timed cell. C0 must not implement/run a live
-CPU screen, choose the environment, launch GP, run a profile or conduct a pilot.
-No live readiness/no-op campaign is authorized while the owner answer is pending.
+**S-OD15 now records A**, owner `amicably8850`, **2026-11-19T07:13:33.350Z**.
+The owner-answer gate for C1 is resolved: build the selected host-active
+readiness/admission implementation after the existing C0 review/dependency
+gates, then test/freeze/review it before timing. The answer does not convert C0
+or C0b's fake/file-only release into a GP/profile/pilot release. No standalone
+live readiness/no-op campaign is assigned.
 
-**C2 (timing) additionally requires** accepted C0/C1 tooling, orchestrator review
+**C2 (timing) additionally requires** accepted C0/C0b/C1 tooling, orchestrator review
 of the particular row's empirical planning basis below, clean frozen inputs and
 a declared window with fresh successful admission. An owner answer alone does
 not make the current tee/wrapper sufficient or admit all 79 cells.
@@ -28,10 +36,48 @@ The only owner-choice switch is the **S-OD15 JSON line in check-list section 4**
 All references to the answer in this plan and the parent leaf resolve to that
 line; dated Phase-A/B descriptions remain history. Before the first timed
 payload, the orchestrator replaces that one line with A or B, the verbatim
-answer and its owner/time/channel reference. Missing/invalid/PENDING means STOP.
+answer and its owner/time/channel reference. This has now been done for A.
+`r24Notice` records delivery of the S1 **status update**, not another permission
+or a precondition on the recorded answer. A missing/invalid/PENDING owner choice
+would still block C1/live work; an undelivered informational notice is not that.
 An answer with different conditions requires a reviewed amendment, not a guessed
 mapping to A/B. After timing starts the selected policy is frozen for the matrix;
 editing the selector cannot reset attempts, authorize retries or mix policies.
+
+### S-OD15 extra clause — resource/scheduling ruling for SA1 cross-review
+
+The owner said **"Máy tính hiện 100% allocate cho task này, hãy sử dụng 100%
+resource."** Read this with the explicit **choice A**: dedicate the machine and
+schedule this task efficiently **within the selected measurement contract**.
+It is not a numeric deadline waiver, a strict-quiet certificate or authority to
+create background load to fill unused cores. No further owner question is needed
+for this conservative mapping; changing a numeric/protocol rule would need a
+separate explicit decision, not an inferred interpretation of "100%".
+
+- **(a) Unchanged:** projected **450 s**, hard **540 s**, both mutexes and foreign/
+  stale-slot handling, the bounded foreign-slot wait, **>=15 s** gaps and the
+  15.3 s observed pre-window. Do not delete/ignore a foreign lock or kill another
+  process because the machine was declared allocated. Fresh facts still govern.
+- **(b) Outside timed GP:** genuinely independent, timing-free, read-only work
+  may overlap. Keep one source writer in this repository and all shared-lock
+  obligations. No blanket parallel permission for the named stages: lock/
+  deadline/orphan stand-ins need controlled isolation; formatting precedes the
+  affected freeze/final tests; **Phase D quick sets remain serial** because they
+  contain generation/time assertions and supply measured cost evidence.
+  An isolated pure-check bundle may use supported parallel execution only
+  within a reviewed bounded invocation/lock and disjoint outputs. Do not bypass
+  locks or add a new scheduler merely to fill cores; otherwise keep it serial.
+- **(c) During a timed chunk:** no second GP chunk, tests, quick sets, format,
+  freeze/hash, merge, profiling, source analysis, prefetch or other agent workload.
+  Only intrinsic runtime/OS activity and required lightweight transport,
+  deadline/exit/cleanup supervision remain; C0-5 still forbids periodic work
+  inside the transport. With Q1 answered, **the orchestrator** pauses/stops its
+  now-unneeded poller before timing rather than leaving optional HTTP/status work.
+- **(d) Unchanged A re-ask:** additional-consumer threshold **>=0.5 CPU-s/s**,
+  verified unstarted consumer-only hold, one fresh-slot re-ask **>=60 s** after
+  release, maximum two admissions and one payload. The unit is **each frozen
+  chunk**, by the separately accepted R24 plan, not by the resource clause.
+  No service/host-tree exemption, counter reset, payload retry or recovery grant.
 
 ## Frozen planning inputs
 
@@ -55,12 +101,14 @@ still match its older hashes. Verify the current freeze before C0 acceptance.
 
 GG set digest: sort the 104 repository-relative paths with `/` separators;
 SHA-256 the UTF-8 concatenation of `path + NUL + raw-file-SHA256 + LF`.
+Every embedded raw-file SHA-256 and the final displayed digest use **lowercase
+hex**, exactly; uppercase changes this text recipe and is not the bound set.
 This fingerprints frozen observations, not the GG request-manifest recipe.
 There are **21 offered GP keys** with 20 existing GG records each; the other
 GG combinations remain fixed diagnostics but supply no public GP row here.
 No new GG run, target recalibration or publication change is assigned.
 
-## Per-cell planning basis — identical reservations under A and B
+## Per-cell planning basis — common max rule, applied per frozen chunk
 
 The Phase-A **mean alerts are not admission bounds**. The following is an
 explicit **empirical reservation proposal for orchestrator review**, not a
@@ -69,18 +117,21 @@ All rows remain unadmitted until the release conditions and live checks hold.
 
 For each offered key, retain all 40 GQ times and, where available, all 20 accepted
 GG `ms` values. Let `m` be the larger **observed** per-request maximum of those
-two sets (GQ alone where GG is absent). Use the same rule for every row:
+two sets (GQ alone where GG is absent). Preserve the single-process reference
+P50, but use the same reservation rule for each **assigned n-request chunk**:
 
 ```
-work reservation = ceil(50 * m / 1000) seconds
-P = 45 seconds readiness + 15 seconds startup/identity/output allowance
-    + work reservation
+P50 = 60 + ceil(50 * m / 1000)                 // reference, not a split-cell command
+capacity = floor(390000 / m)
+k = ceil(50 / capacity)
+Pchunk(n) = 45 seconds readiness + 15 seconds startup/identity/output allowance
+            + ceil(n * m / 1000)
 ```
 
 The variance allowance relative to the GQ mean alert is
-`50 * (m - GQmean) / 1000`, plus upward rounding: plan all 50 requests at the
+`50 * (m - GQmean) / 1000`, plus upward rounding: reserve all 50 requests at the
 largest retained observation, rather than at their average. The 60-second
-non-payload allowance is reserved, not a measured cost; it cannot be spent on
+non-payload allowance is reserved **per chunk**, not a measured cost; it cannot be spent on
 extra generations. No multiplier is fitted to make a slow row fit.
 
 **Limitations retained for review:** GQ is trace off/jobs 4/other seeds/120000 ms
@@ -92,19 +143,23 @@ must be accepted explicitly; if review finds it unsupported for a row, keep that
 row unadmitted. Neither the 540-second backstop nor an owner environment choice
 supplies the missing planning evidence. No pilot or alternative multiplier follows.
 
-**C** in both policy columns means **conditional candidate** (`P <= 450`) on the
-original environment, not admitted. **H** means **hold/unmeasured** (`P > 450`).
-Sohei Hell 2 is additionally held by its independent **485.597059875 s mean
-alert** and cannot be admitted under either answer. There are **62 C / 17 H**;
-these sets are unrelated to the 62 retained / 17 recalibrated target counts.
+**C** in both policy columns means **one-chunk conditional candidate**:
+`[i0=0,n=50,P=P50]`. **R** means **conditional R24 multi-chunk route**, using
+the exact frozen ranges/P values in `MS18d-r24-request-ledger.md`, never the
+over-limit P50 as a command. There are **62 C / 17 R**, unrelated to the 62
+retained / 17 recalibrated target counts. All 79 now have numerical command
+plans; none is automatically admitted. Sohei Hell 2's **485.597059875 s mean
+alert** still forbids its monolithic command, but its six assigned chunks are
+conditional under either policy, not permanently held by that old screen.
 Changing machine/Node under B invalidates the transferred timing basis: every
 row then needs a new reviewed compatible basis, not an assumed speedup.
 
 GQ mean-alert values below are displayed to three decimals; calculations use
 the original unrounded fields. `--` means no matching GG observation, not zero.
-Targets are exact frozen milliseconds. P includes the full reserved prefix.
+Targets are exact frozen milliseconds. P50 includes one reserved prefix and is
+reference-only for R rows; their actual chunk prefixes are counted separately.
 
-| Cell | Target ms | GQ mean alert s | GQ max ms | GG max ms | P s | A | B |
+| Cell | Target ms | GQ mean alert s | GQ max ms | GG max ms | P50 s | A | B |
 |---|---:|---:|---:|---:|---:|:---:|:---:|
 | classic4/veryEasy | 31 | 0.098 | 12.9531 | 8 | 61 | C | C |
 | classic6/veryEasy | 39 | 0.132 | 13.8671 | 11 | 61 | C | C |
@@ -120,16 +175,16 @@ Targets are exact frozen milliseconds. P includes the full reserved prefix.
 | mega12/easy | 1000 | 0.896 | 53.8743 | -- | 63 | C | C |
 | mega12/normal | 1000 | 1.553 | 127.5042 | 50 | 67 | C | C |
 | mega12/hard | 3000 | 4.501 | 372.2446 | -- | 79 | C | C |
-| mega12/expert | 3000 | 31.250 | 7953.7019 | -- | 458 | H | H |
+| mega12/expert | 3000 | 31.250 | 7953.7019 | -- | 458 | R | R |
 | mega12/master | 3000 | 14.491 | 1112.9419 | -- | 116 | C | C |
-| mega12/nightmare | 18842 | 140.373 | 8736.1104 | -- | 497 | H | H |
-| mega12/hell2 | 16000 | 238.706 | 11526.3005 | -- | 637 | H | H |
+| mega12/nightmare | 18842 | 140.373 | 8736.1104 | -- | 497 | R | R |
+| mega12/hell2 | 16000 | 238.706 | 11526.3005 | -- | 637 | R | R |
 | mega16/veryEasy | 1500 | 0.754 | 39.7954 | -- | 62 | C | C |
 | mega16/easy | 4000 | 1.225 | 61.4999 | 58 | 64 | C | C |
 | mega16/normal | 4000 | 2.162 | 134.6989 | -- | 67 | C | C |
 | mega16/hard | 10000 | 26.487 | 2023.2603 | -- | 162 | C | C |
 | mega16/master | 10000 | 106.184 | 6384.3164 | -- | 380 | C | C |
-| mega16/hell2 | 30000 | 205.970 | 43048.0792 | -- | 2213 | H | H |
+| mega16/hell2 | 30000 | 205.970 | 43048.0792 | -- | 2213 | R | R |
 | diagonalX/veryEasy | 80 | 0.216 | 19.6909 | -- | 61 | C | C |
 | diagonalX/normal | 200 | 2.402 | 399.7115 | -- | 80 | C | C |
 | diagonalX/hard | 500 | 1.385 | 98.2527 | -- | 65 | C | C |
@@ -140,45 +195,45 @@ Targets are exact frozen milliseconds. P includes the full reserved prefix.
 | hyper/normal | 1573 | 10.088 | 805.5777 | -- | 101 | C | C |
 | hyper/hard | 500 | 1.734 | 138.827 | 79 | 67 | C | C |
 | hyper/master | 1200 | 12.184 | 1545.0021 | -- | 138 | C | C |
-| hyper/nightmare | 10000 | 134.566 | 11272.8636 | -- | 624 | H | H |
+| hyper/nightmare | 10000 | 134.566 | 11272.8636 | -- | 624 | R | R |
 | hyper/hell2 | 5000 | 97.246 | 6729.419 | -- | 397 | C | C |
 | jigsaw9/veryEasy | 150 | 1.088 | 74.0841 | -- | 64 | C | C |
 | jigsaw9/easy | 1905 | 9.656 | 768.6908 | -- | 99 | C | C |
 | jigsaw9/normal | 350 | 4.050 | 413.6342 | 143 | 81 | C | C |
 | jigsaw9/hard | 900 | 4.009 | 160.6444 | -- | 69 | C | C |
 | jigsaw9/master | 2000 | 34.966 | 2719.933 | 3389 | 230 | C | C |
-| jigsaw9/hell2 | 10000 | 164.326 | 9904.8754 | -- | 556 | H | H |
+| jigsaw9/hell2 | 10000 | 164.326 | 9904.8754 | -- | 556 | R | R |
 | killer/veryEasy | 300 | 0.272 | 25.5256 | -- | 62 | C | C |
 | killer/easy | 700 | 0.932 | 64.8644 | 54 | 64 | C | C |
 | killer/normal | 5425 | 28.289 | 2252.0779 | -- | 173 | C | C |
 | greaterThan/veryEasy | 300 | 1.414 | 55.2629 | -- | 63 | C | C |
 | greaterThan/easy | 700 | 2.421 | 112.6005 | -- | 66 | C | C |
 | greaterThan/hard | 6000 | 36.336 | 3213.7686 | 5018 | 311 | C | C |
-| greaterThan/master | 10000 | 98.254 | 7828.2704 | -- | 452 | H | H |
-| greaterThan/hell2 | 10000 | 224.925 | 19426.627 | -- | 1032 | H | H |
+| greaterThan/master | 10000 | 98.254 | 7828.2704 | -- | 452 | R | R |
+| greaterThan/hell2 | 10000 | 224.925 | 19426.627 | -- | 1032 | R | R |
 | samurai/veryEasy | 3000 | 1.040 | 49.7793 | -- | 63 | C | C |
 | samurai/normal | 8000 | 18.594 | 2718.3111 | -- | 196 | C | C |
 | samurai/hard | 20000 | 12.984 | 1142.9887 | -- | 118 | C | C |
-| samurai/expert | 20000 | 54.211 | 9047.9127 | -- | 513 | H | H |
-| samurai/master | 20000 | 205.781 | 66790.9568 | -- | 3400 | H | H |
+| samurai/expert | 20000 | 54.211 | 9047.9127 | -- | 513 | R | R |
+| samurai/master | 20000 | 205.781 | 66790.9568 | -- | 3400 | R | R |
 | sohei/veryEasy | 3000 | 0.796 | 44.398 | 29 | 63 | C | C |
-| sohei/normal | 8000 | 36.548 | 9022.8878 | -- | 512 | H | H |
+| sohei/normal | 8000 | 36.548 | 9022.8878 | -- | 512 | R | R |
 | sohei/hard | 20000 | 10.482 | 606.0797 | -- | 91 | C | C |
-| sohei/expert | 20000 | 54.645 | 13851.4877 | -- | 753 | H | H |
-| sohei/master | 20000 | 79.219 | 8092.3715 | -- | 465 | H | H |
-| sohei/hell2 | 30000 | 485.597 | 41652.8343 | -- | 2143 | H | H |
+| sohei/expert | 20000 | 54.645 | 13851.4877 | -- | 753 | R | R |
+| sohei/master | 20000 | 79.219 | 8092.3715 | -- | 465 | R | R |
+| sohei/hell2 | 30000 | 485.597 | 41652.8343 | -- | 2143 | R | R |
 | butterfly/veryEasy | 1000 | 0.502 | 34.3091 | -- | 62 | C | C |
 | butterfly/normal | 3000 | 9.771 | 1486.743 | 1842 | 153 | C | C |
 | butterfly/hard | 8000 | 4.909 | 309.2124 | -- | 76 | C | C |
 | butterfly/expert | 8000 | 64.425 | 4966.2758 | -- | 309 | C | C |
 | butterfly/master | 8000 | 16.104 | 948.0175 | -- | 108 | C | C |
-| butterfly/nightmare | 30000 | 303.422 | 21241.2245 | -- | 1123 | H | H |
-| butterfly/hell2 | 15000 | 224.982 | 14259.1274 | -- | 773 | H | H |
+| butterfly/nightmare | 30000 | 303.422 | 21241.2245 | -- | 1123 | R | R |
+| butterfly/hell2 | 15000 | 224.982 | 14259.1274 | -- | 773 | R | R |
 | flower/veryEasy | 3000 | 0.587 | 35.3335 | -- | 62 | C | C |
 | flower/normal | 8000 | 13.654 | 2033.104 | 1447 | 162 | C | C |
 | flower/hard | 20000 | 13.948 | 3523.2231 | -- | 237 | C | C |
 | flower/master | 20000 | 26.534 | 2364.3572 | -- | 179 | C | C |
-| flower/hell2 | 20000 | 164.927 | 13936.7153 | -- | 757 | H | H |
+| flower/hell2 | 20000 | 164.927 | 13936.7153 | -- | 757 | R | R |
 | wordoku/veryEasy | 100 | 0.272 | 21.3596 | -- | 62 | C | C |
 | wordoku/easy | 2921 | 17.286 | 1338.2495 | -- | 127 | C | C |
 | wordoku/hard | 600 | 3.909 | 710.1285 | -- | 96 | C | C |
@@ -186,14 +241,13 @@ Targets are exact frozen milliseconds. P includes the full reserved prefix.
 | wordoku/master | 1500 | 7.927 | 437.3951 | -- | 82 | C | C |
 | wordoku/nightmare | 1500 | 34.579 | 4217.0411 | -- | 271 | C | C |
 
-Run reviewed C rows in this fixed matrix order, not an order chosen after
-observing their GP results. H rows receive no readiness attempt or payload:
-record the key/P/reason as unmeasured. The sixteen H rows other than Sohei are
-the numerical subitems of **MS18d-GP-BOUND-REMAINDER**; retain the existing
-**MS18d-GP-BOUND-sohei-hell2** separately. No longer ceiling, smaller cohort,
-per-request guard, new evidence class or automatic owner question follows.
-All 79 remain the denominator: even 62 successful measurements cannot complete
-the required 79-cell / at-least-72-success gate.
+Run the reviewed chunks in this fixed matrix order, then increasing i0, not an
+order chosen after GP results. **MS18d-GP-BOUND-REMAINDER** and
+**MS18d-GP-BOUND-sohei-hell2** are resolved as single-command planning
+obstructions by the assigned R24 route, not as measured performance passes.
+There is no shorter total cohort, longer ceiling, new guard or unsupported
+percentile split. All 79 still require complete 50-request evidence and at
+least 72 successes for a complete passing GP gate.
 
 ## S-AV11 — same request under either selected policy, still unadmitted
 
@@ -230,7 +284,7 @@ reference the frozen bytes explicitly. Adapt a **Phase-C copy** of
 Stand-in records belong under `evidence\MS18d\phase-c\tooling\`, with isolated
 project-local test locks/state. Do not mix fake records into the real GP matrix.
 
-Implement and test exactly SA1's G1-G5 gaps:
+Implement and test SA1's G1-G5 gaps with the already relayed C0-1..C0-6 additions:
 
 1. **G1, actual acquisition:** record request time/slot state and the actual
    start timestamp **from inside the locked child**, before any payload.
@@ -242,6 +296,15 @@ Implement and test exactly SA1's G1-G5 gaps:
    history hold; do not fabricate timestamps. A hold starts no GP and releases
    the slot. These are slot holds, not eligible A additional-consumer re-asks.
    Retain request/start/release provenance and the final lock recheck.
+   **C0-1:** immediately before every call, observe both mutex files over a
+   **15.3 s lock-free pre-window**, polling nominally every **250 ms**, with
+   **no gap >1000 ms**. A seen lock or longer observation gap restarts that
+   window; the whole watch is bounded at **1200 s**, then holds without a
+   payload. Respect the latest A/B/C release plus 15.3 s as well. Retain the
+   first/last checks, count/max gap, restarts and give-up state. This is a
+   bounded lock watch, not a CPU/readiness retry loop or proof beyond the
+   observations. Its final window also supplies the inter-command fairness gap;
+   do not charge or perform two separate 15.3 s waits unnecessarily.
 2. **G2, logs and paths:** read **A, B and C** release logs, plus any explicitly
    supplied coordinator release evidence. Write each real command's metadata,
    transcript and PID/result records under
@@ -250,10 +313,13 @@ Implement and test exactly SA1's G1-G5 gaps:
    Record a conservative verified release observation after helper return;
    do not label it an exact removal timestamp if the helper does not expose one.
    Carry the latest release across files/restarts; a new log is not a reset.
-3. **G3, result classifier:** implement the complete-result predicate below
+3. **G3, result classifier:** implement the payload-specific predicates
    with synthetic stdout/stderr/exit fixtures. An exit 1 is allowed only with
    a defined semantic meaning plus that predicate; no universal "allow exit 1".
    Preserve both the real CLI exit and wrapper/tee status.
+   **C0-3:** retain stdout and stderr separately, including original byte
+   counts. **Zero stderr bytes is required**: a space, newline or other byte
+   is not excused by trimming/normalization or an apparently complete stdout.
    The Phase-B record now accounts for **eight** nonzero exits: six with an error
    field and two allowed exit-1 development failures, not six total. An error-free
    wrapper record is not proof that a helper test passed; retain that distinction.
@@ -261,13 +327,17 @@ Implement and test exactly SA1's G1-G5 gaps:
    E hash identity **344afdec...**, target table **3d0bffdb...**, Node and machine.
    Before timing, all executable helpers, source, targets and pack decisions
    must be committed/frozen by the orchestrator. Report raw Git status as well
-   as the explicitly reviewed clean-input check. The only permitted new dirty
-   paths during a campaign are its declared append-only run outputs/release
-   ledger; no blanket exemption for an artifacts/evidence tree, executable
-   helper, accepted record or changed tracked input. Never label global status
-   clean if run-output files make it dirty. This exact allowlist/cleanliness
-   definition is part of SA1's C0 review. Freeze helper hashes separately from
-   E's source recipe and verify them before each admission.
+   as the explicitly reviewed clean-input check. **C0-4's exact allowlist:**
+   only **`??` new files directly inside campaign-declared**
+   `docs/difficulty-v3/evidence/MS18d/gp/<variant>-<level>/<run-id>/` directories,
+   and **` M`** of the **already committed**
+   `docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl`, whose committed
+   content is an exact prefix of its working content. Account only for declared
+   Git checkout line-ending conversion when comparing that prefix. No staged,
+   deleted, renamed, other modified, nested-directory or blanket artifact/
+   evidence exemption; no changing an earlier output or accepted input.
+   Keep `rawClean` and `reviewedClean` distinct, with all raw status retained.
+   Freeze helper hashes separately from E's recipe before every admission.
 5. **G5, orphan barrier:** durably record the actual command PID, owner/parent
    provenance and spawn identity/time window, not just the tee PID. After any
    tee outcome, including its early death or exit 0, positively confirm the
@@ -282,6 +352,24 @@ Implement and test exactly SA1's G1-G5 gaps:
    still held. Retain the outer wrapper's abnormal-exit verification as well;
    the unchanged 540 s applies to the whole controller tree. This controller
    performs no CPU readiness work in C0 and is not a detached/recovery service.
+   **C0-2:** obtain the actual command PID from an unambiguous tee spawn
+   line/record or a bounded post-tee-exit lookup. Bind a living process by
+   **PID plus creation time** and ownership, never PID/name alone. Preserve
+   the spawn window; a positive absent result is not an invented creation time.
+   Do not add a periodic process query to obtain this identity.
+
+**C0-5:** the tee/controller does **no periodic work during a payload**:
+no timer-driven PID/CPU/file/Git polling or sampler. Stream/spawn/exit handling
+is event-driven; process lookup/cleanup follows exit. The shared helper keeps
+its unchanged process-tree deadline. The old external HTTP poller exception
+does not permit a transport-side loop; pause optional pollers now Q1 is answered.
+
+**C0-6:** transport stays generic. Register a separate G3 validator for each
+payload type: existing stock GP CLI, generic exit-0 tooling, raw GP recorder
+(strict acquisition exit 0), and check-only merge (defined complete gate
+PASS/MISS exits). C0b extends this hook, not the G1/G2/G4/G5 transport.
+Do not demand a stock rounded GP header from a ledger-writing recorder, or
+interpret a recorder's acquisition success as performance success.
 
 Required stand-ins cover: busy/late acquisition and the exact 2 s / 15 s
 boundaries; another job's recent release despite an old own log; A/B/C log
@@ -291,19 +379,22 @@ source/status/machine mismatch; tee-first death with a surviving child and
 grandchild, normal exit and PID-reuse/unknown-liveness refusal. Check bytes
 exist before completion and survive a kill. Expected fake failures are retained
 and distinguished from real GP evidence.
+Also cover the 15.3 s pre-window/restarts/give-up, zero-byte stderr rule,
+the exact status allowlist/prefix, event-driven transport and a non-CLI payload
+using its own G3 contract without a transport change.
 
 Use isolated short-deadline stand-ins for kill tests, not a killed real shared
 PowerShell wrapper. Clean up only owned test processes/files, preserve review
 evidence, format/freeze the copies and obtain **SA1 review before C1/timing**.
 Every Node test still uses the shared lock and normal bounds/gaps.
 No permanent tool, production code, target, fixture, guide or task-pack edit
-belongs to the developer. **Do not build the CPU readiness/admission launcher
-in C0**; it remains C1 work after the owner chooses.
+belongs to the developer. **CPU readiness/admission belongs to C1, not C0/C0b**.
+The owner has selected A; C1 follows its existing dependency/review gates.
 
 ## C1 — selected readiness policy, only after S-OD15
 
-Build the selected launcher in the same versioned Phase-C area, after C0 review
-and the recorded A/B answer. Use existing bounded host/counter mechanics as
+Build the **selected A launcher** in the same versioned Phase-C area, after C0
+review and the now-recorded answer. Use existing bounded host/counter mechanics as
 references, not an inherited GQ grant. Test the selected policy, fail-closed
 unknowns, re-ask accounting and the G1-G5 integration with stand-ins, then freeze
 and obtain review before an actual cell.
@@ -335,8 +426,8 @@ anything sampled before a lock wait is stale.
   neither the display ProcessName nor a matching filename authorizes it.
 - **A re-ask:** only a verified **unstarted, additional-consumer-only** hold may
   receive one fresh-slot re-ask, **>=60 s after actual/verified release**.
-  Maximum **two admission attempts** per immutable cell/protocol identity,
-  at most **one payload**; preserve both attempts across crashes/restarts/log
+  Maximum **two admission attempts per immutable chunk/protocol identity**,
+  at most **one payload per chunk**; preserve both attempts across crashes/restarts/log
   changes. Mixed, slot, host, counter, source, timeout and missing-evidence holds
   are not eligible. A second hold is an unexecuted gap. Pause a persistently
   contaminated window instead of cycling through other identities to hunt
@@ -350,33 +441,37 @@ anything sampled before a lock wait is stale.
   A different machine/Node is recorded uniformly and requires re-reviewed
   timing bases before any row runs.
 
-The policy applies also to S-AV11 if its separate bound is ever approved.
+For a one-chunk cell this is the original cell-level accounting. The profile
+remains one separate request unit if S-AV11's bound is ever approved.
 S-OD13 and S-OD14 grant neither GP deadline extensions nor GP recovery.
 
 ## C2 — exact execution, batching and acceptance
 
-For each individually reviewed/admitted GP row, from `generator\`, launch one
-fresh original CLI process:
+For each individually reviewed/admitted **frozen chunk**, from `generator\`,
+launch a fresh task-owned recorder process. The proposed entry-point contract
+is implemented/reviewed in C0b, not an already existing CLI permission:
 
 ```powershell
-node tests\perf.js --variant=<variant> --level=<level> --runs=50 --warmup=0 --seed=7000 --gate --ascii
+node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=<frozen-manifest> --chunk=<immutable-id> --out=<new-ledger>
 ```
 
-Jobs 1 is inherent; trace is summary; seeds are **7000+i*101, i=0..49**.
-One contiguous `measure` call, no caller guard, warmup, sample split, preload,
-priority change, target change or independent detached child. Do not require
-`perf.js` as a metadata module: its `main()` runs unconditionally.
+Jobs 1 is inherent; trace is summary; each cell still has all seeds
+**7000+i*101, i=0..49**. Make one contiguous `measure` call per chunk with the
+frozen n/offset. No caller guard, warmup, split outside this R24 plan, preload,
+priority change, target change or detached child. Never require `perf.js`:
+its `main()` runs unconditionally. Only raw-time check-only merging is supported.
 
-**One cell per `Invoke-Locked`/shared-lock acquisition is assigned.**
+**One chunk per `Invoke-Locked`/shared-lock acquisition is assigned.**
 The queue may be prepared as a batch, but no multi-cell GG-style locked compound
-or outer timed loop is released. Each cell has its own new CLI, new admission,
+or outer timed loop is released. Each chunk has its own fresh process/admission,
 transcript and G1/G5 barriers; release before the next, enforce **>=15 s**
 (wrapper wait **15.3 s**) against the latest relevant verified release.
-No sleeps or resampling inside the 50-request cohort. A review rejection or H
-row does not consume a payload or invite a smaller measurement.
+No sleeps or resampling inside a chunk, or choosing a smaller measurement after
+results. The only continuation is an unstarted, preplanned chunk, never a
+failed/completed chunk's retry or replacement.
 
-The row's whole-command projection must be **<=450 s**; the unchanged shared
-helper's **540 s** covers tee/launcher/readiness/CLI together, not a new 540 s
+Each chunk's whole-command projection must be **<=450 s**; the unchanged shared
+helper's **540 s** covers tee/launcher/readiness/recorder together, not a new 540 s
 after sampling. Check the first row as well as later rows. If setup/readiness
 exhausts its allowance or no credible remaining plan fits, do not start a late
 payload. The helper's bounded slot wait is separate; tool `initial_wait` or
@@ -385,11 +480,16 @@ Never use `stop_powershell` as routine completion/timeout handling.
 
 During the declared timed window all other agents suspend generation, tests,
 hashing, formatting and analysis, including short commands. Only required minimal
-supervision/status checks and the declared negligible Discord HTTP poller/report
-remain. No optional CPU sampler is inserted into the measured cohort. Known
+transport/deadline/exit/cleanup checks remain. The orchestrator pauses optional pollers/reports;
+no optional CPU sampler is inserted into the measured cohort. Known
 interference during it makes the raw run compromised, not CPU-adjusted.
 
-**G3's complete-result predicate, adapted from the GG pass discipline:**
+**Actual final GP uses C0b's typed recorder/merge predicates.** A recorder needs
+exit 0 plus its complete raw ledger/receipt and makes no performance verdict.
+Only a complete 50-request merge computes p50/p95/max and a numerical MISS.
+Require all 114 planned chunks/3,950 distinct indices for the complete all-79
+gate. The following **stock-CLI G3 predicate remains for that transport payload
+type and its stand-ins**, not the final matrix's record format:
 
 - Match actual frozen argv/source/Node/machine and a valid admission record.
   Require the stock header declaring **50 runs, trace summary, seed 7000**,
@@ -406,7 +506,7 @@ interference during it makes the raw run compromised, not CPU-adjusted.
 - Require the real completion marker, consistent tee/wrapper/CLI status,
   retained stdout/stderr and the G5 no-orphan confirmation. A stack/error,
   signal, timeout, spawn failure, incomplete or contradictory transcript,
-  missing/source-mismatched record or unexplained stderr is **STOP + QUESTION**.
+  missing/source-mismatched record or **any stderr bytes** is **STOP + QUESTION**.
   Exit 1 alone and even an exit-0 tee are never enough.
 - If an unstarted hold exits its control wrapper normally, label it a
   **control hold**, not a complete GP result. Persist intent/start/PID/end
@@ -418,46 +518,34 @@ interference during it makes the raw run compromised, not CPU-adjusted.
   compromised run stays incomplete, with all partial bytes, never a slow-cell
   MISS or an excuse to choose a faster repeat.
 
-The stock CLI does not persist raw per-request GP times/stats. Preserve that
-limitation; no zeros, fabricated precision, new telemetry or live tool patch.
+The stock CLI still does not persist raw request times; C0b closes that evidence
+gap without patching it. Raw times already returned by `measure` are recorded;
+per-request outcomes/stats not returned by it remain unavailable, never invented.
 Final aggregate: all **79** complete, at least **72** strict unrounded successes.
 Missing/held/compromised cells leave GP incomplete regardless of a subset rate.
 
 ## Wall-time booking and remaining blockers
 
-For the **62 conditional candidates only**, once their bases are reviewed:
+The R24 plan covers **all 79 cells / 114 commands / 113 gaps**, with **35 extra
+cold process starts** disclosed, not extra generations. See its verified booking:
+mean-based arithmetic **12372.8658065 s (~3 h 26 min)**; reserved
+**28490.9 s (~7 h 55 min)**. Use the approximately eight-hour reservation under
+**A**, not a guaranteed GP forecast. **B** has the same execution booking once
+a credible quiet window is supplied; that wait is unknown.
+The first pre-window, tooling/review/report work, CPU holds and foreign waits
+are additional. The old 62-cell / 2 h 25 min booking is superseded, not a final
+matrix estimate.
 
-- GQ mean-alert sum: **956.263885125 s**, not an observed/predictive GP runtime.
-- Add the full 60 s prefix allowance per cell and 61 gaps of 15.3 s:
-  mean-based scheduling arithmetic **5609.563885125 s = 93.49 min**.
-- Sum of row reservations **7739 s**, plus those gaps:
-  **8672.3 s = 144.54 min**, about **2 h 25 min** booked if every first screen
-  admits and the environment/observed-envelope assumptions hold.
-
-Thus provision **about 1.5-2.5 hours of conditional execution time under A**;
-use the **2 h 25 min reservation**, not the lower mean scenario, for scheduling.
-This is a planning scenario, not a guaranteed wall-clock bound or claimed GP
-measurement. Initial/foreign slot waits, C0/C1 implementation/review and report
-work are separate. One eligible A hold/re-ask can add a failed admission prefix
-(up to the reserved 60 s) and at least 60 s wait; foreign waits may add more.
-No finite delay is promised when a shared slot or suitable window is unavailable.
-
-**B has the same 1.5-2.5 hour conditional execution booking on the original
-machine after a quiet window is actually supplied. Its wait has no ETA.**
-All 140 historical strict GQ screens failed; do not advertise immediate strict
-admission or a faster payload merely because B was chosen.
-
-**There is no defensible full-Phase-C completion ETA under either answer.**
-The current plans hold **17 GP cells and S-AV11**, and even the 62 candidates
-require explicit empirical-basis review. Q1 changes only the environment policy.
-The other blockers are: G1-G5 copies/tests/review not yet completed; C1 cannot
-be built until the answer and then needs review; frozen clean source/tool
-binding and the declared window; current-source bounds for held rows/profile;
-and any missing/corrupt input or unverified process cleanup. Do not conceal
-these by reporting a completed 79-cell GP result or invent a new slow-cell route.
+The structural 17-row obstruction is resolved by R24, not by larger limits or
+a smaller denominator. Remaining gates are C0/C0b/C1 implementation/review,
+the recorded S-OD15 A interpretation, frozen clean bindings, the declared window and actual
+per-chunk admission. S-AV11 still lacks a separate current-tuple bound.
+Missing/corrupt data, failed chunks or unknown process cleanup remain blockers,
+not waived outcomes. No guarantee of completion follows from the numerical plan.
 
 Handoff to MS18e retains the selected S-OD15 answer, row-plan revision/approvals,
-every completed MISS and incomplete/held row, S-AV11 disposition, all raw
-admission/transcript/PID/exit records and the true aggregate status. Phase D's
+every completed MISS and incomplete/held chunk/cell, S-AV11 disposition, all raw
+request ledgers and admission/transcript/PID/exit records, cold-start disclosures
+and the true aggregate status. Phase D's
 complete Generator/Player quick sets still run on their final fingerprints;
 this metadata/tooling work is no replacement for them.

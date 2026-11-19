@@ -2,12 +2,12 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS18c accepted at `e0596801`; acceptance recorded by `34ebc3fc`; owner MS18d-Q1 and reviewed per-cell admission before timed work |
+| Depends on | MS18c accepted at `e0596801`; acceptance recorded by `34ebc3fc`; S-OD15 A recorded; reviewed C0/C0b/C1 tooling and per-chunk admission before timing |
 | Accepted base | MS18c `e0596801`; acceptance `34ebc3fc`; Phase A `602af371`; Phase B `50903182`, SA1 ACCEPT WITH CONDITIONS recorded at `b3144fcf` |
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
-| Authority | R24/R21, FS23, S-OD4; S-AV01 not offered; S-OD13 is GQ-only, not a GP waiver |
-| Status | Phase B committed; C0 G1-G5 tooling/stand-ins released now; C1 readiness implementation and C2 timing gated by S-OD15 and the supporting Phase-C plan |
+| Authority | R24/R21, FS23, S-OD4, S-OD15 A; S-AV01 not offered; S-OD13 remains GQ-only |
+| Status | Phase B committed; C0/C0b tooling/stand-ins released; Q1 answered A, resource interpretation recorded for SA1 review; C2 still gated by reviewed tooling, frozen chunk plan and actual admission |
 
 ## Goal & business context
 
@@ -116,6 +116,21 @@ R24, verbatim:
 > Final GP measures 50 runs per offered performance-table cell, records p50/p95/max and the aggregate
 > published success criterion. Hash mode is not a timing gate.
 
+R24 also explicitly provides the bounded route (`report-detailed.md:1162-1165`):
+
+> Use explicit variant/level shards and bounded monitored processes. If one cell cannot complete within
+> the execution ceiling, implement a complete request-ledger/resume path or report it incomplete; do not
+> drop slow seeds, invent a verdict or substitute `--probe` for qualification. Preserve source/seed identity
+> and timing protocol when merging shards.
+
+**O1 accepted:** `ad7d30e3`'s blanket single-command prohibition was too broad.
+The assigned route is now
+**[MS18d-r24-request-ledger.md](MS18d-r24-request-ledger.md)**: raw-time ledgers,
+frozen contiguous/balanced chunks and a check-only merge, never merged rounded
+percentiles. All 79 cells use this recorder, 62 as one chunk and 17 as 52 chunks.
+Preserve 50 samples/cell and disclose the 35 extra cold process starts; this is
+not a claim of numerical equivalence to one fresh process per cell.
+
 Use existing seedBase 7000, seed i=7000+i*101, trace summary, warmup 0, runs 50 and existing
 nearest-rank percentile. The full intended matrix is perfTools.cells() after final offers.
 Every offered level must have a documented performance target; do not omit a newly offered cell.
@@ -142,14 +157,17 @@ quick sets still belong to Phase D. The deep-registration item is **closed on
 file evidence** in that committed handoff; no live deep result is implied.
 
 **Read [MS18d-phase-c-admission.md](MS18d-phase-c-admission.md) as the current
-dispatch addendum.** It releases only **C0**, versioned G1-G5 transport,
-source/result/orphan checks, stand-ins and SA1 review, **before** the owner answer.
-The CPU readiness/admission launcher is **C1**, built only after the single
-**S-OD15 selector in check-list section 4** records A or B. Timing is **C2**,
-after tooling review, explicit row-basis approval and fresh live admission.
-The complete 79-row table proposes **62 conditional candidates / 17 held**
-under either policy on the original environment; S-AV11 also remains held for
-lack of a current-tuple bound. This is not a full GP pass or a new timing grant.
+dispatch addendum.** It retains C0 with SA1's **C0-1..C0-6** conditions and
+releases **C0b**, the raw-time recorder/manifest/merger and stand-ins.
+**S-OD15 now records A**, owner Discord message `1572872444602228798` at
+**2026-11-19T07:13:33.350Z**; C1's owner-answer gate is resolved.
+The extra "100% resource" clause is a scheduling allocation, not permission to
+change caps/gaps/locks, run concurrent timed workloads or relax re-asks;
+the supporting plan records the full resource ruling for SA1 cross-review.
+The S1 message is now an informational status update, not another gate.
+Timing remains **C2**, after tooling review/freeze and fresh per-chunk admission.
+All **79** cells have conditional numerical plans: **114 commands**, maximum
+P **448 s**. S-AV11 remains held for lack of its separate current-tuple bound.
 
 The following Phase-A/B chronology and the original question remain history:
 
@@ -176,11 +194,14 @@ does not add another pause. **At that relay Phase C was not released** and
 **MS18d-Q1 was unanswered on Discord** (2026-11-19 11:11). No GP/S-AV11 run,
 pilot or live readiness campaign follows from Phase B.
 
-### MS18d-Q1 — OWNER: final performance measurement environment
+### MS18d-Q1 — answered A; original environment question and current scope
 
 **Sent through the orchestrator to the owner; not a Fable question.**
-Its live answer is solely the S-OD15 selector; at Phase-B completion it was
-still unanswered. Do not copy a second mutable decision into this leaf.
+Its authoritative answer is the S-OD15 selector: **A**, received
+**2026-11-19T07:13:33.350Z**, owner **amicably8850**, channel
+**ai-agent-session2 / 1571779348573323334**, message **1572872444602228798**.
+The verbatim answer and resource interpretation are recorded there, not a
+second mutable selector here. At Phase-B completion it was still unanswered.
 S-OD13 explicitly authorized host-active **GQ**, not GP. All **140** MS18c raw
 strict screens failed; the resident CLI host was PID **1968**, .NET StartTime
 `2026-11-13T19:26:33.6916441+07:00`, CIM UTC microseconds
@@ -192,7 +213,8 @@ The 140 failures do not prove a strict sample can never pass. This question asks
 for an explicit measurement-regime decision, not a waiver inferred from history
 or an owner stop for one ordinary environmental hold.
 
-Choose **one policy for the whole new GP matrix and the separately recorded S-AV11 profile**:
+The question offered **one policy for the whole matrix/profile**; **A is now
+chosen**, B retained below as the unchosen alternative:
 
 - **A — explicitly authorize `MS18d-GP-host-active`.** Keep the raw five-interval
   strict screen and `ready` separate from named-policy `admitted`. Verify the named
@@ -201,7 +223,8 @@ Choose **one policy for the whole new GP matrix and the separately recorded S-AV
   or known foreign heavy work. No service/whole-process-tree exemption.
   The requested grant includes **one >=60 s fresh-slot re-ask only after a verified
   unstarted additional-consumer hold**, maximum two admission attempts per immutable
-  cell/protocol identity. A second hold is an unexecuted gap, not a failed/hidden cell.
+  **chunk/protocol identity** under the assigned R24 route (one unit for a one-chunk
+  cell or the separate profile). A second hold is an unexecuted gap, not a failed/hidden cell.
   No sampling loop, payload retry or quota reset.
 - **B — retain the strict-quiet policy without exception.** The orchestrator must
   supply a credibly quiet execution window/environment, with five one-second
@@ -214,17 +237,18 @@ For **both** choices: actual observed times and the **pre-GP-fixed** targets rem
 binding; serial jobs 1, **50 runs**, trace summary, warmup 0, `7000+i*101`,
 strict `p95 < target`, the full intended denominator and ordinary **450/540**
 protection are unchanged. No CPU subtraction, target inflation from GP results,
-faster-repeat selection, new guard, new split or GQ watchdog follows. S-OD14's
+faster-repeat selection, new guard, arbitrary split or GQ watchdog follows.
+The separate R24 raw-ledger route is already authorized and explicitly assigned,
+not inferred from the A answer or its resource clause. S-OD14's
 one-recovery permission was **GQ-only** and is not inherited.
 
-**The scope limit matters:** even option A does not admit Sohei Hell 2:
+**The scope limit matters:** A does not admit Sohei Hell 2's monolithic command:
 its existing FS23 mean alert is **485.597 s >450**, before setup/margin.
-It stays in the 79-cell denominator as unmeasured unless a separately authorized,
-credible bounded route exists. A readiness decision neither extends a deadline
-nor makes an incomplete GP gate pass. No automatic second owner question/tooling
-task is raised merely for that cost finding; FS23 already specifies its disposition.
+The assigned R24 plan now supplies **six chunks (9,9,8,8,8,8)** within 450/540.
+This closes the planning obstruction, not the measurement or its performance
+verdict. A readiness decision never extends a deadline or makes a partial gate pass.
 
-**Owner-ready Vietnamese wording:**
+**Original owner-question wording, preserved as history:**
 
 > **MS18d-Q1 — môi trường đo GP:** S-OD13 chỉ cho phép GQ host-active, chưa cho GP.
 > Anh chọn **A**: cho GP và profile S-AV11 chạy theo chính sách
@@ -236,16 +260,16 @@ task is raised merely for that cost finding; FS23 already specifies its disposit
 > Riêng Sohei Hell 2 đã có cảnh báo 485,597 s >450 nên chưa được chạy; chọn A
 > không cấp thêm thời gian, và còn thiếu ô thì không công bố GP hoàn tất.
 
-Record the verbatim answer and task-scoped policy in **S-OD15's one-line
-selector** before C1. Until then, the current addendum permits **C0 G1-G5
-tooling and stand-in tests only**, not the readiness launcher, live CPU sampling,
-admission, pilot or timed measurement. A and B have complete conditional plans
-in the supporting file; selecting either changes no source/target/deadline or
-held-row disposition. The selected launcher still needs review before C2.
+**S-OD15's one-line selector now records the answer.** Post the updated S1
+Vietnamese status message from `MS18d-r24-request-ledger.md`; its delivery
+receipt is information, not a new approval condition. C0/C0b remain tooling-only
+releases. C1 can implement selected A after its existing dependencies; the
+selected launcher and recorder still need review/freeze before C2.
+The resource clause does not authorize parallel GP, shorter gaps or new retries.
 
 ### Readiness and runtime obligations once released
 
-- Obtain the orchestrator's shared window and normal mutex for **each** cell;
+- Obtain the orchestrator's shared window and normal mutex for **each chunk**;
   Pentomino was already stopped by the owner, so do not ask for that pause again.
   Reconfirm no new competing work. Keep actual release/acquisition times and the
   **>=15 s gap**, with observations after acquisition and immediately before payload.
@@ -257,9 +281,10 @@ held-row disposition. The selected launcher still needs review before C2.
   whole-command projection and 540 s protection.
 - Declare the timed window: no other agent generation, tests, hashing, formatting
   or analysis during the payload, including sub-ten-second commands. Only minimal
-  supervision/status reads and the already-declared negligible control-plane HTTP
-  poller/report are allowed. No optional CPU sampler inside the measured cohort.
-- One fresh CLI process, **one cell**, one contiguous **50-run** `measure` call;
+  transport/deadline/exit/cleanup supervision remains. The orchestrator pauses
+  now-unneeded pollers/reports; no optional sampler or other workload during a chunk.
+- One fresh recorder process per frozen chunk, one contiguous **n-run** `measure`
+  call; the check-only merge requires all **50** original indices per cell;
   no warmup/prefetch, process-priority change, internal restart or independently
   detached payload. Audit any wrapper/tool wait so it does not truncate the
   existing 540 s envelope or leave an orphan. Status reads reset no deadline.
@@ -789,11 +814,13 @@ be implemented as part of this performance task.
 ### Mandatory preflight before any GP invocation (FS23)
 
 **Phase-C planning follow-up:** the supporting plan retains these original mean
-alerts, supplements matching keys with existing serial GG maxima, and gives
-every row an explicit proposed `P = 60 + ceil(50*observedMax/1000)` reservation.
+alerts, supplements matching keys with existing serial GG maxima, and applies
+`Pchunk = 60 + ceil(n*observedMax/1000)` to frozen balanced chunks.
 These are reviewed empirical planning assumptions, not proofs of future times;
 they require explicit orchestrator approval before any conditional row runs.
-Seventeen rows exceed 450 s under this common rule, including Sohei Hell 2.
+Seventeen rows exceed 450 s as monolithic commands, including Sohei Hell 2;
+R24 now assigns their 52 bounded chunks. All 114 command projections fit,
+maximum **448 s**, without a target or ceiling change.
 No arbitrary fit-to-ceiling multiplier, pilot or source/CPU normalization is
 authorized. The original frozen Phase-A report remains byte-identical.
 
@@ -811,14 +838,15 @@ readiness, variance and gaps; this is **not a GP runtime forecast**. Largest ale
 | mega16/hell2 | 4119.4028300 | 205.970141500 |
 | samurai/master | 4115.6179625 | 205.780898125 |
 
-**MS18d-GP-BOUND-sohei-hell2** is already an unadmitted mean-alert item:
+**MS18d-GP-BOUND-sohei-hell2** preserves the monolithic mean-alert history:
 485.597 s >450 even before allowances. Thirteen cells also have
 `50*observed GQ maximum >450 s`; those maxima are descriptive, not future bounds.
 Do not promote the other **78** cells to "safe" because their means are below
 450. Each still needs a source-qualified whole-command planning basis, explicit
 setup/readiness/variance margin and an orchestrator-reviewed admission.
-An unsupported or unknown estimate stays unadmitted; do not invent a multiplier
-just to fit a ceiling or add a pilot to obtain one.
+Its planning obstruction is now closed by the explicit six-chunk R24 route,
+not by treating a mean as a bound. Any still unsupported/unknown command stays
+unadmitted; no fit-to-cap multiplier or pilot is authorized.
 
 The final GQ record already has raw `cells[].requests[].ms` for this candidate. First project
 every final offered cell as `50 * mean(requests.ms)`, retaining errors in the observed times and
@@ -835,17 +863,15 @@ within 450 and the hard 540-second ceiling. Report the full table and flagged
 cells to the orchestrator **before the first GP command**, not only when one times out.
 Missing/inapplicable GQ data also blocks this preflight; it is not a zero-millisecond estimate.
 
-If a cell is flagged or lacks an admissible whole-command basis, do not launch it.
-Under S-OD4 create a named final-cost
-item and continue other credibly bounded cells; there is no automatic new tooling task/evidence
-class. This task does not own `perf.js`/`measure` changes or an unsupported CLI. Keep every
-flagged cell in the intended denominator and mark its measurement incomplete, not passed.
-Do not compute a complete >=90% verdict from only the cells that finished.
-`--seed=9525 --runs=25` is not a valid split: it adds a cold start and printed percentiles cannot
-be merged. A separately decided protocol change would need its own authorization; preserve
-50 original requests, seeds, percentile computation and cold/warm semantics unless
-that decision says otherwise. Do not claim raw per-request GP storage that the
-stock CLI does not provide.
+Do not launch an over-limit monolithic command. **C0b is the explicitly assigned
+bounded measurement tooling allowed by R24/FS23**, not an automatic new task or
+an unsupported CLI. Keep every cell in the intended denominator; absent valid
+50-request ledgers its result is incomplete, not a subset pass.
+`perf.js --seed=9525 --runs=25` still cannot supply a valid merged p95 from its
+rounded output. The R24 recorder may use that offset for the **frozen second
+25-request chunk**, because it retains raw times and the manifest fixes all 50
+indices. Preserve trace/warmup/seeds/attempt defaults, disclose each extra cold
+start, and merge only raw times. No patch to `perf.js` or `measure` is assigned.
 
 Implement a read-only task-owned `project-gp.js` in the artifact directory below. It accepts
 `--qualification=<file> --json=<file>`, loads declarations via
@@ -889,8 +915,13 @@ edits or timed work when arithmetic is green.
   `generator/tests/artifacts/difficulty-v3/MS18d/phase-c/`, isolated stand-in
   evidence under `evidence/MS18d/phase-c/tooling/`, and SA1 review. Preserve all
   accepted A/B files. **C1's CPU/readiness/admission implementation is not
-  released until S-OD15 answers Q1**; C2 additionally needs reviewed row plans
-  and tooling. The supporting Phase-C plan is normative for this boundary.
+  assigned to C0**; S-OD15 A now resolves its answer gate, with the remaining
+  C1 dependencies/review intact. C2 needs reviewed chunk plans and tooling.
+  The supporting Phase-C plan is normative for this boundary.
+- **C0b released now:** task-owned recorder, frozen 114-chunk manifest,
+  check-only cell/matrix merger, typed G3 adapters and fake/file-only tests in
+  the same `phase-c/` trees, exactly under `MS18d-r24-request-ledger.md`.
+  No real generation or new live sampling is authorized by this tooling release.
 - `generator/tests/fixtures/perf-helper.js` PERF_TARGETS only if the documented qualification rule
   requires it; corresponding Generator design 9.1 and both developer guides.
 - **Phase-B pin amendment:** the single target-value test/local expectation in
@@ -943,18 +974,18 @@ edits or timed work when arithmetic is green.
    This is functional/hash evidence, **not GP**. Its ordinary shared-slot/bound
    rules still apply. It may be separately released while Q1 timing remains held.
 
-### Phase C — C0 tooling now; C1/C2 owner-policy and admission gates
+### Phase C — C0/C0b tooling; recorded A; C1/C2 review and admission gates
 
-6. First complete the **released C0 G1-G5 copies/stand-ins and SA1 review**.
-   Build C1's selected CPU/readiness/admission launcher **only after S-OD15**
-   records the owner's answer, then test/freeze/review it. C2 requires frozen
-   targets/inputs, the declared timing window and explicit review of each
-   conditional empirical row in `MS18d-phase-c-admission.md`.
+6. Complete **C0 plus C0-1..C0-6**, and **C0b** recorder/manifest/merger stand-ins
+   and SA1 review. S-OD15 now records A; build/test/freeze/review its C1 launcher
+   after the existing dependency gates. C2 requires frozen targets/inputs,
+   the declared window and the reviewed per-chunk plans in the supporting leaves.
    Choose no policy/ceiling yourself. Neither Q1 nor a low mean alert is GO.
-7. Run each admitted GP cell once as a full 50-request original CLI invocation.
-   Retain complete `MISS` results. Do not start Sohei Hell 2 or any other
-   unsupported/unbounded cell under unchanged estimates. Record these in the
-   intended denominator with a named unmeasured reason and no fabricated verdict.
+7. Record each admitted **frozen chunk once**, one `measure` call and raw ledger.
+   The all-79 check-only merge requires **114 chunks / 3,950 distinct indices**.
+   Retain complete numerical MISS results and cold-start flags. Do not resume,
+   retry or replace failed/completed chunks or merge rounded CLI statistics.
+   Any missing/compromised chunk keeps its cell and full matrix incomplete.
 8. Run only the already-assigned S-AV11 fixed profile if its own current-source
    bounded plan is approved. Keep its trace-off/default-attempt request, restored
    diagnostic guard, stage data and limitations separate from GP.
@@ -972,7 +1003,7 @@ edits or timed work when arithmetic is green.
 11. Return the complete GP status, final 520-key check and inherited/new item
     register for **orchestrator review**. Include S-AV01 not offered, S-OD7,
     closed S-AV27, IR17, **MS18c-GQ-ENGINE-COST**, **MS18d-GP-BOUND-sohei-hell2**,
-    **MS18d-GP-BOUND-REMAINDER**, **MS18d-C0-G1-G5**,
+    **MS18d-GP-BOUND-REMAINDER**, **MS18d-C0-G1-G5**, **MS18d-C0b-R24**,
     **MS18d-DEEP-PUBLIC-REGISTRATIONS**, S-AV11 and the older source-qualified
     S-AV31/S-AV33/S-AV34/S-AV36-S-AV39 /
     MS15b-GP-J/U records. S-OD4 permits continued safe work after cost findings,
@@ -989,11 +1020,11 @@ edits or timed work when arithmetic is green.
 
 | ID | Criterion |
 |---|---|
-| MS18d-T01 | Every measured cell completes the unchanged serial 50-run CLI protocol; missing cells are explicit, not substituted, split or retried |
+| MS18d-T01 | Every complete cell has all 50 original indices/seeds exactly once through the assigned R24 raw-ledger plan; only its frozen contiguous chunks may split commands; no dropped/substituted samples or failed/completed chunk retry |
 | MS18d-T02 | Complete GP pass only with all 79 cells measured and at least 72 meeting strict unrounded p95 < target; all misses/errors/unknowns retained |
 | MS18d-T03 | Fresh complete 520-key GG matches; any target changes follow only the documented rule |
 | MS18d-T04 | Full preflight precedes timing; every >450-second projection has an explicit item/outcome, and missing/corrupt input is not hidden |
-| MS18d-T05 | Phase A stops; owner MS18d-Q1 answered and recorded before GP/profile; declared policy, fresh per-cell readiness, ordinary deadlines and window integrity preserved |
+| MS18d-T05 | S-OD15 A recorded verbatim; fresh per-chunk admission, ordinary deadlines/gaps/locks and window integrity preserved; resource clause grants no timing-concurrency or recovery exception |
 | MS18d-T06 | All 17 target updates derive from frozen GQ before GP; 62 retained targets/56 hidden positions unchanged; no manual-CV6 or output-fixture relaxation |
 | MS18d-T07 | Stock CLI limitations reported honestly: no timing JSON/resume/jobs flag or inherited GQ guard; complete MISS distinguished from crash/timeout and rounded output from exact verdict |
 | MS18d-T08 | Scoped target pin preserves OLD and all 79 exact values via 17 frozen overrides; counts/hidden positions/cells comparison unchanged, one test renamed and none added/removed; exact-ms documentation and distinct manual-CV6 wording |
@@ -1002,12 +1033,15 @@ edits or timed work when arithmetic is green.
 | MS18d-T11 | Design 15.1/15.2, both developer guides and handoff enumerate eleven retained-versus-GP contrasts: ten manual rows plus the separately labelled SG_DEEP-only mega12 Nightmare 3000 vs18842; no manual/deep title/budget/threshold/factor/tier changed |
 | MS18d-T12 | Ordinary quick registration names/counts unchanged; deep mega 12 -> 9 and multigrid 16 -> 12 remove exactly the seven named hidden public cells with GQ references; mega12 Nightmare retained; no test-body/budget/diagnostic change or live deep run |
 | MS18d-T13 | Bounded 63-file deep-registration audit documented; additional findings questioned before edits and assigned before Phase-B acceptance; suite-only changes leave E/GG recipes intact, update Generator fingerprints honestly and close MS18d-DEEP-PUBLIC-REGISTRATIONS with reviewed evidence |
-| MS18d-T14 | C0 fixes actual-start/release gaps, A/B/C log routing, complete MISS/crash classification, frozen clean inputs and orphan cleanup; stand-ins and SA1 review precede timing; C1 readiness implementation waits for S-OD15 |
+| MS18d-T14 | C0 plus C0-1..C0-6 fixes pre-window/actual-start gaps, A/B/C logs, typed results/zero stderr, exact clean-input allowlist and PID+creation orphan cleanup without periodic payload work; stand-ins/review precede timing; C1 uses recorded S-OD15 A |
 | MS18d-T15 | S-OD15's single selector governs A/B without inherited GP permission; all 79 row plans and the held S-AV11 tuple retain their status, limits and evidence; candidate/source-transfer assumptions are explicitly reviewed, not promoted by arithmetic or Q1 alone |
+| MS18d-T16 | C0b uses the exact perf loader and one measure call/chunk; 114 immutable raw ledgers cover all 3,950 indices; check-only merge computes sorted[24]/[47]/[49], strict p95<target and the complete >=72/79 gate, rejecting gaps/duplicates/mixed identities |
+| MS18d-T17 | All 35 extra cold starts and tie-inclusive upper-tail flags disclosed without sample removal; A attempt limits are per chunk; S1 is an informational status update, not a new owner question or acknowledgement gate |
 
 ## Test plan and gates
 
-**Current released work is C0 G1-G5 tooling/stand-ins, not live readiness or GP.**
+**C0/C0b tooling and stand-ins are released; no real measure call follows from
+that alone.** S-OD15 A resolves C1's owner gate, not its dependencies or C2 review.
 Follow the supporting plan for the exact tests and staged C1/C2 releases.
 The following is the **completed Phase-A command**, retained as history; do not
 overwrite its frozen output using the post-update target table:
@@ -1031,25 +1065,26 @@ counters, host/lock mismatch, eligible hold/re-ask without payload, complete
 merely because a displayed percentage rounds to 90**. Do not test these policies
 with real GP/pilots before release.
 
-**Later payload examples, not current authorization.** A task-owned readiness
-wrapper under `Invoke-Dv3Node` must build this unchanged GP argv for one admitted
-cell after fresh sampling; a direct command alone does not satisfy readiness:
+**Later payload examples, not current authorization.** The selected readiness
+wrapper must invoke the assigned recorder for one admitted frozen chunk; a direct
+command alone is insufficient. GG below is already-completed functional history:
 
 ```powershell
-node tests\perf.js --variant=classic4 --level=veryEasy --runs=50 --warmup=0 --seed=7000 --gate --ascii
+node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=<frozen-manifest> --chunk=<immutable-id> --out=<new-ledger>
 Invoke-Dv3Node -Task MS18d-GG -NodeArgs @('tests\perf.js', '--hash-key=classic4/veryEasy', '--hash-from=0', '--hash-count=5', '--hash-record=..\docs\difficulty-v3\evidence\MS18d\hashes\classic4-veryEasy-00.json')
 Invoke-Dv3Node -Task MS18d-GG-merge -NodeArgs @('tests\perf.js', '--hash-merge=..\docs\difficulty-v3\evidence\MS18d\hashes', '--check-hashes')
 ```
 
 Persist each command's transcript under evidence/MS18d with its exit code. Complete all E hash
 identities before merge; no --update-hashes. Jobs 1/no --jobs. Use the separately
-reviewed per-cell admission projections, not the raw mean alerts or an assumed
+reviewed per-chunk admission projections, not raw mean alerts or an assumed
 1-540-second allowance. The historical duration estimates are not bounds.
 **Announce the plan, obtain the shared slot and record
-each timed cell's owner-approved readiness policy and observations.** Include in-command readiness in
-the admission projection. Enforce the 540-second process ceiling; do not silently split runs
-with changed cold/warm timing semantics. If no authorized safe route exists, retain a named
-unmeasured-cost item and the incomplete aggregate rather than create another tooling task.
+each timed chunk's owner-approved readiness policy and observations.** Include
+readiness in the admission projection. Keep 540 s; only the assigned R24
+allocation may split a cell, with every extra cold start disclosed. If an assigned
+chunk cannot run/complete, retain its incomplete result and all traces; no further
+split, pilot, replacement or new tooling route is implied.
 For target/docs changes: focused Generator `--suite=perf-tooling,smoke,help`,
 then both complete bounded quick sets on the final fingerprints, all through
 `Invoke-Dv3Node`. Add no suite or CI membership change for task-owned fake tests.
@@ -1060,9 +1095,10 @@ Return the recorded Q1 decision/policy, full preflight and distinct admission
 bases, intended/completed cell coverage, immutable target arithmetic/source tuple,
 all raw transcripts and the actual aggregate verdict (incomplete where appropriate),
 complete GG evidence and the cumulative item list.
-Include the S-OD15 record, C0/C1 reviews/frozen helpers, all 79 row approvals or
-holds, the seventeen current cost holds and the still-unadmitted S-AV11 tuple.
-Finishing a conditional queue is not completion of the full GP matrix.
+Include the S-OD15 record/resource ruling, S1 delivery status, C0/C0b/C1 reviews,
+114-chunk manifest, raw ledgers/receipts and all 79 actual outcomes. Preserve
+the bound items' closed planning history and still-unadmitted S-AV11 tuple.
+Only the complete raw-time merge, not a finished scheduler queue, closes GP.
 Include the closed deep-public-registration item, seven-removal map and bounded
 audit/registration evidence; preserve any additional named finding and its
 explicit assignment rather than pass a known unsupported request to MS18e.

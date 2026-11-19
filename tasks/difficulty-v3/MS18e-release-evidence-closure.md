@@ -32,16 +32,27 @@ additionally withholds Killer Hard/Expert until later calibration without alteri
 qualification verdicts or the complete 135-cell population.
 
 **MS18d Phase-C handoff contract:** audit the single S-OD15 owner record in
-check-list section 4 and `MS18d-phase-c-admission.md`, not an inherited GQ grant.
-G1-G5 transport/stand-ins (C0) precede the selected readiness implementation
-(C1), their reviews and timed release (C2). Keep exact source/tool/target/Node/
+check-list section 4 and both `MS18d-phase-c-admission.md` /
+`MS18d-r24-request-ledger.md`, not an inherited GQ grant. **A is recorded**;
+the "100% resource" clause is scheduling-only under the reviewed interpretation.
+G1-G5/C0-1..C0-6 transport (C0), raw recorder/merger (C0b) and selected
+readiness implementation (C1) need review before timed release (C2).
+Keep exact source/tool/target/Node/
 machine/policy bindings, acquisition evidence, all real exits and the no-orphan
 proof. A complete MISS is not a crash, but an exit-1 code alone proves neither.
-The current empirical plan has **62 conditional / 17 held GP rows**, plus held
-S-AV11; these are planning dispositions, not final measurements or removed offers.
-Finishing the conditional queue cannot satisfy 79 complete cells / >=72 successes.
-Audit every hold/cost-item revision and any explicit later row approval;
-never fill a missing result from GQ/GG, a subset percentage or an old profile.
+R24 resolves the prior 17 monolithic holds: **all 79 cells have plans, 114
+commands / 3,950 indices**, 62 one-chunk cells and 17 cells with 52 chunks.
+The bound items close as planning obstructions, not GP passes. S-AV11 remains held.
+Require each immutable raw ledger/exit-0 receipt and one source/seed/target/
+plan/helper/HEAD/Node/machine/policy identity; reject gaps, duplicates, partial/
+failed chunks and changed ranges. Only the complete check-only merge of raw
+times establishes p50/p95/max **sorted[24]/[47]/[49]**, strict p95<target and
+**79 complete cells / >=72 successes**, never merged chunk percentiles.
+Audit **35 extra cold starts**, per-cell k-1 and tie-inclusive upper-tail flags;
+retain all samples and real MISS verdicts. A finished queue or recorder exit 0
+is not a GP pass. S1 is an informational status update, not another owner gate.
+Never fill a missing result from GQ/GG, a subset percentage or an old profile,
+or release incomplete GP as though R24 had passed without an owner decision.
 
 **MS18c post-GQ handoff, 2026-11-19:** the 135-record set is jointly accepted
 (79 offered / 56 hidden, 4,313 outcomes, 27 retained budget timeouts, zero invalid).
