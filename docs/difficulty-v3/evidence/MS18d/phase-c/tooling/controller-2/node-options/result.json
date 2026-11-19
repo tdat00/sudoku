@@ -1,0 +1,27 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "node-options",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in node-options",
+  "startedAtMs": 1795077728037,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "heldAt": "node-flags",
+  "reasons": [
+    "NODE_OPTIONS is set"
+  ],
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 15000,
+      "systemMicros": 62000
+    }
+  },
+  "finishedAtMs": 1795077728057
+}

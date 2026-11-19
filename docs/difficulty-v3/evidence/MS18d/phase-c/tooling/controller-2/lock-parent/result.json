@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "lock-parent",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in lock-parent",
+  "startedAtMs": 1795077732890,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "the-lock-is-not-held-by-the-wrapper",
+    "the-controller-is-not-a-child-of-the-wrapper"
+  ],
+  "heldAt": "acquisition",
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 46000,
+      "systemMicros": 31000
+    }
+  },
+  "finishedAtMs": 1795077732914
+}

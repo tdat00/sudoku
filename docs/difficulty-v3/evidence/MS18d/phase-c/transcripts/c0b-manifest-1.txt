@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\make-chunk-manifest.js --out=..\docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json
+manifest b92e09bb8c299b8b8ff1330d7ef3845ebcca18dddf71135005e765081cb4618f: 79 cells, 114 commands, 3950 requests, 35 extra cold starts, 229 run slots, 26762 s reserved, max 448 s
+exit=0 seconds=1.098

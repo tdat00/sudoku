@@ -1,0 +1,10 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\check-format.js --verify ..\docs\difficulty-v3\evidence\MS18d\helpers-sha256.txt --verify ..\docs\difficulty-v3\evidence\MS18d\outputs-sha256.txt --verify ..\docs\difficulty-v3\evidence\MS18d\phase-b\helpers-b-sha256.txt --verify ..\docs\difficulty-v3\evidence\MS18d\phase-b\outputs-b-sha256.txt --verify ..\docs\difficulty-v3\evidence\MS18d\phase-b\outputs-b2-sha256.txt --verify ..\docs\difficulty-v3\evidence\MS18d\phase-c\helpers-c-sha256.txt --verify ..\docs\difficulty-v3\evidence\MS18d\phase-c\outputs-c-sha256.txt
+docs\difficulty-v3\evidence\MS18d\helpers-sha256.txt: 6 entries, 0 not matching
+docs\difficulty-v3\evidence\MS18d\outputs-sha256.txt: 19 entries, 0 not matching
+docs\difficulty-v3\evidence\MS18d\phase-b\helpers-b-sha256.txt: 16 entries, 0 not matching
+docs\difficulty-v3\evidence\MS18d\phase-b\outputs-b-sha256.txt: docs\difficulty-v3\evidence\MS18d\phase-b\handoff.md: DIFFERENT
+docs\difficulty-v3\evidence\MS18d\phase-b\outputs-b-sha256.txt: 254 entries, 1 not matching
+docs\difficulty-v3\evidence\MS18d\phase-b\outputs-b2-sha256.txt: 257 entries, 0 not matching
+docs\difficulty-v3\evidence\MS18d\phase-c\helpers-c-sha256.txt: 45 entries, 0 not matching
+docs\difficulty-v3\evidence\MS18d\phase-c\outputs-c-sha256.txt: 667 entries, 0 not matching
+exit=1 seconds=0.763

@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\check-format.js
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-2/runs11/classic4-veryEasy/x10/marker.txt: no final newline
+checked 702 files, 1 with problems
+exit=1 seconds=0.585

@@ -1,0 +1,73 @@
+{
+  "schema": "ms18d-c-watch-1",
+  "startedAtMs": 1795078119043,
+  "firstCheckMs": null,
+  "lastCheckMs": null,
+  "requiredWindowMs": 15300,
+  "maxIntervalAllowedMs": 1000,
+  "intervalMs": 250,
+  "checks": 9,
+  "windowChecks": 0,
+  "maxIntervalMs": 0,
+  "windowSightings": 0,
+  "restartCount": 9,
+  "restarts": [
+    {
+      "atMs": 1795078119043,
+      "reason": "lock-present",
+      "shared": false,
+      "timing": true
+    },
+    {
+      "atMs": 1795078119306,
+      "reason": "lock-present",
+      "shared": false,
+      "timing": true
+    },
+    {
+      "atMs": 1795078119561,
+      "reason": "lock-present",
+      "shared": false,
+      "timing": true
+    },
+    {
+      "atMs": 1795078119814,
+      "reason": "lock-present",
+      "shared": false,
+      "timing": true
+    },
+    {
+      "atMs": 1795078120069,
+      "reason": "lock-present",
+      "shared": false,
+      "timing": true
+    },
+    {
+      "atMs": 1795078120322,
+      "reason": "lock-present",
+      "shared": false,
+      "timing": true
+    },
+    {
+      "atMs": 1795078120576,
+      "reason": "lock-present",
+      "shared": false,
+      "timing": true
+    },
+    {
+      "atMs": 1795078120830,
+      "reason": "lock-present",
+      "shared": false,
+      "timing": true
+    },
+    {
+      "atMs": 1795078121085,
+      "reason": "lock-present",
+      "shared": false,
+      "timing": true
+    }
+  ],
+  "giveUpSeconds": 2.0,
+  "gaveUp": true,
+  "notBeforeMs": 1795076334310
+}

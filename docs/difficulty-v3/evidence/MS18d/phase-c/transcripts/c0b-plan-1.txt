@@ -1,0 +1,92 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\test-plan.js
+ok   R24: the frozen table is exactly what the common rule derives (79 rows)
+ok   R24: 114 commands, 3,950 requests, 35 extra starts, 62 + 52, sums 7739 and 19023, max P 448
+ok   R24: the shapes of mega16/hell2, samurai/master and greaterThan/hell2; ranges are contiguous
+FAIL R24: the derivation rejects an invalid maximum instead of inventing a bound: Error: zero capacity for 390001 ms
+    at Object.deriveChunks (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\plan-data.js:93:31)
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\test-plan.js:95:53
+    at Array.forEach (<anonymous>)
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\test-plan.js:94:59
+    at test (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\test-plan.js:31:11)
+    at planTests (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\test-plan.js:93:9)
+    at async main (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\test-plan.js:502:3)
+ok   R24: a damaged frozen table is reported, never corrected
+ok   canonicalJson is the recipe of toolRecords.canonicalJson (the real tool, in a VM context)
+ok   R2: the manifest declares 114 chunk ranges and the literal run slots: 2 per chunk + the final merge
+ok   R2: optional selected-cell merge slots are declared only when asked for (79 more)
+ok   manifest verification rejects a changed target (the hash no longer matches)
+ok   manifest verification rejects a changed seed
+ok   manifest verification rejects a chunk that is not contiguous
+ok   manifest verification rejects a duplicated chunk
+ok   manifest verification rejects a projection over 450 s
+ok   manifest verification rejects a slot with a traversing path
+ok   manifest verification rejects a slot declared twice
+ok   manifest verification rejects a slot assigned to the wrong cell
+ok   manifest verification rejects an extra slot
+ok   manifest verification rejects a changed slot policy
+ok   manifest verification rejects a missing loaded-source manifest
+ok   manifest verification rejects a wrong request count
+ok   manifest verification rejects a final merge that names a cell
+ok   ledger: a conforming ledger of a planned chunk has no problem; indices and seeds follow the chunk
+ok   ledger: another schema is a problem
+ok   ledger: another chunk id is a problem
+ok   ledger: another target is a problem
+ok   ledger: a warm-up is a problem
+ok   ledger: jobs 2 is a problem
+ok   ledger: a budget is a problem
+ok   ledger: two measure calls is a problem
+ok   ledger: too few requests is a problem
+ok   ledger: a wrong index is a problem
+ok   ledger: a wrong seed is a problem
+ok   ledger: a negative time is a problem
+ok   ledger: a NaN time is a problem
+ok   ledger: a string time is a problem
+ok   ledger: an execArgv flag is a problem
+ok   ledger: NODE_OPTIONS is a problem
+ok   ledger: an identity member missing is a problem
+ok   ledger: an upper-case digest is a problem
+ok   ledger: no loaded files is a problem
+ok   ledger: no observation is a problem
+ok   ledger: stand-in provenance is a problem
+ok   ledger: a fixture marks stand-in provenance only where the caller allows it
+ok   ledger: the completion marker and the start line are exact
+ok   loader: the recipe of perf.js: declared order, js/ui and js/worker omitted, absent files dropped
+ok   loader: the executed digest is that of the string the VM gets (BOM removed); the raw digest is kept
+ok   loader: E identities are derived from the captured texts (LF-normalized hash, raw sources hash)
+FAIL loader: a file changed on disk after the capture does not change what the VM runs: AssertionError [ERR_ASSERTION]: Q:\git\sudoku\.scratch-ms18d-c-plan-2rv9ui\ld5\generator\js\core\alpha.js:2
+SG.order = ['alpha'];
+^
+
+ReferenceError: SG is not defined
+    at Q:\git\sudoku\.scratch-ms18d-c-plan-2rv9ui\ld5\generator\js\core\alpha.js:2:1
+    at Script.runInThisContext (node:vm:138:12)
+    at Object.runInThisContext (node:vm:318:38)
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\loader.js:83:32
+    at Array.forEach (<anonymous>)
+    at Object.execute (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\loader.js:83:14)
+    at [eval]:1:400
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:485:12
+    at [eval]-wrapper:6:24
+
+Node.js v26.13.0
+
+
+1 !== 0
+
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\test-plan.js:347:12
+    at test (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\test-plan.js:31:11)
+    at loaderTests (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\test-plan.js:336:9)
+    at async main (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\test-plan.js:504:3)
+ok   loader (the real tree, captured and NOT executed): 64 declared, 18 excluded, 46 + 3 = 49 loaded, E
+ok   R4: a chunk with no earlier run has no admission and no payload: allowed
+ok   R4: a started payload is final: no retry and no replacement, whatever its outcome
+ok   R4: a plain hold (not an eligible unstarted hold) uses an admission and allows no second one
+ok   R4: an eligible unstarted hold allows ONE re-ask, only at least 60 s after its release
+ok   R4: counts survive a restart: they are derived from the folders and the log each time
+ok   R4: conflicting or missing evidence holds for a ruling instead of defaulting to zero
+ok   R4: a run that was admitted but has no result counts as a started payload (uncertain = consumed)
+ok   R4: other chunks and merge runs never count against this chunk
+55 passed, 2 failed
+FAILED: R24: the derivation rejects an invalid maximum instead of inventing a bound | loader: a file changed on disk after the capture does not change what the VM runs
+exit=1 seconds=0.845

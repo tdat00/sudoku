@@ -1,0 +1,27 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hold-another-job-s-release-5-s-before-with-an-old-own",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in hold-another-job-s-release-5-s-before-with-an-old-own",
+  "startedAtMs": 1795077725100,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "release-gap-under-15s"
+  ],
+  "heldAt": "acquisition",
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 46000,
+      "systemMicros": 31000
+    }
+  },
+  "finishedAtMs": 1795077725127
+}
