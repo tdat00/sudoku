@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=variants --filter=> variants: mega12 > --results=..\docs\difficulty-v3\evidence\MS18c\closure\manual-variants\result-variant-mega12.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   variants: 16 passed  (29.29 s)
+
+Suites: 1
+Tests:  16 total, 16 passed, 0 failed, 0 skipped
+Time:   29.29 s running tests, 29.54 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/manual-variants/result-variant-mega12.json
+exit=0 seconds=29.788

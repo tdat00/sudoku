@@ -38,11 +38,12 @@ const replayFixtures = require('./replay-fixtures.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const REPO = path.resolve(ROOT, '..');
-const FIXTURES = ['tests/fixtures/replay-goldens.js', 'tests/fixtures/recovery-profile.js'];
+const FIXTURES = ['tests/fixtures/tool-records.js', 'tests/fixtures/replay-goldens.js',
+  'tests/fixtures/recovery-profile.js'];
 // The code that decides a record besides the engine sources: the toolHash covers these files.
 const TOOL_FILES = [
   'tests/difficulty-recovery.js', 'tests/fixtures/recovery-profile.js', 'tests/replay-fixtures.js',
-  'tests/fixtures/replay-goldens.js'
+  'tests/fixtures/replay-goldens.js', 'tests/fixtures/tool-records.js'
 ];
 
 let loaded = null;

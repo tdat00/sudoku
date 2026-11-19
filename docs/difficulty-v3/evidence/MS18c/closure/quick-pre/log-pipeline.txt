@@ -1,0 +1,46 @@
+$ node ..\.github\scripts\generator-quick.js run pipeline --results-dir=..\docs\difficulty-v3\evidence\MS18c\closure\quick-pre
+==== shard pipeline (151 tests): node tests/node-runner.js --suite=pipeline --results=..\docs\difficulty-v3\evidence\MS18c\closure\quick-pre\generator-pipeline.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL pipeline: 146 passed, 5 failed  (36.11 s)
+
+Failures:
+  FAIL pipeline > pipeline: the dig log (the data of the replay) > greaterThan normal: applied to the solution, it ends exactly on the puzzle
+       GenerationError: difficulty.unsupportedLevel
+       at fail (Q:\git\sudoku\generator\js\engine\pipeline.js:32:12)
+       at normalizeConfig (Q:\git\sudoku\generator\js\engine\pipeline.js:67:13)
+       at configureStep (Q:\git\sudoku\generator\js\engine\pipeline.js:185:13)
+       at stage (Q:\git\sudoku\generator\js\engine\digger.js:122:22)
+  FAIL pipeline > digger: exactness needs the tier of the level (MS05b1) > every rating and prefilter is made for the actual model > MS05b1-T02: removing a sign starts a new memo, so the same clues are rated again for the new signs
+       GenerationError: difficulty.unsupportedLevel: variant "greaterThan" does not support the level "normal"
+       at fail (Q:\git\sudoku\generator\js\engine\difficulty.js:146:17)
+       at Object.spec (Q:\git\sudoku\generator\js\engine\difficulty.js:466:13)
+       at generateAttempts (Q:\git\sudoku\generator\js\engine\digger.js:2029:32)
+       at generateAttempts.next (<anonymous>)
+  FAIL pipeline > digger: exactness needs the tier of the level (MS05b1) > every rating and prefilter is made for the actual model > MS05b1-T02: Killer asks closer about the layout it rated and offers that layout
+       GenerationError: difficulty.unsupportedLevel: variant "killer" does not support the level "expert"
+       at fail (Q:\git\sudoku\generator\js\engine\difficulty.js:146:17)
+       at Object.spec (Q:\git\sudoku\generator\js\engine\difficulty.js:466:13)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\pipeline.test.js:2076:19)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL pipeline > pipeline: the default attempts by board size (MS05r5p) > MS05r5p-T02: a no-hit mega16 runs eight attempts with an explicit 8 and two by default
+       GenerationError: difficulty.unsupportedLevel
+       at fail (Q:\git\sudoku\generator\js\engine\pipeline.js:32:12)
+       at normalizeConfig (Q:\git\sudoku\generator\js\engine\pipeline.js:67:13)
+       at configureStep (Q:\git\sudoku\generator\js\engine\pipeline.js:185:13)
+       at stage (Q:\git\sudoku\generator\js\engine\digger.js:122:22)
+  FAIL pipeline > pipeline: the default attempts by board size (MS05r5p) > MS05r5p-T01: the direct digger takes the default of its model, and an explicit number as given
+       GenerationError: difficulty.unsupportedLevel: variant "mega16" does not support the level "expert"
+       at fail (Q:\git\sudoku\generator\js\engine\difficulty.js:146:17)
+       at Object.spec (Q:\git\sudoku\generator\js\engine\difficulty.js:466:13)
+       at generateAttempts (Q:\git\sudoku\generator\js\engine\digger.js:2029:32)
+       at generateAttempts.next (<anonymous>)
+
+Suites: 1
+Tests:  151 total, 146 passed, 5 failed, 0 skipped
+Time:   36.11 s running tests, 36.32 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/quick-pre/generator-pipeline.json
+shard pipeline: exit 1, 36.5 s
+FAILED: pipeline
+exit=1 seconds=37.002

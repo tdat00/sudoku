@@ -998,7 +998,7 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (55 suite, 4.784 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js                          # bộ nhanh (55 suite, 4.807 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
 node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
 node tests/node-runner.js --all                    # nhanh + thủ công (63 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
@@ -1009,7 +1009,7 @@ node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và g
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 55 suite, 4.784 bài —
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 55 suite, 4.807 bài —
 37 suite ở `tests/suites/` và 18 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
@@ -1065,7 +1065,7 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm 63 suite, trong đó 55 suite nhanh (4.784 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 63 suite, trong đó 55 suite nhanh (4.807 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
@@ -1088,7 +1088,12 @@ và loại trừ lẫn nhau. Mã nằm ở `core/tests/node-evidence.js` (chỉ 
 đề của đợt quét `variants`, được dựng theo từng mức, ở lần đọc đầu tiên của mức đó
 (`SG.test.lazyCorpus`, `tests/fixtures/manual-corpus.js`): một bài chỉ đọc một mức thì chỉ sinh đúng mức đó, với seed,
 số lượng và tùy chọn của cả kho, còn các bài cần mọi mức (`corpus()`, `allPuzzles()`, các kiểm tra tổng hợp của đợt
-quét) vẫn dựng tất cả. Bộ lọc chỉ là một đoạn chuỗi của tên đầy đủ đã chuyển sang chữ thường, nên một bộ chọn bắt đầu
+quét) vẫn dựng tất cả. Kho đề của năm suite này là kho chẩn đoán cố định: nó giữ nguyên dải mức ban đầu (chín mức,
+tám mức với `wordoku`) và các seed gốc theo chỉ số mức gốc, bất kể biến thể hiện cung cấp những mức nào, và chỉ dựng
+một mức mà bước kiểm định đã ẩn bên trong lớp bảo vệ theo từng lệnh gọi `SG.fixtures.toolRecords.withRequestedLevel`
+(mảng mức hỗ trợ đúng như cũ được trả lại trong `finally`; không menu nào cung cấp mức đó). Chỉ các đăng ký theo từng mức
+(`> <mức>: … > I5:`, `CV6:`) mới chỉ tồn tại cho các mức được cung cấp, nên một mức bị ẩn không có bộ chọn; đợt quét giữ kho
+riêng gồm các mức được cung cấp. Bộ lọc chỉ là một đoạn chuỗi của tên đầy đủ đã chuyển sang chữ thường, nên một bộ chọn bắt đầu
 ở ranh giới của một describe bằng `> ` và được đặt trong dấu nháy: `easy: 20 puzzles > I5:` cũng khớp với Very Easy,
 còn `> easy: 20 puzzles > I5:` thì không. Các bộ chọn:
 `> <mức>: <số lượng> puzzles > I5:` (và `… > CV6:`) cho `killer`, `jigsaw`, `greater-than` và `wordoku` (`killer` chỉ

@@ -1,0 +1,32 @@
+$ node tests\node-runner.js --suite=mega,difficulty-diagnostics,difficulty-floor,export,recovery-profile,smoke,technique-weights --results=..\docs\difficulty-v3\evidence\MS18c\closure\focus\g1.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-diagnostics: 94 passed  (14.81 s)
+ok   difficulty-floor: 48 passed  (31.17 s)
+(node:18968) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   export: 79 passed  (6.69 s)
+ok   mega: 108 passed  (33.99 s)
+FAIL recovery-profile: 25 passed, 2 failed  (637 ms)
+ok   smoke: 44 passed  (4.60 s)
+ok   technique-weights: 18 passed  (12 ms)
+
+Failures:
+  FAIL recovery-profile > recovery profile: the three fixed requests > takes G13 from the golden request through the store, and the megas as the seed-3 CV5 requests
+       AssertionError: expected {variantId: "samurai", difficulty: "nightmare", symbolMode: "digits", symmetry: "rotational180", digOrder: "random", maxAttempts: 2, variantOptions: {}, seed: 42} to equal {variantId: "samurai", difficulty: "master", symbolMode: "digits", symmetry: "rotational180", digOrder: "random", maxAttempts: 2, variantOptions: {}, seed: 42}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\recovery-profile.test.js:213:26)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL recovery-profile > recovery profile: the three fixed requests > changes only maxAttempts in the profile, and nothing in the diagnostic, which keeps the default attempts of its board (2, 4 and 2)
+       GenerationError: difficulty.unsupportedLevel
+       at fail (Q:\git\sudoku\generator\js\engine\pipeline.js:32:12)
+       at Object.normalizeConfig (Q:\git\sudoku\generator\js\engine\pipeline.js:67:13)
+       at Q:\git\sudoku\generator\tests\suites\recovery-profile.test.js:239:38
+       at Array.forEach (<anonymous>)
+
+Suites: 7
+Tests:  418 total, 416 passed, 2 failed, 0 skipped
+Time:   91.91 s running tests, 92.13 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/focus/g1.json
+exit=1 seconds=92.385

@@ -1,0 +1,2 @@
+$ node --check tests\artifacts\difficulty-v3\MS18c\make-e-plans.cjs
+exit=0 seconds=0.090

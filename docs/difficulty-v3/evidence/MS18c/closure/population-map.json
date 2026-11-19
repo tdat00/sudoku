@@ -1,0 +1,5093 @@
+{
+  "schema": 1,
+  "states": {
+    "A": "6a473f7a",
+    "B": "387a4c8d",
+    "before": "HEAD (checkpoint B)",
+    "after": "working tree (step 5)"
+  },
+  "status": "policy/implementation resolved; live validation of killer, jigsaw, greater-than, extra-regions and wordoku pending MS18e",
+  "emulationChecked": {
+    "before": true,
+    "after": true
+  },
+  "totals": {
+    "killer": {
+      "A": 100,
+      "before": 94,
+      "after": 94
+    },
+    "jigsaw": {
+      "A": 100,
+      "before": 100,
+      "after": 88
+    },
+    "greater-than": {
+      "A": 132,
+      "before": 132,
+      "after": 108
+    },
+    "extra-regions": {
+      "A": 147,
+      "before": 147,
+      "after": 129
+    },
+    "wordoku": {
+      "A": 140,
+      "before": 140,
+      "after": 128
+    },
+    "variants": {
+      "A": 324,
+      "before": 285,
+      "after": 285
+    },
+    "perf": {
+      "A": 51,
+      "before": 51,
+      "after": 51
+    },
+    "manual-corpus": {
+      "A": null,
+      "before": 46,
+      "after": 53
+    }
+  },
+  "supportA": {
+    "classic4": [
+      "veryEasy"
+    ],
+    "classic6": [
+      "veryEasy",
+      "hard"
+    ],
+    "classic9": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1"
+    ],
+    "mega12": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1",
+      "hell2"
+    ],
+    "mega16": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1",
+      "hell2"
+    ],
+    "diagonalX": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1",
+      "hell2"
+    ],
+    "hyper": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1",
+      "hell2"
+    ],
+    "jigsaw9": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1",
+      "hell2"
+    ],
+    "killer": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1",
+      "hell2"
+    ],
+    "greaterThan": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1",
+      "hell2"
+    ],
+    "samurai": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1",
+      "hell2"
+    ],
+    "sohei": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1",
+      "hell2"
+    ],
+    "butterfly": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1",
+      "hell2"
+    ],
+    "flower": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1",
+      "hell2"
+    ],
+    "wordoku": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell1"
+    ]
+  },
+  "supportAfter": {
+    "classic4": [
+      "veryEasy"
+    ],
+    "classic6": [
+      "veryEasy",
+      "hard"
+    ],
+    "classic9": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare"
+    ],
+    "mega12": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "mega16": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "master",
+      "hell2"
+    ],
+    "diagonalX": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "hyper": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "jigsaw9": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "master",
+      "hell2"
+    ],
+    "killer": [
+      "veryEasy",
+      "easy",
+      "normal"
+    ],
+    "greaterThan": [
+      "veryEasy",
+      "easy",
+      "hard",
+      "master",
+      "hell2"
+    ],
+    "samurai": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "expert",
+      "master"
+    ],
+    "sohei": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "hell2"
+    ],
+    "butterfly": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "flower": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "master",
+      "hell2"
+    ],
+    "wordoku": [
+      "veryEasy",
+      "easy",
+      "hard",
+      "expert",
+      "master",
+      "nightmare"
+    ]
+  },
+  "removedPublicRegistrations": [
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "killer",
+      "id": "killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > hard: 20 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "variant": "killer",
+      "level": "hard",
+      "originalIndex": 3,
+      "count": 20,
+      "test": "I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1",
+      "seeds": [
+        1,
+        20
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 14,
+        "stopped": "misses",
+        "p95": 6887.1679
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "killer",
+      "id": "killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > expert: 8 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "variant": "killer",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 8,
+      "test": "I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1",
+      "seeds": [
+        1,
+        8
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 2,
+        "n": 12,
+        "stopped": "time",
+        "p95": 34368.4147
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "killer",
+      "id": "killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > master: 8 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "variant": "killer",
+      "level": "master",
+      "originalIndex": 5,
+      "count": 8,
+      "test": "I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1",
+      "seeds": [
+        1,
+        8
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 11,
+        "n": 14,
+        "stopped": "time",
+        "p95": 42674.0885
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "killer",
+      "id": "killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > nightmare: 8 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "variant": "killer",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 8,
+      "test": "I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1",
+      "seeds": [
+        1,
+        8
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 18,
+        "n": 22,
+        "stopped": "time",
+        "p95": 32738.6213
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "killer",
+      "id": "killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > hell1: 8 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "variant": "killer",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 8,
+      "test": "I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1",
+      "seeds": [
+        1,
+        8
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 100540.6829
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "killer",
+      "id": "killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > hell2: 8 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "variant": "killer",
+      "level": "hell2",
+      "originalIndex": 8,
+      "count": 8,
+      "test": "I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1",
+      "seeds": [
+        1,
+        8
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 40,
+        "n": 40,
+        "stopped": "time",
+        "p95": 21188.5029
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "jigsaw",
+      "id": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > expert: 20 puzzles > I1: exactly one solution; I2: givens are part of the solution; I3: the solution is valid",
+      "variant": "jigsaw9",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 20,
+      "test": "I1: exactly one solution; I2: givens are part of the solution; I3: the solution is valid",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "700 + 100 * li + i",
+      "seeds": [
+        1100,
+        1119
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 30,
+        "n": 34,
+        "stopped": "time",
+        "p95": 13692.5219
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "jigsaw",
+      "id": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > expert: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+      "variant": "jigsaw9",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 20,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "700 + 100 * li + i",
+      "seeds": [
+        1100,
+        1119
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 30,
+        "n": 34,
+        "stopped": "time",
+        "p95": 13692.5219
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "jigsaw",
+      "id": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > expert: 20 puzzles > I7: every deduction of the technique ladder on the way to the solution is sound",
+      "variant": "jigsaw9",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 20,
+      "test": "I7: every deduction of the technique ladder on the way to the solution is sound",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "700 + 100 * li + i",
+      "seeds": [
+        1100,
+        1119
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 30,
+        "n": 34,
+        "stopped": "time",
+        "p95": 13692.5219
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "jigsaw",
+      "id": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > expert: 20 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 900 ms",
+      "variant": "jigsaw9",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 20,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 900 ms",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "700 + 100 * li + i",
+      "seeds": [
+        1100,
+        1119
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 30,
+        "n": 34,
+        "stopped": "time",
+        "p95": 13692.5219
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "jigsaw",
+      "id": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > nightmare: 20 puzzles > I1: exactly one solution; I2: givens are part of the solution; I3: the solution is valid",
+      "variant": "jigsaw9",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 20,
+      "test": "I1: exactly one solution; I2: givens are part of the solution; I3: the solution is valid",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "700 + 100 * li + i",
+      "seeds": [
+        1300,
+        1319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 27,
+        "n": 27,
+        "stopped": "time",
+        "p95": 18067.4613
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "jigsaw",
+      "id": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > nightmare: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+      "variant": "jigsaw9",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 20,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "700 + 100 * li + i",
+      "seeds": [
+        1300,
+        1319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 27,
+        "n": 27,
+        "stopped": "time",
+        "p95": 18067.4613
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "jigsaw",
+      "id": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > nightmare: 20 puzzles > I7: every deduction of the technique ladder on the way to the solution is sound",
+      "variant": "jigsaw9",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 20,
+      "test": "I7: every deduction of the technique ladder on the way to the solution is sound",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "700 + 100 * li + i",
+      "seeds": [
+        1300,
+        1319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 27,
+        "n": 27,
+        "stopped": "time",
+        "p95": 18067.4613
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "jigsaw",
+      "id": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > nightmare: 20 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 5000 ms",
+      "variant": "jigsaw9",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 20,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 5000 ms",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "700 + 100 * li + i",
+      "seeds": [
+        1300,
+        1319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 27,
+        "n": 27,
+        "stopped": "time",
+        "p95": 18067.4613
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "jigsaw",
+      "id": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 20 puzzles > I1: exactly one solution; I2: givens are part of the solution; I3: the solution is valid",
+      "variant": "jigsaw9",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "I1: exactly one solution; I2: givens are part of the solution; I3: the solution is valid",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "700 + 100 * li + i",
+      "seeds": [
+        1400,
+        1419
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 80503.5047
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "jigsaw",
+      "id": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+      "variant": "jigsaw9",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "700 + 100 * li + i",
+      "seeds": [
+        1400,
+        1419
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 80503.5047
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "jigsaw",
+      "id": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 20 puzzles > I7: every deduction of the technique ladder on the way to the solution is sound",
+      "variant": "jigsaw9",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "I7: every deduction of the technique ladder on the way to the solution is sound",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "700 + 100 * li + i",
+      "seeds": [
+        1400,
+        1419
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 80503.5047
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "jigsaw",
+      "id": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 20 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 5000 ms",
+      "variant": "jigsaw9",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 5000 ms",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "700 + 100 * li + i",
+      "seeds": [
+        1400,
+        1419
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 80503.5047
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > I1: exactly one solution; I2: givens are part of the solution; I3: it satisfies units and signs",
+      "variant": "greaterThan",
+      "level": "normal",
+      "originalIndex": 2,
+      "count": 20,
+      "test": "I1: exactly one solution; I2: givens are part of the solution; I3: it satisfies units and signs",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        300,
+        319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 40,
+        "n": 40,
+        "stopped": null,
+        "p95": 10192.4051
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > every sign agrees with the solution, joins two neighbours of one box, and appears once",
+      "variant": "greaterThan",
+      "level": "normal",
+      "originalIndex": 2,
+      "count": 20,
+      "test": "every sign agrees with the solution, joins two neighbours of one box, and appears once",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        300,
+        319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 40,
+        "n": 40,
+        "stopped": null,
+        "p95": 10192.4051
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > the sign set is minimal: removing any sign that is left gives a second solution",
+      "variant": "greaterThan",
+      "level": "normal",
+      "originalIndex": 2,
+      "count": 20,
+      "test": "the sign set is minimal: removing any sign that is left gives a second solution",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        300,
+        319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 40,
+        "n": 40,
+        "stopped": null,
+        "p95": 10192.4051
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "variant": "greaterThan",
+      "level": "normal",
+      "originalIndex": 2,
+      "count": 20,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        300,
+        319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 40,
+        "n": 40,
+        "stopped": null,
+        "p95": 10192.4051
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > the clues follow the symmetry of the configuration (rotational180): the signs are not mirrored",
+      "variant": "greaterThan",
+      "level": "normal",
+      "originalIndex": 2,
+      "count": 20,
+      "test": "the clues follow the symmetry of the configuration (rotational180): the signs are not mirrored",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        300,
+        319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 40,
+        "n": 40,
+        "stopped": null,
+        "p95": 10192.4051
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 700 ms",
+      "variant": "greaterThan",
+      "level": "normal",
+      "originalIndex": 2,
+      "count": 20,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 700 ms",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        300,
+        319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 40,
+        "n": 40,
+        "stopped": null,
+        "p95": 10192.4051
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > expert: 10 puzzles > I1: exactly one solution; I2: givens are part of the solution; I3: it satisfies units and signs",
+      "variant": "greaterThan",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 10,
+      "test": "I1: exactly one solution; I2: givens are part of the solution; I3: it satisfies units and signs",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        500,
+        509
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 38,
+        "n": 40,
+        "stopped": "time",
+        "p95": 14280.3533
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > expert: 10 puzzles > every sign agrees with the solution, joins two neighbours of one box, and appears once",
+      "variant": "greaterThan",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 10,
+      "test": "every sign agrees with the solution, joins two neighbours of one box, and appears once",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        500,
+        509
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 38,
+        "n": 40,
+        "stopped": "time",
+        "p95": 14280.3533
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > expert: 10 puzzles > the sign set is minimal: removing any sign that is left gives a second solution",
+      "variant": "greaterThan",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 10,
+      "test": "the sign set is minimal: removing any sign that is left gives a second solution",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        500,
+        509
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 38,
+        "n": 40,
+        "stopped": "time",
+        "p95": 14280.3533
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > expert: 10 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "variant": "greaterThan",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 10,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        500,
+        509
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 38,
+        "n": 40,
+        "stopped": "time",
+        "p95": 14280.3533
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > expert: 10 puzzles > the clues follow the symmetry of the configuration (rotational180): the signs are not mirrored",
+      "variant": "greaterThan",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 10,
+      "test": "the clues follow the symmetry of the configuration (rotational180): the signs are not mirrored",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        500,
+        509
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 38,
+        "n": 40,
+        "stopped": "time",
+        "p95": 14280.3533
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > expert: 10 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 10000 ms",
+      "variant": "greaterThan",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 10,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 10000 ms",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        500,
+        509
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 38,
+        "n": 40,
+        "stopped": "time",
+        "p95": 14280.3533
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > nightmare: 10 puzzles > I1: exactly one solution; I2: givens are part of the solution; I3: it satisfies units and signs",
+      "variant": "greaterThan",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 10,
+      "test": "I1: exactly one solution; I2: givens are part of the solution; I3: it satisfies units and signs",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        700,
+        709
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 13,
+        "n": 13,
+        "stopped": "time",
+        "p95": 46079.9964
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > nightmare: 10 puzzles > every sign agrees with the solution, joins two neighbours of one box, and appears once",
+      "variant": "greaterThan",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 10,
+      "test": "every sign agrees with the solution, joins two neighbours of one box, and appears once",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        700,
+        709
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 13,
+        "n": 13,
+        "stopped": "time",
+        "p95": 46079.9964
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > nightmare: 10 puzzles > the sign set is minimal: removing any sign that is left gives a second solution",
+      "variant": "greaterThan",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 10,
+      "test": "the sign set is minimal: removing any sign that is left gives a second solution",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        700,
+        709
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 13,
+        "n": 13,
+        "stopped": "time",
+        "p95": 46079.9964
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > nightmare: 10 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "variant": "greaterThan",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 10,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        700,
+        709
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 13,
+        "n": 13,
+        "stopped": "time",
+        "p95": 46079.9964
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > nightmare: 10 puzzles > the clues follow the symmetry of the configuration (rotational180): the signs are not mirrored",
+      "variant": "greaterThan",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 10,
+      "test": "the clues follow the symmetry of the configuration (rotational180): the signs are not mirrored",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        700,
+        709
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 13,
+        "n": 13,
+        "stopped": "time",
+        "p95": 46079.9964
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > nightmare: 10 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 10000 ms",
+      "variant": "greaterThan",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 10,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 10000 ms",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        700,
+        709
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 13,
+        "n": 13,
+        "stopped": "time",
+        "p95": 46079.9964
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 10 puzzles > I1: exactly one solution; I2: givens are part of the solution; I3: it satisfies units and signs",
+      "variant": "greaterThan",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 10,
+      "test": "I1: exactly one solution; I2: givens are part of the solution; I3: it satisfies units and signs",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        800,
+        809
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 120003.1741
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 10 puzzles > every sign agrees with the solution, joins two neighbours of one box, and appears once",
+      "variant": "greaterThan",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 10,
+      "test": "every sign agrees with the solution, joins two neighbours of one box, and appears once",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        800,
+        809
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 120003.1741
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 10 puzzles > the sign set is minimal: removing any sign that is left gives a second solution",
+      "variant": "greaterThan",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 10,
+      "test": "the sign set is minimal: removing any sign that is left gives a second solution",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        800,
+        809
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 120003.1741
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 10 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "variant": "greaterThan",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 10,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        800,
+        809
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 120003.1741
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 10 puzzles > the clues follow the symmetry of the configuration (rotational180): the signs are not mirrored",
+      "variant": "greaterThan",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 10,
+      "test": "the clues follow the symmetry of the configuration (rotational180): the signs are not mirrored",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        800,
+        809
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 120003.1741
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "id": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 10 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 10000 ms",
+      "variant": "greaterThan",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 10,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 10000 ms",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        800,
+        809
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 120003.1741
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX easy: 20 puzzles > I1: exactly one solution; I2: givens are part of the solution; I3: it obeys every rule",
+      "variant": "diagonalX",
+      "level": "easy",
+      "originalIndex": 1,
+      "count": 20,
+      "test": "I1: exactly one solution; I2: givens are part of the solution; I3: it obeys every rule",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        10100,
+        10119
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 28,
+        "n": 40,
+        "stopped": "misses",
+        "p95": 1540.0429
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX easy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "variant": "diagonalX",
+      "level": "easy",
+      "originalIndex": 1,
+      "count": 20,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        10100,
+        10119
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 28,
+        "n": 40,
+        "stopped": "misses",
+        "p95": 1540.0429
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX easy: 20 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 200 ms",
+      "variant": "diagonalX",
+      "level": "easy",
+      "originalIndex": 1,
+      "count": 20,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 200 ms",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        10100,
+        10119
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 28,
+        "n": 40,
+        "stopped": "misses",
+        "p95": 1540.0429
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX expert: 20 puzzles > I1: exactly one solution; I2: givens are part of the solution; I3: it obeys every rule",
+      "variant": "diagonalX",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 20,
+      "test": "I1: exactly one solution; I2: givens are part of the solution; I3: it obeys every rule",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        10400,
+        10419
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 37,
+        "n": 40,
+        "stopped": null,
+        "p95": 11795.9214
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX expert: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "variant": "diagonalX",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 20,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        10400,
+        10419
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 37,
+        "n": 40,
+        "stopped": null,
+        "p95": 11795.9214
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX expert: 20 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 500 ms",
+      "variant": "diagonalX",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 20,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 500 ms",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        10400,
+        10419
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 37,
+        "n": 40,
+        "stopped": null,
+        "p95": 11795.9214
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX hell1: 20 puzzles > I1: exactly one solution; I2: givens are part of the solution; I3: it obeys every rule",
+      "variant": "diagonalX",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "I1: exactly one solution; I2: givens are part of the solution; I3: it obeys every rule",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        10700,
+        10719
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 100984.0059
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX hell1: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "variant": "diagonalX",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        10700,
+        10719
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 100984.0059
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX hell1: 20 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 3000 ms",
+      "variant": "diagonalX",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 3000 ms",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        10700,
+        10719
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 100984.0059
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper easy: 20 puzzles > I1: exactly one solution; I2: givens are part of the solution; I3: it obeys every rule",
+      "variant": "hyper",
+      "level": "easy",
+      "originalIndex": 1,
+      "count": 20,
+      "test": "I1: exactly one solution; I2: givens are part of the solution; I3: it obeys every rule",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        20100,
+        20119
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 29,
+        "n": 40,
+        "stopped": "misses",
+        "p95": 1477.0289
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper easy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "variant": "hyper",
+      "level": "easy",
+      "originalIndex": 1,
+      "count": 20,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        20100,
+        20119
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 29,
+        "n": 40,
+        "stopped": "misses",
+        "p95": 1477.0289
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper easy: 20 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 200 ms",
+      "variant": "hyper",
+      "level": "easy",
+      "originalIndex": 1,
+      "count": 20,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 200 ms",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        20100,
+        20119
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 29,
+        "n": 40,
+        "stopped": "misses",
+        "p95": 1477.0289
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper expert: 20 puzzles > I1: exactly one solution; I2: givens are part of the solution; I3: it obeys every rule",
+      "variant": "hyper",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 20,
+      "test": "I1: exactly one solution; I2: givens are part of the solution; I3: it obeys every rule",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        20400,
+        20419
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 42,
+        "n": 53,
+        "stopped": "misses",
+        "p95": 4975.0143
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper expert: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "variant": "hyper",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 20,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        20400,
+        20419
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 42,
+        "n": 53,
+        "stopped": "misses",
+        "p95": 4975.0143
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper expert: 20 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 500 ms",
+      "variant": "hyper",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 20,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 500 ms",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        20400,
+        20419
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 42,
+        "n": 53,
+        "stopped": "misses",
+        "p95": 4975.0143
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper hell1: 20 puzzles > I1: exactly one solution; I2: givens are part of the solution; I3: it obeys every rule",
+      "variant": "hyper",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "I1: exactly one solution; I2: givens are part of the solution; I3: it obeys every rule",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        20700,
+        20719
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 49381.62
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper hell1: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "variant": "hyper",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        20700,
+        20719
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 49381.62
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "id": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper hell1: 20 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 3000 ms",
+      "variant": "hyper",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 3000 ms",
+      "trace": "summary",
+      "options": null,
+      "seedRecipe": "10000 * (variantIndex + 1) + 100 * li + i",
+      "seeds": [
+        20700,
+        20719
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 49381.62
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "wordoku",
+      "id": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > I1: exactly one solution (from the givens alone); I2: givens are part of the solution; I3: it satisfies every unit",
+      "variant": "wordoku",
+      "level": "normal",
+      "originalIndex": 2,
+      "count": 20,
+      "test": "I1: exactly one solution (from the givens alone); I2: givens are part of the solution; I3: it satisfies every unit",
+      "trace": "summary",
+      "options": "placement cycle: diagonal, diagonal, row, column",
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        300,
+        319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 35,
+        "n": 46,
+        "stopped": "misses",
+        "p95": 904.2948
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "wordoku",
+      "id": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > the word appears on the chosen line of the solution, letter by letter",
+      "variant": "wordoku",
+      "level": "normal",
+      "originalIndex": 2,
+      "count": 20,
+      "test": "the word appears on the chosen line of the solution, letter by letter",
+      "trace": "summary",
+      "options": "placement cycle: diagonal, diagonal, row, column",
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        300,
+        319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 35,
+        "n": 46,
+        "stopped": "misses",
+        "p95": 904.2948
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "wordoku",
+      "id": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > solving it reveals the word: the solver, from the givens alone, ends with the word on its line",
+      "variant": "wordoku",
+      "level": "normal",
+      "originalIndex": 2,
+      "count": 20,
+      "test": "solving it reveals the word: the solver, from the givens alone, ends with the word on its line",
+      "trace": "summary",
+      "options": "placement cycle: diagonal, diagonal, row, column",
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        300,
+        319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 35,
+        "n": 46,
+        "stopped": "misses",
+        "p95": 904.2948
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "wordoku",
+      "id": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "variant": "wordoku",
+      "level": "normal",
+      "originalIndex": 2,
+      "count": 20,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "trace": "summary",
+      "options": "placement cycle: diagonal, diagonal, row, column",
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        300,
+        319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 35,
+        "n": 46,
+        "stopped": "misses",
+        "p95": 904.2948
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "wordoku",
+      "id": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > the clues follow the symmetry of the configuration (rotational180), the word line included",
+      "variant": "wordoku",
+      "level": "normal",
+      "originalIndex": 2,
+      "count": 20,
+      "test": "the clues follow the symmetry of the configuration (rotational180), the word line included",
+      "trace": "summary",
+      "options": "placement cycle: diagonal, diagonal, row, column",
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        300,
+        319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 35,
+        "n": 46,
+        "stopped": "misses",
+        "p95": 904.2948
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "wordoku",
+      "id": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 250 ms",
+      "variant": "wordoku",
+      "level": "normal",
+      "originalIndex": 2,
+      "count": 20,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 250 ms",
+      "trace": "summary",
+      "options": "placement cycle: diagonal, diagonal, row, column",
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        300,
+        319
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 35,
+        "n": 46,
+        "stopped": "misses",
+        "p95": 904.2948
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "wordoku",
+      "id": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 20 puzzles > I1: exactly one solution (from the givens alone); I2: givens are part of the solution; I3: it satisfies every unit",
+      "variant": "wordoku",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "I1: exactly one solution (from the givens alone); I2: givens are part of the solution; I3: it satisfies every unit",
+      "trace": "summary",
+      "options": "placement cycle: diagonal, diagonal, row, column",
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        800,
+        819
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 15812.8199
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "wordoku",
+      "id": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 20 puzzles > the word appears on the chosen line of the solution, letter by letter",
+      "variant": "wordoku",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "the word appears on the chosen line of the solution, letter by letter",
+      "trace": "summary",
+      "options": "placement cycle: diagonal, diagonal, row, column",
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        800,
+        819
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 15812.8199
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "wordoku",
+      "id": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 20 puzzles > solving it reveals the word: the solver, from the givens alone, ends with the word on its line",
+      "variant": "wordoku",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "solving it reveals the word: the solver, from the givens alone, ends with the word on its line",
+      "trace": "summary",
+      "options": "placement cycle: diagonal, diagonal, row, column",
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        800,
+        819
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 15812.8199
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "wordoku",
+      "id": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "variant": "wordoku",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "trace": "summary",
+      "options": "placement cycle: diagonal, diagonal, row, column",
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        800,
+        819
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 15812.8199
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "wordoku",
+      "id": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 20 puzzles > the clues follow the symmetry of the configuration (rotational180), the word line included",
+      "variant": "wordoku",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "the clues follow the symmetry of the configuration (rotational180), the word line included",
+      "trace": "summary",
+      "options": "placement cycle: diagonal, diagonal, row, column",
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        800,
+        819
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 15812.8199
+      }
+    },
+    {
+      "at": "step 5",
+      "suite": "wordoku",
+      "id": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > hell1: 20 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 2500 ms",
+      "variant": "wordoku",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 20,
+      "test": "CV6: p95 of the generation time is within the design.md 9.1 budget of 2500 ms",
+      "trace": "summary",
+      "options": "placement cycle: diagonal, diagonal, row, column",
+      "seedRecipe": "100 * (li + 1) + i",
+      "seeds": [
+        800,
+        819
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 15812.8199
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: classic9 > CV3 hell1: puzzles at the supported level",
+      "variant": "classic9",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 3,
+      "test": "CV3 hell1",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 15955.5532
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: mega12 > CV3 hell1: puzzles at the supported level",
+      "variant": "mega12",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 3,
+      "test": "CV3 hell1",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 105764.751
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: mega16 > CV3 expert: puzzles at the supported level",
+      "variant": "mega16",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 2,
+      "test": "CV3 expert",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 35,
+        "n": 40,
+        "stopped": "time",
+        "p95": 40097.4702
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: mega16 > CV3 nightmare: puzzles at the supported level",
+      "variant": "mega16",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 2,
+      "test": "CV3 nightmare",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 25,
+        "n": 25,
+        "stopped": "time",
+        "p95": 60754.8719
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: mega16 > CV3 hell1: puzzles at the supported level",
+      "variant": "mega16",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 2,
+      "test": "CV3 hell1",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 120015.1966
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: diagonalX > CV3 easy: puzzles at the supported level",
+      "variant": "diagonalX",
+      "level": "easy",
+      "originalIndex": 1,
+      "count": 3,
+      "test": "CV3 easy",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 28,
+        "n": 40,
+        "stopped": "misses",
+        "p95": 1540.0429
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: diagonalX > CV3 expert: puzzles at the supported level",
+      "variant": "diagonalX",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 3,
+      "test": "CV3 expert",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 37,
+        "n": 40,
+        "stopped": null,
+        "p95": 11795.9214
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: diagonalX > CV3 hell1: puzzles at the supported level",
+      "variant": "diagonalX",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 3,
+      "test": "CV3 hell1",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 100984.0059
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: hyper > CV3 easy: puzzles at the supported level",
+      "variant": "hyper",
+      "level": "easy",
+      "originalIndex": 1,
+      "count": 3,
+      "test": "CV3 easy",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 29,
+        "n": 40,
+        "stopped": "misses",
+        "p95": 1477.0289
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: hyper > CV3 expert: puzzles at the supported level",
+      "variant": "hyper",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 3,
+      "test": "CV3 expert",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 42,
+        "n": 53,
+        "stopped": "misses",
+        "p95": 4975.0143
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: hyper > CV3 hell1: puzzles at the supported level",
+      "variant": "hyper",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 3,
+      "test": "CV3 hell1",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 49381.62
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: jigsaw9 > CV3 expert: puzzles at the supported level",
+      "variant": "jigsaw9",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 3,
+      "test": "CV3 expert",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 30,
+        "n": 34,
+        "stopped": "time",
+        "p95": 13692.5219
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: jigsaw9 > CV3 nightmare: puzzles at the supported level",
+      "variant": "jigsaw9",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 3,
+      "test": "CV3 nightmare",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 27,
+        "n": 27,
+        "stopped": "time",
+        "p95": 18067.4613
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: jigsaw9 > CV3 hell1: puzzles at the supported level",
+      "variant": "jigsaw9",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 3,
+      "test": "CV3 hell1",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 80503.5047
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: killer > CV3 hard: puzzles at the supported level",
+      "variant": "killer",
+      "level": "hard",
+      "originalIndex": 3,
+      "count": 3,
+      "test": "CV3 hard",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 14,
+        "stopped": "misses",
+        "p95": 6887.1679
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: killer > CV3 expert: puzzles at the supported level",
+      "variant": "killer",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 3,
+      "test": "CV3 expert",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 2,
+        "n": 12,
+        "stopped": "time",
+        "p95": 34368.4147
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: killer > CV3 master: puzzles at the supported level",
+      "variant": "killer",
+      "level": "master",
+      "originalIndex": 5,
+      "count": 3,
+      "test": "CV3 master",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 11,
+        "n": 14,
+        "stopped": "time",
+        "p95": 42674.0885
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: killer > CV3 nightmare: puzzles at the supported level",
+      "variant": "killer",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 3,
+      "test": "CV3 nightmare",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 18,
+        "n": 22,
+        "stopped": "time",
+        "p95": 32738.6213
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: killer > CV3 hell1: puzzles at the supported level",
+      "variant": "killer",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 3,
+      "test": "CV3 hell1",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 100540.6829
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: killer > CV3 hell2: puzzles at the supported level",
+      "variant": "killer",
+      "level": "hell2",
+      "originalIndex": 8,
+      "count": 3,
+      "test": "CV3 hell2",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 40,
+        "n": 40,
+        "stopped": "time",
+        "p95": 21188.5029
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: greaterThan > CV3 normal: puzzles at the supported level",
+      "variant": "greaterThan",
+      "level": "normal",
+      "originalIndex": 2,
+      "count": 3,
+      "test": "CV3 normal",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 40,
+        "n": 40,
+        "stopped": null,
+        "p95": 10192.4051
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: greaterThan > CV3 expert: puzzles at the supported level",
+      "variant": "greaterThan",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 3,
+      "test": "CV3 expert",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 38,
+        "n": 40,
+        "stopped": "time",
+        "p95": 14280.3533
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: greaterThan > CV3 nightmare: puzzles at the supported level",
+      "variant": "greaterThan",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 3,
+      "test": "CV3 nightmare",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 13,
+        "n": 13,
+        "stopped": "time",
+        "p95": 46079.9964
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: greaterThan > CV3 hell1: puzzles at the supported level",
+      "variant": "greaterThan",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 3,
+      "test": "CV3 hell1",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 120003.1741
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: samurai > CV3 easy: puzzles at the supported level",
+      "variant": "samurai",
+      "level": "easy",
+      "originalIndex": 1,
+      "count": 2,
+      "test": "CV3 easy",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 10,
+        "n": 22,
+        "stopped": "misses",
+        "p95": 1129.1194
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: samurai > CV3 nightmare: puzzles at the supported level",
+      "variant": "samurai",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 2,
+      "test": "CV3 nightmare",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 14,
+        "n": 17,
+        "stopped": "time",
+        "p95": 120011.5779
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: samurai > CV3 hell1: puzzles at the supported level",
+      "variant": "samurai",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 2,
+      "test": "CV3 hell1",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 120051.7349
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: samurai > CV3 hell2: puzzles at the supported level",
+      "variant": "samurai",
+      "level": "hell2",
+      "originalIndex": 8,
+      "count": 2,
+      "test": "CV3 hell2",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 40,
+        "n": 40,
+        "stopped": "time",
+        "p95": 43626.5168
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: sohei > CV3 easy: puzzles at the supported level",
+      "variant": "sohei",
+      "level": "easy",
+      "originalIndex": 1,
+      "count": 2,
+      "test": "CV3 easy",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 4,
+        "n": 18,
+        "stopped": "misses",
+        "p95": 899.3724
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: sohei > CV3 nightmare: puzzles at the supported level",
+      "variant": "sohei",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 2,
+      "test": "CV3 nightmare",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 29,
+        "n": 30,
+        "stopped": "time",
+        "p95": 78814.875
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: sohei > CV3 hell1: puzzles at the supported level",
+      "variant": "sohei",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 2,
+      "test": "CV3 hell1",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 120015.0996
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: butterfly > CV3 easy: puzzles at the supported level",
+      "variant": "butterfly",
+      "level": "easy",
+      "originalIndex": 1,
+      "count": 2,
+      "test": "CV3 easy",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 1,
+        "n": 15,
+        "stopped": "misses",
+        "p95": 1115.6109
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: butterfly > CV3 hell1: puzzles at the supported level",
+      "variant": "butterfly",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 2,
+      "test": "CV3 hell1",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 89747.1968
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: flower > CV3 easy: puzzles at the supported level",
+      "variant": "flower",
+      "level": "easy",
+      "originalIndex": 1,
+      "count": 2,
+      "test": "CV3 easy",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 14,
+        "stopped": "misses",
+        "p95": 901.8375
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: flower > CV3 expert: puzzles at the supported level",
+      "variant": "flower",
+      "level": "expert",
+      "originalIndex": 4,
+      "count": 2,
+      "test": "CV3 expert",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 23,
+        "n": 35,
+        "stopped": "misses",
+        "p95": 7717.0783
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: flower > CV3 nightmare: puzzles at the supported level",
+      "variant": "flower",
+      "level": "nightmare",
+      "originalIndex": 6,
+      "count": 2,
+      "test": "CV3 nightmare",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 42,
+        "n": 50,
+        "stopped": "time",
+        "p95": 32514.7798
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: flower > CV3 hell1: puzzles at the supported level",
+      "variant": "flower",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 2,
+      "test": "CV3 hell1",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        2
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 74224.1577
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: wordoku > CV3 normal: puzzles at the supported level",
+      "variant": "wordoku",
+      "level": "normal",
+      "originalIndex": 2,
+      "count": 3,
+      "test": "CV3 normal",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 35,
+        "n": 46,
+        "stopped": "misses",
+        "p95": 904.2948
+      }
+    },
+    {
+      "at": "checkpoint B (live support)",
+      "suite": "variants",
+      "id": "variants > variants: wordoku > CV3 hell1: puzzles at the supported level",
+      "variant": "wordoku",
+      "level": "hell1",
+      "originalIndex": 7,
+      "count": 3,
+      "test": "CV3 hell1",
+      "trace": "off",
+      "options": null,
+      "seedRecipe": "i + 1 (the seeds 1..perLevel)",
+      "seeds": [
+        1,
+        3
+      ],
+      "gq": {
+        "verdict": "hidden",
+        "hits": 0,
+        "n": 9,
+        "stopped": "time",
+        "p95": 15812.8199
+      }
+    }
+  ],
+  "removedOther": [
+    {
+      "at": "step 5",
+      "suite": "greater-than",
+      "name": "greater-than > greaterThan: variant definition and model (CV1, CV2) > offers every level of the nine, hell2 included (measured by tests/qualify.js)"
+    },
+    {
+      "at": "step 5",
+      "suite": "extra-regions",
+      "name": "extra-regions > extraRegions: variant definitions (design.md 5.3 / 13.8) > supports every difficulty level, hell2 included (measured by tests/qualify.js)"
+    },
+    {
+      "at": "step 5",
+      "suite": "wordoku",
+      "name": "wordoku > wordoku: variant definition and model (CV1, CV2) > does not support hell2 (it missed the qualification): asking for it is refused"
+    },
+    {
+      "at": "step 5",
+      "suite": "perf",
+      "name": "perf > perf: generation time against design.md section 9.1 (warn only, 5 runs per cell) > wordoku/normal: p95 within the target of design.md 9.1"
+    },
+    {
+      "at": "step 5",
+      "suite": "perf",
+      "name": "perf > perf: generation time against design.md section 9.1 (warn only, 5 runs per cell) > greaterThan/normal: p95 within the target of design.md 9.1"
+    },
+    {
+      "at": "step 5 (renamed or replaced)",
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > killer: \"> <level>: <count> puzzles > I5:\" selects one test per level"
+    },
+    {
+      "at": "step 5 (renamed or replaced)",
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > jigsaw: \"> <level>: <count> puzzles > I5:\" selects one test per level"
+    },
+    {
+      "at": "step 5 (renamed or replaced)",
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > greater-than: \"> <level>: <count> puzzles > I5:\" selects one test per level"
+    },
+    {
+      "at": "step 5 (renamed or replaced)",
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > wordoku: \"> <level>: <count> puzzles > I5:\" selects one test per level"
+    },
+    {
+      "at": "step 5 (renamed or replaced)",
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > extra-regions: \"> <variant> <level>: <count> puzzles > I5:\" selects one test per variant and level"
+    }
+  ],
+  "addedOrRenamed": [
+    {
+      "suite": "greater-than",
+      "name": "greater-than > greaterThan: variant definition and model (CV1, CV2) > offers the levels of the final qualification and refuses the others (measured by tests/qualify.js)"
+    },
+    {
+      "suite": "extra-regions",
+      "name": "extra-regions > extraRegions: variant definitions (design.md 5.3 / 13.8) > offers the levels of the final qualification and refuses the others (measured by tests/qualify.js)"
+    },
+    {
+      "suite": "wordoku",
+      "name": "wordoku > wordoku: variant definition and model (CV1, CV2) > refuses every level that the final qualification does not offer: normal, hell1 and hell2"
+    },
+    {
+      "suite": "perf",
+      "name": "perf > perf: generation time against design.md section 9.1 (warn only, 5 runs per cell) > wordoku/easy: p95 within the target of design.md 9.1"
+    },
+    {
+      "suite": "perf",
+      "name": "perf > perf: generation time against design.md section 9.1 (warn only, 5 runs per cell) > greaterThan/easy: p95 within the target of design.md 9.1"
+    },
+    {
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > killer: \"> <level>: <count> puzzles > I5:\" selects one test per published level, none for a hidden one"
+    },
+    {
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > jigsaw: \"> <level>: <count> puzzles > I5:\" selects one test per published level, none for a hidden one"
+    },
+    {
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > greater-than: \"> <level>: <count> puzzles > I5:\" selects one test per published level, none for a hidden one"
+    },
+    {
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > wordoku: \"> <level>: <count> puzzles > I5:\" selects one test per published level, none for a hidden one"
+    },
+    {
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > extra-regions: \"> <variant> <level>: <count> puzzles > I5:\" selects one test per variant and published level, none for a hidden one"
+    },
+    {
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the fixed diagnostic corpora keep their ladder, seeds and guard (MS18c) > lists the fixed ladder and the published levels of every suite: killer and extra-regions nine, wordoku eight, and no corpus is built by reading the lazy keys"
+    },
+    {
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the fixed diagnostic corpora keep their ladder, seeds and guard (MS18c) > builds every hidden level inside the per-call guard: the requested tuple, no unsupported-level error, the very support array put back, and an unguarded request still refused"
+    },
+    {
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the fixed diagnostic corpora keep their ladder, seeds and guard (MS18c) > puts the exact support array back when a build throws, and publishes nothing of that level"
+    },
+    {
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the fixed diagnostic corpora keep their ladder, seeds and guard (MS18c) > would notice an unguarded build: a probe of greater-than without its guard is refused for a hidden level and not for an offered one"
+    },
+    {
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the fixed diagnostic corpora keep their ladder, seeds and guard (MS18c) > keeps the witness populations of the cross-level assertions: Greater-Than 20 + 10 + 10, Killer Hard and Master, Wordoku Normal seed 302, and the hybrid of 72 requests"
+    },
+    {
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the performance table and its smoke cells follow the published offers (MS18c) > has one positive, unchanged target for each of the 79 offered cells of the registry and none for the 56 others (39 removed, 17 never offered)"
+    },
+    {
+      "suite": "manual-corpus",
+      "name": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the performance table and its smoke cells follow the published offers (MS18c) > keeps 19 unique smoke cells, all active, with exactly two substitutions: greaterThan/normal to greaterThan/easy and wordoku/normal to wordoku/easy"
+    }
+  ],
+  "changedInPlace": [
+    {
+      "suite": "killer",
+      "test": "CV6: the 95th percentile of the generation time stays inside the killer row of design.md 9.1",
+      "change": "the per-level budget checks of the hidden levels are not public: it asserts the published veryEasy, easy and normal only",
+      "removedChecks": [
+        {
+          "level": "hard",
+          "budgetMs": 1800,
+          "gq": {
+            "verdict": "hidden",
+            "hits": 0,
+            "n": 14,
+            "stopped": "misses",
+            "p95": 6887.1679
+          }
+        },
+        {
+          "level": "expert",
+          "budgetMs": 10000,
+          "gq": {
+            "verdict": "hidden",
+            "hits": 2,
+            "n": 12,
+            "stopped": "time",
+            "p95": 34368.4147
+          }
+        },
+        {
+          "level": "master",
+          "budgetMs": 10000,
+          "gq": {
+            "verdict": "hidden",
+            "hits": 11,
+            "n": 14,
+            "stopped": "time",
+            "p95": 42674.0885
+          }
+        },
+        {
+          "level": "nightmare",
+          "budgetMs": 10000,
+          "gq": {
+            "verdict": "hidden",
+            "hits": 18,
+            "n": 22,
+            "stopped": "time",
+            "p95": 32738.6213
+          }
+        },
+        {
+          "level": "hell1",
+          "budgetMs": 10000,
+          "gq": {
+            "verdict": "hidden",
+            "hits": 0,
+            "n": 9,
+            "stopped": "time",
+            "p95": 100540.6829
+          }
+        },
+        {
+          "level": "hell2",
+          "budgetMs": 10000,
+          "gq": {
+            "verdict": "hidden",
+            "hits": 40,
+            "n": 40,
+            "stopped": "time",
+            "p95": 21188.5029
+          }
+        }
+      ]
+    },
+    {
+      "suite": "killer",
+      "test": "CV3: every supported level yields its puzzles of that variant",
+      "change": "retained over the fixed nine-level corpus (the corpus integrity every diagnostic consumer relies on)"
+    },
+    {
+      "suite": "killer, jigsaw, greater-than, extra-regions, wordoku",
+      "test": "the variant definition tests",
+      "change": "assert the published list and the refusal of its complement (the nine-level catalogue); GT, extra-regions and wordoku also changed title, see above"
+    },
+    {
+      "suite": "killer, jigsaw, greater-than, extra-regions, wordoku",
+      "test": "every fixed or corpus request",
+      "change": "built inside the per-call withRequestedLevel guard (generate / trace / digFrom / spec reads)"
+    },
+    {
+      "suite": "extra-regions",
+      "test": "the check can tell: a classic9 puzzle keeps its unique solution on the classic board",
+      "change": "a public-support control that follows the offers, not a fixed diagnostic population: it iterates classic9's live support, 7 levels since B (veryEasy to nightmare), so Hell 1 (seed 707, global level index 7) is no longer generated; the seeds of the 7 remaining levels are unchanged (700 + global level index, the values of the former array index); no seed is compacted"
+    },
+    {
+      "suite": "perf",
+      "test": "every cell of the table is a variant and a level that the variant offers",
+      "change": "unchanged; it now holds because the 39 hidden targets are null"
+    },
+    {
+      "suite": "recovery-profile (quick)",
+      "test": "the three fixed requests",
+      "change": "guards in caseOf, prepare and profile; G13 stays samurai nightmare 42; one focused test added"
+    }
+  ],
+  "retainedFixedDiagnostics": [
+    {
+      "suite": "killer",
+      "variant": "killer",
+      "ladder": [
+        "veryEasy",
+        "easy",
+        "normal",
+        "hard",
+        "expert",
+        "master",
+        "nightmare",
+        "hell1",
+        "hell2"
+      ],
+      "offered": [
+        "veryEasy",
+        "easy",
+        "normal"
+      ],
+      "hidden": [
+        "hard",
+        "expert",
+        "master",
+        "nightmare",
+        "hell1",
+        "hell2"
+      ],
+      "perLevel": [
+        {
+          "level": "veryEasy",
+          "originalIndex": 0,
+          "count": 20,
+          "seeds": [
+            1,
+            20
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 21.8626
+          }
+        },
+        {
+          "level": "easy",
+          "originalIndex": 1,
+          "count": 20,
+          "seeds": [
+            1,
+            20
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 39.0628
+          }
+        },
+        {
+          "level": "normal",
+          "originalIndex": 2,
+          "count": 20,
+          "seeds": [
+            1,
+            20
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 38,
+            "n": 40,
+            "stopped": null,
+            "p95": 1808.2659
+          }
+        },
+        {
+          "level": "hard",
+          "originalIndex": 3,
+          "count": 20,
+          "seeds": [
+            1,
+            20
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 0,
+            "n": 14,
+            "stopped": "misses",
+            "p95": 6887.1679
+          }
+        },
+        {
+          "level": "expert",
+          "originalIndex": 4,
+          "count": 8,
+          "seeds": [
+            1,
+            8
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 2,
+            "n": 12,
+            "stopped": "time",
+            "p95": 34368.4147
+          }
+        },
+        {
+          "level": "master",
+          "originalIndex": 5,
+          "count": 8,
+          "seeds": [
+            1,
+            8
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 11,
+            "n": 14,
+            "stopped": "time",
+            "p95": 42674.0885
+          }
+        },
+        {
+          "level": "nightmare",
+          "originalIndex": 6,
+          "count": 8,
+          "seeds": [
+            1,
+            8
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 18,
+            "n": 22,
+            "stopped": "time",
+            "p95": 32738.6213
+          }
+        },
+        {
+          "level": "hell1",
+          "originalIndex": 7,
+          "count": 8,
+          "seeds": [
+            1,
+            8
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 0,
+            "n": 9,
+            "stopped": "time",
+            "p95": 100540.6829
+          }
+        },
+        {
+          "level": "hell2",
+          "originalIndex": 8,
+          "count": 8,
+          "seeds": [
+            1,
+            8
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 40,
+            "n": 40,
+            "stopped": "time",
+            "p95": 21188.5029
+          }
+        }
+      ]
+    },
+    {
+      "suite": "jigsaw",
+      "variant": "jigsaw9",
+      "ladder": [
+        "veryEasy",
+        "easy",
+        "normal",
+        "hard",
+        "expert",
+        "master",
+        "nightmare",
+        "hell1",
+        "hell2"
+      ],
+      "offered": [
+        "veryEasy",
+        "easy",
+        "normal",
+        "hard",
+        "master",
+        "hell2"
+      ],
+      "hidden": [
+        "expert",
+        "nightmare",
+        "hell1"
+      ],
+      "perLevel": [
+        {
+          "level": "veryEasy",
+          "originalIndex": 0,
+          "count": 20,
+          "seeds": [
+            700,
+            719
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 54.2844
+          }
+        },
+        {
+          "level": "easy",
+          "originalIndex": 1,
+          "count": 20,
+          "seeds": [
+            800,
+            819
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 634.7225
+          }
+        },
+        {
+          "level": "normal",
+          "originalIndex": 2,
+          "count": 20,
+          "seeds": [
+            900,
+            919
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 225.2274
+          }
+        },
+        {
+          "level": "hard",
+          "originalIndex": 3,
+          "count": 20,
+          "seeds": [
+            1000,
+            1019
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 144.9141
+          }
+        },
+        {
+          "level": "expert",
+          "originalIndex": 4,
+          "count": 20,
+          "seeds": [
+            1100,
+            1119
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 30,
+            "n": 34,
+            "stopped": "time",
+            "p95": 13692.5219
+          }
+        },
+        {
+          "level": "master",
+          "originalIndex": 5,
+          "count": 20,
+          "seeds": [
+            1200,
+            1219
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 1742.2121
+          }
+        },
+        {
+          "level": "nightmare",
+          "originalIndex": 6,
+          "count": 20,
+          "seeds": [
+            1300,
+            1319
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 27,
+            "n": 27,
+            "stopped": "time",
+            "p95": 18067.4613
+          }
+        },
+        {
+          "level": "hell1",
+          "originalIndex": 7,
+          "count": 20,
+          "seeds": [
+            1400,
+            1419
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 0,
+            "n": 9,
+            "stopped": "time",
+            "p95": 80503.5047
+          }
+        },
+        {
+          "level": "hell2",
+          "originalIndex": 8,
+          "count": 8,
+          "seeds": [
+            1500,
+            1507
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 6102.238
+          }
+        }
+      ]
+    },
+    {
+      "suite": "greater-than",
+      "variant": "greaterThan",
+      "ladder": [
+        "veryEasy",
+        "easy",
+        "normal",
+        "hard",
+        "expert",
+        "master",
+        "nightmare",
+        "hell1",
+        "hell2"
+      ],
+      "offered": [
+        "veryEasy",
+        "easy",
+        "hard",
+        "master",
+        "hell2"
+      ],
+      "hidden": [
+        "normal",
+        "expert",
+        "nightmare",
+        "hell1"
+      ],
+      "perLevel": [
+        {
+          "level": "veryEasy",
+          "originalIndex": 0,
+          "count": 20,
+          "seeds": [
+            100,
+            119
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 54.0895
+          }
+        },
+        {
+          "level": "easy",
+          "originalIndex": 1,
+          "count": 20,
+          "seeds": [
+            200,
+            219
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 92.0121
+          }
+        },
+        {
+          "level": "normal",
+          "originalIndex": 2,
+          "count": 20,
+          "seeds": [
+            300,
+            319
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 10192.4051
+          }
+        },
+        {
+          "level": "hard",
+          "originalIndex": 3,
+          "count": 10,
+          "seeds": [
+            400,
+            409
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 2832.4741
+          }
+        },
+        {
+          "level": "expert",
+          "originalIndex": 4,
+          "count": 10,
+          "seeds": [
+            500,
+            509
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 38,
+            "n": 40,
+            "stopped": "time",
+            "p95": 14280.3533
+          }
+        },
+        {
+          "level": "master",
+          "originalIndex": 5,
+          "count": 10,
+          "seeds": [
+            600,
+            609
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 5952.2994
+          }
+        },
+        {
+          "level": "nightmare",
+          "originalIndex": 6,
+          "count": 10,
+          "seeds": [
+            700,
+            709
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 13,
+            "n": 13,
+            "stopped": "time",
+            "p95": 46079.9964
+          }
+        },
+        {
+          "level": "hell1",
+          "originalIndex": 7,
+          "count": 10,
+          "seeds": [
+            800,
+            809
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 0,
+            "n": 9,
+            "stopped": "time",
+            "p95": 120003.1741
+          }
+        },
+        {
+          "level": "hell2",
+          "originalIndex": 8,
+          "count": 10,
+          "seeds": [
+            900,
+            909
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 8826.2361
+          }
+        }
+      ]
+    },
+    {
+      "suite": "extra-regions",
+      "variant": "diagonalX",
+      "ladder": [
+        "veryEasy",
+        "easy",
+        "normal",
+        "hard",
+        "expert",
+        "master",
+        "nightmare",
+        "hell1",
+        "hell2"
+      ],
+      "offered": [
+        "veryEasy",
+        "normal",
+        "hard",
+        "master",
+        "nightmare",
+        "hell2"
+      ],
+      "hidden": [
+        "easy",
+        "expert",
+        "hell1"
+      ],
+      "perLevel": [
+        {
+          "level": "veryEasy",
+          "originalIndex": 0,
+          "count": 20,
+          "seeds": [
+            10000,
+            10019
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 18.1067
+          }
+        },
+        {
+          "level": "easy",
+          "originalIndex": 1,
+          "count": 20,
+          "seeds": [
+            10100,
+            10119
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 28,
+            "n": 40,
+            "stopped": "misses",
+            "p95": 1540.0429
+          }
+        },
+        {
+          "level": "normal",
+          "originalIndex": 2,
+          "count": 20,
+          "seeds": [
+            10200,
+            10219
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 189.9598
+          }
+        },
+        {
+          "level": "hard",
+          "originalIndex": 3,
+          "count": 20,
+          "seeds": [
+            10300,
+            10319
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 76.5739
+          }
+        },
+        {
+          "level": "expert",
+          "originalIndex": 4,
+          "count": 20,
+          "seeds": [
+            10400,
+            10419
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 37,
+            "n": 40,
+            "stopped": null,
+            "p95": 11795.9214
+          }
+        },
+        {
+          "level": "master",
+          "originalIndex": 5,
+          "count": 20,
+          "seeds": [
+            10500,
+            10519
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 662.9567
+          }
+        },
+        {
+          "level": "nightmare",
+          "originalIndex": 6,
+          "count": 20,
+          "seeds": [
+            10600,
+            10619
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 5368.3201
+          }
+        },
+        {
+          "level": "hell1",
+          "originalIndex": 7,
+          "count": 20,
+          "seeds": [
+            10700,
+            10719
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 0,
+            "n": 9,
+            "stopped": "time",
+            "p95": 100984.0059
+          }
+        },
+        {
+          "level": "hell2",
+          "originalIndex": 8,
+          "count": 8,
+          "seeds": [
+            10800,
+            10807
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 2887.0696
+          }
+        }
+      ]
+    },
+    {
+      "suite": "extra-regions",
+      "variant": "hyper",
+      "ladder": [
+        "veryEasy",
+        "easy",
+        "normal",
+        "hard",
+        "expert",
+        "master",
+        "nightmare",
+        "hell1",
+        "hell2"
+      ],
+      "offered": [
+        "veryEasy",
+        "normal",
+        "hard",
+        "master",
+        "nightmare",
+        "hell2"
+      ],
+      "hidden": [
+        "easy",
+        "expert",
+        "hell1"
+      ],
+      "perLevel": [
+        {
+          "level": "veryEasy",
+          "originalIndex": 0,
+          "count": 20,
+          "seeds": [
+            20000,
+            20019
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 18.0367
+          }
+        },
+        {
+          "level": "easy",
+          "originalIndex": 1,
+          "count": 20,
+          "seeds": [
+            20100,
+            20119
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 29,
+            "n": 40,
+            "stopped": "misses",
+            "p95": 1477.0289
+          }
+        },
+        {
+          "level": "normal",
+          "originalIndex": 2,
+          "count": 20,
+          "seeds": [
+            20200,
+            20219
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 524.3035
+          }
+        },
+        {
+          "level": "hard",
+          "originalIndex": 3,
+          "count": 20,
+          "seeds": [
+            20300,
+            20319
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 80.1618
+          }
+        },
+        {
+          "level": "expert",
+          "originalIndex": 4,
+          "count": 20,
+          "seeds": [
+            20400,
+            20419
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 42,
+            "n": 53,
+            "stopped": "misses",
+            "p95": 4975.0143
+          }
+        },
+        {
+          "level": "master",
+          "originalIndex": 5,
+          "count": 20,
+          "seeds": [
+            20500,
+            20519
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 507.0018
+          }
+        },
+        {
+          "level": "nightmare",
+          "originalIndex": 6,
+          "count": 20,
+          "seeds": [
+            20600,
+            20619
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 8503.0273
+          }
+        },
+        {
+          "level": "hell1",
+          "originalIndex": 7,
+          "count": 20,
+          "seeds": [
+            20700,
+            20719
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 0,
+            "n": 9,
+            "stopped": "time",
+            "p95": 49381.62
+          }
+        },
+        {
+          "level": "hell2",
+          "originalIndex": 8,
+          "count": 8,
+          "seeds": [
+            20800,
+            20807
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 4838.1594
+          }
+        }
+      ]
+    },
+    {
+      "suite": "wordoku",
+      "variant": "wordoku",
+      "ladder": [
+        "veryEasy",
+        "easy",
+        "normal",
+        "hard",
+        "expert",
+        "master",
+        "nightmare",
+        "hell1"
+      ],
+      "offered": [
+        "veryEasy",
+        "easy",
+        "hard",
+        "expert",
+        "master",
+        "nightmare"
+      ],
+      "hidden": [
+        "normal",
+        "hell1"
+      ],
+      "perLevel": [
+        {
+          "level": "veryEasy",
+          "originalIndex": 0,
+          "count": 20,
+          "seeds": [
+            100,
+            119
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 18.4295
+          }
+        },
+        {
+          "level": "easy",
+          "originalIndex": 1,
+          "count": 20,
+          "seeds": [
+            200,
+            219
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 973.633
+          }
+        },
+        {
+          "level": "normal",
+          "originalIndex": 2,
+          "count": 20,
+          "seeds": [
+            300,
+            319
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 35,
+            "n": 46,
+            "stopped": "misses",
+            "p95": 904.2948
+          }
+        },
+        {
+          "level": "hard",
+          "originalIndex": 3,
+          "count": 20,
+          "seeds": [
+            400,
+            419
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 283.262
+          }
+        },
+        {
+          "level": "expert",
+          "originalIndex": 4,
+          "count": 20,
+          "seeds": [
+            500,
+            519
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 392.5801
+          }
+        },
+        {
+          "level": "master",
+          "originalIndex": 5,
+          "count": 20,
+          "seeds": [
+            600,
+            619
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 344.9143
+          }
+        },
+        {
+          "level": "nightmare",
+          "originalIndex": 6,
+          "count": 20,
+          "seeds": [
+            700,
+            719
+          ],
+          "gq": {
+            "verdict": "offered",
+            "hits": 40,
+            "n": 40,
+            "stopped": null,
+            "p95": 1323.0135
+          }
+        },
+        {
+          "level": "hell1",
+          "originalIndex": 7,
+          "count": 20,
+          "seeds": [
+            800,
+            819
+          ],
+          "gq": {
+            "verdict": "hidden",
+            "hits": 0,
+            "n": 9,
+            "stopped": "time",
+            "p95": 15812.8199
+          }
+        }
+      ]
+    }
+  ],
+  "refusalComplements": [
+    {
+      "variant": "classic4",
+      "offered": [
+        "veryEasy"
+      ],
+      "refused": [
+        "easy",
+        "normal",
+        "hard",
+        "expert",
+        "master",
+        "nightmare",
+        "hell1",
+        "hell2"
+      ]
+    },
+    {
+      "variant": "classic6",
+      "offered": [
+        "veryEasy",
+        "hard"
+      ],
+      "refused": [
+        "easy",
+        "normal",
+        "expert",
+        "master",
+        "nightmare",
+        "hell1",
+        "hell2"
+      ]
+    },
+    {
+      "variant": "classic9",
+      "offered": [
+        "veryEasy",
+        "easy",
+        "normal",
+        "hard",
+        "expert",
+        "master",
+        "nightmare"
+      ],
+      "refused": [
+        "hell1",
+        "hell2"
+      ]
+    },
+    {
+      "variant": "mega12",
+      "offered": [
+        "veryEasy",
+        "easy",
+        "normal",
+        "hard",
+        "expert",
+        "master",
+        "nightmare",
+        "hell2"
+      ],
+      "refused": [
+        "hell1"
+      ]
+    },
+    {
+      "variant": "mega16",
+      "offered": [
+        "veryEasy",
+        "easy",
+        "normal",
+        "hard",
+        "master",
+        "hell2"
+      ],
+      "refused": [
+        "expert",
+        "nightmare",
+        "hell1"
+      ]
+    },
+    {
+      "variant": "diagonalX",
+      "offered": [
+        "veryEasy",
+        "normal",
+        "hard",
+        "master",
+        "nightmare",
+        "hell2"
+      ],
+      "refused": [
+        "easy",
+        "expert",
+        "hell1"
+      ]
+    },
+    {
+      "variant": "hyper",
+      "offered": [
+        "veryEasy",
+        "normal",
+        "hard",
+        "master",
+        "nightmare",
+        "hell2"
+      ],
+      "refused": [
+        "easy",
+        "expert",
+        "hell1"
+      ]
+    },
+    {
+      "variant": "jigsaw9",
+      "offered": [
+        "veryEasy",
+        "easy",
+        "normal",
+        "hard",
+        "master",
+        "hell2"
+      ],
+      "refused": [
+        "expert",
+        "nightmare",
+        "hell1"
+      ]
+    },
+    {
+      "variant": "killer",
+      "offered": [
+        "veryEasy",
+        "easy",
+        "normal"
+      ],
+      "refused": [
+        "hard",
+        "expert",
+        "master",
+        "nightmare",
+        "hell1",
+        "hell2"
+      ]
+    },
+    {
+      "variant": "greaterThan",
+      "offered": [
+        "veryEasy",
+        "easy",
+        "hard",
+        "master",
+        "hell2"
+      ],
+      "refused": [
+        "normal",
+        "expert",
+        "nightmare",
+        "hell1"
+      ]
+    },
+    {
+      "variant": "samurai",
+      "offered": [
+        "veryEasy",
+        "normal",
+        "hard",
+        "expert",
+        "master"
+      ],
+      "refused": [
+        "easy",
+        "nightmare",
+        "hell1",
+        "hell2"
+      ]
+    },
+    {
+      "variant": "sohei",
+      "offered": [
+        "veryEasy",
+        "normal",
+        "hard",
+        "expert",
+        "master",
+        "hell2"
+      ],
+      "refused": [
+        "easy",
+        "nightmare",
+        "hell1"
+      ]
+    },
+    {
+      "variant": "butterfly",
+      "offered": [
+        "veryEasy",
+        "normal",
+        "hard",
+        "expert",
+        "master",
+        "nightmare",
+        "hell2"
+      ],
+      "refused": [
+        "easy",
+        "hell1"
+      ]
+    },
+    {
+      "variant": "flower",
+      "offered": [
+        "veryEasy",
+        "normal",
+        "hard",
+        "master",
+        "hell2"
+      ],
+      "refused": [
+        "easy",
+        "expert",
+        "nightmare",
+        "hell1"
+      ]
+    },
+    {
+      "variant": "wordoku",
+      "offered": [
+        "veryEasy",
+        "easy",
+        "hard",
+        "expert",
+        "master",
+        "nightmare"
+      ],
+      "refused": [
+        "normal",
+        "hell1",
+        "hell2"
+      ]
+    }
+  ],
+  "perf": {
+    "active": 79,
+    "neverOffered": 17,
+    "targetsRemoved": [
+      {
+        "key": "classic9/hell1",
+        "oldTargetMs": 2500,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 9,
+          "stopped": "time",
+          "p95": 15955.5532
+        }
+      },
+      {
+        "key": "diagonalX/easy",
+        "oldTargetMs": 200,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 28,
+          "n": 40,
+          "stopped": "misses",
+          "p95": 1540.0429
+        }
+      },
+      {
+        "key": "diagonalX/expert",
+        "oldTargetMs": 500,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 37,
+          "n": 40,
+          "stopped": null,
+          "p95": 11795.9214
+        }
+      },
+      {
+        "key": "diagonalX/hell1",
+        "oldTargetMs": 3000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 9,
+          "stopped": "time",
+          "p95": 100984.0059
+        }
+      },
+      {
+        "key": "hyper/easy",
+        "oldTargetMs": 200,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 29,
+          "n": 40,
+          "stopped": "misses",
+          "p95": 1477.0289
+        }
+      },
+      {
+        "key": "hyper/expert",
+        "oldTargetMs": 500,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 42,
+          "n": 53,
+          "stopped": "misses",
+          "p95": 4975.0143
+        }
+      },
+      {
+        "key": "hyper/hell1",
+        "oldTargetMs": 3000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 9,
+          "stopped": "time",
+          "p95": 49381.62
+        }
+      },
+      {
+        "key": "jigsaw9/expert",
+        "oldTargetMs": 900,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 30,
+          "n": 34,
+          "stopped": "time",
+          "p95": 13692.5219
+        }
+      },
+      {
+        "key": "jigsaw9/nightmare",
+        "oldTargetMs": 5000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 27,
+          "n": 27,
+          "stopped": "time",
+          "p95": 18067.4613
+        }
+      },
+      {
+        "key": "jigsaw9/hell1",
+        "oldTargetMs": 5000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 9,
+          "stopped": "time",
+          "p95": 80503.5047
+        }
+      },
+      {
+        "key": "wordoku/normal",
+        "oldTargetMs": 250,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 35,
+          "n": 46,
+          "stopped": "misses",
+          "p95": 904.2948
+        }
+      },
+      {
+        "key": "wordoku/hell1",
+        "oldTargetMs": 2500,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 9,
+          "stopped": "time",
+          "p95": 15812.8199
+        }
+      },
+      {
+        "key": "killer/hard",
+        "oldTargetMs": 1800,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 14,
+          "stopped": "misses",
+          "p95": 6887.1679
+        }
+      },
+      {
+        "key": "killer/expert",
+        "oldTargetMs": 10000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 2,
+          "n": 12,
+          "stopped": "time",
+          "p95": 34368.4147
+        }
+      },
+      {
+        "key": "killer/master",
+        "oldTargetMs": 10000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 11,
+          "n": 14,
+          "stopped": "time",
+          "p95": 42674.0885
+        }
+      },
+      {
+        "key": "killer/nightmare",
+        "oldTargetMs": 10000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 18,
+          "n": 22,
+          "stopped": "time",
+          "p95": 32738.6213
+        }
+      },
+      {
+        "key": "killer/hell1",
+        "oldTargetMs": 10000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 9,
+          "stopped": "time",
+          "p95": 100540.6829
+        }
+      },
+      {
+        "key": "killer/hell2",
+        "oldTargetMs": 10000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 40,
+          "n": 40,
+          "stopped": "time",
+          "p95": 21188.5029
+        }
+      },
+      {
+        "key": "greaterThan/normal",
+        "oldTargetMs": 700,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 40,
+          "n": 40,
+          "stopped": null,
+          "p95": 10192.4051
+        }
+      },
+      {
+        "key": "greaterThan/expert",
+        "oldTargetMs": 10000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 38,
+          "n": 40,
+          "stopped": "time",
+          "p95": 14280.3533
+        }
+      },
+      {
+        "key": "greaterThan/nightmare",
+        "oldTargetMs": 10000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 13,
+          "n": 13,
+          "stopped": "time",
+          "p95": 46079.9964
+        }
+      },
+      {
+        "key": "greaterThan/hell1",
+        "oldTargetMs": 10000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 9,
+          "stopped": "time",
+          "p95": 120003.1741
+        }
+      },
+      {
+        "key": "mega12/hell1",
+        "oldTargetMs": 4500,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 9,
+          "stopped": "time",
+          "p95": 105764.751
+        }
+      },
+      {
+        "key": "mega16/expert",
+        "oldTargetMs": 10000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 35,
+          "n": 40,
+          "stopped": "time",
+          "p95": 40097.4702
+        }
+      },
+      {
+        "key": "mega16/nightmare",
+        "oldTargetMs": 10000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 25,
+          "n": 25,
+          "stopped": "time",
+          "p95": 60754.8719
+        }
+      },
+      {
+        "key": "mega16/hell1",
+        "oldTargetMs": 10000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 9,
+          "stopped": "time",
+          "p95": 120015.1966
+        }
+      },
+      {
+        "key": "butterfly/easy",
+        "oldTargetMs": 3000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 1,
+          "n": 15,
+          "stopped": "misses",
+          "p95": 1115.6109
+        }
+      },
+      {
+        "key": "butterfly/hell1",
+        "oldTargetMs": 8000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 9,
+          "stopped": "time",
+          "p95": 89747.1968
+        }
+      },
+      {
+        "key": "samurai/easy",
+        "oldTargetMs": 8000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 10,
+          "n": 22,
+          "stopped": "misses",
+          "p95": 1129.1194
+        }
+      },
+      {
+        "key": "samurai/nightmare",
+        "oldTargetMs": 20000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 14,
+          "n": 17,
+          "stopped": "time",
+          "p95": 120011.5779
+        }
+      },
+      {
+        "key": "samurai/hell1",
+        "oldTargetMs": 20000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 9,
+          "stopped": "time",
+          "p95": 120051.7349
+        }
+      },
+      {
+        "key": "samurai/hell2",
+        "oldTargetMs": 30000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 40,
+          "n": 40,
+          "stopped": "time",
+          "p95": 43626.5168
+        }
+      },
+      {
+        "key": "flower/easy",
+        "oldTargetMs": 8000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 14,
+          "stopped": "misses",
+          "p95": 901.8375
+        }
+      },
+      {
+        "key": "flower/expert",
+        "oldTargetMs": 20000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 23,
+          "n": 35,
+          "stopped": "misses",
+          "p95": 7717.0783
+        }
+      },
+      {
+        "key": "flower/nightmare",
+        "oldTargetMs": 20000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 42,
+          "n": 50,
+          "stopped": "time",
+          "p95": 32514.7798
+        }
+      },
+      {
+        "key": "flower/hell1",
+        "oldTargetMs": 20000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 9,
+          "stopped": "time",
+          "p95": 74224.1577
+        }
+      },
+      {
+        "key": "sohei/easy",
+        "oldTargetMs": 8000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 4,
+          "n": 18,
+          "stopped": "misses",
+          "p95": 899.3724
+        }
+      },
+      {
+        "key": "sohei/nightmare",
+        "oldTargetMs": 20000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 29,
+          "n": 30,
+          "stopped": "time",
+          "p95": 78814.875
+        }
+      },
+      {
+        "key": "sohei/hell1",
+        "oldTargetMs": 20000,
+        "newTarget": null,
+        "gq": {
+          "verdict": "hidden",
+          "hits": 0,
+          "n": 9,
+          "stopped": "time",
+          "p95": 120015.0996
+        }
+      }
+    ],
+    "smokeBefore": [
+      "classic4/veryEasy",
+      "classic9/veryEasy",
+      "classic9/normal",
+      "classic9/hard",
+      "classic9/master",
+      "classic9/nightmare",
+      "diagonalX/normal",
+      "hyper/normal",
+      "jigsaw9/normal",
+      "wordoku/normal",
+      "killer/veryEasy",
+      "killer/normal",
+      "greaterThan/normal",
+      "mega12/normal",
+      "mega16/veryEasy",
+      "butterfly/veryEasy",
+      "samurai/veryEasy",
+      "flower/veryEasy",
+      "sohei/veryEasy"
+    ],
+    "smokeAfter": [
+      "classic4/veryEasy",
+      "classic9/veryEasy",
+      "classic9/normal",
+      "classic9/hard",
+      "classic9/master",
+      "classic9/nightmare",
+      "diagonalX/normal",
+      "hyper/normal",
+      "jigsaw9/normal",
+      "wordoku/easy",
+      "killer/veryEasy",
+      "killer/normal",
+      "greaterThan/easy",
+      "mega12/normal",
+      "mega16/veryEasy",
+      "butterfly/veryEasy",
+      "samurai/veryEasy",
+      "flower/veryEasy",
+      "sohei/veryEasy"
+    ],
+    "substitutions": [
+      {
+        "from": "wordoku/normal",
+        "to": "wordoku/easy",
+        "fromVerdict": {
+          "verdict": "hidden",
+          "hits": 35,
+          "n": 46,
+          "stopped": "misses",
+          "p95": 904.2948
+        },
+        "toVerdict": {
+          "verdict": "offered",
+          "hits": 40,
+          "n": 40,
+          "stopped": null,
+          "p95": 973.633
+        }
+      },
+      {
+        "from": "greaterThan/normal",
+        "to": "greaterThan/easy",
+        "fromVerdict": {
+          "verdict": "hidden",
+          "hits": 40,
+          "n": 40,
+          "stopped": null,
+          "p95": 10192.4051
+        },
+        "toVerdict": {
+          "verdict": "offered",
+          "hits": 40,
+          "n": 40,
+          "stopped": null,
+          "p95": 92.0121
+        }
+      }
+    ]
+  },
+  "recoveryProfile": {
+    "oldToolHash": "47110866ae0c0f0b05977ff05fd5804416f86249087c57b88954a02d3c968066",
+    "newToolHash": "c7e90ca9d0815255e945da6ffe4d513733fe886dcf2698157765715577957bdf",
+    "oldFiles": [
+      {
+        "file": "tests/difficulty-recovery.js",
+        "sha256": "e2d99997546667b1188a2b9f4a2e548bf053974a824262955fa0f3eebe8470f9"
+      },
+      {
+        "file": "tests/fixtures/recovery-profile.js",
+        "sha256": "fc32f1f7e25ec80ee7d234cef61ec8578cec4a8ea2d5159dfacbdcdfb4336b44"
+      },
+      {
+        "file": "tests/replay-fixtures.js",
+        "sha256": "ada7cb9404993fe4f4d3fd996bb7b1c8436069b2b4cafa1a1cd57899a0512f82"
+      },
+      {
+        "file": "tests/fixtures/replay-goldens.js",
+        "sha256": "72b016382acea075e6423c08c7495942001df064169f69c34ce609281758d406"
+      }
+    ],
+    "newFiles": [
+      {
+        "file": "tests/difficulty-recovery.js",
+        "sha256": "84dfacdb146777d3909aac8190dde2e21673f522135b70e47206dbe49aff8c1b"
+      },
+      {
+        "file": "tests/fixtures/recovery-profile.js",
+        "sha256": "430b325f24b96e57ae2b96fa3a0e1c68dc906eab872a0ac230e8b1207f8168b3"
+      },
+      {
+        "file": "tests/replay-fixtures.js",
+        "sha256": "ada7cb9404993fe4f4d3fd996bb7b1c8436069b2b4cafa1a1cd57899a0512f82"
+      },
+      {
+        "file": "tests/fixtures/replay-goldens.js",
+        "sha256": "72b016382acea075e6423c08c7495942001df064169f69c34ce609281758d406"
+      },
+      {
+        "file": "tests/fixtures/tool-records.js",
+        "sha256": "21113d14d685dab1b3d71461e0c3ff27b03086f827d86cfb1f136cd6e87a21ae"
+      }
+    ],
+    "oldFixtures": [
+      "tests/fixtures/replay-goldens.js",
+      "tests/fixtures/recovery-profile.js"
+    ],
+    "newFixtures": [
+      "tests/fixtures/tool-records.js",
+      "tests/fixtures/replay-goldens.js",
+      "tests/fixtures/recovery-profile.js"
+    ],
+    "changedFiles": [
+      "tests/difficulty-recovery.js",
+      "tests/fixtures/recovery-profile.js",
+      "tests/fixtures/tool-records.js"
+    ]
+  },
+  "problems": []
+}

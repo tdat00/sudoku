@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=variants --filter=> variants: killer > --results=..\docs\difficulty-v3\evidence\MS18c\closure\manual-variants\result-variant-killer.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   variants: 11 passed  (4.47 s)
+
+Suites: 1
+Tests:  11 total, 11 passed, 0 failed, 0 skipped
+Time:   4.47 s running tests, 4.72 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/manual-variants/result-variant-killer.json
+exit=0 seconds=4.956

@@ -1241,7 +1241,7 @@ header of `../core/js/engine/techniques.js`. A complete example — *Full House*
 Everything runs in Node 18+ with no installation (no npm packages are used):
 
 ```bash
-node tests/node-runner.js # the quick set (55 suites, 4,784 tests), whole or in disjoint shards
+node tests/node-runner.js # the quick set (55 suites, 4,807 tests), whole or in disjoint shards
 node tests/node-runner.js --manual                 # only the heavy suites of tests/manual (8 suites)
 node tests/node-runner.js --all                    # quick + manual (63 suites)
 node tests/node-runner.js --suite=killer,variants  # only these suites, quick or manual (file name without .test.js)
@@ -1253,7 +1253,7 @@ node tests/node-runner.js --bail                   # stop at the first failure
 ```
 
 **Two sets of suites, so that development stays fast.** The **quick set** is what runs by default: 55 suites,
-4,784 tests — the 37 suites of `tests/suites/` and the 18 of `../core/tests/suites/` that the
+4,807 tests — the 37 suites of `tests/suites/` and the 18 of `../core/tests/suites/` that the
 player runs too (the engine, the technique ladder, the exchange format, the board view, the harness itself). It includes `smoke.test.js`, which generates one puzzle
 per variant and checks its uniqueness, level and determinism and a sample of the regression hashes.
 `tests/manual/` holds the 8 **heavy** suites — `variants`, `killer`, `greater-than`, `perf`, `difficulty`,
@@ -1310,7 +1310,7 @@ engine, every variant, the solving techniques, the pipeline and its events, the 
 pure parts of every UI module (they run without a DOM). `tests/suites/help.test.js` also checks the guides
 against the code: the variants table and the URL parameters of the user guide; the script names, commands and
 flags, the `SG.…` names and the two worked examples of this guide; and the links of all four guides. At the tip
-of this repository the runner counts 63 suites, 55 of them quick (4,784 tests), all green; the counts of the combined project at its final review (before the split) are in
+of this repository the runner counts 63 suites, 55 of them quick (4,807 tests), all green; the counts of the combined project at its final review (before the split) are in
 [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 **Exact selection, inventory and results.** `--filter` keeps its meaning (a case-insensitive part of the full name,
@@ -1333,7 +1333,12 @@ and exclude each other. The code is `core/tests/node-evidence.js` (Node only, no
 and the corpus of the `variants` sweep are built level by level, on the first read of a level
 (`SG.test.lazyCorpus`, `tests/fixtures/manual-corpus.js`): a test that reads one level generates only that level, with
 the seeds, counts and options of the whole corpus, while the tests that need every level (`corpus()`, `allPuzzles()`,
-the aggregate checks of the sweep) still build all of them. The filter is a plain substring of the lower-cased full
+the aggregate checks of the sweep) still build all of them. The corpus of the five suites is a fixed diagnostic one:
+it keeps its original ladder (nine levels, eight for `wordoku`) and the original seeds (from the original level index),
+whatever the variant offers now, and builds a level that qualification hides only inside the per-call
+`SG.fixtures.toolRecords.withRequestedLevel` guard (the exact support array is put back in `finally`; no menu offers it).
+Only the per-level registrations (`> <level>: … > I5:`, `CV6:`) exist for the offered levels alone, so a hidden level has no
+selector; the sweep keeps its own corpus of the offered levels. The filter is a plain substring of the lower-cased full
 name, so a selector starts at a describe boundary with `> `, and goes in quotes: `easy: 20 puzzles > I5:` also matches
 Very Easy, `> easy: 20 puzzles > I5:` does not. The selectors:
 `> <level>: <count> puzzles > I5:` (and `… > CV6:`) for `killer`, `jigsaw`, `greater-than` and `wordoku` (`killer` has

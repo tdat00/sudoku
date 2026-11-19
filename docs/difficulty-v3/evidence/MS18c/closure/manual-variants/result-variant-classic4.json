@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "13cd63bfb0f5af687bc8e841d522cc7f216aa116125394b33fbc32a53ab1ef3f",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["variants"],"filter":"> variants: classic4 >","exact":null,"count":9},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 268.9,
+  "results": {
+    "total": 9,
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 21.2,
+    "tests": [
+      {"suite":"variants","name":"CV0 the definition and its difficulty spec are sound","fullName":"variants > variants: classic4 > CV0 the definition and its difficulty spec are sound","status":"pass","ms":2.531,"reason":"","error":null,"ordinal":0},
+      {"suite":"variants","name":"CV1 every model passes model.validate (all option values too)","fullName":"variants > variants: classic4 > CV1 every model passes model.validate (all option values too)","status":"pass","ms":1.769,"reason":"","error":null,"ordinal":1},
+      {"suite":"variants","name":"CV2 full grids are valid for every seed","fullName":"variants > variants: classic4 > CV2 full grids are valid for every seed","status":"pass","ms":1.889,"reason":"","error":null,"ordinal":2},
+      {"suite":"variants","name":"CV3 veryEasy: puzzles at the supported level","fullName":"variants > variants: classic4 > CV3 veryEasy: puzzles at the supported level","status":"pass","ms":10.941,"reason":"","error":null,"ordinal":3},
+      {"suite":"variants","name":"CV3 unsupported: other levels are refused","fullName":"variants > variants: classic4 > CV3 unsupported: other levels are refused","status":"pass","ms":0.512,"reason":"","error":null,"ordinal":4},
+      {"suite":"variants","name":"CV4 invariants I1-I7 hold (I6 with the variant's clue floor)","fullName":"variants > variants: classic4 > CV4 invariants I1-I7 hold (I6 with the variant's clue floor)","status":"pass","ms":0.699,"reason":"","error":null,"ordinal":5},
+      {"suite":"variants","name":"CV5 the same seed gives the same puzzle","fullName":"variants > variants: classic4 > CV5 the same seed gives the same puzzle","status":"pass","ms":0.827,"reason":"","error":null,"ordinal":6},
+      {"suite":"variants","name":"CV6 soft: generation never hangs (milestones: perf.test.js)","fullName":"variants > variants: classic4 > CV6 soft: generation never hangs (milestones: perf.test.js)","status":"pass","ms":0.053,"reason":"","error":null,"ordinal":7},
+      {"suite":"variants","name":"CV7 name, options and levels exist in both locale packs","fullName":"variants > variants: classic4 > CV7 name, options and levels exist in both locale packs","status":"pass","ms":1.169,"reason":"","error":null,"ordinal":8}
+    ],
+    "suites": [
+      {"name":"variants","total":9,"passed":9,"failed":0,"skipped":0,"ms":20.893}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=variants","--filter=> variants: classic4 >","--results=..\\docs\\difficulty-v3\\evidence\\MS18c\\closure\\manual-variants\\result-variant-classic4.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

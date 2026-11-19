@@ -88,9 +88,10 @@
       ready();
       expect(values(field(model('?v=classic4'), 'difficulty'))).toEqual(['veryEasy']);
       expect(values(field(model('?v=classic6'), 'difficulty'))).toEqual(['veryEasy', 'hard']);
-      expect(values(field(model('?v=classic9'), 'difficulty'))).toEqual(SG.difficulty.LEVELS.slice(0, 8));
-      expect(values(field(model('?v=killer'), 'difficulty'))).toEqual(SG.difficulty.LEVELS);
-      expect(values(field(model('?v=samurai'), 'difficulty'))).toEqual(SG.difficulty.LEVELS);
+      expect(values(field(model('?v=classic9'), 'difficulty'))).toEqual(SG.difficulty.LEVELS.slice(0, 7));
+      expect(values(field(model('?v=killer'), 'difficulty'))).toEqual(SG.difficulty.LEVELS.slice(0, 3));
+      expect(values(field(model('?v=samurai'), 'difficulty')))
+        .toEqual(['veryEasy', 'normal', 'hard', 'expert', 'master']);
       variantIds().forEach(function (id) {
         var f = field(model('?v=' + id), 'difficulty');
         expect(values(f).indexOf(f.value)).not.toBe(-1);
@@ -836,7 +837,7 @@
       withEnglish(function () {
         var fx = mountFixture();
         pick(fx.byId('ctl-variant'), 'killer');
-        pick(fx.byId('ctl-difficulty'), 'master');
+        pick(fx.byId('ctl-difficulty'), 'easy');
         fx.byId('ctl-advanced').open = true;
         fx.byId('ctl-seed').value = '77';
         fx.byId('ctl-seed').fire('input');
@@ -845,7 +846,7 @@
         var label = fx.doc.find(fx.form, function (el) { return el.getAttribute('for') === 'ctl-variant'; });
         expect(label.textContent).toBe('Biến thể');
         expect(fx.byId('ctl-difficulty').children[0].textContent).toBe('Rất dễ');
-        expect(fx.byId('ctl-difficulty').value).toBe('master');
+        expect(fx.byId('ctl-difficulty').value).toBe('easy');
         expect(fx.byId('ctl-variant').value).toBe('killer');
         expect(fx.byId('ctl-seed').value).toBe('77');
         expect(fx.byId('ctl-advanced').open).toBe(true);
@@ -1063,10 +1064,14 @@
       };
     }
 
+    // The offers start from the whole ladder, whatever the published arrays are (MS18c): each test names the
+    // levels it hides.
     function withHidden(variantId, hidden, fn) {
       var def = SG.variants.get(variantId);
       var original = def.difficultySupport;
-      def.difficultySupport = original.filter(function (level) { return hidden.indexOf(level) === -1; });
+      def.difficultySupport = SG.difficulty.LEVELS.filter(function (level) {
+        return hidden.indexOf(level) === -1;
+      });
       try {
         return fn();
       } finally {

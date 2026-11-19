@@ -190,12 +190,13 @@
   var ENGINE_FILE = /^(?:\.\.\/core\/js\/engine|js\/engine|js\/variants|assets\/wordlists)\//;
   var SANDBOX_FIXTURES = ['../core/tests/fixtures/classic.js', '../core/tests/fixtures/techniques-helper.js',
     '../core/tests/fixtures/techniques.js', '../core/tests/fixtures/testkit.js',
-    'tests/fixtures/testkit-provider.js', 'tests/fixtures/manual-corpus.js'];
+    'tests/fixtures/testkit-provider.js', 'tests/fixtures/tool-records.js', 'tests/fixtures/manual-corpus.js'];
 
   /**
    * Node only (`node` is `SG.test.node`: fs, path, vm and the generator folder). A second complete engine
    * registry in a vm context, with its own harness, the engine, the variants and the fixtures that the manual
-   * suites need. Nothing of it is shared with the registry of the run.
+   * suites need (`tool-records.js` since MS18c: the per-call guard that builds a hidden diagnostic level). Nothing
+   * of it is shared with the registry of the run.
    *
    *  - register(name, relPath)         registers the suite as the runner does, so `list` can select its tests
    *  - list(options)                   SG.test.list of that harness (suite, filter, exact)

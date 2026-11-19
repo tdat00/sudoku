@@ -103,9 +103,29 @@
       return sandbox().probe(sourceOf(file), names, extra);
     }
 
-    /** fn with a scripted pipeline (or the real one with `real`): its value, the log and the plan of the requests. */
+    /**
+     * A scripted pipeline that refuses what the real one refuses (`SG.pipeline.normalizeConfig`): a request whose
+     * level its variant does not offer at the moment of the call. Every other request returns the plain stub, so a
+     * request for a level that qualification hides passes only inside the per-call `withRequestedLevel` guard.
+     */
+    function checkedRun(b) {
+      return function (config) {
+        var def = b.SG.variants.get(config.variantId);
+        if (def.difficultySupport.indexOf(config.difficulty) === -1) {
+          throw new b.SG.errors.GenerationError('difficulty.unsupportedLevel',
+            { level: config.difficulty, variantId: config.variantId });
+        }
+        return { scripted: true, config: JSON.parse(MC.canonical(MC.plain(config))) };
+      };
+    }
+
+    /**
+     * fn with a scripted pipeline (`real`: the real one; 'checked': the scripted one that refuses a level the
+     * variant does not offer): its value, the log and the plan of the requests.
+     */
     function recorded(fn, real) {
-      var rec = MC.recorder({ budgetMsOf: box.budgetMsOf, delegate: real ? box.realRun() : null });
+      var delegate = real === true ? box.realRun() : (real === 'checked' ? checkedRun(box) : null);
+      var rec = MC.recorder({ budgetMsOf: box.budgetMsOf, delegate: delegate });
       var value = box.withRun(rec.run, fn);
       return { value: value, log: rec.log, plan: MC.planOf(rec.log) };
     }
@@ -123,14 +143,28 @@
       return b.SG.variants.get(id).difficultySupport.slice();
     }
 
+    // The fixed diagnostic ladders of the five suites, written from the task's table (MS18c): the corpus of a suite
+    // keeps its pre-qualification levels, whatever the variant offers now. Killer, jigsaw, greater-than and
+    // extra-regions have nine; wordoku has eight. The `variants` sweep has no fixed ladder: its corpus is the offered
+    // levels of each variant.
+    var NINE = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1', 'hell2'];
+    var EIGHT = NINE.slice(0, 8);
+
+    /** The levels of the corpus of an adapter for a group, in the order of the original global index. */
+    function ladderOf(a, b, g) {
+      return a.ladder ? a.ladder.slice() : levelsOf(b, g.id);
+    }
+
     function topLevel(b, level) {
       return b.SG.difficulty.levelIndex(level) >= b.SG.difficulty.levelIndex('expert');
     }
 
-    // The seeded plan of each adapter, written from the task's table, not from the code under test.
+    // The seeded plan of each adapter, written from the task's table, not from the code under test. `li` is the
+    // original global index of the level in the ladder of the adapter, never a position in the filtered offers.
     var ADAPTERS = [
       {
         name: 'killer', file: 'killer.test.js', names: ['corpus', 'corpusOf'], trace: 'off', emit: 'none',
+        ladder: NINE,
         groups: function () { return [{ id: 'killer', vi: 0 }]; },
         count: function (b, g, level) { return topLevel(b, level) ? 8 : 20; },
         seed: function (g, li, i) { return i + 1; },
@@ -139,6 +173,7 @@
       },
       {
         name: 'jigsaw', file: 'jigsaw.test.js', names: ['puzzleRun'], trace: 'off', emit: 'none',
+        ladder: NINE,
         groups: function () { return [{ id: 'jigsaw9', vi: 0 }]; },
         count: function (b, g, level) { return level === 'hell2' ? 8 : 20; },
         seed: function (g, li, i) { return 700 + li * 100 + i; },
@@ -147,7 +182,7 @@
       },
       {
         name: 'greater-than', file: 'greater-than.test.js', names: ['puzzleRun', 'allPuzzles'], trace: 'summary',
-        emit: 'function',
+        emit: 'function', ladder: NINE,
         groups: function () { return [{ id: 'greaterThan', vi: 0 }]; },
         count: function (b, g, level) { return ['veryEasy', 'easy', 'normal'].indexOf(level) !== -1 ? 20 : 10; },
         seed: function (g, li, i) { return 100 * (li + 1) + i; },
@@ -156,7 +191,7 @@
       },
       {
         name: 'extra-regions', file: 'extra-regions.test.js', names: ['puzzleRun', 'allPuzzles'], trace: 'summary',
-        emit: 'function',
+        emit: 'function', ladder: NINE,
         groups: function () { return [{ id: 'diagonalX', vi: 0 }, { id: 'hyper', vi: 1 }]; },
         count: function (b, g, level) { return level === 'hell2' ? 8 : 20; },
         seed: function (g, li, i) { return 10000 * (g.vi + 1) + 100 * li + i; },
@@ -165,7 +200,7 @@
       },
       {
         name: 'wordoku', file: 'wordoku.test.js', names: ['puzzleRun', 'allPuzzles'], trace: 'summary',
-        emit: 'function',
+        emit: 'function', ladder: EIGHT,
         groups: function () { return [{ id: 'wordoku', vi: 0 }]; },
         count: function () { return 20; },
         seed: function (g, li, i) { return 100 * (li + 1) + i; },
@@ -200,7 +235,7 @@
     function keysOf(a, b) {
       var keys = [];
       a.groups(b).forEach(function (g) {
-        levelsOf(b, g.id).forEach(function (level, li) { keys.push({ g: g, level: level, li: li }); });
+        ladderOf(a, b, g).forEach(function (level, li) { keys.push({ g: g, level: level, li: li }); });
       });
       return keys;
     }
@@ -215,15 +250,15 @@
           var b = sandbox();
           var p = probeOf(a.file, a.names);
           a.groups(b).forEach(function (g) {
-            var levels = levelsOf(b, g.id);
+            var levels = ladderOf(a, b, g);
             var picks = [Math.floor(levels.length / 2), levels.length - 1, 0].filter(function (li, at, all) {
               return all.indexOf(li) === at;
             });
             picks.forEach(function (li) {
-              var first = recorded(function () { return a.read(p, g, levels[li]); });
+              var first = recorded(function () { return a.read(p, g, levels[li]); }, 'checked');
               expect(first.plan).toEqual(planOfKey(a, b, g, levels[li], li));
               expect(first.value).toHaveLength(a.count(b, g, levels[li]));
-              var again = recorded(function () { return a.read(p, g, levels[li]); });
+              var again = recorded(function () { return a.read(p, g, levels[li]); }, 'checked');
               expect(again.log).toHaveLength(0);
               expect(again.value).toBe(first.value);
             });
@@ -236,7 +271,7 @@
           var keys = keysOf(a, b);
           var aggregate = recorded(function () {
             return a.groups(b).reduce(function (all, g) { return all.concat(flatten(a.all(p, g))); }, []);
-          });
+          }, 'checked');
           expect(aggregate.plan).toEqual(wholePlan(a, b, keys));
           expect(aggregate.value).toHaveLength(wholePlan(a, b, keys).length);
         });
@@ -246,11 +281,11 @@
           var b = sandbox();
           var p = probeOf(a.file, a.names);
           var keys = keysOf(a, b);
-          var reads = recorded(function () { keys.forEach(function (k) { a.read(p, k.g, k.level); }); });
+          var reads = recorded(function () { keys.forEach(function (k) { a.read(p, k.g, k.level); }); }, 'checked');
           expect(reads.plan).toEqual(wholePlan(a, b, keys));
           var aggregate = recorded(function () {
             return a.groups(b).reduce(function (all, g) { return all.concat(flatten(a.all(p, g))); }, []);
-          });
+          }, 'checked');
           expect(aggregate.log).toHaveLength(0);
           expect(aggregate.value.map(function (puzzle) { return configOf(puzzle); }))
             .toEqual(wholePlan(a, b, keys).map(function (entry) { return entry.config; }));
@@ -262,12 +297,12 @@
             var p = probeOf(a.file, a.names);
             var keys = keysOf(a, b);
             var reverse = keys.slice().reverse();
-            var reads = recorded(function () { reverse.forEach(function (k) { a.read(p, k.g, k.level); }); });
+            var reads = recorded(function () { reverse.forEach(function (k) { a.read(p, k.g, k.level); }); }, 'checked');
             // Each key is built in one piece with its own original index: the log is the keys in reading order.
             expect(reads.plan).toEqual(wholePlan(a, b, reverse));
             var aggregate = recorded(function () {
               return a.groups(b).reduce(function (all, g) { return all.concat(flatten(a.all(p, g))); }, []);
-            });
+            }, 'checked');
             expect(aggregate.log).toHaveLength(0);
             expect(aggregate.value.map(function (puzzle) { return configOf(puzzle); }))
               .toEqual(wholePlan(a, b, keys).map(function (entry) { return entry.config; }));
@@ -282,7 +317,7 @@
         var source = sourceOf(a.file).replace('100 * (li + 1) + i', '100 * li + i');
         expect(source).not.toBe(sourceOf(a.file));
         var p = b.probe(source, a.names);
-        var changed = recorded(function () { return a.read(p, a.groups(b)[0], 'normal'); });
+        var changed = recorded(function () { return a.read(p, a.groups(b)[0], 'normal'); }, 'checked');
         expect(changed.plan).not.toEqual(planOfKey(a, b, a.groups(b)[0], 'normal', 2));
       });
 
@@ -455,42 +490,53 @@
         expect(tests[0].skipped).toBe(false);
       }
 
+      // The published levels of each suite (docs/difficulty-rating/qualification.md), written from the task's table:
+      // only they have a public per-level registration (MS18c); the other levels of the fixed ladder have none.
       var PLAIN = [
-        { suite: 'killer', id: 'killer', count: function (b, level) { return topLevel(b, level) ? 8 : 20; },
-          tests: ['I5:'] },
-        { suite: 'jigsaw', id: 'jigsaw9', count: function (b, level) { return level === 'hell2' ? 8 : 20; },
+        { suite: 'killer', id: 'killer', published: ['veryEasy', 'easy', 'normal'], ladder: NINE,
+          count: function (b, level) { return topLevel(b, level) ? 8 : 20; }, tests: ['I5:'] },
+        { suite: 'jigsaw', id: 'jigsaw9', published: ['veryEasy', 'easy', 'normal', 'hard', 'master', 'hell2'],
+          ladder: NINE, count: function (b, level) { return level === 'hell2' ? 8 : 20; },
           tests: ['I5:', 'CV6:'] },
-        { suite: 'greater-than', id: 'greaterThan', count: function (b, level) {
-          return ['veryEasy', 'easy', 'normal'].indexOf(level) !== -1 ? 20 : 10;
-        }, tests: ['I5:', 'CV6:'] },
-        { suite: 'wordoku', id: 'wordoku', count: function () { return 20; }, tests: ['I5:', 'CV6:'] }
+        { suite: 'greater-than', id: 'greaterThan', published: ['veryEasy', 'easy', 'hard', 'master', 'hell2'],
+          ladder: NINE, count: function (b, level) {
+            return ['veryEasy', 'easy', 'normal'].indexOf(level) !== -1 ? 20 : 10;
+          }, tests: ['I5:', 'CV6:'] },
+        { suite: 'wordoku', id: 'wordoku', published: ['veryEasy', 'easy', 'hard', 'expert', 'master', 'nightmare'],
+          ladder: EIGHT, count: function () { return 20; }, tests: ['I5:', 'CV6:'] }
       ];
 
       PLAIN.forEach(function (entry) {
-        it(entry.suite + ': "> <level>: <count> puzzles > I5:" selects one test per level', function () {
+        it(entry.suite + ': "> <level>: <count> puzzles > I5:" selects one test per published level, none ' +
+          'for a hidden one', function () {
           var b = registry();
-          var levels = levelsOf(b, entry.id);
-          expect(levels.length).toBeGreaterThan(7);
-          levels.forEach(function (level) {
+          expect(levelsOf(b, entry.id)).toEqual(entry.published);
+          entry.ladder.forEach(function (level) {
             entry.tests.forEach(function (name) {
-              expectOne(entry.suite, '> ' + level + ': ' + entry.count(b, level) + ' puzzles > ' + name, name);
+              var filter = '> ' + level + ': ' + entry.count(b, level) + ' puzzles > ' + name;
+              if (entry.published.indexOf(level) !== -1) expectOne(entry.suite, filter, name);
+              else expect(select(entry.suite, filter)).toHaveLength(0);
             });
           });
         });
       });
 
-      it('extra-regions: "> <variant> <level>: <count> puzzles > I5:" selects one test per variant and level',
-        function () {
-          var b = registry();
-          ['diagonalX', 'hyper'].forEach(function (id) {
-            levelsOf(b, id).forEach(function (level) {
-              ['I5:', 'CV6:'].forEach(function (name) {
-                var count = level === 'hell2' ? 8 : 20;
-                expectOne('extra-regions', '> ' + id + ' ' + level + ': ' + count + ' puzzles > ' + name, name);
-              });
+      it('extra-regions: "> <variant> <level>: <count> puzzles > I5:" selects one test per variant and published ' +
+        'level, none for a hidden one', function () {
+        var b = registry();
+        var published = ['veryEasy', 'normal', 'hard', 'master', 'nightmare', 'hell2'];
+        ['diagonalX', 'hyper'].forEach(function (id) {
+          expect(levelsOf(b, id)).toEqual(published);
+          NINE.forEach(function (level) {
+            ['I5:', 'CV6:'].forEach(function (name) {
+              var count = level === 'hell2' ? 8 : 20;
+              var filter = '> ' + id + ' ' + level + ': ' + count + ' puzzles > ' + name;
+              if (published.indexOf(level) !== -1) expectOne('extra-regions', filter, name);
+              else expect(select('extra-regions', filter)).toHaveLength(0);
             });
           });
         });
+      });
 
       it('the boundary prefix matters: "easy: 20 puzzles > I5:" also matches Very Easy, the prefixed form does not',
         function () {
@@ -522,6 +568,260 @@
         });
         expect(select('variants', 'CV3 puzzles at every supported level')).toHaveLength(0);
         expect(select('variants', '> variants: classic9 > CV3 easy:')).toHaveLength(1);
+      });
+    });
+
+    describe('the fixed diagnostic corpora keep their ladder, seeds and guard (MS18c)', function () {
+      var FIVE = ADAPTERS.slice(0, 5);
+      var PUBLISHED = {
+        killer: ['veryEasy', 'easy', 'normal'],
+        jigsaw: ['veryEasy', 'easy', 'normal', 'hard', 'master', 'hell2'],
+        'greater-than': ['veryEasy', 'easy', 'hard', 'master', 'hell2'],
+        'extra-regions': ['veryEasy', 'normal', 'hard', 'master', 'nightmare', 'hell2'],
+        wordoku: ['veryEasy', 'easy', 'hard', 'expert', 'master', 'nightmare']
+      };
+
+      function range(first, n) {
+        var out = [];
+        for (var i = 0; i < n; i++) out.push(first + i);
+        return out;
+      }
+
+      function supportArrays(b) {
+        var out = {};
+        b.SG.variants.list().forEach(function (def) { out[def.id] = def.difficultySupport; });
+        return out;
+      }
+
+      function expectSame(b, before) {
+        Object.keys(before).forEach(function (id) {
+          expect(b.SG.variants.get(id).difficultySupport).toBe(before[id]);
+        });
+      }
+
+      it('lists the fixed ladder and the published levels of every suite: killer and extra-regions nine, ' +
+        'wordoku eight, and no corpus is built by reading the lazy keys', function () {
+        var b = sandbox();
+        FIVE.forEach(function (a) {
+          var p = probeOf(a.file, ['LEVELS', 'PUBLISHED'].concat(a.names));
+          expect(p.LEVELS).toEqual(a.ladder);
+          expect(p.PUBLISHED).toEqual(PUBLISHED[a.name]);
+          expect(levelsOf(b, a.groups(b)[0].id)).toEqual(PUBLISHED[a.name]);
+          if (a.name !== 'killer') {
+            var listed = recorded(function () {
+              var corpus = p.puzzleRun();
+              return a.name === 'extra-regions'
+                ? { diagonalX: Object.keys(corpus.diagonalX), hyper: Object.keys(corpus.hyper) }
+                : Object.keys(corpus);
+            }, 'checked');
+            expect(listed.log).toHaveLength(0);
+            expect(listed.value).toEqual(a.name === 'extra-regions'
+              ? { diagonalX: a.ladder, hyper: a.ladder } : a.ladder);
+          }
+        });
+        expect(NINE).toHaveLength(9);
+        expect(EIGHT).toHaveLength(8);
+      });
+
+      it('builds every hidden level inside the per-call guard: the requested tuple, no unsupported-level error, ' +
+        'the very support array put back, and an unguarded request still refused', function () {
+        var b = sandbox();
+        var before = supportArrays(b);
+        FIVE.forEach(function (a) {
+          var p = probeOf(a.file, a.names);
+          a.groups(b).forEach(function (g) {
+            var hidden = ladderOf(a, b, g).filter(function (level) {
+              return levelsOf(b, g.id).indexOf(level) === -1;
+            });
+            expect(hidden.length).toBeGreaterThan(0);
+            hidden.forEach(function (level) {
+              var run = recorded(function () { return a.read(p, g, level); }, 'checked');
+              expect(run.log).toHaveLength(a.count(b, g, level));
+              run.log.forEach(function (entry) {
+                expect(entry.outcome).toBe('returned');
+                expect(entry.config.variantId).toBe(g.id);
+                expect(entry.config.difficulty).toBe(level);
+              });
+              expectSame(b, before);
+            });
+            var refused = null;
+            try {
+              recorded(function () {
+                return b.SG.pipeline.run({ variantId: g.id, difficulty: hidden[0], seed: 1, trace: 'off' }, null);
+              }, 'checked');
+            } catch (err) {
+              refused = err;
+            }
+            expect(refused).not.toBeNull();
+            expect(refused.code).toBe('difficulty.unsupportedLevel');
+            expectSame(b, before);
+          });
+        });
+      });
+
+      it('puts the exact support array back when a build throws, and publishes nothing of that level',
+        function () {
+          var b = sandbox();
+          var before = supportArrays(b);
+          FIVE.forEach(function (a) {
+            var p = probeOf(a.file, a.names);
+            var g = a.groups(b)[0];
+            var level = ladderOf(a, b, g).filter(function (name) {
+              return levelsOf(b, g.id).indexOf(name) === -1;
+            })[0];
+            var boom = new Error('boom');
+            expect(function () {
+              b.withRun(function () { throw boom; }, function () { return a.read(p, g, level); });
+            }).toThrow('boom');
+            expectSame(b, before);
+            var again = recorded(function () { return a.read(p, g, level); }, 'checked');
+            expect(again.log).toHaveLength(a.count(b, g, level));
+            expectSame(b, before);
+          });
+        });
+
+      it('would notice an unguarded build: a probe of greater-than without its guard is refused for a hidden ' +
+        'level and not for an offered one', function () {
+        var b = sandbox();
+        var a = ADAPTERS[2];
+        var guard = "return SG.fixtures.toolRecords.withRequestedLevel('greaterThan', level, fn).value;";
+        var source = sourceOf(a.file).replace(guard, 'return fn();');
+        expect(source).not.toBe(sourceOf(a.file));
+        var p = b.probe(source, a.names);
+        var g = a.groups(b)[0];
+        var refused = null;
+        try {
+          recorded(function () { return a.read(p, g, 'normal'); }, 'checked');
+        } catch (err) {
+          refused = err;
+        }
+        expect(refused).not.toBeNull();
+        expect(refused.code).toBe('difficulty.unsupportedLevel');
+        expect(recorded(function () { return a.read(p, g, 'easy'); }, 'checked').log).toHaveLength(20);
+      });
+
+      it('keeps the witness populations of the cross-level assertions: Greater-Than 20 + 10 + 10, Killer Hard ' +
+        'and Master, Wordoku Normal seed 302, and the hybrid of 72 requests', function () {
+        var b = sandbox();
+        var gt = ADAPTERS[2];
+        var pg = probeOf(gt.file, gt.names);
+        var g = gt.groups(b)[0];
+        var used = recorded(function () {
+          return ['normal', 'hard', 'master'].map(function (level) { return gt.read(pg, g, level); });
+        }, 'checked');
+        expect(used.plan.map(function (e) { return e.config.difficulty + ':' + e.config.seed; })).toEqual(
+          range(300, 20).map(function (s) { return 'normal:' + s; })
+            .concat(range(400, 10).map(function (s) { return 'hard:' + s; }))
+            .concat(range(600, 10).map(function (s) { return 'master:' + s; })));
+
+        var killer = ADAPTERS[0];
+        var pk = probeOf(killer.file, killer.names);
+        var k = killer.groups(b)[0];
+        var hardMaster = recorded(function () {
+          return [killer.read(pk, k, 'hard'), killer.read(pk, k, 'master')];
+        }, 'checked');
+        expect(hardMaster.plan.map(function (e) { return e.config.difficulty + ':' + e.config.seed; })).toEqual(
+          range(1, 20).map(function (s) { return 'hard:' + s; })
+            .concat(range(1, 8).map(function (s) { return 'master:' + s; })));
+        expect(hardMaster.value[0][0].seed).toBe(1);
+        expect(hardMaster.value[0][0].result.config.seed).toBe(1);
+        expect(hardMaster.value[1][0].seed).toBe(1);
+        expect(hardMaster.value[1][0].result.config.difficulty).toBe('master');
+
+        var word = ADAPTERS[4];
+        var pw = probeOf(word.file, word.names);
+        var normal = recorded(function () { return word.read(pw, word.groups(b)[0], 'normal'); }, 'checked');
+        expect(normal.value).toHaveLength(20);
+        expect(normal.value[2].config).toEqual({ variantId: 'wordoku', difficulty: 'normal', seed: 302,
+          trace: 'summary', variantOptions: { placement: 'row' } });
+
+        var ph = probeOf('extra-regions.test.js', ['hybridRun']);
+        var hybrid = recorded(function () { return ph.hybridRun(); }, 'checked');
+        expect(hybrid.plan).toHaveLength(72);
+        hybrid.plan.forEach(function (entry, n) {
+          var li = Math.floor(n / 8);
+          var i = n % 8;
+          var viaHyper = i % 2 === 1;
+          expect(entry.config).toEqual({
+            variantId: viaHyper ? 'hyper' : 'diagonalX', difficulty: NINE[li], seed: 50000 + 100 * li + i,
+            trace: 'summary', variantOptions: viaHyper ? { withDiagonals: true } : { withHyper: true }
+          });
+        });
+        expect(hybrid.plan.filter(function (e) {
+          return e.config.difficulty !== 'veryEasy' && e.config.difficulty !== 'easy';
+        })).toHaveLength(56);
+      });
+    });
+
+    describe('the performance table and its smoke cells follow the published offers (MS18c)', function () {
+      // The table of design.md 9.1 as it was before the final qualification, one row per variant, the nine levels
+      // in order (null: never offered). The offered cells keep these numbers; the 39 hidden ones lose theirs.
+      var OLD = {
+        classic4: [10, null, null, null, null, null, null, null, null],
+        classic6: [10, null, null, 350, null, null, null, null, null],
+        classic9: [60, 150, 150, 400, 400, 900, 2500, 2500, null],
+        diagonalX: [80, 200, 200, 500, 500, 1200, 3000, 3000, 3000],
+        hyper: [80, 200, 200, 500, 500, 1200, 3000, 3000, 5000],
+        jigsaw9: [150, 350, 350, 900, 900, 2000, 5000, 5000, 5000],
+        wordoku: [100, 250, 250, 600, 600, 1500, 1500, 2500, null],
+        killer: [300, 700, 700, 1800, 10000, 10000, 10000, 10000, 10000],
+        greaterThan: [300, 700, 700, 6000, 10000, 10000, 10000, 10000, 10000],
+        mega12: [400, 1000, 1000, 3000, 3000, 3000, 3000, 4500, 16000],
+        mega16: [1500, 4000, 4000, 10000, 10000, 10000, 10000, 10000, 10000],
+        butterfly: [1000, 3000, 3000, 8000, 8000, 8000, 8000, 8000, 15000],
+        samurai: [3000, 8000, 8000, 20000, 20000, 20000, 20000, 20000, 30000],
+        flower: [3000, 8000, 8000, 20000, 20000, 20000, 20000, 20000, 20000],
+        sohei: [3000, 8000, 8000, 20000, 20000, 20000, 20000, 20000, 20000]
+      };
+      var SMOKE_BEFORE = ['classic4/veryEasy', 'classic9/veryEasy', 'classic9/normal', 'classic9/hard',
+        'classic9/master', 'classic9/nightmare', 'diagonalX/normal', 'hyper/normal', 'jigsaw9/normal',
+        'wordoku/normal', 'killer/veryEasy', 'killer/normal', 'greaterThan/normal', 'mega12/normal',
+        'mega16/veryEasy', 'butterfly/veryEasy', 'samurai/veryEasy', 'flower/veryEasy', 'sohei/veryEasy'];
+
+      it('has one positive, unchanged target for each of the 79 offered cells of the registry and none for the ' +
+        '56 others (39 removed, 17 never offered)', function () {
+        var tools = SG.fixtures.perfTools;
+        if (!tools) SG.test.skip('tests/fixtures/perf-helper.js is not loaded');
+        var offered = [];
+        var removed = 0;
+        var never = 0;
+        SG.variants.list().forEach(function (def) {
+          SG.difficulty.LEVELS.forEach(function (level, i) {
+            var key = def.id + '/' + level;
+            var target = tools.PERF_TARGETS[def.id][level];
+            if (def.difficultySupport.indexOf(level) !== -1) {
+              offered.push(key);
+              expect([key, target]).toEqual([key, OLD[def.id][i]]);
+              expect(OLD[def.id][i]).toBeGreaterThan(0);
+            } else {
+              expect([key, target]).toEqual([key, undefined]);
+              if (OLD[def.id][i] === null) never++;
+              else removed++;
+            }
+          });
+        });
+        expect(SG.variants.list()).toHaveLength(15);
+        expect(offered).toHaveLength(79);
+        expect([removed, never]).toEqual([39, 17]);
+        var cells = tools.cells().map(function (c) { return c.key; });
+        expect(cells).toHaveLength(79);
+        expect(cells.slice().sort()).toEqual(offered.slice().sort());
+      });
+
+      it('keeps 19 unique smoke cells, all active, with exactly two substitutions: greaterThan/normal to ' +
+        'greaterThan/easy and wordoku/normal to wordoku/easy', function () {
+        var tools = SG.fixtures.perfTools;
+        if (!tools) SG.test.skip('tests/fixtures/perf-helper.js is not loaded');
+        var p = probeOf('perf.test.js', ['PERF_CELLS']);
+        var expected = SMOKE_BEFORE.map(function (key) {
+          if (key === 'greaterThan/normal') return 'greaterThan/easy';
+          return key === 'wordoku/normal' ? 'wordoku/easy' : key;
+        });
+        expect(p.PERF_CELLS).toEqual(expected);
+        expect(new Set(p.PERF_CELLS).size).toBe(19);
+        var active = {};
+        tools.cells().forEach(function (c) { active[c.key] = true; });
+        p.PERF_CELLS.forEach(function (key) { expect([key, active[key] === true]).toEqual([key, true]); });
       });
     });
   });

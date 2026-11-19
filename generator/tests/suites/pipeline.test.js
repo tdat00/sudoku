@@ -33,12 +33,17 @@
     return Object.assign({ variantId: 'classic9', difficulty: 'normal', seed: 1, trace: 'summary' }, extra);
   }
 
-  /** Runs the pipeline and collects its events. */
+  /**
+   * Runs the pipeline and collects its events. A fixed request may name a level that qualification hides
+   * (MS18c): the variant offers it for the length of the call only, and the exact array is put back in `finally`.
+   */
   function run(extra, trace, budget) {
     var events = [];
     var cfg = config(extra);
     if (trace !== undefined) cfg.trace = trace;
-    var result = P.run(cfg, function (e) { events.push(e); }, budget);
+    var result = SG.fixtures.toolRecords.withRequestedLevel(cfg.variantId, cfg.difficulty, function () {
+      return P.run(cfg, function (e) { events.push(e); }, budget);
+    }).value;
     return { result: result, events: events };
   }
 
@@ -2019,40 +2024,45 @@
 
       it('MS05b1-T02: removing a sign starts a new memo, so the same clues are rated again for the new signs',
         noExtraAllowance(function () {
-          var greater = SG.variants.get('greaterThan');
-          var signs0 = 0;
-          var strategy = function (model, solution, level, rng, o) {
-            liveCaps = o.caps;
-            signs0 = model.inequalities.length;
-            var dug = Z.dig(model, solution, rng.fork('base'), { minClues: 40 });
-            o.log.push({ op: 'signs', signs: model.inequalities.map(function (s) { return [s.a, s.b]; }) });
-            return { givens: dug.givens, clues: dug.clues, stats: dug.stats, rating: SHALLOW };
-          };
-          // The path follows only a strictly better state (MS06c2): a state with one sign fewer scores a point
-          // more (at most 108 signs: below the band maximum), a clue move with the same signs scores the same as
-          // the state it came from and is not followed.
-          withRater(function (call) {
-            return rated('normal', 250 + signs0 - call.model.inequalities.length, BASIC);
-          }, function (calls) {
-            var out = Z.generate(greater.build({}, SG.rng.create(1)), 'normal', SG.rng.create(SEED), {
-              strategy: strategy, postGenerate: greater.postGenerate, maxAttempts: 1, digTries: 1,
-              maxProposals: 400
+          // Normal is hidden on Greater-Than (MS18c): the fixed request offers it for this test only
+          SG.fixtures.toolRecords.withRequestedLevel('greaterThan', 'normal', function () {
+            var greater = SG.variants.get('greaterThan');
+            var signs0 = 0;
+            var strategy = function (model, solution, level, rng, o) {
+              liveCaps = o.caps;
+              signs0 = model.inequalities.length;
+              var dug = Z.dig(model, solution, rng.fork('base'), { minClues: 40 });
+              o.log.push({ op: 'signs', signs: model.inequalities.map(function (s) { return [s.a, s.b]; }) });
+              return { givens: dug.givens, clues: dug.clues, stats: dug.stats, rating: SHALLOW };
+            };
+            // The path follows only a strictly better state (MS06c2): a state with one sign fewer scores a point
+            // more (at most 108 signs: below the band maximum), a clue move with the same signs scores the same
+            // as the state it came from and is not followed.
+            withRater(function (call) {
+              return rated('normal', 250 + signs0 - call.model.inequalities.length, BASIC);
+            }, function (calls) {
+              var out = Z.generate(greater.build({}, SG.rng.create(1)), 'normal', SG.rng.create(SEED), {
+                strategy: strategy, postGenerate: greater.postGenerate, maxAttempts: 1, digTries: 1,
+                maxProposals: 400
+              });
+              var rated = {};
+              var signsOf = {};
+              calls.forEach(function (c) {
+                var key = Array.from(c.givens).join('');
+                var pair = key + '|' + c.model.inequalities.length;
+                expect(rated[pair]).toBeUndefined();
+                rated[pair] = true;
+                signsOf[key] = signsOf[key] || {};
+                signsOf[key][c.model.inequalities.length] = true;
+              });
+              var again = Object.keys(signsOf).filter(function (key) {
+                return Object.keys(signsOf[key]).length > 1;
+              });
+              expect(again.length).toBeGreaterThan(0);
+              var counts = calls.map(function (c) { return c.model.inequalities.length; });
+              expect(counts[counts.length - 1]).toBeLessThan(counts[0]);
+              expect(out.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
             });
-            var rated = {};
-            var signsOf = {};
-            calls.forEach(function (c) {
-              var key = Array.from(c.givens).join('');
-              var pair = key + '|' + c.model.inequalities.length;
-              expect(rated[pair]).toBeUndefined();
-              rated[pair] = true;
-              signsOf[key] = signsOf[key] || {};
-              signsOf[key][c.model.inequalities.length] = true;
-            });
-            var again = Object.keys(signsOf).filter(function (key) { return Object.keys(signsOf[key]).length > 1; });
-            expect(again.length).toBeGreaterThan(0);
-            var counts = calls.map(function (c) { return c.model.inequalities.length; });
-            expect(counts[counts.length - 1]).toBeLessThan(counts[0]);
-            expect(out.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
           });
         }));
 
@@ -2071,9 +2081,13 @@
             return true;
           }
         };
+        // Expert is hidden on Killer (MS18c): the fixed context keeps its level, offered for the spec only
+        var spec = SG.fixtures.toolRecords.withRequestedLevel('killer', 'expert', function () {
+          return D.spec('expert', base);
+        }).value;
         var ctx = {
           model: base, solution: solution, rng: SG.rng.create(3).fork('extra#1'), level: 'expert',
-          spec: D.spec('expert', base), attempt: 1, budget: null, emit: E.NULL_EMITTER, variantId: 'killer',
+          spec: spec, attempt: 1, budget: null, emit: E.NULL_EMITTER, variantId: 'killer',
           caps: { ratings: 0, proposals: 0, maxRatings: 24, maxProposals: 24 }, symmetry: 'rotational180',
           keeper: keeper
         };
@@ -3053,8 +3067,10 @@
     function probeVariant(baseId) {
       var base = SG.variants.get(baseId);
       var id = baseId + 'Probe';
+      // The scripted double offers every level: its Expert request is the tier of the script, not a published
+      // offer of the board (MS18c hides Expert on mega16)
       return Object.assign({}, base, {
-        id: id, digStrategy: SCRIPT,
+        id: id, digStrategy: SCRIPT, difficultySupport: D.LEVELS.slice(),
         build: function (options, rng) { return reModel(base.build(options, rng), id); }
       });
     }
@@ -3139,8 +3155,11 @@
           var original = Z.SHALLOW_SEARCH_RATINGS;
           Z.SHALLOW_SEARCH_RATINGS = 0;
           try {
-            var out = Z.generate(model, 'expert', SG.rng.create(3),
-              Object.assign({ strategy: scripted, stage: stage }, options));
+            // Expert is hidden on mega16 (MS18c): the fixed direct request offers it for this call only
+            var out = SG.fixtures.toolRecords.withRequestedLevel(id, 'expert', function () {
+              return Z.generate(model, 'expert', SG.rng.create(3),
+                Object.assign({ strategy: scripted, stage: stage }, options));
+            }).value;
             return { attempts: out.attempts, announced: seen.map(function (a) { return a.maxAttempts; }) };
           } finally {
             Z.SHALLOW_SEARCH_RATINGS = original;

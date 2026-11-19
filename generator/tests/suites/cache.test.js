@@ -9,6 +9,15 @@
   const C = SG.cache;
   const P = SG.pipeline;
 
+  // MS18c: a fixed request may name a level that qualification hides (the same request, never another level):
+  // the variant offers it for the length of the call only, and the exact array is put back in `finally`.
+  function runAs(config, sink) {
+    if (!config || !SG.variants.has(config.variantId)) return P.run(config, sink);
+    return SG.fixtures.toolRecords.withRequestedLevel(config.variantId, config.difficulty, function () {
+      return P.run(config, sink);
+    }).value;
+  }
+
   function ready() {
     if (!C || !SG.i18n || !SG.store) SG.test.skip('SG.cache is not loaded here');
   }
@@ -150,7 +159,7 @@
         inner.calls.push({ config: config, hints: hints });
         let result;
         try {
-          result = P.run(config, onEvent || null);
+          result = runAs(config, onEvent || null);
         } catch (err) {
           return Promise.reject(err);
         }
@@ -206,7 +215,7 @@
       complete: function (result) {
         const job = bg.calls[bg.calls.length - 1];
         bg.pending = null;
-        job.resolve(result || P.run(job.config, job.onEvent || null));
+        job.resolve(result || runAs(job.config, job.onEvent || null));
       },
       fail: function (err) {
         const job = bg.calls[bg.calls.length - 1];
@@ -434,12 +443,12 @@
 
     CASES.forEach(function (config) {
       it('round trip equals a fresh generation: ' + config.variantId + ' ' + config.difficulty, function () {
-        const made = P.run(config, null);
+        const made = runAs(config, null);
         const text = JSON.stringify(C.serialize(made));
         const back = C.deserialize(JSON.parse(text), { trace: config.trace });
         expect(back.timings).toEqual(made.timings);
         sameButTimings(back, made);
-        sameButTimings(back, P.run(config, null));
+        sameButTimings(back, runAs(config, null));
         expect(SG.model.validate(back.model).ok).toBe(true);
         expect(SG.dfs.countSolutions(back.model, back.givens, 2)).toBe(1);
         expect(back.model.inequalities.length).toBe(made.model.inequalities.length);
@@ -481,14 +490,14 @@
 
     it('re-applies the trace verbosity of the request (the downgrade rule included)', function () {
       const config = { variantId: 'samurai', difficulty: 'easy', seed: 5 };
-      const off = P.run(Object.assign({ trace: 'off' }, config), null);
-      const full = P.run(Object.assign({ trace: 'full' }, config), null);
+      const off = runAs(Object.assign({ trace: 'off' }, config), null);
+      const full = runAs(Object.assign({ trace: 'full' }, config), null);
       expect(full.warnings).toContain('trace.downgraded');
       const viaCache = C.deserialize(C.serialize(off), { trace: 'full' });
       expect(viaCache.config).toEqual(full.config);
       expect(viaCache.warnings).toEqual(full.warnings);
       const summary = C.deserialize(C.serialize(full), { trace: 'summary' });
-      expect(summary.warnings).toEqual(P.run(Object.assign({ trace: 'summary' }, config), null).warnings);
+      expect(summary.warnings).toEqual(runAs(Object.assign({ trace: 'summary' }, config), null).warnings);
       const small = C.deserialize(C.serialize(P.run(CASES[0], null)), { trace: 'full' });
       expect(small.warnings).toEqual([]);
       expect(small.config.trace).toBe('full');
@@ -620,7 +629,9 @@
 
     const EASY = { variantId: 'classic9', difficulty: 'easy', seed: 5, trace: 'summary' };
     const KILLER = { variantId: 'killer', difficulty: 'easy', seed: 5, trace: 'summary' };
-    const SIGNS = { variantId: 'greaterThan', difficulty: 'normal', seed: 5, trace: 'summary' };
+    // Greater-Than Normal is no longer offered (MS18c), so a copy of it is rightly not served: the Greater-Than
+    // cases use Hard, which is offered and keeps several signs in its puzzle
+    const SIGNS = { variantId: 'greaterThan', difficulty: 'hard', seed: 5, trace: 'summary' };
     const WORDOKU = { variantId: 'wordoku', difficulty: 'easy', seed: 5, trace: 'summary' };
     const SHALLOW = { variantId: 'classic9', difficulty: 'nightmare', seed: 6, trace: 'summary',
       maxAttempts: 1 };
@@ -632,7 +643,7 @@
     /** A fresh generation of `config`, made once: the cases below only read it and build changed copies. */
     function runOnce(config) {
       const id = JSON.stringify(config);
-      if (!generated[id]) generated[id] = P.run(config, null);
+      if (!generated[id]) generated[id] = runAs(config, null);
       return generated[id];
     }
 

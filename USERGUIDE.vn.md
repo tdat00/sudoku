@@ -168,19 +168,19 @@ Các biến thể (cột `id` là giá trị của tham số URL `v`):
 |------|----------|-----------:|-----:|------------|
 | `classic4` | Sudoku Cổ điển 4×4 | 4 | 16 | veryEasy |
 | `classic6` | Sudoku Cổ điển 6×6 | 6 | 36 | veryEasy, hard |
-| `classic9` | Sudoku Cổ điển 9×9 | 9 | 81 | veryEasy–hell1 |
-| `mega12` | Sudoku Khổng lồ 12×12 | 12 | 144 | veryEasy–hell2 |
-| `mega16` | Sudoku Quái vật 16×16 | 16 | 256 | veryEasy–hell2 |
-| `diagonalX` | Sudoku Đường chéo (X) | 9 | 81 | veryEasy–hell2 |
-| `hyper` | Sudoku Siêu vùng (Windoku) | 9 | 81 | veryEasy–hell2 |
-| `jigsaw9` | Sudoku Ghép hình | 9 | 81 | veryEasy–hell2 |
-| `killer` | Sudoku Sát thủ | 9 | 81 | veryEasy–hell2 |
-| `greaterThan` | Sudoku So sánh | 9 | 81 | veryEasy–hell2 |
-| `samurai` | Sudoku Samurai | 9 | 369 | veryEasy–hell2 |
-| `sohei` | Sudoku Sohei | 9 | 288 | veryEasy–hell2 |
-| `butterfly` | Sudoku Cánh bướm | 9 | 144 | veryEasy–hell2 |
-| `flower` | Sudoku Bông hoa | 9 | 189 | veryEasy–hell2 |
-| `wordoku` | Sudoku Chữ (Wordoku) | 9 | 81 | veryEasy–hell1 |
+| `classic9` | Sudoku Cổ điển 9×9 | 9 | 81 | veryEasy–nightmare |
+| `mega12` | Sudoku Khổng lồ 12×12 | 12 | 144 | veryEasy–nightmare, hell2 |
+| `mega16` | Sudoku Quái vật 16×16 | 16 | 256 | veryEasy–hard, master, hell2 |
+| `diagonalX` | Sudoku Đường chéo (X) | 9 | 81 | veryEasy, normal–hard, master–nightmare, hell2 |
+| `hyper` | Sudoku Siêu vùng (Windoku) | 9 | 81 | veryEasy, normal–hard, master–nightmare, hell2 |
+| `jigsaw9` | Sudoku Ghép hình | 9 | 81 | veryEasy–hard, master, hell2 |
+| `killer` | Sudoku Sát thủ | 9 | 81 | veryEasy–normal |
+| `greaterThan` | Sudoku So sánh | 9 | 81 | veryEasy–easy, hard, master, hell2 |
+| `samurai` | Sudoku Samurai | 9 | 369 | veryEasy, normal–master |
+| `sohei` | Sudoku Sohei | 9 | 288 | veryEasy, normal–master, hell2 |
+| `butterfly` | Sudoku Cánh bướm | 9 | 144 | veryEasy, normal–nightmare, hell2 |
+| `flower` | Sudoku Bông hoa | 9 | 189 | veryEasy, normal–hard, master, hell2 |
+| `wordoku` | Sudoku Chữ (Wordoku) | 9 | 81 | veryEasy–easy, hard–nightmare |
 
 ## Ảnh chụp màn hình
 
@@ -281,13 +281,19 @@ thông báo cảnh báo rằng một số ứng dụng và máy chủ cắt bớ
   nhưng mức của nó có thể khác, thường gặp nhất ở các mức khó nhất. Mức nào được cung cấp trên bàn lớn do bước kiểm
   định quyết định, không phải do mặc định này; bạn có thể tăng số lần thử trong tùy chọn nâng cao, đổi lại phải chờ
   lâu hơn.
-- **Không phải mức nào cũng có ở mọi nơi**: Sudoku Cổ điển 4×4 chỉ có mức rất dễ và Cổ điển 6×6 có rất dễ và
-  khó; Sudoku Cổ điển 9×9 và Sudoku Chữ dừng ở mức địa ngục 1; mọi biến thể khác có đủ chín mức. Các mức mà một biến thể cung cấp
-  là những mức nó vượt qua trong bước kiểm định ([docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md)).
-- **Các mức khó nhất chậm nhất**: các tổ hợp chậm nhất là So sánh và Sát thủ từ mức chuyên gia trở lên và các mức
-  địa ngục của bàn cờ lớn, với phân vị 95 đến khoảng 9,5 giây (So sánh chuyên gia; Sát thủ chuyên gia và ác mộng
-  8–9 giây; Quái vật 16×16 và Samurai địa ngục 2 khoảng 6–7 giây) và có yêu cầu đơn lẻ đến khoảng 13 giây; phần lớn
-  các tổ hợp khác mất chưa tới một giây.
+- **Không phải mức nào cũng có ở mọi nơi**: chỉ có các mức trong bảng trên, 79 trong 135 tổ hợp biến thể và mức.
+  Sudoku Cổ điển 4×4 chỉ có mức rất dễ và Cổ điển 6×6 có rất dễ và khó; Sát thủ có từ rất dễ đến trung bình, và
+  không biến thể nào có đủ chín mức. Một mức chỉ được cung cấp khi nó vượt qua bước kiểm định
+  ([docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md)); mức khó và chuyên gia của
+  Sát thủ còn bị giữ lại có chủ ý (quyết định S-OD7) cho đến khi hiệu chuẩn lại, bất kể kết quả của một lần kiểm
+  định sau. Một thiết lập đã lưu hoặc một liên kết nêu một mức mà biến thể không còn cung cấp sẽ được chuyển sang
+  mức gần nhất mà nó có (mức dễ hơn nếu hai mức cách đều) và trang có thông báo.
+- **Các mức khó nhất chậm nhất**: trong 79 mức được cung cấp, 49 mức có phân vị 95 dưới một giây. Chậm nhất là các
+  mức địa ngục và ác mộng của bàn cờ lớn: Sohei địa ngục 2 (phân vị 95 là 27 giây), Quái vật 16×16 địa ngục 2
+  (25 giây), Cánh bướm ác mộng (16 giây) và địa ngục 2 (11 giây), rồi Khổng lồ 12×12 địa ngục 2, Bông hoa địa
+  ngục 2, So sánh địa ngục 2 và Siêu vùng ác mộng (8,5 đến 9,5 giây). Có yêu cầu đơn lẻ mất đến 67 giây (Samurai
+  bậc thầy); trang dừng một lần tạo đề sau 120 giây. Các thời gian này lấy từ lần kiểm định cuối cùng, chạy trên
+  máy đang bận (không phải máy hoàn toàn yên tĩnh); qualification.md liệt kê đủ.
 - **Sudoku Chữ tiếng Việt**: từ chín chữ cái khác nhau rất hiếm trong tiếng Việt nên danh sách ngắn; khi quá ngắn
   thì dùng danh sách tiếng Anh và có thông báo.
 - **Cài đặt**: công tắc tắt việc tạo sẵn đề ở nền không được nhớ giữa các lần truy cập.

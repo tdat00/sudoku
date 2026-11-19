@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "13cd63bfb0f5af687bc8e841d522cc7f216aa116125394b33fbc32a53ab1ef3f",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["variants"],"filter":"> variants: diagonalX >","exact":null,"count":14},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 19932.2,
+  "results": {
+    "total": 14,
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 19689.9,
+    "tests": [
+      {"suite":"variants","name":"CV0 the definition and its difficulty spec are sound","fullName":"variants > variants: diagonalX > CV0 the definition and its difficulty spec are sound","status":"pass","ms":3.679,"reason":"","error":null,"ordinal":64},
+      {"suite":"variants","name":"CV1 every model passes model.validate (all option values too)","fullName":"variants > variants: diagonalX > CV1 every model passes model.validate (all option values too)","status":"pass","ms":6.64,"reason":"","error":null,"ordinal":65},
+      {"suite":"variants","name":"CV2 full grids are valid for every seed","fullName":"variants > variants: diagonalX > CV2 full grids are valid for every seed","status":"pass","ms":4.255,"reason":"","error":null,"ordinal":66},
+      {"suite":"variants","name":"CV3 veryEasy: puzzles at the supported level","fullName":"variants > variants: diagonalX > CV3 veryEasy: puzzles at the supported level","status":"pass","ms":14.423,"reason":"","error":null,"ordinal":67},
+      {"suite":"variants","name":"CV3 normal: puzzles at the supported level","fullName":"variants > variants: diagonalX > CV3 normal: puzzles at the supported level","status":"pass","ms":386.357,"reason":"","error":null,"ordinal":68},
+      {"suite":"variants","name":"CV3 hard: puzzles at the supported level","fullName":"variants > variants: diagonalX > CV3 hard: puzzles at the supported level","status":"pass","ms":77.131,"reason":"","error":null,"ordinal":69},
+      {"suite":"variants","name":"CV3 master: puzzles at the supported level","fullName":"variants > variants: diagonalX > CV3 master: puzzles at the supported level","status":"pass","ms":425.684,"reason":"","error":null,"ordinal":70},
+      {"suite":"variants","name":"CV3 nightmare: puzzles at the supported level","fullName":"variants > variants: diagonalX > CV3 nightmare: puzzles at the supported level","status":"pass","ms":5388.985,"reason":"","error":null,"ordinal":71},
+      {"suite":"variants","name":"CV3 hell2: puzzles at the supported level","fullName":"variants > variants: diagonalX > CV3 hell2: puzzles at the supported level","status":"pass","ms":7851.651,"reason":"","error":null,"ordinal":72},
+      {"suite":"variants","name":"CV3 unsupported: other levels are refused","fullName":"variants > variants: diagonalX > CV3 unsupported: other levels are refused","status":"pass","ms":0.335,"reason":"","error":null,"ordinal":73},
+      {"suite":"variants","name":"CV4 invariants I1-I7 hold (I6 with the variant's clue floor)","fullName":"variants > variants: diagonalX > CV4 invariants I1-I7 hold (I6 with the variant's clue floor)","status":"pass","ms":152.064,"reason":"","error":null,"ordinal":74},
+      {"suite":"variants","name":"CV5 the same seed gives the same puzzle","fullName":"variants > variants: diagonalX > CV5 the same seed gives the same puzzle","status":"pass","ms":5376.79,"reason":"","error":null,"ordinal":75},
+      {"suite":"variants","name":"CV6 soft: generation never hangs (milestones: perf.test.js)","fullName":"variants > variants: diagonalX > CV6 soft: generation never hangs (milestones: perf.test.js)","status":"pass","ms":0.113,"reason":"","error":null,"ordinal":76},
+      {"suite":"variants","name":"CV7 name, options and levels exist in both locale packs","fullName":"variants > variants: diagonalX > CV7 name, options and levels exist in both locale packs","status":"pass","ms":0.993,"reason":"","error":null,"ordinal":77}
+    ],
+    "suites": [
+      {"name":"variants","total":14,"passed":14,"failed":0,"skipped":0,"ms":19689.676}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=variants","--filter=> variants: diagonalX >","--results=..\\docs\\difficulty-v3\\evidence\\MS18c\\closure\\manual-variants\\result-variant-diagonalX.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

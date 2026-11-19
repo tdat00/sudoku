@@ -1,0 +1,154 @@
+{
+  "schema": 1,
+  "inventory": "inventory-variants.json",
+  "total": 285,
+  "shards": [
+    {
+      "name": "variant-sohei",
+      "filter": "> variants: sohei >",
+      "exact": null,
+      "tests": 14,
+      "worstCaseSeconds": 224,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "variant-butterfly",
+      "filter": "> variants: butterfly >",
+      "exact": null,
+      "tests": 15,
+      "worstCaseSeconds": 181,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "variant-mega16",
+      "filter": "> variants: mega16 >",
+      "exact": null,
+      "tests": 14,
+      "worstCaseSeconds": 177,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "variant-mega12",
+      "filter": "> variants: mega12 >",
+      "exact": null,
+      "tests": 16,
+      "worstCaseSeconds": 147,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "variant-greaterThan",
+      "filter": "> variants: greaterThan >",
+      "exact": null,
+      "tests": 13,
+      "worstCaseSeconds": 137,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "variant-flower",
+      "filter": "> variants: flower >",
+      "exact": null,
+      "tests": 13,
+      "worstCaseSeconds": 82,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "variant-hyper",
+      "filter": "> variants: hyper >",
+      "exact": null,
+      "tests": 14,
+      "worstCaseSeconds": 117,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "variant-diagonalX",
+      "filter": "> variants: diagonalX >",
+      "exact": null,
+      "tests": 14,
+      "worstCaseSeconds": 85,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "variant-jigsaw9",
+      "filter": "> variants: jigsaw9 >",
+      "exact": null,
+      "tests": 14,
+      "worstCaseSeconds": 83,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "variant-samurai",
+      "filter": "> variants: samurai >",
+      "exact": null,
+      "tests": 13,
+      "worstCaseSeconds": 86,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "variant-classic9",
+      "filter": "> variants: classic9 >",
+      "exact": null,
+      "tests": 15,
+      "worstCaseSeconds": 63,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "variant-wordoku",
+      "filter": "> variants: wordoku >",
+      "exact": null,
+      "tests": 14,
+      "worstCaseSeconds": 50,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "variant-killer",
+      "filter": "> variants: killer >",
+      "exact": null,
+      "tests": 11,
+      "worstCaseSeconds": 41,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "variant-classic6",
+      "filter": "> variants: classic6 >",
+      "exact": null,
+      "tests": 10,
+      "worstCaseSeconds": 32,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "variant-classic4",
+      "filter": "> variants: classic4 >",
+      "exact": null,
+      "tests": 9,
+      "worstCaseSeconds": 30,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "option-schema",
+      "filter": "> variants: the normalised option schema >",
+      "exact": null,
+      "tests": 81,
+      "worstCaseSeconds": 120,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "mega16-replay",
+      "filter": null,
+      "exact": "variants > player: the replay steps of a result > real top-level results with clues shown again replay faithfully (mega16)",
+      "tests": 1,
+      "worstCaseSeconds": 300,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    },
+    {
+      "name": "rest",
+      "filter": "> variants: the sweep covers every registered variant >",
+      "exact": null,
+      "tests": 4,
+      "worstCaseSeconds": 120,
+      "basis": "the p95 of every offered level of the final qualification times (puzzles + 1 re-run), times 1.5, plus 30 s; fixed 300 s for the real mega16 replay (118 s measured in MS07f), 120 s for the quick rest"
+    }
+  ],
+  "covered": 281,
+  "leftover": 4,
+  "problems": []
+}

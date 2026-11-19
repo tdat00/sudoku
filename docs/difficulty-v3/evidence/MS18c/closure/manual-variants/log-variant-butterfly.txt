@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=variants --filter=> variants: butterfly > --results=..\docs\difficulty-v3\evidence\MS18c\closure\manual-variants\result-variant-butterfly.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   variants: 15 passed  (22.38 s)
+
+Suites: 1
+Tests:  15 total, 15 passed, 0 failed, 0 skipped
+Time:   22.38 s running tests, 22.63 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/manual-variants/result-variant-butterfly.json
+exit=0 seconds=22.883

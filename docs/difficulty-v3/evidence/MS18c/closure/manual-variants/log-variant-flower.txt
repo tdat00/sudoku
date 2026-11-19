@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=variants --filter=> variants: flower > --results=..\docs\difficulty-v3\evidence\MS18c\closure\manual-variants\result-variant-flower.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   variants: 13 passed  (23.26 s)
+
+Suites: 1
+Tests:  13 total, 13 passed, 0 failed, 0 skipped
+Time:   23.26 s running tests, 23.49 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/manual-variants/result-variant-flower.json
+exit=0 seconds=23.739

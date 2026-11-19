@@ -1,0 +1,19 @@
+$ node tests\node-runner.js --suite=manual-corpus,recovery-profile --results=..\docs\difficulty-v3\evidence\MS18c\closure\focus\g6.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL manual-corpus: 51 passed, 1 failed  (2.56 s)
+ok   recovery-profile: 28 passed  (684 ms)
+
+Failures:
+  FAIL manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the fixed diagnostic corpora keep their ladder, seeds and guard (MS18c) > keeps the witness populations of the cross-level assertions: Greater-Than 20 + 10 + 10, Killer Hard and Master, Wordoku Normal seed 302, and the hybrid of 72 requests
+       TypeError: Cannot read properties of undefined (reading 'seed')
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\manual-corpus.test.js:706:46)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+
+Suites: 2
+Tests:  80 total, 79 passed, 1 failed, 0 skipped
+Time:   3.24 s running tests, 3.46 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/focus/g6.json
+exit=1 seconds=3.683

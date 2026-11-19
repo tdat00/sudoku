@@ -50,6 +50,21 @@
   /** Minimum share of exact hits in the deep run (default 8 attempts). */
   var HIT_RATE = { veryEasy: 0.95, easy: 0.95, normal: 0.8, hard: 0.85 };
 
+  /** The levels each board offers after the final qualification (docs/difficulty-rating/qualification.md). */
+  var PUBLISHED = {
+    samurai: ['veryEasy', 'normal', 'hard', 'expert', 'master'],
+    sohei: ['veryEasy', 'normal', 'hard', 'expert', 'master', 'hell2'],
+    butterfly: ['veryEasy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell2'],
+    flower: ['veryEasy', 'normal', 'hard', 'master', 'hell2']
+  };
+
+  // The levels of BOARDS are fixed requests of the generation tests; qualification hides Easy on every board
+  // (MS18c). The variant offers the requested level for the length of the call only, and the exact array is put
+  // back in `finally`.
+  function asRequested(id, level, fn) {
+    return SG.fixtures.toolRecords.withRequestedLevel(id, level, fn).value;
+  }
+
   var CLASSIC = SG.variants.get('classic9').build({}, null);
   var cache = {};
 
@@ -198,14 +213,14 @@
         expect(def.group).toBe('multigrid');
         expect(def.digits).toBe(9);
         expect(def.i18nKey).toBe('variant.' + id);
-        expect(def.difficultySupport).toEqual(SG.difficulty.LEVELS);
+        expect(def.difficultySupport).toEqual(PUBLISHED[id]);
         expect(def.symbolModes).toContain(def.defaultSymbolMode);
         expect(def.options).toEqual([]);
         expect(def.fastSeed).toBe(MG.fastSeedOverlaps);
       });
 
-      it('offers every level of the nine, hell2 included (measured by tests/qualify.js)', function () {
-        expect(SG.variants.get(id).difficultySupport).toEqual(SG.difficulty.LEVELS);
+      it('offers the levels of the final qualification (measured by tests/qualify.js)', function () {
+        expect(SG.variants.get(id).difficultySupport).toEqual(PUBLISHED[id]);
       });
 
       it('has exactly ' + spec.cells + ' unique cells on a ' + spec.canvas + 'x' + spec.canvas + ' canvas',
@@ -910,14 +925,14 @@
       var budget = SG.budget.create({ ms: 60000 });
       var started = now();
       var config = Object.assign({ variantId: id, difficulty: level, seed: seed, trace: 'off' }, extra);
-      var result = SG.pipeline.run(config, null, budget);
+      var result = asRequested(id, level, function () { return SG.pipeline.run(config, null, budget); });
       return { result: result, ms: now() - started };
     }
 
     /** Invariants I1-I3, I5, I6 and the soundness (I7) of the logical solver on this puzzle. */
     function checkInvariants(id, level, result) {
       var m = result.model;
-      var spec = SG.difficulty.spec(level, m);
+      var spec = asRequested(id, level, function () { return SG.difficulty.spec(level, m); });
       expect(m.variantId).toBe(id);
       expect(SG.dfs.countSolutions(m, result.givens, 2)).toBe(1);
       expect(SG.model.isSolution(m, result.solution)).toBe(true);
@@ -997,12 +1012,11 @@
       });
     });
 
-    it('every board offers all nine levels, flower included (its own clue floor makes normal reachable)',
-      function () {
-        IDS.forEach(function (id) {
-          expect(SG.variants.get(id).difficultySupport).toEqual(SG.difficulty.LEVELS);
-        });
+    it('every board offers the levels of the final qualification', function () {
+      IDS.forEach(function (id) {
+        expect(SG.variants.get(id).difficultySupport).toEqual(PUBLISHED[id]);
       });
+    });
 
     it('every board scales the derived clue floor of normal and hard down (flower easy too); ' +
       'veryEasy keeps it',
@@ -1017,7 +1031,7 @@
             var row = SG.difficulty.TABLE[SG.difficulty.levelIndex(level)];
             var derived = Math.max(1, Math.floor(row.minClues * board.cellCount / 81));
             var factor = factors[id][level] === undefined ? 1 : factors[id][level];
-            var spec = SG.difficulty.spec(level, board);
+            var spec = asRequested(id, level, function () { return SG.difficulty.spec(level, board); });
             expect(spec.minClues).toBe(Math.max(1, Math.floor(Math.round(derived * factor * 1e6) / 1e6)));
             floors[id].push(spec.minClues);
           });

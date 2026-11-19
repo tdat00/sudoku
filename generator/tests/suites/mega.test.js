@@ -27,7 +27,12 @@
   var SLOW = 120000;
 
   var IDS = ['mega12', 'mega16'];
-  /** The levels the puzzle tests sample (both boards offer all nine, see the definition test). */
+  /** The levels each board offers after the final qualification (docs/difficulty-rating/qualification.md). */
+  var PUBLISHED = {
+    mega12: ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell2'],
+    mega16: ['veryEasy', 'easy', 'normal', 'hard', 'master', 'hell2']
+  };
+  /** The levels the puzzle tests sample: fixed requests, some of which qualification now hides (MS18c). */
   var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'nightmare', 'hell1'];
   /**
    * The levels whose full-attempt requests run in the quick tier: neither Nightmare nor Hell 1 (see the header). The
@@ -150,10 +155,11 @@
         expect(typeof def.build).toBe('function');
       });
 
-      it(id + ': offers every level of the nine (measured by tests/qualify.js)', function () {
-        var def = SG.variants.get(id);
-        expect(def.difficultySupport).toEqual(SG.difficulty.LEVELS);
-      });
+      it(id + ': offers the levels the final qualification published (docs/difficulty-rating/qualification.md)',
+        function () {
+          var def = SG.variants.get(id);
+          expect(def.difficultySupport).toEqual(PUBLISHED[id]);
+        });
 
       it(id + ': has a pre-fill and a restart threshold far below the generic default', function () {
         var def = SG.variants.get(id);
@@ -830,14 +836,18 @@
       }, SLOW);
 
     // Hell 1 (MS07b) follows the same rule: one real attempt of mega12, the other requests are the deep tier's.
+    // Qualification hides mega12 Hell 1 (MS18c): this fixed diagnostic request keeps its level, which the variant
+    // offers for the length of the test only.
     it('mega12 hell1: one attempt (seed 3) is a valid, unique and truthful puzzle inside the smoke limit',
       function () {
-        var out = generate('mega12', 'hell1', 3, { maxAttempts: 1 });
-        expect(out.result.config.maxAttempts).toBe(1);
-        expect(out.result.attempts).toBe(1);
-        checkInvariants('mega12', 'hell1', out.result);
-        checkTruthful(out.result, 'hell1');
-        expect(out.ms).toBeLessThan(SG.test.timeLimit(SMOKE_HELL1_MS));
+        SG.fixtures.toolRecords.withRequestedLevel('mega12', 'hell1', function () {
+          var out = generate('mega12', 'hell1', 3, { maxAttempts: 1 });
+          expect(out.result.config.maxAttempts).toBe(1);
+          expect(out.result.attempts).toBe(1);
+          checkInvariants('mega12', 'hell1', out.result);
+          checkTruthful(out.result, 'hell1');
+          expect(out.ms).toBeLessThan(SG.test.timeLimit(SMOKE_HELL1_MS));
+        });
       }, SLOW);
 
     // The size-default controls of mega16 run the real pipeline and digger with a scripted dig strategy (the seams
@@ -878,6 +888,9 @@
         var id = 'mega16Control';
         var def = Object.assign({}, base, {
           id: id, digStrategy: SCRIPT,
+          // The scripted double offers every level: these controls prove the attempt policy at the Expert tier,
+          // not the published offers of mega16, which no longer include Expert (MS18c).
+          difficultySupport: SG.difficulty.LEVELS.slice(),
           build: function (options, rng) {
             var built = base.build(options, rng);
             return SG.model.create({ variantId: id, digits: built.digits, units: built.units,

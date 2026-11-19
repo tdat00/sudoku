@@ -152,6 +152,14 @@
     return { mode: given.mode, caseId: given['case'], shallowCap: cap, json: given.json };
   }
 
+  /**
+   * `fn` with the requested level offered by its variant for the length of the call (MS18c: qualification may
+   * hide the level of a fixed request, which keeps its level; the exact array is put back in `finally`).
+   */
+  function asRequested(request, fn) {
+    return SG.fixtures.toolRecords.withRequestedLevel(request.variantId, request.difficulty, fn).value;
+  }
+
   /** The fixed request of a case: { id, request (as the fixture or the test states it), config }. */
   function caseOf(caseId) {
     if (!has(CASES, caseId)) throw usageError('--case=' + caseId + ' is not one of ' + CASE_IDS.join(', '));
@@ -163,7 +171,9 @@
     var golden = goldens.filter(function (g) { return g.id === spec.golden; })[0];
     if (!golden) throw usageError('SG.fixtures.replayGoldens has no ' + spec.golden);
     var request = clone(golden.request);
-    return { id: caseId, request: request, config: SG.store.toConfig(request) };
+    return { id: caseId, request: request, config: asRequested(request, function () {
+      return SG.store.toConfig(request);
+    }) };
   }
 
   /** Does this source have the runtime allowance API of the shallow search (MS05r3)? */
@@ -188,7 +198,7 @@
     if (!diagnostic) config.maxAttempts = 1;
     var normalized;
     try {
-      normalized = SG.pipeline.normalizeConfig(config);
+      normalized = asRequested(config, function () { return SG.pipeline.normalizeConfig(config); });
     } catch (err) {
       throw usageError('the request of ' + args.caseId + ' does not normalise: ' + errorOf(err).code);
     }
@@ -706,7 +716,9 @@
     var restoreNotes = [];
     var t0 = clock();
     try {
-      result = SG.pipeline.run(prepared.config, null, budget);
+      result = asRequested(prepared.config, function () {
+        return SG.pipeline.run(prepared.config, null, budget);
+      });
     } catch (err) {
       failure = err;
     } finally {
@@ -721,7 +733,7 @@
     if (failure === null) {
       var t1 = clock();
       try {
-        validation = validate(result, level, budget);
+        validation = asRequested(prepared.config, function () { return validate(result, level, budget); });
       } catch (err) {
         validationFailure = err;
       }

@@ -36,6 +36,13 @@
   describe('techniques: the order of the registry follows the weights (rating v3)', function () {
     var D = SG.difficulty;
 
+    // Qualification hides Hell 1 on classic9 (MS18c): the level is offered for the length of the call only.
+    function hell1Floor(model) {
+      return SG.fixtures.toolRecords.withRequestedLevel(model.variantId, 'hell1', function () {
+        return D.spec('hell1', model).floorTechniques;
+      }).value;
+    }
+
     /** Asserts that no technique of the sequence is lighter than the one before it (equal is fine). */
     function expectNondecreasing(sequence) {
       sequence.forEach(function (tech, i) {
@@ -310,7 +317,7 @@
         expect(D.spec('nightmare', model).allowedTechniques).toContain('alsXz');
         expect(D.spec('nightmare', model).tierTechniques).toContain('alsXz');
         expect(D.spec('nightmare', model).floorTechniques).not.toContain('alsXz');
-        expect(D.spec('hell1', model).floorTechniques).toContain('alsXz');
+        expect(hell1Floor(model)).toContain('alsXz');
         // allowed right after forcingChain
         expect(D.spec('nightmare', model).allowedTechniques.indexOf('alsXz'))
           .toBe(D.spec('nightmare', model).allowedTechniques.indexOf('forcingChain') + 1);
@@ -347,7 +354,7 @@
         expect(D.spec('nightmare', model).allowedTechniques).toContain('sueDeCoq');
         expect(D.spec('nightmare', model).tierTechniques).toContain('sueDeCoq');
         expect(D.spec('nightmare', model).floorTechniques).not.toContain('sueDeCoq');
-        expect(D.spec('hell1', model).floorTechniques).toContain('sueDeCoq');
+        expect(hell1Floor(model)).toContain('sueDeCoq');
         // allowed right after alsXz
         expect(D.spec('nightmare', model).allowedTechniques.indexOf('sueDeCoq'))
           .toBe(D.spec('nightmare', model).allowedTechniques.indexOf('alsXz') + 1);

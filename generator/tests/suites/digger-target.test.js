@@ -562,17 +562,21 @@
       return a.length === b.length && a.every(function (c) { return b.indexOf(c) !== -1; });
     }
 
-    /** The pass of one case, and everything its replay needs. */
+    // Hell 1 of classic9 is hidden by MS18c: the fixed case keeps its level, which the variant offers for the
+    // length of the pass only.
     function pass(c) {
-      var model = SG.variants.get(c[0]).build({}, null);
-      var rng = SG.rng.create(c[2]);
-      var solution = SG.fullGrid.generate(model, rng.fork('grid'), null);
-      var spec = D.spec(c[1], model);
-      var target = c[4] === null || spec.max === Infinity ? null : spec.min + c[4] * (spec.max - spec.min);
-      var log = [];
-      var dug = SG.digger.digStage(model, solution, c[1], rng.fork('dig'),
-        { log: log, proposal: c[3], target: target });
-      return { model: model, solution: solution, spec: spec, target: target, log: log, dug: dug, proposal: c[3] };
+      return SG.fixtures.toolRecords.withRequestedLevel(c[0], c[1], function () {
+        var model = SG.variants.get(c[0]).build({}, null);
+        var rng = SG.rng.create(c[2]);
+        var solution = SG.fullGrid.generate(model, rng.fork('grid'), null);
+        var spec = D.spec(c[1], model);
+        var target = c[4] === null || spec.max === Infinity ? null : spec.min + c[4] * (spec.max - spec.min);
+        var log = [];
+        var dug = SG.digger.digStage(model, solution, c[1], rng.fork('dig'),
+          { log: log, proposal: c[3], target: target });
+        return { model: model, solution: solution, spec: spec, target: target, log: log, dug: dug,
+          proposal: c[3] };
+      }).value;
     }
 
     var runs = null;
@@ -1639,9 +1643,14 @@
           return out;
         });
         var result;
+        var spec;
         try {
-          result = SG.pipeline.run({ variantId: 'greaterThan', difficulty: 'expert', seed: 319, trace: 'off' },
-            null);
+          // Greater-Than no longer offers Expert (MS18c): the fixed request keeps its level, for this run only
+          SG.fixtures.toolRecords.withRequestedLevel('greaterThan', 'expert', function () {
+            result = SG.pipeline.run({ variantId: 'greaterThan', difficulty: 'expert', seed: 319, trace: 'off' },
+              null);
+            spec = SPEC_OF(result.model);
+          });
         } finally {
           Z.unregisterStrategy('signs');
           Z.registerStrategy('signs', original);
@@ -1654,7 +1663,6 @@
           expect(call.target).toBe(call.expected);
           expect(call.original).toBe(calls[0].original);
         });
-        var spec = SPEC_OF(result.model);
         calls.forEach(function (call) {
           expect(call.target).toBeGreaterThanOrEqual(spec.min);
           expect(call.target).toBeLessThan(spec.max);

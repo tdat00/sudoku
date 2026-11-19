@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "13cd63bfb0f5af687bc8e841d522cc7f216aa116125394b33fbc32a53ab1ef3f",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["variants"],"filter":"> variants: classic6 >","exact":null,"count":10},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 909.3,
+  "results": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 664.7,
+    "tests": [
+      {"suite":"variants","name":"CV0 the definition and its difficulty spec are sound","fullName":"variants > variants: classic6 > CV0 the definition and its difficulty spec are sound","status":"pass","ms":3.514,"reason":"","error":null,"ordinal":9},
+      {"suite":"variants","name":"CV1 every model passes model.validate (all option values too)","fullName":"variants > variants: classic6 > CV1 every model passes model.validate (all option values too)","status":"pass","ms":2.613,"reason":"","error":null,"ordinal":10},
+      {"suite":"variants","name":"CV2 full grids are valid for every seed","fullName":"variants > variants: classic6 > CV2 full grids are valid for every seed","status":"pass","ms":3.674,"reason":"","error":null,"ordinal":11},
+      {"suite":"variants","name":"CV3 veryEasy: puzzles at the supported level","fullName":"variants > variants: classic6 > CV3 veryEasy: puzzles at the supported level","status":"pass","ms":12.073,"reason":"","error":null,"ordinal":12},
+      {"suite":"variants","name":"CV3 hard: puzzles at the supported level","fullName":"variants > variants: classic6 > CV3 hard: puzzles at the supported level","status":"pass","ms":436.276,"reason":"","error":null,"ordinal":13},
+      {"suite":"variants","name":"CV3 unsupported: other levels are refused","fullName":"variants > variants: classic6 > CV3 unsupported: other levels are refused","status":"pass","ms":0.602,"reason":"","error":null,"ordinal":14},
+      {"suite":"variants","name":"CV4 invariants I1-I7 hold (I6 with the variant's clue floor)","fullName":"variants > variants: classic6 > CV4 invariants I1-I7 hold (I6 with the variant's clue floor)","status":"pass","ms":1.344,"reason":"","error":null,"ordinal":15},
+      {"suite":"variants","name":"CV5 the same seed gives the same puzzle","fullName":"variants > variants: classic6 > CV5 the same seed gives the same puzzle","status":"pass","ms":202.753,"reason":"","error":null,"ordinal":16},
+      {"suite":"variants","name":"CV6 soft: generation never hangs (milestones: perf.test.js)","fullName":"variants > variants: classic6 > CV6 soft: generation never hangs (milestones: perf.test.js)","status":"pass","ms":0.104,"reason":"","error":null,"ordinal":17},
+      {"suite":"variants","name":"CV7 name, options and levels exist in both locale packs","fullName":"variants > variants: classic6 > CV7 name, options and levels exist in both locale packs","status":"pass","ms":0.899,"reason":"","error":null,"ordinal":18}
+    ],
+    "suites": [
+      {"name":"variants","total":10,"passed":10,"failed":0,"skipped":0,"ms":664.445}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=variants","--filter=> variants: classic6 >","--results=..\\docs\\difficulty-v3\\evidence\\MS18c\\closure\\manual-variants\\result-variant-classic6.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

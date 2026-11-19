@@ -64,6 +64,13 @@
     return Object.assign({ variantId: 'classic9', difficulty: 'normal', seed: 1, trace: 'summary' }, extra);
   }
 
+  // MS18c: qualification hides some levels of these fixed requests (Killer Hard and Master, diagonalX and Hyper
+  // Easy): the variant offers the level for the length of the call only, and the exact array is put back in
+  // `finally`. A stepper is driven to its end inside the call.
+  function asRequested(variantId, level, fn) {
+    return SG.fixtures.toolRecords.withRequestedLevel(variantId, level, fn).value;
+  }
+
   /** Events without time stamps, sequence numbers, time throttled `metric` events and the elapsed time. */
   function shape(events) {
     return events.filter(function (e) { return e.type !== 'metric'; }).map(function (e) {
@@ -79,26 +86,30 @@
 
   function runSync(config) {
     var events = [];
-    var result = P.run(config, function (e) { events.push(e); });
+    var result = asRequested(config.variantId, config.difficulty, function () {
+      return P.run(config, function (e) { events.push(e); });
+    });
     return { result: result, events: events };
   }
 
   /** Runs the stepper `size` steps per slice; returns { result, events, yields }. */
   function runSliced(config, size, extra) {
-    var events = [];
-    var options = Object.assign({ cooperative: true }, extra);
-    var steps = P.runSteps(config, function (e) { events.push(e); }, null, options);
-    var yields = 0;
-    var step;
-    for (;;) {
-      for (var i = 0; i < size; i++) {
-        step = steps.next();
+    return asRequested(config.variantId, config.difficulty, function () {
+      var events = [];
+      var options = Object.assign({ cooperative: true }, extra);
+      var steps = P.runSteps(config, function (e) { events.push(e); }, null, options);
+      var yields = 0;
+      var step;
+      for (;;) {
+        for (var i = 0; i < size; i++) {
+          step = steps.next();
+          if (step.done) break;
+          yields++;
+        }
         if (step.done) break;
-        yields++;
       }
-      if (step.done) break;
-    }
-    return { result: step.value, events: events, yields: yields };
+      return { result: step.value, events: events, yields: yields };
+    });
   }
 
   function expectSameResult(a, b) {
@@ -399,7 +410,7 @@
         solution: solution,
         rng: master.fork('extra#1'),
         level: level,
-        spec: SG.difficulty.spec(level, model),
+        spec: asRequested(variantId, level, function () { return SG.difficulty.spec(level, model); }),
         attempt: 1,
         budget: null,
         emit: null,
@@ -421,23 +432,25 @@
      * about 2.5 microseconds each in the layout searches.
      */
     function sliceWork(config) {
-      var budget = SG.budget.create({});
-      var current = null;
-      var steps = P.runSteps(config, function (e) {
-        if (e.stepId) current = e.stepId;
-      }, budget, { cooperative: true });
-      var longest = {};
-      var slices = {};
-      var spent = 0;
-      var step;
-      do {
-        step = steps.next();
-        var used = budget.nodes - spent;
-        spent = budget.nodes;
-        longest[current] = Math.max(longest[current] || 0, used);
-        slices[current] = (slices[current] || 0) + 1;
-      } while (!step.done);
-      return { longest: longest, slices: slices };
+      return asRequested(config.variantId, config.difficulty, function () {
+        var budget = SG.budget.create({});
+        var current = null;
+        var steps = P.runSteps(config, function (e) {
+          if (e.stepId) current = e.stepId;
+        }, budget, { cooperative: true });
+        var longest = {};
+        var slices = {};
+        var spent = 0;
+        var step;
+        do {
+          step = steps.next();
+          var used = budget.nodes - spent;
+          spent = budget.nodes;
+          longest[current] = Math.max(longest[current] || 0, used);
+          slices[current] = (slices[current] || 0) + 1;
+        } while (!step.done);
+        return { longest: longest, slices: slices };
+      });
     }
 
     SLICED.forEach(function (c) {
@@ -545,7 +558,9 @@
     WIRE_CASES.forEach(function (pair) {
       it(pair[0] + ': a cloned wire result gives an equal, frozen, valid model with exactly one solution',
         function () {
-          var made = P.run({ variantId: pair[0], difficulty: pair[1], seed: 13, trace: 'off' }, null);
+          var made = asRequested(pair[0], pair[1], function () {
+            return P.run({ variantId: pair[0], difficulty: pair[1], seed: 13, trace: 'off' }, null);
+          });
           var wire = structuredClone(P.toWire(made));
           withoutExtensions(function () {
             var back = P.fromWire(wire);

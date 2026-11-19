@@ -12,6 +12,17 @@
   var X = SG.extraRegions;
 
   var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1', 'hell2'];
+  /** The levels of the final qualification (docs/difficulty-rating/qualification.md), the same for both variants. */
+  var PUBLISHED = ['veryEasy', 'normal', 'hard', 'master', 'nightmare', 'hell2'];
+  /**
+   * The levels with a public per-level registration below: the offered ones, with their global index in LEVELS.
+   * The fixed diagnostic corpus (`puzzleRun`, `allPuzzles`, `hybridRun`) keeps every level of LEVELS, the hidden
+   * ones included (MS18c): its cross-level assertions, its original indexes and its seeds are the original ones.
+   */
+  function offeredOf(id) {
+    var support = SG.variants.get(id).difficultySupport;
+    return LEVELS.filter(function (level) { return support.indexOf(level) !== -1; });
+  }
   /** design.md 9.1, the diagonalX / hyper rows (the larger of the two), p95 in ms. */
   var BUDGET_MS = {
     veryEasy: 80, easy: 200, normal: 200, hard: 500, expert: 500, master: 1200, nightmare: 3000, hell1: 3000,
@@ -157,10 +168,23 @@
 
   var classicModel = SG.variants.get('classic9').build({}, null);
 
+  /**
+   * `fn` with `level` offered by the variant for the length of the call, and the exact support array put back in
+   * `finally` (MS18c): the fixed diagnostic requests keep the levels that qualification hides, never normalized
+   * to another level and never advertised in a menu.
+   */
+  function asLevel(variantId, level, fn) {
+    return SG.fixtures.toolRecords.withRequestedLevel(variantId, level, fn).value;
+  }
+
+  function specOf(variantId, level, model) {
+    return asLevel(variantId, level, function () { return SG.difficulty.spec(level, model); });
+  }
+
   function generate(variantId, level, seed, extra) {
     var cfg = Object.assign({ variantId: variantId, difficulty: level, seed: seed, trace: 'summary' }, extra);
     var t0 = now();
-    var result = SG.pipeline.run(cfg, function () {});
+    var result = asLevel(variantId, level, function () { return SG.pipeline.run(cfg, function () {}); });
     result.elapsedMs = now() - t0;
     return result;
   }
@@ -236,10 +260,16 @@
       });
     });
 
-    it('supports every difficulty level, hell2 included (measured by tests/qualify.js)',
+    it('offers the levels of the final qualification and refuses the others (measured by tests/qualify.js)',
       function () {
         VARIANT_IDS.forEach(function (id) {
-          expect(SG.variants.get(id).difficultySupport).toEqual(LEVELS);
+          expect(SG.variants.get(id).difficultySupport).toEqual(PUBLISHED);
+          SG.difficulty.LEVELS.filter(function (level) { return PUBLISHED.indexOf(level) === -1; })
+            .forEach(function (level) {
+              expectCode(function () {
+                SG.pipeline.run({ variantId: id, difficulty: level, seed: 1, trace: 'off' }, null);
+              }, 'difficulty.unsupportedLevel');
+            });
         });
       });
 
@@ -510,7 +540,8 @@
   describe('extraRegions: puzzles at every level (CV3, CV4, CV6)', function () {
     VARIANT_IDS.forEach(function (id) {
       var cfg = VARIANT_CONFIGS[id];
-      LEVELS.forEach(function (level) {
+      // Public per-level registrations: the published levels only (MS18c). The corpus behind them is the fixed one.
+      offeredOf(id).forEach(function (level) {
         describe(id + ' ' + level + ': ' + (PER_LEVEL[level] || PUZZLES_PER_LEVEL) + ' puzzles', function () {
           it('I1: exactly one solution; I2: givens are part of the solution; I3: it obeys every rule',
             function () {
@@ -602,8 +633,8 @@
       });
 
     it('the check can tell: a classic9 puzzle keeps its unique solution on the classic board', function () {
-      SG.variants.get('classic9').difficultySupport.forEach(function (level, li) {
-        var p = generate('classic9', level, 700 + li);
+      SG.variants.get('classic9').difficultySupport.forEach(function (level) {
+        var p = generate('classic9', level, 700 + SG.difficulty.levelIndex(level));
         expect(SG.dfs.countSolutions(classicModel, p.givens, 2)).toBe(1);
       });
     });
@@ -633,7 +664,7 @@
         hybridRun().forEach(function (p, i) {
           var tag = 'hybrid #' + i + ' (' + p.config.difficulty + ')';
           checkInvariants(p, CONFIGS[2], tag);
-          check(clueCount(p.givens) >= SG.difficulty.spec(p.config.difficulty, p.model).minClues,
+          check(clueCount(p.givens) >= specOf(p.config.variantId, p.config.difficulty, p.model).minClues,
             tag + ': too few clues');
         });
       });
@@ -688,7 +719,7 @@
         'techniques of that level', function () {
         allPuzzles(id).forEach(function (p, i) {
           if (p.rating.level !== p.config.difficulty) return;
-          var spec = SG.difficulty.spec(p.config.difficulty, p.model);
+          var spec = specOf(p.config.variantId, p.config.difficulty, p.model);
           var report = SG.logicalSolver.solve(p.model, p.givens, {
             allowedTechniques: spec.allowedTechniques, assumeUniqueness: false, collectSteps: false
           });
@@ -720,9 +751,11 @@
 
     function run(cfg, level, seed, trace) {
       var events = [];
-      var result = SG.pipeline.run({
-        variantId: cfg.variantId, difficulty: level, seed: seed, trace: trace, variantOptions: cfg.options
-      }, function (e) { events.push(e); });
+      var result = asLevel(cfg.variantId, level, function () {
+        return SG.pipeline.run({
+          variantId: cfg.variantId, difficulty: level, seed: seed, trace: trace, variantOptions: cfg.options
+        }, function (e) { events.push(e); });
+      });
       return { result: result, events: events };
     }
 

@@ -50,23 +50,26 @@
    * of normal; a new cell, or one whose old target the qualification's p95 exceeds, is three times that p95
    * rounded up, never below the target of the level before and never above the budget of the qualification
    * (2 s for 4x4 and 6x6, 10 s up to 81 cells, 30 s above).
+   * Rating v3 (MS18c): the 39 levels that the final qualification hides are null, an alignment of the table with
+   * the 79 offered levels and no recalibration: every target of an offered level is the one it had, and the old
+   * values of the 39 cells are recorded in docs/difficulty-v3/evidence/MS18c/closure/population-map.md.
    */
   var PERF_TARGETS = {
     classic4: row(10, null, null, null, null, null, null, null, null),
     classic6: row(10, null, null, 350, null, null, null, null, null),
-    classic9: row(60, 150, 150, 400, 400, 900, 2500, 2500, null),
-    diagonalX: row(80, 200, 200, 500, 500, 1200, 3000, 3000, 3000),
-    hyper: row(80, 200, 200, 500, 500, 1200, 3000, 3000, 5000),
-    jigsaw9: row(150, 350, 350, 900, 900, 2000, 5000, 5000, 5000),
-    wordoku: row(100, 250, 250, 600, 600, 1500, 1500, 2500, null),
-    killer: row(300, 700, 700, 1800, 10000, 10000, 10000, 10000, 10000),
-    greaterThan: row(300, 700, 700, 6000, 10000, 10000, 10000, 10000, 10000),
-    mega12: row(400, 1000, 1000, 3000, 3000, 3000, 3000, 4500, 16000),
-    mega16: row(1500, 4000, 4000, 10000, 10000, 10000, 10000, 10000, 10000),
-    butterfly: row(1000, 3000, 3000, 8000, 8000, 8000, 8000, 8000, 15000),
-    samurai: row(3000, 8000, 8000, 20000, 20000, 20000, 20000, 20000, 30000),
-    flower: row(3000, 8000, 8000, 20000, 20000, 20000, 20000, 20000, 20000),
-    sohei: row(3000, 8000, 8000, 20000, 20000, 20000, 20000, 20000, 20000)
+    classic9: row(60, 150, 150, 400, 400, 900, 2500, null, null),
+    diagonalX: row(80, null, 200, 500, null, 1200, 3000, null, 3000),
+    hyper: row(80, null, 200, 500, null, 1200, 3000, null, 5000),
+    jigsaw9: row(150, 350, 350, 900, null, 2000, null, null, 5000),
+    wordoku: row(100, 250, null, 600, 600, 1500, 1500, null, null),
+    killer: row(300, 700, 700, null, null, null, null, null, null),
+    greaterThan: row(300, 700, null, 6000, null, 10000, null, null, 10000),
+    mega12: row(400, 1000, 1000, 3000, 3000, 3000, 3000, null, 16000),
+    mega16: row(1500, 4000, 4000, 10000, null, 10000, null, null, 10000),
+    butterfly: row(1000, null, 3000, 8000, 8000, 8000, 8000, null, 15000),
+    samurai: row(3000, null, 8000, 20000, 20000, 20000, null, null, null),
+    flower: row(3000, null, 8000, 20000, null, 20000, null, null, 20000),
+    sohei: row(3000, null, 8000, 20000, 20000, 20000, null, null, 20000)
   };
 
   /**

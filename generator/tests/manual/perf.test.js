@@ -23,10 +23,15 @@
 
   var SLOW = 120000;
   var PERF_RUNS = 5;
-  /** The cells that the suite times: cheap enough for about 20 s, and one of every kind of variant. */
+  /**
+   * The cells that the suite times: cheap enough for about 20 s, and one of every kind of variant. MS18c: the
+   * final qualification hides greaterThan/normal and wordoku/normal, so the declared public smoke selection takes
+   * their nearest offered levels (easier on a tie), greaterThan/easy and wordoku/easy; a fixed diagnostic request
+   * is not touched by this.
+   */
   var PERF_CELLS = ['classic4/veryEasy', 'classic9/veryEasy', 'classic9/normal', 'classic9/hard',
     'classic9/master', 'classic9/nightmare', 'diagonalX/normal', 'hyper/normal', 'jigsaw9/normal',
-    'wordoku/normal', 'killer/veryEasy', 'killer/normal', 'greaterThan/normal', 'mega12/normal',
+    'wordoku/easy', 'killer/veryEasy', 'killer/normal', 'greaterThan/easy', 'mega12/normal',
     'mega16/veryEasy', 'butterfly/veryEasy', 'samurai/veryEasy', 'flower/veryEasy', 'sohei/veryEasy'];
 
   function envFlag(name) {

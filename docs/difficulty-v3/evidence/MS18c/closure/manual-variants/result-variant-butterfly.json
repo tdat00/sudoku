@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "13cd63bfb0f5af687bc8e841d522cc7f216aa116125394b33fbc32a53ab1ef3f",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["variants"],"filter":"> variants: butterfly >","exact":null,"count":15},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 22632.9,
+  "results": {
+    "total": 15,
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 22377.6,
+    "tests": [
+      {"suite":"variants","name":"CV0 the definition and its difficulty spec are sound","fullName":"variants > variants: butterfly > CV0 the definition and its difficulty spec are sound","status":"pass","ms":4.826,"reason":"","error":null,"ordinal":157},
+      {"suite":"variants","name":"CV1 every model passes model.validate (all option values too)","fullName":"variants > variants: butterfly > CV1 every model passes model.validate (all option values too)","status":"pass","ms":6.437,"reason":"","error":null,"ordinal":158},
+      {"suite":"variants","name":"CV2 full grids are valid for every seed","fullName":"variants > variants: butterfly > CV2 full grids are valid for every seed","status":"pass","ms":5.764,"reason":"","error":null,"ordinal":159},
+      {"suite":"variants","name":"CV3 veryEasy: puzzles at the supported level","fullName":"variants > variants: butterfly > CV3 veryEasy: puzzles at the supported level","status":"pass","ms":26.318,"reason":"","error":null,"ordinal":160},
+      {"suite":"variants","name":"CV3 normal: puzzles at the supported level","fullName":"variants > variants: butterfly > CV3 normal: puzzles at the supported level","status":"pass","ms":73.004,"reason":"","error":null,"ordinal":161},
+      {"suite":"variants","name":"CV3 hard: puzzles at the supported level","fullName":"variants > variants: butterfly > CV3 hard: puzzles at the supported level","status":"pass","ms":136.667,"reason":"","error":null,"ordinal":162},
+      {"suite":"variants","name":"CV3 expert: puzzles at the supported level","fullName":"variants > variants: butterfly > CV3 expert: puzzles at the supported level","status":"pass","ms":529.843,"reason":"","error":null,"ordinal":163},
+      {"suite":"variants","name":"CV3 master: puzzles at the supported level","fullName":"variants > variants: butterfly > CV3 master: puzzles at the supported level","status":"pass","ms":548.269,"reason":"","error":null,"ordinal":164},
+      {"suite":"variants","name":"CV3 nightmare: puzzles at the supported level","fullName":"variants > variants: butterfly > CV3 nightmare: puzzles at the supported level","status":"pass","ms":13272.74,"reason":"","error":null,"ordinal":165},
+      {"suite":"variants","name":"CV3 hell2: puzzles at the supported level","fullName":"variants > variants: butterfly > CV3 hell2: puzzles at the supported level","status":"pass","ms":2759.891,"reason":"","error":null,"ordinal":166},
+      {"suite":"variants","name":"CV3 unsupported: other levels are refused","fullName":"variants > variants: butterfly > CV3 unsupported: other levels are refused","status":"pass","ms":0.338,"reason":"","error":null,"ordinal":167},
+      {"suite":"variants","name":"CV4 invariants I1-I7 hold (I6 with the variant's clue floor)","fullName":"variants > variants: butterfly > CV4 invariants I1-I7 hold (I6 with the variant's clue floor)","status":"pass","ms":175.875,"reason":"","error":null,"ordinal":168},
+      {"suite":"variants","name":"CV5 the same seed gives the same puzzle","fullName":"variants > variants: butterfly > CV5 the same seed gives the same puzzle","status":"pass","ms":4835.657,"reason":"","error":null,"ordinal":169},
+      {"suite":"variants","name":"CV6 soft: generation never hangs (milestones: perf.test.js)","fullName":"variants > variants: butterfly > CV6 soft: generation never hangs (milestones: perf.test.js)","status":"pass","ms":0.111,"reason":"","error":null,"ordinal":170},
+      {"suite":"variants","name":"CV7 name, options and levels exist in both locale packs","fullName":"variants > variants: butterfly > CV7 name, options and levels exist in both locale packs","status":"pass","ms":1.019,"reason":"","error":null,"ordinal":171}
+    ],
+    "suites": [
+      {"name":"variants","total":15,"passed":15,"failed":0,"skipped":0,"ms":22377.382}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=variants","--filter=> variants: butterfly >","--results=..\\docs\\difficulty-v3\\evidence\\MS18c\\closure\\manual-variants\\result-variant-butterfly.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

@@ -1,0 +1,29 @@
+$ node tests\node-runner.js --suite=help,pipeline,cache --results=..\docs\difficulty-v3\evidence\MS18c\closure\focus\g3.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL cache: 116 passed, 3 failed  (15.14 s)
+ok   help: 30 passed  (5.49 s)
+ok   pipeline: 151 passed  (37.08 s)
+
+Failures:
+  FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration that differs only in timing, display or representation is the same puzzle
+       AssertionError: expected Array(1)["an equal Greater-Than copy rebuilt from the wire: not served"] to equal Array(0)[]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\cache.test.js:1039:51)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+       AssertionError: expected Array(3)["a sign reversed: not served", "a sign removed: not served", "signs in another outer order: not served"] to equal Array(0)[]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\cache.test.js:1286:52)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+       AssertionError: expected Array(7)["a sign with a missing end: not served", "a sign end out of range: not served", "a sign end that is not an integer: not served", "a sign second end out of range: not served", "a sign end that is negative: not served", "a sign second end that is negative: not served", "a sign that is null: not served"] to equal Array(0)[]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\cache.test.js:1437:52)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 3
+Tests:  300 total, 297 passed, 3 failed, 0 skipped
+Time:   57.71 s running tests, 57.96 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/focus/g3.json
+(node:32608) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+exit=1 seconds=58.196

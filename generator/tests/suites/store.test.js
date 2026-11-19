@@ -114,12 +114,12 @@
       expect(S.sanitize({ variantId: 'classic6', difficulty: 'nightmare' }).difficulty).toBe('hard');
       expect(S.sanitize({ variantId: 'classic6', difficulty: 'normal' }).difficulty).toBe('hard');
       expect(S.sanitize({ variantId: 'classic6', difficulty: 'easy' }).difficulty).toBe('veryEasy');
-      expect(S.sanitize({ variantId: 'killer', difficulty: 'expert' }).difficulty).toBe('expert');
-      expect(S.sanitize({ variantId: 'killer', difficulty: 'nightmare' }).difficulty).toBe('nightmare');
-      expect(S.sanitize({ variantId: 'samurai', difficulty: 'nightmare' }).difficulty).toBe('nightmare');
-      expect(S.sanitize({ variantId: 'samurai', difficulty: 'easy' }).difficulty).toBe('easy');
+      expect(S.sanitize({ variantId: 'killer', difficulty: 'expert' }).difficulty).toBe('normal');
+      expect(S.sanitize({ variantId: 'killer', difficulty: 'nightmare' }).difficulty).toBe('normal');
+      expect(S.sanitize({ variantId: 'samurai', difficulty: 'nightmare' }).difficulty).toBe('master');
+      expect(S.sanitize({ variantId: 'samurai', difficulty: 'easy' }).difficulty).toBe('veryEasy');
       expect(S.sanitize({ variantId: 'classic9', difficulty: 'nightmare' }).difficulty).toBe('nightmare');
-      expect(S.sanitize({ variantId: 'classic9', difficulty: 'hell2' }).difficulty).toBe('hell1');
+      expect(S.sanitize({ variantId: 'classic9', difficulty: 'hell2' }).difficulty).toBe('nightmare');
       expect(S.sanitize({ variantId: 'classic9', difficulty: 'bogus' }).difficulty).toBe('normal');
     });
 
@@ -264,15 +264,15 @@
           expect(S.toSearchString(S.parseUrl(search))).toBe('');
         });
       expect(S.readUrl('?trace=off&speed=fast')).toEqual({ patch: {}, hasConfig: false });
-      var link = S.parseUrl('?v=killer&trace=full&d=hard&speed=step&seed=5');
-      expect(S.toSearchString(link)).toBe('?v=killer&d=hard&seed=5');
+      var link = S.parseUrl('?v=jigsaw9&trace=full&d=hard&speed=step&seed=5');
+      expect(S.toSearchString(link)).toBe('?v=jigsaw9&d=hard&seed=5');
       expect('trace' in S.toConfig(link)).toBe(false);
     });
 
     it('accepts a bare query, a full URL, a fragment and encoded text', function () {
       ready();
-      expect(S.parseUrl('v=killer&d=hard').variantId).toBe('killer');
-      expect(S.parseUrl('https://example.org/app/index.html?v=killer&d=hard#x=1').difficulty).toBe('hard');
+      expect(S.parseUrl('v=jigsaw9&d=hard').variantId).toBe('jigsaw9');
+      expect(S.parseUrl('https://example.org/app/index.html?v=jigsaw9&d=hard#x=1').difficulty).toBe('hard');
       expect(S.parseUrl('?seed=hello%20world').seed).toBe('hello world');
       expect(S.parseUrl('?seed=hello+world').seed).toBe('hello world');
       expect(S.parseUrl('?seed=%E0%A4%A').seed).toBe('%E0%A4%A');
@@ -319,7 +319,8 @@
       expect(jigsaw.variantOptions.compactness).toBe(0.85);
       var gt = S.parseUrl('?v=greaterThan&o.futoshiki=1');
       expect(gt.variantOptions.futoshiki).toBe(true);
-      expect(S.toSearchString(gt)).toBe('?v=greaterThan&o.futoshiki=1');
+      // Greater-Than no longer offers Normal (MS18c): its corrected default is Easy, which the URL then names
+      expect(S.toSearchString(gt)).toBe('?v=greaterThan&d=easy&o.futoshiki=1');
       expect(S.parseUrl('?v=diagonalX&o.withHyper=true').variantOptions.withHyper).toBe(true);
       expect(S.parseUrl('?v=jigsaw9&o.compactness=huge').variantOptions.compactness).toBe(0.6);
     });
@@ -374,11 +375,11 @@
 
     it('builds share links that always name the puzzle', function () {
       ready();
-      var state = S.sanitize({ variantId: 'killer', difficulty: 'hard', seed: '77' });
+      var state = S.sanitize({ variantId: 'killer', difficulty: 'normal', seed: '77' });
       expect(S.shareUrl(state, 'https://example.org/app/?old=1#frag')).toBe(
-        'https://example.org/app/?v=killer&d=hard&seed=77&sym=rotational180&mode=digits');
+        'https://example.org/app/?v=killer&d=normal&seed=77&sym=rotational180&mode=digits');
       expect(S.shareUrl(state, 'https://example.org/app/', { auto: true })).toBe(
-        'https://example.org/app/?v=killer&d=hard&seed=77&sym=rotational180&mode=digits&auto=1');
+        'https://example.org/app/?v=killer&d=normal&seed=77&sym=rotational180&mode=digits&auto=1');
       expect(S.parseUrl(S.shareUrl(state, 'x')).seed).toBe('77');
     });
 
@@ -644,9 +645,9 @@
       var e = env('');
       var store = makeStore({ env: e });
       store.set({ difficulty: 'hard' });
-      store.set({ variantId: 'killer', seed: '5' });
+      store.set({ variantId: 'jigsaw9', seed: '5' });
       store.set({ difficulty: 'normal', variantId: 'classic9', seed: '' });
-      expect(e.urls).toEqual(['/index.html?d=hard#top', '/index.html?v=killer&d=hard&seed=5#top',
+      expect(e.urls).toEqual(['/index.html?d=hard#top', '/index.html?v=jigsaw9&d=hard&seed=5#top',
         '/index.html#top']);
       expect(store.syncUrl()).toBe(true);
     });
@@ -691,12 +692,12 @@
       ready();
       withEnglish(function () {
         var storage = memoryStorage({
-          'sg.lastConfig.v1': JSON.stringify({ v: 1, variantId: 'killer', difficulty: 'master', seed: '11' }),
+          'sg.lastConfig.v1': JSON.stringify({ v: 1, variantId: 'jigsaw9', difficulty: 'master', seed: '11' }),
           'sg.prefs.v1': JSON.stringify({ v: 1, lang: 'vi', theme: 'dark', fontSize: 'large' })
         });
         var fromStorage = makeStore({ storage: storage });
         fromStorage.load();
-        expect(fromStorage.get().variantId).toBe('killer');
+        expect(fromStorage.get().variantId).toBe('jigsaw9');
         expect(fromStorage.get().difficulty).toBe('master');
         expect(fromStorage.get().lang).toBe('vi');
         expect(fromStorage.get().theme).toBe('dark');
@@ -736,12 +737,12 @@
       ready();
       withEnglish(function () {
         var storage = memoryStorage({
-          'sg.lastConfig.v1': JSON.stringify({ v: 1, variantId: 'killer', trace: 'off' }),
+          'sg.lastConfig.v1': JSON.stringify({ v: 1, variantId: 'jigsaw9', trace: 'off' }),
           'sg.prefs.v1': JSON.stringify({ v: 1, lang: 'en', theme: 'dark', speed: 'manual' })
         });
         var store = makeStore({ storage: storage });
         store.load();
-        expect(store.get().variantId).toBe('killer');
+        expect(store.get().variantId).toBe('jigsaw9');
         expect(store.get().theme).toBe('dark');
         expect('trace' in store.get()).toBe(false);
         expect('speed' in store.get()).toBe(false);
@@ -828,7 +829,7 @@
       ready();
       var storage = memoryStorage();
       var store = makeStore({ storage: storage });
-      store.set({ variantId: 'killer', difficulty: 'hard', seed: '31', theme: 'high-contrast',
+      store.set({ variantId: 'jigsaw9', difficulty: 'hard', seed: '31', theme: 'high-contrast',
         fontSize: 'large',
         reducedMotion: true, colorAuxSymbol: false, auto: true });
       expect(S.PREFS_KEY).toBe('sg.prefs.v1');
@@ -839,7 +840,7 @@
       var last = JSON.parse(storage.data['sg.lastConfig.v1']);
       expect(Object.keys(last).sort()).toEqual(['attemptsExplicit', 'difficulty', 'digOrder', 'maxAttempts',
         'seed', 'showSolution', 'symbolMode', 'symmetry', 'variantId', 'variantOptions']);
-      expect(last.variantId).toBe('killer');
+      expect(last.variantId).toBe('jigsaw9');
       expect(last.difficulty).toBe('hard');
       expect(last.seed).toBe('31');
       expect('auto' in last).toBe(false);
@@ -1406,10 +1407,14 @@
       return memoryStorage({ [LAST]: JSON.stringify(config) });
     }
 
+    // The offers start from the whole ladder, whatever the published arrays are (MS18c): each test names the
+    // levels it hides.
     function withOffers(variantId, hidden, fn) {
       var def = SG.variants.get(variantId);
       var original = def.difficultySupport;
-      def.difficultySupport = original.filter(function (level) { return hidden.indexOf(level) === -1; });
+      def.difficultySupport = SG.difficulty.LEVELS.filter(function (level) {
+        return hidden.indexOf(level) === -1;
+      });
       try {
         return fn(def);
       } finally {

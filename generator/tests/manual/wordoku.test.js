@@ -13,6 +13,14 @@
   var def = SG.variants.get('wordoku');
 
   var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1'];
+  /** The levels of the final qualification (docs/difficulty-rating/qualification.md): what the variant offers. */
+  var PUBLISHED = ['veryEasy', 'easy', 'hard', 'expert', 'master', 'nightmare'];
+  /**
+   * The levels with a public per-level registration below: the offered ones. The fixed diagnostic corpus
+   * (`puzzleRun`, `allPuzzles`) keeps the eight levels of LEVELS, the hidden ones included (MS18c), with the
+   * original seeds; hell2 was never part of it.
+   */
+  var OFFERED = LEVELS.filter(function (level) { return def.difficultySupport.indexOf(level) !== -1; });
   /** design.md 9.1, wordoku row, p95 in ms. */
   var BUDGET_MS = {
     veryEasy: 100, easy: 250, normal: 250, hard: 600, expert: 600, master: 1500, nightmare: 1500, hell1: 2500
@@ -96,11 +104,19 @@
 
   // Generated puzzles, shared by the suites below (generated once, on first use)
 
+  /**
+   * A puzzle of the fixed diagnostic corpus or of a fixed request. A level that qualification hides is offered
+   * by the variant for the length of this call only, and the exact support array is put back in `finally`.
+   */
+  function asLevel(level, fn) {
+    return SG.fixtures.toolRecords.withRequestedLevel('wordoku', level, fn).value;
+  }
+
   function generate(level, seed, extra) {
     var events = 0;
     var cfg = Object.assign({ variantId: 'wordoku', difficulty: level, seed: seed, trace: 'summary' }, extra);
     var t0 = now();
-    var result = SG.pipeline.run(cfg, function () { events++; });
+    var result = asLevel(level, function () { return SG.pipeline.run(cfg, function () { events++; }); });
     result.elapsedMs = now() - t0;
     result.eventCount = events;
     return result;
@@ -478,7 +494,7 @@
       expect(def.i18nKey).toBe('variant.wordoku');
       expect(def.group).toBe('wordoku');
       expect(def.digits).toBe(9);
-      expect(def.difficultySupport).toEqual(LEVELS);
+      expect(def.difficultySupport).toEqual(PUBLISHED);
       expect(def.symbolModes).toContain(def.defaultSymbolMode);
       expect(def.defaultSymbolMode).toBe('word');
       expect(def.symbolModes).toEqual(['word', 'digits']);
@@ -487,10 +503,14 @@
       expect(def.digStrategy === undefined || def.digStrategy === null).toBe(true);
     });
 
-    it('does not support hell2 (it missed the qualification): asking for it is refused', function () {
-      expectCode(function () {
-        SG.pipeline.run({ variantId: 'wordoku', difficulty: 'hell2', seed: 1, trace: 'off' }, null);
-      }, 'difficulty.unsupportedLevel');
+    it('refuses every level that the final qualification does not offer: normal, hell1 and hell2', function () {
+      var refused = SG.difficulty.LEVELS.filter(function (level) { return PUBLISHED.indexOf(level) === -1; });
+      expect(refused).toEqual(['normal', 'hell1', 'hell2']);
+      refused.forEach(function (level) {
+        expectCode(function () {
+          SG.pipeline.run({ variantId: 'wordoku', difficulty: level, seed: 1, trace: 'off' }, null);
+        }, 'difficulty.unsupportedLevel');
+      });
     });
 
     it('is loaded once: running the file again registers nothing and adds no second set of strings',
@@ -709,7 +729,8 @@
   });
 
   describe('wordoku: puzzles at every level (CV3, CV4: invariants I1-I7)', function () {
-    LEVELS.forEach(function (level) {
+    // Public per-level registrations: the published levels only (MS18c). The corpus behind them is the fixed one.
+    OFFERED.forEach(function (level) {
       describe(level + ': ' + PUZZLES_PER_LEVEL + ' puzzles', function () {
         it('I1: exactly one solution (from the givens alone); I2: givens are part of the solution; ' +
           'I3: it satisfies every unit', function () {
@@ -902,13 +923,16 @@
     it('the result does not depend on the trace level or on a listening sink', function () {
       var base = generate('normal', 31, { trace: 'summary' });
       ['off', 'full'].forEach(function (trace) {
-        var other = SG.pipeline.run({ variantId: 'wordoku', difficulty: 'normal', seed: 31, trace: trace },
-          function () {});
+        var other = asLevel('normal', function () {
+          return SG.pipeline.run({ variantId: 'wordoku', difficulty: 'normal', seed: 31, trace: trace },
+            function () {});
+        });
         expect(equalArrays(base.givens, other.givens)).toBe(true);
         expect(equalArrays(base.solution, other.solution)).toBe(true);
       });
-      var silent = SG.pipeline.run(
-        { variantId: 'wordoku', difficulty: 'normal', seed: 31, trace: 'summary' }, null);
+      var silent = asLevel('normal', function () {
+        return SG.pipeline.run({ variantId: 'wordoku', difficulty: 'normal', seed: 31, trace: 'summary' }, null);
+      });
       expect(equalArrays(base.givens, silent.givens)).toBe(true);
     });
 
@@ -925,8 +949,10 @@
   describe('wordoku: the pipeline and its events', function () {
     function trace(level, seed, traceLevel, extra) {
       var events = [];
-      var result = SG.pipeline.run(Object.assign({ variantId: 'wordoku', difficulty: level, seed: seed,
-        trace: traceLevel }, extra), function (e) { events.push(e); });
+      var result = asLevel(level, function () {
+        return SG.pipeline.run(Object.assign({ variantId: 'wordoku', difficulty: level, seed: seed,
+          trace: traceLevel }, extra), function (e) { events.push(e); });
+      });
       return { result: result, events: events };
     }
 

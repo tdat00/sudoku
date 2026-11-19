@@ -1,0 +1,20 @@
+$ node tests\node-runner.js --suite=cache --results=..\docs\difficulty-v3\evidence\MS18c\closure\focus\g4.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL cache: 118 passed, 1 failed  (14.92 s)
+
+Failures:
+  FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+       AssertionError: expected 1 to be > 1
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\cache.test.js:1154:52)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+
+Suites: 1
+Tests:  119 total, 118 passed, 1 failed, 0 skipped
+Time:   14.92 s running tests, 15.13 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/focus/g4.json
+(node:34288) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+exit=1 seconds=15.361

@@ -110,14 +110,14 @@
       expect(p.reason).toBe('vacuous-tier');
       expect(p.raw).toBe(20 / 45);
       expect(p.lower).toBeNull();
-      var hell = D.spec('hell1', model9);
+      var hell = specOf('hell1');
       var q = F.positionOf({ score: 3000, solved: true, V: 30, min: hell.min, max: hell.max,
         tierWeights: [], vacuous: true });
       expect(q).toEqual({ raw: 600 / 1200, adjusted: null, lower: null, reason: 'empty-tier' });
     });
 
     it('MS07b: Hell 1 has a tier (nishioDeep), so its position has an adjusted value', function () {
-      var hell = D.spec('hell1', model9);
+      var hell = specOf('hell1');
       expect(hell.tierTechniques).toEqual(['nishioDeep']);
       var lower = 1.25 * D.WEIGHTS.nishioDeep + 30; // 3250 + V: the least a puzzle of the tier can score
       var p = F.positionOf({ score: 3300, solved: true, V: 30, min: hell.min, max: hell.max,
@@ -152,8 +152,15 @@
   // Rows, summaries and the deferred diagnostics, on fabricated ratings (no real solve)
   // ---------------------------------------------------------------------------------------------
 
+  /** The spec of `level` on classic9 though qualification may hide it (MS18c: hell1): band data only. */
+  function specOf(level) {
+    return SG.fixtures.toolRecords.withRequestedLevel('classic9', level, function () {
+      return D.spec(level, model9);
+    }).value;
+  }
+
   function bandOf(level) {
-    var spec = D.spec(level, model9);
+    var spec = specOf(level);
     return {
       band: { min: spec.min, max: spec.max },
       tierWeights: spec.tierTechniques.map(function (id) { return D.WEIGHTS[id]; }),

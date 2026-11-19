@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "13cd63bfb0f5af687bc8e841d522cc7f216aa116125394b33fbc32a53ab1ef3f",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["variants"],"filter":"> variants: classic9 >","exact":null,"count":15},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 7311,
+  "results": {
+    "total": 15,
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 7063.5,
+    "tests": [
+      {"suite":"variants","name":"CV0 the definition and its difficulty spec are sound","fullName":"variants > variants: classic9 > CV0 the definition and its difficulty spec are sound","status":"pass","ms":3.438,"reason":"","error":null,"ordinal":19},
+      {"suite":"variants","name":"CV1 every model passes model.validate (all option values too)","fullName":"variants > variants: classic9 > CV1 every model passes model.validate (all option values too)","status":"pass","ms":3.657,"reason":"","error":null,"ordinal":20},
+      {"suite":"variants","name":"CV2 full grids are valid for every seed","fullName":"variants > variants: classic9 > CV2 full grids are valid for every seed","status":"pass","ms":4.322,"reason":"","error":null,"ordinal":21},
+      {"suite":"variants","name":"CV3 veryEasy: puzzles at the supported level","fullName":"variants > variants: classic9 > CV3 veryEasy: puzzles at the supported level","status":"pass","ms":13.191,"reason":"","error":null,"ordinal":22},
+      {"suite":"variants","name":"CV3 easy: puzzles at the supported level","fullName":"variants > variants: classic9 > CV3 easy: puzzles at the supported level","status":"pass","ms":1216.832,"reason":"","error":null,"ordinal":23},
+      {"suite":"variants","name":"CV3 normal: puzzles at the supported level","fullName":"variants > variants: classic9 > CV3 normal: puzzles at the supported level","status":"pass","ms":1456.791,"reason":"","error":null,"ordinal":24},
+      {"suite":"variants","name":"CV3 hard: puzzles at the supported level","fullName":"variants > variants: classic9 > CV3 hard: puzzles at the supported level","status":"pass","ms":115.448,"reason":"","error":null,"ordinal":25},
+      {"suite":"variants","name":"CV3 expert: puzzles at the supported level","fullName":"variants > variants: classic9 > CV3 expert: puzzles at the supported level","status":"pass","ms":456.327,"reason":"","error":null,"ordinal":26},
+      {"suite":"variants","name":"CV3 master: puzzles at the supported level","fullName":"variants > variants: classic9 > CV3 master: puzzles at the supported level","status":"pass","ms":569.004,"reason":"","error":null,"ordinal":27},
+      {"suite":"variants","name":"CV3 nightmare: puzzles at the supported level","fullName":"variants > variants: classic9 > CV3 nightmare: puzzles at the supported level","status":"pass","ms":1421.11,"reason":"","error":null,"ordinal":28},
+      {"suite":"variants","name":"CV3 unsupported: other levels are refused","fullName":"variants > variants: classic9 > CV3 unsupported: other levels are refused","status":"pass","ms":0.452,"reason":"","error":null,"ordinal":29},
+      {"suite":"variants","name":"CV4 invariants I1-I7 hold (I6 with the variant's clue floor)","fullName":"variants > variants: classic9 > CV4 invariants I1-I7 hold (I6 with the variant's clue floor)","status":"pass","ms":15.707,"reason":"","error":null,"ordinal":30},
+      {"suite":"variants","name":"CV5 the same seed gives the same puzzle","fullName":"variants > variants: classic9 > CV5 the same seed gives the same puzzle","status":"pass","ms":1785.13,"reason":"","error":null,"ordinal":31},
+      {"suite":"variants","name":"CV6 soft: generation never hangs (milestones: perf.test.js)","fullName":"variants > variants: classic9 > CV6 soft: generation never hangs (milestones: perf.test.js)","status":"pass","ms":0.114,"reason":"","error":null,"ordinal":32},
+      {"suite":"variants","name":"CV7 name, options and levels exist in both locale packs","fullName":"variants > variants: classic9 > CV7 name, options and levels exist in both locale packs","status":"pass","ms":0.965,"reason":"","error":null,"ordinal":33}
+    ],
+    "suites": [
+      {"name":"variants","total":15,"passed":15,"failed":0,"skipped":0,"ms":7063.103}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=variants","--filter=> variants: classic9 >","--results=..\\docs\\difficulty-v3\\evidence\\MS18c\\closure\\manual-variants\\result-variant-classic9.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

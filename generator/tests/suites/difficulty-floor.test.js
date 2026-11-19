@@ -288,7 +288,10 @@
       expect(hard.oracle).toBe('techniques');
       expect(hard.proposal).toBe(false);
       expect(hard.scale).toBe(1);
-      var top = D.spec('hell2', killer);
+      // Killer no longer offers Hell 2 (MS18c): the spec of the level is still the one under test
+      var top = SG.fixtures.toolRecords.withRequestedLevel('killer', 'hell2', function () {
+        return D.spec('hell2', killer);
+      }).value;
       expect(top.max).toBe(Infinity);
       expect(top.proposal).toBe(true);
       expect(top.allowedTechniques).toEqual(allowed(8, 'killer'));
@@ -895,8 +898,19 @@
         .toEqual({ required: false, vacuous: false, floorLevel: 'easy', unsolvedCount: 0 });
     });
 
+    // The isolated registry has no fixtures: a level that qualification hides (greaterThan normal, MS18c) is
+    // offered for the length of the call, and the exact array is put back in `finally`.
     function generated(own, variantId, level) {
-      return own.SG.pipeline.run({ variantId: variantId, difficulty: level, seed: 1, trace: 'off' }, null);
+      var def = own.SG.variants.get(variantId);
+      var original = def.difficultySupport;
+      def.difficultySupport = own.SG.difficulty.LEVELS.filter(function (name) {
+        return original.indexOf(name) !== -1 || name === level;
+      });
+      try {
+        return own.SG.pipeline.run({ variantId: variantId, difficulty: level, seed: 1, trace: 'off' }, null);
+      } finally {
+        def.difficultySupport = original;
+      }
     }
 
     it('equals the reference on small generated samples of classic9, Killer, Jigsaw and Greater-Than',

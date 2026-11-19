@@ -169,19 +169,19 @@ The variants (`id` is the value of the URL parameter `v`):
 |------|---------|-------:|------:|----------------|
 | `classic4` | Classic Sudoku 4×4 | 4 | 16 | veryEasy |
 | `classic6` | Classic Sudoku 6×6 | 6 | 36 | veryEasy, hard |
-| `classic9` | Classic Sudoku 9×9 | 9 | 81 | veryEasy–hell1 |
-| `mega12` | Mega Sudoku 12×12 | 12 | 144 | veryEasy–hell2 |
-| `mega16` | Monster Sudoku 16×16 | 16 | 256 | veryEasy–hell2 |
-| `diagonalX` | Diagonal Sudoku (X) | 9 | 81 | veryEasy–hell2 |
-| `hyper` | Hyper Sudoku (Windoku) | 9 | 81 | veryEasy–hell2 |
-| `jigsaw9` | Jigsaw Sudoku | 9 | 81 | veryEasy–hell2 |
-| `killer` | Killer Sudoku | 9 | 81 | veryEasy–hell2 |
-| `greaterThan` | Greater-Than Sudoku | 9 | 81 | veryEasy–hell2 |
-| `samurai` | Samurai Sudoku | 9 | 369 | veryEasy–hell2 |
-| `sohei` | Sohei Sudoku | 9 | 288 | veryEasy–hell2 |
-| `butterfly` | Butterfly Sudoku | 9 | 144 | veryEasy–hell2 |
-| `flower` | Flower Sudoku | 9 | 189 | veryEasy–hell2 |
-| `wordoku` | Wordoku | 9 | 81 | veryEasy–hell1 |
+| `classic9` | Classic Sudoku 9×9 | 9 | 81 | veryEasy–nightmare |
+| `mega12` | Mega Sudoku 12×12 | 12 | 144 | veryEasy–nightmare, hell2 |
+| `mega16` | Monster Sudoku 16×16 | 16 | 256 | veryEasy–hard, master, hell2 |
+| `diagonalX` | Diagonal Sudoku (X) | 9 | 81 | veryEasy, normal–hard, master–nightmare, hell2 |
+| `hyper` | Hyper Sudoku (Windoku) | 9 | 81 | veryEasy, normal–hard, master–nightmare, hell2 |
+| `jigsaw9` | Jigsaw Sudoku | 9 | 81 | veryEasy–hard, master, hell2 |
+| `killer` | Killer Sudoku | 9 | 81 | veryEasy–normal |
+| `greaterThan` | Greater-Than Sudoku | 9 | 81 | veryEasy–easy, hard, master, hell2 |
+| `samurai` | Samurai Sudoku | 9 | 369 | veryEasy, normal–master |
+| `sohei` | Sohei Sudoku | 9 | 288 | veryEasy, normal–master, hell2 |
+| `butterfly` | Butterfly Sudoku | 9 | 144 | veryEasy, normal–nightmare, hell2 |
+| `flower` | Flower Sudoku | 9 | 189 | veryEasy, normal–hard, master, hell2 |
+| `wordoku` | Wordoku | 9 | 81 | veryEasy–easy, hard–nightmare |
 
 ## Screenshots
 
@@ -286,13 +286,19 @@ The format of the link, and how to point the button at another copy of the playe
   valid and has one solution, but its level can differ, most often on the hardest levels. Which levels a large board
   offers is decided by the qualification, not by this default; you can raise the number in the advanced options at
   the price of longer waits.
-- **Not every level is offered everywhere**: Classic 4×4 offers only very easy and Classic 6×6 very easy and hard;
-  Classic 9×9 and Wordoku stop at hell 1; every other variant offers all nine levels. The levels a variant
-  offers are the ones it passed in the qualification ([docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md)).
-- **The hardest levels are the slowest**: the slowest combinations are Greater-Than and Killer from expert
-  upwards and the hell levels of the large boards, with a 95th percentile of up to about 9.5 s (Greater-Than
-  expert; Killer expert and nightmare 8–9 s; Monster 16×16 and Samurai hell 2 6–7 s) and single requests up to
-  about 13 s; most other combinations take well under a second.
+- **Not every level is offered everywhere**: only the levels in the table above, 79 of the 135 combinations of
+  variant and level. Classic 4×4 offers only very easy and Classic 6×6 very easy and hard; Killer offers very easy
+  to normal, and no variant offers all nine levels. A level is offered only when it passed the qualification
+  ([docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md)); Killer hard and expert are
+  also withheld on purpose (decision S-OD7) until a later calibration, whatever a new qualification says. A stored
+  setting or a link that names a level its variant no longer offers is moved to the nearest one it offers (the
+  easier on a tie), and the page says so.
+- **The hardest levels are the slowest**: of the 79 offered levels, 49 have a 95th percentile under one second.
+  The slowest are the hell levels and nightmare of the large boards: Sohei hell 2 (95th percentile 27 s), Monster
+  16×16 hell 2 (25 s), Butterfly nightmare (16 s) and hell 2 (11 s), then Mega 12×12 hell 2, Flower hell 2,
+  Greater-Than hell 2 and Hyper nightmare (8.5 to 9.5 s). Single requests took up to 67 s (Samurai master); the
+  page stops a generation after 120 seconds. These times come from the final qualification, which ran on a busy
+  machine (not strict-quiet); qualification.md lists all of them.
 - **Wordoku in Vietnamese**: nine-letter words with nine different letters are rare in Vietnamese, so the
   list is short; when it is too short the English list is used and a notice says so.
 - **Settings**: the switch that turns background pre-generation off is not remembered between visits.

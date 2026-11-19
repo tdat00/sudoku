@@ -20,7 +20,17 @@
   var T = SG.comboTable;
 
   var DEF = SG.variants.get('killer');
-  var LEVELS = DEF.difficultySupport;
+  /**
+   * The fixed diagnostic ladder of the corpus: the nine levels the variant offered before the final qualification
+   * (MS18c). It is a constant, not the live `DEF.difficultySupport`: the corpus keeps its hidden levels (the
+   * cage-technique soundness sweeps, the layout checks and the cross-level assertions read them), each built inside
+   * the per-call guard of `asLevel`, never advertised in a menu.
+   */
+  var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1', 'hell2'];
+  /** The levels of the final qualification (docs/difficulty-rating/qualification.md): what the variant offers. */
+  var PUBLISHED = ['veryEasy', 'easy', 'normal'];
+  /** The levels with a public per-level registration or budget check below: the offered ones. */
+  var OFFERED = LEVELS.filter(function (level) { return DEF.difficultySupport.indexOf(level) !== -1; });
   var PER_LEVEL = 20;
   /** Fewer puzzles of the slow top levels (each takes a second or more), so that the suite stays quick. */
   var TOP_LEVEL_COUNT = 8;
@@ -43,9 +53,19 @@
 
   function zeros(n) { return new Int32Array(n); }
 
+  /**
+   * `fn` with `level` offered by Killer for the length of the call, and the exact support array put back in
+   * `finally` (MS18c): a fixed diagnostic request keeps a level that qualification hides.
+   */
+  function asLevel(level, fn) {
+    return SG.fixtures.toolRecords.withRequestedLevel('killer', level, fn).value;
+  }
+
   function generate(level, seed, trace, emit) {
-    return SG.pipeline.run({ variantId: 'killer', difficulty: level, seed: seed, trace: trace || 'off' },
-      emit || null, null);
+    return asLevel(level, function () {
+      return SG.pipeline.run({ variantId: 'killer', difficulty: level, seed: seed, trace: trace || 'off' },
+        emit || null, null);
+    });
   }
 
   function clueCount(givens) {
@@ -550,7 +570,9 @@
       expect(SG.difficulty.spec('veryEasy', board).allowedTechniques).not.toContain('cageCombo');
       expect(SG.difficulty.spec('easy', board).allowedTechniques).toContain('cageCombo');
       expect(SG.difficulty.spec('normal', board).allowedTechniques).toContain('ruleOf45');
-      expect(SG.difficulty.spec('hard', board).allowedTechniques).toContain('cageSplit');
+      // Killer no longer offers Hard (MS18c): the spec of the fixed level is read inside the guard
+      expect(asLevel('hard', function () { return SG.difficulty.spec('hard', board); }).allowedTechniques)
+        .toContain('cageSplit');
     });
 
     it('find nothing on a Killer board without cages, and on a solved board', function () {
@@ -946,7 +968,7 @@
       function () {
         corpus().forEach(function (p) {
           var rating = p.result.rating;
-          var spec = SG.difficulty.spec(p.level, p.result.model);
+          var spec = asLevel(p.level, function () { return SG.difficulty.spec(p.level, p.result.model); });
           if (rating.level !== p.level) return;
           expect(rating.score).toBeGreaterThanOrEqual(spec.min);
           expect(rating.score).toBeLessThan(spec.max);
@@ -962,8 +984,15 @@
       expect(DEF.i18nKey).toBe('variant.killer');
       expect(DEF.digits).toBe(9);
       expect(DEF.group).toBe('killer');
-      expect(Array.from(DEF.difficultySupport)).toEqual(['veryEasy', 'easy', 'normal', 'hard', 'expert',
-        'master', 'nightmare', 'hell1', 'hell2']);
+      expect(Array.from(DEF.difficultySupport)).toEqual(PUBLISHED);
+      SG.difficulty.LEVELS.filter(function (level) { return PUBLISHED.indexOf(level) === -1; })
+        .forEach(function (level) {
+          var error = null;
+          try { SG.pipeline.run({ variantId: 'killer', difficulty: level, seed: 1, trace: 'off' }, null); }
+          catch (err) { error = err; }
+          expect(error).not.toBeNull();
+          expect(error.code).toBe('difficulty.unsupportedLevel');
+        });
       expect(DEF.defaultSymbolMode).toBe('digits');
       expect(DEF.symbolModes).toContain(DEF.defaultSymbolMode);
       expect(typeof DEF.build).toBe('function');
@@ -1067,7 +1096,8 @@
           });
         });
 
-      LEVELS.forEach(function (level) {
+      // Public per-level registrations: the published levels only (MS18c). The corpus behind them is the fixed one.
+      OFFERED.forEach(function (level) {
         describe(level + ': ' + countOf(level) + ' puzzles', function () {
           it('I5: every puzzle has a complete proof; one rated as requested has its score in the band',
             function () {
@@ -1136,7 +1166,8 @@
       it('CV6: the 95th percentile of the generation time stays inside the killer row of design.md 9.1',
         function () {
           var report = {};
-          LEVELS.forEach(function (level) {
+          // The per-level generation budgets are public checks: the published levels only (MS18c)
+          OFFERED.forEach(function (level) {
             var times = corpusOf(level).map(function (p) { return p.ms; })
               .sort(function (a, b) { return a - b; });
             var p95 = times[Math.ceil(0.95 * times.length) - 1];
@@ -1147,7 +1178,7 @@
                 SG.test.TIME_FACTOR + ')');
             }
           });
-          expect(Object.keys(report)).toHaveLength(LEVELS.length);
+          expect(Object.keys(report)).toHaveLength(OFFERED.length);
         });
 
       it('stays reproducible whatever the trace level: off, summary and full give the same puzzle',
@@ -1703,7 +1734,7 @@
         };
         var result;
         try {
-          result = SG.pipeline.run(config, null);
+          result = asLevel('master', function () { return SG.pipeline.run(config, null); });
         } finally {
           SG.difficulty.rate = rate;
         }
@@ -1835,8 +1866,10 @@
 
     it('stays quiet at trace off: only the step start and end of step 4 reach the sink', function () {
       var events = [];
-      SG.pipeline.run({ variantId: 'killer', difficulty: 'hard', seed: 3, trace: 'off' },
-        function (e) { events.push(e); }, null);
+      asLevel('hard', function () {
+        return SG.pipeline.run({ variantId: 'killer', difficulty: 'hard', seed: 3, trace: 'off' },
+          function (e) { events.push(e); }, null);
+      });
       var own = events.filter(function (e) { return e.stepId === 'extraStructure'; });
       expect(own.map(function (e) { return e.i18nKey; }))
         .toEqual(['extraStructure.start', 'extraStructure.end']);

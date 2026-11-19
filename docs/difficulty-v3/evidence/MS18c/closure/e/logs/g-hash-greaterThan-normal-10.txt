@@ -1,0 +1,2 @@
+  greaterThan/normal: seeds 144, 233, 377, 610, 987 (0.8 s) (level offered for these records only)
+recorded 5 of 520 keys (greaterThan/normal, seed indexes 10-14 (seeds 144, 233, 377, 610, 987)) in docs/difficulty-v3/evidence/MS18c/closure/e/hashes/greaterThan-normal-10.json; a ledger is one shard, merge them all with --hash-merge

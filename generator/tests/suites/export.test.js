@@ -19,8 +19,11 @@
   function realResult(variantId, difficulty, seed, options) {
     var key = variantId + '/' + difficulty + '/' + seed + '/' + JSON.stringify(options || {});
     if (!cache[key]) {
-      cache[key] = SG.pipeline.run({ variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off',
-        variantOptions: options || {} }, null);
+      // a fixed request may name a level that qualification hides (MS18c): offered for this call only
+      cache[key] = SG.fixtures.toolRecords.withRequestedLevel(variantId, difficulty, function () {
+        return SG.pipeline.run({ variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off',
+          variantOptions: options || {} }, null);
+      }).value;
     }
     return cache[key];
   }

@@ -206,11 +206,19 @@
       }
     }
 
+    // MS18c: qualification hides these levels (samurai Nightmare, mega16 Nightmare), and the fixed requests keep
+    // them: the tests state them with the level offered for the length of the call, as the fixture does.
+    function asRequested(config, fn) {
+      return SG.fixtures.toolRecords.withRequestedLevel(config.variantId, config.difficulty, fn).value;
+    }
+
     it('takes G13 from the golden request through the store, and the megas as the seed-3 CV5 requests', function () {
       var golden = SG.fixtures.replayGoldens.filter(function (g) { return g.id === 'G13'; })[0];
       var g13 = F.caseOf('G13');
       expect(g13.request).toEqual(golden.request);
-      expect(g13.config).toEqual(SG.store.toConfig(golden.request));
+      expect(g13.config).toEqual(asRequested(golden.request, function () {
+        return SG.store.toConfig(golden.request);
+      }));
       expect([g13.config.variantId, g13.config.difficulty, g13.config.seed]).toEqual(['samurai', 'nightmare', 42]);
       expect(F.caseOf('mega12-nightmare').config).toEqual(
         { variantId: 'mega12', difficulty: 'nightmare', seed: 3, trace: 'off' });
@@ -236,9 +244,52 @@
           expect(diag.normalizedConfig.maxAttempts).toBe(
             SG.digger.defaultMaxAttempts(SG.variants.cellCountOf(base.variantId)));
         });
-        var normalized = SG.pipeline.normalizeConfig(Object.assign({}, base, { maxAttempts: 1 }));
+        var normalized = asRequested(base, function () {
+          return SG.pipeline.normalizeConfig(Object.assign({}, base, { maxAttempts: 1 }));
+        });
         expect(Object.assign({}, profile.normalizedConfig)).toEqual(normalized);
       });
+    });
+
+    it('MS18c: the fixed requests keep their hidden levels through caseOf, prepare and profile, the support array ' +
+      'is put back on success and on failure, and an unguarded request is still refused', function () {
+      var def = SG.variants.get('samurai');
+      var support = def.difficultySupport;
+      var before = support.slice();
+      expect(support.indexOf('nightmare')).toBe(-1);
+      var g13 = F.caseOf('G13');
+      expect([g13.config.variantId, g13.config.difficulty, g13.config.seed]).toEqual(['samurai', 'nightmare', 42]);
+      expect(def.difficultySupport).toBe(support);
+      var profile = F.prepare({ mode: 'profile', caseId: 'G13', shallowCap: null, json: 'x.json' });
+      expect(profile.normalizedConfig.difficulty).toBe('nightmare');
+      expect(profile.normalizedConfig.maxAttempts).toBe(1);
+      allowanceApi(true, function () {
+        var diag = F.prepare({ mode: 'diagnostic', caseId: 'G13', shallowCap: '128', json: 'x.json' });
+        expect(diag.normalizedConfig.difficulty).toBe('nightmare');
+        expect(diag.normalizedConfig.maxAttempts).toBe(2);
+      });
+      expect(def.difficultySupport).toBe(support);
+      // a request that names the hidden level outside the guard is refused, as the public pipeline refuses it
+      expect(function () { SG.pipeline.normalizeConfig(g13.config); }).toThrow(SG.errors.GenerationError);
+      // failure inside the guarded run: the level is offered while it runs, and the array is back afterwards
+      var offered = null;
+      var run = SG.pipeline.run;
+      var ticks = 0;
+      SG.pipeline.run = function (config) {
+        offered = SG.variants.get(config.variantId).difficultySupport.indexOf(config.difficulty) !== -1;
+        throw new SG.errors.GenerationError('budget.exceeded', {});
+      };
+      var out;
+      try {
+        out = F.profile(profile, { clock: function () { return ticks++; } });
+      } finally {
+        SG.pipeline.run = run;
+      }
+      expect(offered).toBe(true);
+      expect(out.result).toBeNull();
+      expect(out.error.code).toBe('budget.exceeded');
+      expect(def.difficultySupport).toBe(support);
+      expect(support).toEqual(before);
     });
 
     it('refuses the diagnostic mode before anything is generated while the allowance API does not exist', function () {
