@@ -498,12 +498,15 @@ Test-Case 'C0-6: a ledger-writing payload runs on the same transport with its ow
 # committed at HEAD and at the campaign base B (a test mutates the maps; the working tree is never consulted)
 $script:Committed = @{}
 $script:CommittedBase = @{}
+# the `git status --porcelain=v1 -z` text of the fake Git (epoch 3 working-tree check): clean unless set
+$script:StatusBox = @{ Text = '' }
 $script:FixtureDoc = $null
 
 # A fake Git reader: HEAD, whether the base is its ancestor, the changed names, whether the pack files are
 # tracked, and the committed texts of `git show <ref>:<path>` (HEAD's own map, any other ref reads the base's)
 function New-FakeGit([string]$Head, [bool]$Descendant, [string[]]$Names, [bool]$Tracked,
-  [hashtable]$Show = $script:Committed, [hashtable]$ShowBase = $script:CommittedBase) {
+  [hashtable]$Show = $script:Committed, [hashtable]$ShowBase = $script:CommittedBase,
+  [hashtable]$Status = $script:StatusBox) {
   return {
     param([string[]]$a)
     if ($a[0] -eq 'rev-parse') {
@@ -512,6 +515,7 @@ function New-FakeGit([string]$Head, [bool]$Descendant, [string[]]$Names, [bool]$
     if ($a[0] -eq 'merge-base') {
       return [pscustomobject]@{ Exit = $(if ($Descendant) { 0 } else { 1 }); Out = '' }
     }
+    if ($a -contains 'status') { return [pscustomobject]@{ Exit = 0; Out = [string]$Status.Text } }
     if ($a -contains 'diff') { return [pscustomobject]@{ Exit = 0; Out = ($Names -join "`n") } }
     if ($a[0] -eq 'cat-file') {
       return [pscustomobject]@{ Exit = $(if ($Tracked) { 0 } else { 1 }); Out = '' }
@@ -1735,6 +1739,459 @@ Test-Case 'epoch 2: the 600 ms, 1,000 ms and 1,200 s boundaries are unchanged' {
       Assert ([long]$kept.lastCheckMs -gt [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds() - 4000) `
         'the run keeps the second watch, not the first'
     } finally { $script:WatchHook = $null }
+  }
+}
+
+# ---- Epoch 3: the typed pre-window event is no release; the pre-folder history and working-tree checks
+
+# the exact bytes of line 24 of the real Phase C log (the first give-up the wrapper ever wrote)
+$script:Line24 = '{"schema":"ms18d-c-run-1","type":"pre-window-hold",' +
+  '"task":"MS18d GP record mega16-easy.i0.n50 a2","runId":"mega16-easy.i0.n50.a2","cell":"mega16/easy",' +
+  '"payload":"gp-recorder","chunkId":"mega16-easy.i0.n50","attempt":2,"scope":null,"standin":false,' +
+  '"outcome":"pre-window-hold","heldAt":"foreign-lock-watch","at":"2026-11-19T19:09:20.061+07:00",' +
+  '"reasons":["a lock of another job did not leave a 15.3 s quiet window within the bounded wait"],' +
+  '"watch":{"startedAtMs":1795090155748,"lastCheckMs":1795090160060,"checks":18,' +
+  '"restartCount":0,"giveUpSeconds":4.2332728,"gaveUp":true},"problems":[]}'
+$script:HistoryCase = 0
+
+function Write-Raw([string]$Path, [string]$Text, [bool]$Bom = $false) {
+  [IO.File]::WriteAllText($Path, $Text, [Text.UTF8Encoding]::new($Bom))
+}
+
+# One world of logs for the parity tests: a log is an array of lines (written with CRLF and a final CRLF) or
+# $null (the file does not exist); `$Real` points the A, B and C logs at the real files (read only).
+function Set-HistoryWorld($A, $B, $C, $Coordinator = $null, [string]$Sep = "`r`n") {
+  $script:HistoryCase++
+  $dir = "$scratch\hp$script:HistoryCase"
+  New-Item -ItemType Directory -Force -Path $dir | Out-Null
+  $files = [ordered]@{ A = $A; B = $B; C = $C }
+  foreach ($k in @($files.Keys)) {
+    $path = "$dir\$($k.ToLower()).jsonl"
+    if ($null -ne $files[$k]) { Write-Raw $path ((@($files[$k]) -join $Sep) + $Sep) }
+    $files[$k] = $path
+  }
+  $script:LogA = $files.A
+  $script:LogB = $files.B
+  $script:LogC = $files.C
+  $script:CoordinatorEvidence = @()
+  if ($null -ne $Coordinator) {
+    $coordinatorFile = "$dir\coordinator.jsonl"
+    Write-Raw $coordinatorFile ((@($Coordinator) -join $Sep) + $Sep)
+    $script:CoordinatorEvidence = @($coordinatorFile)
+  }
+  return $dir
+}
+
+# PowerShell's Read-HistoryC and release-history.js (through standin-history.js) over the same files: they
+# must agree on the problems (the same text), the number of releases, the latest release and the skipped
+# events.
+function Assert-HistoryParity([string]$What) {
+  $sources = @(Get-ReleaseSourcesC)
+  $ps = Read-HistoryC -Sources $sources
+  $file = "$scratch\sources$script:HistoryCase.json"
+  [IO.File]::WriteAllText($file, (ConvertTo-Json -InputObject $sources -Depth 4))
+  $json = & node "$tools\standin-history.js" $file
+  if ($LASTEXITCODE -ne 0) { throw "standin-history.js failed for $What" }
+  $node = $json | ConvertFrom-Json
+  $latest = $null
+  foreach ($r in @($ps.Releases)) { if ($null -eq $latest -or $r.AtMs -gt $latest) { $latest = $r.AtMs } }
+  $psProblems = (@($ps.Problems) -join "`n")
+  $nodeProblems = (@($node.problems) -join "`n")
+  Assert ($psProblems -ceq $nodeProblems) "$What : problems differ: PS [$psProblems] Node [$nodeProblems]"
+  $psCount = @($ps.Releases).Count
+  Assert ($psCount -eq $node.releaseCount) "$What : releases $psCount vs $($node.releaseCount)"
+  Assert ($latest -eq $node.latestMs) "$What : latest $latest vs $($node.latestMs)"
+  $psSkipped = $(if ($ps.Skipped.ContainsKey('C')) { @($ps.Skipped['C']) -join ',' } else { '' })
+  $nodeSkipped = ''
+  if ($node.skipped.PSObject.Properties.Name -contains 'C') { $nodeSkipped = @($node.skipped.C) -join ',' }
+  Assert ($psSkipped -ceq $nodeSkipped) "$What : skipped lines [$psSkipped] vs [$nodeSkipped]"
+  return $ps
+}
+
+function New-FinishedRow([datetime]$When) { '{"finished":"' + (Get-Stamp $When) + '"}' }
+
+Test-Case 'epoch 3: the PowerShell history reader equals release-history.js on every log shape (parity)' {
+  New-World | Out-Null
+  $old = (Get-Date).AddHours(-2)
+  $good = New-FinishedRow $old
+  $meta = '"lockAcquired":false,"admissionConsumed":false,"payloadStarted":false'
+  $cases = [ordered]@{}
+  $cases['valid logs'] = @{ A = @($good); B = @($good); C = @($good) }
+  $cases['no C log'] = @{ A = @($good); B = @($good); C = $null }
+  $cases['no A log'] = @{ A = $null; B = @($good); C = @($good) }
+  $cases['no B log'] = @{ A = @($good); B = $null; C = @($good) }
+  $cases['no log at all'] = @{ A = $null; B = $null; C = $null }
+  $cases['empty logs'] = @{ A = @(); B = @(); C = @() }
+  $cases['old pre-window line 24'] = @{ A = @($good); B = @($good); C = @($good, $script:Line24) }
+  $cases['pre-window first'] = @{ A = @($good); B = @($good); C = @($script:Line24) }
+  $cases['recheck, no metadata'] = @{ A = @($good); B = @($good)
+    C = @($good, $script:Line24.Replace('foreign-lock-watch', 'pre-window-recheck')) }
+  $cases['new form with metadata'] = @{ A = @($good); B = @($good)
+    C = @($good, $script:Line24.Replace('"problems":[]', '"problems":[],' + $meta)) }
+  $finishedMeta = $meta + ',"finished":"2030-01-01T00:00:00Z"'
+  $cases['new form with a finished'] = @{ A = @($good); B = @($good)
+    C = @($good, $script:Line24.Replace('"problems":[]', '"problems":[],' + $finishedMeta)) }
+  $cases['finished without metadata'] = @{ A = @($good); B = @($good)
+    C = @($good, $script:Line24.Replace('"problems":[]', '"problems":[],"finished":"2030-01-01T00:00:00Z"')) }
+  $cases['pre-window in the A log'] = @{ A = @($good, $script:Line24); B = @($good); C = @($good) }
+  foreach ($v in @(
+      @('schema', '"schema":"ms18d-c-run-1"', '"schema":"x"'),
+      @('heldAt', '"heldAt":"foreign-lock-watch"', '"heldAt":"lock"'),
+      @('at', '"at":"2026-11-19T19:09:20.061+07:00"', '"at":"soon"'),
+      @('exit', '"scope":null', '"scope":null,"exit":64'),
+      @('runDir', '"scope":null', '"scope":null,"runDir":"x"'),
+      @('release', '"scope":null', '"scope":null,"releaseObservedAt":"2026-11-19T10:00:00Z"'),
+      @('claim', '"scope":null', '"scope":null,"lockAcquired":true'),
+      @('claim2', '"scope":null', '"scope":null,"payloadStarted":"no"'),
+      @('unknown', '"scope":null', '"scope":null,"note":1'))) {
+    $variant = $script:Line24.Replace($v[1], $v[2])
+    $cases["variant $($v[0])"] = @{ A = @($good); B = @($good); C = @($good, $variant) }
+  }
+  $noType = $script:Line24.Replace('"type":"pre-window-hold",', '')
+  $cases['outcome only'] = @{ A = @($good); B = @($good); C = @($good, $noType) }
+  $noOutcome = $script:Line24.Replace('"outcome":"pre-window-hold"', '"outcome":"x"')
+  $cases['type only'] = @{ A = @($good); B = @($good); C = @($good, $noOutcome) }
+  # a text field must be a string for the mirror, as for the strict JS comparison (an array is no match)
+  $arrays = [ordered]@{
+    'array schema' = @('"schema":"ms18d-c-run-1"', '"schema":["ms18d-c-run-1"]')
+    'array type' = @('"type":"pre-window-hold"', '"type":["pre-window-hold"]')
+    'array outcome' = @('"outcome":"pre-window-hold"', '"outcome":["pre-window-hold"]')
+    'array heldAt' = @('"heldAt":"foreign-lock-watch"', '"heldAt":["foreign-lock-watch"]')
+    'trailing newline in at' = @('"at":"2026-11-19T19:09:20.061+07:00"',
+      '"at":"2026-11-19T19:09:20.061+07:00\n"')
+    'case variant key' = @('"type":"pre-window-hold"', '"Type":"pre-window-hold"')
+    'duplicate type key' = @('"type":"pre-window-hold",', '"type":"x","type":"pre-window-hold",')
+  }
+  foreach ($k in $arrays.Keys) {
+    $row = $script:Line24.Replace($arrays[$k][0], $arrays[$k][1])
+    $cases[$k] = @{ A = @($good); B = @($good); C = @($good, $row) }
+  }
+  # only the array claims to be an event (the other field is another text): an ordinary row without finished
+  $arrayOnly = [ordered]@{
+    'array type, other outcome' = @('"type":"pre-window-hold"', '"type":["pre-window-hold"]',
+      '"outcome":"pre-window-hold"', '"outcome":"x"')
+    'array outcome, other type' = @('"outcome":"pre-window-hold"', '"outcome":["pre-window-hold"]',
+      '"type":"pre-window-hold"', '"type":"x"')
+  }
+  foreach ($k in $arrayOnly.Keys) {
+    $v = $arrayOnly[$k]
+    $row = $script:Line24.Replace($v[0], $v[1]).Replace($v[2], $v[3])
+    $cases[$k] = @{ A = @($good); B = @($good); C = @($good, $row) }
+  }
+  $cases['time with a trailing newline'] = @{ A = @($good); B = @($good)
+    C = @($good, '{"finished":"2026-11-19T10:00:00Z\n"}', '{"finished":"2026-11-19T10:00:00Z\r"}') }
+  $cases['broken lines'] = @{ A = @($good); B = @($good)
+    C = @($good, 'not json', '{', '{"a":1,}', '{"finished":"2026-11-19T10:00:00Z"} x', '', '   ', "`t") }
+  $cases['non-object rows'] = @{ A = @($good); B = @($good)
+    C = @($good, '5', 'null', '"x"', '[]', 'true', '[{"finished":"2026-11-19T10:00:00Z"}]') }
+  $cases['finished shapes'] = @{ A = @($good); B = @($good)
+    C = @($good, '{"finished":5}', '{"finished":null}', '{"finished":""}',
+      '{"finished":" 2026-11-19T10:00:00Z"}', '{}') }
+  $cases['release observed shapes'] = @{ A = @($good); B = @($good)
+    C = @('{"finished":"2026-11-19T10:00:00Z","releaseObservedAt":"later"}',
+      '{"finished":"2026-11-19T10:00:00Z","releaseObservedAt":null}',
+      '{"finished":"2026-11-19T10:00:00Z","releaseObservedAt":""}',
+      '{"finished":"2026-11-19T10:00:05Z","releaseObservedAt":"2026-11-19T10:00:01Z"}',
+      '{"finished":"2026-11-19T10:00:00Z","releaseObservedAt":"2026-11-19T10:00:09.5Z"}') }
+  $forms = @('2026-11-19T10:00:00Z', '2026-11-19T10:00:00.1234567Z', '2026-11-19T10:00:00.12345678Z',
+    '2026-11-19T10:00:00+25:00', '2026-11-19T10:00:00-00:30', '2026-11-19T10:00:00+23:59',
+    '2026-11-19T10:00:00+24:00',
+    '2026-11-19T10:00:00+07:60', '2026-11-19T24:00:00Z', '2026-11-19T10:00:60Z', '2026-02-30T00:00:00Z',
+    '2024-02-29T00:00:00Z', '2026-13-01T00:00:00Z', '0050-01-01T00:00:00Z', '0000-01-01T00:00:00Z',
+    '9999-12-31T23:59:59Z', '2026-11-19t10:00:00Z', '2026-11-19 10:00:00Z', '2026-11-19T10:00:00',
+    '2026-11-19T10:00:00+0700', '2026-11-19T10:00:00.Z', '2026-11-19T10:00:00z',
+    ([string]::Join('', @([char]0x0662, [char]0x0660, [char]0x0662, [char]0x0666)) + '-11-19T10:00:00Z'))
+  foreach ($form in $forms) {
+    $cases["time form $form"] = @{ A = @($good); B = @($good); C = @($good, '{"finished":"' + $form + '"}') }
+  }
+  $coordinators = [ordered]@{
+    'good' = @('{"at":"2026-11-19T10:00:00Z","source":"seen","note":"x"}')
+    'no source' = @('{"at":"2026-11-19T10:00:00Z"}')
+    'blank source' = @('{"at":"2026-11-19T10:00:00Z","source":"  "}')
+    'numeric source' = @('{"at":"2026-11-19T10:00:00Z","source":5}')
+    'bad at' = @('{"at":"never","source":"s"}')
+    'null row' = @('null'); 'broken row' = @('{"at":') }
+  foreach ($k in $coordinators.Keys) {
+    $cases["coordinator $k"] = @{ A = @($good); B = @($good); C = @($good); Coordinator = $coordinators[$k] }
+  }
+  foreach ($name in $cases.Keys) {
+    $c = $cases[$name]
+    Set-HistoryWorld $c.A $c.B $c.C $c.Coordinator | Out-Null
+    Assert-HistoryParity $name | Out-Null
+  }
+  # layout: LF only, a BOM, no final newline, a mixed bag
+  Set-HistoryWorld @($good) @($good) @($good, $script:Line24) $null "`n" | Out-Null
+  Assert-HistoryParity 'LF only' | Out-Null
+  Set-HistoryWorld @($good) @($good) @($good) | Out-Null
+  Write-Raw $script:LogC ($good + "`r`n" + $script:Line24) $true
+  Assert-HistoryParity 'a BOM and no final newline' | Out-Null
+  # the retained data: the first 24 and the first 25 lines of the real C log, with the real A and B logs
+  $realC = @([IO.File]::ReadAllLines($realLogC))
+  foreach ($count in 24, 25) {
+    Set-HistoryWorld @($good) @($good) $realC[0..($count - 1)] | Out-Null
+    $script:LogA = $realLogA
+    $script:LogB = $realLogB
+    $ps = Assert-HistoryParity "the first $count real lines"
+    $problemText = @($ps.Problems) -join '; '
+    Assert (@($ps.Problems).Count -eq 0) "the first $count real lines are a proved history: $problemText"
+    Assert (($ps.Skipped['C'] -join ',') -eq '24') 'only line 24 is the event'
+  }
+}
+
+Test-Case 'epoch 3: a pre-window event is no release for the courtesy wait either, whatever time it carries' {
+  New-World | Out-Null
+  $old = (Get-Date).AddHours(-2)
+  $meta = '"lockAcquired":false,"admissionConsumed":false,"payloadStarted":false'
+  $soon = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ss.fffZ')
+  $extra = $meta + ',"finished":"' + $soon + '"'
+  $diagnostic = $script:Line24.Replace('"problems":[]', '"problems":[],' + $extra)
+  Set-HistoryWorld @((New-FinishedRow $old)) @((New-FinishedRow $old.AddHours(-1))) @(
+    (New-FinishedRow $old.AddMinutes(30)), $script:Line24, $diagnostic) | Out-Null
+  $last = Get-LastReleaseC
+  $want = [DateTimeOffset]::Parse((Get-Stamp $old.AddMinutes(30)))
+  Assert ($null -ne $last -and $last.ToUnixTimeMilliseconds() -eq $want.ToUnixTimeMilliseconds()) `
+    "the latest release is the last real one, not the give-up: $last"
+  Set-HistoryWorld @() @() @($script:Line24) | Out-Null
+  Assert ($null -eq (Get-LastReleaseC)) 'a log of events alone has no release'
+}
+
+Test-Case 'epoch 3: a give-up, then a second call: the historical event no longer poisons acquisition' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'e3a'
+  $keepGive = $script:WatchGiveUpSeconds
+  Invoke-InStandinWorld $w {
+    try {
+      $script:WatchGiveUpSeconds = 1
+      $script:WatchHook = {
+        param($call, $record, $giveUp)
+        $record.gaveUp = $true
+      }
+      $held = Start-StandinRecorder $w 'fakea-easy.i0.n50'
+      Assert ($held.Outcome -eq 'control-hold' -and $null -eq $held.RunDir) "outcome $($held.Outcome)"
+      $row = @(Get-Ledger)[0]
+      Assert ($row.type -eq 'pre-window-hold' -and $null -eq $row.finished -and
+        $null -eq $row.releaseObservedAt) `
+        'the give-up has an `at` and no release time'
+      Assert ($row.lockAcquired -eq $false -and $row.admissionConsumed -eq $false -and
+        $row.payloadStarted -eq $false) 'it says explicitly that no lock, admission or payload happened'
+      Assert ((Get-PreWindowEventC $row).Valid) 'the reader accepts it'
+      # the row the wrapper really wrote: skipped by both readers, never a release for the courtesy wait
+      $parity = Assert-HistoryParity 'the give-up row the wrapper wrote (at, no finished)'
+      Assert ((@($parity.Skipped['C']) -join ',') -eq '1') 'both readers skip the row, as line 1 of C'
+      $atMs = [DateTimeOffset]::Parse($row.at).ToUnixTimeMilliseconds()
+      $last = Get-LastReleaseC
+      Assert ($null -eq $last -or $last.ToUnixTimeMilliseconds() -lt $atMs) 'Get-LastReleaseC ignores it'
+      $script:WatchHook = $null
+      $script:WatchGiveUpSeconds = $keepGive
+      $script:WatchCalls.Clear()
+      $r = Start-StandinRecorder $w 'fakea-easy.i0.n50'
+      Assert ($r.Outcome -eq 'success') "the second call came back $($r.Outcome)"
+      $acq = Read-Json "$($r.RunDir)\acquisition.json"
+      Assert ($acq.decision -eq 'proceed' -and @($acq.historyProblems).Count -eq 0) 'acquisition proceeded'
+      $c = @($acq.historyFiles | Where-Object { $_.label -eq 'C' })[0]
+      Assert ((@($c.skippedLines) -join ',') -eq '1') 'the history file entry names the skipped line'
+      Assert ($c.skippedEvents[0].heldAt -eq 'foreign-lock-watch' -and $c.skippedEvents[0].line -eq 1) `
+        'and the event it skipped'
+      $at = [DateTimeOffset]::Parse($row.at).ToUnixTimeMilliseconds()
+      Assert ($script:WatchCalls[0].NotBeforeMs -lt $at) 'the give-up was no release for the gap rule'
+      # the retained historical line itself, followed by a normal call of another chunk
+      Write-Raw $script:LogC ($script:Line24 + "`r`n")
+      $again = Start-StandinRecorder $w 'fakeb-easy.i0.n25'
+      Assert ($again.Outcome -eq 'success') "after the exact bytes of line 24: $($again.Outcome)"
+    } finally {
+      $script:WatchHook = $null
+      $script:WatchGiveUpSeconds = $keepGive
+    }
+  }
+}
+
+Test-Case 'epoch 3: a log-shape or stray-file problem refuses before the folder: no folder, no admission' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'e3b'
+  Invoke-InStandinWorld $w {
+    $declared = @(Get-DeclaredDirsC -PlanDoc (Get-PlanDocC $w))
+    $run = $declared | Where-Object { $_ -like '*fakea-easy.i0.n50.a1' }
+    $ledgerText = ''
+    try {
+      $script:StandinHistoryChecks = $true
+      $refuse = {
+        param([string]$pattern, [string]$what)
+        $before = if (Test-Path $script:LogC) { [IO.File]::ReadAllText($script:LogC) } else { $null }
+        $script:WatchCalls.Clear()
+        Assert-Throws { Start-StandinRecorder $w 'fakea-easy.i0.n50' } $pattern $what
+        Assert (-not (Test-Path "$script:RunsRoot\fakea-easy")) "$what : no run folder"
+        Assert ($script:WatchCalls.Count -eq 0) "$what : refused before the watch"
+        $after = if (Test-Path $script:LogC) { [IO.File]::ReadAllText($script:LogC) } else { $null }
+        Assert ($before -ceq $after) "$what : not a byte of the C log changed (no admission is spent)"
+      }
+      $old = (Get-Date).AddHours(-2)
+      # a row without a release time
+      $success = '{"schema":"ms18d-c-run-1","outcome":"success"}'
+      Write-Raw $script:LogC ((New-FinishedRow $old) + "`r`n" + $success + "`r`n")
+      & $refuse 'release history is unproved.*C:2: no usable finished time' 'an ordinary row without finished'
+      $claimsExit = $script:Line24.Replace('"scope"', '"exit":64,"scope"')
+      Write-Raw $script:LogC ((New-FinishedRow $old) + "`r`n" + $claimsExit + "`r`n")
+      & $refuse 'not a valid pre-window event \(key exit\)' 'a pre-window row that claims an exit'
+      Write-Raw $script:LogC ((New-FinishedRow $old) + "`r`n" + 'not json' + "`r`n")
+      & $refuse 'C: c\.jsonl:2: not JSON' 'a line that is not JSON'
+      Remove-Item -LiteralPath $script:LogA
+      & $refuse 'the required log .* is missing' 'a missing Phase A log'
+      Write-Raw $script:LogA ((New-FinishedRow $old) + "`r`n")
+      # the working tree
+      Remove-Item -LiteralPath $script:LogC
+      $script:Committed[$script:LedgerRel] = ''
+      $script:CommittedBase[$script:LedgerRel] = ''
+      $script:StatusBox.Text = "?? generator/stray.txt`0"
+      & $refuse '\?\? generator/stray\.txt' 'a stray untracked file'
+      $script:StatusBox.Text = "?? $run/ledger.json`0"
+      & $refuse '\?\? .*fakea-easy.i0.n50.a1/ledger\.json' 'a new file in a run folder the log does not name'
+      $script:StatusBox.Text = " M generator/tests/x.js`0"
+      & $refuse ' M generator/tests/x\.js' 'a modified helper'
+      $script:StatusBox.Text = "A  $script:LedgerRel`0"
+      & $refuse 'A  docs' 'a staged ledger'
+      $script:StatusBox.Text = "R  b.txt`0a.txt`0"
+      & $refuse 'R  b\.txt' 'a rename'
+      $script:StatusBox.Text = " M $script:LedgerRel`0"
+      & $refuse 'not a pure append of its committed bytes' 'a ledger that is no append of the committed'
+    } finally {
+      $script:StandinHistoryChecks = $false
+      $script:StatusBox.Text = ''
+    }
+  }
+}
+
+Test-Case 'epoch 3: the real lines 23-25 and the line-only ruling: the next chunk passes F4 and every check' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'e3f'
+  $easy = 'mega16-easy.i0.n50'
+  Invoke-InStandinWorld $w {
+    # the retained bytes of C lines 23 (a1, an eligible hold), 24 (the pre-window event) and 25 (a2, a hold
+    # that is no eligible re-ask) and the two real run folders (read only; copied into the stand-in world)
+    $real = @([IO.File]::ReadAllLines($realLogC))
+    $kept = @($real[22], $real[23], $real[24])
+    Assert ($kept[0] -like "*`"runId`":`"$easy.a1`"*`"eligibleReAsk`":true*" -and
+      $kept[1] -like '*"type":"pre-window-hold"*' -and
+      $kept[2] -like "*`"runId`":`"$easy.a2`"*`"eligibleReAsk`":false*") 'the real lines are the ones named'
+    Write-Raw $script:LogC (($kept -join "`r`n") + "`r`n")
+    New-Item -ItemType Directory -Force -Path $script:RunsRoot | Out-Null
+    Copy-Item -Recurse -LiteralPath "$realGp\mega16-easy" -Destination "$script:RunsRoot\mega16-easy"
+    $next = 'mega16-normal.i0.n50', 'mega16-hard.i0.n50'
+    # before the ruling: a1 is followed by its a2, but a2 ended as a hold: the line is stopped for every chunk
+    foreach ($c in $next) {
+      $message = $null
+      try { Assert-LineOpenC -ChunkId $c -Attempt 1 } catch { $message = $_.Exception.Message }
+      Assert ($message -match "run $easy\.a2 ended with control-hold" -and
+        $message -notmatch "run $easy\.a1") `
+        "$c before the ruling: $message"
+    }
+    # the template ruling (line release only, as SA2 words it), committed
+    $ruling = New-RulingLine $easy "$easy.a2" @{ ref = 'tasks/difficulty-v3/MS18d-gp-campaign-base-3.jsonl'
+      at = (Get-Date).ToString($stamp) }
+    Set-Committed $script:RulingsRel ($ruling + "`n")
+    # (a) F4 passes for the next chunks, and also for mega16-easy itself: F4 is released, nothing else
+    foreach ($c in $next) { Assert-LineOpenC -ChunkId $c -Attempt 1 }
+    foreach ($n in 1, 2, 3) { Assert-LineOpenC -ChunkId $easy -Attempt $n }
+    # (b) F2 still refuses mega16-easy at attempts 1, 2 and 3: both folders exist, both admissions are spent
+    $f2 = @{ 1 = "attempt 1 of $easy, but a run folder of the chunk exists"
+      2 = "attempt 2 of $easy needs exactly its attempt 1 folder"
+      3 = 'needs exactly its attempt 1 folder' }
+    foreach ($n in 1, 2, 3) {
+      $refuseF2 = { Test-LineChecksC -Profile 'gp-recorder' -Unit $easy -Attempt $n -CellDir 'mega16-easy' }
+      Assert-Throws $refuseF2 ([regex]::Escape($f2[$n])) "mega16-easy attempt $n"
+    }
+    foreach ($c in $next) {
+      Test-LineChecksC -Profile 'gp-recorder' -Unit $c -Attempt 1 -CellDir ($c -replace '\.i0\.n50$', '')
+    }
+    # (c) the next chunk (a stand-in chunk: the plan of the world has no mega16) still runs every admission
+    # check of the controller: accounting, plan, binding, history, acquisition; the ruling reached it unused
+    $id = 'fakea-easy.i0.n50'
+    $r = Start-StandinRecorder $w $id
+    Assert ($r.Outcome -eq 'success') "the next chunk came back $($r.Outcome)"
+    foreach ($n in 'attempts.json', 'plan-check.json', 'binding.json', 'acquisition.json', 'admission.json') {
+      Assert (Test-Path "$($r.RunDir)\$n") "missing $n"
+    }
+    $att = Read-Json "$($r.RunDir)\attempts.json"
+    Assert ($att.decision -eq 'allow' -and $att.admissions -eq 0 -and $null -eq $att.ruling -and
+      $att.rulingsJournal.entryCount -eq 1) 'attempts: own accounting, the journal read, the ruling unused'
+    $acq = Read-Json "$($r.RunDir)\acquisition.json"
+    $c = @($acq.historyFiles | Where-Object { $_.label -eq 'C' })[0]
+    Assert ($acq.decision -eq 'proceed' -and @($acq.historyProblems).Count -eq 0 -and
+      (@($c.skippedLines) -join ',') -eq '2') 'acquisition proceeded over the real history, line 24 skipped'
+    $adm = Read-Json "$($r.RunDir)\admission.json"
+    Assert ($adm.decision -eq 'proceed' -and $adm.payloadChecks -eq $true) 'admission'
+    # and F2 / F4 still bite for it: its folder now exists, and the ruling covers a2 and nothing else
+    Assert-Throws { Test-LineChecksC -Profile 'gp-recorder' -Unit $id -Attempt 1 -CellDir 'fakea-easy' } `
+      'a run folder of the chunk exists' 'the same chunk again'
+    Write-Row $script:LogC ([ordered]@{ schema = 'ms18d-c-run-1'; payload = 'gp-recorder'; runId = 'x.a1'
+        chunkId = 'fakeb-easy.i0.n25'; attempt = 1; outcome = 'stop'; controllerOutcome = 'stop' })
+    Assert-Throws { Assert-LineOpenC -ChunkId $next[0] -Attempt 1 } 'run x\.a1 ended with stop' `
+      'a later failure is not covered by the ruling'
+  }
+}
+
+Test-Case 'epoch 3: a release later than now refuses before the folder (release-in-the-future)' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'e3d'
+  Invoke-InStandinWorld $w {
+    try {
+      $script:StandinHistoryChecks = $true
+      $future = Get-Stamp (Get-Date).AddHours(1)
+      Write-Raw $script:LogC ((New-FinishedRow (Get-Date).AddHours(1)) + "`r`n")
+      $before = [IO.File]::ReadAllText($script:LogC)
+      $script:WatchCalls.Clear()
+      Assert-Throws { Start-StandinRecorder $w 'fakea-easy.i0.n50' } `
+        'release history is unproved.*C:1: release-in-the-future' 'a release an hour ahead'
+      Assert (-not (Test-Path "$script:RunsRoot\fakea-easy")) 'no run folder'
+      Assert ($script:WatchCalls.Count -eq 0) 'refused before the watch'
+      Assert ($before -ceq [IO.File]::ReadAllText($script:LogC)) 'not a byte of the C log changed'
+      $both = @(Get-HistoryProblemsC)
+      Assert ($both.Count -eq 1 -and $both[0] -like 'C:1: release-in-the-future*') "problems: $both"
+      # a past release passes; a give-up row whose diagnostic finished lies ahead is no release at all
+      $meta = '"lockAcquired":false,"admissionConsumed":false,"payloadStarted":false'
+      $extra = $meta + ',"finished":"' + $future + '"'
+      $event = $script:Line24.Replace('"problems":[]', '"problems":[],' + $extra)
+      Write-Raw $script:LogC ((New-FinishedRow (Get-Date).AddHours(-1)) + "`r`n" + $event + "`r`n")
+      Assert (@(Get-HistoryProblemsC).Count -eq 0) 'a future diagnostic finished is no release'
+      $r = Start-StandinRecorder $w 'fakea-easy.i0.n50'
+      Assert ($r.Outcome -eq 'success') "the call after a past release came back $($r.Outcome)"
+    } finally {
+      $script:StandinHistoryChecks = $false
+    }
+  }
+}
+
+Test-Case 'epoch 3: the allowed working tree passes: a named run, an appended ledger, a clean tree' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'e3c'
+  Invoke-InStandinWorld $w {
+    $declared = @(Get-DeclaredDirsC -PlanDoc (Get-PlanDocC $w))
+    $named = $declared | Where-Object { $_ -like '*fakeb-easy.i0.n25.a1' }
+    try {
+      $script:StandinHistoryChecks = $true
+      $old = (Get-Date).AddHours(-2)
+      $stamp = Get-Stamp $old
+      $row = '{"schema":"ms18d-c-run-1","outcome":"success","runDir":"' + $named +
+        '","finished":"' + $stamp + '"}'
+      Write-Raw $script:LogC ($row + "`r`n")
+      $script:Committed[$script:LedgerRel] = ''
+      $script:CommittedBase[$script:LedgerRel] = ''
+      $problemsNow = { @(Get-StatusProblemsC -DeclaredDirs $declared).Count }
+      Assert ((& $problemsNow) -eq 0) 'a clean tree'
+      $script:StatusBox.Text = "?? $named/request.json`0 M $script:LedgerRel`0"
+      Assert ((& $problemsNow) -eq 0) 'new run output of a named run, ledger appended'
+      $script:Committed[$script:LedgerRel] = $row + "`n"
+      Assert ((& $problemsNow) -eq 0) 'the ledger equals its committed bytes'
+      $script:StatusBox.Text = "?? $named/sub/request.json`0"
+      Assert ((& $problemsNow) -eq 1) 'a nested file is not allowed'
+      $script:StatusBox.Text = "?? $named/.`0"
+      Assert ((& $problemsNow) -eq 1) 'a dot name is not a run file'
+      $script:StatusBox.Text = ''
+      $r = Start-StandinRecorder $w 'fakea-easy.i0.n50'
+      Assert ($r.Outcome -eq 'success') "a clean world still runs: $($r.Outcome)"
+    } finally {
+      $script:StandinHistoryChecks = $false
+      $script:StatusBox.Text = ''
+    }
   }
 }
 

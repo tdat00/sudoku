@@ -1,0 +1,93 @@
+{
+  "schema": "ms18d-c-request-1",
+  "runId": "miss",
+  "task": "stand-in miss",
+  "standin": true,
+  "profile": "gp-cell",
+  "allowExit1": true,
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "runDir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\tooling\\controller-c3r\\miss",
+  "repo": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\miss",
+  "command": {
+    "args": [
+      "tests\\perf.js",
+      "--variant=classic4",
+      "--level=veryEasy",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate",
+      "--ascii"
+    ]
+  },
+  "requestedAt": "2026-11-19T15:20:44.017Z",
+  "wrapperPid": 9536,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795101628517,
+    "lastCheckMs": 1795101643817,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restartCount": 0,
+    "restarts": [],
+    "gaveUp": false
+  },
+  "releaseSources": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\miss\\logs\\a.jsonl",
+      "kind": "log",
+      "required": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\miss\\logs\\b.jsonl",
+      "kind": "log",
+      "required": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\miss\\logs\\c.jsonl",
+      "kind": "log",
+      "required": false
+    }
+  ],
+  "cLedger": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\miss\\logs\\c.jsonl",
+  "expected": {
+    "base": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "identities": {
+      "hashIdentity": "H",
+      "replayIdentity": "R",
+      "sources": "S"
+    },
+    "tableSha256": "TABLE",
+    "node": "v26.13.0",
+    "machine": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    }
+  },
+  "helpers": {
+    "manifestFile": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\manifest.txt",
+    "manifestSha256": null,
+    "required": [
+      "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/controller.js"
+    ],
+    "repoRoot": "Q:\\git\\sudoku"
+  },
+  "bindingFixture": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\miss\\fixture.json",
+  "powershell": "pwsh",
+  "ownedProcesses": "Q:\\git\\sudoku\\generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\owned-processes.ps1"
+}

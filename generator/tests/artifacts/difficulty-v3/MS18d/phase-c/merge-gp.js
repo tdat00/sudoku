@@ -160,7 +160,8 @@ function reportOf(ctx, evaluation, line) {
     consumed,
     identity: { manifestSha256: ctx.doc.manifestSha256, helperManifestSha256: ctx.helperSha, base: ctx.base },
     epochs: ctx.epochInfo && ctx.epochInfo.record ? { pairs: ctx.epochInfo.pairs,
-      record: { file: ctx.epochInfo.file, sha256: ctx.epochInfo.recordSha256 } } : null,
+      record: { file: ctx.epochInfo.file, sha256: ctx.epochInfo.recordSha256 },
+      chain: ctx.epochInfo.records.map((r) => ({ epoch: r.epoch, file: r.file, sha256: r.sha256 })) } : null,
     observation: { argv: process.argv.slice(2), pid: process.pid, at: new Date().toISOString(),
       standin: ctx.standin }
   };
@@ -217,14 +218,15 @@ function bindingJournalOf(ctx, git, deps) {
 }
 
 /**
- * The epochs of this merge (the B2 transport repair). A merge that runs at the base of the declared
- * epoch 1 has that one pair. Any other merge is the merge of epoch 2: its campaign base B2 and helper
- * manifest H2 must be exactly the pair of the one never-edited record committed at EPOCH2_RECORD_REL (read
- * from HEAD, with every proof it cites validated: merge-core.js epochRecordProblems), and the campaign then
- * has TWO pairs, epoch 1 and epoch 2, and no third. Epoch 1 is the frozen declaration of merge-core.js
- * (EPOCH1); a stand-in request carries its own `epoch1` (absent: a single-pair stand-in merge) and its
- * record as `epoch2Text`. Invalid when the pair is declared nowhere, or the record is missing, edited, or
- * does not verify.
+ * The epochs of this merge. A merge that runs at the base of the declared epoch 1 has that one pair. Any
+ * other merge belongs to a later epoch, declared by one never-edited record committed per step (EPOCH_STEPS:
+ * epoch 2 at EPOCH2_RECORD_REL, epoch 3 at EPOCH3_RECORD_REL), read from HEAD and validated with every proof
+ * it cites (merge-core.js epochRecordProblems) against the epoch before it. The chain is followed from epoch
+ * 1 until the pair of the merge request is reached: the campaign then has exactly the declared pairs up to
+ * it, and no other. Epoch 1 is the frozen declaration of merge-core.js (EPOCH1); a stand-in request carries
+ * its own `epoch1` (absent: a single-pair stand-in merge), the records as `epoch2Text` and `epoch3Text` and,
+ * for epoch 3, the checkpoint as `epoch3Checkpoint`. Invalid when the pair is declared nowhere, or a record
+ * is missing, edited, or does not verify.
  */
 function declaredEpoch1(ctx) {
   if (!ctx.standin) return core.EPOCH1;
@@ -236,53 +238,95 @@ function declaredEpoch1(ctx) {
   return Object.assign({ id: 1 }, o);
 }
 
+const readText = (file) => {
+  try {
+    return fs.readFileSync(file, 'utf8');
+  } catch (err) {
+    throw new Invalid('cannot read ' + file + ': ' + err.message);
+  }
+};
+
 function epochsOf(ctx, git) {
   const e1 = declaredEpoch1(ctx);
-  const first = { id: 1, base: e1.base, helperManifestSha256: e1.helperManifestSha256 };
+  const pairs = [{ id: 1, base: e1.base, helperManifestSha256: e1.helperManifestSha256 }];
   if (ctx.base === e1.base) {
     if (ctx.helperSha !== e1.helperManifestSha256) {
       throw new Invalid('the helper manifest of the request is not the declared one of epoch 1');
     }
-    return { pairs: [first], record: null, file: null, recordSha256: null };
+    return { pairs, record: null, records: [], file: null, recordSha256: null };
   }
+  const inside = (rel) => {
+    const file = path.resolve(ctx.repo, rel);
+    if (path.relative(ctx.repo, file).startsWith('..')) {
+      throw new Invalid('a path leaves the repository: ' + rel);
+    }
+    return file;
+  };
   let head;
-  let text;
-  let commits;
   try {
     head = String(git(['rev-parse', 'HEAD'])).trim();
-    text = ctx.standin && typeof ctx.request.epoch2Text === 'string' ? ctx.request.epoch2Text :
-      String(git(['show', head + ':' + core.EPOCH2_RECORD_REL]));
-    commits = Number(String(git(['rev-list', '--count', 'HEAD', '--', core.EPOCH2_RECORD_REL])).trim());
   } catch (err) {
-    throw new Invalid('the base-2 record is not committed at HEAD (' + core.EPOCH2_RECORD_REL + '): ' +
-      String(err.message).split(/\r?\n/)[0]);
+    throw new Invalid('HEAD cannot be read: ' + String(err.message).split(/\r?\n/)[0]);
   }
-  const parsed = core.parseEpochRecord(text);
-  if (parsed.problems.length > 0) throw new Invalid(parsed.problems[0]);
-  const readText = (file) => {
+  const records = [];
+  let previous = e1;
+  let previousRecord = null;
+  for (const n of [2, 3]) {
+    const step = core.EPOCH_STEPS[n];
+    let text;
+    let commits;
     try {
-      return fs.readFileSync(file, 'utf8');
+      const own = ctx.standin ? ctx.request['epoch' + n + 'Text'] : undefined;
+      text = typeof own === 'string' ? own : String(git(['show', head + ':' + step.recordRel]));
+      commits = Number(String(git(['rev-list', '--count', 'HEAD', '--', step.recordRel])).trim());
     } catch (err) {
-      throw new Invalid('cannot read ' + file + ': ' + err.message);
+      const why = 'the ' + step.label + ' record is not committed at HEAD (' + step.recordRel + '): ' +
+        String(err.message).split(/\r?\n/)[0];
+      throw new Invalid(n === 2 ? why : 'the campaign base ' + ctx.base + ' is not a declared epoch: ' + why);
     }
-  };
-  const manifest1Text = readText(path.join(ctx.repo, String(e1.manifestRel)));
-  if (sha256(Buffer.from(manifest1Text, 'utf8')) !== e1.helperManifestSha256) {
-    throw new Invalid('the helper manifest of epoch 1 is not the declared one');
+    const parsed = core.parseEpochRecord(text, step.label);
+    if (parsed.problems.length > 0) throw new Invalid(parsed.problems[0]);
+    const rec = parsed.record;
+    const own = rec.campaignBase === ctx.base;
+    let base = ctx.base;
+    let helperSha = ctx.helperSha;
+    let manifest2Text;
+    if (own) manifest2Text = readText(ctx.request.helpers.manifestFile);
+    else {
+      const rel = rec.helperManifest && rec.helperManifest.file;
+      if (typeof rel !== 'string') {
+        throw new Invalid(step.label + ' record: helperManifest.file is not a path');
+      }
+      manifest2Text = readText(inside(rel));
+      base = rec.campaignBase;
+      helperSha = sha256(Buffer.from(manifest2Text, 'utf8'));
+    }
+    const manifest1Text = readText(inside(String(previous.manifestRel)));
+    if (sha256(Buffer.from(manifest1Text, 'utf8')) !== previous.helperManifestSha256) {
+      throw new Invalid('the helper manifest of epoch ' + (n - 1) + ' is not the declared one');
+    }
+    const checkpoint = n === 2 ? previous.checkpoint : (ctx.standin && ctx.request.epoch3Checkpoint) ||
+      core.EPOCH2_CHECKPOINT;
+    const checked = core.epochRecordProblems({ step, record: rec, base, helperSha,
+      epoch1: Object.assign({}, previous, { checkpoint }), previousRecord, doc: ctx.doc,
+      planRawSha256: ctx.request.plan.rawSha256, manifest1Text, manifest2Text, git, head, commits,
+      readProof: (rel) => {
+        const file = path.resolve(ctx.repo, rel);
+        return path.relative(ctx.repo, file).startsWith('..') || !fs.existsSync(file) ? null :
+          fs.readFileSync(file);
+      } });
+    if (checked.problems.length > 0) throw new Invalid(checked.problems.slice(0, 5).join('; '));
+    pairs.push({ id: n, base: rec.campaignBase, helperManifestSha256: helperSha });
+    records.push({ epoch: n, record: rec, file: step.recordRel, sha256: sha256(Buffer.from(text, 'utf8')) });
+    if (own) {
+      const last = records[records.length - 1];
+      return { pairs, record: rec, records, file: last.file, recordSha256: last.sha256 };
+    }
+    previous = { id: n, base: rec.campaignBase, helperManifestSha256: helperSha,
+      entries: rec.helperManifest.entries, manifestRel: rec.helperManifest.file };
+    previousRecord = rec;
   }
-  const checked = core.epochRecordProblems({ record: parsed.record, base: ctx.base, helperSha: ctx.helperSha,
-    epoch1: e1, doc: ctx.doc, planRawSha256: ctx.request.plan.rawSha256, manifest1Text,
-    manifest2Text: readText(ctx.request.helpers.manifestFile), git, head, commits,
-    readProof: (rel) => {
-      const file = path.resolve(ctx.repo, rel);
-      return path.relative(ctx.repo, file).startsWith('..') || !fs.existsSync(file) ? null :
-        fs.readFileSync(file);
-    } });
-  if (checked.problems.length > 0) {
-    throw new Invalid(checked.problems.slice(0, 5).join('; '));
-  }
-  return { pairs: [first, { id: 2, base: ctx.base, helperManifestSha256: ctx.helperSha }],
-    record: parsed.record, file: core.EPOCH2_RECORD_REL, recordSha256: sha256(Buffer.from(text, 'utf8')) };
+  throw new Invalid('the campaign base ' + ctx.base + ' is not a declared epoch');
 }
 
 /** Runs the merge. `deps.git` replaces the Git reader and `deps.out` the stdout writer (stand-in tests). */
@@ -314,8 +358,16 @@ function main(argv, deps) {
   if (epochInfo.record) {
     const consumed = [];
     evaluation.cells.forEach((c) => (c.consumed || []).forEach((x) => consumed.push(x)));
-    core.epochAccounting(consumed, epochInfo.record, evaluation.complete && scope.type === 'all')
-      .forEach((p) => evaluation.problems.push(p));
+    core.epochAccountingChain(consumed, core.retainedOf(epochInfo.record), epochInfo.pairs.length,
+      evaluation.complete && scope.type === 'all').forEach((p) => evaluation.problems.push(p));
+    if (scope.type === 'all') {
+      // every hold a record retains (a1 of epoch 1, the a2 hold of epoch 2) must still be a hold
+      const holdRuns = [];
+      evaluation.cells.forEach((c) => (c.chunks || []).forEach((d) => (d.holdRuns || [])
+        .forEach((id) => holdRuns.push(id))));
+      core.holdProblems(holdRuns, epochInfo.records.map((r) => r.record.retainedEvidence.holds))
+        .forEach((p) => evaluation.problems.push(p));
+    }
     if (evaluation.problems.length > 0) evaluation.complete = false;
   }
 

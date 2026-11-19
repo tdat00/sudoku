@@ -9,7 +9,8 @@
 #      held by others. It records the slot state and the instant of the request; the controller records the
 #      ACTUAL start from inside the locked child and holds when the slot was busy or the start was more than
 #      2.000 s late unless a release of another job is proved at least 15 s before (acquisition.js). The
-#      pre-window checks (F1, F4/F2, host, stale lock) are FULL before each watch and bound to a cheap state
+#      pre-window checks (F1, the release history and the working tree as the controller reads them (epoch 3),
+#      F4/F2, host, stale lock) are FULL before each watch and bound to a cheap state
 #      fingerprint; after the watch only the fingerprint and the age of the watch (600 ms) are checked, so
 #      slow full checks never starve the call (epoch 2, one 1,200 s bound);
 #  G2  it reads the release logs of Phase A, Phase B and Phase C and any coordinator evidence, writes every
@@ -94,6 +95,8 @@ $script:GitOverride = $null
 $script:StandinReadiness = $null
 # a stand-in over a fake Git runs the R3 base check in every cycle only when a test turns it on
 $script:StandinHeadChecks = $false
+# likewise for the release-history and working-tree checks of epoch 3 (the working tree also needs a fake Git)
+$script:StandinHistoryChecks = $false
 . $script:HelperPath
 . "$script:ToolsC\owned-processes.ps1"
 . "$script:ToolsC\slot-watch.ps1"
@@ -126,27 +129,188 @@ function Read-JsonLinesStrict {
   return $rows
 }
 
-# The latest release in the Phase A, B and C logs and in coordinator evidence (the courtesy wait only: the
-# controller decides from the same files on its own).
-function Get-LastReleaseC {
-  $times = @()
-  foreach ($file in @($script:LogA, $script:LogB, $script:LogC)) {
-    foreach ($row in (Read-JsonLines -File $file)) {
-      if ($row.finished) { $times += [string]$row.finished }
-      if ($row.releaseObservedAt) { $times += [string]$row.releaseObservedAt }
+# ---- Epoch 3: the release history as the controller reads it (release-history.js), in PowerShell. One
+# reader serves the courtesy wait (Get-LastReleaseC) and the pre-folder history check
+# (Get-HistoryProblemsC): the typed F1 pre-window event of the Phase C log is no release, whatever time it
+# carries, and everything else needs a usable time. The controller stays the authority (it re-reads the
+# files, fail-closed); this check exists so that a log-shape problem refuses the call BEFORE the run folder
+# exists, and parity tests keep it equal.
+
+$script:PreWindowHeldAt = @('foreign-lock-watch', 'pre-window-recheck')
+$script:PreWindowKeys = @('schema', 'type', 'task', 'runId', 'cell', 'payload', 'chunkId', 'attempt', 'scope',
+  'standin', 'outcome', 'heldAt', 'at', 'reasons', 'watch', 'problems', 'watchCycles', 'repeatedCycles',
+  'omittedCycles', 'cycles', 'lockAcquired', 'admissionConsumed', 'payloadStarted', 'finished')
+$script:PreWindowNot = @('lockAcquired', 'admissionConsumed', 'payloadStarted')
+$script:StrictInstant = '^([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})' +
+  '(?:\.([0-9]{1,7}))?(Z|[+-][0-9]{2}:[0-9]{2})\z'
+
+# common.js parseIsoMs: an ISO instant with an explicit zone as epoch milliseconds (fraction truncated to ms),
+# $null for anything else, anything that is no real calendar instant, and a non-string.
+function ConvertTo-StrictMsC($Text) {
+  if ($Text -isnot [string]) { return $null }
+  $m = [regex]::Match($Text, $script:StrictInstant)
+  if (-not $m.Success) { return $null }
+  $g = $m.Groups
+  $year = [int]$g[1].Value
+  $offsetMs = 0
+  if ($g[8].Value -ne 'Z') {
+    $hh = [int]$g[8].Value.Substring(1, 2)
+    $mm = [int]$g[8].Value.Substring(4, 2)
+    if ($hh -gt 23 -or $mm -gt 59) { return $null }
+    $offsetMs = $(if ($g[8].Value[0] -eq '-') { -1 } else { 1 }) * ($hh * 60 + $mm) * 60000
+  }
+  if ($year -lt 100) { return $null }
+  try {
+    $utc = [DateTime]::new($year, [int]$g[2].Value, [int]$g[3].Value, [int]$g[4].Value, [int]$g[5].Value,
+      [int]$g[6].Value, [DateTimeKind]::Utc)
+  } catch { return $null }
+  $ms = [int](($g[7].Value + '000').Substring(0, 3))
+  return ([DateTimeOffset]::new($utc).ToUnixTimeMilliseconds() + $ms - $offsetMs)
+}
+
+# release-history.js classifyPreWindowEvent: $null when the row does not claim to be a pre-window event, else
+# { Valid, Why }. A text field is compared only when it is a string: `-ceq` on an array would filter it (the
+# JS comparison is strict), and this mirror must never accept what the Node reader rejects.
+function Test-TextIsC($Value, [string]$Text) { return ($Value -is [string] -and $Value -ceq $Text) }
+
+function Get-PreWindowEventC($Row) {
+  if ($Row -isnot [pscustomobject]) { return $null }
+  $names = @($Row.PSObject.Properties.Name)
+  $claims = ($names -ccontains 'type' -and (Test-TextIsC $Row.type 'pre-window-hold')) -or
+    ($names -ccontains 'outcome' -and (Test-TextIsC $Row.outcome 'pre-window-hold'))
+  if (-not $claims) { return $null }
+  $no = { param($why) [pscustomobject]@{ Valid = $false; Why = $why } }
+  if (-not ($names -ccontains 'schema' -and (Test-TextIsC $Row.schema 'ms18d-c-run-1'))) {
+    return (& $no 'schema')
+  }
+  if (-not ($names -ccontains 'type' -and (Test-TextIsC $Row.type 'pre-window-hold') -and
+      $names -ccontains 'outcome' -and (Test-TextIsC $Row.outcome 'pre-window-hold'))) {
+    return (& $no 'type and outcome')
+  }
+  if (-not ($names -ccontains 'heldAt' -and $Row.heldAt -is [string] -and
+      $script:PreWindowHeldAt -ccontains $Row.heldAt)) { return (& $no 'heldAt') }
+  if (-not ($names -ccontains 'at') -or $null -eq (ConvertTo-StrictMsC $Row.at)) { return (& $no 'at') }
+  $unknown = @($names | Where-Object { $script:PreWindowKeys -cnotcontains $_ })
+  if ($unknown.Count -gt 0) { return (& $no ('key ' + $unknown[0])) }
+  foreach ($k in $script:PreWindowNot) {
+    if ($names -ccontains $k -and -not ($Row.$k -is [bool] -and -not $Row.$k)) {
+      return (& $no ('claim ' + $k))
     }
   }
+  if ($names -ccontains 'finished') {
+    if ($null -eq (ConvertTo-StrictMsC $Row.finished)) { return (& $no 'finished') }
+    foreach ($k in $script:PreWindowNot) {
+      if (-not ($names -ccontains $k)) { return (& $no 'finished without metadata') }
+    }
+  }
+  return [pscustomobject]@{ Valid = $true; Why = $null }
+}
+
+# The sources of the request, as the controller gets them: the Phase A and B logs (required), the Phase C log
+# (not required) and every coordinator evidence file (required).
+function Get-ReleaseSourcesC {
+  $sources = @(
+    [ordered]@{ label = 'A'; file = $script:LogA; kind = 'log'; required = $true }
+    [ordered]@{ label = 'B'; file = $script:LogB; kind = 'log'; required = $true }
+    [ordered]@{ label = 'C'; file = $script:LogC; kind = 'log'; required = $false }
+  )
+  $n = 0
   foreach ($file in $script:CoordinatorEvidence) {
-    foreach ($row in (Read-JsonLines -File $file)) { if ($row.at) { $times += [string]$row.at } }
+    $n++
+    $sources += [ordered]@{ label = "coordinator$n"; file = $file; kind = 'coordinator'; required = $true }
   }
-  $latest = $null
-  foreach ($text in $times) {
-    $when = [DateTimeOffset]::MinValue
-    if ([DateTimeOffset]::TryParse($text, [ref]$when)) {
-      if ($null -eq $latest -or $when -gt $latest) { $latest = $when }
+  return $sources
+}
+
+# release-history.js collectReleases over `Sources` ({ label, file, kind, required }): { Problems (the same
+# text), Releases ({ AtMs, Label, Line }), Skipped (label -> lines of pre-window events) }.
+function Read-HistoryC {
+  param([object[]]$Sources)
+  $problems = @()
+  $releases = @()
+  $skipped = @{}
+  foreach ($s in $Sources) {
+    if (-not (Test-Path -LiteralPath $s.file)) {
+      if ($s.required) { $problems += "$($s.label): the required log $($s.file) is missing" }
+      continue
+    }
+    $name = [IO.Path]::GetFileName($s.file)
+    $n = 0
+    foreach ($raw in ([IO.File]::ReadAllText($s.file) -split "\r?\n")) {
+      $n++
+      if ($raw.Trim() -eq '') { continue }
+      $row = $null
+      try {
+        # strict like JSON.parse: ConvertFrom-Json alone takes a trailing comma
+        [Text.Json.JsonDocument]::Parse($raw).Dispose()
+        $row = ConvertFrom-Json -InputObject $raw -NoEnumerate -DateKind String
+      } catch {
+        $problems += "$($s.label): ${name}:${n}: not JSON"
+        continue
+      }
+      $names = $(if ($row -is [pscustomobject]) { @($row.PSObject.Properties.Name) } else { @() })
+      if ($s.kind -eq 'coordinator') {
+        $at = $(if ($names -ccontains 'at') { ConvertTo-StrictMsC $row.at } else { $null })
+        if ($null -eq $at) { $problems += "$($s.label):${n}: no usable time"; continue }
+        if (-not ($names -ccontains 'source' -and $row.source -is [string] -and $row.source.Trim() -ne '')) {
+          $problems += "$($s.label):${n}: no source: the evidence is not vouched for"
+          continue
+        }
+        $releases += [pscustomobject]@{ AtMs = $at; Label = $s.label; Line = $n }
+        continue
+      }
+      if ($s.label -eq 'C') {
+        $event = Get-PreWindowEventC $row
+        if ($null -ne $event) {
+          if ($event.Valid) {
+            if (-not $skipped.ContainsKey('C')) { $skipped['C'] = @() }
+            $skipped['C'] += $n
+          } else {
+            $problems += "$($s.label):${n}: not a valid pre-window event ($($event.Why))"
+          }
+          continue
+        }
+      }
+      $finished = $(if ($names -ccontains 'finished') { ConvertTo-StrictMsC $row.finished } else { $null })
+      $observed = $null
+      if ($names -ccontains 'releaseObservedAt') {
+        $observed = ConvertTo-StrictMsC $row.releaseObservedAt
+        if ($null -eq $observed) { $problems += "$($s.label):${n}: releaseObservedAt is not a usable time" }
+      }
+      if ($null -eq $finished) {
+        $problems += "$($s.label):${n}: no usable finished time"
+        continue
+      }
+      $atMs = $(if ($null -ne $observed -and $observed -gt $finished) { $observed } else { $finished })
+      $releases += [pscustomobject]@{ AtMs = $atMs; Label = $s.label; Line = $n }
     }
   }
-  return $latest
+  return [pscustomobject]@{ Problems = $problems; Releases = $releases; Skipped = $skipped }
+}
+
+# The pre-folder history check: what the controller's acquisition would call an unproved history, plus an
+# empty history (its `no-release-history`). [] when the history is proved.
+function Get-HistoryProblemsC {
+  $h = Read-HistoryC -Sources (Get-ReleaseSourcesC)
+  $problems = @($h.Problems)
+  if (@($h.Releases).Count -eq 0) { $problems += 'the release history holds no release' }
+  # the controller's `release-in-the-future` (acquisition.js), judged against now instead of the start
+  $nowMs = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+  foreach ($r in @($h.Releases)) {
+    if ($r.AtMs -gt $nowMs) { $problems += "$($r.Label):$($r.Line): release-in-the-future (later than now)" }
+  }
+  return $problems
+}
+
+# The latest release in the Phase A, B and C logs and in coordinator evidence (the courtesy wait only: the
+# controller decides from the same files on its own). A pre-window event is no release.
+function Get-LastReleaseC {
+  $latest = $null
+  foreach ($r in @((Read-HistoryC -Sources (Get-ReleaseSourcesC)).Releases)) {
+    if ($null -eq $latest -or $r.AtMs -gt $latest) { $latest = $r.AtMs }
+  }
+  if ($null -eq $latest) { return $null }
+  return [DateTimeOffset]::FromUnixTimeMilliseconds([long]$latest)
 }
 
 function Get-SlotStateC {
@@ -653,9 +817,54 @@ function Compare-TransportFingerprintC {
   return $d
 }
 
+# source-binding.js evaluateStatus as a pre-folder check: `git status --porcelain=v1 -z --untracked-files=all`
+# may list only new files directly inside a run folder the manifest declares and the C log already names, and
+# the release ledger as ` M` whose committed bytes are an exact prefix of the working file (line ends aside).
+# Anything else would hold the run at its binding AFTER the folder exists, which spends an admission.
+function Get-StatusProblemsC {
+  param([string[]]$DeclaredDirs)
+  $r = Invoke-GitC @('--no-optional-locks', 'status', '--porcelain=v1', '-z', '--untracked-files=all')
+  if ($r.Exit -ne 0) { return @('git status failed') }
+  $declared = @($DeclaredDirs | ForEach-Object { ([string]$_).Replace('\', '/').TrimEnd('/') })
+  $named = @()
+  foreach ($row in (Read-JsonLines -File $script:LogC)) {
+    if ($row.PSObject.Properties.Name -contains 'runDir' -and $row.runDir) {
+      $named += ([string]$row.runDir).Replace('\', '/').TrimEnd('/')
+    }
+  }
+  $runs = @($named | Where-Object { $declared -contains $_ } | Select-Object -Unique)
+  $parts = @(([string]$r.Out -split "`0") | Where-Object { $_ -ne '' })
+  $problems = @()
+  for ($i = 0; $i -lt $parts.Count; $i++) {
+    $xy = $parts[$i].Substring(0, [math]::Min(2, $parts[$i].Length))
+    $file = $parts[$i].Substring([math]::Min(3, $parts[$i].Length)).Replace('\', '/')
+    if ($xy -match '[RC]') { $i++ }
+    if ($xy -eq '??') {
+      $slash = $file.LastIndexOf('/')
+      $dir = $(if ($slash -ge 0) { $file.Substring(0, $slash) } else { '.' })
+      $leaf = $file.Substring($slash + 1)
+      if ($runs -contains $dir -and $leaf -match '^(?!\.+\z)[A-Za-z0-9._-]+\z') { continue }
+    } elseif ($xy -eq ' M' -and $file -eq $script:LedgerRel) {
+      $committed = Get-CommittedTextC 'HEAD' $script:LedgerRel
+      $working = $null
+      if (Test-Path -LiteralPath $script:LogC) { $working = [IO.File]::ReadAllText($script:LogC) }
+      $lf = [StringComparison]::Ordinal
+      if ($null -ne $committed -and $null -ne $working -and
+        $working.Replace("`r`n", "`n").StartsWith($committed.Replace("`r`n", "`n"), $lf)) {
+        continue
+      }
+      $problems += "$xy $file (the release ledger is not a pure append of its committed bytes)"
+      continue
+    }
+    $problems += "$xy $file"
+  }
+  return $problems
+}
+
 # The full checks of one cycle, in the order of the F1 pre-flight; each throws, nothing is started: the
-# campaign base (R3; a stand-in only when a test turns it on over a fake Git), F4 and F2, the live host (a
-# recorder) and the stale shared lock.
+# campaign base (R3; a stand-in only when a test turns it on over a fake Git), the release history and the
+# working tree as the controller will read them (epoch 3; a stand-in only when a test turns them on), F4 and
+# F2, the live host (a recorder) and the stale shared lock.
 function Invoke-FullChecksC {
   param([string]$Profile, [string]$Unit, [int]$Attempt, [string]$CellDir, [string]$Base, [bool]$Standin,
     [bool]$FinalMatrix, [string[]]$DeclaredDirs)
@@ -663,6 +872,20 @@ function Invoke-FullChecksC {
     $headProblems = @(Get-CampaignHeadProblemsC -Base $Base -DeclaredDirs $DeclaredDirs)
     if ($headProblems.Count -gt 0) {
       throw ('MS18d-C hold before the lock (the campaign base): ' + ($headProblems -join '; '))
+    }
+  }
+  if ($FinalMatrix -and (-not $Standin -or $script:StandinHistoryChecks)) {
+    $historyProblems = @(Get-HistoryProblemsC)
+    if ($historyProblems.Count -gt 0) {
+      throw ('MS18d-C hold before the lock (the release history is unproved): ' +
+        ($historyProblems -join '; '))
+    }
+  }
+  if ($FinalMatrix -and (-not $Standin -or ($script:GitOverride -and $script:StandinHistoryChecks))) {
+    $statusProblems = @(Get-StatusProblemsC -DeclaredDirs $DeclaredDirs)
+    if ($statusProblems.Count -gt 0) {
+      throw ('MS18d-C hold before the lock (the working tree is not the reviewed clean input): ' +
+        ($statusProblems -join '; '))
     }
   }
   if ($FinalMatrix) {
@@ -871,6 +1094,7 @@ function Invoke-PayloadLocked {
       attempt = $PayloadRequest['attempt']; scope = $PayloadRequest['scope']
       standin = [bool]$Standin; outcome = 'pre-window-hold'
       heldAt = $(if ($repeated.Count -gt 0) { 'pre-window-recheck' } else { 'foreign-lock-watch' })
+      lockAcquired = $false; admissionConsumed = $false; payloadStarted = $false
       at = [DateTimeOffset]::Now.ToString($script:Stamp)
       reasons = $reasons
       watch = [ordered]@{ startedAtMs = $watch.startedAtMs; lastCheckMs = $watch.lastCheckMs
@@ -897,16 +1121,7 @@ function Invoke-PayloadLocked {
   # the request: instant and slot state, then the record the controller reads
   $asked = [DateTimeOffset]::Now
   $slot = Get-SlotStateC
-  $sources = @(
-    [ordered]@{ label = 'A'; file = $script:LogA; kind = 'log'; required = $true }
-    [ordered]@{ label = 'B'; file = $script:LogB; kind = 'log'; required = $true }
-    [ordered]@{ label = 'C'; file = $script:LogC; kind = 'log'; required = $false }
-  )
-  $n = 0
-  foreach ($file in $script:CoordinatorEvidence) {
-    $n++
-    $sources += [ordered]@{ label = "coordinator$n"; file = $file; kind = 'coordinator'; required = $true }
-  }
+  $sources = Get-ReleaseSourcesC
   $expected = [ordered]@{
     base = $(if ($CampaignBase) { $CampaignBase } else { $null })
     identities = $script:Expected.identities; tableSha256 = $script:Expected.tableSha256

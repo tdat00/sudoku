@@ -1,0 +1,19 @@
+{
+  "schema": "ms18d-c-watch-1",
+  "startedAtMs": 1795102966289,
+  "firstCheckMs": 1795102966289,
+  "lastCheckMs": 1795102981679,
+  "requiredWindowMs": 15300,
+  "maxIntervalAllowedMs": 1000,
+  "intervalMs": 250,
+  "checks": 62,
+  "windowChecks": 62,
+  "maxIntervalMs": 260,
+  "windowSightings": 0,
+  "restartCount": 0,
+  "restarts": [],
+  "giveUpSeconds": 1199.9966947,
+  "gaveUp": false,
+  "notBeforeMs": 1795101196947,
+  "stub": true
+}

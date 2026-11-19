@@ -1,0 +1,27 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hold-no-lock-watch-record",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in hold-no-lock-watch-record",
+  "startedAtMs": 1795099526608,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "foreign-lock-watch-missing"
+  ],
+  "heldAt": "acquisition",
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 31000,
+      "systemMicros": 109000
+    }
+  },
+  "finishedAtMs": 1795099526639
+}

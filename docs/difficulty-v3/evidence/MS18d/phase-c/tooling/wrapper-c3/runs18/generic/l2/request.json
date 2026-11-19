@@ -1,0 +1,94 @@
+{
+  "schema": "ms18d-c-request-1",
+  "runId": "l2",
+  "task": "stand-in l2",
+  "standin": true,
+  "profile": "standin-ledger",
+  "allowExit1": false,
+  "cell": null,
+  "runDir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\tooling\\wrapper-c3\\runs18\\generic\\l2",
+  "repo": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-aQBfHw\\repo",
+  "command": {
+    "args": [
+      "Q:\\git\\sudoku\\generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\fake-writer.js",
+      "--out=Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\tooling\\wrapper-c3\\runs18\\generic\\l2\\ledger.json",
+      "--records=3",
+      "--mode=short"
+    ]
+  },
+  "requestedAt": "2026-11-19T21:49:10.236+07:00",
+  "wrapperPid": 17348,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "startedAtMs": 1795099734832,
+    "firstCheckMs": 1795099734832,
+    "lastCheckMs": 1795099750222,
+    "requiredWindowMs": 15300,
+    "maxIntervalAllowedMs": 1000,
+    "intervalMs": 250,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restartCount": 0,
+    "restarts": [],
+    "giveUpSeconds": 1199.997334,
+    "gaveUp": false,
+    "notBeforeMs": 1795097965492,
+    "stub": true
+  },
+  "releaseSources": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-aQBfHw\\logs18\\a.jsonl",
+      "kind": "log",
+      "required": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-aQBfHw\\logs18\\b.jsonl",
+      "kind": "log",
+      "required": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-aQBfHw\\logs18\\c.jsonl",
+      "kind": "log",
+      "required": false
+    }
+  ],
+  "cLedger": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-aQBfHw\\logs18\\c.jsonl",
+  "expected": {
+    "base": null,
+    "identities": {
+      "hashIdentity": "H",
+      "replayIdentity": "R",
+      "sources": "S"
+    },
+    "tableSha256": "TABLE",
+    "node": "v26.13.0",
+    "machine": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    }
+  },
+  "helpers": {
+    "manifestFile": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-aQBfHw\\helpers-manifest.txt",
+    "manifestSha256": null,
+    "required": [
+      "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/controller.js"
+    ],
+    "repoRoot": "Q:\\git\\sudoku"
+  },
+  "powershell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+  "ownedProcesses": "Q:\\git\\sudoku\\generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\owned-processes.ps1",
+  "bindingFixture": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-aQBfHw\\fixture.json",
+  "expectedRecords": 3,
+  "classifierModule": "Q:\\git\\sudoku\\generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\standin-payload-classifier.js"
+}

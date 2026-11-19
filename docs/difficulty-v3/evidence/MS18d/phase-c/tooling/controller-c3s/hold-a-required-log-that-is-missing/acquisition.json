@@ -1,0 +1,63 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795102755462,
+  "startedAtMs": 1795102755535,
+  "lockAcquiredAtMs": 1795102755467,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [
+    "A: the required log Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-Ec5TJM\\hold-a-required-log-that-is-missing\\logs\\no.jsonl is missing"
+  ],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795102739962,
+    "lastCheckMs": 1795102755262,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 73,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795100955460,
+    "label": "B",
+    "origin": "own"
+  },
+  "releaseGapMs": 1800075,
+  "reasons": [
+    "release-history-unproved"
+  ],
+  "decision": "hold",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 32784,
+    "task": "stand-in hold-a-required-log-that-is-missing",
+    "controllerPid": 13148,
+    "controllerParentPid": 32784,
+    "wrapperPid": 32784
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-Ec5TJM\\hold-a-required-log-that-is-missing\\logs\\no.jsonl",
+      "present": false
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-Ec5TJM\\hold-a-required-log-that-is-missing\\logs\\b.jsonl",
+      "present": true
+    }
+  ]
+}

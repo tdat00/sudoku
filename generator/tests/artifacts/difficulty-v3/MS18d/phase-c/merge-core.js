@@ -69,10 +69,28 @@ const EPOCH1 = Object.freeze({
 const EPOCH2_RECORD_REL = 'tasks/difficulty-v3/MS18d-gp-campaign-base-2.jsonl';
 const EPOCH2_SCHEMA = 'ms18d-gp-transport-epoch-2-v1';
 const PROOF_SCHEMA = 'ms18d-gp-epoch-2-transition-proof-v1';
+// Epoch 3 (the release-history repair): declared by ONE more never-edited committed line, after the
+// checkpoint of the epoch-2 run (the a2 folder and the C log it left)
+const EPOCH3_RECORD_REL = 'tasks/difficulty-v3/MS18d-gp-campaign-base-3.jsonl';
+const EPOCH3_SCHEMA = 'ms18d-gp-transport-epoch-3-v1';
+const PROOF3_SCHEMA = 'ms18d-gp-epoch-3-transition-proof-v1';
+const EPOCH2_CHECKPOINT = 'ed95a1f0caf127cbc3c37c63cb41df8c17c7f06a';
 const HEX40 = /^[0-9a-f]{40}$/;
 const HEX64 = /^[0-9a-f]{64}$/;
 const HELPER_DIR = 'generator/tests/artifacts/difficulty-v3/MS18d/phase-c/';
 const PRODUCTION_FILES = ['run-locked-c.ps1', 'merge-core.js', 'merge-gp.js'];
+/**
+ * The declared steps from one epoch to the next: epoch 2 (the transport repair: three production files) and
+ * epoch 3 (the release-history repair: release-history.js joins them). A later step is added here, with its
+ * own record, schema, proof schema and production files; nothing else adopts an epoch.
+ */
+const EPOCH_STEPS = Object.freeze({
+  2: Object.freeze({ n: 2, label: 'base-2', prev: 'B1', cur: 'B2', recordRel: EPOCH2_RECORD_REL,
+    schema: EPOCH2_SCHEMA, proofSchema: PROOF_SCHEMA, production: PRODUCTION_FILES }),
+  3: Object.freeze({ n: 3, label: 'base-3', prev: 'B2', cur: 'B3', recordRel: EPOCH3_RECORD_REL,
+    schema: EPOCH3_SCHEMA, proofSchema: PROOF3_SCHEMA,
+    production: ['release-history.js'].concat(PRODUCTION_FILES) })
+});
 const TEST_CLASS = /^(test|standin)-[A-Za-z0-9._-]+\.(js|ps1)$/;
 const PACK_DIR = 'tasks/difficulty-v3/';
 const EVIDENCE_DIR = 'docs/difficulty-v3/evidence/MS18d/';
@@ -101,7 +119,8 @@ function parseHelperManifest(text) {
  * added or removed). { changes: [{ path, class, before, after }] sorted by path ('/'), identical (the number
  * of byte-identical entries), problems }.
  */
-function manifestTransition(m1, m2) {
+function manifestTransition(m1, m2, production) {
+  const allowed = production || PRODUCTION_FILES;
   const problems = [];
   const changes = [];
   let identical = 0;
@@ -117,7 +136,7 @@ function manifestTransition(m1, m2) {
     const name = p.startsWith(HELPER_DIR) ? p.slice(HELPER_DIR.length) : '';
     let cls = null;
     if (name !== '' && name.indexOf('/') === -1) {
-      if (PRODUCTION_FILES.indexOf(name) !== -1 && before !== null && after !== null) cls = 'production';
+      if (allowed.indexOf(name) !== -1 && before !== null && after !== null) cls = 'production';
       else if (TEST_CLASS.test(name)) cls = 'test';
     }
     if (cls === null) problems.push('the helper manifests differ in ' + p + ', which is no allowed change');
@@ -164,10 +183,11 @@ function diffEntries(git, a, b) {
   return out;
 }
 
-/** The one line of the base-2 record: { record, problems }. */
-function parseEpochRecord(text) {
+/** The one line of a base record (`label`: 'base-2' or 'base-3'): { record, problems }. */
+function parseEpochRecord(text, label) {
+  const what = 'the ' + (label || 'base-2') + ' record';
   const lines = String(text).replace(/^\uFEFF/, '').split(/\r?\n/).filter((l) => l.trim() !== '');
-  if (lines.length !== 1) return { record: null, problems: ['the base-2 record is not exactly one line'] };
+  if (lines.length !== 1) return { record: null, problems: [what + ' is not exactly one line'] };
   try {
     const record = JSON.parse(lines[0]);
     if (record === null || typeof record !== 'object' || Array.isArray(record)) {
@@ -175,31 +195,34 @@ function parseEpochRecord(text) {
     }
     return { record, problems: [] };
   } catch (err) {
-    return { record: null, problems: ['the base-2 record is not JSON: ' + err.message] };
+    return { record: null, problems: [what + ' is not JSON: ' + err.message] };
   }
 }
 
 /**
- * The base-2 record against everything it names: the merge request (campaign base B2, helper manifest H2),
- * the declared epoch 1, the plan, both helper manifests, Git (ancestry B1 -> checkpoint -> B2 -> HEAD, and
- * the diff), and the proof file. `input`: { record, base, helperSha, epoch1, doc, planRawSha256,
- * manifest1Text, manifest2Text, git, head, commits (the commits that touched the record's path),
- * readProof(rel) -> Buffer }.
+ * A base record against everything it names: the pair it declares (campaign base, helper manifest), the
+ * previous declared epoch, the plan, both helper manifests, Git (ancestry previous base -> checkpoint ->
+ * base -> HEAD, and the diff), and the proof file. `input`: { step (EPOCH_STEPS[n], default epoch 2),
+ * record, base, helperSha, epoch1 (the PREVIOUS declared epoch: { base, helperManifestSha256, entries,
+ * manifestRel, checkpoint (the checkpoint of this step) }), previousRecord (the record of the previous step,
+ * when it has one), doc, planRawSha256, manifest1Text, manifest2Text, git, head, commits (the commits that
+ * touched the record's path), readProof(rel) -> Buffer }.
  * Returns the problems ([] when the record is valid) and the manifest transition it was checked with.
  */
 function epochRecordProblems(input) {
   const rec = input.record;
   const e1 = input.epoch1;
+  const step = input.step || EPOCH_STEPS[2];
   const problems = [];
-  const bad = (t) => problems.push('base-2 record: ' + t);
+  const bad = (t) => problems.push(step.label + ' record: ' + t);
   const isObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
   if (input.commits !== 1) bad('the file was committed ' + input.commits + ' times, not once (never edited)');
-  if (rec.schema !== EPOCH2_SCHEMA) bad('schema is not ' + EPOCH2_SCHEMA);
+  if (rec.schema !== step.schema) bad('schema is not ' + step.schema);
   if (!HEX40.test(String(rec.campaignBase)) || rec.campaignBase !== input.base) {
     bad('campaignBase is not the campaign base of the merge request');
   }
-  if (rec.campaignBase === e1.base) bad('campaignBase is the base of epoch 1');
-  if (rec.previousBase !== e1.base) bad('previousBase is not the declared base of epoch 1');
+  if (rec.campaignBase === e1.base) bad('campaignBase is the base of the previous epoch');
+  if (rec.previousBase !== e1.base) bad('previousBase is not the declared base of the previous epoch');
   if (rec.checkpoint !== e1.checkpoint) bad('checkpoint is not the declared checkpoint');
   const m1 = parseHelperManifest(input.manifest1Text);
   const m2 = parseHelperManifest(input.manifest2Text);
@@ -211,12 +234,12 @@ function epochRecordProblems(input) {
   const previous = rec.previousHelperManifest;
   if (!isObject(previous) || previous.sha256 !== e1.helperManifestSha256 ||
     previous.entries !== m1.entries.size || (e1.manifestRel && previous.file !== e1.manifestRel)) {
-    bad('previousHelperManifest is not the declared manifest of epoch 1 (file, sha256, entries)');
+    bad('previousHelperManifest is not the declared manifest of the previous epoch (file, sha256, entries)');
   }
   if (e1.entries !== undefined && m1.entries.size !== e1.entries) {
-    bad('the epoch-1 manifest has other entries');
+    bad('the previous epoch manifest has other entries');
   }
-  const transition = manifestTransition(m1, m2);
+  const transition = manifestTransition(m1, m2, step.production);
   transition.problems.forEach(bad);
   if (!same(rec.allowedHelperChanges, transition.changes)) {
     bad('allowedHelperChanges is not the exact change list of the two manifests');
@@ -228,15 +251,15 @@ function epochRecordProblems(input) {
       bad(what + ' is not an ancestor');
     }
   };
-  ancestor(e1.base, e1.checkpoint, 'B1 of the checkpoint');
-  ancestor(e1.checkpoint, input.base, 'the checkpoint of B2');
-  ancestor(input.base, input.head, 'B2 of HEAD');
+  ancestor(e1.base, e1.checkpoint, step.prev + ' of the checkpoint');
+  ancestor(e1.checkpoint, input.base, 'the checkpoint of ' + step.cur);
+  ancestor(input.base, input.head, step.cur + ' of HEAD');
   let names = [];
   try {
     names = diffEntries(input.git, e1.base, input.base);
     transitionDiffProblems(names, transition.changes, LEDGER).forEach(bad);
   } catch (err) {
-    bad('the B1 -> B2 diff cannot be read: ' + err.message);
+    bad('the previous base -> base diff cannot be read: ' + err.message);
   }
   const proof = rec.transitionProof;
   if (!isObject(proof) || typeof proof.file !== 'string' || !HEX64.test(String(proof.sha256))) {
@@ -255,7 +278,7 @@ function epochRecordProblems(input) {
         bad('the transition proof is not JSON');
       }
       if (doc) {
-        const want = { schema: PROOF_SCHEMA, previousBase: e1.base, checkpoint: e1.checkpoint,
+        const want = { schema: step.proofSchema, previousBase: e1.base, checkpoint: e1.checkpoint,
           campaignBase: input.base, previousHelperManifestSha256: e1.helperManifestSha256,
           helperManifestSha256: input.helperSha, changes: transition.changes,
           identicalEntries: transition.identical,
@@ -283,9 +306,14 @@ function epochRecordProblems(input) {
   }
   const kept = isObject(rec.retainedEvidence) ? rec.retainedEvidence.successes : null;
   const chunkIds = new Set(input.doc.chunks.map((c) => c.chunkId));
+  // from epoch 3 on, a retained success names the epoch it was recorded under (1 .. n - 1)
+  const tagged = step.n >= 3;
+  const epochOk = (r) => !tagged || (Number.isInteger(r.epoch) && r.epoch >= 1 && r.epoch < step.n);
   if (!Array.isArray(kept) || kept.length === 0 || !kept.every((r) => isObject(r) &&
-    chunkIds.has(r.chunkId) && typeof r.runId === 'string' && HEX64.test(String(r.ledgerSha256)))) {
-    bad('retainedEvidence.successes is not a list of { chunkId, runId, ledgerSha256 }');
+    chunkIds.has(r.chunkId) && typeof r.runId === 'string' && HEX64.test(String(r.ledgerSha256)) &&
+    epochOk(r))) {
+    bad('retainedEvidence.successes is not a list of { chunkId, runId, ledgerSha256' +
+      (tagged ? ', epoch' : '') + ' }');
   } else {
     if (new Set(kept.map((r) => r.chunkId)).size !== kept.length) bad('retainedEvidence names a chunk twice');
     const requests = input.doc.chunks.filter((c) => kept.some((r) => r.chunkId === c.chunkId))
@@ -294,32 +322,88 @@ function epochRecordProblems(input) {
     if (!isObject(cut) || cut.successes !== kept.length || cut.requests !== requests) {
       bad('cutover is not the retained successes and their requests');
     }
+    // the successes the previous record retained stay retained, byte for byte, under the epoch they had
+    const before = input.previousRecord && input.previousRecord.retainedEvidence &&
+      input.previousRecord.retainedEvidence.successes;
+    if (tagged && Array.isArray(before)) {
+      const strip = (r) => ({ chunkId: r.chunkId, runId: r.runId, ledgerSha256: r.ledgerSha256 });
+      if (!same(kept.filter((r) => r.epoch === 1).map(strip), before.map(strip))) {
+        bad('the epoch-1 successes are not those the previous record retained');
+      }
+    }
+  }
+  if (tagged) {
+    const holds = isObject(rec.retainedEvidence) ? rec.retainedEvidence.holds : null;
+    if (!Array.isArray(holds) || !holds.every((h) => typeof h === 'string')) {
+      bad('retainedEvidence.holds is not a list of run ids');
+    }
   }
   return { problems, transition };
 }
 
+/** The retained successes of a record as [{ chunkId, runId, ledgerSha256, epoch }] (untagged: epoch 1). */
+function retainedOf(record) {
+  return record.retainedEvidence.successes.map((r) => ({ chunkId: r.chunkId, runId: r.runId,
+    ledgerSha256: r.ledgerSha256, epoch: Number.isInteger(r.epoch) ? r.epoch : 1 }));
+}
+
 /**
- * The epoch-1 ledgers of a merge must be exactly the retained successes of the record (chunk, run, ledger
- * digest), no epoch-2 ledger may answer a retained chunk, and a complete all-79 merge consumes all of them.
- * `consumed`: [{ chunkId, runDir, ledgerSha256, epoch: { id } }].
+ * The ledgers of every epoch BEFORE the newest must be exactly the successes the newest record retains for
+ * that epoch (chunk, run, ledger digest), no ledger of the newest epoch may answer a retained chunk, and a
+ * complete all-79 merge consumes every retained success. `consumed`: [{ chunkId, runDir, ledgerSha256,
+ * epoch: { id } }]; `retained`: retainedOf(newest record); `newest`: the id of the newest epoch.
  */
-function epochAccounting(consumed, record, complete) {
+function epochAccountingChain(consumed, retained, newest, complete) {
   const problems = [];
-  const kept = new Map(record.retainedEvidence.successes.map((r) => [r.chunkId, r]));
-  let first = 0;
+  const byEpoch = new Map();
+  retained.forEach((r) => {
+    if (!byEpoch.has(r.epoch)) byEpoch.set(r.epoch, new Map());
+    byEpoch.get(r.epoch).set(r.chunkId, r);
+  });
+  const anywhere = new Set(retained.map((r) => r.chunkId));
+  const seen = new Map();
   consumed.forEach((c) => {
     const runId = String(c.runDir).split('/').pop();
-    const retained = kept.get(c.chunkId);
-    if (c.epoch.id === 1) {
-      first++;
-      if (!retained || retained.runId !== runId || retained.ledgerSha256 !== c.ledgerSha256) {
-        problems.push(c.chunkId + ': an epoch-1 ledger that is not one of the retained successes');
+    if (c.epoch.id < newest) {
+      seen.set(c.epoch.id, (seen.get(c.epoch.id) || 0) + 1);
+      const r = byEpoch.has(c.epoch.id) ? byEpoch.get(c.epoch.id).get(c.chunkId) : undefined;
+      if (!r || r.runId !== runId || r.ledgerSha256 !== c.ledgerSha256) {
+        problems.push(c.chunkId + ': an epoch-' + c.epoch.id +
+          ' ledger that is not one of the retained successes');
       }
-    } else if (retained) problems.push(c.chunkId + ': a retained success is answered by an epoch-2 ledger');
+    } else if (anywhere.has(c.chunkId)) {
+      problems.push(c.chunkId + ': a retained success is answered by an epoch-' + c.epoch.id + ' ledger');
+    }
   });
-  if (complete && first !== kept.size) {
-    problems.push('the retained successes are ' + kept.size + ', the epoch-1 ledgers of the merge ' + first);
+  if (complete) {
+    byEpoch.forEach((map, id) => {
+      if ((seen.get(id) || 0) !== map.size) {
+        problems.push('the retained successes' + (id === 1 ? '' : ' of epoch ' + id) + ' are ' + map.size +
+          ', the epoch-' + id + ' ledgers of the merge ' + (seen.get(id) || 0));
+      }
+    });
   }
+  return problems;
+}
+
+/** The two-epoch form of the accounting (the record of epoch 2 alone). */
+function epochAccounting(consumed, record, complete) {
+  return epochAccountingChain(consumed, retainedOf(record), 2, complete);
+}
+
+/**
+ * Every run a record lists as a retained hold must still be a hold of the merge (a discarded hold is a
+ * problem). `holdRuns`: the run ids the evaluation judged to be holds; `lists`: the `holds` arrays of the
+ * records.
+ */
+function holdProblems(holdRuns, lists) {
+  const have = new Set(holdRuns);
+  const problems = [];
+  lists.forEach((list) => (Array.isArray(list) ? list : []).forEach((id) => {
+    if (typeof id === 'string' && !have.has(id)) {
+      problems.push('the retained hold ' + id + ' is gone or is no hold');
+    }
+  }));
   return problems;
 }
 
@@ -670,7 +754,7 @@ function mergeCell(cell, chunks, verdicts) {
       accepted.push({ chunk, verdict: complete[0].verdict });
     }
     detail.push({ chunkId: chunk.chunkId, complete: complete.length, failed: failed.length,
-      holds: holds.length });
+      holds: holds.length, holdRuns: holds.map((h) => h.slot.runId) });
   });
   if (accepted.length !== chunks.length || problems.length > 0) {
     return { cell, complete: false, problems, stats: null, chunks: detail, coldStart: [] };
@@ -822,5 +906,7 @@ const publicStats = (s) => (s ? { n: s.n, p50: s.p50, p95: s.p95, max: s.max, me
 
 module.exports = { judgeRun, mergeCell, evaluate, cellStats, makeHeadChecker, expectedIdentityOf,
   collectRunFolders, readRunFolder, frozenRecorderArgs, publicStats, ascending, EPOCH1, EPOCH2_RECORD_REL,
-  EPOCH2_SCHEMA, PROOF_SCHEMA, HELPER_DIR, parseHelperManifest, manifestTransition, transitionDiffProblems,
-  diffEntries, parseEpochRecord, epochRecordProblems, epochAccounting, buildEpochs };
+  EPOCH2_SCHEMA, PROOF_SCHEMA, EPOCH3_RECORD_REL, EPOCH3_SCHEMA, PROOF3_SCHEMA, EPOCH2_CHECKPOINT,
+  EPOCH_STEPS, HELPER_DIR, parseHelperManifest, manifestTransition, transitionDiffProblems, diffEntries,
+  parseEpochRecord, epochRecordProblems, epochAccounting, epochAccountingChain, retainedOf, holdProblems,
+  buildEpochs };

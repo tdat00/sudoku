@@ -1,0 +1,5 @@
+{"role":"controller","pid":27444,"ppid":9536,"beforeMs":1795101683340,"afterMs":1795101683416}
+{"role":"tee","pid":34800,"ppid":27444,"beforeMs":1795101683477,"afterMs":1795101683492}
+{"role":"command","pid":6876,"ppid":34800,"beforeMs":1795101683559,"afterMs":1795101683575,"startedAtIso":"2026-11-19T15:21:23.575Z","argv":["C:\\Program Files\\nodejs\\node.exe","Q:\\git\\sudoku\\generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-b\\fake-child.js","ok"]}
+{"event":"command-exit","atMs":1795101684849,"code":0,"signal":null}
+{"event":"tee-exit","atMs":1795101684852,"stdoutBytes":18,"stderrBytes":0,"cpuUserMicros":62000,"cpuSystemMicros":31000}

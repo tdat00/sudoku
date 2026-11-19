@@ -1,0 +1,27 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "r8",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in r8",
+  "startedAtMs": 1795099735129,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "slot-busy-and-foreign-release-unproved"
+  ],
+  "heldAt": "acquisition",
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 0,
+      "systemMicros": 93000
+    }
+  },
+  "finishedAtMs": 1795099735156
+}

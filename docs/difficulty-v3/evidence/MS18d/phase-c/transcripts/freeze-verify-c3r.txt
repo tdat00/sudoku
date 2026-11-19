@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\check-format.js --verify ..\docs\difficulty-v3\evidence\MS18d\phase-c\helpers-c3-sha256.txt --verify ..\docs\difficulty-v3\evidence\MS18d\phase-c\outputs-c3-sha256.txt
+docs\difficulty-v3\evidence\MS18d\phase-c\helpers-c3-sha256.txt: 55 entries, 0 not matching
+docs\difficulty-v3\evidence\MS18d\phase-c\outputs-c3-sha256.txt: 6200 entries, 0 not matching
+exit=0 seconds=3.158

@@ -16,6 +16,7 @@ const { spawn } = require('child_process');
 const { parseIsoMs, sha256 } = require('./common.js');
 const { collectReleases } = require('./release-history.js');
 const { decideAcquisition } = require('./acquisition.js');
+const { chunkAttempts } = require('./attempts.js');
 const { classifyGpRun, classifyGenericRun, parseStock } = require('./classify.js');
 const { stockOutput } = require('./stock-fixtures.js');
 const sb = require('./source-binding.js');
@@ -928,8 +929,177 @@ async function payloadHook() {
     });
 }
 
+// ---------------------------------------------------------------------------------------------------------
+// epoch 3: the typed pre-window event is no release (release-history.js), replayed over the retained data
+// ---------------------------------------------------------------------------------------------------------
+
+const EV = path.join(REPO, 'docs', 'difficulty-v3', 'evidence', 'MS18d');
+// the exact bytes of line 24 of the real Phase C log: the first give-up the wrapper ever wrote (19:09:20 +07)
+const LINE24 = '{"schema":"ms18d-c-run-1","type":"pre-window-hold",' +
+  '"task":"MS18d GP record mega16-easy.i0.n50 a2","runId":"mega16-easy.i0.n50.a2","cell":"mega16/easy",' +
+  '"payload":"gp-recorder","chunkId":"mega16-easy.i0.n50","attempt":2,"scope":null,"standin":false,' +
+  '"outcome":"pre-window-hold","heldAt":"foreign-lock-watch","at":"2026-11-19T19:09:20.061+07:00",' +
+  '"reasons":["a lock of another job did not leave a 15.3 s quiet window within the bounded wait"],' +
+  '"watch":{"startedAtMs":1795090155748,"lastCheckMs":1795090160060,"checks":18,' +
+  '"restartCount":0,"giveUpSeconds":4.2332728,"gaveUp":true},"problems":[]}';
+const realLines = () => fs.readFileSync(path.join(EV, 'phase-c', 'lock-log.jsonl'), 'utf8')
+  .split(/\r?\n/).filter((l) => l.trim() !== '');
+const realSources = (cFile) => [
+  { label: 'A', file: path.join(EV, 'lock-log.jsonl'), kind: 'log', required: true },
+  { label: 'B', file: path.join(EV, 'phase-b', 'lock-log.jsonl'), kind: 'log', required: true },
+  { label: 'C', file: cFile, kind: 'log', required: false }];
+
+async function preWindowEvents() {
+  await test('epoch 3: the exact bytes of real line 24 are a pre-window event: skipped, no release', () => {
+    assert.strictEqual(realLines()[23], LINE24, 'the retained line is the one this test names');
+    jsonl(at('pw1.jsonl'), [{ finished: iso(T - 90000), releaseObservedAt: iso(T - 89000) }, LINE24]);
+    const h = collectReleases([{ label: 'C', file: at('pw1.jsonl'), kind: 'log', required: false }]);
+    assert.deepStrictEqual(h.problems, []);
+    assert.strictEqual(h.releases.length, 1, 'the event adds no release');
+    assert.strictEqual(h.latest.atMs, T - 89000);
+    assert.deepStrictEqual(h.files[0].skippedLines, [2]);
+    assert.deepStrictEqual(h.files[0].skippedEvents, [{ line: 2, type: 'pre-window-hold',
+      heldAt: 'foreign-lock-watch', runId: 'mega16-easy.i0.n50.a2', at: '2026-11-19T19:09:20.061+07:00' }]);
+    const alone = collectReleases([{ label: 'C', file: at('pw1.jsonl'), kind: 'log', required: false }]);
+    assert.strictEqual(alone.latest.atMs, T - 89000, 'the give-up at 19:09 never becomes the latest release');
+  });
+
+  await test('epoch 3: the first 24 real lines are the pre-a2 history: 24 excluded, 23 the release', () => {
+    fs.writeFileSync(at('real24.jsonl'), realLines().slice(0, 24).join('\r\n') + '\r\n');
+    const h = collectReleases(realSources(at('real24.jsonl')));
+    assert.deepStrictEqual(h.problems, []);
+    assert.strictEqual(h.latest.label, 'C');
+    assert.strictEqual(h.latest.atMs, Date.parse('2026-11-19T18:47:51.850+07:00'), 'line 23 release');
+    assert.strictEqual(h.latest.line, 23);
+    assert.deepStrictEqual(h.files[2].skippedLines, [24]);
+    assert.strictEqual(h.files[0].skippedLines, undefined, 'only the Phase C log has the exemption');
+    assert.strictEqual(h.files[1].skippedLines, undefined);
+    assert.strictEqual(h.releases.filter((r) => r.label === 'C').length, 23, 'each earlier run of C');
+  });
+
+  await test('epoch 3: the 25-line history excludes only line 24 and takes the line 25 release', () => {
+    fs.writeFileSync(at('real25.jsonl'), realLines().slice(0, 25).join('\r\n') + '\r\n');
+    const h = collectReleases(realSources(at('real25.jsonl')));
+    assert.deepStrictEqual(h.problems, []);
+    assert.strictEqual(h.latest.line, 25);
+    assert.strictEqual(h.latest.atMs, Date.parse('2026-11-19T20:50:13.563+07:00'));
+    assert.deepStrictEqual(h.files[2].skippedLines, [24]);
+  });
+
+  await test('epoch 3: the saved a2 acquisition facts replayed over the pre-a2 history now proceed', () => {
+    const saved = JSON.parse(fs.readFileSync(path.join(EV, 'gp', 'mega16-easy', 'mega16-easy.i0.n50.a2',
+      'acquisition.json'), 'utf8'));
+    assert.strictEqual(saved.decision, 'hold');
+    assert.deepStrictEqual(saved.historyProblems, ['C:24: no usable finished time']);
+    const history24 = collectReleases(realSources(at('real24.jsonl')));
+    const again = decideAcquisition({ requestedAtMs: saved.requestedAtMs, startedAtMs: saved.startedAtMs,
+      lockAcquiredAtMs: saved.lockAcquiredAtMs, slotBefore: saved.slotBefore, history: history24,
+      watch: saved.watch });
+    assert.deepStrictEqual(again.reasons, []);
+    assert.strictEqual(again.decision, 'proceed');
+    assert.deepStrictEqual(again.historyProblems, []);
+    // the watch, the start delay and the slot facts are the saved ones; nothing else was relaxed
+    assert.strictEqual(again.startDelayMs, saved.startDelayMs);
+    assert.strictEqual(again.releaseGapMs, saved.startedAtMs - Date.parse('2026-11-19T18:47:51.850+07:00'));
+  });
+
+  await test('epoch 3: old and new typed pre-window rows, with or without a diagnostic finished', () => {
+    const old = JSON.parse(LINE24);
+    const meta = { lockAcquired: false, admissionConsumed: false, payloadStarted: false };
+    const rows = [
+      { finished: iso(T - 90000) },
+      Object.assign({}, old, { heldAt: 'pre-window-recheck' }),
+      Object.assign({}, old, meta, { watchCycles: 3, repeatedCycles: 2, omittedCycles: 0, cycles: [] }),
+      Object.assign({}, old, meta, { finished: iso(T + 500000) }),
+      Object.assign({}, old, meta, { heldAt: 'pre-window-recheck', finished: iso(T + 600000) }),
+      Object.assign({}, old, meta, { finished: old.at })];
+    jsonl(at('pw2.jsonl'), rows);
+    const h = collectReleases([{ label: 'C', file: at('pw2.jsonl'), kind: 'log', required: false }]);
+    assert.deepStrictEqual(h.problems, []);
+    assert.strictEqual(h.releases.length, 1);
+    assert.strictEqual(h.latest.atMs, T - 90000, 'a diagnostic finished is not a release');
+    assert.deepStrictEqual(h.files[0].skippedLines, [2, 3, 4, 5, 6]);
+  });
+
+  await test('epoch 3: variants of the shape and contradictory claims are problems, never skipped', () => {
+    const old = JSON.parse(LINE24);
+    const meta = { lockAcquired: false, admissionConsumed: false, payloadStarted: false };
+    const variants = [
+      ['another schema', { schema: 'other' }, 'schema'], ['no heldAt', { heldAt: undefined }, 'heldAt'],
+      ['another heldAt', { heldAt: 'lock' }, 'heldAt'], ['no at', { at: undefined }, 'at'],
+      ['an unusable at', { at: 'soon' }, 'at'], ['an at without a zone', { at: '2026-11-19T19:09:20' }, 'at'],
+      ['outcome only', { type: undefined }, 'type and outcome'],
+      ['type only', { outcome: 'success' }, 'type and outcome'],
+      ['a release time', { releaseObservedAt: iso(T) }, 'key releaseObservedAt'],
+      ['a run directory', { runDir: 'docs/x' }, 'key runDir'], ['an exit', { exit: 64 }, 'key exit'],
+      ['a controller outcome', { controllerOutcome: 'control-hold' }, 'key controllerOutcome'],
+      ['an unknown key', { note: 'x' }, 'key note'],
+      ['a lock acquired', { lockAcquired: true }, 'claim lockAcquired'],
+      ['an admission consumed', { admissionConsumed: true }, 'claim admissionConsumed'],
+      ['a payload started', { payloadStarted: true }, 'claim payloadStarted'],
+      ['a metadata that is no boolean', { lockAcquired: 'no' }, 'claim lockAcquired'],
+      ['a finished without the metadata', { finished: iso(T) }, 'finished without metadata'],
+      ['a finished with partial metadata', { finished: iso(T), lockAcquired: false },
+        'finished without metadata'],
+      ['an unusable finished', Object.assign({ finished: 'soon' }, meta), 'finished']];
+    variants.forEach(([what, over, why]) => {
+      jsonl(at('pw3.jsonl'), [{ finished: iso(T - 90000) }, Object.assign({}, old, over)]);
+      const h = collectReleases([{ label: 'C', file: at('pw3.jsonl'), kind: 'log', required: false }]);
+      assert.deepStrictEqual(h.problems, ['C:2: not a valid pre-window event (' + why + ')'], what);
+      assert.strictEqual(h.releases.length, 1, what + ': it is no release');
+      assert.strictEqual(h.files[0].skippedLines, undefined, what + ': it is not skipped');
+    });
+  });
+
+  await test('epoch 3: only the Phase C log has the exemption; an ordinary row still needs finished', () => {
+    const old = JSON.parse(LINE24);
+    jsonl(at('pw4.jsonl'), [{ finished: iso(T - 90000) }, old]);
+    const asA = collectReleases([{ label: 'A', file: at('pw4.jsonl'), kind: 'log', required: true }]);
+    assert.deepStrictEqual(asA.problems, ['A:2: no usable finished time'], 'no such event in Phase A/B');
+    const run = Object.assign({}, old, { type: undefined, outcome: 'control-hold', runDir: 'x' });
+    const others = [JSON.stringify(run), JSON.stringify({ schema: 'ms18d-c-run-1', outcome: 'success' })];
+    ['5', 'null', '"x"', '[]'].concat(others)
+      .forEach((row) => {
+        jsonl(at('pw5.jsonl'), [{ finished: iso(T - 90000) }, row]);
+        const h = collectReleases([{ label: 'C', file: at('pw5.jsonl'), kind: 'log', required: false }]);
+        assert.deepStrictEqual(h.problems, ['C:2: no usable finished time'], row);
+      });
+    jsonl(at('pw6.jsonl'), [{ finished: iso(T - 90000) }, '{"broken', old]);
+    const mixed = collectReleases([{ label: 'C', file: at('pw6.jsonl'), kind: 'log', required: false }]);
+    assert.deepStrictEqual(mixed.problems, ['C: pw6.jsonl:2: not JSON'], 'a broken line is still a problem');
+    assert.deepStrictEqual(mixed.files[0].skippedLines, [3]);
+  });
+
+  await test('epoch 3: the line-only ruling releases no admission: mega16-easy is still refused', () => {
+    const easy = 'mega16-easy.i0.n50';
+    fs.writeFileSync(at('real25c.jsonl'), realLines().slice(0, 25).join('\r\n') + '\r\n');
+    // the template: it names the held run a2, carries the fixed allowAttempt 2 and releases the F4 line only
+    const ruling = { chunkId: easy, heldRunId: easy + '.a2', allowAttempt: 2,
+      ref: 'tasks/difficulty-v3/MS18d-gp-campaign-base-3.jsonl', at: '2026-11-19T21:00:00+07:00' };
+    const journal = (entries) => ({ entries, problems: [], reference: null });
+    const ask = (chunkId, cell, runId, entries) => chunkAttempts({ baseDir: path.join(EV, 'gp', cell),
+      chunkId, runId, ledgerFile: at('real25c.jsonl'), rulings: journal(entries),
+      nowMs: Date.parse('2026-11-19T22:30:00+07:00') });
+    [[], [ruling]].forEach((entries) => {
+      const a3 = ask(easy, 'mega16-easy', easy + '.a3', entries);
+      assert.strictEqual(a3.decision, 'refuse', 'a3 with ' + entries.length + ' ruling(s)');
+      assert.deepStrictEqual(a3.reasons, ['chunk-admissions-used: at most two per chunk']);
+      assert.deepStrictEqual(a3.problems, [], 'the retained records are consistent');
+      assert.strictEqual(a3.admissions, 2, 'a1 and a2 stay spent');
+      assert.strictEqual(a3.payloads, 0);
+      assert.strictEqual(a3.ruling, null, 'the ruling stands in for nothing');
+      ['mega16-normal.i0.n50', 'mega16-hard.i0.n50'].forEach((next) => {
+        const r = ask(next, 'mega16-' + next.split('-')[1].split('.')[0], next + '.a1', entries);
+        assert.strictEqual(r.decision, 'allow', next + ' still needs every check, and passes them');
+        assert.strictEqual(r.admissions, 0);
+      });
+    });
+  });
+}
+
 async function main() {
   await timeAndHistory();
+  await preWindowEvents();
   await acquisitionRule();
   await classifier();
   await payloadHook();

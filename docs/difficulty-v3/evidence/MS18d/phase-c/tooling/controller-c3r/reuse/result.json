@@ -1,0 +1,86 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "reuse",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in reuse",
+  "startedAtMs": 1795101676780,
+  "outcome": "stop",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-cell",
+    "outcome": "stop",
+    "complete": false,
+    "controllerExit": 65,
+    "kinds": [
+      "cli-no-exit",
+      "stderr-output",
+      "marker-missing",
+      "orphan",
+      "partial-output"
+    ],
+    "problems": [
+      "the command has no recorded exit code",
+      "the raw stderr byte count was not recorded",
+      "the tee transcript does not end with exit=<code> seconds=<n>: $ node tests\\perf.js --variant=classic4 --level=veryEasy --runs=50 --warmup=0 --seed=7000 --gate --ascii",
+      "the orphan barrier did not find the command and its descendants gone: hold-unknown",
+      "stdout is empty"
+    ],
+    "header": null,
+    "row": null,
+    "summary": null,
+    "miss": null,
+    "cli": {
+      "exit": null,
+      "signal": null
+    },
+    "tee": {
+      "marker": "$ node tests\\perf.js --variant=classic4 --level=veryEasy --runs=50 --warmup=0 --seed=7000 --gate --ascii",
+      "exit": 1
+    }
+  },
+  "cli": {
+    "exit": null,
+    "signal": null
+  },
+  "tee": {
+    "pid": 28988,
+    "processExit": 1,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "$ node tests\\perf.js --variant=classic4 --level=veryEasy --runs=50 --warmup=0 --seed=7000 --gate --ascii",
+    "exit": 1
+  },
+  "barrier": {
+    "verdict": "hold-unknown",
+    "file": "cleanup.json",
+    "problems": [
+      "pid 31384 (command) is held by a process created at another time and nothing proves the recorded one ended"
+    ]
+  },
+  "rawBytes": {
+    "stdout": null,
+    "stderr": null
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 46000,
+      "systemMicros": 109000
+    },
+    "tee": null
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 66,
+  "finishedAtMs": 1795101677794
+}

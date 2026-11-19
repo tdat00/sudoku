@@ -1,0 +1,47 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "stand-in l2",
+  "runId": "l2",
+  "cell": "",
+  "payload": "standin-ledger",
+  "chunkId": null,
+  "attempt": null,
+  "scope": null,
+  "standin": true,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-c3r/runs18/generic/l2",
+  "requestedAt": "2026-11-19T22:27:14.514+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795102019109,
+    "lastCheckMs": 1795102034499,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 260
+  },
+  "startedAtFromChild": "2026-11-19T22:27:14.593+07:00",
+  "finished": "2026-11-19T22:27:15.894+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 0,
+    "cheapCheckMs": 0,
+    "ageMs": 11,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-19T22:27:15.894+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 65,
+  "controllerOutcome": "stop",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": "stand-in l2 command failed: 65",
+  "outcome": "stop",
+  "problems": [
+    "the controller outcome 'stop' with exit 65 is a stop"
+  ]
+}

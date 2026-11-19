@@ -1277,15 +1277,19 @@ const HDIR = core.HELPER_DIR;
 const B1 = 'a1'.repeat(20);
 const CHK = 'c0'.repeat(20);
 const B2 = 'b2'.repeat(20);
+const CHK3 = 'c9'.repeat(20);
+const B3 = 'b3'.repeat(20);
 const HEADX = 'd4'.repeat(20);
 const MANIFEST1_REL = 'docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c1b-sha256.txt';
 const MANIFEST2_REL = 'docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c2-sha256.txt';
+const MANIFEST3_REL = 'docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c3-sha256.txt';
 const PROOF_REL = 'tasks/difficulty-v3/MS18d-gp-campaign-base-2-proof.json';
+const PROOF3_REL = 'tasks/difficulty-v3/MS18d-gp-campaign-base-3-proof.json';
 const hexOf = (text) => sha256(Buffer.from(text, 'utf8'));
 const helperText = (entries) => Object.keys(entries).sort()
   .map((p) => entries[p].toUpperCase() + '  ' + p.replace(/\//g, '\\')).join('\r\n') + '\r\n';
 const HELPER_NAMES = ['record-gp.js', 'loader.js', 'controller.js', 'readiness-core.js', 'run-locked-c.ps1',
-  'merge-core.js', 'merge-gp.js', 'test-units.js', 'standin-gp.js'];
+  'merge-core.js', 'merge-gp.js', 'test-units.js', 'standin-gp.js', 'release-history.js'];
 
 function helperEntries(version, extra) {
   const e = {};
@@ -1338,7 +1342,7 @@ function epochWorld(o) {
 }
 
 const pairOf = (w, n) => (n === 1 ? { base: B1, helper: { sha256: w.h1.sha256 } }
-  : { base: B2, helper: { sha256: w.h2.sha256 } });
+  : n === 2 ? { base: B2, helper: { sha256: w.h2.sha256 } } : { base: B3, helper: { sha256: w.h3.sha256 } });
 
 /** The campaign of an epoch world: epoch 1 for `first` (chunk ids), epoch 2 for the others. */
 function writeEpochCampaign(w, first, extra) {
@@ -1389,7 +1393,8 @@ function epochGit(w, o) {
       return '';
     }
     if (args[0] === 'diff' && args.indexOf('--name-status') !== -1) {
-      return (opts.diff || w.diff).map((d) => d.status + '\0' + d.file + '\0').join('');
+      const list = args[4] === B2 ? (opts.diff3 || w.diff3) : (opts.diff || w.diff);
+      return list.map((d) => d.status + '\0' + d.file + '\0').join('');
     }
     if (args[0] === 'diff') return '';
     throw new Error('unexpected git ' + args.join(' '));
@@ -1420,6 +1425,306 @@ function epochMerge(w, o) {
   const file = path.join(dir, 'report.json');
   return { code, lines, text: lines.join('\n'),
     report: fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null };
+}
+
+// ---- epoch 3 (the release-history repair): three chained pairs (B1, H1), (B2, H2), (B3, H3)
+
+/**
+ * A world of three epochs. H3 differs from H2 in release-history.js, the wrapper, the merger (production) and
+ * test files (one changed, two added); B2 contributes no success and one hold (a1 of the last chunk).
+ * `o.h3` overrides entries of H3 (a null removes one); `o.h2`, `o.diff` as in epochWorld; `o.diff3`
+ * replaces the committed B2 -> B3 diff.
+ */
+function epochWorld3(o) {
+  const opts = o || {};
+  const w = epochWorld(opts);
+  const e3 = {};
+  core.parseHelperManifest(w.m2Text).entries.forEach((hash, rel) => { e3[rel] = hash; });
+  Object.assign(e3, { [HDIR + 'release-history.js']: hexOf('v3 history'),
+    [HDIR + 'run-locked-c.ps1']: hexOf('v3 wrapper'), [HDIR + 'merge-core.js']: hexOf('v3 core'),
+    [HDIR + 'merge-gp.js']: hexOf('v3 gp'), [HDIR + 'test-units.js']: hexOf('v3 units'),
+    [HDIR + 'test-epoch3-proof.js']: hexOf('v3 proof tool'),
+    [HDIR + 'standin-history.js']: hexOf('v3 standin') });
+  Object.keys(opts.h3 || {}).forEach((k) => {
+    if (opts.h3[k] === null) delete e3[k];
+    else e3[k] = opts.h3[k];
+  });
+  w.m3Text = helperText(e3);
+  w.h3 = { file: w.write(MANIFEST3_REL, w.m3Text), sha256: hexOf(w.m3Text), entries: Object.keys(e3).length };
+  w.diff3 = opts.diff3 || [
+    { status: 'M', file: HDIR + 'release-history.js' }, { status: 'M', file: HDIR + 'run-locked-c.ps1' },
+    { status: 'M', file: HDIR + 'merge-core.js' }, { status: 'M', file: HDIR + 'merge-gp.js' },
+    { status: 'M', file: HDIR + 'test-units.js' }, { status: 'A', file: HDIR + 'test-epoch3-proof.js' },
+    { status: 'A', file: HDIR + 'standin-history.js' },
+    { status: 'A', file: 'docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c3-sha256.txt' },
+    { status: 'A', file: standin.RUN_BASE + '/fakeb-easy/fakeb-easy.i25.n25.a1/result.json' },
+    { status: 'M', file: 'docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl' },
+    { status: 'A', file: 'tasks/difficulty-v3/MS18d-epoch3-release-history-repair.md' }];
+  return w;
+}
+
+/** The campaign of a three-epoch world: epoch 1 for two chunks, a B2-era hold and a B3 attempt 2. */
+function writeCampaign3(w, extra) {
+  const first = ['fakea-easy.i0.n50', 'fakeb-easy.i0.n25'];
+  const last = 'fakeb-easy.i25.n25';
+  const chunk = {};
+  first.forEach((id) => { chunk[id] = pairOf(w, 1); });
+  chunk[last] = { skip: true };
+  writeCampaign(w, { times: lowTimes, chunk });
+  standin.writeHoldFolder(w.repo, slotOf(w, last, 1));
+  standin.writeRunFolder(w.repo, w.made, slotOf(w, last, 2), Object.assign({ helper: w.helper,
+    times: lowTimes(chunkOf(w, last)) }, pairOf(w, 3), extra || {}));
+}
+
+/** The base-3 record and its proof file (written to the world). `tagged`: the retained successes. */
+function epochRecord3(w, tagged, holds, over) {
+  const t = core.manifestTransition(core.parseHelperManifest(w.m2Text), core.parseHelperManifest(w.m3Text),
+    core.EPOCH_STEPS[3].production);
+  const proof = { schema: core.PROOF3_SCHEMA, previousBase: B2, checkpoint: CHK3, campaignBase: B3,
+    previousHelperManifestSha256: w.h2.sha256, helperManifestSha256: w.h3.sha256, changes: t.changes,
+    identicalEntries: t.identical, committedDiff: w.diff3.map((d) => d.status + ' ' + d.file).sort() };
+  const proofText = JSON.stringify(proof, null, 2) + '\n';
+  w.write(PROOF3_REL, proofText);
+  const requests = w.doc.chunks.filter((c) => tagged.some((r) => r.chunkId === c.chunkId))
+    .reduce((sum, c) => sum + c.n, 0);
+  return Object.assign({ schema: core.EPOCH3_SCHEMA, campaignBase: B3, previousBase: B2, checkpoint: CHK3,
+    reason: 'a fixture', recordedAt: '2026-11-19T22:00:00+07:00', recordedBy: 'orchestrator',
+    previousHelperManifest: { file: MANIFEST2_REL, sha256: w.h2.sha256, entries: w.h2.entries },
+    helperManifest: { file: MANIFEST3_REL, sha256: w.h3.sha256, entries: w.h3.entries },
+    allowedHelperChanges: t.changes, transitionProof: { file: PROOF3_REL, sha256: hexOf(proofText) },
+    retainedEvidence: { successes: tagged, holds },
+    plan: { rawSha256: w.made.rawSha256, manifestSha256: w.doc.manifestSha256 },
+    identities: { hashIdentity: w.doc.sources.hashIdentity, sources: w.doc.sources.sources,
+      tableSha256: w.doc.targets.tableSha256 },
+    environment: { node: w.doc.environment.node }, policy: { choice: w.doc.policy.choice },
+    cutover: { successes: tagged.length, requests } }, over || {});
+}
+
+/**
+ * One merge of a three-epoch world. `o`: { record2Over, record3, record3Over, tagged, holds, noRecord3,
+ * record3Text, request, base, git }.
+ */
+function epochMerge3(w, o) {
+  const opts = o || {};
+  const first = ['fakea-easy.i0.n50', 'fakeb-easy.i0.n25'];
+  const retained2 = retainedOf(w, first);
+  const tagged = opts.tagged || retained2.map((r) => Object.assign({ epoch: 1 }, r));
+  const holds = opts.holds || ['fakeb-easy.i25.n25.a1'];
+  const record2 = epochRecord(w, retained2, Object.assign({ retainedEvidence: { successes: retained2,
+    holds: [] } }, opts.record2Over));
+  const record3 = opts.record3 || epochRecord3(w, tagged, holds, opts.record3Over);
+  const request = Object.assign({ expected: { base: opts.base || B3 },
+    helpers: { manifestFile: w.h3.file, manifestSha256: w.h3.sha256, required: [], repoRoot: w.repo },
+    epoch1: { base: B1, helperManifestSha256: w.h1.sha256, entries: w.h1.entries, manifestRel: MANIFEST1_REL,
+      checkpoint: CHK }, epoch2Text: JSON.stringify(record2) + '\n', epoch3Checkpoint: CHK3 }, opts.request);
+  if (!opts.noRecord3) {
+    request.epoch3Text = opts.record3Text !== undefined ? opts.record3Text : JSON.stringify(record3) + '\n';
+  }
+  const { dir } = mergeRequestFile(w, 'all-79', request);
+  fs.rmSync(path.join(dir, 'report.json'), { force: true });
+  const lines = [];
+  const code = mergeGp.main(['--plan=' + w.made.planRel, '--scope=all-79',
+    '--out=' + path.join(dir, 'report.json')], { git: epochGit(w, opts.git), out: (t) => lines.push(t) });
+  const file = path.join(dir, 'report.json');
+  return { code, lines, text: lines.join('\n'),
+    report: fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null };
+}
+
+async function epoch3Tests() {
+  await test('epoch 3: three chained pairs merge: B1 successes, a B2-era hold, a B3 attempt 2', () => {
+    const w = epochWorld3();
+    writeCampaign3(w);
+    const r = epochMerge3(w);
+    assert.strictEqual(r.code, 0, r.text);
+    assert.strictEqual(r.lines[r.lines.length - 1], RESULT_ALL + 'true successes=2 cells=2 required=2');
+    assert.ok(r.lines.some((l) => /^ms18d-gp-merge-epochs 1=a1a1a1a1:\w{8} 2=b2b2b2b2:\w{8} 3=b3b3b3b3:\w{8}/
+      .test(l)), r.text);
+    assert.deepStrictEqual(r.report.consumed.map((c) => c.epoch.id).sort(), [1, 1, 3]);
+    assert.deepStrictEqual(r.report.epochs.pairs.map((p) => p.id), [1, 2, 3]);
+    assert.deepStrictEqual(r.report.epochs.chain.map((c) => c.epoch), [2, 3]);
+    assert.strictEqual(r.report.identity.base, B3, 'the merge run itself is B3/H3');
+    assert.strictEqual(r.report.identity.helperManifestSha256, w.h3.sha256);
+    const holds = r.report.cells.filter((c) => c.cell === 'fakeb/easy')[0].chunks
+      .filter((c) => c.chunkId === 'fakeb-easy.i25.n25')[0];
+    assert.deepStrictEqual(holds.holdRuns, ['fakeb-easy.i25.n25.a1']);
+  });
+
+  await test('epoch 3: a merge at B2 reads only the base-2 record; a third pair needs its own record', () => {
+    const w = epochWorld3();
+    writeCampaign(w, { times: lowTimes, chunk: { 'fakeb-easy.i25.n25': pairOf(w, 2),
+      'fakea-easy.i0.n50': pairOf(w, 1), 'fakeb-easy.i0.n25': pairOf(w, 1) } });
+    const r = epochMerge(w, { request: { epoch3Text: 'not even json' } });
+    assert.strictEqual(r.code, 0, r.text);
+    assert.strictEqual(r.report.epochs.pairs.length, 2);
+    const noRecord = epochMerge3(w, { noRecord3: true });
+    assert.strictEqual(noRecord.code, 2);
+    assert.ok(/is not a declared epoch: the base-3 record is not committed at HEAD/.test(noRecord.text),
+      noRecord.text);
+  });
+
+  await test('epoch 3: B2 contributes no success; a ledger of (B2, H2) or any other pair is refused', () => {
+    const cases = [
+      ['a ledger of B2/H2', (w) => pairOf(w, 2), /an epoch-2 ledger that is not one of the retained/],
+      ['a fourth pair', () => ({ base: 'c4'.repeat(20), helper: { sha256: 'e4'.repeat(32) } }),
+        /identity pair .* is no declared epoch/],
+      ['(B2, H3)', (w) => ({ base: B2, helper: { sha256: w.h3.sha256 } }), /is no declared epoch/],
+      ['(B3, H2)', (w) => ({ base: B3, helper: { sha256: w.h2.sha256 } }), /is no declared epoch/],
+      ['(B1, H3)', (w) => ({ base: B1, helper: { sha256: w.h3.sha256 } }), /is no declared epoch/]];
+    cases.forEach(([what, pair, pattern]) => {
+      const w = epochWorld3();
+      writeCampaign3(w, pair(w));
+      const r = epochMerge3(w);
+      assert.strictEqual(r.code, 2, what + ' ' + r.text);
+      assert.ok(pattern.test(r.text), what + ': ' + r.text);
+    });
+  });
+
+  await test('epoch 3: the base-3 record must be valid against the base-2 epoch', () => {
+    const w = epochWorld3();
+    writeCampaign3(w);
+    const retained2 = retainedOf(w, ['fakea-easy.i0.n50', 'fakeb-easy.i0.n25']);
+    const tagged = retained2.map((r) => Object.assign({ epoch: 1 }, r));
+    const good = JSON.stringify(epochRecord3(w, tagged, ['fakeb-easy.i25.n25.a1'])) + '\n';
+    const bad = (what, o, pattern) => {
+      const r = epochMerge3(w, o);
+      assert.strictEqual(r.code, 2, what + ' ' + r.text);
+      assert.ok(/^ms18d-gp-merge-invalid /m.test(r.text) && pattern.test(r.text), what + ': ' + r.text);
+      assert.strictEqual(r.report, null, what + ': an invalid merge writes no report');
+    };
+    bad('two lines', { record3Text: good + good }, /base-3 record is not exactly one line/);
+    bad('edited once', { git: { commits: 2 } }, /committed 2 times/);
+    bad('another schema', { record3Over: { schema: core.EPOCH2_SCHEMA } }, /schema is not/);
+    bad('another previous base', { record3Over: { previousBase: B1 } },
+      /previousBase is not the declared base/);
+    bad('another checkpoint', { record3Over: { checkpoint: CHK } }, /checkpoint is not the declared/);
+    bad('another request base', { base: 'c4'.repeat(20) }, /is not a declared epoch/);
+    bad('B3 is no ancestor of HEAD', { git: { notAncestor: new RegExp('^' + B3 + ' ' + HEADX) } },
+      /B3 of HEAD is not an ancestor/);
+    bad('the checkpoint is no ancestor of B3', { git: { notAncestor: new RegExp('^' + CHK3 + ' ' + B3) } },
+      /the checkpoint of B3 is not an ancestor/);
+    bad('B2 is no ancestor of the checkpoint', { git: { notAncestor: new RegExp('^' + B2 + ' ' + CHK3) } },
+      /B2 of the checkpoint is not an ancestor/);
+    bad('a record that retains epoch-1 successes unlike the base-2 record', { tagged: tagged.map((r, i) =>
+      (i === 0 ? Object.assign({}, r, { ledgerSha256: 'e3'.repeat(32) }) : r)) },
+    /epoch-1 successes are not those the previous record retained/);
+    bad('a success without its epoch', { tagged: retained2 }, /retainedEvidence\.successes is not a list/);
+    bad('a success of an epoch that is not before this one', { tagged: tagged.map((r) =>
+      Object.assign({}, r, { epoch: 3 })) }, /retainedEvidence\.successes is not a list/);
+    bad('holds that are no run ids', { holds: [5] }, /retainedEvidence\.holds is not a list of run ids/);
+    bad('a cutover that is not the retained', { record3Over: { cutover: { successes: 9, requests: 1 } } },
+      /cutover is not the retained successes/);
+    bad('another helper manifest',
+      { record3Over: { helperManifest: { sha256: 'e3'.repeat(32), entries: 1 } } },
+      /helperManifest is not the manifest of the merge request/);
+    bad('another previous manifest', { record3Over: { previousHelperManifest: { file: MANIFEST2_REL,
+      sha256: 'e3'.repeat(32), entries: w.h2.entries } } }, /previousHelperManifest is not the declared/);
+    bad('a damaged base-2 record', { record2Over: { schema: 'x' } }, /base-2 record: schema is not/);
+    bad('a change list that is not the exact one', { record3Over: { allowedHelperChanges: [] } },
+      /allowedHelperChanges is not the exact change list/);
+    // the base-2 transition is judged by its own allowlist: release-history.js is no epoch-2 change
+    const w2 = epochWorld3({ h2: { [HDIR + 'release-history.js']: hexOf('tampered in epoch 2') } });
+    writeCampaign3(w2);
+    const r2 = epochMerge3(w2);
+    assert.strictEqual(r2.code, 2, r2.text);
+    assert.ok(/base-2 record: the helper manifests differ in .*release-history\.js/.test(r2.text), r2.text);
+  });
+
+  await test('epoch 3: the manifests of B2 and B3 differ only in the four production files and tests', () => {
+    const clean = epochWorld3();
+    writeCampaign3(clean);
+    assert.strictEqual(epochMerge3(clean).code, 0);
+    const t = core.manifestTransition(core.parseHelperManifest(clean.m2Text),
+      core.parseHelperManifest(clean.m3Text), core.EPOCH_STEPS[3].production);
+    assert.deepStrictEqual(t.changes.map((c) => c.path.slice(HDIR.length) + ':' + c.class), [
+      'merge-core.js:production', 'merge-gp.js:production', 'release-history.js:production',
+      'run-locked-c.ps1:production', 'standin-history.js:test', 'test-epoch3-proof.js:test',
+      'test-units.js:test']);
+    const refuse = (what, h3, pattern) => {
+      const w = epochWorld3({ h3 });
+      writeCampaign3(w);
+      const r = epochMerge3(w);
+      assert.strictEqual(r.code, 2, what + ' ' + r.text);
+      assert.ok(pattern.test(r.text), what + ': ' + r.text);
+    };
+    refuse('the acquisition rule', { [HDIR + 'acquisition.js']: hexOf('x') }, /differ in .*acquisition\.js/);
+    refuse('the controller', { [HDIR + 'controller.js']: hexOf('x') }, /differ in .*controller\.js/);
+    refuse('the recorder', { [HDIR + 'record-gp.js']: hexOf('x') }, /differ in .*record-gp\.js/);
+    refuse('readiness', { [HDIR + 'readiness-core.js']: hexOf('x') }, /differ in .*readiness-core\.js/);
+    refuse('the plan', { 'docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest.json': hexOf('x') },
+      /differ in .*gp-chunk-manifest\.json/);
+    refuse('a removed production file', { [HDIR + 'release-history.js']: null },
+      /differ in .*release-history/);
+    refuse('a new production module', { [HDIR + 'new-module.js']: hexOf('x') }, /differ in .*new-module\.js/);
+  });
+
+  await test('epoch 3: the committed B2 -> B3 diff holds only the allowed paths', () => {
+    const w = epochWorld3();
+    writeCampaign3(w);
+    const refuse = (what, extra, drop, pattern) => {
+      const list = w.diff3.filter((d) => d.file !== drop).concat(extra);
+      const r = epochMerge3(w, { git: { diff3: list } });
+      assert.strictEqual(r.code, 2, what + ' ' + r.text);
+      assert.ok(pattern.test(r.text), what + ': ' + r.text);
+    };
+    refuse('the acquisition rule', [{ status: 'M', file: HDIR + 'acquisition.js' }], null,
+      /acquisition\.js: a helper file changed that is no change of the manifests/);
+    refuse('an engine file', [{ status: 'M', file: 'generator/js/core/engine.js' }], null,
+      /engine\.js: outside the allowed B1 -> B2 set/);
+    refuse('a recorded base record changed', [{ status: 'M', file: MANIFEST2_REL }], null,
+      /helpers-c2-sha256\.txt: recorded evidence was changed \(M\)/);
+    refuse('a recorded run output deleted', [{ status: 'D', file: standin.RUN_BASE + '/x/y/ledger.json' }],
+      null, /recorded evidence was changed \(D\)/);
+    refuse('a manifest change missing from the diff', [], HDIR + 'release-history.js',
+      /release-history\.js: a manifest change that is not in the committed diff/);
+  });
+
+  await test('epoch 3: no retagging, no discarded hold, no replacement of a started payload', () => {
+    const first = ['fakea-easy.i0.n50', 'fakeb-easy.i0.n25'];
+    // a chunk recorded under epoch 1 that the records do not retain
+    let w = epochWorld3();
+    writeCampaign3(w);
+    fs.rmSync(path.join(w.repo, slotOf(w, 'fakeb-easy.i25.n25', 2).dir), { recursive: true, force: true });
+    standin.writeRunFolder(w.repo, w.made, slotOf(w, 'fakeb-easy.i25.n25', 2),
+      Object.assign({ helper: w.helper, times: lowTimes(chunkOf(w, 'fakeb-easy.i25.n25')) }, pairOf(w, 1)));
+    let r = epochMerge3(w);
+    assert.strictEqual(r.code, 2);
+    assert.ok(/fakeb-easy\.i25\.n25: an epoch-1 ledger that is not one of the retained successes/
+      .test(r.text), r.text);
+    // a retained epoch-1 chunk answered by an epoch-3 ledger
+    w = epochWorld3();
+    writeCampaign3(w);
+    fs.rmSync(path.join(w.repo, slotOf(w, 'fakea-easy.i0.n50', 1).dir), { recursive: true, force: true });
+    standin.writeRunFolder(w.repo, w.made, slotOf(w, 'fakea-easy.i0.n50', 1),
+      Object.assign({ helper: w.helper, times: lowTimes(chunkOf(w, 'fakea-easy.i0.n50')) }, pairOf(w, 3)));
+    r = epochMerge3(w, { tagged: retainedOf(w, first).map((x) => Object.assign({ epoch: 1 }, x)) });
+    assert.strictEqual(r.code, 2);
+    assert.ok(/a retained success is answered by an epoch-3 ledger/.test(r.text), r.text);
+    // the B2 hold is discarded (its folder is gone)
+    w = epochWorld3();
+    writeCampaign3(w);
+    fs.rmSync(path.join(w.repo, slotOf(w, 'fakeb-easy.i25.n25', 1).dir), { recursive: true, force: true });
+    r = epochMerge3(w);
+    assert.strictEqual(r.code, 2);
+    assert.ok(/the retained hold fakeb-easy\.i25\.n25\.a1 is gone or is no hold/.test(r.text), r.text);
+    // the hold run is a started failed payload now, not a hold
+    w = epochWorld3();
+    writeCampaign3(w);
+    fs.rmSync(path.join(w.repo, slotOf(w, 'fakeb-easy.i25.n25', 1).dir), { recursive: true, force: true });
+    standin.writeRunFolder(w.repo, w.made, slotOf(w, 'fakeb-easy.i25.n25', 1), Object.assign({
+      helper: w.helper, times: lowTimes(chunkOf(w, 'fakeb-easy.i25.n25')),
+      mutate: { 'wrapper.json': (x) => Object.assign({}, x, { outcome: 'stop', exit: 65 }) } },
+    pairOf(w, 2)));
+    r = epochMerge3(w);
+    assert.strictEqual(r.code, 2);
+    assert.ok(/a complete run follows a run that failed/.test(r.text), r.text);
+    // a missing remaining record stays incomplete
+    w = epochWorld3();
+    writeCampaign3(w);
+    fs.rmSync(path.join(w.repo, slotOf(w, 'fakeb-easy.i25.n25', 2).dir), { recursive: true, force: true });
+    r = epochMerge3(w);
+    assert.strictEqual(r.code, 2);
+    assert.ok(/no complete run \(1 hold\(s\), 0 failed\)/.test(r.text), r.text);
+  });
 }
 
 async function epochTests() {
@@ -1481,7 +1786,8 @@ async function epochTests() {
     bad('an array', { recordText: '[]\n' }, /not JSON/);
     bad('edited once', { git: { commits: 2 } }, /committed 2 times/);
     bad('another schema', { recordOver: { schema: 'x' } }, /schema is not/);
-    bad('another base than the request', { base: 'c3'.repeat(20) }, /campaignBase is not the campaign base/);
+    bad('another base than the request', { base: 'c3'.repeat(20) },
+      /is not a declared epoch: the base-3 record/);
     bad('epoch 1 as epoch 2', { recordOver: { campaignBase: B1 }, base: B1,
       request: { helpers: { manifestFile: w.h2.file, manifestSha256: w.h2.sha256, repoRoot: w.repo } } },
     /helper manifest of the request is not the declared one of epoch 1/);
@@ -1712,11 +2018,11 @@ async function epochTests() {
     assert.throws(() => mergeGp.epochsOf(ctx({ helperSha: 'e3'.repeat(32) }), git),
       /helper manifest of the request is not the declared one of epoch 1/);
     assert.throws(() => mergeGp.epochsOf(ctx({ base: 'c3'.repeat(20) }), git),
-      /base-2 record is not committed at HEAD/);
+      /HEAD cannot be read/);
     // a real request cannot declare its own epoch 1: its own pair is no declared pair
     const own = ctx({ request: { epoch1: { base: B1, helperManifestSha256: 'e3'.repeat(32) } },
       base: B1, helperSha: 'e3'.repeat(32) });
-    assert.throws(() => mergeGp.epochsOf(own, git), /base-2 record is not committed at HEAD/);
+    assert.throws(() => mergeGp.epochsOf(own, git), /HEAD cannot be read/);
     assert.strictEqual(e1.base, 'a2e6423a52a89dd36ee646aa14706dd2369e087f');
     assert.strictEqual(e1.helperManifestSha256,
       '5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03');
@@ -1731,6 +2037,7 @@ async function main() {
   await readinessMergeTests();
   await classifierTests();
   await epochTests();
+  await epoch3Tests();
 }
 
 main().then(() => {

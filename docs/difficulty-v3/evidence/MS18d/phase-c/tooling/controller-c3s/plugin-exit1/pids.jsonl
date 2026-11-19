@@ -1,0 +1,5 @@
+{"role":"controller","pid":24720,"ppid":32784,"beforeMs":1795102775650,"afterMs":1795102775722}
+{"role":"tee","pid":13028,"ppid":24720,"beforeMs":1795102775779,"afterMs":1795102775795}
+{"role":"command","pid":27392,"ppid":13028,"beforeMs":1795102775859,"afterMs":1795102775875,"startedAtIso":"2026-11-19T15:39:35.875Z","argv":["C:\\Program Files\\nodejs\\node.exe","Q:\\git\\sudoku\\generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\fake-writer.js","--out=Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\tooling\\controller-c3s\\plugin-exit1\\ledger.json","--records=3","--mode=exit1"]}
+{"event":"command-exit","atMs":1795102775943,"code":1,"signal":null}
+{"event":"tee-exit","atMs":1795102775946,"stdoutBytes":27,"stderrBytes":0,"cpuUserMicros":31000,"cpuSystemMicros":78000}

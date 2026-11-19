@@ -1,0 +1,73 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "generic-fail",
+  "standin": true,
+  "profile": "generic",
+  "cell": null,
+  "task": "stand-in generic-fail",
+  "startedAtMs": 1795102779616,
+  "outcome": "stop",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "generic",
+    "outcome": "stop",
+    "complete": false,
+    "controllerExit": 65,
+    "kinds": [
+      "cli-nonzero",
+      "stderr-output"
+    ],
+    "problems": [
+      "the command exit was 1: only 0 is accepted for this profile",
+      "14 raw byte(s) arrived on stderr"
+    ],
+    "cli": {
+      "exit": 1,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=1 seconds=0.149",
+      "exit": 1
+    }
+  },
+  "cli": {
+    "exit": 1,
+    "signal": null
+  },
+  "tee": {
+    "pid": 23720,
+    "processExit": 1,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=1 seconds=0.149",
+    "exit": 1
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 19,
+    "stderr": 14
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 78000,
+      "systemMicros": 78000
+    },
+    "tee": {
+      "userMicros": 62000,
+      "systemMicros": 15000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 65,
+  "finishedAtMs": 1795102780954
+}

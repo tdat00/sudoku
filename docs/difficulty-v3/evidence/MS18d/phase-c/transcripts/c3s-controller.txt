@@ -1,0 +1,60 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\test-controller.js --keep=..\docs\difficulty-v3\evidence\MS18d\phase-c\tooling\controller-c3s
+ok   a complete success: exit 0, every record written, the barrier clean
+ok   C0-5: CPU time of controller and tee is recorded; no process is queried while the payload runs
+ok   a complete MISS: exit 1 comes through the controller, the mark is authoritative
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: an exit-1 crash with a stack on stderr
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: partial output
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: a row for another cell
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: a row with another target
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: a summary of two cells
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: a MISS without its Misses: entry
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: ok and 1 of 1 with exit 1
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: MISS and 0 of 1 with exit 0
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: an ok row with the summary 0 of 1
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: an unexplained line on stderr after a perfect result
+ok   C0-3: any stderr byte makes a perfect result incomplete, even one normalisation drops
+ok   HOLD before any payload (exit 64, nothing started): a late start (a request 10 s before the controller started), no foreign release proved
+ok   HOLD before any payload (exit 64, nothing started): a busy slot at the request
+ok   HOLD before any payload (exit 64, nothing started): the timing lock busy at the request
+ok   HOLD before any payload (exit 64, nothing started): another job's release 5 s before, with an old own log (coordinator evidence)
+ok   HOLD before any payload (exit 64, nothing started): our own release 3 s ago in the Phase C log
+ok   HOLD before any payload (exit 64, nothing started): the newest release only in the Phase A log (all three logs are read)
+ok   HOLD before any payload (exit 64, nothing started): a required log that is missing
+ok   HOLD before any payload (exit 64, nothing started): a corrupt line in the Phase C log
+ok   HOLD before any payload (exit 64, nothing started): no lock watch record
+ok   HOLD before any payload (exit 64, nothing started): a lock watch that gave up
+ok   HOLD before any payload (exit 64, nothing started): a lock watch window of 15.299 s
+ok   HOLD before any payload (exit 64, nothing started): a lock watch whose last check is not right before the call
+ok   HOLD before any payload (exit 64, nothing started): a lock watch with checks more than a second apart
+ok   HOLD before any payload (exit 64, nothing started): an engine file changed (another E hash identity)
+ok   HOLD before any payload (exit 64, nothing started): a HEAD that is not a descendant of the campaign base
+ok   HOLD before any payload (exit 64, nothing started): a descendant HEAD that changed a tracked source since the base
+ok   HOLD before any payload (exit 64, nothing started): a descendant HEAD that changed an undeclared run folder
+ok   HOLD before any payload (exit 64, nothing started): a changed tracked file in the status
+ok   HOLD before any payload (exit 64, nothing started): a staged ledger
+ok   HOLD before any payload (exit 64, nothing started): an untracked ledger
+ok   HOLD before any payload (exit 64, nothing started): a ledger that is not a pure append of its committed bytes
+ok   HOLD before any payload (exit 64, nothing started): another target table
+ok   HOLD before any payload (exit 64, nothing started): another target for the cell
+ok   HOLD before any payload (exit 64, nothing started): another Node
+ok   HOLD before any payload (exit 64, nothing started): another machine
+ok   R5: NODE_OPTIONS or a Node flag in the controller is a hold before anything starts (exit 64)
+ok   R3: a descendant HEAD whose diff is declared run output, ledger and pack files proceeds
+ok   R3: the same descendant is a hold when the declared run directories are not those of the diff
+ok   A/B/C continuity: the newest release, wherever it is, is old enough: proceed
+ok   a busy or late acquisition needs a foreign release proved 15 s earlier
+ok   the lock must be ours: absent, held by another process, or the timing lock present: hold
+ok   a helper manifest that does not match, or a payload table that disagrees on exit 1: hold
+ok   bytes are on disk BEFORE the command ends and survive a kill of the controller; the wrapper barrier then stops the orphans
+ok   the tee dies first with a surviving command and grandchild: the controller's barrier stops them
+ok   a grandchild that outlives a command that exited 0 with a perfect result: a stop
+ok   unknown liveness is a hold (exit 66): an unreadable table, nothing stopped
+ok   a pid held by a process created long after the spawn window, no proof of exit: hold 66
+ok   C0-6: a ledger-writing payload plugs in with its own classifier on the same transport
+ok   C0-6: the ledger payload is a stop, never a result: short (exit 1 undefined)
+ok   C0-6: the ledger payload is a stop, never a result: nowrite (exit 1 undefined)
+ok   C0-6: the ledger payload is a stop, never a result: exit1 (exit 1 undefined)
+ok   C0-6: the generic payload takes any command and accepts exit 0 only
+ok   C0-6: a request whose payload type is unknown is refused before anything runs
+57 passed, 0 failed
+exit=0 seconds=47.655

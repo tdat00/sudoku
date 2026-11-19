@@ -13,16 +13,73 @@
  * A log that is missing when it is required, a line that is not JSON, a record without a usable time or
  * coordinator evidence without a source is a PROBLEM: an unproved history, which the acquisition rule treats
  * as a hold. Reading the logs again after a restart, or after a log was added, never resets the latest
- * release.
+ * release. The one record class of the Phase C log that is not a release is the typed F1 pre-window event
+ * (epoch 3, below): it is excluded before the time is required and listed in that log's `files[]` entry.
  */
 const fs = require('fs');
 const path = require('path');
 const { parseIsoMs, readJsonl } = require('./common.js');
 
-function fromLog(source, release) {
+/*
+ * Epoch 3: the F1 `pre-window-hold` event of the Phase C log (label `C`) is NOT a release. The wrapper
+ * writes it when the lock watch (or the cheap re-check after it) gave up before any run folder existed: no
+ * lock was acquired, no admission was consumed, no payload started, so there is nothing to collect and no
+ * `finished` time (the historical writer wrote only `at`; line 24 of the real log is one). It is recognised
+ * by its TYPED semantics, in every form a writer produced (heldAt `foreign-lock-watch` or
+ * `pre-window-recheck`, with or without the explicit no-acquisition metadata, with or without a diagnostic
+ * `finished`), and only when it is valid in every respect: the exact schema, `type` and `outcome` both
+ * `pre-window-hold`, a usable `at`, no key outside the list below (a release time, a run directory, an exit,
+ * a controller outcome ... are claims of an acquisition, so such a row is contradictory and a PROBLEM), the
+ * metadata false where present, and a `finished` only together with all three metadata fields false. A row
+ * that claims to be one and is not valid is a problem, never a release and never silently ignored.
+ * Everything else still needs a usable `finished`.
+ */
+const PRE_WINDOW_HELD_AT = ['foreign-lock-watch', 'pre-window-recheck'];
+const PRE_WINDOW_KEYS = ['schema', 'type', 'task', 'runId', 'cell', 'payload', 'chunkId', 'attempt', 'scope',
+  'standin', 'outcome', 'heldAt', 'at', 'reasons', 'watch', 'problems', 'watchCycles', 'repeatedCycles',
+  'omittedCycles', 'cycles', 'lockAcquired', 'admissionConsumed', 'payloadStarted', 'finished'];
+const PRE_WINDOW_NOT = ['lockAcquired', 'admissionConsumed', 'payloadStarted'];
+
+/**
+ * null when the record does not claim to be a pre-window event (it is an ordinary row), else
+ * { valid, why }: `why` is the first reason it is not a valid one.
+ */
+function classifyPreWindowEvent(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  if (value.type !== 'pre-window-hold' && value.outcome !== 'pre-window-hold') return null;
+  const no = (why) => ({ valid: false, why });
+  if (value.schema !== 'ms18d-c-run-1') return no('schema');
+  if (value.type !== 'pre-window-hold' || value.outcome !== 'pre-window-hold') return no('type and outcome');
+  if (PRE_WINDOW_HELD_AT.indexOf(value.heldAt) === -1) return no('heldAt');
+  if (parseIsoMs(value.at) === null) return no('at');
+  const unknown = Object.keys(value).filter((k) => PRE_WINDOW_KEYS.indexOf(k) === -1)[0];
+  if (unknown !== undefined) return no('key ' + unknown);
+  const claim = PRE_WINDOW_NOT.filter((k) => value[k] !== undefined && value[k] !== false)[0];
+  if (claim !== undefined) return no('claim ' + claim);
+  if (value.finished !== undefined) {
+    if (parseIsoMs(value.finished) === null) return no('finished');
+    if (PRE_WINDOW_NOT.some((k) => value[k] !== false)) return no('finished without metadata');
+  }
+  return { valid: true, why: null };
+}
+
+function fromLog(source, release, entry) {
   const entries = readJsonl(source.file);
   const problems = entries.problems.map((p) => source.label + ': ' + p);
   entries.entries.forEach(({ line, value }) => {
+    if (source.label === 'C') {
+      const event = classifyPreWindowEvent(value);
+      if (event !== null) {
+        if (event.valid) {
+          entry.skippedLines = (entry.skippedLines || []).concat([line]);
+          entry.skippedEvents = (entry.skippedEvents || []).concat([{ line, type: value.type,
+            heldAt: value.heldAt, runId: value.runId === undefined ? null : value.runId, at: value.at }]);
+        } else {
+          problems.push(source.label + ':' + line + ': not a valid pre-window event (' + event.why + ')');
+        }
+        return;
+      }
+    }
     const finished = parseIsoMs(value && value.finished);
     const observed = value && value.releaseObservedAt !== undefined
       ? parseIsoMs(value.releaseObservedAt) : null;
@@ -69,9 +126,10 @@ function collectReleases(sources) {
       files.push({ label: source.label, file: source.file, present: false });
       return;
     }
-    files.push({ label: source.label, file: source.file, present: true });
+    const entry = { label: source.label, file: source.file, present: true };
+    files.push(entry);
     const found = source.kind === 'coordinator' ? fromCoordinator(source, releases)
-      : fromLog(source, releases);
+      : fromLog(source, releases, entry);
     found.forEach((p) => problems.push(p));
   });
   const latestOf = (list) => list.reduce((best, r) => (best === null || r.atMs > best.atMs ? r : best), null);
@@ -85,4 +143,4 @@ function collectReleases(sources) {
   };
 }
 
-module.exports = { collectReleases };
+module.exports = { collectReleases, classifyPreWindowEvent, PRE_WINDOW_HELD_AT, PRE_WINDOW_KEYS };

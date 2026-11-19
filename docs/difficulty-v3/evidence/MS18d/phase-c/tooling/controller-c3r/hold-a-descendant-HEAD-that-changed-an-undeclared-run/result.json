@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hold-a-descendant-HEAD-that-changed-an-undeclared-run",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in hold-a-descendant-HEAD-that-changed-an-undeclared-run",
+  "startedAtMs": 1795101663134,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "since the campaign base 1 path(s) changed that are not campaign outputs or pack files: docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/zz/x.json"
+  ],
+  "heldAt": "binding",
+  "eligibleReAsk": false,
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 62000,
+      "systemMicros": 93000
+    }
+  },
+  "finishedAtMs": 1795101663186
+}

@@ -1,0 +1,85 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\test-epoch3-proof.js --history --chunk=mega16-easy.i0.n50 --attempt=3 --expect=refuse
+{
+  "ok": true,
+  "head": "243346e8652ab8d27cdbab0d8523716ce59bb83d",
+  "slot": "mega16-easy.i0.n50.a3",
+  "history": {
+    "problems": [],
+    "releases": 73,
+    "latest": {
+      "label": "C",
+      "line": 25,
+      "atMs": 1795096213563
+    },
+    "skippedPreWindowLines": {
+      "C": [
+        24
+      ]
+    },
+    "files": [
+      {
+        "label": "A",
+        "present": true,
+        "releases": 15
+      },
+      {
+        "label": "B",
+        "present": true,
+        "releases": 34
+      },
+      {
+        "label": "C",
+        "present": true,
+        "releases": 24,
+        "skippedLines": [
+          24
+        ],
+        "skippedEvents": [
+          {
+            "line": 24,
+            "type": "pre-window-hold",
+            "heldAt": "foreign-lock-watch",
+            "runId": "mega16-easy.i0.n50.a2",
+            "at": "2026-11-19T19:09:20.061+07:00"
+          }
+        ]
+      }
+    ]
+  },
+  "attempts": {
+    "decision": "refuse",
+    "reasons": [
+      "chunk-admissions-used: at most two per chunk"
+    ],
+    "problems": [],
+    "admissions": 2,
+    "payloads": 0,
+    "runs": [
+      {
+        "runId": "mega16-easy.i0.n50.a1",
+        "admitted": false,
+        "payloadStarted": false,
+        "eligibleReAsk": true,
+        "outcome": "control-hold"
+      },
+      {
+        "runId": "mega16-easy.i0.n50.a2",
+        "admitted": false,
+        "payloadStarted": false,
+        "eligibleReAsk": false,
+        "outcome": "control-hold"
+      }
+    ],
+    "ruling": null,
+    "rulingsJournal": {
+      "path": "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+      "commit": "243346e8652ab8d27cdbab0d8523716ce59bb83d",
+      "baseCommit": null,
+      "entryCount": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "baseSha256": null
+    }
+  },
+  "note": "read-only dry run; F4 still stops the real line until a disposition is committed"
+}
+exit=0 seconds=0.382

@@ -1,0 +1,164 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\run-ps-test.js tests\artifacts\difficulty-v3\MS18d\phase-c\test-run-locked-c.ps1 --keep=..\docs\difficulty-v3\evidence\MS18d\phase-c\tooling\wrapper-b3r-dev-1
+stand-in r1 exit=0 seconds=1.513
+LOCKED-C stand-in r1: outcome=gp-success exit=0 barrier=clean
+ok   success through the REAL watch, controller and tee: all records, one ledger line
+stand-in r2 exit=0 seconds=1.509
+LOCKED-C stand-in r2: outcome=gp-success exit=0 barrier=clean
+ok   a foreign lock inside the REAL watch restarts the window and the run still proceeds
+stand-in r3 exit=1 seconds=1.477
+LOCKED-C stand-in r3: outcome=gp-miss exit=1 barrier=clean
+ok   a complete MISS comes back as a result, not a throw: the only place exit 1 is allowed
+stand-in r4 exit=65 seconds=1.526
+LOCKED-C stand-in r4: outcome=stop exit=65 barrier=clean PROBLEMS the controller outcome 'stop' with exit 65 is a stop
+ok   a crash is a STOP: the call throws after the record is written, and every byte is kept
+stand-in r5 exit=64 seconds=0.119
+LOCKED-C stand-in r5: outcome=control-hold exit=64 barrier=clean
+ok   a control-hold is returned, not thrown, and nothing was started (own release 5 s ago)
+stand-in r6a exit=0 seconds=1.438
+LOCKED-C stand-in r6a: outcome=gp-success exit=0 barrier=clean
+stand-in r6b exit=64 seconds=0.117
+LOCKED-C stand-in r6b: outcome=control-hold exit=64 barrier=clean
+ok   A/B/C continuity: the next run reads the C ledger and the watch is asked to wait until 15.3 s
+stand-in r7 exit=64 seconds=0.113
+LOCKED-C stand-in r7: outcome=control-hold exit=64 barrier=clean
+ok   coordinator evidence is a release too: the wait honours it and the controller holds on it
+stand-in r8 exit=64 seconds=0.115
+LOCKED-C stand-in r8: outcome=control-hold exit=64 barrier=clean
+ok   a slot found busy at the request, and a start over 2 s late, is held (the 5 s helper poll)
+LOCKED-C stand-in r9: outcome=control-hold (no 15.3 s quiet window that was still fresh within 1.9974167 s, 1 cycle(s); no run folder)
+ok   a watch that gives up writes NO run folder: one pre-window-hold line, nothing started (F1)
+stand-in f1a exit=0 seconds=1.417
+LOCKED-C stand-in f1a: outcome=gp-success exit=0 barrier=clean
+ok   F1: the run folder is created only AFTER the quiet window; the folder of a refusal never is
+ok   a wrong helper manifest stops before the lock: tampered, unlisted, not the reviewed one
+ok   refusals before anything starts: base, command line, cell, type, name, existing run directory
+stand-in c1 exit=0 seconds=0.088
+LOCKED-C stand-in c1: outcome=gp-success exit=0 barrier=clean
+stand-in c2 exit=0 seconds=0.096
+LOCKED-C stand-in c2: outcome=success exit=0 barrier=clean
+stand-in c3 exit=64 seconds=0.088
+LOCKED-C stand-in c3: outcome=control-hold exit=64 barrier=clean
+stand-in c4 exit=1 seconds=0.088
+LOCKED-C stand-in c4: outcome=gp-miss exit=1 barrier=clean
+stand-in c5 exit=1 seconds=0.087
+LOCKED-C stand-in c5: outcome=stop exit=1 barrier=clean PROBLEMS the controller outcome 'miss' with exit 1 is a stop
+stand-in c6 exit=64 seconds=0.089
+LOCKED-C stand-in c6: outcome=stop exit=64 barrier=clean PROBLEMS the controller outcome 'control-hold' with exit 64 is a stop
+stand-in c7 exit=3 seconds=0.087
+LOCKED-C stand-in c7: outcome=stop exit=3 barrier=clean PROBLEMS the helper exit code 3 differs from the controller's 0
+stand-in c8 exit=0 seconds=0.087
+LOCKED-C stand-in c8: outcome=stop exit=0 barrier=clean PROBLEMS the controller wrote no result.json: the run is incomplete
+ok   exit code and result.json are reconciled (a stand-in controller): every disagreement is a STOP
+stand-in o1 exit=0 seconds=0.102
+LOCKED-C stand-in o1: outcome=stop exit=0 barrier=stopped-owned PROBLEMS the wrapper barrier verdict is stopped-owned
+ok   a process of the run that outlives the controller is stopped by the wrapper barrier: a STOP
+LOCKED-C stand-in k1: outcome=stop exit= barrier=clean PROBLEMS 540-second limit reached; record the timeout; the controller wrote no result.json: the run is incomplete
+ok   the 540 s path (a 6 s copy of the helper): partial bytes kept, nothing invented, tree gone
+stand-in l1 exit=0 seconds=1.53
+LOCKED-C stand-in l1: outcome=success exit=0 barrier=clean
+stand-in l2 exit=65 seconds=1.507
+LOCKED-C stand-in l2: outcome=stop exit=65 barrier=clean PROBLEMS the controller outcome 'stop' with exit 65 is a stop
+ok   C0-6: a ledger-writing payload runs on the same transport with its own G3 classifier
+MS18d GP record fakea-easy.i0.n50 a1 exit=0 seconds=1.417
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=success exit=0 barrier=clean
+ok   R24 recorder through wrapper, controller, tee and recorder: ledger, receipts, accounting
+MS18d GP record fakea-easy.i0.n50 a1 exit=0 seconds=1.439
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=success exit=0 barrier=clean
+ok   R4/F2 through the wrapper: a chunk whose payload started never runs again; no folder is made
+ok   R5 through the wrapper: NODE_OPTIONS set means the transport refuses to spawn (no run folder)
+ok   final-matrix refusals before anything starts: unknown chunk, undeclared slot, no base
+MS18d GP merge all-79 exit=0 seconds=1.491
+LOCKED-C MS18d GP merge all-79: outcome=success exit=0 barrier=clean
+MS18d GP merge all-79 exit=1 seconds=1.487
+LOCKED-C MS18d GP merge all-79: outcome=miss exit=1 barrier=clean
+ok   R1 through the wrapper: a final merge returns success (0) or a complete MISS (1), no throw
+MS18d GP merge all-79 exit=65 seconds=1.428
+LOCKED-C MS18d GP merge all-79: outcome=stop exit=65 barrier=clean PROBLEMS the controller outcome 'stop' with exit 65 is a stop
+ok   R1 through the wrapper: incomplete input is exit 2: a STOP that keeps every record
+ok   F1: every pre-flight refusal of a REAL call comes before any folder, log line, watch or lock
+ok   F1: the campaign head check passes at B, at an allowed descendant, with a tracked C log
+ok   F1: a stale shared lock (its owner is gone) is reported at once, never deleted, never waited out
+ok   C1: the wrapper pre-flight verifies the live host instance fact by fact, from the journal
+ok   C1: the probe returns the host facts and a process table with cumulative CPU times
+ok   C1: a host observation has the shape of a journal entry, and a journal made of it verifies
+ok   F2: the attempt is checked before the folder exists (attempt 1 needs none, 2 only a1)
+ok   F3: only a committed, current ruling stands in for the eligibility and the 60 s
+ok   F4: the line stops after anything but a success (or the own chunk re-ask after an eligible hold)
+MS18d GP record fakea-easy.i0.n50 a1 exit=64 seconds=0.165
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=control-hold exit=64 barrier=clean
+MS18d GP record fakea-easy.i0.n50 a2 exit=0 seconds=1.49
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a2: outcome=success exit=0 barrier=clean
+MS18d GP record fakeb-easy.i0.n25 a1 exit=0 seconds=1.53
+LOCKED-C MS18d GP record fakeb-easy.i0.n25 a1: outcome=success exit=0 barrier=clean
+ok   C1 through the wrapper: a consumer hold is eligible, re-ask after 60 s, other chunks wait (F4)
+MS18d GP record fakea-easy.i0.n50 a1 exit=64 seconds=0.167
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=control-hold exit=64 barrier=clean
+MS18d GP record fakea-easy.i0.n50 a2 exit=0 seconds=1.497
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a2: outcome=success exit=0 barrier=clean
+ok   C1 through the wrapper: a replaced host holds with no eligibility; a committed ruling reopens
+MS18d GP record fakea-easy.i0.n50 a1 exit=0 seconds=1.467
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=success exit=0 barrier=clean
+MS18d GP record fakeb-easy.i0.n25 a1 exit=64 seconds=0.162
+LOCKED-C MS18d GP record fakeb-easy.i0.n25 a1: outcome=control-hold exit=64 barrier=clean
+MS18d GP record fakeb-easy.i0.n25 a2 exit=0 seconds=1.46
+LOCKED-C MS18d GP record fakeb-easy.i0.n25 a2: outcome=success exit=0 barrier=clean
+ok   C1 through the wrapper: a renamed binary is no hold; a restart or reused PID holds until rebound
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: quiet watch 1 repeated: the state changed during the watch: the C log length -1 -> 157; the C log write time changed
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: quiet watch 1 repeated: the state changed during the watch: HEAD bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb -> cccccccccccccccccccccccccccccccccccccccc
+MS18d GP record fakea-easy.i0.n50 a1 exit=0 seconds=1.439
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=success exit=0 barrier=clean
+ok   R2: facts are rechecked after the watch: a stop line or a new HEAD leaves no folder
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: quiet watch 1 repeated: the cheap check ended 5001 ms after the last check of the watch (the limit is 600 ms)
+MS18d GP record fakea-easy.i0.n50 a1 exit=0 seconds=1.481
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=success exit=0 barrier=clean
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: quiet watch 1 repeated: the cheap check ended 5002 ms after the last check of the watch (the limit is 600 ms)
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: quiet watch 2 repeated: the cheap check ended 5001 ms after the last check of the watch (the limit is 600 ms)
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=control-hold (no 15.3 s quiet window that was still fresh within 0.3553148 s, 3 cycle(s); no run folder)
+ok   R2: a watch that is no longer right before the call is repeated, within the same bound
+ok   epoch 2: the fingerprint reads the C log, the cell folder and the slot fresh and compares them
+MS18d GP record fakea-easy.i0.n50 a1 exit=0 seconds=1.492
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=success exit=0 barrier=clean
+MS18d GP record fakeb-easy.i0.n25 a1 exit=0 seconds=1.507
+LOCKED-C MS18d GP record fakeb-easy.i0.n25 a1: outcome=success exit=0 barrier=clean
+ok   epoch 2: 1.5 s full checks over a large growing C log still reach the call; cheap stays cheap
+MS18d GP record fakea-easy.i0.n50 a1 exit=0 seconds=1.46
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=success exit=0 barrier=clean
+ok   epoch 2: a state changing during the full checks is taken again; one never settling refuses
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: quiet watch 1 repeated: the state changed during the watch: the folders of the cell changed [] -> [elsewhere]
+MS18d GP record fakea-easy.i0.n50 a1 exit=0 seconds=1.501
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=success exit=0 barrier=clean
+LOCKED-C MS18d GP record fakeb-easy.i0.n25 a1: quiet watch 1 repeated: the state changed during the watch: the folders of the cell changed [] -> [fakeb-easy.i0.n25.a1]; the requested slot folder appeared or vanished
+LOCKED-C MS18d GP record fakeb-easy.i0.n25 a1: quiet watch 1 repeated: the state changed during the watch: HEAD bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb -> cccccccccccccccccccccccccccccccccccccccc
+LOCKED-C MS18d GP record fakeb-easy.i0.n25 a1: quiet watch 1 repeated: the state changed during the watch: the C log length 1073 -> 1191; the C log write time changed
+ok   epoch 2: a new folder is watched again; a used slot, a stop and a bad HEAD leave no folder
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: quiet watch 1 repeated: the state changed during the watch: the C log length -1 -> 166; the C log write time changed
+MS18d GP record fakea-easy.i0.n50 a1 exit=64 seconds=0.113
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=control-hold exit=64 barrier=clean
+ok   epoch 2: the release constraint is recomputed from the log for every watch
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: quiet watch 1 repeated: the cheap check ended 5001 ms after the last check of the watch (the limit is 600 ms)
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=control-hold (no 15.3 s quiet window that was still fresh within 0.4630298 s, 2 cycle(s); no run folder)
+ok   epoch 2: the one bound holds when every check is slow: a hold, no folder, no late call
+MS18d GP record fakea-easy.i0.n50 a1 exit=0 seconds=1.454
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=success exit=0 barrier=clean
+LOCKED-C MS18d GP record fakeb-easy.i0.n25 a1: quiet watch 1 repeated: the cheap check ended 901 ms after the last check of the watch (the limit is 600 ms)
+MS18d GP record fakeb-easy.i0.n25 a1 exit=0 seconds=1.499
+LOCKED-C MS18d GP record fakeb-easy.i0.n25 a1: outcome=success exit=0 barrier=clean
+ok   epoch 2: the 600 ms, 1,000 ms and 1,200 s boundaries are unchanged
+ok   epoch 3: the PowerShell history reader equals release-history.js on every log shape (parity)
+ok   epoch 3: a pre-window event is no release for the courtesy wait either, whatever time it carries
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=control-hold (no 15.3 s quiet window that was still fresh within 0.9965906 s, 1 cycle(s); no run folder)
+MS18d GP record fakea-easy.i0.n50 a1 exit=0 seconds=1.423
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=success exit=0 barrier=clean
+MS18d GP record fakeb-easy.i0.n25 a1 exit=0 seconds=1.443
+LOCKED-C MS18d GP record fakeb-easy.i0.n25 a1: outcome=success exit=0 barrier=clean
+ok   epoch 3: a give-up, then a second call: the historical event no longer poisons acquisition
+ok   epoch 3: a log-shape or stray-file problem refuses before the folder: no folder, no admission
+MS18d GP record fakea-easy.i0.n50 a1 exit=0 seconds=1.44
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=success exit=0 barrier=clean
+ok   epoch 3: a release later than now refuses before the folder (release-in-the-future)
+MS18d GP record fakea-easy.i0.n50 a1 exit=0 seconds=1.418
+LOCKED-C MS18d GP record fakea-easy.i0.n50 a1: outcome=success exit=0 barrier=clean
+ok   epoch 3: the allowed working tree passes: a named run, an appended ledger, a clean tree
+ok   the real Phase A, B and C logs and the real GP outputs were never written by the wrapper
+50 passed, 0 failed
+exit=0 seconds=133.268

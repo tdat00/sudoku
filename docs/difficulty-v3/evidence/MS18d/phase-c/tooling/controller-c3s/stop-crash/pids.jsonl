@@ -1,0 +1,5 @@
+{"role":"controller","pid":32764,"ppid":32784,"beforeMs":1795102739261,"afterMs":1795102739340}
+{"role":"tee","pid":11776,"ppid":32764,"beforeMs":1795102739404,"afterMs":1795102739419}
+{"role":"command","pid":13924,"ppid":11776,"beforeMs":1795102739490,"afterMs":1795102739507,"startedAtIso":"2026-11-19T15:38:59.507Z","argv":["C:\\Program Files\\nodejs\\node.exe","tests\\perf.js","--variant=classic4","--level=veryEasy","--runs=50","--warmup=0","--seed=7000","--gate","--ascii"]}
+{"event":"command-exit","atMs":1795102739625,"code":1,"signal":null}
+{"event":"tee-exit","atMs":1795102739629,"stdoutBytes":203,"stderrBytes":464,"cpuUserMicros":62000,"cpuSystemMicros":31000}

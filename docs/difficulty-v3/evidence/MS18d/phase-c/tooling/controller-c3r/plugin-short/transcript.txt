@@ -1,0 +1,3 @@
+$ node Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\fake-writer.js --out=Q:\git\sudoku\docs\difficulty-v3\evidence\MS18d\phase-c\tooling\controller-c3r\plugin-short\ledger.json --records=3 --mode=short
+writing 3 stand-in records
+exit=0 seconds=0.092
