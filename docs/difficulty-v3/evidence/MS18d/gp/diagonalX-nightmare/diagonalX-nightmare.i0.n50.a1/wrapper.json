@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record diagonalX-nightmare.i0.n50 a1",
+  "runId": "diagonalX-nightmare.i0.n50.a1",
+  "cell": "diagonalX/nightmare",
+  "payload": "gp-recorder",
+  "chunkId": "diagonalX-nightmare.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/diagonalX-nightmare/diagonalX-nightmare.i0.n50.a1",
+  "requestedAt": "2026-11-19T23:18:22.170+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795105086683,
+    "lastCheckMs": 1795105101999,
+    "checks": 61,
+    "restartCount": 0,
+    "maxIntervalMs": 303
+  },
+  "startedAtFromChild": "2026-11-19T23:18:22.297+07:00",
+  "finished": "2026-11-19T23:19:47.895+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2895,
+    "cheapCheckMs": 125,
+    "ageMs": 135,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-19T23:19:47.896+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

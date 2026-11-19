@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=diagonalX-hell2.i0.n50 --out=..\docs\difficulty-v3\evidence\MS18d\gp\diagonalX-hell2\diagonalX-hell2.i0.n50.a1\ledger.json
+ms18d-gp-recorder-start chunk=diagonalX-hell2.i0.n50 i0=0 n=50 seedBase=7000
+ms18d-gp-ledger-complete chunk=diagonalX-hell2.i0.n50 bytes=21781 sha256=6041c95b16c31110c95a46ead67db15f8d6351be5274ae9a62728c0eccf3545b
+exit=0 seconds=38.034

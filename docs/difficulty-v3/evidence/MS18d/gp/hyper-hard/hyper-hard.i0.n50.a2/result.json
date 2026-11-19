@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hyper-hard.i0.n50.a2",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "hyper",
+    "level": "hard",
+    "targetMs": 500
+  },
+  "task": "MS18d GP record hyper-hard.i0.n50 a2",
+  "startedAtMs": 1795105462270,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "additional-consumer: process 20636 (powershell.exe) gained 0.875 CPU-s per elapsed second"
+  ],
+  "heldAt": "readiness",
+  "eligibleReAsk": true,
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 203000,
+      "systemMicros": 265000
+    }
+  },
+  "finishedAtMs": 1795105470953
+}

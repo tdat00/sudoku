@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record hyper-normal.i0.n50 a1",
+  "runId": "hyper-normal.i0.n50.a1",
+  "cell": "hyper/normal",
+  "payload": "gp-recorder",
+  "chunkId": "hyper-normal.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/hyper-normal/hyper-normal.i0.n50.a1",
+  "requestedAt": "2026-11-19T23:22:05.371+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795105309871,
+    "lastCheckMs": 1795105325201,
+    "checks": 61,
+    "restartCount": 0,
+    "maxIntervalMs": 335
+  },
+  "startedAtFromChild": "2026-11-19T23:22:05.494+07:00",
+  "finished": "2026-11-19T23:22:21.681+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2831,
+    "cheapCheckMs": 124,
+    "ageMs": 134,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-19T23:22:21.682+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

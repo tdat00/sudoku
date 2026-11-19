@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=mega16-master.i0.n50 --out=..\docs\difficulty-v3\evidence\MS18d\gp\mega16-master\mega16-master.i0.n50.a1\ledger.json
+ms18d-gp-recorder-start chunk=mega16-master.i0.n50 i0=0 n=50 seedBase=7000
+ms18d-gp-ledger-complete chunk=mega16-master.i0.n50 bytes=21769 sha256=3fb77c4ac7620352aa3d8d700cedca65778ee0d64d62bbfac4d857c46a25b423
+exit=0 seconds=118.014

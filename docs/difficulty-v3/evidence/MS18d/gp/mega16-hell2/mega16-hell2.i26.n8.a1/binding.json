@@ -1,0 +1,1610 @@
+{
+  "schema": "ms18d-c-binding-1",
+  "ok": true,
+  "problems": [],
+  "head": {
+    "actual": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+    "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+    "descendant": true,
+    "diff": {
+      "paths": [
+        "tasks/difficulty-v3/MS18d-gp-campaign-base-3-proof.json",
+        "tasks/difficulty-v3/MS18d-gp-campaign-base-3.jsonl",
+        "tasks/difficulty-v3/MS18d-gp-rulings.jsonl"
+      ],
+      "violations": []
+    },
+    "ok": true
+  },
+  "status": {
+    "rawText": [
+      "M docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i26.n8.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i26.n8.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i26.n8.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i26.n8.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/wrapper.json"
+    ],
+    "rawClean": false,
+    "reviewedClean": true,
+    "entries": [
+      {
+        "xy": " M",
+        "path": "docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i26.n8.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i26.n8.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i26.n8.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i26.n8.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/wrapper.json",
+        "from": null
+      }
+    ],
+    "allowed": [
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl",
+        "xy": " M",
+        "why": "release ledger, committed bytes are an exact prefix"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i26.n8.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i26.n8.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i26.n8.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i26.n8.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      }
+    ],
+    "violations": []
+  },
+  "identities": {
+    "sources": "75b0955e3e356bd1",
+    "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+    "hashIdentity": "344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1",
+    "replayIdentity": "1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc"
+  },
+  "table": {
+    "sha256": "3d0bffdb19cc8d0e4c2495163858bfcbf3fd6e3d8567f4718dc722a23746963a",
+    "expected": "3d0bffdb19cc8d0e4c2495163858bfcbf3fd6e3d8567f4718dc722a23746963a"
+  },
+  "cell": {
+    "key": "mega16/hell2",
+    "target": 30000,
+    "expected": 30000
+  },
+  "node": {
+    "actual": "v26.13.0",
+    "expected": "v26.13.0"
+  },
+  "machine": {
+    "actual": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    },
+    "expected": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    }
+  },
+  "helpers": {
+    "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\helpers-c3-sha256.txt",
+    "entries": 55,
+    "mismatches": [],
+    "missing": [],
+    "sha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+  }
+}

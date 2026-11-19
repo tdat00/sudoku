@@ -1,0 +1,19 @@
+{
+  "schema": "ms18d-c-attempts-1",
+  "chunkId": "mega16-hell2.i42.n8",
+  "runs": [],
+  "admissions": 0,
+  "payloads": 0,
+  "problems": [],
+  "reasons": [],
+  "ruling": null,
+  "rulingsJournal": {
+    "path": "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+    "commit": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+    "baseCommit": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+    "entryCount": 1,
+    "sha256": "99988dc1803bc8f38655a1303a3e6d4afc05bb5bec2ab93cb199d98a0d61d878",
+    "baseSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "decision": "allow"
+}
