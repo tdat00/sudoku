@@ -22,16 +22,27 @@ AGENTS/checklist; CRLF, both guide languages; no Git writes.
 
 ## Inputs & context
 
-**Current second-halt audit:** retain both mega16-easy hold folders and C-log
-lines 23-25. The first is a genuine CPU hold; the second is an acquisition
-hold caused by classifying a no-acquisition pre-window row as a release.
-No payload ran, but both admissions are consumed. Audit the checkpoint and
-`MS18d-epoch3-release-history-repair.md`; no a3 is authorized without the owner
-decision on MS18d-Q2. A later B3 must preserve B1/B2 records and explicitly
-declare any approved single-slot/manifest exception, never retag or relabel.
-Without that exception the cell remains incomplete and the original 79-cell
-gate cannot be reported passed. This is not permission for release with a
-reduced denominator or for retrying any measured payload.
+**Current hold/scheduling audit:** retain mega16-easy's two hold folders and
+C-log lines 23-25, plus hyper-hard's two legitimate consumer holds at lines
+44-45 of checkpoint `d3e6b366`. Each cell has two spent admissions and zero
+payloads; no refund/relabel is permitted. Preserve mega16-normal's earlier
+hold and later success too. B3 `8e95cb14` / H3 `4a0e5881...` and record
+`bce27077` repair history only, with unchanged V1/cap 2 and B1/B2 evidence.
+
+Audit `MS18d-hyper-hard-holds-and-scheduling.md`, both joint line-only F3
+dispositions and their committed references, separate **Q2/S-OD16** and
+**Q3/S-OD17** decisions, and the exact approved subset in any later B4.
+No blanket exception, cap increase, payload retry or hidden plan identity.
+Without complete records for both cells, the original 79/79 gate cannot pass.
+Do not release against a reduced denominator.
+
+Carry **MS18d-C2-EXTERNAL-CONSUMERS**: actual CPU/lineage evidence, the
+automatic-re-ask scheduling disclosure, conservative gate start/checkpoint,
+wait/expiry counts and wall cost. Distinguish that scheduling from the
+unchanged A-readiness and raw GP times; later clean windows are not
+strict-quiet-machine measurements or replacements for earlier data.
+Audit all exact epoch/base/helper/plan tuples and original source/seed/target
+identities through the required single final all-79 check-only merge.
 
 Final invariants: rating/cache 3, history/wire 1, 40 IDs/34 unscoped, two uniqueness IDs, fixed weights/
 bands, selected cap/C and frozen pattern limits. Exact means canonical solved/in-band/required;

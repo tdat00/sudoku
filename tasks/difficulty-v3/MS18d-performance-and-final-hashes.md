@@ -7,7 +7,7 @@
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
 | Authority | R24/R21, FS23, S-OD4, S-OD15 A; S-AV01 not offered; S-OD13 remains GQ-only |
-| Status | C2 awaits reviewed history-only B3 and joint F4 disposition; two mega16-easy admissions used/no payload; other 91 chunks then continue independently of pending Q2; any approved a3 needs separate B4, run last |
+| Status | C2 paused at hyper-hard a2: two genuine consumer holds/no payload; B3 deployed, checkpoint d3e6b366 has 39 successes/1,550 requests; joint line-only F3 and conservative scheduling precede the remaining 73 chunks; Q3 is separate from mega16-easy Q2 |
 
 ## Goal & business context
 
@@ -146,7 +146,16 @@ There is **no `SG_TIME_FACTOR` multiplication of CLI GP targets**.
 
 ## Dispatch boundary and owner action
 
-**Current second halt:** reviewed B2 **`b6de2c46`** / H2 **`bd6949ef`**,
+**Current external-consumer halt:** B3 `8e95cb14` / records `bce27077` is
+deployed. Checkpoint `d3e6b366` retains 39 successful chunks/1,550 requests
+and the two legitimate hyper-hard holds. Follow
+`MS18d-hyper-hard-holds-and-scheduling.md`: line-release-only F3 after joint
+agreement, separate Q3, and the bounded scheduling procedure before the
+remaining 73 original chunks/2,300 requests. No admission refund, CPU/service
+exemption or frozen-helper change. Conditional B4 may contain only explicit
+named Q2/Q3 grants; keep `final.m1` unused until both questions are resolved.
+
+**Earlier second halt:** reviewed B2 **`b6de2c46`** / H2 **`bd6949ef`**,
 declaration **`42533fcc`**, produced a real a2 control-hold at acquisition,
 exit 64, no readiness or payload. C-log line 24 is a typed no-acquisition
 pre-window event; `release-history.js` wrongly requires its `finished`.

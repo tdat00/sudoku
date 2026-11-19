@@ -1265,7 +1265,32 @@ Poller paused during payloads; progress reports/checkpoints only between chunks,
 after cleanup and before the next fresh checks. Phase D's non-pack docs edits
 follow the final campaign merge, not a mid-campaign path exception.
 
-**MS18d-C2-RELEASE-HISTORY — B3 review/release pending; MS18d-Q2 pending.**
+**MS18d-C2-EXTERNAL-CONSUMERS — current halt at hyper-hard, Q3 separate.**
+B3 **`8e95cb14`**, final H3 **`4a0e5881...`**, records **`bce27077`** are
+deployed. Checkpoint **`d3e6b366`** retains **39 successful chunks / 1,550
+requests / 31 complete cells**. Hyper-hard a1/a2 both legitimately held,
+payload unstarted: Intune PowerShell **0.897 / 0.875 CPU-s/s**, plus Dnscache
+**0.711** at a1. Both admissions stay spent. The orchestrator disclosed an
+automatic 65 s re-ask scheduled in the same management batch; the actual
+post-watch request respected >=60 s, but the batch had not cleared.
+
+`MS18d-hyper-hard-holds-and-scheduling.md` supplies the exact joint
+line-only F3 disposition (no admission grant), separate **MS18d-Q3** wording,
+and bounded read-only scheduling: 120 s observed manager/descendant absence,
+last >=20 s EventLog/Dnscache CPU below the existing consumer threshold,
+300 s cooldown before a fresh re-ask window, 30-minute total bound then pause.
+No repeated readiness trials, idle-window ranking, service interference or
+measurement/helper change. Carry holds, scheduling disclosure, waits/expiries
+and wall cost to **MS18d/MS18e**; 73 clean 120 s gates alone cost >=146 minutes.
+After SA1 concurrence and the committed F3 disposition, continue **73 original
+chunks / 2,300 requests**, starting hyper-master a1, independently of Q2/Q3.
+Reserve **S-OD17** for the actual Q3 answer; **S-OD16 remains Q2 only**.
+The conditional B4 leaf now permits only the explicitly approved subset of
+these two named candidates: 230 or 231 slots, never a global cap increase.
+No B4 work before the remaining original chunks are disposed/checkpointed,
+and no final slot while either owner question is unresolved.
+
+**MS18d-C2-RELEASE-HISTORY — B3 repair deployed; original Q2 remains separate.**
 The first repair was reviewed/committed as B2 **`b6de2c46`**, H2 **`bd6949ef`**,
 record **`42533fcc`**. Its mega16-easy a2 now has a real folder and held at
 acquisition: `release-history.js::fromLog` treated C-log line 24's
@@ -1281,7 +1306,9 @@ Two admissions have been used, zero payloads: **a1 was the genuine EventLog
 CPU hold, a2 the reader defect**. Existing F3 cannot authorize a3.
 **MS18d-Q2 reserves S-OD16 for the actual owner answer; no grant is recorded.**
 The exact Vietnamese A/B question, history-only B3 and line-only F4 disposition
-are in `MS18d-epoch3-release-history-repair.md`. After joint review/freeze,
+are in `MS18d-epoch3-release-history-repair.md`. That repair was released
+at `8e95cb14` / `bce27077`; the following is its original resume order.
+After joint review/freeze,
 base-3/F3 records and live validation, **the other 91 chunks / 2,950 requests
 continue under B3 whether Q2 is pending, A or B**, starting mega16-normal a1.
 B3 keeps V1 and two admissions. The F3 line names mega16-easy a2 with the

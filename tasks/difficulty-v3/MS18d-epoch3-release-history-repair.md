@@ -1,5 +1,11 @@
 # MS18d — Second halt: B3 history repair and separate Q2 admission decision
 
+**Historical second-halt ruling:** B3 was accepted/deployed as `8e95cb14`,
+with final H3 `4a0e5881...` and base-3/F3 records `bce27077`. The current
+hyper-hard halt, separate Q3 and scheduling disposition are in
+`MS18d-hyper-hard-holds-and-scheduling.md`; its amended conditional B4
+specification supersedes the Q2-only prospective exception below.
+
 **Campaign paused pending B3 review/freeze and the joint F4 disposition below.
 No retry or third admission is authorized.**
 SA2 ruling, with **SA1 concurrence received at 22:20 +07:00, 2026-11-19**,

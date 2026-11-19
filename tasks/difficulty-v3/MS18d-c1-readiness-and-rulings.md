@@ -1,6 +1,11 @@
 # MS18d — C1 readiness, hold rulings and host rebinding
 
-**Current second-halt addendum:** `MS18d-epoch3-release-history-repair.md`.
+**Current halt:** `MS18d-hyper-hard-holds-and-scheduling.md` governs the
+two legitimate hyper-hard holds at `d3e6b366`, its line-only F3 disposition,
+separate owner Q3 and bounded pre-launch scheduling. B3 remains unchanged;
+no F3 line grants either cell an a3.
+
+**Earlier second-halt addendum:** `MS18d-epoch3-release-history-repair.md`.
 The real mega16-easy a2 folder now exists and consumes the second admission,
 although it held at acquisition before a payload. Existing F3 cannot grant
 an a3. The owner must explicitly decide MS18d-Q2 before any such exception;

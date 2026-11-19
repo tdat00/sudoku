@@ -1,6 +1,13 @@
 # MS18d — R24 raw-time recorder and frozen request-chunk plan
 
-**Current halt:** after B2, mega16-easy's real a2 was an acquisition hold and
+**Current halt:** hyper-hard has exhausted its two admissions through genuine
+consumer holds. B3 is deployed, checkpoint `d3e6b366` keeps 39 successes;
+73 original chunks remain. `MS18d-hyper-hard-holds-and-scheduling.md` assigns
+the line-only disposition, separate Q3 and conservative scheduling, without
+changing this numerical plan. Only explicit Q2/Q3 grants can supply their
+own later B4 a3 slots; otherwise their cells remain incomplete.
+
+**Earlier halt:** after B2, mega16-easy's real a2 was an acquisition hold and
 consumed its remaining admission; no measurement began. The current ruling is
 `MS18d-epoch3-release-history-repair.md`. Its reader repair is not permission
 for an a3: **MS18d-Q2 requires the owner**. History-only B3 and a joint

@@ -6,7 +6,14 @@ acceptance closure **`b3144fcf`**, 2026-11-19.
 
 ## Release boundary
 
-**Second halt, current:** the real B2 mega16-easy a2 acquired the slot and
+**Current hyper-hard halt:** B3 `8e95cb14` / records `bce27077` is deployed.
+Checkpoint `d3e6b366` retains 39 successes and hyper-hard's two legitimate
+unstarted consumer holds. Follow `MS18d-hyper-hard-holds-and-scheduling.md`
+for joint line-only F3, separate Q3 and bounded scheduling; then continue
+the remaining 73 original chunks under unchanged B3. No a3 without its
+own owner decision and later B4. Do not consume the final slot prematurely.
+
+**Second halt, historical:** the real B2 mega16-easy a2 acquired the slot and
 created its folder, then held before readiness/payload because C-log line 24's
 no-acquisition event has no `finished`. Both admissions are used; no a3 or
 relabelled a2 is authorized. Follow
