@@ -1,0 +1,64 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795094261409,
+  "startedAtMs": 1795094261493,
+  "lockAcquiredAtMs": 1795094261414,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795094245909,
+    "lastCheckMs": 1795094261209,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 84,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795093362406,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 899087,
+  "reasons": [],
+  "decision": "proceed",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 33512,
+    "task": "stand-in hold-a-descendant-HEAD-that-changed-a-tracked-source-",
+    "controllerPid": 18536,
+    "controllerParentPid": 33512,
+    "wrapperPid": 33512
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\hold-a-descendant-HEAD-that-changed-a-tracked-source-\\logs\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\hold-a-descendant-HEAD-that-changed-a-tracked-source-\\logs\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\hold-a-descendant-HEAD-that-changed-a-tracked-source-\\logs\\c.jsonl",
+      "present": true
+    }
+  ]
+}

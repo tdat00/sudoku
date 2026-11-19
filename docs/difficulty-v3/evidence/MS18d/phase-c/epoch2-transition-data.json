@@ -1,0 +1,53 @@
+{
+  "schema": "ms18d-gp-epoch-2-transition-data-v1",
+  "previousHelperManifest": {
+    "file": "docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c1b-sha256.txt",
+    "sha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03",
+    "entries": 52
+  },
+  "helperManifest": {
+    "file": "docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c2-sha256.txt",
+    "sha256": "bd6949efbef5aa7bc827324405faf5c3aa68ab248f09bba07daf1dc55504c0ae",
+    "entries": 53
+  },
+  "allowedHelperChanges": [
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-core.js",
+      "class": "production",
+      "before": "92a70f15c5ec1655758abbd147c76275e490f256cdb34ab8f7bcae620467981f",
+      "after": "d1bc5cdb16df2236af6932b142aaf3aacc868553184352c5be61cb87157f052c"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-gp.js",
+      "class": "production",
+      "before": "a30087fd495b1c1c3c4ca9039e503f5ff8443aa335d31c5b552f0f0baeb2a328",
+      "after": "c82e8b752d13501df621c2be9fa768cb17f23db1188951da06b4b4b9afa43f73"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/run-locked-c.ps1",
+      "class": "production",
+      "before": "f785fdca00a5385025b753ba0b561e70edef1823c003cee785004bf6e4dec9e6",
+      "after": "bcd1abaf2021d6ed1b639e7decc703ebffd35dcf1b4e38f48180e431032d16e9"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-epoch2-proof.js",
+      "class": "test",
+      "before": null,
+      "after": "c239e4632db1fbf9e0fb109e1d2e453b1ba1c6982cc2ff9d20d46055113c8cff"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-recorder-merge.js",
+      "class": "test",
+      "before": "93050418dbccfca8f5b93d93bf176191d1f5529c294ce3e7e70bffd28e94a335",
+      "after": "e98b5d6d2f0e916331c44a2dd7650a50446759061eaeed8b18586357c2d82659"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-run-locked-c.ps1",
+      "class": "test",
+      "before": "a44de5284b1380349f6ca0b83e5c0ee2c60483b082dd8a3193f20433db52e880",
+      "after": "fa1a2a6eeb6df384695275b74b4cdbd87fa4ec83e86468c9b4fd42df01f7ee5b"
+    }
+  ],
+  "identicalEntries": 47,
+  "problems": []
+}

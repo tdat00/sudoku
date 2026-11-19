@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "manifest",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in manifest",
+  "startedAtMs": 1795094268641,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "helper bytes differ from the manifest: generator/tests/artifacts/difficulty-v3/MS18d/phase-c/controller.js"
+  ],
+  "heldAt": "binding",
+  "eligibleReAsk": false,
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 15000,
+      "systemMicros": 62000
+    }
+  },
+  "finishedAtMs": 1795094268680
+}

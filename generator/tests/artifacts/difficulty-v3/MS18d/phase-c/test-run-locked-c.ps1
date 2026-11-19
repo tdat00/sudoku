@@ -19,8 +19,21 @@ $tools = 'Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c'
 . "$tools\run-locked-c.ps1"
 $realLogA = $script:LogA
 $realLogB = $script:LogB
+$realLogC = $script:LogC
 $realHashA = (Get-FileHash -LiteralPath $realLogA).Hash
 $realHashB = (Get-FileHash -LiteralPath $realLogB).Hash
+$realHashC = (Get-FileHash -LiteralPath $realLogC).Hash
+$realGp = $script:RunsRoot
+# the names and content digests of a folder tree (the real GP outputs of the campaign are read, never written)
+function Get-TreeState([string]$Root) {
+  if (-not (Test-Path -LiteralPath $Root)) { return 'absent' }
+  $lines = Get-ChildItem -LiteralPath $Root -Recurse -File | Sort-Object FullName | ForEach-Object {
+    $_.FullName.Substring($Root.Length) + '|' + (Get-FileHash -LiteralPath $_.FullName).Hash
+  }
+  $bytes = [Text.Encoding]::UTF8.GetBytes(($lines -join "`n"))
+  return [BitConverter]::ToString([Security.Cryptography.SHA256]::HashData($bytes)).Replace('-', '')
+}
+$realGpState = Get-TreeState $realGp
 $helperText = [IO.File]::ReadAllText($script:HelperPath)
 if ([regex]::Matches($helperText, '540000').Count -ne 1) { throw 'the helper no longer has one 540000' }
 $sharedLock = Join-Path $env:TEMP 'dv3-sudoku.lock'
@@ -78,6 +91,19 @@ function Wait-SlotQuiet {
   # R2 tests: an event during the watch (a log line, a new HEAD) or a watch that is stale when it ends
   if ($script:WatchHook) { & $script:WatchHook $script:WatchCalls.Count $record $GiveUpSeconds }
   return $record
+}
+
+# Epoch 2 tests: the full checks of a cycle can be slowed, or made to change the state, by a test
+$realLineChecks = ${function:Test-LineChecksC}
+$script:LineChecksDelayMs = 0
+$script:LineChecksHook = $null
+$script:LineChecksCalls = 0
+function Test-LineChecksC {
+  param([string]$Profile, [string]$Unit, [int]$Attempt, [string]$CellDir, [string]$Base = '')
+  $script:LineChecksCalls++
+  if ($script:LineChecksDelayMs -gt 0) { Start-Sleep -Milliseconds $script:LineChecksDelayMs }
+  if ($script:LineChecksHook) { & $script:LineChecksHook $script:LineChecksCalls }
+  & $realLineChecks @PSBoundParameters
 }
 
 $script:passed = 0
@@ -1367,17 +1393,20 @@ Test-Case 'R2: facts are rechecked after the watch: a stop line or a new HEAD le
       Assert ($script:WatchCalls.Count -eq 1) 'the watch ran once'
       Assert (-not (Test-Path "$script:RunsRoot\fakea-easy")) 'a stop line: no run folder'
       Assert (@(Get-Ledger).Count -eq 1) 'only the stop line of the other call is in the C log'
-      # a commit landed on HEAD while this call waited
+      # a commit landed on HEAD while this call waited: the call goes back through the FULL checks before the
+      # next watch (it throws only when the new HEAD is no valid campaign HEAD; see the epoch 2 tests)
       Remove-Item -LiteralPath $script:LogC
       $script:WatchCalls.Clear()
       $script:WatchHook = {
         param($call, $record, $giveUp)
         $script:GitOverride = New-FakeGit ('c' * 40) $true @() $true $script:Committed $script:CommittedBase
       }
-      Assert-Throws { Start-StandinRecorder $w $a } `
-        'HEAD changed during the lock watch.*Nothing was started' 'a HEAD that changed during the watch'
-      Assert (-not (Test-Path "$script:RunsRoot\fakea-easy")) 'a new HEAD: no run folder'
-      Assert (-not (Test-Path $script:LogC) -or @(Get-Ledger).Count -eq 0) 'nothing was logged'
+      $moved = Start-StandinRecorder $w $a
+      Assert ($moved.Outcome -eq 'success') "outcome $($moved.Outcome)"
+      Assert ($script:WatchCalls.Count -eq 2) 'a new HEAD: the quiet watch was repeated'
+      $kept = Read-Json "$($moved.RunDir)\wrapper.json"
+      Assert ($kept.preflight.cycles -eq 2 -and $kept.preflight.repeated -eq 1 -and
+        $kept.preflight.reasons[0] -match 'HEAD') 'the repeat and its reason are recorded'
     } finally {
       $script:WatchHook = $null
       $script:GitOverride = $git0
@@ -1422,6 +1451,17 @@ Test-Case 'R2: a watch that is no longer right before the call is repeated, with
       Assert (-not (Test-Path "$script:RunsRoot\fakea-easy")) 'no run folder after the give-up'
       $rows = @(Get-Ledger)
       Assert ($rows.Count -eq 1 -and $rows[0].type -eq 'pre-window-hold') 'one pre-window-hold line'
+      # the hold tells the watches that were repeated and why (a stale check is no foreign lock)
+      Assert ($rows[0].watchCycles -eq $script:WatchCalls.Count -and $rows[0].repeatedCycles -ge 1) `
+        'the hold counts the outer watches and the repeated ones'
+      Assert ($rows[0].heldAt -eq 'pre-window-recheck') 'a stale check is not blamed on a foreign lock'
+      Assert ($rows[0].reasons[0] -match 'not a foreign lock' -and
+        $rows[0].reasons[1] -match 'cycle 1: the cheap check ended \d+ ms after the last check') `
+        'the hold gives the reason of each repeat'
+      Assert ($rows[0].cycles[0].result -eq 'repeated' -and $null -ne $rows[0].cycles[0].fullChecksMs -and
+        $rows[0].cycles[0].cheapCheckMs -ge 0 -and $rows[0].cycles[0].ageMs -gt 600) `
+        'the hold keeps the durations of a cycle'
+      Assert ($rows[0].admissions -eq $null -and @($rows[0].problems).Count -eq 0) 'no admission is claimed'
     } finally {
       $script:WatchHook = $null
       $script:WatchGiveUpSeconds = $keepGive
@@ -1429,10 +1469,280 @@ Test-Case 'R2: a watch that is no longer right before the call is repeated, with
   }
 }
 
-Test-Case 'the Phase A and Phase B ledgers were never written by the wrapper' {
+# ---- Epoch 2 (fix b): full checks before each watch, only the cheap invariance check after it
+
+function New-OtherSuccessRow([string]$Name, [string]$Finished = '') {
+  $row = [ordered]@{ schema = 'ms18d-c-run-1'; payload = 'gp-recorder'; runId = "$Name.a1"; chunkId = $Name
+    attempt = 1; outcome = 'success' }
+  if ($Finished) { $row.finished = $Finished }
+  return $row
+}
+
+Test-Case 'epoch 2: the fingerprint reads the C log, the cell folder and the slot fresh and compares them' {
+  New-World | Out-Null
+  $cell = "$scratch\fp-cell"
+  New-Item -ItemType Directory -Force -Path $cell | Out-Null
+  $fp = @{ CellPath = $cell; SlotPath = "$cell\slot1"; WithHead = $false; Real = $false }
+  $a = Get-TransportFingerprintC @fp
+  Assert ($a.LogLength -eq -1 -and $a.Problems.Count -eq 0 -and -not $a.SlotExists) 'an empty state'
+  Assert (@(Compare-TransportFingerprintC $a (Get-TransportFingerprintC @fp)).Count -eq 0) 'the same state'
+  Write-Row $script:LogC (New-OtherSuccessRow 'x1')
+  $b = Get-TransportFingerprintC @fp
+  $d = @(Compare-TransportFingerprintC $a $b) -join ' | '
+  Assert ($d -match 'C log length -1 ->' -and $d -match 'write time') "a log line: $d"
+  [IO.File]::SetLastWriteTimeUtc($script:LogC, [DateTime]::UtcNow.AddMinutes(-5))
+  $c = Get-TransportFingerprintC @fp
+  $d = @(Compare-TransportFingerprintC $b $c)
+  Assert ($d.Count -eq 1 -and $d[0] -match 'write time') 'the same length but another write time is a change'
+  New-Item -ItemType Directory -Path "$cell\elsewhere" | Out-Null
+  $e = Get-TransportFingerprintC @fp
+  Assert (@(Compare-TransportFingerprintC $c $e) -join '' -match 'folders of the cell changed') 'a new folder'
+  New-Item -ItemType Directory -Path "$cell\slot1" | Out-Null
+  $f = Get-TransportFingerprintC @fp
+  $moved = @(Compare-TransportFingerprintC $e $f) -join ''
+  Assert ($f.SlotExists -and $moved -match 'slot folder') 'the slot'
+  # invalid facts: a real run without its C log, an unreadable HEAD
+  $real = @{ CellPath = $cell; SlotPath = "$cell\slot2"; WithHead = $false; Real = $true }
+  $script:LogC = "$scratch\no-such-log.jsonl"
+  Assert ((Get-TransportFingerprintC @real).Problems -join '' -match 'C lock log is missing') 'real, no log'
+  $git0 = $script:GitOverride
+  try {
+    $script:GitOverride = New-FakeGit $null $true @() $true @{} @{}
+    $noHead = Get-TransportFingerprintC -CellPath $cell -SlotPath "$cell\slot2" -WithHead $true -Real $false
+    Assert ($noHead.Problems -join '' -match 'HEAD cannot be read') 'no HEAD'
+  } finally { $script:GitOverride = $git0 }
+}
+
+Test-Case 'epoch 2: 1.5 s full checks over a large growing C log still reach the call; cheap stays cheap' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'e2a'
+  $old = Get-Stamp (Get-Date).AddHours(-3)
+  $fill = {
+    param([int]$count, [int]$from)
+    $lines = for ($i = $from; $i -lt $from + $count; $i++) {
+      (New-OtherSuccessRow "old$i" $old) | ConvertTo-Json -Compress
+    }
+    [IO.File]::AppendAllText($script:LogC, (($lines -join "`r`n") + "`r`n"))
+  }
+  Invoke-InStandinWorld $w {
+    try {
+      $script:LineChecksDelayMs = 1500
+      & $fill 300 0
+      $r1 = Start-StandinRecorder $w 'fakea-easy.i0.n50'
+      Assert ($r1.Outcome -eq 'success') "outcome $($r1.Outcome)"
+      Set-LedgerOld
+      & $fill 2500 300
+      Assert ((Get-Item -LiteralPath $script:LogC).Length -gt 200000) 'a large C log'
+      $r2 = Start-StandinRecorder $w 'fakeb-easy.i0.n25'
+      Assert ($r2.Outcome -eq 'success') "outcome $($r2.Outcome)"
+      Assert ($script:WatchCalls.Count -eq 2) "the watch ran $($script:WatchCalls.Count) times, once per call"
+      foreach ($r in @($r1, $r2)) {
+        $p = (Read-Json "$($r.RunDir)\wrapper.json").preflight
+        Assert ($p.cycles -eq 1 -and $p.repeated -eq 0) 'one cycle, nothing repeated'
+        Assert ($p.fullChecksMs -ge 1500) "the full checks took $($p.fullChecksMs) ms"
+        Assert ($p.cheapCheckMs -lt 600 -and $p.ageMs -le 600) "cheap $($p.cheapCheckMs), age $($p.ageMs) ms"
+      }
+    } finally { $script:LineChecksDelayMs = 0 }
+  }
+}
+
+Test-Case 'epoch 2: a state changing during the full checks is taken again; one never settling refuses' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'e2b'
+  $old = Get-Stamp (Get-Date).AddHours(-3)
+  Invoke-InStandinWorld $w {
+    try {
+      $script:LineChecksCalls = 0
+      $script:LineChecksHook = {
+        param($call)
+        if ($call -eq 1) { Write-Row $script:LogC (New-OtherSuccessRow 'other1' $old) }
+      }
+      $r = Start-StandinRecorder $w 'fakea-easy.i0.n50'
+      Assert ($r.Outcome -eq 'success') "outcome $($r.Outcome)"
+      Assert ($script:LineChecksCalls -eq 2) "the checks ran $($script:LineChecksCalls) times, not twice"
+      $p = (Read-Json "$($r.RunDir)\wrapper.json").preflight
+      Assert ($p.cycles -eq 1 -and $p.unstable[0] -match 'round 1: the C log length') 'the round is recorded'
+      Remove-Item -LiteralPath "$script:RunsRoot\fakea-easy" -Recurse -Force
+      $script:WatchCalls.Clear()
+      $script:LineChecksCalls = 0
+      $script:LineChecksHook = {
+        param($call)
+        Write-Row $script:LogC (New-OtherSuccessRow "churn$call" $old)
+      }
+      Assert-Throws { Start-StandinRecorder $w 'fakea-easy.i0.n50' } `
+        'kept changing during the full checks.*Nothing was started' 'a state that never settles'
+      Assert ($script:WatchCalls.Count -eq 0 -and $script:LineChecksCalls -eq 3) 'three rounds, no watch'
+      Assert (-not (Test-Path "$script:RunsRoot\fakea-easy")) 'no run folder'
+    } finally {
+      $script:LineChecksHook = $null
+      $script:LineChecksCalls = 0
+    }
+  }
+}
+
+Test-Case 'epoch 2: a new folder is watched again; a used slot, a stop and a bad HEAD leave no folder' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'e2c'
+  Invoke-InStandinWorld $w {
+    $git0 = $script:GitOverride
+    try {
+      # an unrelated folder in the cell during the watch: the quiet watch is repeated, the call proceeds
+      $script:WatchHook = {
+        param($call, $record, $giveUp)
+        if ($call -eq 1) {
+          New-Item -ItemType Directory -Force -Path "$script:RunsRoot\fakea-easy\elsewhere" | Out-Null
+        }
+      }
+      $r = Start-StandinRecorder $w 'fakea-easy.i0.n50'
+      Assert ($r.Outcome -eq 'success' -and $script:WatchCalls.Count -eq 2) 'a new folder: watched again'
+      $p = (Read-Json "$($r.RunDir)\wrapper.json").preflight
+      Assert ($p.repeated -eq 1 -and $p.reasons[0] -match 'folders of the cell changed') "reason: $p"
+      # the slot of the chunk appears during the watch (another process): no folder of ours, no payload
+      Set-LedgerOld
+      $script:WatchCalls.Clear()
+      $slotDir = "$script:RunsRoot\fakeb-easy\fakeb-easy.i0.n25.a1"
+      $script:WatchHook = {
+        param($call, $record, $giveUp)
+        New-Item -ItemType Directory -Force -Path $slotDir | Out-Null
+      }
+      Assert-Throws { Start-StandinRecorder $w 'fakeb-easy.i0.n25' } 'a run folder of the chunk exists' `
+        'a used slot'
+      Assert ($script:WatchCalls.Count -eq 1 -and @(Get-ChildItem -LiteralPath $slotDir).Count -eq 0) `
+        'the folder is not ours and holds nothing'
+      # an unreadable HEAD during the watch
+      Remove-Item -LiteralPath $slotDir -Recurse -Force
+      $script:WatchCalls.Clear()
+      $script:WatchHook = {
+        param($call, $record, $giveUp)
+        $script:GitOverride = New-FakeGit $null $true @() $true $script:Committed $script:CommittedBase
+      }
+      Assert-Throws { Start-StandinRecorder $w 'fakeb-easy.i0.n25' } `
+        'HEAD cannot be read.*Nothing was started' 'an unreadable HEAD'
+      Assert (-not (Test-Path $slotDir)) 'an unreadable HEAD: no folder'
+      # a HEAD that is no descendant of the campaign base: the full checks of the next cycle refuse it
+      $script:GitOverride = $git0
+      $script:StandinHeadChecks = $true
+      $script:WatchCalls.Clear()
+      $script:WatchHook = {
+        param($call, $record, $giveUp)
+        $script:GitOverride = New-FakeGit ('c' * 40) $false @() $true $script:Committed $script:CommittedBase
+      }
+      Assert-Throws { Start-StandinRecorder $w 'fakeb-easy.i0.n25' } `
+        'neither the campaign base .* nor a descendant' 'a HEAD that left the campaign'
+      Assert ($script:WatchCalls.Count -eq 1 -and -not (Test-Path $slotDir)) 'no folder, one watch'
+      # a stop line during the watch
+      $script:GitOverride = $git0
+      $script:StandinHeadChecks = $false
+      $script:WatchCalls.Clear()
+      $script:WatchHook = {
+        param($call, $record, $giveUp)
+        Write-Row $script:LogC ([ordered]@{ schema = 'ms18d-c-run-1'; payload = 'gp-recorder'
+            runId = 'other.a1'; chunkId = 'other'; attempt = 1; outcome = 'stop' })
+      }
+      Assert-Throws { Start-StandinRecorder $w 'fakeb-easy.i0.n25' } 'the line is stopped' 'a stop line'
+      Assert ($script:WatchCalls.Count -eq 1 -and -not (Test-Path $slotDir)) 'a stop: no folder, one watch'
+    } finally {
+      $script:WatchHook = $null
+      $script:StandinHeadChecks = $false
+      $script:GitOverride = $git0
+    }
+  }
+}
+
+Test-Case 'epoch 2: the release constraint is recomputed from the log for every watch' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'e2g'
+  Invoke-InStandinWorld $w {
+    try {
+      $script:WatchHook = {
+        param($call, $record, $giveUp)
+        if ($call -eq 1) {
+          Write-Row $script:LogC (New-OtherSuccessRow 'other1' (Get-Stamp (Get-Date)))
+        }
+      }
+      # the controller may hold the run on the fresh release (its own 15 s rule): the outcome is not the point
+      try { Start-StandinRecorder $w 'fakea-easy.i0.n50' | Out-Null } catch { }
+      Assert ($script:WatchCalls.Count -eq 2) 'the changed log repeated the watch'
+      $first = [long]$script:WatchCalls[0].NotBeforeMs
+      $second = [long]$script:WatchCalls[1].NotBeforeMs
+      Assert ($second -gt $first + 14000) "not-before $first -> $second (the new release plus 15.3 s)"
+    } finally { $script:WatchHook = $null }
+  }
+}
+
+Test-Case 'epoch 2: the one bound holds when every check is slow: a hold, no folder, no late call' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'e2e'
+  $keepGive = $script:WatchGiveUpSeconds
+  Invoke-InStandinWorld $w {
+    try {
+      $script:WatchGiveUpSeconds = 2
+      $script:LineChecksDelayMs = 700
+      $script:WatchHook = {
+        param($call, $record, $giveUp)
+        Start-Sleep -Milliseconds 100
+        $record.lastCheckMs = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds() - 5000
+        if ($giveUp -le 0.5) { $record.gaveUp = $true }
+      }
+      $clock = [Diagnostics.Stopwatch]::StartNew()
+      $held = Start-StandinRecorder $w 'fakea-easy.i0.n50'
+      $took = $clock.ElapsedMilliseconds
+      Assert ($held.Outcome -eq 'control-hold' -and $null -eq $held.RunDir) "outcome $($held.Outcome)"
+      Assert ($took -lt 7000) "the bound of 2 s was kept: $took ms"
+      $row = @(Get-Ledger)[0]
+      Assert ($row.type -eq 'pre-window-hold' -and $row.watchCycles -ge 2 -and $row.watchCycles -le 4) `
+        "cycles $($row.watchCycles)"
+      Assert ($row.cycles[0].fullChecksMs -ge 700) 'the slow full checks are recorded'
+      Assert (-not (Test-Path "$script:RunsRoot\fakea-easy")) 'no run folder'
+    } finally {
+      $script:WatchHook = $null
+      $script:LineChecksDelayMs = 0
+      $script:WatchGiveUpSeconds = $keepGive
+    }
+  }
+}
+
+Test-Case 'epoch 2: the 600 ms, 1,000 ms and 1,200 s boundaries are unchanged' {
+  Assert ($script:WatchFreshMs -eq 600) 'the cheap budget after the watch is 600 ms'
+  Assert ($script:WatchGiveUpSeconds -eq 1200) 'the single bound is 1,200 s'
+  Assert ($script:GapSeconds -eq 15 -and $script:GapMarginSeconds -eq 0.3) 'the window is 15.3 s'
+  $acq = [IO.File]::ReadAllText("$tools\acquisition.js")
+  Assert ($acq -match 'WATCH_LAST_CHECK_MAX_AGE_MS\s*=\s*1000') 'acquisition.js allows 1,000 ms'
+  New-World | Out-Null
+  $w = New-StandinWorld 'e2f'
+  Invoke-InStandinWorld $w {
+    try {
+      # 450 ms old at the end of the watch (its window shifted with it): fresh enough, one cycle
+      $script:WatchHook = {
+        param($call, $record, $giveUp)
+        $last = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds() - 450
+        $record.lastCheckMs = $last
+        $record.startedAtMs = $last - 15400
+        $record.firstCheckMs = $last - 15400
+      }
+      $r = Start-StandinRecorder $w 'fakea-easy.i0.n50'
+      Assert ($r.Outcome -eq 'success' -and $script:WatchCalls.Count -eq 1) 'a 450 ms watch is fresh'
+      Set-LedgerOld
+      # 900 ms old: not fresh, the watch is repeated, never refreshed
+      $script:WatchCalls.Clear()
+      $script:WatchHook = {
+        param($call, $record, $giveUp)
+        if ($call -eq 1) { $record.lastCheckMs = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds() - 900 }
+      }
+      $r2 = Start-StandinRecorder $w 'fakeb-easy.i0.n25'
+      Assert ($r2.Outcome -eq 'success' -and $script:WatchCalls.Count -eq 2) 'a 900 ms watch is repeated'
+      $kept = Read-Json "$($r2.RunDir)\watch.json"
+      Assert ([long]$kept.lastCheckMs -gt [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds() - 4000) `
+        'the run keeps the second watch, not the first'
+    } finally { $script:WatchHook = $null }
+  }
+}
+
+Test-Case 'the real Phase A, B and C logs and the real GP outputs were never written by the wrapper' {
   Assert ((Get-FileHash -LiteralPath $realLogA).Hash -eq $realHashA) 'the Phase A lock log is unchanged'
   Assert ((Get-FileHash -LiteralPath $realLogB).Hash -eq $realHashB) 'the Phase B lock log is unchanged'
-  Assert (-not (Test-Path 'Q:\git\sudoku\docs\difficulty-v3\evidence\MS18d\gp')) 'no real GP directory'
+  Assert ((Get-FileHash -LiteralPath $realLogC).Hash -eq $realHashC) 'the Phase C lock log is unchanged'
+  Assert ((Get-TreeState $realGp) -eq $realGpState) 'the real GP outputs are unchanged'
 }
 
 foreach ($p in $script:started) {

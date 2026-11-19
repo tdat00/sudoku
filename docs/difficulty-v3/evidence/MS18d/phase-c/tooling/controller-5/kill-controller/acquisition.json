@@ -1,0 +1,64 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795094268822,
+  "startedAtMs": 1795094268902,
+  "lockAcquiredAtMs": 1795094268827,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795094253322,
+    "lastCheckMs": 1795094268622,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 80,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795093369819,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 899083,
+  "reasons": [],
+  "decision": "proceed",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 33512,
+    "task": "stand-in kill-controller",
+    "controllerPid": 17196,
+    "controllerParentPid": 33512,
+    "wrapperPid": 33512
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\kill-controller\\logs\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\kill-controller\\logs\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\kill-controller\\logs\\c.jsonl",
+      "present": true
+    }
+  ]
+}

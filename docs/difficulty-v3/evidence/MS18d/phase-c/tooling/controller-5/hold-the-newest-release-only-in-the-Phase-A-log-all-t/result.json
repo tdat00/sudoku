@@ -1,0 +1,27 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hold-the-newest-release-only-in-the-Phase-A-log-all-t",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in hold-the-newest-release-only-in-the-Phase-A-log-all-t",
+  "startedAtMs": 1795094260075,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "release-gap-under-15s"
+  ],
+  "heldAt": "acquisition",
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 46000,
+      "systemMicros": 31000
+    }
+  },
+  "finishedAtMs": 1795094260104
+}

@@ -1,0 +1,74 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "plugin-exit1",
+  "standin": true,
+  "profile": "standin-ledger",
+  "cell": null,
+  "task": "stand-in plugin-exit1",
+  "startedAtMs": 1795094281824,
+  "outcome": "stop",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "standin-ledger",
+    "outcome": "stop",
+    "complete": false,
+    "controllerExit": 65,
+    "kinds": [
+      "cli-not-zero",
+      "marker-missing"
+    ],
+    "problems": [
+      "exit 1 signal null",
+      "exit=1 seconds=0.086"
+    ],
+    "cli": {
+      "exit": 1,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=1 seconds=0.086",
+      "exit": 1
+    },
+    "records": 3
+  },
+  "cli": {
+    "exit": 1,
+    "signal": null
+  },
+  "tee": {
+    "pid": 23280,
+    "processExit": 1,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=1 seconds=0.086",
+    "exit": 1
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 27,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 62000,
+      "systemMicros": 78000
+    },
+    "tee": {
+      "userMicros": 46000,
+      "systemMicros": 46000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 65,
+  "finishedAtMs": 1795094283168
+}

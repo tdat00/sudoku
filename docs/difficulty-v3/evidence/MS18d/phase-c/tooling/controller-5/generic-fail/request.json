@@ -1,0 +1,84 @@
+{
+  "schema": "ms18d-c-request-1",
+  "runId": "generic-fail",
+  "task": "stand-in generic-fail",
+  "standin": true,
+  "profile": "generic",
+  "allowExit1": false,
+  "cell": null,
+  "runDir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\tooling\\controller-5\\generic-fail",
+  "repo": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\generic-fail",
+  "command": {
+    "args": [
+      "Q:\\git\\sudoku\\generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-b\\fake-child.js",
+      "fail",
+      "1"
+    ]
+  },
+  "requestedAt": "2026-11-19T13:18:05.801Z",
+  "wrapperPid": 33512,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795094270301,
+    "lastCheckMs": 1795094285601,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restartCount": 0,
+    "restarts": [],
+    "gaveUp": false
+  },
+  "releaseSources": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\generic-fail\\logs\\a.jsonl",
+      "kind": "log",
+      "required": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\generic-fail\\logs\\b.jsonl",
+      "kind": "log",
+      "required": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\generic-fail\\logs\\c.jsonl",
+      "kind": "log",
+      "required": false
+    }
+  ],
+  "cLedger": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\generic-fail\\logs\\c.jsonl",
+  "expected": {
+    "base": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "identities": {
+      "hashIdentity": "H",
+      "replayIdentity": "R",
+      "sources": "S"
+    },
+    "tableSha256": "TABLE",
+    "node": "v26.13.0",
+    "machine": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    }
+  },
+  "helpers": {
+    "manifestFile": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\manifest.txt",
+    "manifestSha256": null,
+    "required": [
+      "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/controller.js"
+    ],
+    "repoRoot": "Q:\\git\\sudoku"
+  },
+  "bindingFixture": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\generic-fail\\fixture.json",
+  "powershell": "pwsh",
+  "ownedProcesses": "Q:\\git\\sudoku\\generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\owned-processes.ps1"
+}

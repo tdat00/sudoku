@@ -15,7 +15,10 @@
  *     complete ledger AND an earlier run that started its payload and failed is rejected (no replacement);
  *   - one common identity across the matrix: the manifest, the helpers, the executed sources, E, the table,
  *     Node, the machine, the policy, the campaign base and R5's empty flags. HEADs may differ only under R3
- *     (descendant of the base, only campaign outputs and pack files changed);
+ *     (descendant of the base, only campaign outputs and pack files changed). The only exception is the
+ *     declared transport epoch (see the epoch section below): the pair (campaign base, helper manifest) may
+ *     be one of TWO declared pairs, each ledger is judged completely against its own pair, and every other
+ *     identity field is still common;
  *   - the statistics come from the 50 raw times of a cell, sorted numerically: p50 = sorted[24], p95 =
  *     sorted[47], max = sorted[49], mean = sum in request order / 50, meets = p95 < target (strict,
  *     unrounded). No percentile of a chunk is ever combined. The final gate is 79 complete cells and at
@@ -49,6 +52,283 @@ const same = (a, b) => {
 };
 
 const OWNED_ROLES = ['wrapper', 'controller', 'readiness-probe'];
+
+// ---------------------------------------------------------------------------------------------------------
+// Epochs (the B2 transport repair). The campaign has TWO declared (campaign base, helper manifest) pairs and
+// no others: epoch 1 = B1 with helpers-c1b (the 22 chunks recorded before the checkpoint), epoch 2 = B2 with
+// the repaired helpers (every later chunk). Epoch 2 is declared by ONE never-edited line of the committed
+// pack file EPOCH2_RECORD_REL, written after B2 was committed; nothing else adopts an epoch.
+// ---------------------------------------------------------------------------------------------------------
+
+const EPOCH1 = Object.freeze({
+  id: 1, base: 'a2e6423a52a89dd36ee646aa14706dd2369e087f',
+  helperManifestSha256: '5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03', entries: 52,
+  manifestRel: 'docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c1b-sha256.txt',
+  checkpoint: '4db0114e0acd325a34b29a7741ca8eb75e178813'
+});
+const EPOCH2_RECORD_REL = 'tasks/difficulty-v3/MS18d-gp-campaign-base-2.jsonl';
+const EPOCH2_SCHEMA = 'ms18d-gp-transport-epoch-2-v1';
+const PROOF_SCHEMA = 'ms18d-gp-epoch-2-transition-proof-v1';
+const HEX40 = /^[0-9a-f]{40}$/;
+const HEX64 = /^[0-9a-f]{64}$/;
+const HELPER_DIR = 'generator/tests/artifacts/difficulty-v3/MS18d/phase-c/';
+const PRODUCTION_FILES = ['run-locked-c.ps1', 'merge-core.js', 'merge-gp.js'];
+const TEST_CLASS = /^(test|standin)-[A-Za-z0-9._-]+\.(js|ps1)$/;
+const PACK_DIR = 'tasks/difficulty-v3/';
+const EVIDENCE_DIR = 'docs/difficulty-v3/evidence/MS18d/';
+
+/** A helper manifest (`HASH  path` lines): { entries: Map('/' path -> lower-case hash), problems } */
+function parseHelperManifest(text) {
+  const entries = new Map();
+  const problems = [];
+  String(text).split(/\r?\n/).forEach((line, i) => {
+    if (line.trim() === '') return;
+    const m = /^([0-9A-Fa-f]{64})  (.+)$/.exec(line);
+    if (!m) {
+      problems.push('manifest line ' + (i + 1) + ' is not "<sha256>  <path>"');
+      return;
+    }
+    const rel = m[2].replace(/\\/g, '/');
+    if (entries.has(rel)) problems.push('manifest entry ' + rel + ' twice');
+    entries.set(rel, m[1].toLowerCase());
+  });
+  return { entries, problems };
+}
+
+/**
+ * The difference of the two helper manifests, which may be ONLY: run-locked-c.ps1, merge-core.js and
+ * merge-gp.js (changed, never added or removed) and test-* / standin-* files of the helper folder (changed,
+ * added or removed). { changes: [{ path, class, before, after }] sorted by path ('/'), identical (the number
+ * of byte-identical entries), problems }.
+ */
+function manifestTransition(m1, m2) {
+  const problems = [];
+  const changes = [];
+  let identical = 0;
+  const all = Array.from(m1.entries.keys()).concat(Array.from(m2.entries.keys()));
+  const paths = Array.from(new Set(all)).sort();
+  paths.forEach((p) => {
+    const before = m1.entries.has(p) ? m1.entries.get(p) : null;
+    const after = m2.entries.has(p) ? m2.entries.get(p) : null;
+    if (before === after) {
+      identical++;
+      return;
+    }
+    const name = p.startsWith(HELPER_DIR) ? p.slice(HELPER_DIR.length) : '';
+    let cls = null;
+    if (name !== '' && name.indexOf('/') === -1) {
+      if (PRODUCTION_FILES.indexOf(name) !== -1 && before !== null && after !== null) cls = 'production';
+      else if (TEST_CLASS.test(name)) cls = 'test';
+    }
+    if (cls === null) problems.push('the helper manifests differ in ' + p + ', which is no allowed change');
+    else changes.push({ path: p, class: cls, before, after });
+  });
+  return { changes, identical, problems };
+}
+
+/**
+ * The committed B1 -> B2 diff (`git diff --name-status -z --no-renames`, as [{ status, file }]) holds only:
+ * the helper files of the manifest transition (each of them, and no other file of the helper folder), pack
+ * files, and ADDED evidence files under docs/difficulty-v3/evidence/MS18d/ (freeze, transcript, tooling and
+ * run outputs; nothing recorded is modified or deleted) plus the append-only C log.
+ */
+function transitionDiffProblems(entries, changes, ledgerRel) {
+  const problems = [];
+  const wanted = new Set(changes.map((c) => c.path));
+  const seen = new Set();
+  entries.forEach(({ status, file }) => {
+    const f = file.replace(/\\/g, '/');
+    seen.add(f);
+    if (f.split('/').indexOf('..') !== -1) problems.push(f + ': a path that leaves the repository');
+    else if (f.startsWith(HELPER_DIR)) {
+      if (!wanted.has(f)) problems.push(f + ': a helper file changed that is no change of the manifests');
+    } else if (f.startsWith(PACK_DIR)) {
+      // pack files: the journals, rulings, base records and notes
+    } else if (f.startsWith(EVIDENCE_DIR)) {
+      if (status !== 'A' && f !== ledgerRel) {
+        problems.push(f + ': recorded evidence was changed (' + status + ')');
+      }
+    } else problems.push(f + ': outside the allowed B1 -> B2 set');
+  });
+  wanted.forEach((f) => {
+    if (!seen.has(f)) problems.push(f + ': a manifest change that is not in the committed diff');
+  });
+  return problems;
+}
+
+/** `git diff --name-status -z --no-renames <a> <b>` as [{ status, file }] (the reader returns text). */
+function diffEntries(git, a, b) {
+  const tokens = String(git(['diff', '--name-status', '-z', '--no-renames', a, b])).split('\0');
+  const out = [];
+  for (let i = 0; i + 1 < tokens.length; i += 2) out.push({ status: tokens[i].trim(), file: tokens[i + 1] });
+  return out;
+}
+
+/** The one line of the base-2 record: { record, problems }. */
+function parseEpochRecord(text) {
+  const lines = String(text).replace(/^\uFEFF/, '').split(/\r?\n/).filter((l) => l.trim() !== '');
+  if (lines.length !== 1) return { record: null, problems: ['the base-2 record is not exactly one line'] };
+  try {
+    const record = JSON.parse(lines[0]);
+    if (record === null || typeof record !== 'object' || Array.isArray(record)) {
+      throw new Error('not an object');
+    }
+    return { record, problems: [] };
+  } catch (err) {
+    return { record: null, problems: ['the base-2 record is not JSON: ' + err.message] };
+  }
+}
+
+/**
+ * The base-2 record against everything it names: the merge request (campaign base B2, helper manifest H2),
+ * the declared epoch 1, the plan, both helper manifests, Git (ancestry B1 -> checkpoint -> B2 -> HEAD, and
+ * the diff), and the proof file. `input`: { record, base, helperSha, epoch1, doc, planRawSha256,
+ * manifest1Text, manifest2Text, git, head, commits (the commits that touched the record's path),
+ * readProof(rel) -> Buffer }.
+ * Returns the problems ([] when the record is valid) and the manifest transition it was checked with.
+ */
+function epochRecordProblems(input) {
+  const rec = input.record;
+  const e1 = input.epoch1;
+  const problems = [];
+  const bad = (t) => problems.push('base-2 record: ' + t);
+  const isObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+  if (input.commits !== 1) bad('the file was committed ' + input.commits + ' times, not once (never edited)');
+  if (rec.schema !== EPOCH2_SCHEMA) bad('schema is not ' + EPOCH2_SCHEMA);
+  if (!HEX40.test(String(rec.campaignBase)) || rec.campaignBase !== input.base) {
+    bad('campaignBase is not the campaign base of the merge request');
+  }
+  if (rec.campaignBase === e1.base) bad('campaignBase is the base of epoch 1');
+  if (rec.previousBase !== e1.base) bad('previousBase is not the declared base of epoch 1');
+  if (rec.checkpoint !== e1.checkpoint) bad('checkpoint is not the declared checkpoint');
+  const m1 = parseHelperManifest(input.manifest1Text);
+  const m2 = parseHelperManifest(input.manifest2Text);
+  m1.problems.concat(m2.problems).forEach(bad);
+  const helper = rec.helperManifest;
+  if (!isObject(helper) || helper.sha256 !== input.helperSha || helper.entries !== m2.entries.size) {
+    bad('helperManifest is not the manifest of the merge request (sha256, entries)');
+  }
+  const previous = rec.previousHelperManifest;
+  if (!isObject(previous) || previous.sha256 !== e1.helperManifestSha256 ||
+    previous.entries !== m1.entries.size || (e1.manifestRel && previous.file !== e1.manifestRel)) {
+    bad('previousHelperManifest is not the declared manifest of epoch 1 (file, sha256, entries)');
+  }
+  if (e1.entries !== undefined && m1.entries.size !== e1.entries) {
+    bad('the epoch-1 manifest has other entries');
+  }
+  const transition = manifestTransition(m1, m2);
+  transition.problems.forEach(bad);
+  if (!same(rec.allowedHelperChanges, transition.changes)) {
+    bad('allowedHelperChanges is not the exact change list of the two manifests');
+  }
+  const ancestor = (a, b, what) => {
+    try {
+      input.git(['merge-base', '--is-ancestor', a, b]);
+    } catch (err) {
+      bad(what + ' is not an ancestor');
+    }
+  };
+  ancestor(e1.base, e1.checkpoint, 'B1 of the checkpoint');
+  ancestor(e1.checkpoint, input.base, 'the checkpoint of B2');
+  ancestor(input.base, input.head, 'B2 of HEAD');
+  let names = [];
+  try {
+    names = diffEntries(input.git, e1.base, input.base);
+    transitionDiffProblems(names, transition.changes, LEDGER).forEach(bad);
+  } catch (err) {
+    bad('the B1 -> B2 diff cannot be read: ' + err.message);
+  }
+  const proof = rec.transitionProof;
+  if (!isObject(proof) || typeof proof.file !== 'string' || !HEX64.test(String(proof.sha256))) {
+    bad('transitionProof is not { file, sha256 }');
+  } else if (proof.file.split(/[\\/]/).indexOf('..') !== -1) {
+    bad('transitionProof leaves the repository');
+  } else {
+    const bytes = input.readProof(proof.file.replace(/\\/g, '/'));
+    if (bytes === null || sha256(bytes) !== proof.sha256) {
+      bad('the transition proof is missing or not the cited bytes');
+    } else {
+      let doc = null;
+      try {
+        doc = JSON.parse(bytes.toString('utf8').replace(/^\uFEFF/, ''));
+      } catch (err) {
+        bad('the transition proof is not JSON');
+      }
+      if (doc) {
+        const want = { schema: PROOF_SCHEMA, previousBase: e1.base, checkpoint: e1.checkpoint,
+          campaignBase: input.base, previousHelperManifestSha256: e1.helperManifestSha256,
+          helperManifestSha256: input.helperSha, changes: transition.changes,
+          identicalEntries: transition.identical,
+          committedDiff: names.map((n) => n.status + ' ' + n.file.replace(/\\/g, '/')).sort() };
+        Object.keys(want).forEach((k) => {
+          if (!same(doc[k], want[k])) bad('the transition proof differs from the recomputed ' + k);
+        });
+      }
+    }
+  }
+  const p = rec.plan;
+  if (!isObject(p) || p.manifestSha256 !== input.doc.manifestSha256 || p.rawSha256 !== input.planRawSha256) {
+    bad('plan is not the plan of the merge request');
+  }
+  const id = rec.identities;
+  if (!isObject(id) || id.hashIdentity !== input.doc.sources.hashIdentity ||
+    id.sources !== input.doc.sources.sources || id.tableSha256 !== input.doc.targets.tableSha256) {
+    bad('identities are not those of the plan');
+  }
+  if (!isObject(rec.environment) || !same(rec.environment.node, input.doc.environment.node)) {
+    bad('environment is not that of the plan');
+  }
+  if (!isObject(rec.policy) || rec.policy.choice !== input.doc.policy.choice) {
+    bad('policy is not that of the plan');
+  }
+  const kept = isObject(rec.retainedEvidence) ? rec.retainedEvidence.successes : null;
+  const chunkIds = new Set(input.doc.chunks.map((c) => c.chunkId));
+  if (!Array.isArray(kept) || kept.length === 0 || !kept.every((r) => isObject(r) &&
+    chunkIds.has(r.chunkId) && typeof r.runId === 'string' && HEX64.test(String(r.ledgerSha256)))) {
+    bad('retainedEvidence.successes is not a list of { chunkId, runId, ledgerSha256 }');
+  } else {
+    if (new Set(kept.map((r) => r.chunkId)).size !== kept.length) bad('retainedEvidence names a chunk twice');
+    const requests = input.doc.chunks.filter((c) => kept.some((r) => r.chunkId === c.chunkId))
+      .reduce((sum, c) => sum + c.n, 0);
+    const cut = rec.cutover;
+    if (!isObject(cut) || cut.successes !== kept.length || cut.requests !== requests) {
+      bad('cutover is not the retained successes and their requests');
+    }
+  }
+  return { problems, transition };
+}
+
+/**
+ * The epoch-1 ledgers of a merge must be exactly the retained successes of the record (chunk, run, ledger
+ * digest), no epoch-2 ledger may answer a retained chunk, and a complete all-79 merge consumes all of them.
+ * `consumed`: [{ chunkId, runDir, ledgerSha256, epoch: { id } }].
+ */
+function epochAccounting(consumed, record, complete) {
+  const problems = [];
+  const kept = new Map(record.retainedEvidence.successes.map((r) => [r.chunkId, r]));
+  let first = 0;
+  consumed.forEach((c) => {
+    const runId = String(c.runDir).split('/').pop();
+    const retained = kept.get(c.chunkId);
+    if (c.epoch.id === 1) {
+      first++;
+      if (!retained || retained.runId !== runId || retained.ledgerSha256 !== c.ledgerSha256) {
+        problems.push(c.chunkId + ': an epoch-1 ledger that is not one of the retained successes');
+      }
+    } else if (retained) problems.push(c.chunkId + ': a retained success is answered by an epoch-2 ledger');
+  });
+  if (complete && first !== kept.size) {
+    problems.push('the retained successes are ' + kept.size + ', the epoch-1 ledgers of the merge ' + first);
+  }
+  return problems;
+}
+
+/** The epochs of a merge as the evaluation uses them: identity and R3 HEAD checker of each declared pair. */
+function buildEpochs(doc, pairs, git, ledgerPath) {
+  return pairs.map((p) => ({ id: p.id, base: p.base, helperManifestSha256: p.helperManifestSha256,
+    expectedIdentity: expectedIdentityOf(doc, p.helperManifestSha256, p.base),
+    checkHead: makeHeadChecker(git, p.base, doc, ledgerPath) }));
+}
 
 /**
  * The host binding an admission used (pack section "Host-binding journal"): the id, tuple and journal
@@ -206,6 +486,7 @@ function judgeRun(run, ctx) {
   const result = run.json('result.json');
   const wrapper = run.json('wrapper.json');
   const ledgerBytes = run.bytes('ledger.json');
+  const ledger0 = run.json('ledger.json').value;
   const r = result.value;
   // F5: a hold is a control-hold that started no payload and left no payload sign at all: no tee/command
   // record, no transcript, stdout, stderr or ledger. (A wrapper.json that says `foreign-lock-watch` and is
@@ -262,6 +543,19 @@ function judgeRun(run, ctx) {
   if (!acquisition || acquisition.decision !== 'proceed') bad('acquisition.json: not proceed');
   if (!binding || binding.ok !== true) bad('binding.json: not ok');
   const request = run.json('request.json').value;
+  // the epoch of the run: the declared (base, helper manifest) pair its ledger names. A ledger of another
+  // pair is no record of this campaign; a single-epoch merge has the one pair
+  const epochs = ctx.epochs;
+  const named = ledger0 && ledger0.identity;
+  let epoch = (named && epochs.filter((e) => named.base === e.base &&
+    named.helperManifestSha256 === e.helperManifestSha256)[0]) || null;
+  if (epoch === null) {
+    if (named && epochs.length > 1) {
+      bad('ledger: the identity pair (base, helper manifest) is no declared epoch');
+    }
+    const asked = request && request.expected && request.expected.base;
+    epoch = epochs.filter((e) => e.base === asked)[0] || epochs[epochs.length - 1];
+  }
   // F6: a complete A readiness record, re-decided here from the retained raw data
   readinessProblems(run, admission, request, pidRows, ctx).forEach(bad);
 
@@ -274,7 +568,9 @@ function judgeRun(run, ctx) {
     if (!request.plan || request.plan.manifestSha256 !== doc.manifestSha256) bad('request.json: plan');
     if (!same(request.chunk, chunk)) bad('request.json: the chunk differs from the manifest');
     if (request.attempt !== slot.attempt || request.runId !== slot.runId) bad('request.json: slot');
-    if (!request.expected || request.expected.base !== ctx.base) bad('request.json: campaign base');
+    if (!request.expected || request.expected.base !== epoch.base) bad('request.json: campaign base');
+    if (request.helpers && request.helpers.manifestSha256 !== undefined &&
+      request.helpers.manifestSha256 !== epoch.helperManifestSha256) bad('request.json: helper manifest');
     if (ctx.realRun && !same((request.command || {}).args, frozenRecorderArgs(ctx.planRel, slot))) {
       bad('request.json: the command line is not the frozen one');
     }
@@ -308,7 +604,7 @@ function judgeRun(run, ctx) {
   }
   if (ledger) {
     validateLedgerShape(ledger, chunk).forEach((p) => bad('ledger: ' + p));
-    if (!same(ledger.identity, ctx.expectedIdentity)) {
+    if (!same(ledger.identity, epoch.expectedIdentity)) {
       bad('ledger: identity differs from the campaign identity');
     }
     const o = ledger.observation || {};
@@ -321,13 +617,14 @@ function judgeRun(run, ctx) {
       }
     });
     if (binding && binding.head && o.head !== binding.head.actual) bad('ledger: HEAD is not the bound HEAD');
-    if (binding && binding.head && binding.head.base !== ctx.base) bad('binding.json: campaign base');
-    const headCheck = ctx.checkHead(o.head);
+    if (binding && binding.head && binding.head.base !== epoch.base) bad('binding.json: campaign base');
+    const headCheck = epoch.checkHead(o.head);
     headCheck.problems.forEach((p) => bad('HEAD ' + o.head + ': ' + p));
   }
   if (problems.length === 0) {
     return { status: 'complete', problems, ledger, ledgerSha256, head: ledger.observation.head,
-      dir: slot.dir };
+      dir: slot.dir, epoch: { id: epoch.id, base: epoch.base,
+        helperManifestSha256: epoch.helperManifestSha256 } };
   }
   const started = !(r && r.payloadStarted === false);
   return { status: 'failed', problems, payloadStarted: started };
@@ -396,12 +693,14 @@ function mergeCell(cell, chunks, verdicts) {
   return { cell, complete: true, problems, stats, chunks: detail, coldStart,
     coldStartSensitive: coldStart.length > 0,
     consumed: accepted.map(({ chunk, verdict }) => ({ chunkId: chunk.chunkId, runDir: verdict.dir,
-      ledgerSha256: verdict.ledgerSha256, head: verdict.head })) };
+      ledgerSha256: verdict.ledgerSha256, head: verdict.head, epoch: verdict.epoch })) };
 }
 
 /**
  * The whole evaluation. `input`: { doc, scope: { type: 'cell', cell } | { type: 'all' }, runFolders (a Map of
- * declared dir -> readRunFolder result or null), expectedIdentity, base, checkHead, realRun }. Returns
+ * declared dir -> readRunFolder result or null), realRun, and either `epochs` (the pairs of buildEpochs)
+ * or expectedIdentity, base, checkHead (one pair) }. Each complete ledger is judged against the epoch whose
+ * (base, helper manifest) pair its own identity names. Returns
  * { scope, complete, problems, cells, successes, required, meets, extraStarts }.
  */
 function evaluate(input) {
@@ -414,6 +713,9 @@ function evaluate(input) {
   if (scope.type === 'all' && cells.length !== doc.gate.cells) {
     problems.push('the manifest has ' + cells.length + ' cells, the gate expects ' + doc.gate.cells);
   }
+  // a merge of one declared pair (the usual case) or of the two epochs of the campaign
+  const epochs = input.epochs || [{ id: 1, base: input.base, expectedIdentity: input.expectedIdentity,
+    helperManifestSha256: input.expectedIdentity.helperManifestSha256, checkHead: input.checkHead }];
   const results = cells.map((cell) => {
     const chunks = doc.chunks.filter((c) => c.cell === cell);
     const verdicts = new Map();
@@ -421,9 +723,8 @@ function evaluate(input) {
       const list = [];
       doc.runSlots.filter((s) => s.role === 'chunk' && s.chunkId === chunk.chunkId).forEach((slot) => {
         const run = input.runFolders.get(slot.dir) || null;
-        list.push({ slot, verdict: judgeRun(run, { doc, slot, chunk, expectedIdentity: input.expectedIdentity,
-          base: input.base, checkHead: input.checkHead, realRun: input.realRun, planRel: input.planRel,
-          bindingJournal: input.bindingJournal }) });
+        list.push({ slot, verdict: judgeRun(run, { doc, slot, chunk, epochs, realRun: input.realRun,
+          planRel: input.planRel, bindingJournal: input.bindingJournal }) });
       });
       verdicts.set(chunk.chunkId, list);
     });
@@ -520,4 +821,6 @@ const publicStats = (s) => (s ? { n: s.n, p50: s.p50, p95: s.p95, max: s.max, me
   meets: s.meets } : null);
 
 module.exports = { judgeRun, mergeCell, evaluate, cellStats, makeHeadChecker, expectedIdentityOf,
-  collectRunFolders, readRunFolder, frozenRecorderArgs, publicStats, ascending };
+  collectRunFolders, readRunFolder, frozenRecorderArgs, publicStats, ascending, EPOCH1, EPOCH2_RECORD_REL,
+  EPOCH2_SCHEMA, PROOF_SCHEMA, HELPER_DIR, parseHelperManifest, manifestTransition, transitionDiffProblems,
+  diffEntries, parseEpochRecord, epochRecordProblems, epochAccounting, buildEpochs };

@@ -1,0 +1,15 @@
+$ node tests\perf.js --variant=classic4 --level=veryEasy --runs=50 --warmup=0 --seed=7000 --gate --ascii
+Sudoku Generator performance  (node v26.13.0, AMD EPYC 7763 64-Core Processor, 50 runs per cell, trace summary, seed 7000)
+p95 target = design.md section 9.1; cells = variant x level the variant offers
+
+Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\fake-gp.js:66
+  setTimeout(() => { throw new Error('stand-in generation error'); }, 30);
+                     ^
+
+Error: stand-in generation error
+    at Timeout._onTimeout (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\fake-gp.js:66:28)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+
+Node.js v26.13.0
+exit=1 seconds=0.134

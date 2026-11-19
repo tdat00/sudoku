@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "r1",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in r1",
+  "startedAtMs": 1795093339312,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "helper bytes differ from the manifest: generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-core.js, generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-gp.js, generator/tests/artifacts/difficulty-v3/MS18d/phase-c/run-locked-c.ps1, generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-run-locked-c.ps1"
+  ],
+  "heldAt": "binding",
+  "eligibleReAsk": false,
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 46000,
+      "systemMicros": 31000
+    }
+  },
+  "finishedAtMs": 1795093339370
+}

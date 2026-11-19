@@ -8,7 +8,10 @@
 #      and ends in a hold) and records the first and last check, the proof of the last release for locks
 #      held by others. It records the slot state and the instant of the request; the controller records the
 #      ACTUAL start from inside the locked child and holds when the slot was busy or the start was more than
-#      2.000 s late unless a release of another job is proved at least 15 s before (acquisition.js);
+#      2.000 s late unless a release of another job is proved at least 15 s before (acquisition.js). The
+#      pre-window checks (F1, F4/F2, host, stale lock) are FULL before each watch and bound to a cheap state
+#      fingerprint; after the watch only the fingerprint and the age of the watch (600 ms) are checked, so
+#      slow full checks never starve the call (epoch 2, one 1,200 s bound);
 #  G2  it reads the release logs of Phase A, Phase B and Phase C and any coordinator evidence, writes every
 #      record of a run into <runs root>\<variant>-<level>\<run-id>\ and indexes the run in the new
 #      append-only phase-c\lock-log.jsonl. It never writes into the Phase A or B records. After the helper
@@ -89,6 +92,8 @@ $script:ReAskWaitSeconds = 60
 $script:WatchFreshMs = 600
 $script:GitOverride = $null
 $script:StandinReadiness = $null
+# a stand-in over a fake Git runs the R3 base check in every cycle only when a test turns it on
+$script:StandinHeadChecks = $false
 . $script:HelperPath
 . "$script:ToolsC\owned-processes.ps1"
 . "$script:ToolsC\slot-watch.ps1"
@@ -426,7 +431,8 @@ function Assert-AttemptC {
 }
 
 # F2/F4 as one call: the stop line (F4) for every final-matrix call, the attempt (F2) for a recorder. Run
-# before the lock watch and again after it (R2); throws, nothing is started.
+# before the lock watch of every cycle (epoch 2: not again after it, the fingerprint covers the wait);
+# throws, nothing is started.
 function Test-LineChecksC {
   param([string]$Profile, [string]$Unit, [int]$Attempt, [string]$CellDir, [string]$Base = '')
   Assert-LineOpenC -ChunkId $Unit -Attempt $Attempt -Base $Base
@@ -591,6 +597,112 @@ function Write-RunRecord {
   [IO.File]::AppendAllText($script:LogC, (($Record | ConvertTo-Json -Depth 6 -Compress) + "`r`n"))
 }
 
+# ---- Epoch 2: the pre-window cycle. The FULL checks (logs, journals, Git, host: seconds, growing with the
+# C log) run before each watch and are bound to a cheap state fingerprint. After the quiet watch only the
+# fingerprint is read again (about 150 ms, independent of the size of the log), so the 600 ms freshness of the
+# watch (acquisition.js: 1 s) no longer depends on how long the full checks take. A changed fingerprint sends
+# the call back through the full checks BEFORE another watch; the one deadline is never reset.
+
+# The cheap state a full check was made at: HEAD, the C log (existence, length, write time, read fresh), the
+# folder names of this cell and whether the requested slot folder exists. `Problems` lists facts that are
+# unusable on their own (HEAD unreadable, a real run without its C log, a folder that cannot be listed).
+function Get-TransportFingerprintC {
+  param([string]$CellPath, [string]$SlotPath, [bool]$WithHead, [bool]$Real)
+  $problems = @()
+  $headId = $null
+  if ($WithHead) {
+    $headId = Get-HeadIdC
+    if (-not $headId) { $problems += 'HEAD cannot be read' }
+  }
+  $log = [IO.FileInfo]::new($script:LogC)
+  $logLength = -1
+  $logTicks = 0
+  if ($log.Exists) {
+    $logLength = $log.Length
+    $logTicks = $log.LastWriteTimeUtc.Ticks
+  } elseif ($Real) {
+    $problems += 'the C lock log is missing'
+  }
+  $names = @()
+  try {
+    if ([IO.Directory]::Exists($CellPath)) {
+      $names = @([IO.Directory]::GetFileSystemEntries($CellPath) |
+          ForEach-Object { [IO.Path]::GetFileName($_) })
+      [Array]::Sort($names, [StringComparer]::Ordinal)
+    }
+  } catch {
+    $problems += "the folder $CellPath cannot be listed: $($_.Exception.Message)"
+  }
+  return [pscustomobject]@{
+    Head = $headId; LogLength = $logLength; LogTicks = $logTicks; CellEntries = ($names -join '|')
+    SlotExists = [bool](Test-Path -LiteralPath $SlotPath); Problems = $problems
+  }
+}
+
+# What differs between two fingerprints, as sentences ([] when they are the same state)
+function Compare-TransportFingerprintC {
+  param($Was, $Now)
+  $d = @()
+  if ($Was.Head -ne $Now.Head) { $d += "HEAD $($Was.Head) -> $($Now.Head)" }
+  if ($Was.LogLength -ne $Now.LogLength) { $d += "the C log length $($Was.LogLength) -> $($Now.LogLength)" }
+  if ($Was.LogTicks -ne $Now.LogTicks) { $d += 'the C log write time changed' }
+  if ($Was.CellEntries -ne $Now.CellEntries) {
+    $d += "the folders of the cell changed [$($Was.CellEntries)] -> [$($Now.CellEntries)]"
+  }
+  if ($Was.SlotExists -ne $Now.SlotExists) { $d += 'the requested slot folder appeared or vanished' }
+  return $d
+}
+
+# The full checks of one cycle, in the order of the F1 pre-flight; each throws, nothing is started: the
+# campaign base (R3; a stand-in only when a test turns it on over a fake Git), F4 and F2, the live host (a
+# recorder) and the stale shared lock.
+function Invoke-FullChecksC {
+  param([string]$Profile, [string]$Unit, [int]$Attempt, [string]$CellDir, [string]$Base, [bool]$Standin,
+    [bool]$FinalMatrix, [string[]]$DeclaredDirs)
+  if (-not $Standin -or ($script:GitOverride -and $script:StandinHeadChecks)) {
+    $headProblems = @(Get-CampaignHeadProblemsC -Base $Base -DeclaredDirs $DeclaredDirs)
+    if ($headProblems.Count -gt 0) {
+      throw ('MS18d-C hold before the lock (the campaign base): ' + ($headProblems -join '; '))
+    }
+  }
+  if ($FinalMatrix) {
+    Test-LineChecksC -Profile $Profile -Unit $Unit -Attempt $Attempt -CellDir $CellDir -Base $Base
+    if ($Profile -eq 'gp-recorder' -and -not $Standin) {
+      $hostProblems = @(Get-HostProblemsC -Base $Base)
+      if ($hostProblems.Count -gt 0) {
+        throw ('MS18d-C hold before the lock (the host instance): ' + ($hostProblems -join '; '))
+      }
+    }
+  }
+  $stale = Get-StaleSharedLockC
+  if ($stale) { throw "MS18d-C: $stale Nothing was started." }
+}
+
+# The full checks bound to a fingerprint: the fingerprint is read before and after them, and a state that
+# changed meanwhile is checked again (three rounds at most, then the call refuses), so the token is the state
+# the checks really saw. A used slot folder is refused. Returns { Token, Retries }.
+function Get-CheckedStateC {
+  param([hashtable]$Checks, [hashtable]$Fp)
+  $retries = @()
+  for ($round = 1; $round -le 3; $round++) {
+    $before = Get-TransportFingerprintC @Fp
+    Invoke-FullChecksC @Checks
+    $after = Get-TransportFingerprintC @Fp
+    $facts = @($before.Problems) + @($after.Problems)
+    if ($facts.Count -gt 0) {
+      throw ('MS18d-C: the state cannot be fixed: ' + ($facts -join '; ') + '. Nothing was started.')
+    }
+    if ($before.SlotExists -or $after.SlotExists) {
+      throw "MS18d-C: the run directory $($Fp.SlotPath) exists; a run is never overwritten"
+    }
+    $diff = @(Compare-TransportFingerprintC $before $after)
+    if ($diff.Count -eq 0) { return [pscustomobject]@{ Token = $after; Retries = $retries } }
+    $retries += ('round ' + $round + ': ' + ($diff -join '; '))
+  }
+  throw ('MS18d-C: the repository state kept changing during the full checks (' + ($retries -join ' | ') +
+    '). Nothing was started.')
+}
+
 function Invoke-PayloadLocked {
   param(
     [Parameter(Mandatory)][string]$Task,
@@ -665,40 +777,39 @@ function Invoke-PayloadLocked {
     throw ('MS18d-C hold before the lock (the helpers are not frozen as reviewed): ' +
       ($manifestProblems -join '; '))
   }
-  if (-not $Standin) {
-    $pair = $PayloadRequest['declaredDirs']
-    $headProblems = @(Get-CampaignHeadProblemsC -Base $CampaignBase -DeclaredDirs @($pair))
-    if ($headProblems.Count -gt 0) {
-      throw ('MS18d-C hold before the lock (the campaign base): ' + ($headProblems -join '; '))
-    }
-  }
+  $unit = ''
+  $attempt = 0
   if ($finalMatrix) {
-    # F4 and F2, then (a recorder) the live host against its binding: all before any folder exists
     $unit = [string]$PayloadRequest['scope']
     if ($PayloadRequest['chunk']) { $unit = $PayloadRequest['chunk'].chunkId }
     $attempt = [int]$PayloadRequest['attempt']
-    Test-LineChecksC -Profile $Profile -Unit $unit -Attempt $attempt -CellDir $cellDir -Base $CampaignBase
-    if ($Profile -eq 'gp-recorder' -and -not $Standin) {
-      $hostProblems = @(Get-HostProblemsC -Base $CampaignBase)
-      if ($hostProblems.Count -gt 0) {
-        throw ('MS18d-C hold before the lock (the host instance): ' + ($hostProblems -join '; '))
-      }
-    }
   }
-  $stale = Get-StaleSharedLockC
-  if ($stale) { throw "MS18d-C: $stale Nothing was started." }
-  # R2: the HEAD the checks above were made at; it must be the same after the wait (a stand-in repository
-  # that is no Git repository has none)
-  $headBefore = $null
-  if (-not $Standin -or $script:GitOverride) { $headBefore = Get-HeadIdC }
+  $checks = @{
+    Profile = $Profile; Unit = $unit; Attempt = $attempt; CellDir = $cellDir; Base = $CampaignBase
+    Standin = [bool]$Standin; FinalMatrix = [bool]$finalMatrix
+    DeclaredDirs = @($PayloadRequest['declaredDirs'])
+  }
+  $fp = @{ CellPath = (Join-Path $script:RunsRoot $cellDir); SlotPath = $runDir
+    WithHead = [bool]((-not $Standin) -or $script:GitOverride); Real = [bool](-not $Standin) }
 
-  # the lock watch during the gap wait: both lock files at least once a second for the 15.3 s right before
-  # the call. NO run folder exists yet: a watch that gives up must not leave a folder the merger would read
-  # as a started payload (F1). R2: the facts are rechecked AFTER the wait and before the folder: the stop
-  # line (F4), the attempt (F2) and the HEAD. If the rechecks took so long that the watch is no longer
-  # "right before the call" (acquisition.js: 1 s), the slot is watched again, within the same bound.
+  # The pre-window cycles, within ONE bound. Per cycle: the full checks (R3 base, F4, F2, host, stale lock)
+  # bound to a cheap fingerprint; the lock watch (both lock files at least once a second for the 15.3 s right
+  # before the call; NO run folder exists, so a give-up leaves none: F1); then only the cheap invariance check
+  # (the fingerprint again, and the age of the watch, 600 ms). A changed fingerprint or a watch the cheap
+  # check aged sends the call back to the full checks before another watch: a new stop line, a used slot or
+  # an invalid HEAD then throws with no folder. Nothing refreshes a timestamp, and the bound is never reset.
   $deadline = [DateTimeOffset]::UtcNow.AddSeconds($script:WatchGiveUpSeconds)
+  $cycles = [System.Collections.Generic.List[object]]::new()
+  $clock = [Diagnostics.Stopwatch]::new()
   while ($true) {
+    $cycle = [ordered]@{ cycle = $cycles.Count + 1; fullChecksMs = $null; unstable = @()
+      watchStartedAtMs = $null; watchLastCheckMs = $null; cheapCheckMs = $null; ageMs = $null
+      result = $null; reason = $null }
+    $cycles.Add($cycle)
+    $clock.Restart()
+    $state = Get-CheckedStateC -Checks $checks -Fp $fp
+    $cycle.fullChecksMs = $clock.ElapsedMilliseconds
+    $cycle.unstable = @($state.Retries)
     $last = Get-LastReleaseC
     $notBefore = 0
     if ($null -ne $last) {
@@ -708,39 +819,71 @@ function Invoke-PayloadLocked {
     $left = ($deadline - [DateTimeOffset]::UtcNow).TotalSeconds
     $watch = Wait-SlotQuiet -WindowSeconds ($script:GapSeconds + $script:GapMarginSeconds) `
       -GiveUpSeconds ([math]::Max(0.001, $left)) -IntervalMs $script:WatchIntervalMs -NotBeforeMs $notBefore
-    if ($watch.gaveUp) { break }
-    if ($finalMatrix) {
-      Test-LineChecksC -Profile $Profile -Unit $unit -Attempt $attempt -CellDir $cellDir -Base $CampaignBase
+    $cycle.watchStartedAtMs = $watch.startedAtMs
+    $cycle.watchLastCheckMs = $watch.lastCheckMs
+    if ($watch.gaveUp) {
+      $cycle.result = 'gave-up'
+      break
     }
-    if ($null -ne $headBefore) {
-      $headNow = Get-HeadIdC
-      if ($headNow -ne $headBefore) {
-        throw ("MS18d-C: HEAD changed during the lock watch (was $headBefore, now $headNow). " +
-          'Nothing was started.')
-      }
+    $clock.Restart()
+    $now = Get-TransportFingerprintC @fp
+    $cycle.cheapCheckMs = $clock.ElapsedMilliseconds
+    if ($now.Problems.Count -gt 0) {
+      throw ('MS18d-C: the state cannot be fixed after the watch: ' + ($now.Problems -join '; ') +
+        '. Nothing was started.')
     }
+    $changes = @(Compare-TransportFingerprintC $state.Token $now)
     $age = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds() - [long]$watch.lastCheckMs
-    if ($age -le $script:WatchFreshMs) { break }
+    $cycle.ageMs = $age
+    if ($changes.Count -gt 0) {
+      $cycle.result = 'repeated'
+      $cycle.reason = 'the state changed during the watch: ' + ($changes -join '; ')
+    } elseif ($age -gt $script:WatchFreshMs) {
+      $cycle.result = 'repeated'
+      $cycle.reason = "the cheap check ended $age ms after the last check of the watch " +
+        "(the limit is $($script:WatchFreshMs) ms)"
+    } else {
+      $cycle.result = 'proceed'
+      break
+    }
+    Write-Host "LOCKED-C ${Task}: quiet watch $($cycle.cycle) repeated: $($cycle.reason)"
   }
+  $repeated = @($cycles | Where-Object { $_.result -eq 'repeated' })
   if ($watch.gaveUp) {
-    # one C-log line typed `pre-window-hold`: no folder, no admission consumed (attempts.js ignores it)
+    # one C-log line typed `pre-window-hold`: no folder, no admission consumed (attempts.js ignores it). The
+    # watches that were repeated are told, each with its reason: a stale check is no foreign lock.
+    $reasons = @('a lock of another job did not leave a 15.3 s quiet window within the bounded wait')
+    if ($repeated.Count -gt 0) {
+      $reasons = @("the bounded wait of $($script:WatchGiveUpSeconds) s ended after $($cycles.Count) " +
+        "cycle(s); $($repeated.Count) quiet watch(es) were repeated before the last: not a foreign lock")
+      foreach ($r in $repeated) { $reasons += "cycle $($r.cycle): $($r.reason)" }
+    }
+    $kept = @($cycles)
+    $omitted = 0
+    if ($kept.Count -gt 20) {
+      $omitted = $kept.Count - 20
+      $kept = @($kept[0..9]) + @($kept[($kept.Count - 10)..($kept.Count - 1)])
+    }
     $record = [ordered]@{
       schema = 'ms18d-c-run-1'; type = 'pre-window-hold'; task = $Task; runId = $RunId; cell = $Cell
       payload = $Profile
       chunkId = $(if ($PayloadRequest['chunk']) { $PayloadRequest['chunk'].chunkId } else { $null })
       attempt = $PayloadRequest['attempt']; scope = $PayloadRequest['scope']
-      standin = [bool]$Standin; outcome = 'pre-window-hold'; heldAt = 'foreign-lock-watch'
+      standin = [bool]$Standin; outcome = 'pre-window-hold'
+      heldAt = $(if ($repeated.Count -gt 0) { 'pre-window-recheck' } else { 'foreign-lock-watch' })
       at = [DateTimeOffset]::Now.ToString($script:Stamp)
-      reasons = @('a lock of another job did not leave a 15.3 s quiet window within the bounded wait')
+      reasons = $reasons
       watch = [ordered]@{ startedAtMs = $watch.startedAtMs; lastCheckMs = $watch.lastCheckMs
         checks = $watch.checks; restartCount = $watch.restartCount; giveUpSeconds = $watch.giveUpSeconds
         gaveUp = $true }
+      watchCycles = $cycles.Count; repeatedCycles = $repeated.Count; omittedCycles = $omitted
+      cycles = $kept
       problems = @()
     }
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $script:LogC) | Out-Null
     [IO.File]::AppendAllText($script:LogC, (($record | ConvertTo-Json -Depth 6 -Compress) + "`r`n"))
-    Write-Host ("LOCKED-C ${Task}: outcome=control-hold (the slot was never quiet for 15.3 s within " +
-      "$($watch.giveUpSeconds) s; no run folder)")
+    Write-Host ("LOCKED-C ${Task}: outcome=control-hold (no 15.3 s quiet window that was still fresh " +
+      "within $($watch.giveUpSeconds) s, $($cycles.Count) cycle(s); no run folder)")
     return [pscustomobject]@{ Outcome = 'control-hold'; Exit = $null; RunDir = $null; Result = $null
       Record = $record }
   }
@@ -893,6 +1036,11 @@ function Invoke-PayloadLocked {
     watch = [ordered]@{ firstCheckMs = $watch.firstCheckMs; lastCheckMs = $watch.lastCheckMs
       checks = $watch.checks; restartCount = $watch.restartCount; maxIntervalMs = $watch.maxIntervalMs }
     startedAtFromChild = $startedFromChild; finished = $finished.ToString($script:Stamp)
+    preflight = [ordered]@{ cycles = $cycles.Count; repeated = $repeated.Count
+      fullChecksMs = $cycles[$cycles.Count - 1].fullChecksMs
+      cheapCheckMs = $cycles[$cycles.Count - 1].cheapCheckMs; ageMs = $cycles[$cycles.Count - 1].ageMs
+      unstable = @($cycles | ForEach-Object { $_.unstable } | Where-Object { $_ })
+      reasons = @($repeated | ForEach-Object { "cycle $($_.cycle): $($_.reason)" }) }
     releaseObservedAt = $(if ($observed) { $observed.ToString($script:Stamp) } else { $null })
     releaseVerified = [bool]$observed; releaseExact = $false; exit = $exitCode
     controllerOutcome = $(if ($result) { $result.outcome } else { $null })

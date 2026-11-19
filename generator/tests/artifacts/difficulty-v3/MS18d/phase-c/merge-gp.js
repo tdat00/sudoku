@@ -22,6 +22,12 @@
  *   ms18d-gp-merge-result scope=all-79 complete=true meets=<true|false> successes=<k> cells=<n> required=<r>
  * and the same facts are in report.json. A selected-cell pass is not the final gate; only the all-79 scope
  * is.
+ *
+ * Epochs (the B2 transport repair): a merge at the base of the declared epoch 1 judges its one pair. The
+ * merge of epoch 2 (any other base) needs the one committed base-2 record (merge-core.js,
+ * epochRecordProblems) and judges the ledgers of BOTH declared pairs, each against its own pair; the report
+ * names the pairs, the record digest and the epoch of every consumed ledger. An invalid or missing record is
+ * exit 2 (no report).
  */
 const fs = require('fs');
 const path = require('path');
@@ -35,6 +41,8 @@ const { LEDGER } = require('./source-binding.js');
 const REAL_REPO = path.resolve(__dirname, '..', '..', '..', '..', '..', '..');
 const EXIT = { PASS: 0, MISS: 1, INVALID: 2, UNEXPECTED: 3 };
 const RESULT = 'ms18d-gp-merge-result';
+const HEX40 = /^[0-9a-f]{40}$/;
+const HEX64 = /^[0-9a-f]{64}$/;
 
 class Invalid extends Error {}
 
@@ -151,6 +159,8 @@ function reportOf(ctx, evaluation, line) {
       coldStart: c.coldStart, problems: c.complete ? [] : c.problems })),
     consumed,
     identity: { manifestSha256: ctx.doc.manifestSha256, helperManifestSha256: ctx.helperSha, base: ctx.base },
+    epochs: ctx.epochInfo && ctx.epochInfo.record ? { pairs: ctx.epochInfo.pairs,
+      record: { file: ctx.epochInfo.file, sha256: ctx.epochInfo.recordSha256 } } : null,
     observation: { argv: process.argv.slice(2), pid: process.pid, at: new Date().toISOString(),
       standin: ctx.standin }
   };
@@ -206,33 +216,115 @@ function bindingJournalOf(ctx, git, deps) {
   return { entries: parsed.entries, lines, problems: [] };
 }
 
+/**
+ * The epochs of this merge (the B2 transport repair). A merge that runs at the base of the declared
+ * epoch 1 has that one pair. Any other merge is the merge of epoch 2: its campaign base B2 and helper
+ * manifest H2 must be exactly the pair of the one never-edited record committed at EPOCH2_RECORD_REL (read
+ * from HEAD, with every proof it cites validated: merge-core.js epochRecordProblems), and the campaign then
+ * has TWO pairs, epoch 1 and epoch 2, and no third. Epoch 1 is the frozen declaration of merge-core.js
+ * (EPOCH1); a stand-in request carries its own `epoch1` (absent: a single-pair stand-in merge) and its
+ * record as `epoch2Text`. Invalid when the pair is declared nowhere, or the record is missing, edited, or
+ * does not verify.
+ */
+function declaredEpoch1(ctx) {
+  if (!ctx.standin) return core.EPOCH1;
+  const o = ctx.request.epoch1;
+  if (o === undefined) return { id: 1, base: ctx.base, helperManifestSha256: ctx.helperSha };
+  if (!o || !HEX40.test(String(o.base)) || !HEX64.test(String(o.helperManifestSha256))) {
+    throw new Invalid('the stand-in epoch 1 is not a declared pair');
+  }
+  return Object.assign({ id: 1 }, o);
+}
+
+function epochsOf(ctx, git) {
+  const e1 = declaredEpoch1(ctx);
+  const first = { id: 1, base: e1.base, helperManifestSha256: e1.helperManifestSha256 };
+  if (ctx.base === e1.base) {
+    if (ctx.helperSha !== e1.helperManifestSha256) {
+      throw new Invalid('the helper manifest of the request is not the declared one of epoch 1');
+    }
+    return { pairs: [first], record: null, file: null, recordSha256: null };
+  }
+  let head;
+  let text;
+  let commits;
+  try {
+    head = String(git(['rev-parse', 'HEAD'])).trim();
+    text = ctx.standin && typeof ctx.request.epoch2Text === 'string' ? ctx.request.epoch2Text :
+      String(git(['show', head + ':' + core.EPOCH2_RECORD_REL]));
+    commits = Number(String(git(['rev-list', '--count', 'HEAD', '--', core.EPOCH2_RECORD_REL])).trim());
+  } catch (err) {
+    throw new Invalid('the base-2 record is not committed at HEAD (' + core.EPOCH2_RECORD_REL + '): ' +
+      String(err.message).split(/\r?\n/)[0]);
+  }
+  const parsed = core.parseEpochRecord(text);
+  if (parsed.problems.length > 0) throw new Invalid(parsed.problems[0]);
+  const readText = (file) => {
+    try {
+      return fs.readFileSync(file, 'utf8');
+    } catch (err) {
+      throw new Invalid('cannot read ' + file + ': ' + err.message);
+    }
+  };
+  const manifest1Text = readText(path.join(ctx.repo, String(e1.manifestRel)));
+  if (sha256(Buffer.from(manifest1Text, 'utf8')) !== e1.helperManifestSha256) {
+    throw new Invalid('the helper manifest of epoch 1 is not the declared one');
+  }
+  const checked = core.epochRecordProblems({ record: parsed.record, base: ctx.base, helperSha: ctx.helperSha,
+    epoch1: e1, doc: ctx.doc, planRawSha256: ctx.request.plan.rawSha256, manifest1Text,
+    manifest2Text: readText(ctx.request.helpers.manifestFile), git, head, commits,
+    readProof: (rel) => {
+      const file = path.resolve(ctx.repo, rel);
+      return path.relative(ctx.repo, file).startsWith('..') || !fs.existsSync(file) ? null :
+        fs.readFileSync(file);
+    } });
+  if (checked.problems.length > 0) {
+    throw new Invalid(checked.problems.slice(0, 5).join('; '));
+  }
+  return { pairs: [first, { id: 2, base: ctx.base, helperManifestSha256: ctx.helperSha }],
+    record: parsed.record, file: core.EPOCH2_RECORD_REL, recordSha256: sha256(Buffer.from(text, 'utf8')) };
+}
+
 /** Runs the merge. `deps.git` replaces the Git reader and `deps.out` the stdout writer (stand-in tests). */
 function main(argv, deps) {
   const out = (deps && deps.out) || ((text) => process.stdout.write(text + '\n'));
   let ctx;
   let bindingJournal;
   let git;
+  let epochInfo;
   try {
     ctx = prepare(parseArgs(argv));
     git = (deps && deps.git) || gitReader(ctx.repo);
     bindingJournal = bindingJournalOf(ctx, git, deps);
+    epochInfo = epochsOf(ctx, git);
   } catch (err) {
     if (!(err instanceof Invalid)) throw err;
     out('ms18d-gp-merge-invalid ' + err.message);
     return EXIT.INVALID;
   }
+  ctx.epochInfo = epochInfo;
   const ledgerPath = (deps && deps.ledger) || LEDGER;
   const scope = ctx.args.scopeObject;
   const folders = core.collectRunFolders(ctx.doc, scope, repoFs(ctx.repo));
-  const headChecker = core.makeHeadChecker(git, ctx.base, ctx.doc, ledgerPath);
-  const evaluation = core.evaluate({ doc: ctx.doc, scope, runFolders: folders.folders,
-    expectedIdentity: core.expectedIdentityOf(ctx.doc, ctx.helperSha, ctx.base), base: ctx.base,
-    checkHead: headChecker, realRun: !ctx.standin, planRel: ctx.args.plan, bindingJournal });
+  const epochs = core.buildEpochs(ctx.doc, epochInfo.pairs, git, ledgerPath);
+  const evaluation = core.evaluate({ doc: ctx.doc, scope, runFolders: folders.folders, epochs,
+    realRun: !ctx.standin, planRel: ctx.args.plan, bindingJournal });
   folders.problems.forEach((p) => evaluation.problems.push(p));
   if (folders.problems.length > 0) evaluation.complete = false;
+  if (epochInfo.record) {
+    const consumed = [];
+    evaluation.cells.forEach((c) => (c.consumed || []).forEach((x) => consumed.push(x)));
+    core.epochAccounting(consumed, epochInfo.record, evaluation.complete && scope.type === 'all')
+      .forEach((p) => evaluation.problems.push(p));
+    if (evaluation.problems.length > 0) evaluation.complete = false;
+  }
 
   out('ms18d-gp-merge-start scope=' + scopeLabel(scope) + ' manifest=' + ctx.doc.manifestSha256 +
     ' base=' + ctx.base);
+  if (epochInfo.record) {
+    out('ms18d-gp-merge-epochs ' + epochInfo.pairs.map((p) => p.id + '=' + p.base.slice(0, 8) + ':' +
+      p.helperManifestSha256.slice(0, 8)).join(' ') + ' record=' + epochInfo.recordSha256.slice(0, 16));
+  }
   evaluation.cells.forEach((c) => {
     if (c.complete) {
       const s = c.stats;
@@ -285,4 +377,4 @@ if (require.main === module) {
   process.exitCode = guarded(process.argv.slice(2));
 }
 
-module.exports = { main: guarded, prepare, parseArgs, resultLine, bindingJournalOf, EXIT, RESULT };
+module.exports = { main: guarded, prepare, parseArgs, resultLine, bindingJournalOf, epochsOf, EXIT, RESULT };
