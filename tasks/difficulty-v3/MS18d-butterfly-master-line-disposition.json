@@ -1,0 +1,38 @@
+{
+  "schema": "ms18d-gp-line-disposition-v1",
+  "runId": "butterfly-master.i0.n50.a2",
+  "chunkId": "butterfly-master.i0.n50",
+  "purpose": "line-release-only",
+  "admissionsSpent": 2,
+  "payloads": 0,
+  "authorizes": "no admission",
+  "sa2Ruling": {
+    "form": "text-only ruling to the orchestrator, 2026-11-20 ~03:24 +07:00 (campaign live; SA2 performed no repository operation)",
+    "recordedIn": "tasks/difficulty-v3/MS18d-gate-wide-stability.md",
+    "text": "SA2 approves, subject to SA1 concurrence and verification of both unstarted holds. Line release only: both admissions remain spent; no retry or a3 is authorized."
+  },
+  "sa1Concurrence": {
+    "text": "SA1 concurs: line-release-only F3 for butterfly-master.i0.n50.a2. Evidence: checkpoint 2fe18f4b23b8c7f4aacda1e9f153bfadb1704b54, C-log lines 102-103; two eligible unstarted consumer holds (a1 BackgroundDownload.exe 34696 at 0.712 CPU-s/s; a2 MsMpEng.exe 5632 at 0.846), payloadStarted:false, no ledger, 0 payloads. Both admissions spent. Authorizes no admission.",
+    "ref": "SA1 (SA-Opus) text-only reply to the orchestrator, 2026-11-20 ~03:30 +07:00"
+  },
+  "evidence": {
+    "checkpoint": "2fe18f4b23b8c7f4aacda1e9f153bfadb1704b54",
+    "cLogLines": [
+      102,
+      103
+    ],
+    "runs": [
+      "docs/difficulty-v3/evidence/MS18d/gp/butterfly-master/butterfly-master.i0.n50.a1",
+      "docs/difficulty-v3/evidence/MS18d/gp/butterfly-master/butterfly-master.i0.n50.a2"
+    ],
+    "verifiedByOrchestrator": "both result.json payloadStarted=false, outcome control-hold, no ledger.json"
+  },
+  "campaignBase": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+  "f3Entry": {
+    "journal": "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+    "line": 3,
+    "at": "2026-11-20T03:31:19.927+07:00"
+  },
+  "recordedBy": "orchestrator",
+  "recordedAt": "2026-11-20T03:31:19.927+07:00"
+}
