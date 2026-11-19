@@ -1396,11 +1396,23 @@ kept as it is, and the timings and the work counts `checks` are not part of it. 
 variant no longer offers is generated with that level offered for the request only (recorded in the ledger); no
 offer ever changes. `tests/suites/steps.test.js` pins a few step scores by hand: review them with the goldens.
 
-The suites check the generation time of every variant against the budgets of [design.md](generator/design.md) §9.1 with
-a tolerance, so that a busy or slower machine does not fail them: twice the budget by default, three times when
-the environment variable `CI` is set (as on GitHub Actions), or the factor in `SG_TIME_FACTOR`
-(`SG_TIME_FACTOR=1` checks the budgets themselves). The budgets as such are enforced by `node tests/qualify.js`
-on the reference machine and measured by `node tests/perf.js`.
+The suites check the generation time of the variants against the budget that each suite retains, with a tolerance,
+so that a busy or slower machine does not fail them: twice the budget by default, three times when the environment
+variable `CI` is set (as on GitHub Actions), or the factor in `SG_TIME_FACTOR` (`SG_TIME_FACTOR=1` checks the
+budgets themselves). These retained budgets (`BUDGET_MS` in each manual suite, and the table of the deep run of
+`mega.test.js`) are the rating v2 values of the table of [design.md](generator/design.md) §9.1; `node tests/perf.js`
+compares with the current table, `PERF_TARGETS` in `tests/fixtures/perf-helper.js`, strictly (`p95 < target`) and
+without the factor. The recalibration of 17 of those targets by MS18d changed no retained budget, statistic, factor
+or title, so a CV6 title "design.md 9.1 budget of N" means the retained N. Eleven retained base values (ms, before
+the factor) now differ from the §9.1 target of an offered level. Manual suites, p95 (CV6): Killer Normal 700 → 5,425;
+Jigsaw 9 Easy 350 → 1,905 and Hell 2 5,000 → 10,000; Wordoku Easy 250 → 2,921; `extra-regions`, one table for both
+boards (the larger of the Diagonal X and Hyper rows), Normal 200 → 1,573 and Nightmare 3,000 → 10,000. Manual
+suite, median (not a p95): `difficulty.test.js` classic9 Easy 150 → 2,342, Normal 150 → 2,627, Expert 600 → 1,323
+and Nightmare 2,500 → 8,377. Deep only, not a manual suite: the p95 of 20 seeds of mega12 Nightmare in the
+`SG_DEEP` branch of `mega.test.js`, 3,000 → 18,842 (neither the quick set nor CI runs it). Greater-Than has no
+differing row. A failure of one of these checks is a failed numerical result to report (an S-OD4 item), not a
+reason to align a retained value, to skip or rename the test, or to call it a pass. The budgets as such are
+enforced by `node tests/qualify.js` on the reference machine and measured by `node tests/perf.js`.
 
 - **In the browser:** open `tests.html` (it works from `file://`). It loads the quick suites; `?all=1` also
   loads the manual ones, `?manual=1` runs only the manual ones and `?suite=<name>` works for both. Other query
@@ -1631,7 +1643,9 @@ on the reference machine and measured by `node tests/perf.js`.
   them.
 - **Deep statistical runs** in the mega, multigrid and variants suites are off by default; enable them with the
   environment variable `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid,variants`; in
-  PowerShell `$env:SG_DEEP = 1`).
+  PowerShell `$env:SG_DEEP = 1`). The per-level deep tests of the mega and multigrid suites are registered only for
+  the levels the board offers (MS18d); a level that the qualification hides keeps its fixed diagnostic requests,
+  not a public deep timing case. `--list-tests` with `SG_DEEP=1` lists them without running one.
 - **Final QA report:** [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 ## Conventions

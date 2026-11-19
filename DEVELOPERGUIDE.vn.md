@@ -1150,11 +1150,23 @@ biến thể không còn cung cấp mức độ của nó được tạo với m
 có mức nào được cung cấp thay đổi. `tests/suites/steps.test.js` ghim tay vài điểm của các bước: hãy rà chúng cùng các
 dữ liệu chuẩn.
 
-Các suite so thời gian tạo đề của mọi biến thể với ngân sách ở [design.md](generator/design.md) §9.1 kèm một hệ số dung
-sai, để một máy đang bận hoặc chậm hơn không làm chúng thất bại: gấp đôi ngân sách theo mặc định, gấp ba khi có
-biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số trong `SG_TIME_FACTOR` (`SG_TIME_FACTOR=1` kiểm
-đúng ngân sách). Bản thân các ngân sách do `node tests/qualify.js` bảo đảm trên máy tham chiếu và do
-`node tests/perf.js` đo.
+Các suite so thời gian tạo đề của các biến thể với ngân sách mà mỗi suite giữ lại, kèm một hệ số dung sai, để một
+máy đang bận hoặc chậm hơn không làm chúng thất bại: gấp đôi ngân sách theo mặc định, gấp ba khi có biến môi trường
+`CI` (như trên GitHub Actions), hoặc theo hệ số trong `SG_TIME_FACTOR` (`SG_TIME_FACTOR=1` kiểm đúng ngân sách). Các
+ngân sách giữ lại này (`BUDGET_MS` trong từng suite thủ công, và bảng của lần chạy sâu trong `mega.test.js`) là giá
+trị theo bản xếp hạng v2 của bảng ở [design.md](generator/design.md) §9.1; `node tests/perf.js` so với bảng hiện tại,
+`PERF_TARGETS` trong `tests/fixtures/perf-helper.js`, theo đúng `p95 < mục tiêu` và không nhân hệ số. Việc MS18d hiệu
+chỉnh lại 17 mục tiêu đó không đổi ngân sách giữ lại, thống kê, hệ số hay tiêu đề nào, nên tiêu đề CV6 "design.md 9.1
+budget of N" nghĩa là giá trị N giữ lại. Mười một giá trị gốc giữ lại (ms, trước khi nhân hệ số) hiện khác mục tiêu
+§9.1 của một mức được cung cấp. Các suite thủ công, p95 (CV6): Killer Normal 700 → 5.425; Jigsaw 9 Easy 350 → 1.905 và
+Hell 2 5.000 → 10.000; Wordoku Easy 250 → 2.921; `extra-regions`, một bảng chung cho hai bàn (lấy giá trị lớn hơn của
+hàng Diagonal X và Hyper), Normal 200 → 1.573 và Nightmare 3.000 → 10.000. Suite thủ công, trung vị (không phải
+p95): `difficulty.test.js` classic9 Easy 150 → 2.342, Normal 150 → 2.627, Expert 600 → 1.323 và
+Nightmare 2.500 → 8.377. Chỉ ở lần chạy sâu, không phải suite thủ công: p95 của 20 seed của mega12 Nightmare trong
+nhánh `SG_DEEP` của `mega.test.js`, 3.000 → 18.842 (bộ kiểm thử nhanh và CI không chạy nó). Greater-Than không có
+hàng nào khác. Một kiểm tra thất bại là một kết quả số thất bại phải báo cáo (một mục S-OD4), không phải lý do để
+chỉnh một giá trị giữ lại, bỏ qua hay đổi tên bài kiểm tra, hay coi là đã đạt. Bản thân các ngân sách do
+`node tests/qualify.js` bảo đảm trên máy tham chiếu và do `node tests/perf.js` đo.
 
 - **Trong trình duyệt:** mở `tests.html` (chạy được từ `file://`). Trang nạp các suite nhanh; `?all=1` nạp thêm
   các suite thủ công, `?manual=1` chỉ chạy các suite thủ công và `?suite=<tên>` dùng được cho cả hai. Các tham số
@@ -1379,7 +1391,9 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   thử chúng.
 - **Các lần chạy thống kê sâu** trong các suite mega, multigrid và variants mặc định tắt; bật bằng biến môi
   trường `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid,variants`; trong PowerShell dùng
-  `$env:SG_DEEP = 1`).
+  `$env:SG_DEEP = 1`). Các bài kiểm thử sâu theo từng mức của suite mega và multigrid chỉ được đăng ký cho những mức
+  mà bàn cờ cung cấp (MS18d); mức mà việc kiểm định đã ẩn vẫn giữ các yêu cầu chẩn đoán cố định của nó, không có bài
+  đo thời gian sâu công khai. `--list-tests` cùng `SG_DEEP=1` liệt kê chúng mà không chạy bài nào.
 - **Báo cáo kiểm định cuối cùng:** [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 ## Quy ước

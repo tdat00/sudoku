@@ -51,25 +51,30 @@
    * rounded up, never below the target of the level before and never above the budget of the qualification
    * (2 s for 4x4 and 6x6, 10 s up to 81 cells, 30 s above).
    * Rating v3 (MS18c): the 39 levels that the final qualification hides are null, an alignment of the table with
-   * the 79 offered levels and no recalibration: every target of an offered level is the one it had, and the old
+   * the 79 offered levels and no recalibration: every target of an offered level was the one it had, and the old
    * values of the 39 cells are recorded in docs/difficulty-v3/evidence/MS18c/closure/population-map.md.
+   * Rating v3 (MS18d): the 17 offered cells whose final qualification p95 (q) was above their target take
+   * min(budget, max(the target already selected for the level before, ceil(3 q))) from the raw q of
+   * docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json; the other 62 targets are kept (q at most
+   * the target), without a cascade; the table is in docs/difficulty-v3/evidence/MS18d/gp-preflight.json. It
+   * is a rule applied to qualification data, not a measurement of this script.
    */
   var PERF_TARGETS = {
-    classic4: row(10, null, null, null, null, null, null, null, null),
-    classic6: row(10, null, null, 350, null, null, null, null, null),
-    classic9: row(60, 150, 150, 400, 400, 900, 2500, null, null),
-    diagonalX: row(80, null, 200, 500, null, 1200, 3000, null, 3000),
-    hyper: row(80, null, 200, 500, null, 1200, 3000, null, 5000),
-    jigsaw9: row(150, 350, 350, 900, null, 2000, null, null, 5000),
-    wordoku: row(100, 250, null, 600, 600, 1500, 1500, null, null),
-    killer: row(300, 700, 700, null, null, null, null, null, null),
+    classic4: row(31, null, null, null, null, null, null, null, null),
+    classic6: row(39, null, null, 350, null, null, null, null, null),
+    classic9: row(60, 2342, 2627, 400, 1323, 900, 8377, null, null),
+    diagonalX: row(80, null, 200, 500, null, 1200, 10000, null, 3000),
+    hyper: row(80, null, 1573, 500, null, 1200, 10000, null, 5000),
+    jigsaw9: row(150, 1905, 350, 900, null, 2000, null, null, 10000),
+    wordoku: row(100, 2921, null, 600, 600, 1500, 1500, null, null),
+    killer: row(300, 700, 5425, null, null, null, null, null, null),
     greaterThan: row(300, 700, null, 6000, null, 10000, null, null, 10000),
-    mega12: row(400, 1000, 1000, 3000, 3000, 3000, 3000, null, 16000),
-    mega16: row(1500, 4000, 4000, 10000, null, 10000, null, null, 10000),
-    butterfly: row(1000, null, 3000, 8000, 8000, 8000, 8000, null, 15000),
+    mega12: row(400, 1000, 1000, 3000, 3000, 3000, 18842, null, 16000),
+    mega16: row(1500, 4000, 4000, 10000, null, 10000, null, null, 30000),
+    butterfly: row(1000, null, 3000, 8000, 8000, 8000, 30000, null, 15000),
     samurai: row(3000, null, 8000, 20000, 20000, 20000, null, null, null),
     flower: row(3000, null, 8000, 20000, null, 20000, null, null, 20000),
-    sohei: row(3000, null, 8000, 20000, 20000, 20000, null, null, 20000)
+    sohei: row(3000, null, 8000, 20000, 20000, 20000, null, null, 30000)
   };
 
   /**

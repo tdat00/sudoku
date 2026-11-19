@@ -1,0 +1,12 @@
+$ node tests\node-runner.js --suite=mega,multigrid --results=..\docs\difficulty-v3\evidence\MS18d\phase-b\results\focused-mega-multigrid.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   mega: 108 passed  (31.14 s)
+ok   multigrid: 184 passed  (25.31 s)
+
+Suites: 2
+Tests:  292 total, 292 passed, 0 failed, 0 skipped
+Time:   56.44 s running tests, 56.69 s total
+Results: docs/difficulty-v3/evidence/MS18d/phase-b/results/focused-mega-multigrid.json
+exit=0 seconds=56.922

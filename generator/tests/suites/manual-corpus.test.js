@@ -755,7 +755,8 @@
 
     describe('the performance table and its smoke cells follow the published offers (MS18c)', function () {
       // The table of design.md 9.1 as it was before the final qualification, one row per variant, the nine levels
-      // in order (null: never offered). The offered cells keep these numbers; the 39 hidden ones lose theirs.
+      // in order (null: never offered). Of the offered cells 62 keep these numbers; the 39 hidden ones lose theirs
+      // (MS18c) and the 17 listed in RECALIBRATED below take a new one (MS18d).
       var OLD = {
         classic4: [10, null, null, null, null, null, null, null, null],
         classic6: [10, null, null, 350, null, null, null, null, null],
@@ -773,16 +774,29 @@
         flower: [3000, 8000, 8000, 20000, 20000, 20000, 20000, 20000, 20000],
         sohei: [3000, 8000, 8000, 20000, 20000, 20000, 20000, 20000, 20000]
       };
+      // The 17 targets that MS18d takes from the final qualification (the rule of design.md 9.1 applied to
+      // the raw p95 of docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json; the frozen table is in
+      // docs/difficulty-v3/evidence/MS18d/phase-b/), written out here and never read from the table under
+      // test: key -> p95 target in ms. Every key is an offered cell and every value a positive integer that
+      // differs from OLD.
+      var RECALIBRATED = {
+        'classic4/veryEasy': 31, 'classic6/veryEasy': 39, 'classic9/easy': 2342, 'classic9/normal': 2627,
+        'classic9/expert': 1323, 'classic9/nightmare': 8377, 'mega12/nightmare': 18842, 'mega16/hell2': 30000,
+        'diagonalX/nightmare': 10000, 'hyper/normal': 1573, 'hyper/nightmare': 10000, 'jigsaw9/easy': 1905,
+        'jigsaw9/hell2': 10000, 'killer/normal': 5425, 'sohei/hell2': 30000, 'butterfly/nightmare': 30000,
+        'wordoku/easy': 2921
+      };
       var SMOKE_BEFORE = ['classic4/veryEasy', 'classic9/veryEasy', 'classic9/normal', 'classic9/hard',
         'classic9/master', 'classic9/nightmare', 'diagonalX/normal', 'hyper/normal', 'jigsaw9/normal',
         'wordoku/normal', 'killer/veryEasy', 'killer/normal', 'greaterThan/normal', 'mega12/normal',
         'mega16/veryEasy', 'butterfly/veryEasy', 'samurai/veryEasy', 'flower/veryEasy', 'sohei/veryEasy'];
 
-      it('has one positive, unchanged target for each of the 79 offered cells of the registry and none for the ' +
-        '56 others (39 removed, 17 never offered)', function () {
+      it('has one positive target for each of the 79 offered cells of the registry, 62 unchanged and 17 ' +
+        'recalibrated (MS18d), and none for the 56 others (39 removed, 17 never offered)', function () {
         var tools = SG.fixtures.perfTools;
         if (!tools) SG.test.skip('tests/fixtures/perf-helper.js is not loaded');
         var offered = [];
+        var updated = [];
         var removed = 0;
         var never = 0;
         SG.variants.list().forEach(function (def) {
@@ -791,7 +805,9 @@
             var target = tools.PERF_TARGETS[def.id][level];
             if (def.difficultySupport.indexOf(level) !== -1) {
               offered.push(key);
-              expect([key, target]).toEqual([key, OLD[def.id][i]]);
+              var recalibrated = Object.prototype.hasOwnProperty.call(RECALIBRATED, key);
+              if (recalibrated) updated.push(key);
+              expect([key, target]).toEqual([key, recalibrated ? RECALIBRATED[key] : OLD[def.id][i]]);
               expect(OLD[def.id][i]).toBeGreaterThan(0);
             } else {
               expect([key, target]).toEqual([key, undefined]);
@@ -803,6 +819,17 @@
         expect(SG.variants.list()).toHaveLength(15);
         expect(offered).toHaveLength(79);
         expect([removed, never]).toEqual([39, 17]);
+        // The 17 updates are all used on offered cells, positive whole numbers and real changes; 62 are kept.
+        expect(Object.keys(RECALIBRATED)).toHaveLength(17);
+        expect(updated.slice().sort()).toEqual(Object.keys(RECALIBRATED).sort());
+        expect(offered.length - updated.length).toBe(62);
+        Object.keys(RECALIBRATED).forEach(function (key) {
+          var parts = key.split('/');
+          var old = OLD[parts[0]][SG.difficulty.LEVELS.indexOf(parts[1])];
+          var value = RECALIBRATED[key];
+          expect([key, value > 0 && Math.floor(value) === value]).toEqual([key, true]);
+          expect([key, value !== old]).toEqual([key, true]);
+        });
         var cells = tools.cells().map(function (c) { return c.key; });
         expect(cells).toHaveLength(79);
         expect(cells.slice().sort()).toEqual(offered.slice().sort());

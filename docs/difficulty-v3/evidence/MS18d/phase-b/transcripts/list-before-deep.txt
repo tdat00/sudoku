@@ -1,0 +1,4 @@
+$ node tests\node-runner.js --list-tests=..\docs\difficulty-v3\evidence\MS18d\phase-b\deep-registration\before-deep.json
+Inventory: 4835 tests in 55 suites (0 skipped, 30 benchmarks), registration 0.7 s
+Written: docs/difficulty-v3/evidence/MS18d/phase-b/deep-registration/before-deep.json
+exit=0 seconds=0.795

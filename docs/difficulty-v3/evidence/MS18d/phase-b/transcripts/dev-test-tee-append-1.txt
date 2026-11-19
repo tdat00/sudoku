@@ -1,0 +1,23 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\test-tee-append.js
+ok   append-writer: CRLF only, trailing blanks dropped, a partial line is kept, create is exclusive
+ok   a command that runs: its first line is in the file BEFORE it ends, the final line is exit=0
+ok   a nonzero exit is returned as it is, stdout and stderr are both kept, nothing is retried
+ok   long output, blanks, a missing last line end, CRLF input and a split UTF-8 letter
+FAIL the tee is killed mid-output: the bytes written so far stay and there is NO final line: AssertionError [ERR_ASSERTION]: the stand-in outlives its killed tee, as designed
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-tee-append.js:152:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async test (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-tee-append.js:72:5)
+    at async main (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-tee-append.js:139:3)
+ok   the owned command is killed while the tee lives: the partial output stays, the final line is not a success
+FAIL a command that cannot be started ends with spawn-error and 127, never with an exit line: AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+1 !== 127
+
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-tee-append.js:178:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async test (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-tee-append.js:72:5)
+    at async main (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-tee-append.js:174:3)
+ok   usage errors and an existing transcript give code 2 and change nothing
+6 passed, 2 failed
+FAILED: the tee is killed mid-output: the bytes written so far stay and there is NO final line | a command that cannot be started ends with spawn-error and 127, never with an exit line
+exit=1 seconds=3.687

@@ -1114,6 +1114,9 @@
     describe('mega deep run: 20 puzzles per level (SG_DEEP=1)', function () {
       IDS.forEach(function (id) {
         LEVELS.forEach(function (level) {
+          // A public deep timing case exists only for a level the board offers (MS18d, as in step 5 of MS18c);
+          // a level that qualification hides stays a fixed diagnostic request and is not registered here.
+          if (PUBLISHED[id].indexOf(level) === -1) return;
           it(id + ' ' + level + ': 20 seeds, hit rate and p95 time against section 9.1', function () {
             var exact = 0;
             var times = [];

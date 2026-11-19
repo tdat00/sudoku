@@ -1,0 +1,4 @@
+$ node tests\perf.js --hash-key=flower/normal --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS18d\hashes\flower-normal-00.json
+  flower/normal: seeds 1, 2, 3, 5, 8 (2.5 s)
+recorded 5 of 520 keys (flower/normal, seed indexes 0-4 (seeds 1, 2, 3, 5, 8)) in docs/difficulty-v3/evidence/MS18d/hashes/flower-normal-00.json; a ledger is one shard, merge them all with --hash-merge
+exit=0 seconds=3.070

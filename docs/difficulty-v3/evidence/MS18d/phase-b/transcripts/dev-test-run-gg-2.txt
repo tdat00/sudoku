@@ -1,0 +1,13 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\test-run-gg.js
+ok   a clean compound: every shard passes, transcripts and ledgers are complete, runs are recorded
+ok   admission: a shard that does not fit is not started, the compound ends normally and resumes
+ok   a nonzero exit stops the compound: the next shard never starts, the failed one is kept
+ok   exit 0 is not a pass without its complete ledger of the right identity: partial
+ok   exit 0 is not a pass without its complete ledger of the right identity: badsource
+ok   exit 0 is not a pass without its complete ledger of the right identity: nofile
+ok   a shard already run is never run again or replaced; nothing is touched
+ok   a stray or .partial file in the ledgers directory stops everything before the first shard
+ok   the compound is killed mid-shard: the partial transcript stays, no end record, no ledger
+ok   a dry run writes nothing; refusals of bad arguments and plans are exit 2
+10 passed, 0 failed
+exit=0 seconds=7.436

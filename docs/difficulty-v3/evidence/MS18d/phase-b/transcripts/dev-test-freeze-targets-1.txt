@@ -1,0 +1,54 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\test-freeze-targets.js
+ok   a target is read exactly to the millisecond: seconds with up to three decimals, never rounded
+ok   the table of design.md is read per variant and level, with the bold cells and the dashes
+FAIL a budget literal is evaluated as data only: AssertionError [ERR_ASSERTION]: Values have same structure but are not reference-equal:
+
+{
+  a: 1,
+  b: 2,
+  c: 3
+}
+
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-freeze-targets.js:55:10
+    at test (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-freeze-targets.js:17:5)
+    at Object.<anonymous> (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-freeze-targets.js:53:1)
+    at Module._compile (node:internal/modules/cjs/loader:1968:14)
+    at Object..js (node:internal/modules/cjs/loader:2108:10)
+    at Module.load (node:internal/modules/cjs/loader:1690:32)
+    at Module._load (node:internal/modules/cjs/loader:1480:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:33:47
+FAIL retained budgets: only offered levels are compared; the larger of two rows; the mega table: AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+... Skipped lines
+
+  [
+    [
+      'one.test.js',
+      'alpha',
+      'easy',
+...
+      'two.test.js',
++     'beta',
+-     'alpha+beta',
+      'normal',
+      200,
+      3000
+    ],
+    [
+
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-freeze-targets.js:73:10
+    at test (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-freeze-targets.js:17:5)
+    at Object.<anonymous> (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-freeze-targets.js:59:1)
+    at Module._compile (node:internal/modules/cjs/loader:1968:14)
+    at Object..js (node:internal/modules/cjs/loader:2108:10)
+    at Module.load (node:internal/modules/cjs/loader:1690:32)
+    at Module._load (node:internal/modules/cjs/loader:1480:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:33:47
+ok   the pairs as the documents write them: thousands with a comma in English and a dot in Vietnamese
+3 passed, 2 failed
+FAILED: a budget literal is evaluated as data only | retained budgets: only offered levels are compared; the larger of two rows; the mega table
+exit=1 seconds=0.104
