@@ -81,6 +81,23 @@ Other hit-rate/availability results keep their own status; correctness/uniquenes
 unsoundness and evidence failures still block. No separate deep compatibility
 or completeness requirement is waived.
 
+**Deep registration prerequisite, assigned to MS18d Phase B (2026-11-19):**
+audit the closure of **MS18d-DEEP-PUBLIC-REGISTRATIONS** before live deep work.
+SA1 identified the unfiltered mega public deep loop after MS18c acceptance;
+SA2 also verified the analogous four multigrid Easy cells. MS18d owns the
+branch-local published-level filters: mega removes **mega12/hell1,
+mega16/nightmare, mega16/hell1** (12 -> 9 deep registrations), and multigrid
+removes **samurai/easy, sohei/easy, butterfly/easy, flower/easy** (16 -> 12).
+Require the seven-entry original-request/GQ removal map, unchanged ordinary
+quick inventory, exact deep-list delta and bounded source-audit disposition.
+This is not an application/test-repair assignment for MS18e.
+**Mega12 Nightmare stays registered with the 3000 ms base contract above.**
+No retained test body, threshold, seed or tier changes; fixed diagnostic corpora,
+restoring guards, mega-contract and GG/GR requests remain intact. Extra findings
+must have an explicit assignment before handoff, not an unsupported-level crash
+left for this task to discover. Do not treat registration-only proof as a live
+deep pass or silently waive missing compatibility evidence.
+
 Also audit the recovery-profile scope repair: **G13 = Samurai/Nightmare/42**,
 existing mode-specific attempts/budgets unchanged, support restored and the newly
 loaded `tool-records.js` covered by the reported old/new toolHash. Retag no older

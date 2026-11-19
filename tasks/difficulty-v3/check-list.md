@@ -265,16 +265,42 @@ In design 15.1/15.2, both developer guides and the Phase-B handoff enumerate
 every retained manual-versus-GP budget mismatch, including extra-regions'
 larger-row rule and classic9's **median** gates. Legacy CV6 titles mean their
 retained N; no manual title/budget/threshold/factor edit or later automatic
-alignment after a live MS18e failure. **SA2's inventory ruling B (for SA1
-cross-review) keeps eleven contrasts: ten manual plus one separately labelled
-deep-only row**:
+alignment after a live MS18e failure. **SA2's inventory ruling B (`4b9e5a1f`),
+concurred with by SA1 with conditions, keeps eleven contrasts: ten manual plus
+one separately labelled deep-only row**:
 `BOARDS.mega12.budgets.nightmare` remains **3000 ms** before the factor, while
 its GP target is **18842 ms**. Its 20-seed p95 assertion runs only with
 `SG_DEEP=1`, not ordinary quick/CI. Keep it in the documents/freeze-checker
 inventory and MS18e handoff; a time-only failure is retained, never aligned or
-waived. No mega test/budget/title/seed/tier edit or new run is assigned.
+waived. The original inventory ruling assigned no mega edit; the following
+registration-only addendum is the explicit exception, not a budget/title/seed/
+tier change or permission for a live deep run.
 The earlier design 15.5 reference was wrong (browser checklist); use actual
 15.1/15.2 locations. Hidden rows still have no GP target, not zero.
+
+**MS18d-DEEP-PUBLIC-REGISTRATIONS — OPEN, assigned now to Phase B.**
+The 12:06 relay records SA1's missed unfiltered mega public deep branch; remove
+exactly mega12/hell1, mega16/nightmare and mega16/hell1 via the existing
+`PUBLISHED[id]` intersection before registration. SA2 directly verified the same
+defect in multigrid's deep branch and assigns its four Easy removals:
+samurai, sohei, butterfly and flower. Preserve original ladders, all retained
+bodies/budgets/requests/assertions/titles/tier and all fixed diagnostic/GG/GR
+populations/guards. Mega12 Nightmare stays registered at the retained 3000 ms base.
+The leaf records the seven GQ references and SA1's mega condition verbatim.
+
+Capture ordinary and `SG_DEEP=1` **`--list-tests`** before/after under the lock:
+ordinary quick unchanged; mega deep **12 -> 9**, multigrid deep **16 -> 12**,
+only these seven removals and no additions. No live deep work in MS18d.
+One file-only audit covers the **37 Generator quick + 8 manual + 18 shared
+suite files**, tracing only deep gates/aliases and their public/diagnostic
+registration/generation routes. Other positive or ambiguous findings are
+**QUESTIONs before edits**, not blanket fix permission, and need explicit
+assignment before Phase-B acceptance. Close this item with the map/audit/proof;
+MS18e audits it before deep work rather than repairs known unsupported requests.
+Suite-only changes affect Generator quick/with-manual fingerprints, not E hash/
+replay source identities, GG's 520-key recipe or Player quick by themselves.
+The existing target edit's E hash identity change and common-guide fingerprint
+changes remain distinct; capture real metadata and retain Phase D's quick gates.
 
 **Step-5 ruling (2026-11-19, 07:58 relay):** cases 1-3 use original fixed
 diagnostic corpora, counts, seeds, indexes and thresholds, with per-call restoring
@@ -820,6 +846,7 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | S-AV27 qualification second round on one worker | **Final execution gap closed by MS18c under S-OD13:** all six old unexecuted cells ran and are hidden on time; all 135 records accepted. The scheduler is unchanged: MS07d's `round2-workers.txt` still establishes the possible 60 serial second-round requests. Final expansions were hyper/Expert 53, flower/Nightmare 50 and wordoku/Normal 46 requests. Preserve MS07e's incomplete old-source checkpoint and mixed-concurrency caveat; GQ is not jobs-1 GP timing and receives no time normalization | Closed final-GQ gap; timing/cost caveat to MS18d, MS18e audit |
 | MS18c-GQ-ENGINE-COST | **Open; comparator definitions resolved. Primary SA2:** 2,122 strict matched pairs, ordinary pooled median **1.1240**. **Separate SA1:** equal seed/hit/achieved/score/solved/approximate/exact/valid within a cell, both times >50 ms, >=5 pairs/cell; lower median of each cell's ratios then lower median of **51 cell medians =1.1285**, reproduced after the 11:33 clarification. Not a pooled statistic or a new timing run. Closure also records **mega16-replay 331.6 s vs118 s at MS07f**, above its 300 s projection but inside 450, and 17 offered GQ cells above the pre-update targets. Preserve source/clock/cohort distinctions; no GP verdict, normalization, retune, budget waiver or GQ repeat follows | MS18d; MS18e audit |
 | MS18d-GP-BOUND-sohei-hell2 | **Unadmitted mean alert, not a GP measurement.** Accepted GQ: n=40, mean **9711.9411975 ms**, `50*mean/1000 = 485.597059875 s >450`, before setup/readiness/variance. Keep the cell in the 79-cell GP denominator; no shorter cohort, GQ watchdog, pilot or extended deadline. Other 78 mean-unflagged cells still need credible reviewed whole-command plans. Q1's environment answer cannot waive this bound; an unmeasured cell leaves the full GP gate incomplete | MS18d current-source admission/report; MS18e audit |
+| MS18d-DEEP-PUBLIC-REGISTRATIONS | **OPEN; narrow Phase-B fix/audit assigned.** Remove only three hidden mega and four multigrid Easy public deep registrations via existing published membership. Keep the eleven-row budget inventory, mega12 Nightmare's 3000 ms base and all diagnostic/retained test contracts. Require ordinary inventory unchanged, mega deep 12 -> 9, multigrid deep 16 -> 12, seven-entry GQ removal map and the bounded 63-file source audit; further findings are QUESTIONs before edits. No live deep run or E/GG recipe change; no unresolved unsupported-level handoff | MS18d Phase B repair/evidence; MS18e prerequisite audit |
 | IR17 final carry | Classic9 Nightmare remains offered. The older `00647f9` GD batch cost **430.5 s**; **449 s is not a reusable bound**. Require current-source conservative whole-command admission under unchanged 450/540 protection, with honest named incomplete coverage if not admissible | MS18c handoff; remaining GD and final audit MS18e |
 | S-AV28 Easy availability | MS07e GQ: diagonalX Easy 28/40, hyper 29/40, samurai 10/22, sohei 4/18, butterfly 1/15, flower 0/14 (current offers lose Easy on six variants); 40/40 elsewhere | MS18c |
 | S-AV29 Greater-Than Master time | MS07e GQ: 40/40 hits but p95 14.5 s over the 10 s budget (heavy tail; the cell took 35.3 s against a 27.5 s projection): hidden by time | MS18c, MS18d |

@@ -7,7 +7,7 @@
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
 | Authority | R24/R21, FS23, S-OD4; S-AV01 not offered; S-OD13 is GQ-only, not a GP waiver |
-| Status | Phase A accepted/committed; Phase B resumed with SA1's GG/CV6 conditions (2026-11-19 11:33 relay); Phase C NOT released, Q1 unanswered |
+| Status | Phase A accepted/committed; Phase B functional work with SA1's GG/CV6 conditions and the 2026-11-19 deep-registration addendum below; Phase C NOT released, Q1 unanswered |
 
 ## Goal & business context
 
@@ -16,7 +16,8 @@ puzzle hashes after publication. A hash-only pass is not a timing gate.
 
 ## Scope and repository rules
 
-In: published qualification-derived target rule, full GP, full GG check and evidence.
+In: published qualification-derived target rule, full GP, full GG check and evidence;
+the explicitly bounded Phase-B deep-public-registration repair and file-only audit below.
 Out: performance-driven algorithm tuning, arbitrary target relaxation, canonical hash rewriting.
 AGENTS/checklist; no developer Git writes, pack edits or task-log edits. The
 orchestrator owns implementation commits and dispatch. All local Node commands
@@ -441,7 +442,8 @@ remain unadmitted, and the Sohei Hell 2 hold is unchanged.
 
 ### Retained manual/deep budgets versus the new GP table — documentation, not edits to tests
 
-**SA2 inventory ruling B, 2026-11-19, for SA1 cross-review/orchestrator relay:**
+**SA2 inventory ruling B, `4b9e5a1f`, concurred with by SA1 with conditions
+(2026-11-19 12:06 relay):**
 keep **eleven** documented contrasts:
 the ten manual rows below **plus one separately labelled SG_DEEP-only row**.
 The ten-row list in `9ab6cd4b` was correct for its manual subset but incomplete
@@ -526,8 +528,149 @@ Verify this inventory from the unchanged manual/deep declarations and the frozen
 target plan when writing the design/guides/handoff. A later source difference
 must be reported, not silently handled by changing an assertion. The existing
 manual/deep titles, thresholds, budgets, seeds, counts, time factors and
-public/diagnostic/tier boundaries all remain as accepted. In particular,
-**`mega.test.js` is not assigned any edit by this ruling**.
+public/diagnostic/tier boundaries all remain as accepted, except for the
+explicitly assigned public registration removals in the addendum below.
+**The original inventory-only ruling assigned no `mega.test.js` edit; the
+following narrow assignment supersedes that exclusion, not its budget ruling.**
+
+### Phase-B addendum — deep public registrations, not diagnostic population changes
+
+**Assign now to MS18d Phase B, not MS18e.** Item
+**MS18d-DEEP-PUBLIC-REGISTRATIONS is OPEN** until the repair, bounded audit and
+registration evidence below are verified. SA1 identified the missed mega branch
+after MS18c acceptance; preserve that acceptance/history and record this correction
+explicitly rather than leave known `difficulty.unsupportedLevel` failures to the
+planned MS18e deep run. No owner decision is needed: apply the existing step-5
+public per-level rule, not a new threshold or tier policy. Ruling B's eleven-row
+inventory and honest failed S-OD4 timing treatment remain unchanged.
+
+**SA1's condition, verbatim:**
+
+> In `generator\tests\suites\mega.test.js`'s `SG_DEEP=1` branch, register the per-level deep test only for levels in `PUBLISHED[id]`, under the step-5 public per-level rule.
+> - Keep unchanged: `LEVELS`, `BOARDS` budgets, seeds 1..20, the 120000 ms request budget, hit-rate and p95 assertions, titles and tier.
+> - Record the three removed deep registrations (mega12/hell1, mega16/nightmare, mega16/hell1) with their GQ verdicts in the Phase-B handoff.
+> - Prove the quick inventory is unchanged with `--list-tests`, and that the `SG_DEEP=1` registration list drops exactly those three.
+> - No deep run in MS18d. Mega12 Nightmare stays registered, as the eleventh inventory row.
+
+**Additional directly verified hit, assigned by SA2 under the same rule:**
+`generator\tests\suites\multigrid.test.js:1086-1107` has the same unfiltered
+public deep loop over `BOARDS[id].levels`. Its existing `PUBLISHED` map excludes
+**Easy for samurai, sohei, butterfly and flower**, yet that branch directly calls
+`SG.pipeline.run`, not its existing diagnostic `asRequested` helper. Remove
+exactly these **four Easy public deep registrations** using the same membership
+check before `it`. Keep `BOARDS` levels/budgets, `HIT_RATE`, original order and
+indexes, seeds 1..20, trace off, 120000 ms request budget, test timeout, p95/index
+calculation, uniqueness assertion, titles and tier unchanged.
+
+Only these **two branch-local registration filters / seven named removals** are
+authorized. Keep the original loops/arrays and skip registration for a level
+absent from `PUBLISHED[id]`; do not rebuild or compact a level ladder, replace
+an assertion, call `it.skip`, expand public support or add a diagnostic override
+to make a hidden public timing case run. All retained test bodies stay unchanged.
+Do not filter fixed diagnostics, existing `asRequested`/`withRequestedLevel`
+corpora, aggregate/trend/soundness checks, `mega-contract.js`, recovery requests
+or GG/GR manifests. In particular, GG's fixed Samurai Easy request remains.
+
+**Authoritative GQ references for the removal map**, read file-only from
+`evidence\MS18c\merge\qualification-v3.json` at this ruling; these are **not new
+deep measurements**. Each removed public deep registration requested seeds
+**1..20, count 20**. Record its full original test name, local level index and
+canonical nine-level index, original request options/count and GQ reference in
+the new Phase-B handoff/map, without changing accepted MS18c records.
+Every row below has GQ budget **30000 ms**; keep the actual early-stop reason.
+
+| Suite / removed cell | Original local level index | GQ hits / n | GQ verdict / stop | GQ p95 ms |
+|---|---:|---:|---|---:|
+| mega / mega12 hell1 | 5 | 0 / 9 | hidden / time | 105764.751 |
+| mega / mega16 nightmare | 4 | 25 / 25 | hidden / time | 60754.8719 |
+| mega / mega16 hell1 | 5 | 0 / 9 | hidden / time | 120015.1966 |
+| multigrid / samurai easy | 1 | 10 / 22 | hidden / misses | 1129.1194 |
+| multigrid / sohei easy | 1 | 4 / 18 | hidden / misses | 899.3724 |
+| multigrid / butterfly easy | 1 | 1 / 15 | hidden / misses | 1115.6109 |
+| multigrid / flower easy | 1 | 0 / 14 | hidden / misses | 901.8375 |
+
+**Bounded follow-up audit: one file-only pass, no general test repair.**
+
+- Inventory `*.test.js` under **`generator\tests\suites` (37)**,
+  **`generator\tests\manual` (8)** and **`core\tests\suites` (18)**: 63 files
+  at this base. Search `SG_DEEP`, `SG.test.deep` and their aliases; follow the
+  resulting deep-only registrations/volume changes and per-level producer calls.
+  Trace existing runner/corpus helpers only as needed to classify those calls.
+- Include the named candidates **multigrid, killer, jigsaw, extra-regions,
+  wordoku, difficulty**, plus **mega and manual variants**. The initial source
+  screen finds actual mode switches in mega, multigrid and manual variants;
+  document the others' negative/classification results, not just grep silence.
+  A technique named `nishioDeep`, a `deepEqual` call or a help-text assertion is
+  not a deep execution gate.
+- Distinguish public per-level checks from fixed diagnostics: published
+  intersection for the former; original population plus existing restoring
+  guards for the latter. Manual variants' deep volume uses its public support
+  population; do not convert the five manual suites' fixed diagnostic ladders
+  into that population or reopen their accepted aggregate assertions.
+- Record inspected files/branches, public membership, guard/corpus route and
+  verdict in the Phase-B handoff. **Any further positive or ambiguous finding
+  is a `QUESTION:` before editing it.** Report the exact source, affected
+  registrations/requests and proposed classification. No blanket permission to
+  filter other loops, fix another suite, change thresholds or widen the audit.
+  The seven explicitly named removals above need no second discovery question.
+
+**Registration proof and release boundaries:**
+
+1. Capture the ordinary Generator **`--list-tests`** inventory **before and
+   after these filters**, with deep mode unset. Compare full names/membership,
+   not only counts: zero change. Baseline the current Phase-B tree, so the
+   separately approved `manual-corpus` target-pin rename is not mistaken for
+   a new difference caused by this repair.
+   Keep the real before/after fingerprint metadata: the expected zero
+   membership/name delta does not mean the inventory JSON is byte-identical.
+2. Capture the corresponding **`SG_DEEP=1 --list-tests`** inventories, with the
+   same suite selectors before/after. Mega's named deep describe goes **12 -> 9**
+   (exactly SA1's three); multigrid's goes **16 -> 12** (exactly the four Easy
+   cases). The combined delta is **seven removals, zero additions**, with all
+   other registrations unchanged. **Mega12 Nightmare remains registered.**
+   Reconcile full names, source hashes and the removal map.
+3. All Node inventory/identity calls still use `Invoke-Dv3Node`, transcripts,
+   shared slot, bounds and >=15 s gaps. `SG_DEEP=1` is allowed **only for
+   registration listing**, never a live test invocation here. Scope the
+   environment flag to that child or restore it in `finally`; non-listing
+   focused/GG commands must not inherit deep mode. No deep/manual generation,
+   timed sampling or browser run is authorized by this audit.
+4. Preserve before/after sources and outputs under the existing Phase-B evidence
+   tree. Reconcile the diff so that only the two registration filters and
+   directly coupled living documentation change for this repair. Preserve every
+   retained test body, count per retained cell, budget and assertion; do not
+   turn an unsupported-level exception into an accepted S-OD4 timing miss.
+5. Close the named item only after this evidence and the bounded-audit outcome
+   are reviewed. An unresolved additional finding must be explicitly assigned
+   before Phase-B acceptance; no unsupported-level discovery is delegated to
+   MS18e. Its eventual live deep results remain MS18e's obligation.
+
+**Identity ruling — verified recipes, not just an expectation:**
+
+- The two `suites\*.test.js` files are **not inputs to E hash `sourceHash`,
+  replay `sourceHash`, or the GG request manifest**. `perf.js` hashes its
+  engine list plus `perf-helper.js`, `tool-records.js` and `perf.js`; its
+  `hashManifest()` uses the unchanged 26 `COMBOS` x 20 `SEEDS`.
+  The replay recipe uses its existing source list and four recorder files.
+  Keep all 520 GG keys, the 104 shards and the check-only protocol unchanged.
+- The post-target E hash source identity currently is
+  **`344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1`**;
+  replay is
+  **`1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc`**.
+  These were reproduced file-only on the dirty Phase-B tree at this ruling.
+  **The suite filters alone change neither**; the earlier `perf-helper.js`
+  target edit already changed E hash from `1032ab2f...`, independently of them.
+  Compare actual before/after identities; any unexpected change is a QUESTION.
+- Generator quick **and Generator-with-manual** fingerprints include these
+  suite files and therefore change. The two suite files alone do **not** change
+  Player quick's fingerprint; the already assigned common-guide edits do.
+  Complete final quick runs/fingerprints remain Phase D. Registration-only
+  evidence is not a replacement quick pass.
+- Git commit/dirty/Node metadata is distinct from source/manifest identities:
+  report actual metadata, retag nothing. Do not rerun or rewrite GG/replay
+  merely because a suite file or pack commit changed when the required
+  source/manifest compatibility still holds. This grants no new Phase-C GP or
+  S-AV11 permission; Q1 and per-cell admission remain outstanding.
 
 **CV6-05 / S-AV01 is settled: "not offered".** Normal has 40/40 hits but p95
 10,192.4051 ms >10,000 ms. It is not in the 79-cell GP population; the Fable trigger
@@ -710,6 +853,11 @@ edits or timed work when arithmetic is green.
   `generator/tests/suites/manual-corpus.test.js`, exactly as ruled above;
   Generator design **15.1/15.2** and the coupled manual/deep budget wording in
   both developer guides. No change to `manual/perf.test.js`'s consistency test or other pins.
+- **Phase-B deep-registration addendum:** only the named `SG_DEEP=1` public
+  registration filters in `generator/tests/suites/mega.test.js` and
+  `generator/tests/suites/multigrid.test.js`, their Phase-B audit/inventory
+  evidence and directly coupled living documentation. No other suite edit is
+  authorized by the file-only audit; further findings are QUESTIONs first.
 - Clarify GP-target versus retained manual-CV6 wording if needed, without changing
   a manual `BUDGET_MS`, test threshold, seed or population.
 - No production code, `perf.js`/`measure` behavior, `regression.js`, replay/help
@@ -737,6 +885,9 @@ edits or timed work when arithmetic is green.
    resume, apply **only** the rule-derived 17
    targets (or return any mismatch as a QUESTION), with design 9.1 and both
    developer guides and the single coupled quick pin under option A above.
+   Apply the seven named public deep-registration removals in the two assigned
+   branches; perform the bounded source audit and before/after registration
+   proof under **MS18d-DEEP-PUBLIC-REGISTRATIONS**, without running deep tests.
    Prepare/test the versioned incremental wrapper before long GG work.
    Freeze the complete target table and source identities
    **before GP**; keep every other positive target and all hidden/null cells.
@@ -774,7 +925,8 @@ edits or timed work when arithmetic is green.
 11. Return the complete GP status, final 520-key check and inherited/new item
     register for **orchestrator review**. Include S-AV01 not offered, S-OD7,
     closed S-AV27, IR17, **MS18c-GQ-ENGINE-COST**, **MS18d-GP-BOUND-sohei-hell2**,
-    S-AV11 and the older source-qualified S-AV31/S-AV33/S-AV34/S-AV36-S-AV39 /
+    **MS18d-DEEP-PUBLIC-REGISTRATIONS**, S-AV11 and the older source-qualified
+    S-AV31/S-AV33/S-AV34/S-AV36-S-AV39 /
     MS15b-GP-J/U records. S-OD4 permits continued safe work after cost findings,
     not an incomplete/failing gate labelled green. No developer commit/push.
 
@@ -800,6 +952,8 @@ edits or timed work when arithmetic is green.
 | MS18d-T09 | Versioned append-as-arriving transcript wrapper/short stand-ins preserve partial failures and exit semantics, cleanup and >=15 s gaps; Phase-A 25-entry freeze remains intact; Phase B grants no GP/profile permission |
 | MS18d-T10 | Every real GG shard has exit 0 plus five exact ledger keys; full 104-ledger check-only merge is the only GG pass; nonzero/signal/kill/missing/partial/mismatch stops for QUESTION without an automatic retry |
 | MS18d-T11 | Design 15.1/15.2, both developer guides and handoff enumerate eleven retained-versus-GP contrasts: ten manual rows plus the separately labelled SG_DEEP-only mega12 Nightmare 3000 vs18842; no manual/deep title/budget/threshold/factor/tier changed |
+| MS18d-T12 | Ordinary quick registration names/counts unchanged; deep mega 12 -> 9 and multigrid 16 -> 12 remove exactly the seven named hidden public cells with GQ references; mega12 Nightmare retained; no test-body/budget/diagnostic change or live deep run |
+| MS18d-T13 | Bounded 63-file deep-registration audit documented; additional findings questioned before edits and assigned before Phase-B acceptance; suite-only changes leave E/GG recipes intact, update Generator fingerprints honestly and close MS18d-DEEP-PUBLIC-REGISTRATIONS with reviewed evidence |
 
 ## Test plan and gates
 
@@ -855,6 +1009,9 @@ Return the recorded Q1 decision/policy, full preflight and distinct admission
 bases, intended/completed cell coverage, immutable target arithmetic/source tuple,
 all raw transcripts and the actual aggregate verdict (incomplete where appropriate),
 complete GG evidence and the cumulative item list.
+Include the closed deep-public-registration item, seven-removal map and bounded
+audit/registration evidence; preserve any additional named finding and its
+explicit assignment rather than pass a known unsupported request to MS18e.
 S-OD4 allows continuing after a performance miss, not claiming a failed release gate passed.
 Any proposed change to a recorded performance contract still needs its owner/delegated decision
 (not an inherited S-OD13/S-OD14 grant); an authorized
