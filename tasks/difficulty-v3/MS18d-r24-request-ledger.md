@@ -5,6 +5,10 @@ SA2 accepts SA1's **O1**, 2026-11-19: the blanket single-command restriction
 in `ad7d30e3` was too broad. R24 already permits this route.
 SA1 **CONCURS WITH CONDITIONS** on `e4cd92d6`; **R1-R6 below are binding**.
 The numerical plan is unchanged.
+Implementation baseline **`56b97b26`** is now **SA1 ACCEPT WITH CONDITIONS
+F1-F6; C1 released**. Those conditions and host/ruling governance are in
+**`MS18d-c1-readiness-and-rulings.md`** and supersede any pre-C1 path that could
+admit a real request without readiness. No real recording is released yet.
 
 ## Authority and release
 
@@ -168,6 +172,14 @@ Non-descendants, disallowed committed paths or content-identity drift stop.
 Working-tree cleanliness still follows C0-4 exactly; uncommitted pack/helper
 changes are not allowed merely because a later pack-only commit would be.
 
+F3's committed hold-rulings journal and the C1 host-binding journal are
+append-only **operational authorization data under `tasks/difficulty-v3/`**.
+Their reader/policy code and paths are frozen; do not freeze their changing
+contents as common helper hashes or require one active host tuple for all
+chunks. Each admission binds the committed entries/version it used. Approved
+single-host replacements keep A's policy/thresholds unchanged, preserve prior
+references and need joint approval; they never reset counts or authorize a retry.
+
 Checkpoint commits and reports happen **only between payloads**, after cleanup
 and before the next fresh checks. Phase D's non-pack design/guide/report edits
 follow the final campaign merge; they are not mid-campaign path exceptions.
@@ -259,6 +271,14 @@ For each cell require:
   cleanup proof. A killed recorder's apparently complete file is not rescued.
   Reject stand-in/test/dry-run provenance even when its schema or hashes match;
   test artifacts never become entries of the real campaign.
+- **F5/F6:** a real request may not contain `command.exec`. A hold must be a
+  genuine unstarted control-hold with **no payload artifacts**, or the narrow
+  bare foreign-lock-watch `wrapper.json` case; a boolean is insufficient.
+  Every real ledger requires a complete **admitted A readiness record**:
+  five in-process intervals, before/after instance snapshots, valid approved
+  host binding/exclusions, raw-ready versus admitted distinction and the
+  query/readiness/call-to-spawn limits. Validate the referenced committed
+  binding for that admission, not the newest host after the campaign.
 - One common source/executed-content, target-table, plan/helper identity,
   campaign base **B**, Node, machine, selected policy and empty R5 flags across
   the cell **and across the final matrix**. Actual HEADs may differ only under R3.
@@ -310,8 +330,9 @@ Only the complete all-79 check can declare the aggregate gate:
 Each chunk has its **own** fresh process, admission, 450/540 envelope and
 >=15 s gap (planned 15.3 s lock-free pre-window), plus G1-G5/C0-1..C0-6.
 Under A, at most **two admissions per immutable chunk/protocol identity**,
-the second only after the existing verified unstarted consumer-only hold and
->=60 s release-to-re-ask wait. At most **one actual payload per chunk**.
+the second only after the declared `.a1` is an artifact-free unstarted hold
+and either automatic consumer-only eligibility with **>=60 s** since release
+or a valid **F3 committed joint ruling**. At most **one actual payload per chunk**.
 For a one-chunk cell this is the old cell-level allowance. B has no automatic
 re-ask. An S-AV11 request, if ever admitted, remains one independent profile unit.
 
@@ -326,6 +347,19 @@ Do not reset counts on process restart, HEAD change or evidence checkpoint.
 A derived immutable report may display counts, but cannot become resettable
 operational state. The campaign B/manifest/chunk identity, not current HEAD,
 anchors accounting across permitted R3 commits.
+Under F1, a new watch give-up creates **no folder** and its `pre-window-hold`
+log line consumes no admission. F2 checks before creation: `.a1` refuses any
+existing folder of the chunk, `.a2` must meet all the conditions above.
+
+**F3/F4:** SA2 rules, SA1 concurs, and the orchestrator alone appends/commits
+`tasks\difficulty-v3\MS18d-gp-rulings.jsonl` lines of the prescribed
+`{chunkId,heldRunId,allowAttempt:2,ref,at}` shape. After any non-success other
+than that chunk's own eligible re-ask, stop all further real calls until a
+valid ruling covers the held run. Do not bypass the stop through another chunk,
+directory or profile.
+Rulings apply only to unstarted holds, not started failures; F1/F2/F6 and the
+two-admission/one-payload limits still apply. The C1 leaf defines this governance,
+host-rebinding approvals and the B-freeze prerequisites in full.
 
 The legal continuation is **later execution of an unstarted, preplanned chunk**.
 It is not restarting `measure`, resuming the tail of an executed chunk,
@@ -375,11 +409,17 @@ Focused stand-ins/file-only checks must cover:
 - R4 count reconstruction across restarts/checkpoints, conflicting/missing
   evidence and no resettable counter file; lawful unstarted continuation versus
   forbidden failed/completed replacement.
+- F1-F6 precreation refusals and zero-admission pre-window holds, F2 attempts,
+  committed F3 rulings/global F4 stop, strict hold/artifact/command.exec checks
+  and rejection of missing/incomplete readiness. Rebinding tests preserve the
+  policy, old ledger references and used slots; they do not enable retries.
 
 Freeze/review the manifest and helper identities before C2. Preserve C0 work
 already done; extend the per-payload classifier rather than replace transport.
 All tests use the shared lock/bounds; this fake-data release is independent of
 Q1. Its recorded A answer resolves the environment choice, not C2's remaining gates.
+The final integrated **C0/C0b/C1** snapshot must pass all seven suites, be
+refrozen under a new helper SHA and receive the combined SA1 review before C2.
 
 ## Merge scheduling, progress and Phase D attribution
 

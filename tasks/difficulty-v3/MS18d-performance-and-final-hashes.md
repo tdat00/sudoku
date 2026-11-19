@@ -3,11 +3,11 @@
 | Header | Value |
 |---|---|
 | Depends on | MS18c accepted at `e0596801`; acceptance recorded by `34ebc3fc`; S-OD15 A recorded; reviewed C0/C0b/C1 tooling and per-chunk admission before timing |
-| Accepted base | MS18c `e0596801`; acceptance `34ebc3fc`; Phase A `602af371`; Phase B `50903182`, SA1 ACCEPT WITH CONDITIONS recorded at `b3144fcf` |
+| Accepted base | MS18c `e0596801`; acceptance `34ebc3fc`; Phase A `602af371`; Phase B `50903182` / `b3144fcf`; C0/C0b `56b97b26`, SA1 ACCEPT WITH CONDITIONS F1-F6 |
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
 | Authority | R24/R21, FS23, S-OD4, S-OD15 A; S-AV01 not offered; S-OD13 remains GQ-only |
-| Status | Phase B committed; C0/C0b tooling/stand-ins released; Q1 answered A, resource interpretation recorded for SA1 review; C2 still gated by reviewed tooling, frozen chunk plan and actual admission |
+| Status | C0/C0b committed at `56b97b26`; C1 released with F1-F6 and selected A readiness; no C2 until seven-suite rerun, final re-freeze and combined SA1 review |
 
 ## Goal & business context
 
@@ -159,6 +159,13 @@ file evidence** in that committed handoff; no live deep result is implied.
 **Read [MS18d-phase-c-admission.md](MS18d-phase-c-admission.md) as the current
 dispatch addendum.** It retains C0 with SA1's **C0-1..C0-6** conditions and
 releases **C0b**, the raw-time recorder/manifest/merger and stand-ins.
+**Implementation update:** C0/C0b is committed at **`56b97b26`**, 710 files;
+SA1 **ACCEPT WITH CONDITIONS F1-F6 and released C1**. The baseline
+`helpers-c` SHA is **`c07f308b...`**, not the final C1 helper identity.
+**[MS18d-c1-readiness-and-rulings.md](MS18d-c1-readiness-and-rulings.md)** now
+governs the precreation/attempt checks, committed rulings/global stop,
+strict merger holds, mandatory A readiness, verified host-rebinding procedure
+and B-freeze checklist. No real recording is released by that acceptance.
 **S-OD15 now records A**, owner Discord message `1572872444602228798` at
 **2026-11-19T07:13:33.350Z**; C1's owner-answer gate is resolved.
 The extra "100% resource" clause is a scheduling allocation, not permission to
@@ -305,6 +312,16 @@ The resource clause does not authorize parallel GP, shorter gaps or new retries.
 - The Discord background poller stays paused during GP payloads. Reports,
   one-shot communication and permitted checkpoints are **between chunks only**,
   after G5 proves no payload alive and before fresh checks for the next chunk.
+- **From C1 every agent Node command is locked**, including version/check and
+  Discord. No agent runs any Node command outside the approved GP tree during
+  a timed payload. The orchestrator stops `node discord.cjs` and sends/polls
+  only in locked between-chunk calls. The accepted earlier unlocked calls
+  remain disclosed deviations, not a precedent.
+- **Host/ruling authority:** SA2 rules, SA1 concurs, and the orchestrator
+  alone appends/commits the pack's operational JSONL journals. ProcessName
+  renames do not change a binding; actual tuple changes hold for verified
+  rebinding. Rebinding never resets attempts, releases F4 by itself or grants
+  a started-payload retry.
 - A complete legitimate `MISS` is retained, never repeated for speed. A crash,
   timeout, compromised window or missing result is **incomplete**, not a slow-cell
   pass/fail record; preserve traces and use the existing evidence-failure routing.
@@ -936,6 +953,12 @@ edits or timed work when arithmetic is green.
   check-only cell/matrix merger, typed G3 adapters and fake/file-only tests in
   the same `phase-c/` trees, exactly under `MS18d-r24-request-ledger.md`.
   No real generation or new live sampling is authorized by this tooling release.
+- **C1 released with F1-F6:** integrate selected A readiness and the precreation/
+  attempt/global-stop/merger fixes in the Phase-C helpers; add stand-ins and
+  version new final freeze outputs. The pack-only journals
+  `tasks/difficulty-v3/MS18d-gp-rulings.jsonl` and
+  `tasks/difficulty-v3/MS18d-gp-host-bindings.jsonl` are read-only to the developer.
+  Their committed appends belong to the orchestrator after SA2/SA1 approval.
 - **Phase D, not C0b:** update Generator design **9.1's status text** and
   `docs/difficulty-v3/performance-v3.md` to attribute final GP numbers to the
   task-owned R24 recorder calling `perfTools.measure`, not `perf.js` stdout.
@@ -996,10 +1019,13 @@ edits or timed work when arithmetic is green.
 
 ### Phase C — C0/C0b tooling; recorded A; C1/C2 review and admission gates
 
-6. Complete **C0 plus C0-1..C0-6**, and **C0b** recorder/manifest/merger stand-ins
-   and SA1 review. S-OD15 now records A; build/test/freeze/review its C1 launcher
-   after the existing dependency gates. C2 requires frozen targets/inputs,
-   the declared window and the reviewed per-chunk plans in the supporting leaves.
+6. C0/C0b review at `56b97b26` **releases C1 with F1-F6**, not C2. Integrate
+   the conditions and A readiness; rerun all seven suites, version/re-verify
+   the final helper freeze, then obtain the **combined SA1 C0/C0b/C1 review**.
+   The orchestrator follows the new leaf's B checklist: empty tracked C log,
+   tracked rulings journal, committed initial host binding, current helper SHA/
+   required plan, notice, clean bindings and no unresolved stop. Only then
+   declare B and consider C2's actual per-chunk admission.
    Choose no policy/ceiling yourself. Neither Q1 nor a low mean alert is GO.
 7. Record each admitted **frozen chunk once**, one `measure` call and raw ledger.
    The all-79 check-only merge requires **114 chunks / 3,950 distinct indices**.
@@ -1032,6 +1058,7 @@ edits or timed work when arithmetic is green.
     register for **orchestrator review**. Include S-AV01 not offered, S-OD7,
     closed S-AV27, IR17, **MS18c-GQ-ENGINE-COST**, **MS18d-GP-BOUND-sohei-hell2**,
     **MS18d-GP-BOUND-REMAINDER**, **MS18d-C0-G1-G5**, **MS18d-C0b-R24**,
+    **MS18d-C1-F1-F6**,
     **MS18d-DEEP-PUBLIC-REGISTRATIONS**, S-AV11 and the older source-qualified
     S-AV31/S-AV33/S-AV34/S-AV36-S-AV39 /
     MS15b-GP-J/U records. S-OD4 permits continued safe work after cost findings,
@@ -1068,11 +1095,13 @@ edits or timed work when arithmetic is green.
 | MS18d-T18 | R1 merger exits 0/1/2/3 have exact complete-result/zero-stderr semantics; R2 uses exact manifest-declared cell/all-79 directories; only final all-79 merge is required, optional cell merges are not automatic |
 | MS18d-T19 | R3 records B after notice/tooling freeze; each ledger HEAD is B/allowed descendant with unchanged content identities; R4 derives quotas from immutable folders plus append-only C log, never a mutable counter or HEAD reset |
 | MS18d-T20 | R5 hashes captured executed contents and records identical empty execArgv/NODE_OPTIONS with pre-spawn rejection; R6 Phase D design/report attribution names the R24 recorder/measure API; poller/reporting boundaries preserved |
+| MS18d-T21 | F1-F6 precreation and attempt checks, committed joint rulings/global stop, strict artifact/command.exec rejection and complete A readiness are tested; real recording refuses before readiness integration |
+| MS18d-T22 | Host tuple/journal/rebinding authority preserved, ProcessName ignored, no automatic rebind or reset; all seven suites rerun, final helper SHA and tracked empty C log/journals satisfy B checklist before combined review/C2 |
 
 ## Test plan and gates
 
-**C0/C0b tooling and stand-ins are released; no real measure call follows from
-that alone.** S-OD15 A resolves C1's owner gate, not its dependencies or C2 review.
+**C1 is released with F1-F6; no real measure call follows from that alone.**
+Use the C1 leaf's exact seven-suite rerun, host/ruling tests and B-freeze checklist.
 Follow the supporting plan for the exact tests and staged C1/C2 releases.
 The following is the **completed Phase-A command**, retained as history; do not
 overwrite its frozen output using the post-update target table:
@@ -1129,6 +1158,7 @@ complete GG evidence and the cumulative item list.
 Include the S-OD15 record/resource ruling, S1 delivery status, C0/C0b/C1 reviews,
 campaign B/recorded-HEAD proofs, 114-chunk manifest with exact merge directories,
 immutable-history quota evidence, executed-byte/empty-flag bindings,
+committed ruling/host-binding histories and complete A readiness,
 raw ledgers/receipts and the one required all-79 merge. Preserve
 the bound items' closed planning history and still-unadmitted S-AV11 tuple.
 Only the complete raw-time merge, not a finished scheduler queue, closes GP.

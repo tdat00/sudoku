@@ -264,6 +264,21 @@ do not add 79 automatic cell merges (~21 min beyond the generation booking).
 Keep the background poller paused during payloads; report/checkpoint between
 chunks only, with no payload alive and fresh checks before the next.
 
+**C0/C0b implementation accepted with F1-F6 at `56b97b26`; C1 released now.**
+The committed helper freeze **`c07f308b...`** is baseline history, not the
+post-C1 SHA. See **`MS18d-c1-readiness-and-rulings.md`** for the exact conditions,
+seven-suite rerun, combined SA1 review and orchestrator B-freeze checklist.
+Create a run folder only after pre-flight/watch/attempt/stop-line checks.
+Real recording refuses until A readiness exists; a real merger requires it.
+The host's renamed **ProcessName is diagnostic only**; an actual instance
+change holds for a verified **SA2 ruling + SA1 concurrence**, followed by the
+orchestrator's committed host-binding append. No auto-rebind or retry follows.
+The empty tracked **`MS18d-gp-rulings.jsonl`** and
+**`MS18d-gp-host-bindings.jsonl`** are operational pack journals, not developer
+scratch files or fixed helper-content hashes. The orchestrator appends/commits.
+**No agent runs Node during a timed chunk** outside the already approved GP
+tree; stop `node discord.cjs`. All between-chunk Node controls are locked too.
+
 **MS18d Phase-B pin ruling: option A, concurred with by SA1; Phase B resumed.**
 The quick `manual-corpus.test.js` target-value pin may change to a literal frozen
 17-entry expected override map plus unchanged `OLD` fallback. Check all 79
@@ -875,8 +890,9 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | MS18c-GQ-ENGINE-COST | **Open; comparator definitions resolved. Primary SA2:** 2,122 strict matched pairs, ordinary pooled median **1.1240**. **Separate SA1:** equal seed/hit/achieved/score/solved/approximate/exact/valid within a cell, both times >50 ms, >=5 pairs/cell; lower median of each cell's ratios then lower median of **51 cell medians =1.1285**, reproduced after the 11:33 clarification. Not a pooled statistic or a new timing run. Closure also records **mega16-replay 331.6 s vs118 s at MS07f**, above its 300 s projection but inside 450, and 17 offered GQ cells above the pre-update targets. Preserve source/clock/cohort distinctions; no GP verdict, normalization, retune, budget waiver or GQ repeat follows | MS18d; MS18e audit |
 | MS18d-GP-BOUND-sohei-hell2 | **Closed as a planning obstruction through R24, not a GP measurement/pass.** Preserve n=40, mean **9711.9411975 ms**, mean alert **485.597059875 s**: its monolithic command remains unadmitted. The frozen raw-ledger route is **6 chunks (9,9,8,8,8,8)**, P **435,435,394,394,394,394 s**, sum **2446 s**. Fifty original indices, source/policy and targets remain; extra cold starts disclosed. Actual execution still needs reviewed tooling and fresh per-chunk admission | MS18d R24 recording/actual outcome; MS18e audit |
 | MS18d-GP-BOUND-REMAINDER | **Closed as the other sixteen monolithic planning obstructions through R24**, not timing passes. Together with Sohei, the 17 cells have **52 frozen balanced chunks / 19023 s**, maximum P **448 s**, in `MS18d-r24-request-ledger.md`. All 79 use the same raw-time recorder; 114 commands, 3,950 indices, 35 extra cold starts. Missing/failed chunks remain incomplete; no rounded-percentile merge, arbitrary repartition, retry or limit increase | MS18d R24 recording/true aggregate; MS18e audit |
-| MS18d-C0-G1-G5 | **Open implementation/review gate; C0 accepted with C0-1..C0-6 conditions.** Add the bounded 15.3 s lock-free pre-window, PID+creation identity, separate zero-byte stderr gate, exact Git-status allowlist, no periodic payload work and generic transport with per-payload G3. S-OD15 A resolves the answer gate, not required tooling review or actual admission | MS18d C0/C1 release gates; MS18e evidence audit |
-| MS18d-C0b-R24 | **Open implementation/review gate; SA1 concurs with R1-R6.** Exact-loader recorder hashes executed contents, records empty Node flags, and uses the frozen 114-chunk manifest plus exact merge directories. R1 merger exits 0/1/2/3 require explicit completion semantics. Actual HEAD may advance from campaign B only through allowed pack/output commits with all content identities unchanged. R4 derives per-chunk counts from immutable run folders/C log. Only the final all-79 merge is required; R6 attributes final numbers to the recorder/measure API, not stock stdout. No real recording before tooling review/admission | MS18d C0b/C2 gate; MS18e raw-ledger audit |
+| MS18d-C0-G1-G5 | **Baseline reviewed at `56b97b26`, ACCEPT WITH CONDITIONS F1-F6; C1 integration/review pending.** Retain C0-1..C0-6 pre-window/PID/stderr/allowlist/no-periodic-work/generic-transport rules. F1-F6 close the remaining precreation, attempts/global-stop and readiness gaps; no real recording before the combined final review | MS18d C1 release gates; MS18e evidence audit |
+| MS18d-C0b-R24 | **Baseline reviewed at `56b97b26`, conditional on F1-F6/C1 close-out.** Preserve R1-R6: exact executed bytes/empty flags, 114-chunk manifest/exact directories, typed exits, B descendants with stable content and immutable-history counts. F5/F6 strengthen hold/override/readiness validation. Only final all-79 merge is required; R6 attributes numbers to the recorder/measure API. Re-freeze/test/review the integrated snapshot before C2 | MS18d C1/C2 gate; MS18e raw-ledger audit |
+| MS18d-C1-F1-F6 | **Open; C1 released after SA1 conditional acceptance of `56b97b26`.** Pre-flight/watch before folder creation, zero-admission pre-window holds, precreation `.a1/.a2` checks, committed joint F3 rulings and global F4 stop, strict F5 artifact/command.exec checks and F6 complete A readiness. Host rebinding is jointly verified and committed, never automatic. Seven-suite rerun/new freeze/combined SA1 review and B checklist precede C2; `c07f308b...` is not the final helper SHA | MS18d C1/B release; MS18e readiness/authority audit |
 | MS18d-DEEP-PUBLIC-REGISTRATIONS | **CLOSED on file evidence (`50903182`, recorded at `b3144fcf`).** Quick inventory unchanged at 4807; SG_DEEP listing 4835 -> 4828, seven removals/no additions: mega 12 -> 9, multigrid 16 -> 12. Seven-entry GQ map and 63-file audit retained, no other positive. Eleven budget contrasts, mega12 Nightmare's 3000 ms base, fixed diagnostics and E/GG recipes unchanged. No live deep run or timing claim | Closed Phase-B repair; MS18e final-source prerequisite audit |
 | IR17 final carry | Classic9 Nightmare remains offered. The older `00647f9` GD batch cost **430.5 s**; **449 s is not a reusable bound**. Require current-source conservative whole-command admission under unchanged 450/540 protection, with honest named incomplete coverage if not admissible | MS18c handoff; remaining GD and final audit MS18e |
 | S-AV28 Easy availability | MS07e GQ: diagonalX Easy 28/40, hyper 29/40, samurai 10/22, sohei 4/18, butterfly 1/15, flower 0/14 (current offers lose Easy on six variants); 40/40 elsewhere | MS18c |
@@ -1248,6 +1264,36 @@ No evidence checkpoint may rewrite earlier records or reset quotas.
 Poller paused during payloads; progress reports/checkpoints only between chunks,
 after cleanup and before the next fresh checks. Phase D's non-pack docs edits
 follow the final campaign merge, not a mid-campaign path exception.
+
+**F3/F4 execution authority:** `MS18d-gp-rulings.jsonl` is created empty and
+tracked. Each appended line has exactly
+`{chunkId,heldRunId,allowAttempt:2,ref,at}`. **SA2 rules, SA1 concurs, and the
+orchestrator alone appends and commits**; the developer/tooling never does.
+Honour only committed rulings after proved unstarted holds, never after a
+started payload or beyond two admissions. F4 blocks subsequent real calls
+after a non-success other than the chunk's own eligible re-ask; a different
+chunk or directory is no bypass. All F1/F2/F6 predicates still apply.
+
+**Host rebinding:** the separate append-only
+`MS18d-gp-host-bindings.jsonl` starts empty; the orchestrator must commit the
+initial approved/live-verified tuple before B. Bind PID, independent .NET/CIM
+start times, parent and executable path, never ProcessName. An actual tuple
+change stops for a bounded verification packet and **SA2 ruling + SA1
+concurrence**, then an orchestrator append/commit under the pack path.
+Existing A permits a verified single-host replacement without another owner
+question; expanding exemptions or unverifiable ownership does not. Rebinding
+does not release F4 or grant `.a2`: a prior held admission separately needs its
+F3 disposition. Keep old ledger binding references; do not retag them.
+The C1 leaf defines the schema, evidence locations and exact procedure.
+
+**B-freeze guard:** first integrate F1-F6/C1, rerun all seven suites and obtain
+the combined SA1 review. Commit the final helpers/manifest/freeze, an **empty
+`docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl`**, the ruling journal
+and initial host binding. Verify `Required` includes the actual
+`docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest.json`, record the
+new full helper SHA and the already-delivered notice, confirm clean inputs/no
+unresolved stop, then declare B before any payload. Never truncate history,
+reuse `c07f308b...` after C1 edits or assign `56b97b26` as B prematurely.
 
 **S-OD13, 2026-11-18 21:31:46 (+07:00):** Q1-A and Q2-B are owner-approved,
 with GQ ceiling authority delegated **jointly to SA1/Opus and SA2/Astra, not Fable**.

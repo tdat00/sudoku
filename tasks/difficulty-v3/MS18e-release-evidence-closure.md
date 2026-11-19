@@ -63,6 +63,17 @@ coverage. Progress reports/checkpoints were between chunks, poller paused for
 payloads. Phase D's design 9.1 status and final performance report must attribute
 the numbers to the task-owned R24 recorder calling `perfTools.measure`, not
 `perf.js` output; preserve valid recorded campaign provenance after later docs edits.
+**C1/F1-F6 audit:** require the integrated seven-suite rerun/new helper freeze
+and combined SA1 review, the tracked initial empty C log, and the committed
+operational ruling/host-binding histories. Pre-window give-ups have no folder
+and consume zero admissions; true unstarted holds have no payload artifacts.
+Reject real `command.exec`, missing/incomplete A readiness or a fake zero-count
+reset. Host display-name changes are not identity changes; real replacements
+need SA2's ruling, SA1's concurrence and an orchestrator commit before use.
+Validate the binding approved for each admission, not only the latest host.
+Neither F3 nor rebinding can authorize a started-payload retry or a third
+admission; unresolved F4 stops cannot be bypassed by another chunk.
+No agent Node command, including the Discord poller, overlaps a timed payload.
 Never fill a missing result from GQ/GG, a subset percentage or an old profile,
 or release incomplete GP as though R24 had passed without an owner decision.
 

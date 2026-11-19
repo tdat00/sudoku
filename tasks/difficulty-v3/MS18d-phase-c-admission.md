@@ -6,6 +6,14 @@ acceptance closure **`b3144fcf`**, 2026-11-19.
 
 ## Release boundary
 
+**Current state:** C0/C0b is committed at **`56b97b26`**, SA1 **ACCEPT WITH
+CONDITIONS F1-F6; C1 released now**. Implement those conditions and selected A
+readiness under **[MS18d-c1-readiness-and-rulings.md](MS18d-c1-readiness-and-rulings.md)**.
+That leaf defines the committed hold-ruling/host-binding journals and B-freeze
+checklist. C2 remains held for final integrated C0/C0b/C1 review and freeze.
+The release history below remains context, not permission to run the pre-C1
+controller with `readiness:null`.
+
 **C0 is released now: Q1-independent G1-G5 transport, source binding and result
 classification, in versioned Phase-C copies, with stand-in tests and SA1 review.**
 SA1 accepts C0 with the additive **C0-1..C0-6** conditions below and accepts the
@@ -410,52 +418,67 @@ permitted versus forbidden B descendants, immutable-history count derivation,
 single-read executed-byte hashing and rejection of Node flags/options.
 
 Use isolated short-deadline stand-ins for kill tests, not a killed real shared
-PowerShell wrapper. Clean up only owned test processes/files, preserve review
-evidence, format/freeze the copies and obtain **SA1 review before C1/timing**.
+PowerShell wrapper. Clean up only owned test processes/files and preserve review
+evidence. C0/C0b review at `56b97b26` now releases **C1 with F1-F6**; rerun the
+seven suites/refreeze and obtain **combined SA1 review before C2**, not a
+real-measurement smoke test.
 Every Node test still uses the shared lock and normal bounds/gaps.
 No permanent tool, production code, target, fixture, guide or task-pack edit
 belongs to the developer. **CPU readiness/admission belongs to C1, not C0/C0b**.
-The owner has selected A; C1 follows its existing dependency/review gates.
+The owner has selected A; C1 is released, with the new leaf's close-out gates.
 
-## C1 — selected readiness policy, only after S-OD15
+## C1 — released selected A readiness and F1-F6 integration
 
-Build the **selected A launcher** in the same versioned Phase-C area, after C0
-review and the now-recorded answer. Use existing bounded host/counter mechanics as
+Build the **selected A launcher** in the same Phase-C area, now that the
+conditional C0/C0b review and answer are recorded. Use existing bounded host/counter mechanics as
 references, not an inherited GQ grant. Test the selected policy, fail-closed
 unknowns, re-ask accounting and the G1-G5 integration with stand-ins, then freeze
 and obtain review before an actual cell.
 
 For either choice, source hashing/compilation precedes sampling. While the
-verified lock is held, take **five one-second aggregate CPU intervals** from real
-cumulative counters; record logical CPU count, raw busy-core values, mean/max,
-timestamps and valid per-instance observations. No `os.loadavg`, subtraction or
+verified lock is held, take **five in-process one-second intervals from
+`os.cpus()`**, with no subprocess inside that window. Take bounded per-process
+snapshots before/after it; record logical CPU count, raw busy-core values,
+mean/max, timestamps and per-instance observations. No `os.loadavg`, subtraction or
 normalization. A PowerShell/CIM query is bounded at **15 s**, the cumulative
 readiness at **45 s**. Invalid/unavailable required facts or timeout mean an
 unstarted hold, never idle. Recheck locks immediately before the payload;
-anything sampled before a lock wait is stale.
+anything sampled before a lock wait is stale. **More than 60 s from the
+post-watch recorded call/request to payload spawn is a hold**; no clock reset.
+F6 makes missing configured readiness a real-run hold/refusal, and the merger
+requires the complete saved A record, not a non-null placeholder.
 
 - **A: `MS18d-GP-host-active`.** Keep the original raw strict `ready` verdict
   (**mean <=0.5 / max <=1.0 busy logical cores**) distinct from policy `admitted`.
   Verify the exact named host instance, own/foreign locks and per-instance CPU
   deltas over the observed snapshot window. No additional consumer may gain
   **>=0.5 CPU-s per elapsed second**. No OS-service, all-Copilot or host-tree
-  exemption. Only the positively identified host, idle process and specifically
-  identified owned instrumentation are excluded from that *additional-consumer*
+  exemption. Exclude only the approved **host itself**, idle, and **this run's
+  identified wrapper/controller/readiness PIDs and instances**, not their
+  ancestors/descendants or other agents, from that *additional-consumer*
   classification; none is subtracted from the raw aggregate screen.
 - The historical host binding is PID **1968**, parent **18780**, .NET StartTime
   **`2026-11-13T19:26:33.6916441+07:00`**, CIM UTC creation
   **`2026-11-13T12:26:33.691644Z`**, executable
-  **`C:\Users\ledat\AppData\Local\Microsoft\WinGet\Links\copilot.exe`**, CIM name
-  **`copilot.exe`**. Reconfirm live; this file asserts no liveness. Compare the
+  **`C:\Users\ledat\AppData\Local\Microsoft\WinGet\Links\copilot.exe`**.
+  Name fields are diagnostic only. SA1 confirmed the tuple at `56b97b26`;
+  .NET ProcessName is now **`copilot.exe.old-25148-1794809773310`**.
+  That rename alone is not a new instance. Reconfirm live before each admission. Compare the
   .NET and CIM timestamps independently, not by padding one into the other.
   A replaced/mismatching instance holds for explicit verified rebinding;
-  neither the display ProcessName nor a matching filename authorizes it.
+  neither ProcessName nor a matching filename authorizes it.
+  Use the committed host-binding journal and **SA2 ruling + SA1 concurrence,
+  orchestrator append/commit** procedure in the C1 leaf. No automatic rebind,
+  second exemption, retry or retroactive change to earlier admissions.
 - **A re-ask:** only a verified **unstarted, additional-consumer-only** hold may
   receive one fresh-slot re-ask, **>=60 s after actual/verified release**.
   Maximum **two admission attempts per immutable chunk/protocol identity**,
   at most **one payload per chunk**; preserve both attempts across crashes/restarts/log
   changes. Mixed, slot, host, counter, source, timeout and missing-evidence holds
-  are not eligible. A second hold is an unexecuted gap. Pause a persistently
+  are not eligible for an **automatic** re-ask. F3 permits only the existing
+  second slot after a proved unstarted hold and committed joint ruling; it
+  bypasses no F1/F2/F6 predicate and creates no third admission or started-payload
+  retry. A second hold is an unexecuted gap. Pause a persistently
   contaminated window instead of cycling through other identities to hunt
   an idle sample. Further scheduling goes back to the orchestrator.
 - **B: strict-quiet.** Require the same valid screen with **mean <=0.5 and
@@ -474,6 +497,14 @@ S-OD13 and S-OD14 grant neither GP deadline extensions nor GP recovery.
 not a mutable counter file. Cross-check/deduplicate evidence by chunk/attempt
 identity anchored to B; missing/ambiguous history holds, never resets to zero.
 Merge runs do not consume GP chunk attempts. HEAD checkpoints do not reset them.
+**F1:** a watch give-up has no run folder and logs `pre-window-hold`, zero
+admissions; do not treat that expected no-folder record as a missing admission.
+**F2/F4:** check attempts and the global line-stop before folder creation.
+Attempt 1 refuses any existing chunk folder; attempt 2 needs the genuine
+unstarted `.a1` plus automatic eligibility/wait or a committed F3 ruling.
+After a non-success other than that chunk's own eligible re-ask, block all
+further real calls until valid joint disposition; do not continue on another
+chunk. F3 is not a way to clear a started-payload failure.
 
 ## C2 — exact execution, batching and acceptance
 
@@ -507,6 +538,8 @@ exhausts its allowance or no credible remaining plan fits, do not start a late
 payload. The helper's bounded slot wait is separate; tool `initial_wait` or
 status reads are not extra time and must not kill the owning shell prematurely.
 Never use `stop_powershell` as routine completion/timeout handling.
+The current pre-C1 controller's acquisition/binding-only admission is not a
+real-run path: F6 requires readiness configuration and complete admitted A facts.
 
 During the declared timed window all other agents suspend generation, tests,
 hashing, formatting and analysis, including short commands. Only required minimal
@@ -516,6 +549,10 @@ message checks and permitted checkpoints occur **only between chunks with no
 payload alive**, after G5 and before the next fresh pre-window/binding/readiness.
 No optional CPU sampler is inserted into the measured cohort. Known
 interference during it makes the raw run compromised, not CPU-adjusted.
+**From C1 all agent Node commands are locked, including version/check and
+Discord commands. During a timed chunk no agent runs Node outside the approved
+GP tree at all. The orchestrator stops `node discord.cjs` and uses locked
+one-shot sends/polls only between chunks after verified cleanup.**
 
 **Actual final GP uses C0b's typed recorder/merge predicates.** A recorder needs
 exit 0 plus its complete raw ledger/receipt and makes no performance verdict.
