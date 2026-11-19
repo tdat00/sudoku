@@ -1269,10 +1269,13 @@ follow the final campaign merge, not a mid-campaign path exception.
 tracked. Each appended line has exactly
 `{chunkId,heldRunId,allowAttempt:2,ref,at}`. **SA2 rules, SA1 concurs, and the
 orchestrator alone appends and commits**; the developer/tooling never does.
-Honour only committed rulings after proved unstarted holds, never after a
-started payload or beyond two admissions. F4 blocks subsequent real calls
-after a non-success other than the chunk's own eligible re-ask; a different
-chunk or directory is no bypass. All F1/F2/F6 predicates still apply.
+Only a proved unstarted hold may gain that chunk's second admission.
+**P1:** a jointly approved committed line naming a started failure may instead
+lift **only the F4 line stop for other chunks and final merge**; it never permits
+attempt 2/retry/replacement for the failed chunk or erases its failure.
+`allowAttempt:2` retains its schema value, not retry meaning in this case.
+Without that ruling, a different chunk/directory is no bypass. All F1/F2/F6
+predicates and the two-admission/one-payload limits still apply.
 
 **Host rebinding:** the separate append-only
 `MS18d-gp-host-bindings.jsonl` starts empty; the orchestrator must commit the
@@ -1294,6 +1297,21 @@ and initial host binding. Verify `Required` includes the actual
 new full helper SHA and the already-delivered notice, confirm clean inputs/no
 unresolved stop, then declare B before any payload. Never truncate history,
 reuse `c07f308b...` after C1 edits or assign `56b97b26` as B prematurely.
+
+**Latest pre-B state:** combined tooling **`e62d0931`** / helpers-c1
+**`3dd18e8e...`** received SA1 ACCEPT WITH CONDITIONS. Pre-B
+**`27128684afc6d46d697ee455512c878986760eec`** records host-b1/evidence and the
+empty C log; SA1 verified live journal validation. The developer's remaining
+C1-review-R1/R2 fixes get **helpers-c1b**, then SA1's short check.
+**B is that accepted fix commit**, not a previous baseline.
+
+The orchestrator's proposed **`tasks/difficulty-v3/MS18d-gp-campaign-base.jsonl`**
+location/shape is approved: **one never-edited JSON line committed after B**,
+with actual full hashes, review/eight-transcript references and baseline journal
+facts. No tool reads it; calls continue to pass **`-CampaignBase <B>`**.
+The C1 leaf specifies the record. This P1 pack commit may be an ancestor of B
+or a pack-only descendant under R3; in the latter order commit between payloads.
+Neither order requires changing B or rewriting its one-line record.
 
 **S-OD13, 2026-11-18 21:31:46 (+07:00):** Q1-A and Q2-B are owner-approved,
 with GQ ceiling authority delegated **jointly to SA1/Opus and SA2/Astra, not Fable**.

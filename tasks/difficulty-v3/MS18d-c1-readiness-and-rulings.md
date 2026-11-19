@@ -6,6 +6,17 @@ SA1 **ACCEPT WITH CONDITIONS F1-F6; C1 released now**, relayed 2026-11-19.
 This assigns the conditions and selected A readiness together. It does **not**
 release C2 or approve a real GP call before the integrated review/freeze.
 
+**Latest review:** combined C0/C0b/C1 at **`e62d0931`**, helper freeze
+**`3dd18e8e...`**, is SA1 **ACCEPT WITH CONDITIONS**. The developer owns the
+two remaining code fixes: **C1-review-R1** (new-process CPU-rate denominator)
+and **C1-review-R2** (recheck line/attempt/HEAD after the watch, before creating
+the folder). These names are distinct from the earlier ledger R1/R2.
+Re-freeze as **`helpers-c1b`** and obtain SA1's short check; **B is that fix
+commit**, not the earlier C1 or pre-B commit. **P1 below is pack-only**.
+The initial `host-b1` binding/evidence and empty C log are already committed
+at **`27128684afc6d46d697ee455512c878986760eec`**; SA1 verified the live journal
+validation. No journal/evidence change is assigned by this P1 amendment.
+
 The accepted baseline helper manifest is
 `evidence\MS18d\phase-c\helpers-c-sha256.txt`, raw SHA-256
 **`c07f308b1f273cf108ba07d703ae9565667996b88dedfad465d2e44319456e10`**
@@ -67,7 +78,7 @@ Reject **every real run whose request contains `command.exec`**, even if it
 names the usual Node executable. Preserve real exits/records; do not repair an
 invalid run by deleting artifacts or changing its provenance.
 
-## F3 — committed hold rulings, not developer discretion
+## F3 — committed hold/line-stop rulings, not developer discretion
 
 The pack creates the **zero-byte, tracked** file
 **`tasks\difficulty-v3\MS18d-gp-rulings.jsonl`**. Empty means **no rulings**.
@@ -77,11 +88,12 @@ One complete JSON object per appended line, with the exact fields:
 {chunkId, heldRunId, allowAttempt: 2, ref, at}
 ```
 
-`chunkId`/`heldRunId` identify the actual frozen chunk and held run.
+`chunkId`/`heldRunId` identify the actual frozen chunk and held/failed run;
+the existing field name `heldRunId` also names a started failure under P1.
 `allowAttempt` is the integer **2**, never another value.
 `ref` points to a durable decision record containing the **SA2 ruling, explicit
-SA1 concurrence and the exact held-run evidence**. `at` is the actual
-decision/record timestamp with timezone, after the referenced hold, not a
+SA1 concurrence and the exact held/failed-run evidence**. `at` is the actual
+decision/record timestamp with timezone, after the referenced outcome, not a
 fabricated or prospective permission. A stable pack-section/evidence reference
 avoids needing the append commit's own hash inside itself.
 
@@ -92,10 +104,22 @@ uncommitted, malformed, contradictory or stale rulings are not authority.
 Verify append-only history from the recorded baseline/previous committed
 version. No edits/removals/compaction of earlier lines.
 
-A line is honoured **only after a verified unstarted hold**, never after a
-payload started, and never beyond the existing two admissions. It does not
-create a slot, change the frozen plan, bypass F1/F2/F6 or reset counts.
-Rulings are narrow operational authorizations, not a new GP recovery policy.
+**P1 separates line-stop release from attempt permission:**
+
+- After a **verified unstarted hold**, a jointly approved line may lift F4 and
+  permit the existing second slot **only when F2 and every other predicate
+  hold**. It never grants more than two admissions or one actual payload.
+- A jointly approved line naming a **started-payload failure** may **only lift
+  the F4 line stop for other chunks and the final check-only merge**.
+  It **never authorizes attempt 2 or any new payload for the failed chunk**.
+  The referenced joint decision states this line-release-only purpose explicitly.
+  `allowAttempt:2` remains the unchanged schema field, not a retry grant in
+  this case. `Assert-AttemptC`, `attempts.js` and the merger still refuse a retry
+  or replacement of a chunk whose payload started.
+
+Neither case creates a slot, changes the frozen plan, bypasses F1/F2/F6, resets
+counts or removes the failure. These are narrow operational rulings, not a
+new GP recovery policy. **P1 needs no code change.**
 Keep this journal out of fixed helper-content hashes: its parser and the
 permitted journal path are frozen; each run records the committed journal
 version/entry it actually used.
@@ -115,11 +139,15 @@ admissions; a ruling cannot turn it into a fictitious `.a1`. At two admissions
 there is no further slot. Unexpected/unrepresentable state stays stopped for
 joint disposition, not a permissive default.
 
-**F3 cannot clear a started-payload failure.** Preserve that failure and stop
-for an explicit further disposition; no `allowAttempt:2` line may relabel it as
-unstarted or authorize its retry. File-only/fake diagnosis and pack rulings
-may proceed under their ordinary controls once G5 proves no payload survives;
-they are not real recording calls or a backdoor into the stopped campaign.
+**P1: F3 may clear the line stop after a started-payload failure, not the
+failure or the failed chunk's no-retry state.** Require the same SA2 ruling,
+SA1 concurrence and orchestrator commit before other chunks/final merge proceed.
+Preserve all raw failure/partial records; do not relabel the run as unstarted,
+fill its missing samples or accept a replacement. The final merge may then
+truthfully report the incomplete cell/matrix instead of being blocked by the
+line stop itself. Clearing F4 is neither completion nor a GP pass.
+G5 must still prove no payload survives before any further work. File-only/fake
+diagnosis remains permitted under its ordinary controls, never as a bypass.
 
 ## F6 / C1 — complete A readiness is mandatory
 
@@ -244,7 +272,9 @@ rejected merely because a later approved host differs.
    `.a1` host hold caused F4, it additionally needs the specific jointly
    approved F3 ruling before `.a2`; both changes may be one pack-only commit.
    With no real held call, rebinding alone does not consume/create an attempt.
-   No rebinding enables a third admission or clears a started-payload failure.
+   No rebinding enables a third admission, clears a failure or releases F4 by
+   itself. A separate jointly approved P1 ruling may release **other chunks/
+   final merge** after a started failure, never retry that failed chunk.
 6. Repeat all pre-flight/watch/binding/readiness checks in a fresh slot.
    Any changed host/binding during that admission holds again; do not reuse
    observations from the old instance or shorten the CPU screen.
@@ -281,7 +311,8 @@ The orchestrator checks before assigning/freezing **B**:
    The earlier unlocked `node --version`/`node --check` remain disclosed,
    accepted deviations, **not standing permission**.
 2. Code/manifest and the **new final helper SHA** are frozen, verified and
-   committed. `c07f308b...` is baseline history, not the C1 SHA.
+   committed. `c07f308b...` and `3dd18e8e...` are earlier baselines, not the
+   final **helpers-c1b** identity after C1-review-R1/R2.
    Version new freeze outputs rather than overwrite accepted freeze records.
    `Required` includes the actual **`gp-chunk-manifest.json` path above** and
    every executable dependency, including readiness/journal readers.
@@ -291,6 +322,7 @@ The orchestrator checks before assigning/freezing **B**:
 4. **`docs\difficulty-v3\evidence\MS18d\phase-c\lock-log.jsonl` is tracked and
    committed empty before B.** At `56b97b26` it was absent. The orchestrator,
    not a first real invocation, creates/commits it outside this pack-only edit.
+   This prerequisite is recorded at pre-B **`27128684`**.
    Never truncate a nonempty real campaign log to manufacture an empty start.
 5. **`MS18d-gp-rulings.jsonl` is tracked**, initially empty, with the agreed
    append authority. **The host-binding journal is tracked and has its initial
@@ -303,12 +335,54 @@ The orchestrator checks before assigning/freezing **B**:
 7. Raw/clean-input status, exact R2 folder allowlist and R3 ancestry/path
    predicates pass; no unresolved F4 real-call stop or ambiguous prior start.
    No helper/plan/parameter stand-in override can reach a real payload.
-8. Freeze B from that final committed input state and record it before the
-   first real chunk, using R3's non-self-referential release record. Neither
-   `56b97b26` nor this pack commit is automatically B.
+8. After C1-review-R1/R2, the helpers-c1b freeze and SA1's short check, freeze
+   **B = the accepted fix commit**. Record it before the first real chunk using
+   the one-line record below. Neither `56b97b26`, `e62d0931`, pre-B `27128684`
+   nor this P1 pack commit is automatically B.
 9. Declare the exclusive timed window, pause the background Node Discord poller
    and other agent work, confirm no payload/orphan/foreign slot and take the
    fresh checks. Only then may the orchestrator release C2.
+
+## Confirmed B-record location and shape
+
+The proposed **`tasks\difficulty-v3\MS18d-gp-campaign-base.jsonl`** is approved:
+the orchestrator creates/commits it **after B**, as **one physical JSON line,
+written once and never edited or appended to**. Do not create a placeholder
+now. It is an audit record, **not an input to any tool**; every real call still
+passes **`-CampaignBase <B>`**. Its pack-only commit is an R3-allowed descendant.
+
+The proposed fields are accepted without a runtime/schema change:
+
+| Field | Required contents |
+|---|---|
+| `campaignBase` | The actual 40-hex accepted C1-review-R1/R2 fix commit B |
+| `preB` | `27128684afc6d46d697ee455512c878986760eec` |
+| `recordedAt`, `recordedBy` | Actual record-creation timestamp in ISO format with `+07:00`; `orchestrator` |
+| `helperManifest` | `docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c1b-sha256.txt`, its full actual SHA-256 and integer entry count |
+| `plan` | Actual `gp-chunk-manifest.json` path, full raw-file SHA-256 and canonical manifest SHA-256, with their distinct recipes |
+| `identities` | Full E hash/replay identities, producer `sources` identity and target-table hash from the frozen inputs |
+| `environment` | The actual frozen Node/CPU/logical-processors/memory/platform values already specified in the proposed record |
+| `policy` | S-OD15, choice A, owner-answer message `1572872444602228798`, notice message `1572878023034675262` |
+| `journals` | Baseline binding ID/count/raw-file hash, ruling count/raw-file hash and `cLogBytesAtB:0`, verified from the B snapshot |
+| `reviews` | Concrete references to the combined review and final short check, not an unexplained acceptance label |
+| `suites` | Explicit references to the eight actual transcripts present at B, with their existing provenance; do not retag their recorded HEAD/dirty state to B |
+
+Use complete lowercase hashes and real values, never the example's ellipses or
+placeholders. File SHA-256 fields describe raw bytes in B's frozen checkout;
+canonical manifest/source/table identities retain their named recipes.
+The current pre-B journal baseline is `host-b1` / one host entry, zero ruling
+entries and an empty C log. Verify the actual B snapshot rather than forcing
+those example counts if an approved pre-B change intervenes.
+These are **baseline** journal facts: later valid appends do not rewrite this
+record. A later correction, if ever needed, preserves this original line and
+is documented separately, not silently edited in place.
+
+**P1 commit order:** either before B (part of its ancestry) or after B as a
+pack-only descendant is valid under R3, with unchanged execution/content
+identities. If it lands during the campaign, commit between payloads and before
+using the clarified F3 disposition. Do not rebase/redefine B, re-freeze helper
+identities or edit the B-record merely because this documentation commit lands
+on one side of B or the other.
 
 ## Campaign-time Node rule
 

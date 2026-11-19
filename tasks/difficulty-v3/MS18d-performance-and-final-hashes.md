@@ -3,11 +3,11 @@
 | Header | Value |
 |---|---|
 | Depends on | MS18c accepted at `e0596801`; acceptance recorded by `34ebc3fc`; S-OD15 A recorded; reviewed C0/C0b/C1 tooling and per-chunk admission before timing |
-| Accepted base | MS18c `e0596801`; acceptance `34ebc3fc`; Phase A `602af371`; Phase B `50903182` / `b3144fcf`; C0/C0b `56b97b26`, SA1 ACCEPT WITH CONDITIONS F1-F6 |
+| Accepted base | MS18c `e0596801`; acceptance `34ebc3fc`; Phase A `602af371`; Phase B `50903182` / `b3144fcf`; C0/C0b `56b97b26`; combined C1 `e62d0931`, pre-B `27128684` |
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
 | Authority | R24/R21, FS23, S-OD4, S-OD15 A; S-AV01 not offered; S-OD13 remains GQ-only |
-| Status | C0/C0b committed at `56b97b26`; C1 released with F1-F6 and selected A readiness; no C2 until seven-suite rerun, final re-freeze and combined SA1 review |
+| Status | Combined review ACCEPT WITH CONDITIONS; C1-review-R1/R2 code fixes and helpers-c1b/SA1 short check precede B; P1 is pack-only; no C2 release implied |
 
 ## Goal & business context
 
@@ -166,6 +166,14 @@ SA1 **ACCEPT WITH CONDITIONS F1-F6 and released C1**. The baseline
 governs the precreation/attempt checks, committed rulings/global stop,
 strict merger holds, mandatory A readiness, verified host-rebinding procedure
 and B-freeze checklist. No real recording is released by that acceptance.
+The later combined review of **`e62d0931`** (helpers-c1 **`3dd18e8e...`**) is
+ACCEPT WITH CONDITIONS; pre-B **`27128684`** has host-b1/evidence and an empty
+C log. The developer owns C1-review-R1/R2 fixes and helpers-c1b refreeze.
+**P1 is documentation-only:** a jointly approved F3 line for a started failure
+may lift F4 for **other chunks/final merge**, never retry/replace that chunk.
+The existing attempt guards and merger continue to enforce that distinction.
+B is the accepted fix commit after SA1's short check; its one-line pack-path
+record is specified in the C1 leaf and does not replace `-CampaignBase <B>`.
 **S-OD15 now records A**, owner Discord message `1572872444602228798` at
 **2026-11-19T07:13:33.350Z**; C1's owner-answer gate is resolved.
 The extra "100% resource" clause is a scheduling allocation, not permission to

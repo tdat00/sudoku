@@ -72,7 +72,12 @@ reset. Host display-name changes are not identity changes; real replacements
 need SA2's ruling, SA1's concurrence and an orchestrator commit before use.
 Validate the binding approved for each admission, not only the latest host.
 Neither F3 nor rebinding can authorize a started-payload retry or a third
-admission; unresolved F4 stops cannot be bypassed by another chunk.
+admission. **P1** permits a jointly approved F3 line naming the started failure
+to lift F4 **only for other chunks/final merge**. Keep the failed chunk's raw
+history and missing coverage; the final merge may report incomplete, not
+silently replace the chunk. Unresolved F4 stops still cannot be bypassed.
+Audit B's one-time pack-path record and each actual descendant HEAD; the record
+is provenance, not a tool input or a replacement for `-CampaignBase <B>`.
 No agent Node command, including the Discord poller, overlaps a timed payload.
 Never fill a missing result from GQ/GG, a subset percentage or an old profile,
 or release incomplete GP as though R24 had passed without an owner decision.

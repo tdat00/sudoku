@@ -475,8 +475,8 @@ requires the complete saved A record, not a non-null placeholder.
   Maximum **two admission attempts per immutable chunk/protocol identity**,
   at most **one payload per chunk**; preserve both attempts across crashes/restarts/log
   changes. Mixed, slot, host, counter, source, timeout and missing-evidence holds
-  are not eligible for an **automatic** re-ask. F3 permits only the existing
-  second slot after a proved unstarted hold and committed joint ruling; it
+  are not eligible for an **automatic** re-ask. F3 may permit that chunk's
+  existing second slot only after a proved unstarted hold and committed joint ruling; it
   bypasses no F1/F2/F6 predicate and creates no third admission or started-payload
   retry. A second hold is an unexecuted gap. Pause a persistently
   contaminated window instead of cycling through other identities to hunt
@@ -503,8 +503,12 @@ admissions; do not treat that expected no-folder record as a missing admission.
 Attempt 1 refuses any existing chunk folder; attempt 2 needs the genuine
 unstarted `.a1` plus automatic eligibility/wait or a committed F3 ruling.
 After a non-success other than that chunk's own eligible re-ask, block all
-further real calls until valid joint disposition; do not continue on another
-chunk. F3 is not a way to clear a started-payload failure.
+further real calls until valid joint disposition; do not bypass the stop with
+another chunk. **P1:** a jointly approved F3 line naming a started failure may
+lift F4 for **other chunks and the final check-only merge**, never for another
+attempt/payload of the failed chunk. Failure/partial records and incomplete
+coverage remain; `Assert-AttemptC`, `attempts.js` and the merger still reject
+retry/replacement. This is a pack clarification, not a code change.
 
 ## C2 — exact execution, batching and acceptance
 

@@ -357,9 +357,13 @@ existing folder of the chunk, `.a2` must meet all the conditions above.
 than that chunk's own eligible re-ask, stop all further real calls until a
 valid ruling covers the held run. Do not bypass the stop through another chunk,
 directory or profile.
-Rulings apply only to unstarted holds, not started failures; F1/F2/F6 and the
-two-admission/one-payload limits still apply. The C1 leaf defines this governance,
-host-rebinding approvals and the B-freeze prerequisites in full.
+**P1:** an F3 ruling may authorize that chunk's second admission only after a
+valid unstarted hold. A jointly approved line naming a **started failure**
+only lifts the **line stop for other chunks/final merge**; it never authorizes
+attempt 2 or replacement of the failed chunk, even though the unchanged schema
+still says `allowAttempt:2`. F1/F2/F6 and the two-admission/one-payload limits
+remain enforced by the existing guards/merger. Keep the failed chunk incomplete.
+The C1 leaf defines this governance, host rebinding and the one-line B-record.
 
 The legal continuation is **later execution of an unstarted, preplanned chunk**.
 It is not restarting `measure`, resuming the tail of an executed chunk,
