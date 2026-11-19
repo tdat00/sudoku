@@ -1,0 +1,2 @@
+ms18d-gp-recorder-start chunk=sohei-hell2.i42.n8 i0=42 n=8 seedBase=11242
+ms18d-gp-ledger-complete chunk=sohei-hell2.i42.n8 bytes=18099 sha256=19d9c160279e175985f886d758a1c87d4157d5ed62e9c98f1ab9b46fc965d9c3

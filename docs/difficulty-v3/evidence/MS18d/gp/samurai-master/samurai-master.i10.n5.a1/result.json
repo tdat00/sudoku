@@ -1,0 +1,76 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "samurai-master.i10.n5.a1",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "samurai",
+    "level": "master",
+    "targetMs": 20000
+  },
+  "task": "MS18d GP record samurai-master.i10.n5 a1",
+  "startedAtMs": 1795113796332,
+  "outcome": "success",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-recorder",
+    "outcome": "success",
+    "complete": true,
+    "controllerExit": 0,
+    "kinds": [],
+    "problems": [],
+    "cli": {
+      "exit": 0,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=0 seconds=7.408",
+      "exit": 0
+    },
+    "ledger": {
+      "chunkId": "samurai-master.i10.n5",
+      "requests": 5,
+      "sha256": "3551d364b26fb6ae99caae843ad651a823a65ff8024fdb44c7731aea5dd4f00a"
+    }
+  },
+  "cli": {
+    "exit": 0,
+    "signal": null
+  },
+  "tee": {
+    "pid": 33012,
+    "processExit": 0,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=0 seconds=7.408",
+    "exit": 0
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 213,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 171000,
+      "systemMicros": 359000
+    },
+    "tee": {
+      "userMicros": 0,
+      "systemMicros": 140000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 0,
+  "finishedAtMs": 1795113813571
+}

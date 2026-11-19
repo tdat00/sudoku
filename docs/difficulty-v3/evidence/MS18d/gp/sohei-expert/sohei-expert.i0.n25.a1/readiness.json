@@ -1,0 +1,987 @@
+{
+  "schema": "ms18d-c-readiness-record-1",
+  "policy": {
+    "selector": "S-OD15",
+    "choice": "A",
+    "name": "MS18d-GP-host-active"
+  },
+  "requestedAtMs": 1795115943869,
+  "startedAtMs": 1795115945654,
+  "endedAtMs": 1795115952617,
+  "standin": false,
+  "inputs": {
+    "expected": {
+      "bindingId": "host-b1",
+      "pid": 1968,
+      "parentPid": 18780,
+      "netStartUtc": "2026-11-13T12:26:33.6916441Z",
+      "cimCreationUtc": "2026-11-13T12:26:33.691644Z",
+      "exePath": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe"
+    },
+    "binding": {
+      "bindingId": "host-b1",
+      "host": {
+        "pid": 1968,
+        "dotNetStartTime": "2026-11-13T19:26:33.6916441+07:00",
+        "cimCreationDateUtcMicroseconds": "2026-11-13T12:26:33.691644Z",
+        "parentPid": 18780,
+        "executablePath": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe"
+      },
+      "ref": "Initial binding of the already-approved host tuple (pack 9828457a MS18d-c1-readiness-and-rulings.md \"Host-binding journal\": existing tuple approved by the pack and SA1 review of 56b97b26); fresh matching observation by the orchestrator",
+      "journal": {
+        "path": "tasks/difficulty-v3/MS18d-gp-host-bindings.jsonl",
+        "commit": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+        "baseCommit": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "entryCount": 1,
+        "sha256": "eaa3fe68466e22b02f5b88a6e86bfe5be74af9c2ac2e324c4638189adefdb705",
+        "baseSha256": "eaa3fe68466e22b02f5b88a6e86bfe5be74af9c2ac2e324c4638189adefdb705"
+      },
+      "evidence": {
+        "file": "tasks/difficulty-v3/MS18d-gp-host-evidence/host-b1.json",
+        "sha256": "8e98bcb569a1243ddc44017bb6c34f1dd31091302dcb80e9d4220061aaf4d15c",
+        "verified": true
+      }
+    },
+    "bindingSource": "journal entry host-b1",
+    "logicalCpus": 16,
+    "readings": [
+      {
+        "atMs": 1795115946632,
+        "hrNs": 710727993498100,
+        "cpus": [
+          {
+            "user": 60046593,
+            "nice": 0,
+            "sys": 28175765,
+            "idle": 622504781,
+            "irq": 3187265
+          },
+          {
+            "user": 24350625,
+            "nice": 0,
+            "sys": 17757406,
+            "idle": 668619046,
+            "irq": 3051015
+          },
+          {
+            "user": 281672953,
+            "nice": 0,
+            "sys": 33808625,
+            "idle": 395245500,
+            "irq": 3203468
+          },
+          {
+            "user": 28186140,
+            "nice": 0,
+            "sys": 11240062,
+            "idle": 671300875,
+            "irq": 3281000
+          },
+          {
+            "user": 84588671,
+            "nice": 0,
+            "sys": 31435218,
+            "idle": 594703187,
+            "irq": 3332437
+          },
+          {
+            "user": 43756437,
+            "nice": 0,
+            "sys": 16134578,
+            "idle": 650836062,
+            "irq": 3152484
+          },
+          {
+            "user": 73235718,
+            "nice": 0,
+            "sys": 27058171,
+            "idle": 610433187,
+            "irq": 3282390
+          },
+          {
+            "user": 40358375,
+            "nice": 0,
+            "sys": 13707734,
+            "idle": 656660968,
+            "irq": 3077750
+          },
+          {
+            "user": 57524781,
+            "nice": 0,
+            "sys": 25747390,
+            "idle": 627454906,
+            "irq": 3310453
+          },
+          {
+            "user": 36373656,
+            "nice": 0,
+            "sys": 12708140,
+            "idle": 661645281,
+            "irq": 3121203
+          },
+          {
+            "user": 70914156,
+            "nice": 0,
+            "sys": 25015640,
+            "idle": 614797281,
+            "irq": 3286312
+          },
+          {
+            "user": 26490421,
+            "nice": 0,
+            "sys": 11516796,
+            "idle": 672719859,
+            "irq": 3099625
+          },
+          {
+            "user": 58489593,
+            "nice": 0,
+            "sys": 25617312,
+            "idle": 626620171,
+            "irq": 3279984
+          },
+          {
+            "user": 46475046,
+            "nice": 0,
+            "sys": 15335062,
+            "idle": 648916968,
+            "irq": 3074062
+          },
+          {
+            "user": 57483890,
+            "nice": 0,
+            "sys": 22891703,
+            "idle": 630351484,
+            "irq": 3256875
+          },
+          {
+            "user": 41654437,
+            "nice": 0,
+            "sys": 15871484,
+            "idle": 653201156,
+            "irq": 3047921
+          }
+        ]
+      },
+      {
+        "atMs": 1795115947633,
+        "hrNs": 710728994149100,
+        "cpus": [
+          {
+            "user": 60046609,
+            "nice": 0,
+            "sys": 28175765,
+            "idle": 622505765,
+            "irq": 3187265
+          },
+          {
+            "user": 24350625,
+            "nice": 0,
+            "sys": 17757421,
+            "idle": 668620031,
+            "irq": 3051015
+          },
+          {
+            "user": 281673234,
+            "nice": 0,
+            "sys": 33808640,
+            "idle": 395246203,
+            "irq": 3203484
+          },
+          {
+            "user": 28186140,
+            "nice": 0,
+            "sys": 11240109,
+            "idle": 671301828,
+            "irq": 3281031
+          },
+          {
+            "user": 84588859,
+            "nice": 0,
+            "sys": 31435250,
+            "idle": 594703968,
+            "irq": 3332437
+          },
+          {
+            "user": 43756437,
+            "nice": 0,
+            "sys": 16134593,
+            "idle": 650837046,
+            "irq": 3152484
+          },
+          {
+            "user": 73235781,
+            "nice": 0,
+            "sys": 27058171,
+            "idle": 610434125,
+            "irq": 3282390
+          },
+          {
+            "user": 40358390,
+            "nice": 0,
+            "sys": 13707765,
+            "idle": 656661921,
+            "irq": 3077750
+          },
+          {
+            "user": 57524812,
+            "nice": 0,
+            "sys": 25747390,
+            "idle": 627455875,
+            "irq": 3310453
+          },
+          {
+            "user": 36373656,
+            "nice": 0,
+            "sys": 12708171,
+            "idle": 661646250,
+            "irq": 3121218
+          },
+          {
+            "user": 70914156,
+            "nice": 0,
+            "sys": 25015671,
+            "idle": 614798250,
+            "irq": 3286312
+          },
+          {
+            "user": 26490421,
+            "nice": 0,
+            "sys": 11516796,
+            "idle": 672720859,
+            "irq": 3099625
+          },
+          {
+            "user": 58489593,
+            "nice": 0,
+            "sys": 25617312,
+            "idle": 626621171,
+            "irq": 3279984
+          },
+          {
+            "user": 46475046,
+            "nice": 0,
+            "sys": 15335093,
+            "idle": 648917937,
+            "irq": 3074093
+          },
+          {
+            "user": 57483890,
+            "nice": 0,
+            "sys": 22891718,
+            "idle": 630352468,
+            "irq": 3256875
+          },
+          {
+            "user": 41654453,
+            "nice": 0,
+            "sys": 15871484,
+            "idle": 653202140,
+            "irq": 3047921
+          }
+        ]
+      },
+      {
+        "atMs": 1795115948632,
+        "hrNs": 710729993198000,
+        "cpus": [
+          {
+            "user": 60046609,
+            "nice": 0,
+            "sys": 28175781,
+            "idle": 622506750,
+            "irq": 3187281
+          },
+          {
+            "user": 24350656,
+            "nice": 0,
+            "sys": 17757421,
+            "idle": 668621000,
+            "irq": 3051015
+          },
+          {
+            "user": 281673453,
+            "nice": 0,
+            "sys": 33808671,
+            "idle": 395246953,
+            "irq": 3203484
+          },
+          {
+            "user": 28186156,
+            "nice": 0,
+            "sys": 11240109,
+            "idle": 671302812,
+            "irq": 3281031
+          },
+          {
+            "user": 84589062,
+            "nice": 0,
+            "sys": 31435281,
+            "idle": 594704734,
+            "irq": 3332453
+          },
+          {
+            "user": 43756437,
+            "nice": 0,
+            "sys": 16134609,
+            "idle": 650838031,
+            "irq": 3152500
+          },
+          {
+            "user": 73235812,
+            "nice": 0,
+            "sys": 27058187,
+            "idle": 610435078,
+            "irq": 3282390
+          },
+          {
+            "user": 40358406,
+            "nice": 0,
+            "sys": 13707765,
+            "idle": 656662906,
+            "irq": 3077750
+          },
+          {
+            "user": 57524812,
+            "nice": 0,
+            "sys": 25747390,
+            "idle": 627456875,
+            "irq": 3310453
+          },
+          {
+            "user": 36373687,
+            "nice": 0,
+            "sys": 12708171,
+            "idle": 661647218,
+            "irq": 3121218
+          },
+          {
+            "user": 70914156,
+            "nice": 0,
+            "sys": 25015671,
+            "idle": 614799250,
+            "irq": 3286312
+          },
+          {
+            "user": 26490437,
+            "nice": 0,
+            "sys": 11516796,
+            "idle": 672721843,
+            "irq": 3099625
+          },
+          {
+            "user": 58489640,
+            "nice": 0,
+            "sys": 25617312,
+            "idle": 626622125,
+            "irq": 3279984
+          },
+          {
+            "user": 46475046,
+            "nice": 0,
+            "sys": 15335093,
+            "idle": 648918937,
+            "irq": 3074093
+          },
+          {
+            "user": 57483906,
+            "nice": 0,
+            "sys": 22891734,
+            "idle": 630353437,
+            "irq": 3256890
+          },
+          {
+            "user": 41654468,
+            "nice": 0,
+            "sys": 15871484,
+            "idle": 653203125,
+            "irq": 3047921
+          }
+        ]
+      },
+      {
+        "atMs": 1795115949646,
+        "hrNs": 710731007747200,
+        "cpus": [
+          {
+            "user": 60046625,
+            "nice": 0,
+            "sys": 28175812,
+            "idle": 622507718,
+            "irq": 3187296
+          },
+          {
+            "user": 24350656,
+            "nice": 0,
+            "sys": 17757421,
+            "idle": 668622015,
+            "irq": 3051015
+          },
+          {
+            "user": 281673703,
+            "nice": 0,
+            "sys": 33808671,
+            "idle": 395247718,
+            "irq": 3203484
+          },
+          {
+            "user": 28186171,
+            "nice": 0,
+            "sys": 11240125,
+            "idle": 671303796,
+            "irq": 3281031
+          },
+          {
+            "user": 84589218,
+            "nice": 0,
+            "sys": 31435343,
+            "idle": 594705531,
+            "irq": 3332484
+          },
+          {
+            "user": 43756453,
+            "nice": 0,
+            "sys": 16134625,
+            "idle": 650839015,
+            "irq": 3152515
+          },
+          {
+            "user": 73235828,
+            "nice": 0,
+            "sys": 27058234,
+            "idle": 610436031,
+            "irq": 3282406
+          },
+          {
+            "user": 40358406,
+            "nice": 0,
+            "sys": 13707781,
+            "idle": 656663906,
+            "irq": 3077750
+          },
+          {
+            "user": 57524843,
+            "nice": 0,
+            "sys": 25747421,
+            "idle": 627457828,
+            "irq": 3310453
+          },
+          {
+            "user": 36373703,
+            "nice": 0,
+            "sys": 12708171,
+            "idle": 661648218,
+            "irq": 3121218
+          },
+          {
+            "user": 70914171,
+            "nice": 0,
+            "sys": 25015703,
+            "idle": 614800218,
+            "irq": 3286343
+          },
+          {
+            "user": 26490468,
+            "nice": 0,
+            "sys": 11516796,
+            "idle": 672722828,
+            "irq": 3099625
+          },
+          {
+            "user": 58489671,
+            "nice": 0,
+            "sys": 25617328,
+            "idle": 626623093,
+            "irq": 3279984
+          },
+          {
+            "user": 46475062,
+            "nice": 0,
+            "sys": 15335109,
+            "idle": 648919921,
+            "irq": 3074093
+          },
+          {
+            "user": 57483906,
+            "nice": 0,
+            "sys": 22891765,
+            "idle": 630354421,
+            "irq": 3256890
+          },
+          {
+            "user": 41654468,
+            "nice": 0,
+            "sys": 15871484,
+            "idle": 653204140,
+            "irq": 3047921
+          }
+        ]
+      },
+      {
+        "atMs": 1795115950646,
+        "hrNs": 710732007150200,
+        "cpus": [
+          {
+            "user": 60046671,
+            "nice": 0,
+            "sys": 28175843,
+            "idle": 622508640,
+            "irq": 3187312
+          },
+          {
+            "user": 24350671,
+            "nice": 0,
+            "sys": 17757437,
+            "idle": 668622984,
+            "irq": 3051015
+          },
+          {
+            "user": 281673968,
+            "nice": 0,
+            "sys": 33808687,
+            "idle": 395248437,
+            "irq": 3203484
+          },
+          {
+            "user": 28186187,
+            "nice": 0,
+            "sys": 11240125,
+            "idle": 671304781,
+            "irq": 3281031
+          },
+          {
+            "user": 84589390,
+            "nice": 0,
+            "sys": 31435359,
+            "idle": 594706343,
+            "irq": 3332484
+          },
+          {
+            "user": 43756453,
+            "nice": 0,
+            "sys": 16134625,
+            "idle": 650840015,
+            "irq": 3152515
+          },
+          {
+            "user": 73235859,
+            "nice": 0,
+            "sys": 27058234,
+            "idle": 610437000,
+            "irq": 3282406
+          },
+          {
+            "user": 40358406,
+            "nice": 0,
+            "sys": 13707781,
+            "idle": 656664906,
+            "irq": 3077750
+          },
+          {
+            "user": 57524843,
+            "nice": 0,
+            "sys": 25747421,
+            "idle": 627458828,
+            "irq": 3310453
+          },
+          {
+            "user": 36373703,
+            "nice": 0,
+            "sys": 12708171,
+            "idle": 661649218,
+            "irq": 3121218
+          },
+          {
+            "user": 70914171,
+            "nice": 0,
+            "sys": 25015703,
+            "idle": 614801218,
+            "irq": 3286343
+          },
+          {
+            "user": 26490484,
+            "nice": 0,
+            "sys": 11516796,
+            "idle": 672723812,
+            "irq": 3099625
+          },
+          {
+            "user": 58489687,
+            "nice": 0,
+            "sys": 25617328,
+            "idle": 626624078,
+            "irq": 3279984
+          },
+          {
+            "user": 46475062,
+            "nice": 0,
+            "sys": 15335109,
+            "idle": 648920921,
+            "irq": 3074093
+          },
+          {
+            "user": 57483921,
+            "nice": 0,
+            "sys": 22891765,
+            "idle": 630355406,
+            "irq": 3256890
+          },
+          {
+            "user": 41654484,
+            "nice": 0,
+            "sys": 15871484,
+            "idle": 653205125,
+            "irq": 3047921
+          }
+        ]
+      },
+      {
+        "atMs": 1795115951646,
+        "hrNs": 710733007124700,
+        "cpus": [
+          {
+            "user": 60046687,
+            "nice": 0,
+            "sys": 28175875,
+            "idle": 622509593,
+            "irq": 3187312
+          },
+          {
+            "user": 24350687,
+            "nice": 0,
+            "sys": 17757453,
+            "idle": 668623953,
+            "irq": 3051015
+          },
+          {
+            "user": 281674187,
+            "nice": 0,
+            "sys": 33808703,
+            "idle": 395249203,
+            "irq": 3203484
+          },
+          {
+            "user": 28186296,
+            "nice": 0,
+            "sys": 11240140,
+            "idle": 671305656,
+            "irq": 3281031
+          },
+          {
+            "user": 84589625,
+            "nice": 0,
+            "sys": 31435359,
+            "idle": 594707109,
+            "irq": 3332484
+          },
+          {
+            "user": 43756546,
+            "nice": 0,
+            "sys": 16134625,
+            "idle": 650840921,
+            "irq": 3152515
+          },
+          {
+            "user": 73235875,
+            "nice": 0,
+            "sys": 27058265,
+            "idle": 610437953,
+            "irq": 3282421
+          },
+          {
+            "user": 40358531,
+            "nice": 0,
+            "sys": 13707812,
+            "idle": 656665750,
+            "irq": 3077765
+          },
+          {
+            "user": 57524859,
+            "nice": 0,
+            "sys": 25747468,
+            "idle": 627459765,
+            "irq": 3310468
+          },
+          {
+            "user": 36373796,
+            "nice": 0,
+            "sys": 12708171,
+            "idle": 661650125,
+            "irq": 3121218
+          },
+          {
+            "user": 70914187,
+            "nice": 0,
+            "sys": 25015718,
+            "idle": 614802187,
+            "irq": 3286343
+          },
+          {
+            "user": 26490531,
+            "nice": 0,
+            "sys": 11516828,
+            "idle": 672724734,
+            "irq": 3099656
+          },
+          {
+            "user": 58489765,
+            "nice": 0,
+            "sys": 25617328,
+            "idle": 626625000,
+            "irq": 3279984
+          },
+          {
+            "user": 46475156,
+            "nice": 0,
+            "sys": 15335125,
+            "idle": 648921812,
+            "irq": 3074093
+          },
+          {
+            "user": 57484000,
+            "nice": 0,
+            "sys": 22891796,
+            "idle": 630356296,
+            "irq": 3256906
+          },
+          {
+            "user": 41654515,
+            "nice": 0,
+            "sys": 15871500,
+            "idle": 653206078,
+            "irq": 3047921
+          }
+        ]
+      }
+    ],
+    "owned": [
+      {
+        "role": "wrapper",
+        "pid": 10104,
+        "createdMs": 1795115924012
+      },
+      {
+        "role": "controller",
+        "pid": 18552,
+        "createdMs": 1795115943919
+      },
+      {
+        "role": "readiness-probe",
+        "pid": 33788,
+        "createdMs": 1795115945657
+      },
+      {
+        "role": "readiness-probe",
+        "pid": 32156,
+        "createdMs": 1795115951650
+      }
+    ],
+    "budget": {
+      "elapsedMs": 6961,
+      "queryDurationsMs": [
+        978,
+        967
+      ]
+    },
+    "queries": [
+      {
+        "ok": true,
+        "timedOut": false,
+        "error": null,
+        "durationMs": 978
+      },
+      {
+        "ok": true,
+        "timedOut": false,
+        "error": null,
+        "durationMs": 967
+      }
+    ]
+  },
+  "snapshots": {
+    "before": {
+      "file": "readiness-before.json",
+      "sha256": "88ea907b11b05823c785daa1b85cb50f417a2e1c1199d3bab6983a75f8dbf34f"
+    },
+    "after": {
+      "file": "readiness-after.json",
+      "sha256": "c96843a2f8fd03a6b3f67c59ef467d3dbd8161c870d511ed72e0ceeab3823434"
+    }
+  },
+  "decision": {
+    "schema": "ms18d-c-readiness-1",
+    "policy": {
+      "selector": "S-OD15",
+      "choice": "A",
+      "name": "MS18d-GP-host-active"
+    },
+    "complete": true,
+    "ready": false,
+    "admitted": true,
+    "eligibleReAsk": false,
+    "kind": "admitted",
+    "reasons": [],
+    "host": {
+      "expected": {
+        "bindingId": "host-b1",
+        "pid": 1968,
+        "parentPid": 18780,
+        "netStartUtc": "2026-11-13T12:26:33.6916441Z",
+        "cimCreationUtc": "2026-11-13T12:26:33.691644Z",
+        "exePath": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe"
+      },
+      "source": "journal entry host-b1",
+      "verified": true,
+      "first": {
+        "verified": true,
+        "kind": "verified",
+        "checks": {
+          "pid": true,
+          "parentPid": true,
+          "exePath": true,
+          "netStartUtc": true,
+          "cimCreationUtc": true
+        },
+        "problems": []
+      },
+      "second": {
+        "verified": true,
+        "kind": "verified",
+        "checks": {
+          "pid": true,
+          "parentPid": true,
+          "exePath": true,
+          "netStartUtc": true,
+          "cimCreationUtc": true
+        },
+        "problems": []
+      }
+    },
+    "counters": {
+      "logicalCpus": 16,
+      "intervals": [
+        {
+          "index": 1,
+          "startMs": 1795115946632,
+          "endMs": 1795115947633,
+          "elapsedMs": 1000.651,
+          "busyCores": 0.9562932130646435,
+          "instances": 16,
+          "valid": true,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "startMs": 1795115947633,
+          "endMs": 1795115948632,
+          "elapsedMs": 999.0489,
+          "busyCores": 0.8242211154377556,
+          "instances": 16,
+          "valid": true,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "startMs": 1795115948632,
+          "endMs": 1795115949646,
+          "elapsedMs": 1014.5492,
+          "busyCores": 1.0032331362766516,
+          "instances": 16,
+          "valid": true,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "startMs": 1795115949646,
+          "endMs": 1795115950646,
+          "elapsedMs": 999.403,
+          "busyCores": 0.7015776637155948,
+          "instances": 16,
+          "valid": true,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "startMs": 1795115950646,
+          "endMs": 1795115951646,
+          "elapsedMs": 999.9745,
+          "busyCores": 1.6625667127628938,
+          "instances": 16,
+          "valid": true,
+          "problems": []
+        }
+      ],
+      "valid": true,
+      "mean": 1.0295783682515078,
+      "max": 1.6625667127628938,
+      "thresholds": {
+        "mean": 0.5,
+        "max": 1
+      }
+    },
+    "processes": {
+      "valid": true,
+      "problems": [],
+      "windowMs": 5992,
+      "threshold": 0.5,
+      "consumers": [],
+      "excluded": [
+        {
+          "pid": 0,
+          "createdMs": 1794405221996,
+          "name": "System Idle Process",
+          "role": "idle"
+        },
+        {
+          "pid": 1968,
+          "createdMs": 1794572793691,
+          "name": "copilot.exe",
+          "role": "host"
+        },
+        {
+          "pid": 10104,
+          "createdMs": 1795115924012,
+          "name": "pwsh.exe",
+          "role": "wrapper"
+        },
+        {
+          "pid": 18552,
+          "createdMs": 1795115943919,
+          "name": "node.exe",
+          "role": "controller"
+        },
+        {
+          "pid": 32156,
+          "createdMs": 1795115951650,
+          "name": "pwsh.exe",
+          "role": "readiness-probe"
+        }
+      ],
+      "vanished": [
+        {
+          "pid": 12592,
+          "createdMs": 1795115944387,
+          "name": "vdsldr.exe",
+          "cpuMs": 31.25
+        },
+        {
+          "pid": 17600,
+          "createdMs": 1795115945676,
+          "name": "conhost.exe",
+          "cpuMs": 15.625
+        }
+      ],
+      "created": 1,
+      "observed": 282
+    },
+    "budget": {
+      "elapsedMs": 6961,
+      "queryDurationsMs": [
+        978,
+        967
+      ],
+      "totalBudgetMs": 45000,
+      "queryBudgetMs": 15000
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record greaterThan-hell2.i34.n16 a1",
+  "runId": "greaterThan-hell2.i34.n16.a1",
+  "cell": "greaterThan/hell2",
+  "payload": "gp-recorder",
+  "chunkId": "greaterThan-hell2.i34.n16",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/greaterThan-hell2/greaterThan-hell2.i34.n16.a1",
+  "requestedAt": "2026-11-20T01:18:45.486+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795112309797,
+    "lastCheckMs": 1795112325308,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 269
+  },
+  "startedAtFromChild": "2026-11-20T01:18:45.614+07:00",
+  "finished": "2026-11-20T01:20:08.531+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2961,
+    "cheapCheckMs": 126,
+    "ageMs": 136,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T01:20:08.532+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

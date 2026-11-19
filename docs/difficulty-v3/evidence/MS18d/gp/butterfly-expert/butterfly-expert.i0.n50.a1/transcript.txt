@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=butterfly-expert.i0.n50 --out=..\docs\difficulty-v3\evidence\MS18d\gp\butterfly-expert\butterfly-expert.i0.n50.a1\ledger.json
+ms18d-gp-recorder-start chunk=butterfly-expert.i0.n50 i0=0 n=50 seedBase=7000
+ms18d-gp-ledger-complete chunk=butterfly-expert.i0.n50 bytes=21753 sha256=85bf1a23d5b3a6bae5279b2f6ffd3d325f8eaff6c147a144de65e090ac306a7b
+exit=0 seconds=39.357

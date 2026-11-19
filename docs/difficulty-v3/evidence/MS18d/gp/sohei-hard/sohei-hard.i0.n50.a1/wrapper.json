@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record sohei-hard.i0.n50 a1",
+  "runId": "sohei-hard.i0.n50.a1",
+  "cell": "sohei/hard",
+  "payload": "gp-recorder",
+  "chunkId": "sohei-hard.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-hard/sohei-hard.i0.n50.a1",
+  "requestedAt": "2026-11-20T02:14:45.478+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795115669798,
+    "lastCheckMs": 1795115685305,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 262
+  },
+  "startedAtFromChild": "2026-11-20T02:14:45.612+07:00",
+  "finished": "2026-11-20T02:15:08.930+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 3078,
+    "cheapCheckMs": 124,
+    "ageMs": 133,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T02:15:08.931+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

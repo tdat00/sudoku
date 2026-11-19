@@ -1,0 +1,76 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795116340256,
+  "startedAtMs": 1795116340387,
+  "lockAcquiredAtMs": 1795116340299,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795116324562,
+    "lastCheckMs": 1795116340083,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 270,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 131,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795116188653,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 151734,
+  "reasons": [],
+  "decision": "proceed",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 30772,
+    "task": "MS18d GP record sohei-master.i0.n25 a1",
+    "controllerPid": 29460,
+    "controllerParentPid": 30772,
+    "wrapperPid": 30772
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\lock-log.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-b\\lock-log.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\lock-log.jsonl",
+      "present": true,
+      "skippedLines": [
+        24
+      ],
+      "skippedEvents": [
+        {
+          "line": 24,
+          "type": "pre-window-hold",
+          "heldAt": "foreign-lock-watch",
+          "runId": "mega16-easy.i0.n50.a2",
+          "at": "2026-11-19T19:09:20.061+07:00"
+        }
+      ]
+    }
+  ]
+}

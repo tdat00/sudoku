@@ -1,0 +1,2 @@
+ms18d-gp-recorder-start chunk=samurai-master.i20.n5 i0=20 n=5 seedBase=9020
+ms18d-gp-ledger-complete chunk=samurai-master.i20.n5 bytes=17867 sha256=a2b67fd4c7f789d7b6251417e773db360bb8e0bd1f02ef34dbbb15fb06b0d635

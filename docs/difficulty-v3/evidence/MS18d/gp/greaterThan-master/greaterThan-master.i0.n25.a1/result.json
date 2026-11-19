@@ -1,0 +1,76 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "greaterThan-master.i0.n25.a1",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "greaterThan",
+    "level": "master",
+    "targetMs": 10000
+  },
+  "task": "MS18d GP record greaterThan-master.i0.n25 a1",
+  "startedAtMs": 1795111427544,
+  "outcome": "success",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-recorder",
+    "outcome": "success",
+    "complete": true,
+    "controllerExit": 0,
+    "kinds": [],
+    "problems": [],
+    "cli": {
+      "exit": 0,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=0 seconds=46.488",
+      "exit": 0
+    },
+    "ledger": {
+      "chunkId": "greaterThan-master.i0.n25",
+      "requests": 25,
+      "sha256": "f20e4c894d9d125f55a54dfb2f5cb8ee48e6670207cab1aae30e2c0848fa7b13"
+    }
+  },
+  "cli": {
+    "exit": 0,
+    "signal": null
+  },
+  "tee": {
+    "pid": 27380,
+    "processExit": 0,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=0 seconds=46.488",
+    "exit": 0
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 221,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 187000,
+      "systemMicros": 265000
+    },
+    "tee": {
+      "userMicros": 78000,
+      "systemMicros": 46000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 0,
+  "finishedAtMs": 1795111484057
+}

@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "butterfly-master.i0.n50.a2",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "butterfly",
+    "level": "master",
+    "targetMs": 8000
+  },
+  "task": "MS18d GP record butterfly-master.i0.n50 a2",
+  "startedAtMs": 1795119593159,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "additional-consumer: process 5632 (MsMpEng.exe) gained 0.846 CPU-s per elapsed second"
+  ],
+  "heldAt": "readiness",
+  "eligibleReAsk": true,
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 93000,
+      "systemMicros": 218000
+    }
+  },
+  "finishedAtMs": 1795119602005
+}

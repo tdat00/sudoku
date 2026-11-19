@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=greaterThan-hell2.i34.n16 --out=..\docs\difficulty-v3\evidence\MS18d\gp\greaterThan-hell2\greaterThan-hell2.i34.n16.a1\ledger.json
+ms18d-gp-recorder-start chunk=greaterThan-hell2.i34.n16 i0=34 n=16 seedBase=10434
+ms18d-gp-ledger-complete chunk=greaterThan-hell2.i34.n16 bytes=18836 sha256=bd83d5861e344a64b3513cdd9699bddab814fbed6bfe126c9e35bb5ba8b3c713
+exit=0 seconds=73.056
