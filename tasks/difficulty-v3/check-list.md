@@ -1265,23 +1265,33 @@ Poller paused during payloads; progress reports/checkpoints only between chunks,
 after cleanup and before the next fresh checks. Phase D's non-pack docs edits
 follow the final campaign merge, not a mid-campaign path exception.
 
-**MS18d-C2-RELEASE-HISTORY — current halt; MS18d-Q2 pending.**
+**MS18d-C2-RELEASE-HISTORY — B3 review/release pending; MS18d-Q2 pending.**
 The first repair was reviewed/committed as B2 **`b6de2c46`**, H2 **`bd6949ef`**,
 record **`42533fcc`**. Its mega16-easy a2 now has a real folder and held at
 acquisition: `release-history.js::fromLog` treated C-log line 24's
 `pre-window-hold` as a release and required `finished`. The fail-closed
 acquisition decision is correct on that input; repair the typed history
 classification in both readers, not the log or the safety threshold.
-Checkpoint the a2 folder and append-only C log now, unchanged.
+The a2 folder and append-only C log are checkpointed unchanged at **`ed95a1f0`**.
+Keep the prepared B3 writer's `at` and explicit no-acquisition/no-admission/
+no-payload flags, **no `finished`**; valid typed C pre-window events are not
+releases with or without a diagnostic timestamp.
 
 Two admissions have been used, zero payloads: **a1 was the genuine EventLog
 CPU hold, a2 the reader defect**. Existing F3 cannot authorize a3.
 **MS18d-Q2 reserves S-OD16 for the actual owner answer; no grant is recorded.**
-The exact Vietnamese A/B question and conditional B3 plan are in
-`MS18d-epoch3-release-history-repair.md`. Keep the line paused. A new B3, never
-an amended B2, is required if the repair is deployed. An owner-approved third
-slot, if granted, must be explicit and one-use; no relabelled second admission,
-global cap increase, fourth admission, payload repeat or denominator reduction.
+The exact Vietnamese A/B question, history-only B3 and line-only F4 disposition
+are in `MS18d-epoch3-release-history-repair.md`. After joint review/freeze,
+base-3/F3 records and live validation, **the other 91 chunks / 2,950 requests
+continue under B3 whether Q2 is pending, A or B**, starting mega16-normal a1.
+B3 keeps V1 and two admissions. The F3 line names mega16-easy a2 with the
+unchanged `allowAttempt:2`, releases only the line and preserves both holds.
+An actual owner A answer uses the separate **B4, a3 last** specification in
+`MS18d-epoch4-a3-exception.md`; no new exception code/slots enter B3.
+With B, continue the other chunks and report incomplete at the required final
+all-79 merge. With Q2 pending, do not consume its sole final slot prematurely.
+No relabelled second admission, global cap increase, fourth admission,
+payload repeat or denominator reduction is permitted.
 
 **MS18d-C2-TRANSPORT-WATCH — first repair completed, now historical.** B1 **`a2e6423a`**,
 base record **`f7f56cbb`**, immutable epoch-1 checkpoint **`4db0114e`**:
@@ -1292,7 +1302,7 @@ SA1/SA2 agree on **fix (b)**: expensive full checks before each watch, a stable
 HEAD/C-log/folder fingerprint and cheap invariance only afterwards, inside
 the same 1200 s deadline. Do not raise the 600/1000 ms freshness thresholds.
 
-The sole R3 exception is in **`MS18d-epoch2-transport-repair.md`**: one reviewed
+The original R3 exception was in **`MS18d-epoch2-transport-repair.md`**: one reviewed
 B2 descendant, exact two (base, helper-SHA) pairs, and per-epoch validation.
 Allowed production helper changes are **run-locked-c.ps1, merge-core.js,
 merge-gp.js**; only named tests/stand-ins may additionally differ.
@@ -1302,7 +1312,8 @@ After B2 and its separate committed base-2 record, run live journal validation
 under the lock, then only mega16-easy's still-available a2.
 This is a technical compatibility repair, **not an owner question or a new
 deadline/CPU/measurement grant**. Send the informational status message in the
-repair leaf. No new payload before the repair's review/release gates.
+repair leaf. No new payload before the repair's review/release gates. This describes the
+first repair; the current B3 extension above supersedes its next-call order.
 
 **F3/F4 execution authority:** `MS18d-gp-rulings.jsonl` is created empty and
 tracked. Each appended line has exactly
@@ -1313,6 +1324,9 @@ Only a proved unstarted hold may gain that chunk's second admission.
 lift **only the F4 line stop for other chunks and final merge**; it never permits
 attempt 2/retry/replacement for the failed chunk or erases its failure.
 `allowAttempt:2` retains its schema value, not retry meaning in this case.
+Likewise, a joint line for an **unstarted second hold with both admissions
+spent** may release only other chunks/final merge, never reuse a2 or create
+a3. The epoch-3 leaf specifies the exact mega16-easy a2 disposition.
 Without that ruling, a different chunk/directory is no bypass. All F1/F2/F6
 predicates and the two-admission/one-payload limits still apply.
 

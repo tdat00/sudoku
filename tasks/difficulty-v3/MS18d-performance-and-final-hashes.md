@@ -7,7 +7,7 @@
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
 | Authority | R24/R21, FS23, S-OD4, S-OD15 A; S-AV01 not offered; S-OD13 remains GQ-only |
-| Status | C2 paused again after B2 mega16-easy a2 acquisition hold; two admissions used/no payload; release-history repair and new B3 needed; MS18d-Q2 owner decision pending for any third admission |
+| Status | C2 awaits reviewed history-only B3 and joint F4 disposition; two mega16-easy admissions used/no payload; other 91 chunks then continue independently of pending Q2; any approved a3 needs separate B4, run last |
 
 ## Goal & business context
 
@@ -150,11 +150,15 @@ There is **no `SG_TIME_FACTOR` multiplication of CLI GP targets**.
 declaration **`42533fcc`**, produced a real a2 control-hold at acquisition,
 exit 64, no readiness or payload. C-log line 24 is a typed no-acquisition
 pre-window event; `release-history.js` wrongly requires its `finished`.
-Preserve/checkpoint the a2 folder and log. Both admissions are used: a1 was a
+The a2 folder and log are checkpointed at `ed95a1f0`. Both admissions are used: a1 was a
 legitimate CPU hold, a2 the tooling defect. Do not retry/relabel a2.
 **`MS18d-epoch3-release-history-repair.md`** assigns the semantic reader fix,
-requires a new B3 rather than amended B2, and contains the exact **MS18d-Q2**
-owner question for a one-use a3. Current limits remain two; no live continuation.
+keeps `at`/no `finished` on future no-lock give-ups, and requires reviewed B3
+rather than amended B2. With the joint F4 line-only disposition, the other
+91 chunks may continue regardless of pending **MS18d-Q2**. Current limits
+remain two. Only an actual A answer enables the separately reviewed B4/a3-last
+specification in `MS18d-epoch4-a3-exception.md`; B retains an incomplete cell
+and failed 79/79 gate. No live continuation before the B3/F4 release gates.
 
 **Earlier epoch-1 halt/ruling, historical:** B1 is **`a2e6423a`**, original base record **`f7f56cbb`**,
 checkpoint **`4db0114e`**. Preserve 22 successful chunks (19 cells / 950

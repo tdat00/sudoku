@@ -4,8 +4,11 @@
 The real mega16-easy a2 folder now exists and consumes the second admission,
 although it held at acquisition before a payload. Existing F3 cannot grant
 an a3. The owner must explicitly decide MS18d-Q2 before any such exception;
-no relabelling, folder deletion or counter reset is permitted. Preserve/checkpoint
-the evidence and keep the line stopped while the reviewed repair is prepared.
+no relabelling, folder deletion or counter reset is permitted. The evidence is
+checkpointed at `ed95a1f0`. After reviewed history-only B3 and the joint line-only
+F4 disposition, the other 91 chunks may proceed regardless of Q2's answer.
+Any owner-approved a3 is separate B4 work, run last; see the conditional
+`MS18d-epoch4-a3-exception.md`. Nothing here grants it.
 
 Supporting specification of `MS18d-phase-c-admission.md` and the R24 leaf.
 **C0/C0b baseline: `56b97b2671a55c3cafefdbb999ad12c277fc0770`.**
@@ -57,6 +60,10 @@ create **no run directory**; append a **`pre-window-hold`** record to the C log.
 It counts as **zero admissions**, not `.a1`, not a payload and not an eligible
 CPU re-ask. Preserve its reason/time and return to the orchestrator; do not
 silently cycle watches or create/delete a folder to change accounting.
+The B3 writer uses `at` with explicit `lockAcquired`, `admissionConsumed` and
+`payloadStarted` all false, **not `finished`**. Valid typed C pre-window events
+are excluded by release-history readers even if a diagnostic `finished`
+exists; malformed events and actual unproved releases still fail closed.
 
 ## F2 / F5 — attempt eligibility and genuine unstarted holds
 
@@ -123,8 +130,13 @@ version. No edits/removals/compaction of earlier lines.
   `allowAttempt:2` remains the unchanged schema field, not a retry grant in
   this case. `Assert-AttemptC`, `attempts.js` and the merger still refuse a retry
   or replacement of a chunk whose payload started.
+- A jointly approved line naming an **unstarted second hold after both
+  admissions are used** likewise releases **only F4 for other chunks/final
+  merge**. It does not reuse `.a2` or authorize `.a3`. The current exact
+  disposition for `mega16-easy.i0.n50.a2` is in the epoch-3 repair leaf;
+  its base-3 record must preserve the evidence and both analysts' agreement.
 
-Neither case creates a slot, changes the frozen plan, bypasses F1/F2/F6, resets
+No case creates a slot, changes the frozen plan, bypasses F1/F2/F6, resets
 counts or removes the failure. These are narrow operational rulings, not a
 new GP recovery policy. **P1 needs no code change.**
 Keep this journal out of fixed helper-content hashes: its parser and the
@@ -143,7 +155,9 @@ not a mutable reset switch. Stand-in history is never real-campaign permission.
 All predicates are conjunctive: clearing a stop is not permission to violate
 F2 or manufacture an admission. A no-folder pre-window hold remains zero
 admissions; a ruling cannot turn it into a fictitious `.a1`. At two admissions
-there is no further slot. Unexpected/unrepresentable state stays stopped for
+there is no further slot under current V1/B3. Only a separate owner-approved,
+frozen B4 exception could change that one chunk, never an F3 line.
+Unexpected/unrepresentable state stays stopped for
 joint disposition, not a permissive default.
 
 **P1: F3 may clear the line stop after a started-payload failure, not the

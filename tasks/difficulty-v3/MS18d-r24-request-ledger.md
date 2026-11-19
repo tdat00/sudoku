@@ -3,9 +3,12 @@
 **Current halt:** after B2, mega16-easy's real a2 was an acquisition hold and
 consumed its remaining admission; no measurement began. The current ruling is
 `MS18d-epoch3-release-history-repair.md`. Its reader repair is not permission
-for an a3: **MS18d-Q2 requires the owner**, and a reviewed B3 identity/slot
-disposition is needed before deployment. Both older epochs and all raw data
-remain immutable; do not extend the two-epoch allowlist or relabel `.a2`.
+for an a3: **MS18d-Q2 requires the owner**. History-only B3 and a joint
+line-only F4 disposition may release the other 91 chunks regardless of Q2;
+B3 keeps the original manifest/slots/cap. An actual A answer requires the
+separate B4 of `MS18d-epoch4-a3-exception.md`, a3 last. With B, the final
+all-79 merge reports incomplete. Both older epochs and all raw data remain
+immutable; no silent identity extension or relabelled `.a2`.
 
 Supporting specification of `MS18d-phase-c-admission.md`, not another task.
 SA2 accepts SA1's **O1**, 2026-11-19: the blanket single-command restriction

@@ -11,9 +11,14 @@ created its folder, then held before readiness/payload because C-log line 24's
 no-acquisition event has no `finished`. Both admissions are used; no a3 or
 relabelled a2 is authorized. Follow
 **[MS18d-epoch3-release-history-repair.md](MS18d-epoch3-release-history-repair.md)**.
-The history-reader repair/tests may be prepared under the lock. A new reviewed
-B3 is required for deployment, and **MS18d-Q2 needs the owner** for any third
-admission. Checkpoint the a2 folder/log unchanged. No real continuation meanwhile.
+The a2 folder/log is checkpointed unchanged at `ed95a1f0`. The B3 writer keeps
+`at` and explicit no-acquisition flags, **no `finished`**. After history-only
+B3 review/freeze, base-3 and the joint line-only F4 disposition, the other
+**91 chunks may continue while Q2 is pending or under either answer**.
+**MS18d-Q2 needs the owner only for the third-admission exception**; if A,
+follow `MS18d-epoch4-a3-exception.md` for a separately reviewed B4, a3 last.
+With B, continue the other chunks and report incomplete at the final merge.
+No real continuation before the B3/F4 gates are met.
 
 **Earlier epoch-1 halt, historical:** B1 `a2e6423a`, checkpoint `4db0114e`, 22 successful
 chunks plus mega16-easy a1 and a zero-admission a2 pre-window hold.
