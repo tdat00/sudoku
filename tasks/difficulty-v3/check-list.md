@@ -219,8 +219,15 @@ targets and 17 rule-derived updates (11 ceil / six cap), 29/29 locked tests.
 One unlocked `node --version` and nine own gaps of 14.2-14.9 s are retained
 deviations; the gap bug was fixed, not its history. No generation or GP ran.
 The orchestrator released Phase B, which paused before any edit/Node run for the
-target-pin QUESTION. **Phase C and S-AV11 remain NOT released**.
-Its leaf contains the sent, still-unanswered **OWNER question MS18d-Q1**:
+target-pin QUESTION, then completed at **`50903182`**. SA1 gave **ACCEPT WITH
+CONDITIONS**, recorded/refrozen at **`b3144fcf`**, no implementation rework.
+The 17 targets, eleven contrasts, seven deep removals, 4,807 quick registrations,
+104 successful GG shards and 520-key check-only merge are recorded there.
+The deep-registration item is closed on its file evidence, not a live deep pass.
+**C0 G1-G5 tooling/stand-ins and SA1 review are released now**, in new Phase-C
+copies. The **CPU readiness/admission launcher (C1)** and live GP/profile (C2)
+remain behind **S-OD15's single selector in section 4** and their review gates.
+The original **OWNER question MS18d-Q1** asks for:
 explicit new task-scoped host-active GP permission, or a credible strict-quiet
 window/environment. S-OD13/S-OD14 grant neither GP readiness nor GP recovery.
 Do not route this owner decision to Fable or infer it from the local CI acceptance.
@@ -233,9 +240,14 @@ relay, also reproduces: pair matching outcome fields within cells, keep both
 times >50 ms and cells with >=5 retained pairs, then lower median per cell and
 lower median over **51 cells =1.1285**. The earlier "not reproduced" statement
 used the wrong description; preserve its frozen Phase-A record as history.
-All 79 GP cells and S-AV11 remain unadmitted. Targets/GG functional work is Phase B;
-timing also
-requires the recorded Q1 answer and per-cell whole-command admission.
+The supporting **`MS18d-phase-c-admission.md`** gives both policy plans and all
+79 row reservations: **62 conditional candidates / 17 held** on the original
+environment, including Sohei Hell 2, with S-AV11 held separately. No row is
+admitted merely by arithmetic or the owner answer; explicit empirical-basis
+review and the selected fresh CPU admission still precede every payload.
+Current booking for that conditional queue is about **1.5-2.5 hours**, reserving
+**2 h 25 min** without holds. B adds an unknown wait for a credible quiet window.
+There is no full-matrix/profile completion ETA while bounds are missing.
 The stock timing CLI has no JSON/resume/jobs option and no inherited GQ 120 s
 request guard. Keep its exact `ok`/`MISS` verdict distinct from rounded display.
 
@@ -254,7 +266,8 @@ Phase-A files/manifests. Retain kill partials, real exit/failure state, cleanup
 and >=15 s actual gaps; no automatic stale-real-lock deletion. GG keeps the
 104 five-seed shards / 520 keys, conservative whole-command <=450 and hard 540,
 no update flag. Hash-family identity changes; replay is expected unchanged but
-must be recomputed. Phase B grants no GP/profile permission; Q1 is still pending.
+must be recomputed. Phase B grants no GP/profile permission; current owner
+selection and C0/C1/C2 permissions come from S-OD15 and the supporting plan.
 
 **SA1's binding conditions, relayed 2026-11-19 11:33:** real GG shards need
 exit 0 **and** complete five-key ledgers; only the full 104-ledger check-only
@@ -278,7 +291,8 @@ tier change or permission for a live deep run.
 The earlier design 15.5 reference was wrong (browser checklist); use actual
 15.1/15.2 locations. Hidden rows still have no GP target, not zero.
 
-**MS18d-DEEP-PUBLIC-REGISTRATIONS — OPEN, assigned now to Phase B.**
+**MS18d-DEEP-PUBLIC-REGISTRATIONS — CLOSED on file evidence at `50903182` /
+`b3144fcf`.** The following records the completed assignment, not a live deep pass.
 The 12:06 relay records SA1's missed unfiltered mega public deep branch; remove
 exactly mega12/hell1, mega16/nightmare and mega16/hell1 via the existing
 `PUBLISHED[id]` intersection before registration. SA2 directly verified the same
@@ -623,6 +637,7 @@ accepted. The owner-ordered pause commit `a7f6660` was not green; preserve it as
 | S-OD12 (JF-02 A + S0) | Owner, Discord, 2026-11-17 13:46 (+07:00): "tôi chọn A và S0". Retroactively approve retention of MS13c's verified Jellyfish source `testkit-4242-8657`, snapshot and all acquisition records, for MS13c only. Explicitly preserve that the scan lacked authorization when performed; S-OD10 did not authorize it. No further scan, unused quota, budget reset or gate waiver. **S0 keeps case-by-case permission; the proposed standing S1 rule is not approved.** Ordinary B/IR72 acquisition remains unchanged; every future exception/expansion needs separate prior owner authorization. The owner hold is resolved, but reviewed fixes and final GH/both quick sets/CI still precede MS13c acceptance/commit and later dispatch. S-OD11, cost items and final qualification/performance obligations are unchanged. |
 | S-OD13 (MS18c-Q1/Q2) | Owner, Discord author `amicably8850`, **2026-11-18 21:31:46 (+07:00)**: **"Q1: A. Q2: chọn phương án B nhưng giao SA-Opus và SA-Astra chọn mức trần, không cần thông qua Fable."** Q1-A approves declared host-active GQ with raw p95/budgets/jobs/seeds/120000 ms guard unchanged and the existing unstarted-hold re-ask. Q2-B delegates GQ-only finite ceilings **jointly to SA1/Opus and SA2/Astra, not Fable/developer**. The 22:42 structural agreement is now bound by both analysts' 135-row Stage 2 manifest and its staged release/review conditions. Q3's later recovery exception is S-OD14 below. Other gates keep 450/540; no scheduler/protocol/offer/partial-publication/acquisition waiver. The owner's original statement selected no number itself. |
 | S-OD14 (MS18c-Q3) | Owner, Discord author `amicably8850`, **2026-11-18 23:05:53 (+07:00)**, verbatim **"Q3: chọn B"**. At most one GQ recovery relaunch per cell after T-kill, worker/supervisor fault or session loss, only with no complete record and prior **joint SA1/SA2 diagnosis/approval**. Same qualified source/seed/protocol; all traces remain; no completed-record rerun, correctness erasure or faster-result selection. Adopt a live supervisor. Primary/recovery slots and their admission budgets are explicit and durable; a committed one-use case authorization is required before slot 2. Failure/exhaustion of recovery is a permanent gap; no third run or implicit reset. This satisfies the Q3 owner-answer gate, not Stage 2 binding or actual recovery approval. |
+| S-OD15 (MS18d-Q1) | **Reserved owner-decision record; the sole live selector is in section 4.** A selects `MS18d-GP-host-active` with the stated raw screen/additional-consumer gate and single eligible >=60 s re-ask; B requires a credible strict-quiet window with no automatic re-ask. C0 G1-G5 tooling/stand-ins is separately released before the answer. C1 readiness implementation, row admission and timing stay gated. Neither answer supplies a missing bound, extends 450/540, changes the 79-cell protocol or grants GP recovery. |
 
 The following are serial ownership transfers, not permission for parallel edits:
 
@@ -846,7 +861,9 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | S-AV27 qualification second round on one worker | **Final execution gap closed by MS18c under S-OD13:** all six old unexecuted cells ran and are hidden on time; all 135 records accepted. The scheduler is unchanged: MS07d's `round2-workers.txt` still establishes the possible 60 serial second-round requests. Final expansions were hyper/Expert 53, flower/Nightmare 50 and wordoku/Normal 46 requests. Preserve MS07e's incomplete old-source checkpoint and mixed-concurrency caveat; GQ is not jobs-1 GP timing and receives no time normalization | Closed final-GQ gap; timing/cost caveat to MS18d, MS18e audit |
 | MS18c-GQ-ENGINE-COST | **Open; comparator definitions resolved. Primary SA2:** 2,122 strict matched pairs, ordinary pooled median **1.1240**. **Separate SA1:** equal seed/hit/achieved/score/solved/approximate/exact/valid within a cell, both times >50 ms, >=5 pairs/cell; lower median of each cell's ratios then lower median of **51 cell medians =1.1285**, reproduced after the 11:33 clarification. Not a pooled statistic or a new timing run. Closure also records **mega16-replay 331.6 s vs118 s at MS07f**, above its 300 s projection but inside 450, and 17 offered GQ cells above the pre-update targets. Preserve source/clock/cohort distinctions; no GP verdict, normalization, retune, budget waiver or GQ repeat follows | MS18d; MS18e audit |
 | MS18d-GP-BOUND-sohei-hell2 | **Unadmitted mean alert, not a GP measurement.** Accepted GQ: n=40, mean **9711.9411975 ms**, `50*mean/1000 = 485.597059875 s >450`, before setup/readiness/variance. Keep the cell in the 79-cell GP denominator; no shorter cohort, GQ watchdog, pilot or extended deadline. Other 78 mean-unflagged cells still need credible reviewed whole-command plans. Q1's environment answer cannot waive this bound; an unmeasured cell leaves the full GP gate incomplete | MS18d current-source admission/report; MS18e audit |
-| MS18d-DEEP-PUBLIC-REGISTRATIONS | **OPEN; narrow Phase-B fix/audit assigned.** Remove only three hidden mega and four multigrid Easy public deep registrations via existing published membership. Keep the eleven-row budget inventory, mega12 Nightmare's 3000 ms base and all diagnostic/retained test contracts. Require ordinary inventory unchanged, mega deep 12 -> 9, multigrid deep 16 -> 12, seven-entry GQ removal map and the bounded 63-file source audit; further findings are QUESTIONs before edits. No live deep run or E/GG recipe change; no unresolved unsupported-level handoff | MS18d Phase B repair/evidence; MS18e prerequisite audit |
+| MS18d-GP-BOUND-REMAINDER | **Open, sixteen additional H rows**, individually named/numerical in `MS18d-phase-c-admission.md`; together with Sohei, **17 held** under A and B. Proposed common reservation `60 + ceil(50*max(existing GQ/GG request ms)/1000)` exceeds 450 s for those rows. This is an empirical planning disposition, not a GP result or proof that generation cannot finish; no fit-to-cap margin, pilot, cohort split or deadline increase. The other 62 rows remain conditional on review/readiness | MS18d planning/true incomplete GP report; MS18e audit |
+| MS18d-C0-G1-G5 | **Open; tooling-only release now.** Phase-C copies must fix actual start/latest-release gaps, A/B/C log routing, MISS/crash classification, frozen clean input binding and tee-first orphan cleanup. Stand-ins and SA1 review required. No CPU/readiness/admission launcher until S-OD15; no timed cell until C1 review and row approval | MS18d C0/C1 release gates; MS18e evidence audit |
+| MS18d-DEEP-PUBLIC-REGISTRATIONS | **CLOSED on file evidence (`50903182`, recorded at `b3144fcf`).** Quick inventory unchanged at 4807; SG_DEEP listing 4835 -> 4828, seven removals/no additions: mega 12 -> 9, multigrid 16 -> 12. Seven-entry GQ map and 63-file audit retained, no other positive. Eleven budget contrasts, mega12 Nightmare's 3000 ms base, fixed diagnostics and E/GG recipes unchanged. No live deep run or timing claim | Closed Phase-B repair; MS18e final-source prerequisite audit |
 | IR17 final carry | Classic9 Nightmare remains offered. The older `00647f9` GD batch cost **430.5 s**; **449 s is not a reusable bound**. Require current-source conservative whole-command admission under unchanged 450/540 protection, with honest named incomplete coverage if not admissible | MS18c handoff; remaining GD and final audit MS18e |
 | S-AV28 Easy availability | MS07e GQ: diagonalX Easy 28/40, hyper 29/40, samurai 10/22, sohei 4/18, butterfly 1/15, flower 0/14 (current offers lose Easy on six variants); 40/40 elsewhere | MS18c |
 | S-AV29 Greater-Than Master time | MS07e GQ: 40/40 hits but p95 14.5 s over the 10 s budget (heavy tail; the cell took 35.3 s against a 27.5 s projection): hidden by time | MS18c, MS18d |
@@ -1155,6 +1172,37 @@ MS17b freezes the actual new-pattern limits with v3.
 
 ## 4. Decisions taken
 
+### S-OD15 — MS18d-Q1 single owner-choice record
+
+**Only the following JSON line is amended when the owner answers.** The current
+PENDING value grants nothing. Record the actual owner identity, timestamp,
+channel/message reference and verbatim answer (JSON-escape any line breaks).
+Do not treat preparation of A/B plans as an owner decision.
+
+```text
+S-OD15 {"choice":"PENDING","owner":null,"answeredAt":null,"source":null,"answer":null}
+```
+
+- **If choice is A**, select exactly **`MS18d-GP-host-active`** in
+  `MS18d-phase-c-admission.md`: retain raw strict results, verify the named host
+  and additional-consumer/lock/counter conditions, and permit only its one
+  >=60 s fresh-slot re-ask for a verified unstarted consumer-only hold.
+- **If choice is B**, select exactly **strict-quiet** in that same plan:
+  mean <=0.5 / max <=1.0 busy logical cores, credible quiet window, no host
+  exception or automatic readiness retry.
+- **If missing, invalid or PENDING**, C1 readiness implementation, live
+  admission and all GP/S-AV11 payloads remain blocked. **C0 G1-G5 copies,
+  stand-in tests and SA1 review are already released**, independently.
+
+An unambiguous answer choosing A/B with the prepared conditions needs only that
+one-line amendment; different conditions require a reviewed amendment instead.
+Neither choice waives C0/C1 review, row-basis approval, clean frozen inputs,
+the seventeen current cost holds, S-AV11's missing bound, 450/540 or the complete
+79-cell / >=72-success gate. The selected policy is frozen before the first
+timed payload; changing this line later cannot reset quotas or mix a matrix.
+The entry in section 2 and the task leaves reference this line, never a second
+mutable choice.
+
 **S-OD13, 2026-11-18 21:31:46 (+07:00):** Q1-A and Q2-B are owner-approved,
 with GQ ceiling authority delegated **jointly to SA1/Opus and SA2/Astra, not Fable**.
 The canonical verbatim owner record and section 2 govern. Stage 1 has finished
@@ -1325,13 +1373,15 @@ all Node and timed work**, ordinary 450/540, under the leaf's A/B checkpoints.
 The shared helper below remains unchanged; no global timeout, product-budget or
 GP timing waiver follows from the GQ permission.
 
-**MS18d dispatch after MS18c acceptance:** only file-only Phase A is ready.
-**MS18d-Q1 is an unanswered owner decision**, prepared in the leaf, not permission
-to reuse `MS18c-GQ-host-active`. The leaf offers A (explicit `MS18d-GP-host-active`,
+**MS18d dispatch after Phase B:** **C0 G1-G5 tooling/stand-ins/review only** is
+released before the owner answer. **S-OD15 in section 4 is the single live
+MS18d-Q1 decision**, not permission to reuse `MS18c-GQ-host-active`.
+The prepared choices are A (explicit `MS18d-GP-host-active`,
 raw timing/targets unchanged and a narrowly bounded unstarted CPU-hold re-ask)
 or B (retain the strict-quiet condition in a credible window/environment).
-No GP/S-AV11 payload or live readiness campaign before that recorded decision
-and explicit dispatch. Ordinary 450/540, all 50 requests, trace/seeds, target
+No C1 CPU/readiness/admission implementation, live screen or GP/S-AV11 payload
+before that recorded decision and the supporting plan's explicit review/release
+gates. Ordinary 450/540, all 50 requests, trace/seeds, target
 freeze and full-matrix completeness remain in either case. The baseline screen
 below still applies; a proposed policy is not an implemented exemption.
 

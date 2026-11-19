@@ -3,11 +3,11 @@
 | Header | Value |
 |---|---|
 | Depends on | MS18c accepted at `e0596801`; acceptance recorded by `34ebc3fc`; owner MS18d-Q1 and reviewed per-cell admission before timed work |
-| Accepted base | MS18c `e0596801`; acceptance `34ebc3fc`; MS18d Phase A `602af371` (25/25 freeze entries, 29/29 tests) |
+| Accepted base | MS18c `e0596801`; acceptance `34ebc3fc`; Phase A `602af371`; Phase B `50903182`, SA1 ACCEPT WITH CONDITIONS recorded at `b3144fcf` |
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
 | Authority | R24/R21, FS23, S-OD4; S-AV01 not offered; S-OD13 is GQ-only, not a GP waiver |
-| Status | Phase A accepted/committed; Phase B functional work with SA1's GG/CV6 conditions and the 2026-11-19 deep-registration addendum below; Phase C NOT released, Q1 unanswered |
+| Status | Phase B committed; C0 G1-G5 tooling/stand-ins released now; C1 readiness implementation and C2 timing gated by S-OD15 and the supporting Phase-C plan |
 
 ## Goal & business context
 
@@ -131,6 +131,28 @@ There is **no `SG_TIME_FACTOR` multiplication of CLI GP targets**.
 
 ## Dispatch boundary and owner action
 
+**Current dispatch, after Phase B `50903182`:** the orchestrator verified the
+17 target updates, 135-position freeze **`3d0bffdb...`**, eleven contrasts,
+seven deep public removals and unchanged 4,807 quick registrations, 104/104 GG
+shards and the 520/520 check-only merge. SA1 gave **ACCEPT WITH CONDITIONS**:
+three record-only additions/refreeze are committed at **`b3144fcf`**; no
+implementation rework. Player quick is now **`aa352658...`**, Generator quick
+**`49089814...`**, and Generator with-manual **`176f9c95...`**. Both complete
+quick sets still belong to Phase D. The deep-registration item is **closed on
+file evidence** in that committed handoff; no live deep result is implied.
+
+**Read [MS18d-phase-c-admission.md](MS18d-phase-c-admission.md) as the current
+dispatch addendum.** It releases only **C0**, versioned G1-G5 transport,
+source/result/orphan checks, stand-ins and SA1 review, **before** the owner answer.
+The CPU readiness/admission launcher is **C1**, built only after the single
+**S-OD15 selector in check-list section 4** records A or B. Timing is **C2**,
+after tooling review, explicit row-basis approval and fresh live admission.
+The complete 79-row table proposes **62 conditional candidates / 17 held**
+under either policy on the original environment; S-AV11 also remains held for
+lack of a current-tuple bound. This is not a full GP pass or a new timing grant.
+
+The following Phase-A/B chronology and the original question remain history:
+
 **Phase A is complete at `602af371`**, 28 files. The orchestrator verified all
 **25/25** freeze entries, bound identities, the 79-row table, 62 retained targets
 and 17 proposals (**11 ceil(3q), six budget-capped**), and **29/29** locked tests.
@@ -150,13 +172,15 @@ The orchestrator **released Phase B**, which started at **11:08:38 (+07:00)** an
 stopped for the target-pin QUESTION before any edit/Node run (clean at 11:10:57).
 The orchestrator relayed **SA1 CONCURS WITH CONDITIONS** and resumed Phase B
 at the 11:33 update. The two GG/CV6 conditions below are binding; this pack update
-does not add another pause. **Phase C is NOT released**; owner **MS18d-Q1 remains
-unanswered on Discord**, per the 2026-11-19 11:11 relay. No GP/S-AV11 run,
+does not add another pause. **At that relay Phase C was not released** and
+**MS18d-Q1 was unanswered on Discord** (2026-11-19 11:11). No GP/S-AV11 run,
 pilot or live readiness campaign follows from Phase B.
 
 ### MS18d-Q1 — OWNER: final performance measurement environment
 
-**Sent through the orchestrator to the owner; unanswered, not a Fable question.**
+**Sent through the orchestrator to the owner; not a Fable question.**
+Its live answer is solely the S-OD15 selector; at Phase-B completion it was
+still unanswered. Do not copy a second mutable decision into this leaf.
 S-OD13 explicitly authorized host-active **GQ**, not GP. All **140** MS18c raw
 strict screens failed; the resident CLI host was PID **1968**, .NET StartTime
 `2026-11-13T19:26:33.6916441+07:00`, CIM UTC microseconds
@@ -212,10 +236,12 @@ task is raised merely for that cost finding; FS23 already specifies its disposit
 > Riêng Sohei Hell 2 đã có cảnh báo 485,597 s >450 nên chưa được chạy; chọn A
 > không cấp thêm thời gian, và còn thiếu ô thì không công bố GP hoàn tất.
 
-Record the verbatim answer and task-scoped policy before Phase C. Until then:
-metadata/planning only in Phase A; no live readiness/no-op campaign, pilot or
-timed measurement to choose the policy. Phase B's non-GP functional work may be
-separately released after its review without pretending Q1 is answered.
+Record the verbatim answer and task-scoped policy in **S-OD15's one-line
+selector** before C1. Until then, the current addendum permits **C0 G1-G5
+tooling and stand-in tests only**, not the readiness launcher, live CPU sampling,
+admission, pilot or timed measurement. A and B have complete conditional plans
+in the supporting file; selecting either changes no source/target/deadline or
+held-row disposition. The selected launcher still needs review before C2.
 
 ### Readiness and runtime obligations once released
 
@@ -437,8 +463,9 @@ map is expressly assigned; no other ownership expands.
 After focused/GG checks, freeze the **new** Phase-B helpers/outputs and re-verify
 Phase A still **25/25**. Record changed identities and the one test rename in
 the Phase-B handoff. **No GP, S-AV11, pilot, live timing-admission campaign or
-Phase-C release** is granted by this ruling. Q1 remains unanswered, all 79 cells
-remain unadmitted, and the Sohei Hell 2 hold is unchanged.
+Phase-C release** was granted by that Phase-B ruling. At that point Q1 was
+unanswered and all 79 cells unadmitted. Current C0/C1/C2 permissions follow the
+supporting plan and S-OD15; the Sohei Hell 2 hold remains unchanged.
 
 ### Retained manual/deep budgets versus the new GP table — documentation, not edits to tests
 
@@ -535,9 +562,10 @@ following narrow assignment supersedes that exclusion, not its budget ruling.**
 
 ### Phase-B addendum — deep public registrations, not diagnostic population changes
 
-**Assign now to MS18d Phase B, not MS18e.** Item
-**MS18d-DEEP-PUBLIC-REGISTRATIONS is OPEN** until the repair, bounded audit and
-registration evidence below are verified. SA1 identified the missed mega branch
+**Historical Phase-B assignment, now closed on file evidence at `50903182` /
+`b3144fcf`, not live deep execution.** Item
+**MS18d-DEEP-PUBLIC-REGISTRATIONS** required the repair, bounded audit and
+registration evidence below. SA1 identified the missed mega branch
 after MS18c acceptance; preserve that acceptance/history and record this correction
 explicitly rather than leave known `difficulty.unsupportedLevel` failures to the
 planned MS18e deep run. No owner decision is needed: apply the existing step-5
@@ -670,7 +698,8 @@ Every row below has GQ budget **30000 ms**; keep the actual early-stop reason.
   report actual metadata, retag nothing. Do not rerun or rewrite GG/replay
   merely because a suite file or pack commit changed when the required
   source/manifest compatibility still holds. This grants no new Phase-C GP or
-  S-AV11 permission; Q1 and per-cell admission remain outstanding.
+  S-AV11 permission; S-OD15, tooling review and per-cell admission are still
+  prerequisites under the supporting Phase-C plan.
 
 **CV6-05 / S-AV01 is settled: "not offered".** Normal has 40/40 hits but p95
 10,192.4051 ms >10,000 ms. It is not in the 79-cell GP population; the Fable trigger
@@ -758,6 +787,15 @@ The profile informs which unbounded piece might be guarded **later**; it authori
 be implemented as part of this performance task.
 
 ### Mandatory preflight before any GP invocation (FS23)
+
+**Phase-C planning follow-up:** the supporting plan retains these original mean
+alerts, supplements matching keys with existing serial GG maxima, and gives
+every row an explicit proposed `P = 60 + ceil(50*observedMax/1000)` reservation.
+These are reviewed empirical planning assumptions, not proofs of future times;
+they require explicit orchestrator approval before any conditional row runs.
+Seventeen rows exceed 450 s under this common rule, including Sohei Hell 2.
+No arbitrary fit-to-ceiling multiplier, pilot or source/CPU normalization is
+authorized. The original frozen Phase-A report remains byte-identical.
 
 **File-only pack-author check, no GP/pilot run:** all 79 offered GQ cells have 40
 outcomes. The arithmetic mean alerts sum to **3803.9658065 s**, excluding setup,
@@ -847,6 +885,12 @@ edits or timed work when arithmetic is green.
   `evidence\MS18d\gp\<variant>-<level>\<run-id>\`, S-AV11 records under
   `evidence\MS18d\s-av11\`, and complete GG ledgers under `evidence\MS18d\hashes\`.
   Never overwrite a run or write inside the accepted MS18c trees.
+- **C0 released now:** versioned G1-G5 copies/tests under
+  `generator/tests/artifacts/difficulty-v3/MS18d/phase-c/`, isolated stand-in
+  evidence under `evidence/MS18d/phase-c/tooling/`, and SA1 review. Preserve all
+  accepted A/B files. **C1's CPU/readiness/admission implementation is not
+  released until S-OD15 answers Q1**; C2 additionally needs reviewed row plans
+  and tooling. The supporting Phase-C plan is normative for this boundary.
 - `generator/tests/fixtures/perf-helper.js` PERF_TARGETS only if the documented qualification rule
   requires it; corresponding Generator design 9.1 and both developer guides.
 - **Phase-B pin amendment:** the single target-value test/local expectation in
@@ -899,11 +943,14 @@ edits or timed work when arithmetic is green.
    This is functional/hash evidence, **not GP**. Its ordinary shared-slot/bound
    rules still apply. It may be separately released while Q1 timing remains held.
 
-### Phase C — timed GP/profile, separate owner-policy and admission release
+### Phase C — C0 tooling now; C1/C2 owner-policy and admission gates
 
-6. Require the recorded **owner answer to MS18d-Q1**, frozen targets/inputs and
-   the orchestrator's declared timing window and reviewed per-cell admission plans.
-   Choose no policy/ceiling yourself. The mere absence of a mean alert is not GO.
+6. First complete the **released C0 G1-G5 copies/stand-ins and SA1 review**.
+   Build C1's selected CPU/readiness/admission launcher **only after S-OD15**
+   records the owner's answer, then test/freeze/review it. C2 requires frozen
+   targets/inputs, the declared timing window and explicit review of each
+   conditional empirical row in `MS18d-phase-c-admission.md`.
+   Choose no policy/ceiling yourself. Neither Q1 nor a low mean alert is GO.
 7. Run each admitted GP cell once as a full 50-request original CLI invocation.
    Retain complete `MISS` results. Do not start Sohei Hell 2 or any other
    unsupported/unbounded cell under unchanged estimates. Record these in the
@@ -925,6 +972,7 @@ edits or timed work when arithmetic is green.
 11. Return the complete GP status, final 520-key check and inherited/new item
     register for **orchestrator review**. Include S-AV01 not offered, S-OD7,
     closed S-AV27, IR17, **MS18c-GQ-ENGINE-COST**, **MS18d-GP-BOUND-sohei-hell2**,
+    **MS18d-GP-BOUND-REMAINDER**, **MS18d-C0-G1-G5**,
     **MS18d-DEEP-PUBLIC-REGISTRATIONS**, S-AV11 and the older source-qualified
     S-AV31/S-AV33/S-AV34/S-AV36-S-AV39 /
     MS15b-GP-J/U records. S-OD4 permits continued safe work after cost findings,
@@ -954,10 +1002,13 @@ edits or timed work when arithmetic is green.
 | MS18d-T11 | Design 15.1/15.2, both developer guides and handoff enumerate eleven retained-versus-GP contrasts: ten manual rows plus the separately labelled SG_DEEP-only mega12 Nightmare 3000 vs18842; no manual/deep title/budget/threshold/factor/tier changed |
 | MS18d-T12 | Ordinary quick registration names/counts unchanged; deep mega 12 -> 9 and multigrid 16 -> 12 remove exactly the seven named hidden public cells with GQ references; mega12 Nightmare retained; no test-body/budget/diagnostic change or live deep run |
 | MS18d-T13 | Bounded 63-file deep-registration audit documented; additional findings questioned before edits and assigned before Phase-B acceptance; suite-only changes leave E/GG recipes intact, update Generator fingerprints honestly and close MS18d-DEEP-PUBLIC-REGISTRATIONS with reviewed evidence |
+| MS18d-T14 | C0 fixes actual-start/release gaps, A/B/C log routing, complete MISS/crash classification, frozen clean inputs and orphan cleanup; stand-ins and SA1 review precede timing; C1 readiness implementation waits for S-OD15 |
+| MS18d-T15 | S-OD15's single selector governs A/B without inherited GP permission; all 79 row plans and the held S-AV11 tuple retain their status, limits and evidence; candidate/source-transfer assumptions are explicitly reviewed, not promoted by arithmetic or Q1 alone |
 
 ## Test plan and gates
 
-**Current work is the released Phase B, after the pin-ruling concurrence/resume.**
+**Current released work is C0 G1-G5 tooling/stand-ins, not live readiness or GP.**
+Follow the supporting plan for the exact tests and staged C1/C2 releases.
 The following is the **completed Phase-A command**, retained as history; do not
 overwrite its frozen output using the post-update target table:
 
@@ -1009,6 +1060,9 @@ Return the recorded Q1 decision/policy, full preflight and distinct admission
 bases, intended/completed cell coverage, immutable target arithmetic/source tuple,
 all raw transcripts and the actual aggregate verdict (incomplete where appropriate),
 complete GG evidence and the cumulative item list.
+Include the S-OD15 record, C0/C1 reviews/frozen helpers, all 79 row approvals or
+holds, the seventeen current cost holds and the still-unadmitted S-AV11 tuple.
+Finishing a conditional queue is not completion of the full GP matrix.
 Include the closed deep-public-registration item, seven-removal map and bounded
 audit/registration evidence; preserve any additional named finding and its
 explicit assignment rather than pass a known unsupported request to MS18e.

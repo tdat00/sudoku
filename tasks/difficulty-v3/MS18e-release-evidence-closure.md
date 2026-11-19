@@ -31,6 +31,18 @@ and fourteen analyses. Every final offer meets (c1); bounded fallbacks are misse
 additionally withholds Killer Hard/Expert until later calibration without altering their raw
 qualification verdicts or the complete 135-cell population.
 
+**MS18d Phase-C handoff contract:** audit the single S-OD15 owner record in
+check-list section 4 and `MS18d-phase-c-admission.md`, not an inherited GQ grant.
+G1-G5 transport/stand-ins (C0) precede the selected readiness implementation
+(C1), their reviews and timed release (C2). Keep exact source/tool/target/Node/
+machine/policy bindings, acquisition evidence, all real exits and the no-orphan
+proof. A complete MISS is not a crash, but an exit-1 code alone proves neither.
+The current empirical plan has **62 conditional / 17 held GP rows**, plus held
+S-AV11; these are planning dispositions, not final measurements or removed offers.
+Finishing the conditional queue cannot satisfy 79 complete cells / >=72 successes.
+Audit every hold/cost-item revision and any explicit later row approval;
+never fill a missing result from GQ/GG, a subset percentage or an old profile.
+
 **MS18c post-GQ handoff, 2026-11-19:** the 135-record set is jointly accepted
 (79 offered / 56 hidden, 4,313 outcomes, 27 retained budget timeouts, zero invalid).
 Audit its measured `ed2fe50c`, dirty / sources `0ca29eaeebc295b6` identity against
