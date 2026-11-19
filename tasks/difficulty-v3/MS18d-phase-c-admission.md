@@ -6,6 +6,16 @@ acceptance closure **`b3144fcf`**, 2026-11-19.
 
 ## Release boundary
 
+**Current campaign halt:** B1 `a2e6423a`, checkpoint `4db0114e`, 22 successful
+chunks plus mega16-easy a1 and a zero-admission a2 pre-window hold.
+Follow **[MS18d-epoch2-transport-repair.md](MS18d-epoch2-transport-repair.md)**:
+SA2 concurs with SA1 on fix (b) and a single declared second transport epoch.
+Only the scoped repair/tests are released; no next payload until one reviewed
+B2 fix/freeze, its base-2 record and live journal validation. The 22 records
+remain immutable and never re-requested. The named R3 exception permits exactly
+two helper/base pairs; all other content identities and the ordinary checks
+within each epoch remain unchanged. B2 resets no admission or payload count.
+
 **Current state:** C0/C0b is committed at **`56b97b26`**, SA1 **ACCEPT WITH
 CONDITIONS F1-F6; C1 released now**. Implement those conditions and selected A
 readiness under **[MS18d-c1-readiness-and-rulings.md](MS18d-c1-readiness-and-rulings.md)**.
@@ -344,6 +354,9 @@ Implement and test SA1's G1-G5 gaps with the already relayed C0-1..C0-6 addition
    An uncaught Node exception's default exit 1 must never become a GP MISS.
 4. **G4/R3, source binding:** record campaign base **B** before the first real
    chunk, after final tooling/manifest freeze and the already-recorded notice.
+   For the named epoch-2 repair, B is the record's declared epoch base and
+   helper matching is per approved pair; only that leaf's exact cross-epoch
+   helper delta is allowed. The unchanged admission checker uses current B2.
    Each actual HEAD must be B or a descendant; `git diff --name-only B <HEAD>`
    may list only the exact C0-4 campaign-output paths or `tasks/difficulty-v3/`.
    Keep all content/environment identities equal: E hash **344afdec...**,

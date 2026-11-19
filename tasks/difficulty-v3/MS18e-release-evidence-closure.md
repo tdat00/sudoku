@@ -35,6 +35,14 @@ qualification verdicts or the complete 135-cell population.
 check-list section 4 and both `MS18d-phase-c-admission.md` /
 `MS18d-r24-request-ledger.md`, not an inherited GQ grant. **A is recorded**;
 the "100% resource" clause is scheduling-only under the reviewed interpretation.
+**Named epoch-2 exception:** also audit `MS18d-epoch2-transport-repair.md`,
+the immutable `4db0114e` checkpoint and the separate base-2 declaration.
+The merger may accept exactly the reviewed B1/H1 and B2/H2 pairs, selecting
+each record's own identity/base checker, with every other measurement identity
+unchanged. The helper diff is limited to the wrapper, two check-only merger
+files and named tests/stand-ins; no recorder/readiness/engine/plan change.
+Preserve the 22 epoch-1 ledgers and all attempt history; no retagging,
+replacement or hidden new campaign. Report provenance/counts per epoch.
 G1-G5/C0-1..C0-6 transport (C0), raw recorder/merger (C0b) and selected
 readiness implementation (C1) need review before timed release (C2).
 Keep exact source/tool/target/Node/
@@ -44,7 +52,8 @@ R24 resolves the prior 17 monolithic holds: **all 79 cells have plans, 114
 commands / 3,950 indices**, 62 one-chunk cells and 17 cells with 52 chunks.
 The bound items close as planning obstructions, not GP passes. S-AV11 remains held.
 Require each immutable raw ledger/exit-0 receipt and unchanged source/seed/target/
-plan/helper/executed-content/Node/machine/policy identities and empty R5 flags.
+plan/executed-content/Node/machine/policy identities and empty R5 flags.
+Helper/base equality is per declared epoch under the sole named exception above.
 Preserve actual HEADs: each must be campaign B or an allowed descendant under
 R3's exact campaign-output/pack path rule, not necessarily the same HEAD.
 Reject gaps, duplicates, partial/failed chunks and changed ranges. Only the complete check-only merge of raw

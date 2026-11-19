@@ -7,7 +7,7 @@
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
 | Authority | R24/R21, FS23, S-OD4, S-OD15 A; S-AV01 not offered; S-OD13 remains GQ-only |
-| Status | Combined review ACCEPT WITH CONDITIONS; C1-review-R1/R2 code fixes and helpers-c1b/SA1 short check precede B; P1 is pack-only; no C2 release implied |
+| Status | C2 paused after 22 successful chunks; epoch-1 checkpoint `4db0114e`; scoped transport repair/dual-epoch merger assigned; no resume before reviewed B2 record and live journal validation |
 
 ## Goal & business context
 
@@ -145,6 +145,19 @@ The perf CLI uses strict **`p95 < target`**; qualification uses **`p95 <= budget
 There is **no `SG_TIME_FACTOR` multiplication of CLI GP targets**.
 
 ## Dispatch boundary and owner action
+
+**Current halt/ruling:** B1 is **`a2e6423a`**, original base record **`f7f56cbb`**,
+checkpoint **`4db0114e`**. Preserve 22 successful chunks (19 cells / 950
+requests), mega16-easy's eligible unstarted a1 and its no-folder a2 watch give-up.
+The R2 freshness loop starves on its own full rechecks; it is not a GP timeout.
+**`MS18d-epoch2-transport-repair.md`** assigns fix (b), exact two-epoch R3
+compatibility and the developer tests/base-2 record/resume sequence.
+SA2 concurs with SA1: no owner question, restart, rerun or retagging.
+The repair and check-only merger changes land together in reviewed B2.
+Next actual payload is only **mega16-easy.i0.n50 a2**, still subject to fresh
+admission; the pre-window hold consumed no admission and needs no F3 ruling.
+All writes and Node work are locked while paused; nobody measures before
+the B2 freeze/record and `validate-journals --base B2 --live` succeed.
 
 **Current dispatch, after Phase B `50903182`:** the orchestrator verified the
 17 target updates, 135-position freeze **`3d0bffdb...`**, eleven contrasts,

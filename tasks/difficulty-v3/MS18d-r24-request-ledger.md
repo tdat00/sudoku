@@ -143,6 +143,18 @@ or reuse a measurement run directory to avoid declaring a merge slot.
 
 ### R3 — campaign base and permitted later commits
 
+**Named epoch-2 amendment, after checkpoint `4db0114e`:**
+`MS18d-epoch2-transport-repair.md` is the sole exception to single-base/helper
+equality below. SA1/SA2 authorize the bounded wrapper repair plus check-only
+merger support for exactly **(B1,H1)** and **(B2,H2)**, with the reviewed
+three-production-file/test-only diff. All measurement-content identities and
+the plan remain unchanged. Preserve the 22 completed chunks, a1 hold and
+pre-window record; no retagging, rerun or counter reset.
+Within each epoch the ordinary R3 path/content rule still applies. The merger
+checks each record against its own declared pair; an unknown third pair fails.
+The original B1 record is unchanged; the separate base-2 record is the narrow
+committed compatibility input described in that leaf.
+
 After final executable helpers/manifest are frozen and committed, the
 orchestrator records a **campaign base commit B before the first real chunk**.
 Record `r24Notice` before freezing B (the notice receipt is now in the selector).
@@ -279,9 +291,11 @@ For each cell require:
   host binding/exclusions, raw-ready versus admitted distinction and the
   query/readiness/call-to-spawn limits. Validate the referenced committed
   binding for that admission, not the newest host after the campaign.
-- One common source/executed-content, target-table, plan/helper identity,
-  campaign base **B**, Node, machine, selected policy and empty R5 flags across
-  the cell **and across the final matrix**. Actual HEADs may differ only under R3.
+- One common source/executed-content, target-table, plan, Node, machine,
+  selected policy and empty R5 flags across the matrix. Normally the helper/base
+  pair is common too; the **named epoch-2 repair** permits exactly its two
+  declared pairs, each validated against its own base and helper manifest.
+  Actual HEADs may differ only under the applicable epoch's R3 rule.
   Permit only the planned differences in i0/n/seedBase/output path/run ID/argv.
   Raw Git-status observations may grow with allowed new outputs; require R3
   ancestry/path proofs and the clean-input predicate, not identical HEAD/status text.
@@ -347,6 +361,9 @@ Do not reset counts on process restart, HEAD change or evidence checkpoint.
 A derived immutable report may display counts, but cannot become resettable
 operational state. The campaign B/manifest/chunk identity, not current HEAD,
 anchors accounting across permitted R3 commits.
+The epoch-2 cutover retains **B1 as the logical campaign root** for history;
+passing B2 as the current transport base does not reset or filter out B1
+attempts. The pending mega16-easy a1 remains the earlier eligible admission.
 Under F1, a new watch give-up creates **no folder** and its `pre-window-hold`
 log line consumes no admission. F2 checks before creation: `.a1` refuses any
 existing folder of the chunk, `.a2` must meet all the conditions above.

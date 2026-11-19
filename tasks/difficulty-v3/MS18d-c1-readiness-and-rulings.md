@@ -345,6 +345,14 @@ The orchestrator checks before assigning/freezing **B**:
 
 ## Confirmed B-record location and shape
 
+**Epoch-2 clarification:** the original B1 record below is already immutable
+at `f7f56cbb` and is never edited. The one named transport repair uses a separate
+`MS18d-gp-campaign-base-2.jsonl`, defined in
+`MS18d-epoch2-transport-repair.md`. Unlike the original audit-only record,
+the second record is also the merger's read-only, committed two-pair
+compatibility declaration. Calls after the reviewed cutover pass B2, but retain
+all B1 folders, counters, journals and the checkpointed C-log prefix.
+
 The proposed **`tasks\difficulty-v3\MS18d-gp-campaign-base.jsonl`** is approved:
 the orchestrator creates/commits it **after B**, as **one physical JSON line,
 written once and never edited or appended to**. Do not create a placeholder

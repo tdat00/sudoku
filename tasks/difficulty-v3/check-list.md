@@ -1265,6 +1265,27 @@ Poller paused during payloads; progress reports/checkpoints only between chunks,
 after cleanup and before the next fresh checks. Phase D's non-pack docs edits
 follow the final campaign merge, not a mid-campaign path exception.
 
+**MS18d-C2-TRANSPORT-WATCH — paused, narrow repair assigned.** B1 **`a2e6423a`**,
+base record **`f7f56cbb`**, immutable epoch-1 checkpoint **`4db0114e`**:
+22 successful chunks / 19 cells / 950 requests; 92 chunks remain.
+The mega16-easy a1 is an eligible unstarted consumer hold; a2's 1203 s
+pre-window give-up created no folder and consumed zero admissions.
+SA1/SA2 agree on **fix (b)**: expensive full checks before each watch, a stable
+HEAD/C-log/folder fingerprint and cheap invariance only afterwards, inside
+the same 1200 s deadline. Do not raise the 600/1000 ms freshness thresholds.
+
+The sole R3 exception is in **`MS18d-epoch2-transport-repair.md`**: one reviewed
+B2 descendant, exact two (base, helper-SHA) pairs, and per-epoch validation.
+Allowed production helper changes are **run-locked-c.ps1, merge-core.js,
+merge-gp.js**; only named tests/stand-ins may additionally differ.
+Every other helper/measurement input is byte-identical; retain all checkpoint
+bytes/counters and never retag or rerun. B2 is not a fresh campaign.
+After B2 and its separate committed base-2 record, run live journal validation
+under the lock, then only mega16-easy's still-available a2.
+This is a technical compatibility repair, **not an owner question or a new
+deadline/CPU/measurement grant**. Send the informational status message in the
+repair leaf. No new payload before the repair's review/release gates.
+
 **F3/F4 execution authority:** `MS18d-gp-rulings.jsonl` is created empty and
 tracked. Each appended line has exactly
 `{chunkId,heldRunId,allowAttempt:2,ref,at}`. **SA2 rules, SA1 concurs, and the
