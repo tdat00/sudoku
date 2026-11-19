@@ -1,0 +1,38 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "stand-in c8",
+  "runId": "c8",
+  "cell": "classic4/veryEasy",
+  "payload": "gp-cell",
+  "chunkId": null,
+  "attempt": null,
+  "scope": null,
+  "standin": true,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-5/runs14/classic4-veryEasy/c8",
+  "requestedAt": "2026-11-19T18:13:22.961+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795086787557,
+    "lastCheckMs": 1795086802947,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 260
+  },
+  "startedAtFromChild": null,
+  "finished": "2026-11-19T18:13:23.056+07:00",
+  "releaseObservedAt": "2026-11-19T18:13:23.056+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": null,
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "stop",
+  "problems": [
+    "the controller wrote no result.json: the run is incomplete"
+  ]
+}

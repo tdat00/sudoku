@@ -369,12 +369,46 @@ function pureConsumerTests() {
       assert.ok(hit && hit.newInWindow, 'its whole CPU total counts in the window');
       assert.ok(c.vanished.some((p) => p.pid === 8100 && p.name === 'a.exe'), 'the old instance vanished');
     }),
-    test('consumers: a process that appeared in the window is judged on its CPU over the window', () => {
-      const small = rd.proc(8200, 'burst.exe', NOW + 5000, 3999);
-      const large = rd.proc(8201, 'burst.exe', NOW + 5000, 4000);
+    test('consumers: a process that appeared in the window is judged on its own life inside it', () => {
+      // created at the first snapshot: the whole window counts, the 0.5 boundary is unchanged
+      const small = rd.proc(8200, 'burst.exe', NOW - 500, 3999);
+      const large = rd.proc(8201, 'burst.exe', NOW - 500, 4000);
       const c = classify({ snapshotOptions: { afterOnly: [small, large] } });
       assert.deepStrictEqual(c.consumers.map((p) => p.pid), [8201]);
+      assert.strictEqual(c.consumers[0].elapsedMs, 8000);
       assert.strictEqual(c.created >= 2, true);
+    }),
+    test('consumers: a short full-core burst of a NEW process is not diluted by the whole window', () => {
+      // the second snapshot is at NOW + 7500: 2 s of life and 2 s of CPU is one full core
+      const burst = rd.proc(8210, 'burst.exe', NOW + 5500, 2000);
+      const c = classify({ snapshotOptions: { afterOnly: [burst] } });
+      assert.deepStrictEqual(c.consumers.map((p) => p.pid), [8210]);
+      assert.strictEqual(c.consumers[0].elapsedMs, 2000);
+      assert.strictEqual(c.consumers[0].cpuSecondsPerSecond, 1);
+      assert.strictEqual(c.consumers[0].newInWindow, true);
+      const d = rd.quietDecision({ snapshotOptions: { afterOnly: [burst] } });
+      assert.deepStrictEqual([d.admitted, d.eligibleReAsk, d.kind],
+        [false, true, 'additional-consumer-hold']);
+    }),
+    test('consumers: a new process lives at least one second: 0.3 s and 0.3 CPU-s is no consumer', () => {
+      const young = rd.proc(8220, 'young.exe', NOW + 7200, 300);
+      const c = classify({ snapshotOptions: { afterOnly: [young] } });
+      assert.strictEqual(c.consumers.length, 0);
+      assert.strictEqual(rd.quietDecision({ snapshotOptions: { afterOnly: [young] } }).admitted, true);
+      // exactly 0.5 at the one-second floor is a consumer; just below is not
+      const edge = (id, age, cpu) => classify({ snapshotOptions: { afterOnly: [
+        rd.proc(id, 'edge.exe', NOW + 7500 - age, cpu)] } }).consumers.length;
+      assert.strictEqual(edge(8221, 1000, 500), 1);
+      assert.strictEqual(edge(8222, 1000, 499), 0);
+      assert.strictEqual(edge(8223, 300, 500), 1, 'under a second of life: the one-second floor, 0.5 holds');
+      assert.strictEqual(edge(8224, 1500, 749), 0);
+      assert.strictEqual(edge(8225, 1500, 750), 1);
+    }),
+    test('consumers: one created before the first snapshot but missing from it counts from it', () => {
+      const missed = rd.proc(8230, 'missed.exe', NOW - 1e6, 4000);
+      const c = classify({ snapshotOptions: { afterOnly: [missed] } });
+      assert.strictEqual(c.consumers.length, 1);
+      assert.strictEqual(c.consumers[0].elapsedMs, 8000);
     }),
     test('consumers: a process that vanished is recorded, never classified or invented', () => {
       const c = classify({ snapshotOptions: { vanish: [310] } });
@@ -907,6 +941,20 @@ function controllerTests() {
     assert.strictEqual(at.result.eligibleReAsk, true);
     const below = await drive(world('edge-below', consumerOf(0.4999)));
     assert.strictEqual(below.code, 0, below.out);
+  });
+
+  add('controller: a short full-core burst of a NEW process is an eligible consumer hold (R1)', async () => {
+    const burst = rd.proc(8210, 'burst.exe', NOW + 5500, 2000);
+    const held = await drive(world('burst', { snapshotOptions: { afterOnly: [burst] } }));
+    noPayload(held);
+    assert.strictEqual(held.result.eligibleReAsk, true);
+    assert.ok(held.result.reasons.some((x) => /additional-consumer: process 8210/.test(x)),
+      held.result.reasons.join());
+    const rec = held.read('readiness.json');
+    assert.strictEqual(rec.decision.processes.consumers[0].elapsedMs, 2000);
+    const young = rd.proc(8220, 'young.exe', NOW + 7200, 300);
+    const ok = await drive(world('young', { snapshotOptions: { afterOnly: [young] } }));
+    assert.strictEqual(ok.code, 0, ok.out);
   });
 
   add('controller: a replaced host holds with no payload, no eligibility and no rebinding', async () => {

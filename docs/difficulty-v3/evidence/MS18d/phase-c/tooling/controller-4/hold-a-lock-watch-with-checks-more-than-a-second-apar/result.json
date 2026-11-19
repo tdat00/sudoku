@@ -1,0 +1,27 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hold-a-lock-watch-with-checks-more-than-a-second-apar",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in hold-a-lock-watch-with-checks-more-than-a-second-apar",
+  "startedAtMs": 1795086601379,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "foreign-lock-watch-interval-over-1s"
+  ],
+  "heldAt": "acquisition",
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 15000,
+      "systemMicros": 78000
+    }
+  },
+  "finishedAtMs": 1795086601407
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hold-the-timing-lock-busy-at-the-request",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in hold-the-timing-lock-busy-at-the-request",
+  "startedAtMs": 1795086600149,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "slot-busy-and-foreign-release-unproved"
+  ],
+  "heldAt": "acquisition",
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 46000,
+      "systemMicros": 62000
+    }
+  },
+  "finishedAtMs": 1795086600176
+}

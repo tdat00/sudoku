@@ -1,0 +1,64 @@
+{
+  "schema": "ms18d-c-cleanup-1",
+  "verdict": "stopped-owned",
+  "startedAtMs": 1795086609331,
+  "finishedAtMs": 1795086610215,
+  "selfPid": 29768,
+  "includeController": true,
+  "simulated": false,
+  "snapshotOk": true,
+  "snapshotError": null,
+  "processCount": 287,
+  "roots": [
+    {
+      "Role": "controller",
+      "Pid": 4312,
+      "State": "absent"
+    },
+    {
+      "Role": "tee",
+      "Pid": 26800,
+      "State": "absent"
+    },
+    {
+      "Role": "command",
+      "Pid": 13128,
+      "State": "alive"
+    }
+  ],
+  "survivors": [
+    {
+      "Pid": 13128,
+      "CreatedMs": 1795086608619,
+      "Name": "node.exe",
+      "Why": "the recorded command"
+    },
+    {
+      "Pid": 15116,
+      "CreatedMs": 1795086608699,
+      "Name": "node.exe",
+      "Why": "descendant of the command 13128"
+    }
+  ],
+  "ignored": [],
+  "stops": [
+    {
+      "pid": 15116,
+      "createdMs": 1795086608699,
+      "name": "node.exe",
+      "why": "descendant of the command 13128",
+      "outcome": "stopped"
+    },
+    {
+      "pid": 13128,
+      "createdMs": 1795086608619,
+      "name": "node.exe",
+      "why": "the recorded command",
+      "outcome": "stopped"
+    }
+  ],
+  "confirmedGone": true,
+  "stillAlive": [],
+  "ambiguous": false,
+  "problems": []
+}

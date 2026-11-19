@@ -1,0 +1,78 @@
+{
+  "schema": "ms18d-c-binding-1",
+  "ok": false,
+  "problems": [
+    "the reviewed clean-input check found 1 path(s): M  docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl"
+  ],
+  "head": {
+    "actual": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "base": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "descendant": true,
+    "diff": {
+      "paths": [],
+      "violations": []
+    },
+    "ok": true
+  },
+  "status": {
+    "rawText": [
+      "M  docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl"
+    ],
+    "rawClean": false,
+    "reviewedClean": false,
+    "entries": [
+      {
+        "xy": "M ",
+        "path": "docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl",
+        "from": null
+      }
+    ],
+    "allowed": [],
+    "violations": [
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl",
+        "xy": "M ",
+        "why": "not an append-only run output or the release ledger"
+      }
+    ]
+  },
+  "identities": {
+    "hashIdentity": "H",
+    "replayIdentity": "R",
+    "sources": "S"
+  },
+  "table": {
+    "sha256": "TABLE",
+    "expected": "TABLE"
+  },
+  "cell": {
+    "key": "classic4/veryEasy",
+    "target": 31,
+    "expected": 31
+  },
+  "node": {
+    "actual": "v26.13.0",
+    "expected": "v26.13.0"
+  },
+  "machine": {
+    "actual": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    },
+    "expected": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    }
+  },
+  "helpers": {
+    "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-e1XEn4\\manifest.txt",
+    "entries": 45,
+    "mismatches": [],
+    "missing": [],
+    "sha256": "de459301ea873e6de3699da12298892c68ade1672be8a7ea9d3922760ee4d75b"
+  }
+}

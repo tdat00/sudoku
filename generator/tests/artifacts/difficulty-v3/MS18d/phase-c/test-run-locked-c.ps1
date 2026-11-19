@@ -57,6 +57,7 @@ $script:HelperManifest = [pscustomobject]@{ File = $manifestFile; Sha256 = $null
 
 # the lock watch: real, or a stub that records what the wrapper asked for and returns a conforming record
 $script:UseRealWatch = $false
+$script:WatchHook = $null
 $script:WatchCalls = [System.Collections.Generic.List[object]]::new()
 $realWatch = ${function:Wait-SlotQuiet}
 function Wait-SlotQuiet {
@@ -68,12 +69,15 @@ function Wait-SlotQuiet {
       RunFolders = @(Get-ChildItem -LiteralPath $script:RunsRoot -Directory -Recurse `
           -ErrorAction SilentlyContinue).Count })
   $t = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
-  return [pscustomobject][ordered]@{
+  $record = [pscustomobject][ordered]@{
     schema = 'ms18d-c-watch-1'; startedAtMs = $t - 15400; firstCheckMs = $t - 15400; lastCheckMs = $t - 10
     requiredWindowMs = 15300; maxIntervalAllowedMs = 1000; intervalMs = 250; checks = 62; windowChecks = 62
     maxIntervalMs = 260; windowSightings = 0; restartCount = 0; restarts = @(); giveUpSeconds = $GiveUpSeconds
     gaveUp = $false; notBeforeMs = $NotBeforeMs; stub = $true
   }
+  # R2 tests: an event during the watch (a log line, a new HEAD) or a watch that is stale when it ends
+  if ($script:WatchHook) { & $script:WatchHook $script:WatchCalls.Count $record $GiveUpSeconds }
+  return $record
 }
 
 $script:passed = 0
@@ -1341,6 +1345,87 @@ Test-Case 'C1 through the wrapper: a renamed binary is no hold; a restart or reu
       $att = Read-Json "$($again.RunDir)\attempts.json"
       Assert ($att.admissions -eq 1 -and $att.payloads -eq 0) 'a rebinding resets no attempt count'
     } finally { $script:StandinReadiness = $null }
+  }
+}
+
+Test-Case 'R2: facts are rechecked after the watch: a stop line or a new HEAD leaves no folder' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'r2a'
+  $a = 'fakea-easy.i0.n50'
+  Invoke-InStandinWorld $w {
+    $git0 = $script:GitOverride
+    try {
+      # another call ended in a stop while this one waited for the quiet slot
+      $script:WatchHook = {
+        param($call, $record, $giveUp)
+        Write-Row $script:LogC ([ordered]@{ schema = 'ms18d-c-run-1'; payload = 'gp-recorder'
+            runId = 'other.a1'; chunkId = 'fakeb-easy.i0.n25'; attempt = 1; outcome = 'stop'
+            controllerOutcome = 'stop' })
+      }
+      Assert-Throws { Start-StandinRecorder $w $a } 'the line is stopped.*Nothing was started' `
+        'a stop line during the watch'
+      Assert ($script:WatchCalls.Count -eq 1) 'the watch ran once'
+      Assert (-not (Test-Path "$script:RunsRoot\fakea-easy")) 'a stop line: no run folder'
+      Assert (@(Get-Ledger).Count -eq 1) 'only the stop line of the other call is in the C log'
+      # a commit landed on HEAD while this call waited
+      Remove-Item -LiteralPath $script:LogC
+      $script:WatchCalls.Clear()
+      $script:WatchHook = {
+        param($call, $record, $giveUp)
+        $script:GitOverride = New-FakeGit ('c' * 40) $true @() $true $script:Committed $script:CommittedBase
+      }
+      Assert-Throws { Start-StandinRecorder $w $a } `
+        'HEAD changed during the lock watch.*Nothing was started' 'a HEAD that changed during the watch'
+      Assert (-not (Test-Path "$script:RunsRoot\fakea-easy")) 'a new HEAD: no run folder'
+      Assert (-not (Test-Path $script:LogC) -or @(Get-Ledger).Count -eq 0) 'nothing was logged'
+    } finally {
+      $script:WatchHook = $null
+      $script:GitOverride = $git0
+    }
+  }
+}
+
+Test-Case 'R2: a watch that is no longer right before the call is repeated, within the same bound' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'r2b'
+  $a = 'fakea-easy.i0.n50'
+  $keepGive = $script:WatchGiveUpSeconds
+  Invoke-InStandinWorld $w {
+    try {
+      # the rechecks took so long that the last check of the watch is 5 s old: watch again
+      $script:WatchHook = {
+        param($call, $record, $giveUp)
+        if ($call -eq 1) { $record.lastCheckMs = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds() - 5000 }
+      }
+      $r = Start-StandinRecorder $w $a
+      Assert ($r.Outcome -eq 'success') "outcome $($r.Outcome)"
+      Assert ($script:WatchCalls.Count -eq 2) "the watch ran $($script:WatchCalls.Count) times, not twice"
+      Assert ($script:WatchCalls[1].RunFolders -eq 0) 'no folder before the second watch ended'
+      $kept = Read-Json "$($r.RunDir)\watch.json"
+      Assert ([long]$kept.lastCheckMs -gt [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds() - 4000) `
+        'the run keeps the second, fresh watch'
+      # a watch that stays stale ends in the one bound: a pre-window-hold, no folder, no admission
+      Remove-Item -LiteralPath $script:LogC
+      Remove-Item -LiteralPath "$script:RunsRoot\fakea-easy" -Recurse -Force
+      $script:WatchCalls.Clear()
+      $script:WatchGiveUpSeconds = 1
+      $script:WatchHook = {
+        param($call, $record, $giveUp)
+        Start-Sleep -Milliseconds 300
+        $record.lastCheckMs = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds() - 5000
+        if ($giveUp -le 0.5) { $record.gaveUp = $true }
+      }
+      $held = Start-StandinRecorder $w $a
+      Assert ($held.Outcome -eq 'control-hold' -and $null -eq $held.RunDir) "outcome $($held.Outcome)"
+      Assert ($script:WatchCalls.Count -ge 2 -and $script:WatchCalls.Count -le 4) `
+        "the watch ran $($script:WatchCalls.Count) times"
+      Assert (-not (Test-Path "$script:RunsRoot\fakea-easy")) 'no run folder after the give-up'
+      $rows = @(Get-Ledger)
+      Assert ($rows.Count -eq 1 -and $rows[0].type -eq 'pre-window-hold') 'one pre-window-hold line'
+    } finally {
+      $script:WatchHook = $null
+      $script:WatchGiveUpSeconds = $keepGive
+    }
   }
 }
 

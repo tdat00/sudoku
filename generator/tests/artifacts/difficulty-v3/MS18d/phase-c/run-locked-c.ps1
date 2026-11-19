@@ -84,6 +84,9 @@ $script:HostBindingsRel = 'tasks/difficulty-v3/MS18d-gp-host-bindings.jsonl'
 $script:EvidenceDirRel = 'tasks/difficulty-v3/MS18d-gp-host-evidence/'
 $script:ProbeScript = "$script:ToolsC\readiness-probe.ps1"
 $script:ReAskWaitSeconds = 60
+# R2: the longest time between the last check of the lock watch and the request that the wrapper accepts
+# (acquisition.js allows 1000 ms; the rest is the folder, watch.json and the slot state)
+$script:WatchFreshMs = 600
 $script:GitOverride = $null
 $script:StandinReadiness = $null
 . $script:HelperPath
@@ -422,6 +425,23 @@ function Assert-AttemptC {
   }
 }
 
+# F2/F4 as one call: the stop line (F4) for every final-matrix call, the attempt (F2) for a recorder. Run
+# before the lock watch and again after it (R2); throws, nothing is started.
+function Test-LineChecksC {
+  param([string]$Profile, [string]$Unit, [int]$Attempt, [string]$CellDir, [string]$Base = '')
+  Assert-LineOpenC -ChunkId $Unit -Attempt $Attempt -Base $Base
+  if ($Profile -eq 'gp-recorder') {
+    Assert-AttemptC -ChunkId $Unit -Attempt $Attempt -CellDir $CellDir -Base $Base
+  }
+}
+
+# The commit HEAD names, or $null when it cannot be read
+function Get-HeadIdC {
+  $r = Invoke-GitC @('rev-parse', 'HEAD')
+  if ($r.Exit -ne 0) { return $null }
+  return $r.Out.Trim()
+}
+
 # C1: the host binding in force: the LAST entry of the committed host-binding journal (append-only chain,
 # evidence committed with its digest). An empty or invalid journal means NO host binding is configured: it
 # throws, and nothing falls back to a host approved earlier. The tooling never writes the journal.
@@ -656,32 +676,52 @@ function Invoke-PayloadLocked {
     # F4 and F2, then (a recorder) the live host against its binding: all before any folder exists
     $unit = [string]$PayloadRequest['scope']
     if ($PayloadRequest['chunk']) { $unit = $PayloadRequest['chunk'].chunkId }
-    Assert-LineOpenC -ChunkId $unit -Attempt ([int]$PayloadRequest['attempt']) -Base $CampaignBase
-    if ($Profile -eq 'gp-recorder') {
-      Assert-AttemptC -ChunkId $unit -Attempt ([int]$PayloadRequest['attempt']) -CellDir $cellDir `
-        -Base $CampaignBase
-      if (-not $Standin) {
-        $hostProblems = @(Get-HostProblemsC -Base $CampaignBase)
-        if ($hostProblems.Count -gt 0) {
-          throw ('MS18d-C hold before the lock (the host instance): ' + ($hostProblems -join '; '))
-        }
+    $attempt = [int]$PayloadRequest['attempt']
+    Test-LineChecksC -Profile $Profile -Unit $unit -Attempt $attempt -CellDir $cellDir -Base $CampaignBase
+    if ($Profile -eq 'gp-recorder' -and -not $Standin) {
+      $hostProblems = @(Get-HostProblemsC -Base $CampaignBase)
+      if ($hostProblems.Count -gt 0) {
+        throw ('MS18d-C hold before the lock (the host instance): ' + ($hostProblems -join '; '))
       }
     }
   }
   $stale = Get-StaleSharedLockC
   if ($stale) { throw "MS18d-C: $stale Nothing was started." }
+  # R2: the HEAD the checks above were made at; it must be the same after the wait (a stand-in repository
+  # that is no Git repository has none)
+  $headBefore = $null
+  if (-not $Standin -or $script:GitOverride) { $headBefore = Get-HeadIdC }
 
   # the lock watch during the gap wait: both lock files at least once a second for the 15.3 s right before
   # the call. NO run folder exists yet: a watch that gives up must not leave a folder the merger would read
-  # as a started payload (F1)
-  $last = Get-LastReleaseC
-  $notBefore = 0
-  if ($null -ne $last) {
-    $gapMs = ($script:GapSeconds + $script:GapMarginSeconds) * 1000
-    $notBefore = $last.ToUnixTimeMilliseconds() + [long]$gapMs
+  # as a started payload (F1). R2: the facts are rechecked AFTER the wait and before the folder: the stop
+  # line (F4), the attempt (F2) and the HEAD. If the rechecks took so long that the watch is no longer
+  # "right before the call" (acquisition.js: 1 s), the slot is watched again, within the same bound.
+  $deadline = [DateTimeOffset]::UtcNow.AddSeconds($script:WatchGiveUpSeconds)
+  while ($true) {
+    $last = Get-LastReleaseC
+    $notBefore = 0
+    if ($null -ne $last) {
+      $gapMs = ($script:GapSeconds + $script:GapMarginSeconds) * 1000
+      $notBefore = $last.ToUnixTimeMilliseconds() + [long]$gapMs
+    }
+    $left = ($deadline - [DateTimeOffset]::UtcNow).TotalSeconds
+    $watch = Wait-SlotQuiet -WindowSeconds ($script:GapSeconds + $script:GapMarginSeconds) `
+      -GiveUpSeconds ([math]::Max(0.001, $left)) -IntervalMs $script:WatchIntervalMs -NotBeforeMs $notBefore
+    if ($watch.gaveUp) { break }
+    if ($finalMatrix) {
+      Test-LineChecksC -Profile $Profile -Unit $unit -Attempt $attempt -CellDir $cellDir -Base $CampaignBase
+    }
+    if ($null -ne $headBefore) {
+      $headNow = Get-HeadIdC
+      if ($headNow -ne $headBefore) {
+        throw ("MS18d-C: HEAD changed during the lock watch (was $headBefore, now $headNow). " +
+          'Nothing was started.')
+      }
+    }
+    $age = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds() - [long]$watch.lastCheckMs
+    if ($age -le $script:WatchFreshMs) { break }
   }
-  $watch = Wait-SlotQuiet -WindowSeconds ($script:GapSeconds + $script:GapMarginSeconds) `
-    -GiveUpSeconds $script:WatchGiveUpSeconds -IntervalMs $script:WatchIntervalMs -NotBeforeMs $notBefore
   if ($watch.gaveUp) {
     # one C-log line typed `pre-window-hold`: no folder, no admission consumed (attempts.js ignores it)
     $record = [ordered]@{

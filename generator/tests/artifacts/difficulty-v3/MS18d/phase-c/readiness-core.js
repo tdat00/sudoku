@@ -12,7 +12,11 @@
  *   admitted   the policy verdict under A: every required fact valid (the exact named host instance in both
  *              snapshots, five valid intervals, two valid snapshots, in budget) AND no additional consumer.
  *   additional consumer   a process (PID plus creation time) that gains at least 0.5 CPU-s per elapsed second
- *              between the two snapshots (unrounded, `>=`). Only the positively identified host itself (not
+ *              between the two snapshots (unrounded, `>=`). A process present in both snapshots is judged
+ *              over the window between them; one that is missing from the first snapshot (it started
+ *              later) over its own life inside the window: the time from max(its creation, the first
+ *              snapshot) to the second snapshot, at least one second. Only the positively identified
+ *              host itself (not
  *              its descendants), the idle process (pid 0) and this run's wrapper, controller and readiness
  *              probe processes are excluded from that classification, and none is subtracted from the raw
  *              aggregate. No OS-service, all-Copilot or host-tree exemption.
@@ -29,7 +33,7 @@ const POLICY = Object.freeze({ selector: 'S-OD15', choice: 'A', name: 'MS18d-GP-
 const LIMITS = Object.freeze({
   intervalCount: 5, intervalMs: 1000, intervalMinMs: 900, intervalMaxMs: 1600,
   readyMeanMax: 0.5, readyMaxMax: 1.0, consumerCpuPerSecond: 0.5,
-  totalBudgetMs: 45000, queryBudgetMs: 15000, callToSpawnMs: 60000
+  totalBudgetMs: 45000, queryBudgetMs: 15000, callToSpawnMs: 60000, newProcessMinElapsedMs: 1000
 });
 
 const isNum = (v) => typeof v === 'number' && Number.isFinite(v);
@@ -187,19 +191,24 @@ function classifyProcesses(before, after, ctx) {
     out.observed++;
     const was = prior.get(keyOf(p));
     let gained;
+    let elapsedMs = windowMs;
     if (was) gained = p.cpuMs - was.cpuMs;
     else {
+      // a process that appeared since the first snapshot is judged over its own life inside the window (at
+      // least one second), so a short full-core burst is not diluted by the whole window
       gained = p.cpuMs;
+      elapsedMs = Math.max(LIMITS.newProcessMinElapsedMs,
+        after.takenAtMs - Math.max(p.createdMs, before.takenAtMs));
       out.created++;
     }
     if (gained < 0) {
       problems.push('process ' + p.pid + ' (' + p.name + '): its CPU time went backwards');
       return;
     }
-    const rate = gained / windowMs;
+    const rate = gained / elapsedMs;
     if (rate >= LIMITS.consumerCpuPerSecond) {
       out.consumers.push({ pid: p.pid, createdMs: p.createdMs, name: p.name, ppid: p.ppid,
-        cpuSecondsPerSecond: rate, gainedCpuMs: gained, newInWindow: !was });
+        cpuSecondsPerSecond: rate, gainedCpuMs: gained, elapsedMs, newInWindow: !was });
     }
   });
   before.processes.forEach((p) => {

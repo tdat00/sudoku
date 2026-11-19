@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hold-another-machine",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in hold-another-machine",
+  "startedAtMs": 1795086603151,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "machine cpu Other differs from AMD EPYC 7763 64-Core Processor"
+  ],
+  "heldAt": "binding",
+  "eligibleReAsk": false,
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 0,
+      "systemMicros": 78000
+    }
+  },
+  "finishedAtMs": 1795086603201
+}

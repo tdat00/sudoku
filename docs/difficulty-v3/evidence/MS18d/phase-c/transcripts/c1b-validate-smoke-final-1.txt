@@ -1,0 +1,63 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\validate-journals.js --report-only
+{
+  "schema": "ms18d-c-validate-journals-1",
+  "authority": true,
+  "repo": "Q:\\git\\sudoku",
+  "head": "e2794d4100e517ff96ce4a59777f1b45289fb1fd",
+  "base": null,
+  "hostBinding": {
+    "ok": true,
+    "configured": true,
+    "bindingId": "host-b1",
+    "entryCount": 1,
+    "tuple": {
+      "bindingId": "host-b1",
+      "pid": 1968,
+      "parentPid": 18780,
+      "netStartUtc": "2026-11-13T12:26:33.6916441Z",
+      "cimCreationUtc": "2026-11-13T12:26:33.691644Z",
+      "exePath": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe"
+    },
+    "reference": {
+      "bindingId": "host-b1",
+      "host": {
+        "pid": 1968,
+        "dotNetStartTime": "2026-11-13T19:26:33.6916441+07:00",
+        "cimCreationDateUtcMicroseconds": "2026-11-13T12:26:33.691644Z",
+        "parentPid": 18780,
+        "executablePath": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe"
+      },
+      "ref": "Initial binding of the already-approved host tuple (pack 9828457a MS18d-c1-readiness-and-rulings.md \"Host-binding journal\": existing tuple approved by the pack and SA1 review of 56b97b26); fresh matching observation by the orchestrator",
+      "journal": {
+        "path": "tasks/difficulty-v3/MS18d-gp-host-bindings.jsonl",
+        "commit": "e2794d4100e517ff96ce4a59777f1b45289fb1fd",
+        "baseCommit": null,
+        "entryCount": 1,
+        "sha256": "eaa3fe68466e22b02f5b88a6e86bfe5be74af9c2ac2e324c4638189adefdb705",
+        "baseSha256": null
+      },
+      "evidence": {
+        "file": "tasks/difficulty-v3/MS18d-gp-host-evidence/host-b1.json",
+        "sha256": "8e98bcb569a1243ddc44017bb6c34f1dd31091302dcb80e9d4220061aaf4d15c",
+        "verified": true
+      }
+    },
+    "problems": []
+  },
+  "rulings": {
+    "ok": true,
+    "entryCount": 0,
+    "reference": {
+      "path": "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+      "commit": "e2794d4100e517ff96ce4a59777f1b45289fb1fd",
+      "baseCommit": null,
+      "entryCount": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "baseSha256": null
+    },
+    "problems": []
+  },
+  "live": null
+}
+VALIDATE-JOURNALS ok=true authority=true hostBinding=host-b1 rulings=0
+exit=0 seconds=0.622

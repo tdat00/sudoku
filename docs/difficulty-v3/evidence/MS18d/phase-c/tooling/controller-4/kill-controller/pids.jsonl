@@ -1,0 +1,3 @@
+{"role":"controller","pid":4312,"ppid":3232,"beforeMs":1795086608400,"afterMs":1795086608473}
+{"role":"tee","pid":26800,"ppid":4312,"beforeMs":1795086608527,"afterMs":1795086608543}
+{"role":"command","pid":13128,"ppid":26800,"beforeMs":1795086608614,"afterMs":1795086608631,"startedAtIso":"2026-11-19T11:10:08.631Z","argv":["C:\\Program Files\\nodejs\\node.exe","tests\\perf.js","--variant=classic4","--level=veryEasy","--runs=50","--warmup=0","--seed=7000","--gate","--ascii"]}

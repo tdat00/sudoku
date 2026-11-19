@@ -1,0 +1,38 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "stand-in o1",
+  "runId": "o1",
+  "cell": "classic4/veryEasy",
+  "payload": "gp-cell",
+  "chunkId": null,
+  "attempt": null,
+  "scope": null,
+  "standin": true,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-5/runs15/classic4-veryEasy/o1",
+  "requestedAt": "2026-11-19T18:13:23.250+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795086787846,
+    "lastCheckMs": 1795086803236,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 260
+  },
+  "startedAtFromChild": null,
+  "finished": "2026-11-19T18:13:23.363+07:00",
+  "releaseObservedAt": "2026-11-19T18:13:23.364+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "stopped-owned",
+  "helperNote": null,
+  "outcome": "stop",
+  "problems": [
+    "the wrapper barrier verdict is stopped-owned"
+  ]
+}

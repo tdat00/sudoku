@@ -1126,6 +1126,9 @@ async function readinessMergeTests() {
     }), /recorded decision is not the one the retained data give/],
     ['an additional consumer in the retained data (honestly recorded)', {
       readiness: { snapshotOptions: { rates: { [bystander]: 0.9 } } } }, /not a complete admitted one/],
+    ['a short full-core burst of a new process (honestly recorded, R1)', {
+      readiness: { snapshotOptions: { afterOnly: [rd.proc(8210, 'burst.exe', rd.T0 + 5500, 2000)] } } },
+      /not a complete admitted one/],
     ['a replaced host (honestly recorded)', { readiness: { snapshotOptions: {
       hostFacts: rd.hostFacts(Object.assign({}, rd.HOST, { pid: 1 })) } } }, /not a complete admitted one/],
     ['a host tuple that is not the one the journal approved', mutate('readiness.json', (o) => {
@@ -1186,6 +1189,23 @@ async function readinessMergeTests() {
     campaignWith(w, { readiness: { input: { readings: rd.readings(16, [3, 3, 3, 3, 3]) } } });
     const r = runMerge(w, 'all-79');
     assert.strictEqual(r.status, 0, r.stdout.split('\n').slice(-5).join('|'));
+  });
+
+  await test('F6/R1: a young new process (0.3 s, 0.3 CPU-s) passes; its data made a burst is refused', () => {
+    const young = () => rd.proc(8220, 'young.exe', rd.T0 + 7200, 300);
+    const w = newWorld();
+    campaignWith(w, { readiness: { snapshotOptions: { afterOnly: [young()] } } });
+    const ok = runMerge(w, 'all-79');
+    assert.strictEqual(ok.status, 0, ok.stdout.split('\n').slice(-5).join('|'));
+    // the same record with the retained second snapshot changed to a two-second full-core burst
+    const w2 = newWorld();
+    campaignWith(w2, Object.assign({ readiness: { snapshotOptions: { afterOnly: [young()] } } },
+      mutate('readiness-after.json', (o) => {
+        const p = o.processes.filter((x) => x.pid === 8220)[0];
+        p.createdMs = rd.T0 + 5500;
+        p.cpuMs = 2000;
+      })));
+    refused(w2, /recorded decision is not the one the retained data give/, 'a burst made of a young one');
   });
 
   await test('F6: an approved rebinding is judged for ITS admissions; earlier ledgers stay valid', () => {
