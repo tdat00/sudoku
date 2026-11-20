@@ -6,7 +6,7 @@
 | Size / active time | File-only preflight first; live duration comes from the approved current-source manifest, not an inherited estimate |
 | Owner / milestone | Release evidence and owner of the v3 PR's CI; M18 complete |
 | Authority / review | R20-R24, S-OD3/S-OD4/S-OD7/S-OD8; owner-requested SA1 dispatch review; orchestrator implementation acceptance |
-| Status | Staged dispatch prepared: E0/E1 after review; no E2 live command without its approved bound; remote/owner actions separate |
+| Status | SA1 review conditions incorporated: E0/E1 need no owner decision; two named test guards assigned; E2 per-command bounds and eight-job final PR-CI gate remain |
 
 **Current concrete dispatch:** **`MS18e-dispatch-and-release-gates.md`**.
 It gives exact write paths, inventories/reuse rules, per-command admission,
@@ -14,6 +14,9 @@ known documentation/CI corrections, final verification and the developer /
 orchestrator / owner boundary. It controls stale examples below. All Node work,
 including metadata and syntax checks, uses the unchanged shared helper and tee;
 no unlocked `node -e` or historical “under a second, no lock” exception applies.
+SA1 concurs upon the B1/B2/M1–M4 and concrete variants-proof conditions in that
+leaf, without another dispatch-review round. The recorded early-CI owner choice
+permits only an owner push and orchestrator draft PR; it is not final CI evidence.
 
 ## Goal & business context
 
@@ -23,8 +26,8 @@ This task does not deploy, push, commit or edit the orchestrator's task logs.
 ## Scope and repository rules
 
 In: final GD/quick/deep and the four named MS07f manual checks, complete item/evidence audit, final-tree workflow/PR-CI ownership,
-living documentation/release record and tightly coupled CI manifest/group corrections.
-Out: application/tuning/fixture repairs, blanket all/manual/browser runs, historical report or pack edits.
+living documentation/release record, the two explicitly assigned per-call diagnostic guards, and tightly coupled CI manifest/group corrections.
+Out: application/tuning/fixture repairs, other suite/assertion edits, blanket all/manual/browser runs, historical report or pack edits.
 AGENTS/checklist; CRLF, both guide languages; no Git writes.
 
 ## Inputs & context
@@ -222,6 +225,10 @@ and `digLevel makes one attempt` in `generator/tests/manual/difficulty.test.js`;
 - Applicable living Generator/Player designs and both user/developer guides, correcting actual final facts.
 - `.github/scripts/generator-suites.sh`, its r6c portable manifest/helper, both
   `.github/workflows/pull-request.yml` and `pages.yml`, only for final bounded-tier correctness.
+- `generator/tests/manual/difficulty.test.js` and `generator/tests/manual/perf.test.js`:
+  only the B1 per-call `withRequestedLevel(...).value` guards in the dispatch leaf,
+  preserving every original request and assertion. No other edits to these files;
+  the perf fix does not assign its non-ratio tests.
 - No application, expected fixture, historical analysis report or task-pack file. The existing
   mega deep tool is run, not redesigned to bypass a slow final cell.
 
@@ -322,10 +329,10 @@ pass or a corrected comment alone does not close a remote-CI obligation.
 
 | Item | Required audit |
 |---|---|
-| R6C-I01 | Generator CI changed from five jobs to four with new names. Have the orchestrator compare the repository's configured required checks with the actual final job contexts, including whether the new **Plan generator tests** job must be added. Record the disposition; do not assume old required-check names cover the new workflow or change branch-protection settings in this task. |
+| R6C-I01 | SA1's API observation as of **2026-11-20**: `rulesets = []`; main protection returns **404 “Branch not protected”**. Re-read/timestamp the configuration at E4. Adding required checks, including **Plan generator tests**, is an owner choice outside MS18e; no protection edits. The task nevertheless requires all eight listed PR jobs to succeed on the matching final head. |
 | R6C-I02 | Remote job durations were unknown at recovery closure. Use actual PR-run timings, including startup, for the matching source and compare them with each job's existing timeout. Local sums/projections are not measured remote durations; absent run evidence stays pending. |
 | R6C-I04 | `player/design.md:437` at the recovery source says browser scripts are not in CI, although the PR workflow runs them. Recheck the final workflow and correct the living design's description; do not remove browser coverage to make the old text true. |
-| IR21 | The first PR run executes **Node 24 / Linux / SG_TIME_FACTOR=3**, whereas local recovery evidence used Node 26 / Windows / factor 2. Record that first platform result and any findings; local green is not that platform's pass. Classify/investigate failures without weakening assertions, raising factors or extending timeouts. Final sign-off still needs matching-head checks. |
+| IR21 | The first PR run executes **Node 24 / Linux / harness factor 3 from CI** (`SG_TIME_FACTOR` remains unset), whereas local recovery evidence used Node 26 / Windows / factor 2. Record that first platform result and any findings; an early draft-PR run is diagnostic only and local green is not that platform's pass. Classify/investigate failures without weakening assertions, raising factors or extending timeouts. Final sign-off still needs all eight matching-head task-defined jobs. |
 | IR22 | `generator/design.md:2073` (the Tests row in section 18) has stale suite/test counts, and `player/design.md:437` has the R6C-I04 browser-CI claim. Derive counts and facts from the final inventory/workflows, not copied recovery counts. The Player text may share one correction/evidence link with R6C-I04, but give both IDs a disposition. |
 | MS05r6a-COV01 | The reveal-fold branch retained one G11 specimen after the search of the 14 goldens, the guides' example and the player suite's 11 other fixed results found no replacement. Verify that the branch remains genuinely asserted on the final fixtures and record the coverage disposition. Do not silently drop it or close the item merely because the older test passed; any needed out-of-scope test/fixture repair goes to its assigned owner. |
 
@@ -337,8 +344,14 @@ documentation/CI audit scope, not permission for new browser runs, fixture repai
 The orchestrator supplies the v3 PR/check-run identity and performs any required Git/PR actions.
 This task owns reading/checking the final-head results and investigating bounded CI grouping
 failures, forwarding application/correctness defects to their owner. Local success is not a
-remote CI pass; if no matching final-head run exists, leave PR-CI sign-off explicitly pending.
-No merge, push, workflow dispatch or new browser run is authorized by this task file.
+remote CI pass. **All eight `pull-request.yml` jobs listed in the dispatch must
+conclude success on the matching final head**, with run IDs, job IDs and attempts,
+regardless of repository protection. A failed, cancelled, skipped or missing job,
+including the browser job, leaves sign-off failed/pending; only an explicit
+`MS18e-Q-CI-POLICY` owner decision may waive a named requirement, never make it passed.
+The owner-approved early draft PR may receive an early run and later the final
+post-E3 head; that early run is not final evidence. No agent push, merge, deploy,
+workflow dispatch or new local browser run is authorized.
 
 ### S-OD8 — final-source checks of the relocated cases
 
@@ -416,7 +429,7 @@ their refusal coverage; do not enable them for CV3. Their fixed deep diagnostic 
 | MS18e-T02 | GS/GQ/GP/GG/GR/GH and 28 deep occurrences/relations have current compatible evidence or explicitly unsatisfied release status |
 | MS18e-T03 | Living EN/VI docs match the final code; no application/tuning/fixture/pack edit |
 | MS18e-T04 | Every S-OD4 item has an evidenced disposition or named outstanding owner, including S-OD7/S-OD8 and the six Q-MS07e-2 cells; all six S3 groups remain |
-| MS18e-T05 | Final workflow/group audit and matching-head PR-CI status are recorded; no time-factor/timeout raise or deep CI run |
+| MS18e-T05 | Final workflow/group audit plus **all eight listed `pull-request.yml` jobs concluding success on the matching post-E3 head**, with run IDs/job IDs/attempts, regardless of repository protection. Failed/cancelled/skipped/missing jobs leave failed/pending sign-off unless an explicit MS18e-Q-CI-POLICY owner waiver is recorded as such; early CI is not final evidence. No factor/timeout raise or deep CI run |
 
 ## Test plan and gates
 
@@ -448,6 +461,8 @@ Qualification can hide a level. Reconcile the current manual population with the
 offers before executing: an unadapted fixed manual list requesting a now-hidden level is a
 test/publication compatibility blocker for an assigned MS18c follow-up, not a zero-test pass,
 permission to drop its assertion silently, or permission to enable hidden production requests.
+The two named B1 compatibility misses are now assigned to E1; scan all eight
+manual suites and report any further unguarded hidden-level request before E2.
 Record every intended population change under final qualification. Fixed GG/GR recipes use
 their separate diagnostic guards and remain complete.
 Complete the difficulty suite through checklist section 7's disjoint offered-level/non-batch

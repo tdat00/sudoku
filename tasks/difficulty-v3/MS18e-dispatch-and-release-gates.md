@@ -3,11 +3,16 @@
 | Field | Contract |
 |---|---|
 | Baseline | Accepted MS18d implementation `1faa96c55afa6a4f0aa57e6b457fba86593cb3ce`; acceptance/index `c978a2ee1a274cbdc2b8bae83e6caac90e226c1c` |
-| Initial release | E0 file-only preflight and E1 owned documentation/CI corrections, after SA1's requested dispatch review |
+| Initial release | E0 preflight and E1 owned documentation/CI plus the two B1 guard fixes; no owner decision is needed before starting |
 | Live release | E2 only for individually reviewed, credibly <=450 s commands in the E0 plan; an unknown bound is not GO |
 | Final checks | E3 on the final fingerprinted files; E4 remote/PR actions are orchestrator/owner work |
 | Developer | One serial developer; no Git writes, push, PR mutation, workflow dispatch, deployment or task-pack edits |
-| Acceptance | Orchestrator review; explicit local, required-gate and remote-CI verdicts, never “all green” from a subset |
+| Acceptance | Orchestrator review; all eight task-defined PR jobs must succeed on the final matching head, independent of repository protection; no subset/early-run green |
+
+SA1 reviewed `34d39983`, objected with B1/B2, and concurs once the conditions
+incorporated here are satisfied; no further dispatch-review round is requested.
+The variants-reuse concurrence is conditional on the four concrete proof checks
+below, not on assuming that a changed full fingerprint is harmless.
 
 This leaf controls the concrete dispatch where older examples in the main MS18e
 task name stale counts, a hidden public level or an unlocked metadata command.
@@ -64,7 +69,8 @@ a skipped required test or a killed process is not completed coverage.
   stale current facts found by this audit. Preserve the accepted section 9.1
   target table, R6 provenance and all eleven retained-budget contrasts.
 - **Update** `player\design.md`: directory/testing/CI descriptions (currently
-  lines 65, 608–644), including the false “browser scripts are not part of CI”
+  lines **64–65**, 608–644), including stale `suites/ (30)` and the false
+  “browser scripts are not part of CI”
   claim and the current table's stale inactive-grouped-graph description.
   Preserve dated historical MS13a/inactive observations as history.
 - **Only directly coupled current-fact corrections**, together in both languages:
@@ -80,10 +86,14 @@ a skipped required test or a killed process is not completed coverage.
   `.github\workflows\pages.yml`: final-evidence comments and only explicitly
   reviewed bounded-tier correctness corrections. Preserve triggers, permissions,
   test coverage, dependencies, platforms, factors and all current timeouts.
+- **B1 exceptions, exactly two original requests and no other edits:**
+  `generator\tests\manual\difficulty.test.js` and
+  `generator\tests\manual\perf.test.js`, only the per-call
+  `SG.fixtures.toolRecords.withRequestedLevel(...).value` guards assigned in E1.
 
-No application, manual/quick suite, canonical fixture, support array, weight,
-band, work limit, cache/wire contract or frozen earlier helper/evidence edit.
-No automatic test/publication repair. Report a needed out-of-scope correction
+No application, other manual/quick suite edit, canonical fixture, support array,
+weight, band, work limit, cache/wire contract or frozen earlier helper/evidence edit.
+No other automatic test/publication repair. Report a needed out-of-scope correction
 with its exact file/assertion and obtain a scoped assignment first.
 
 ### New task-owned files
@@ -97,6 +107,7 @@ preflight\targets-recheck-before.json
 preflight\inventory-all.json
 preflight\inventory-<selected-suite>.json
 preflight\scope-map.json
+preflight\manual-hidden-requests-before.json
 preflight\reuse-map.json
 preflight\variants-compatibility.json
 preflight\admission-plan.json
@@ -117,6 +128,7 @@ audit\items.json
 audit\coverage.json
 audit\gates.json
 audit\source-bindings.json
+audit\manual-hidden-requests-final.json
 audit\workflow-audit.json
 audit\remote-ci.json
 audit\final-identities.txt
@@ -202,6 +214,15 @@ The scope map must contain:
 | S-AV11 | One fixed diagnostic tuple, held until its separate bound/transport plan is approved |
 | Other manual assertions | Explicitly label covered, required by an existing named contract, or outside this dispatch. Do not silently convert a whole-suite claim into I5-only coverage |
 
+**B1 static scan:** inspect all eight manual suites for unguarded `pipeline.run`
+or `digger.generate` requests of hidden levels, including requests reached through
+local helpers/call sites. Record variant/level/seed, source line, selected-test
+scope and the verified per-call guard, or an unresolved finding; a grep alone is
+not the complete scan. The two known misses are the E1 assignment below.
+Report **any other unguarded-hidden-level hit before E2** for disposition; do not
+silently wrap further requests, omit the test or launch it to see what happens.
+Retain the before scan and a final scan after the two fixes under their new paths.
+
 The five I5 suites retain fixed diagnostic corpora behind their public
 registrations: original nine levels, Wordoku eight, restoring hidden-level
 guards and aggregate API semantics. This dispatch does not newly assign every
@@ -224,23 +245,47 @@ no failures/skips, under
 It includes every public CV3/refusal and the mega16 replay. Its fingerprint is
 not the current with-manual fingerprint.
 
-Prepare `variants-compatibility.json` before proposing reuse. Compare all
-fingerprinted inputs from accepted `e0596801` to the final MS18e tree; require
-unchanged selected test names/ordinals, request recipes, assertions, relevant
-fixtures/loaders/engine/options/defaults and no source instability.
-At this dispatch the intervening changed inputs are the two developer guides,
-Generator design, the **target literals only** in `perf-helper.js`, and the
-`manual-corpus`, `mega` and `multigrid` quick-suite changes. The selected
-`manual\variants.test.js` and `manual-corpus.js` are unchanged. Prove that those
-differences do not affect the selected variants tests; a file list alone is not proof.
-Include later E1 documentation changes in that analysis.
+`variants-compatibility.json` must prove **all four** checks against accepted
+**`e0596801cf95d79761073a344ffc2e60f7764c8f`** and the actual final MS18e tree:
 
-**SA2/SA1 must concur with the concrete compatibility proof before reuse.**
-Keep old hashes/receipts and label `reused-compatible`, not fresh-current-hash.
-If approved, reuse the 285 tests and do not regenerate their CV3/replay requests.
-If not, identify precisely invalidated coverage and submit bounded replacement
-commands; no blind whole-variant rerun. The earlier approximately 332 s mega replay
-already exceeded its old 300 s projection: do not inherit that old bound.
+1. **Identical blobs**, with old/final IDs and a complete path inventory, for
+   `core\tests\harness.js`, `core\tests\node-evidence.js`,
+   `generator\tests\node-runner.js`, every `SOURCE_FILES` entry, every fixture
+   in the runner's core/Generator fixture trees except
+   `generator\tests\fixtures\perf-helper.js`, and
+   `generator\tests\manual\variants.test.js`. Account for missing/added paths;
+   never omit a changed dependency from the comparison. Record the actual
+   final HEAD/dirty state and retain the original result fingerprint.
+2. The complete `perf-helper.js` diff is limited to comments and the reviewed
+   `PERF_TARGETS` rows, with no executable behavior change. Record the diff and
+   the read-reference scan showing no `perfTools`/`PERF_TARGETS` consumer in
+   the loaded engine/fixtures/`variants` execution path (distinguish the
+   defining fixture's own definitions from consumers). The test consumers are
+   the `perf` suite and quick `manual-corpus`, `perf-tooling`, `smoke`, none
+   selected by `--suite=variants`.
+   **Review count correction:** the actual diff has **12 changed target rows /
+   17 cell values**, not 13 target rows; Git's 13 deleted lines include one
+   comment. The rows are classic4, classic6, classic9, diagonalX, hyper, jigsaw9,
+   wordoku, killer, mega12, mega16, butterfly and sohei. This permits no extra
+   row/value change and does not authorize editing the frozen fixture.
+3. Prove the runner's selected-file loading path (`node-runner.js:291–330` at
+   dispatch): `--suite=variants` loads only that suite file after the unchanged
+   sources/fixtures. The changed quick suites and B1's two other manual files
+   are not loaded; documents may be read for the fingerprint but are not
+   executed as test code. Include all E1 changes in this analysis.
+4. A final ordinary-mode registration of `variants`, with `SG_DEEP` unset,
+   equals MS18c's `closure\manual-variants\inventory-variants.json` on
+   **(ordinal, fullName) for all 285 tests**, with no omissions, additions,
+   duplicates or registration errors.
+
+SA1 concurs without another review round **if these concrete checks are all
+proved**; SA2 accepts the same conditions. The orchestrator verifies that the
+record meets them before accepting reuse. Any deviation is a QUESTION, not
+automatic compatibility. Keep old hashes/receipts and label `reused-compatible`,
+not fresh-current-hash. If the proof holds, do not regenerate those CV3/replay
+requests; otherwise identify invalidated coverage and submit bounded replacement
+commands, never a blind whole-variant rerun. The earlier approximately 332 s mega
+replay exceeded its old 300 s projection; do not inherit that old bound.
 
 The same principle is stricter for deep records: inspect both
 `identity.currentMatches.sourceHash` and `.toolHash`. A mismatched record is
@@ -260,6 +305,11 @@ expected selected total, allowed exit interpretation and dependencies.
 Unknown or >450 s means **not admitted**. A test timeout, the deep 500 s budget,
 GQ/GP time, a different seed/trace/options cohort, or historical 430.5/449 s is
 not by itself a current whole-command bound. No pilot/trial run to discover one.
+**M3:** `core\tests\harness.js:415–418` applies per-test timeouts only to async
+tests returning a promise; synchronous tests are not stopped by that metadata.
+That is why the replay could pass after about 331.6 s despite its declared
+60 s base timeout. Only the external **540 s process ceiling** stops the
+whole synchronous run; its <=450 s launch projection still needs evidence.
 
 In particular, the `difficulty` confusion-matrix assertion calls **all seven
 batches (700 requests)** in a fresh process. Do not hide it in a cheap
@@ -272,23 +322,71 @@ Return the scope/reuse/admission matrix and QUESTIONS to the orchestrator.
 Continue independent E1/file-only work while a performance-bound row is held;
 do not mark the held gate green or remove it from the required population.
 
-## 4. E1 — current documents and bounded CI correctness
+## 4. E1 — two diagnostic guards, current documents and bounded CI correctness
+
+### B1 — two explicit MS18c compatibility repairs
+
+Apply **before any E2 run of either file**, using the existing per-call pattern
+in `manual\variants.test.js:793–799` / `manual\killer.test.js:60–61`:
+
+- In `manual\difficulty.test.js:1782–1805`, test
+  **“never returns an ambiguous candidate of a search either: the keeper counts
+  before it keeps”**, replace only the original `r = SG.pipeline.run(config)`
+  expression with the value of
+  `SG.fixtures.toolRecords.withRequestedLevel('killer', 'master', function () { return SG.pipeline.run(config); }).value`.
+  Preserve the entire original config (seed61843, diagonal symmetry,
+  maxAttempts1, trace off), the ambiguity-guesser/weight setup, the
+  `digger.noRatedPuzzle` catch expectation and every uniqueness/proof/warning
+  assertion. Killer's public support remains Very Easy/Easy/Normal.
+- In `manual\perf.test.js`, serializer test **“the hash covers the givens, the
+  solution, the cages, the signs, the regions and the symbols”**, wrap only
+  `result('greaterThan', 'normal', 1)` in
+  `SG.fixtures.toolRecords.withRequestedLevel('greaterThan', 'normal', function () { return result('greaterThan', 'normal', 1); }).value`.
+  Keep the original request/helper and all serialization assertions unchanged.
+  Do not guard every request through a broader shared-helper rewrite.
+
+The established helper restores the exact public support array even on throw.
+These are diagnostic-compatibility fixes under MS18c's existing rule, not new
+offers, request substitutions, assertion changes or correctness waivers.
+The certain pre-fix unsupported-level failure is not evidence that the generator
+returned an ambiguous puzzle.
+Record both **MS18c compatibility misses** as
+`MS18c-COMPAT-DIFFICULTY-KILLER-MASTER` and
+`MS18c-COMPAT-PERF-GREATERTHAN-NORMAL`, with before/after scope and honest
+validation status. The perf guard fix **does not assign live non-ratio perf tests**
+or a whole perf suite; do not claim that serializer test ran when it did not.
+
+These two edits alone change only the **with-manual** fingerprint, not either
+quick fingerprint or E identity. `--suite=variants` loads neither changed file.
+They must appear in the final compatibility proof and identity delta; the separate
+design/guide corrections still require the affected quick sets.
+
+### Current-document/CI corrections
 
 1. Correct Generator section 18's stale 56/48/~2900 counts from the inventory:
    current **63 suites =55 quick +8 manual**, 4,807 quick, with 37 own quick and
    18 shared. State actual combined/manual counts only from registration, not
    an old 3,910 total. Do not overwrite dated historical counts elsewhere.
-2. Correct Player directory/section 10/table: its 32 suites/2,981 tests remain
+2. Correct Player directory/section 10/table, **including line64 `suites/ (30)`**:
+   the own `tests/suites/` folder has **14**, while **14 own +18 shared =32**
+   is the total quick-suite count; do not label that own folder as 32.
+   Its 32 suites/2,981 tests remain
    quick; the existing PR workflow **also runs browser scripts**. Pages runs
    core/Generator/Player checks before deployment, not that PR browser job.
    Fix the current inactive-chain wording to match S-OD11 activation/fallback;
    preserve the dated inactive MS13a history.
-3. Audit both guide languages against actual v3 code: rating/cache 3, history/wire 1,
+3. Treat these values as **audit targets**, not facts proved by the dispatch:
+   rating/cache 3, history/wire 1,
    grouped proofVersion 2, 40 IDs/34 unscoped, two uniqueness IDs, frozen new-pattern
    bounds, generation defaults 8/4/2, R5=256/C=4, exact/shallow/warning semantics,
    immutable legacy history/import claims and final 79 offers/56 hidden.
    Keep “bounded proof/minimum in its stated domain” distinct from exhaustive
-   deduction coverage. A documentation fix must not invent a behavior change.
+   deduction coverage. Each document edit must cite the actual matching **code
+   file/symbol/line** in the audit. A disagreement with a dispatch value is a
+   **QUESTION**, never a reason to change code or force the document to that value.
+   SA1 confirmed RATING_VERSION 3, WIRE_VERSION 1, proofVersion 2, attempts 8/4/2
+   and allowance 256; this does not remove the need for citations. In particular,
+   **40 IDs/34 unscoped, two uniqueness IDs and C=4 were not verified in that review**.
 4. Fix the CI helper's **known Player limit mismatch** within its existing
    validation/reporting path: Player must be checked/printed against **900 s**,
    not the Generator's generic 1800 s. Keep the actual workflow timeout 15 minutes,
@@ -297,6 +395,11 @@ do not mark the held gate green or remove it from the required population.
    250 projects 930 and must fail although below 1800. No new manifest schema or
    configurable larger Player limit is needed. This enforces an existing
    contract and needs no owner waiver.
+   Adopt M4: have the existing selftest also assert that the **same new 900 s
+   constant used for validation/reporting** equals `timeout-minutes * 60` for
+   the **`test-player` job in each workflow**. Scope the read to that job, not
+   the first timeout elsewhere in the YAML; absent/ambiguous/mismatching values
+   fail. Keep both workflow values 15 and add no parser dependency or new schema.
 5. Update workflow comments to reference the final release/evidence map and the
    actual 28-occurrence obligation/results. Do not claim old r5m records alone
    validate later techniques or call registration-only evidence a live pass.
@@ -310,12 +413,6 @@ R6C-I01/I02/I04, IR21/IR22 and MS05r6a-COV01 each get an explicit disposition.
 For COV01 inspect the actual G11 fixture and positive reveal-fold assertions,
 including the current `generator\tests\suites\player.test.js` coverage; a passing
 test name alone does not prove a branch executed. No new discovery or fixture repair.
-
-Record a static scope finding: `manual\perf.test.js`'s serializer test still calls
-Greater-Than Normal seed1 directly, although Normal is hidden. That non-ratio
-block is **not assigned here**. Do not run it speculatively, repair it silently or
-claim the entire manual `perf` suite passed. If broader perf coverage is required,
-raise a scoped publication-compatibility QUESTION for the orchestrator first.
 
 Complete these edits and refresh inventories/identities/target re-check before
 final verification. Both designs are quick-fingerprint inputs, so these known
@@ -384,7 +481,17 @@ perf > instrumented generators: what the events cost > generating puzzles: verbo
 Confirm these names/ordinals via inventory. Preserve limits 1.02/1.10/1.35,
 the existing warmup, six interleaved rounds and up-to 5/4/4 internal measurements.
 Each work call generates 24 Easy plus 2 Normal puzzles; account for full internal
-work, not assumed early success. Those original repetitions are part of the test,
+work, not assumed early success. One internal attempt is **1 warm-up +12 measured
+work calls =13 calls**, so the maximum accounting is:
+
+| Ratio | Maximum attempts | Maximum work calls | Maximum generated puzzles (26 per call) |
+|---|---:|---:|---:|
+| off | 5 | 65 | 1690 |
+| summary | 4 | 52 | 1352 |
+| full | 4 | 52 | 1352 |
+
+Include those bounds and setup/checking in E0; per-test timeout metadata does
+not terminate the synchronous workload. Those original repetitions are part of the test,
 not permission for external rerun-to-green. Timing failures are hard failed
 assertions under S-OD4, not the unrelated warn-only perf samples' skip behavior.
 No 19-cell warn-only sweep or 26 hash-combination test sweep is inferred here.
@@ -459,6 +566,9 @@ report actual existing stage/counter scopes and null/unknown where absent.
   items, S-AV02/03/04/08, Remote Pairs S-AV32/S-OD9 and Jellyfish S-AV35 with
   S-OD10/S-OD12's bounded, case-specific history. No new discovery quota.
   Keep all six S3 group closure/proof/cost records and MS15b-GP-J/U cohorts.
+- Include the two B1 MS18c compatibility misses and the all-eight-manual-suite
+  static scan. Distinguish a fixed guard from completed live coverage; additional
+  unguarded hidden-level hits need disposition before E2.
 - Keep S-AV01 closed **not offered**, and **S-OD7 / S-AV05 / S-AV06** explicit:
   Killer Hard/Expert remain hidden until later calibration, with their raw
   qualification results kept separately from owner withholding. S-AV27's final
@@ -481,17 +591,43 @@ required gate is unexecuted or correctness/evidence is unresolved. Preserve all
 time-only failures and their S-OD4 dispositions; do not translate “continue” into
 “all manual gates passed”.
 
-## 7. E4 — orchestrator/owner remote path
+## 7. E4 — orchestrator/owner remote path and task-defined CI gate
+
+### Recorded optional early-CI decision
+
+**MS18e-Q-EARLY-CI = A**, owner answer message **`1573181349634777210`**,
+**`2026-11-20T03:41:02.049Z`** (10:41:02.049 +07:00), verbatim:
+
+> EARLY-CI=A, chỉ mở  draft PR, không merge
+
+The owner pushes the current `rating-v3` branch; then the orchestrator opens a
+**draft** PR from `rating-v3` to `main` for an **early signal only**.
+It is the same PR that later receives the final post-E3 head.
+This grants no agent push, merge, deploy or Pages/workflow dispatch, and no
+change from draft status without a further owner instruction.
+When the orchestrator relayed the answer, the owner had **not pushed**:
+origin was reported at `8bd2487b`, 87 commits behind. These are time-qualified
+observations, not a future head pin; recheck after the owner's push.
+
+This optional path can precede local E3 completion and does not block E0/E1.
+Keep early run/head/base/job IDs, attempts and findings labelled **early**.
+An early pass is **never final evidence**, including for the browser job.
+The task-defined final gate below still requires the final matching post-E3
+head's CI; early failures inform investigation, not a waiver or automatic retest.
+
+### Final PR-CI gate
 
 The developer provides the local candidate tree, final fingerprints, bounded
 workflow audit, per-job arithmetic and unresolved items. **The orchestrator**
 reviews and commits all intended changes; **the owner** pushes the intended
 `rating-v3` commit set. No developer push, PR creation, remote rerun or deploy.
 
-After that push the orchestrator prepares/creates or updates the PR targeting
-`main` and records its number/URL and actual current head. Read the actual
-required-check/ruleset configuration; do not assume recovery's old names suffice.
-Current job names are:
+After the final owner push, the orchestrator updates that draft PR (or prepares/
+creates the PR if the early path was not used), recording its number/URL and
+actual current head. **The task defines the PR-CI gate, not repository protection.**
+All **eight** jobs below from `pull-request.yml` must conclude **`success`** on
+the matching final head, with run IDs, job IDs and attempts recorded, **whatever
+the repository's required-check settings say**:
 
 ```text
 Test core
@@ -504,9 +640,20 @@ Test player
 Test player in a browser
 ```
 
-Record whether each is required and whether the Plan job needs a policy decision.
-No branch-protection/ruleset edits are assigned. Missing permission to inspect
-configuration is a pending owner/maintainer action, not “no required checks”.
+Any failed, timed-out, cancelled, skipped or missing job leaves PR-CI sign-off
+**failed or pending**, including **Test player in a browser**. No local result
+covers that browser job. No empty required-check set, early run, subset result
+or skipped-job “success” substitutes for these eight successful final jobs.
+Only an explicit owner decision **`MS18e-Q-CI-POLICY`** can waive a named part
+of this gate; preserve the real result and waiver, never relabel it passed.
+
+**R6C-I01:** record SA1's read-only API observation **as of 2026-11-20**:
+`rulesets = []`, and main protection returned **404 “Branch not protected”**.
+Thus no repository checks were required then. Re-read the configuration at E4
+and timestamp/source the result; lack of permission then is unknown, not an
+empty set. Adding protection/required checks (including Plan generator tests)
+is an owner choice **outside MS18e**, not a prerequisite for E0/E1 and not
+permission for an agent to edit protection. It cannot weaken the task's gate.
 
 For actual PR CI record run/job URLs/IDs, attempts, conclusions, Node24/Linux/
 factor3, browser/version, durations including checkout/setup, and actual timeout
@@ -523,7 +670,8 @@ PR. Do not dispatch/deploy Pages to obtain a pre-merge badge.
 
 No remote result yet means **remote CI pending**, never local success promoted
 to Linux/Node24/browser success. Final sign-off needs the intended current
-candidate's actual required checks and policy disposition. Finish the intended
+post-E3 candidate's **all eight successful task-defined jobs**, or an explicit
+recorded owner CI-POLICY waiver with unmet results still shown. Finish the intended
 commit set before the final push/check; if another repository commit is made
 after verification, repeat matching-head verification after its owner push.
 Keep the last CI attestation in PR/orchestrator records rather than advancing
@@ -535,6 +683,10 @@ by this dispatch.
 All owner/Fable matters go **through the orchestrator to the owner on Discord**.
 Record the exact question, named scope/measurements, message/time/verbatim reply
 and decision binding. Do not contact Fable directly or infer a new delegation.
+**No owner decision is needed before the developer starts E0/E1.** GD-DEEP,
+SAV11 and CI-POLICY questions arise only from actual E0/E4 findings or a proposed
+change, not as speculative prerequisites. The early-CI choice above is already
+answered and does not replace the owner's still-pending push.
 
 | Situation | Routing / rule |
 |---|---|
@@ -542,7 +694,8 @@ and decision binding. Do not contact Fable directly or infer a new delegation.
 | Missing credible <=450 bound for required GD/deep, including IR17/confusion matrix | Hold that command and report full requested population/basis. If release requires waiving/changing the gate or a new execution route, ask owner `MS18e-Q-GD-DEEP`; no trial run or silent omission |
 | S-AV11 still lacks a defensible bound/approved capture route | Report held/unknown, obtain technical plan review; ask owner `MS18e-Q-SAV11` only if proposing changed scope/contract or release with that assigned profile outstanding |
 | Failed required assertion would need new threshold, budget, request count, tier, limit, offer or fixture | Owner/delegated decision first; correctness/evidence failure blocks. Neither task acceptance nor a past GQ/GP exception supplies the grant |
-| Required-check configuration mismatch or policy change | Owner/maintainer decision `MS18e-Q-CI-POLICY`; orchestrator does not silently alter protection |
+| Any of the task's eight final PR jobs is failed/cancelled/skipped/missing, or a waiver is proposed | PR-CI remains failed/pending; only owner decision `MS18e-Q-CI-POLICY` may waive the named requirement. Repository settings, including no protection, do not waive it |
+| Adding repository required checks/protection | Optional owner/maintainer policy choice outside MS18e; record/re-read R6C-I01, no agent protection edits |
 | Candidate ready but not pushed | Owner action, not a Fable decision: orchestrator sends exact branch/SHA and waits for the owner's push |
 | New ambiguity needing Fable interpretation | State the exact conflicting contract to the owner; Fable acts only on a recorded owner delegation |
 
@@ -574,4 +727,6 @@ all passed/failed/blocked gates and actual costs; every inherited item/decision;
 local CI arithmetic and exact remote status; owner actions still outstanding.
 The developer leaves execution-log/index writes to the orchestrator.
 No “M18 complete”, release-ready or all-green claim while required coverage,
-correctness/evidence, owner decisions or matching-head remote checks remain unmet.
+correctness/evidence, applicable owner decisions or the **eight-job final
+matching-head CI gate** remain unmet. An explicit waiver is reported as a
+waiver, never as a successful job; correctness/evidence failures still block.
