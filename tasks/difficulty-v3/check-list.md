@@ -116,7 +116,7 @@ pause commit saved non-green step evidence; it did not turn that evidence into a
 | [x] | MS18b | [MS18b](MS18b-recheck-cap-and-window.md) | Cap/window final rechecks | MS18a | S, 25-40 min | Evidence | M18b | 44 |
 | [x] | MS18c | [MS18c](MS18c-qualify-and-publish-offers.md) | Qualify and publish offers | GQ accepted; A `6a473f7a` / B `387a4c8d` complete; step-5 population ruling AGREE/resume and final closure | M + bounded manual/E/quick/CI | Qualification | M18c | 45 |
 | [x] | MS18d | [MS18d](MS18d-performance-and-final-hashes.md) | Final GP preflight/performance/hashes | Accepted `1faa96c5`: GP complete/meets at `732d1b66` (74/79, 3,950 requests), owner a3s S-OD16-18, Phase D quick 4,807 + 2,981 green | M, 40-55 min + GP/GG | Evidence | M18d | 46 |
-| [ ] | MS18e | [MS18e](MS18e-release-evidence-closure.md) | Final correctness/items/workflows and PR CI | MS18d | M, 40-60 min + GD/deep/CI | Release evidence/CI | M18 | 47 |
+| [ ] | MS18e | [MS18e](MS18e-release-evidence-closure.md), [staged dispatch](MS18e-dispatch-and-release-gates.md) | Final correctness/items/workflows and PR CI | MS18d accepted at 1faa96c5 / c978a2ee | E0/E1 first; reviewed per-command GD/deep; owner push/remote CI | Release evidence/CI | M18 | 47 |
 
 S/M/L mean approximately 100-300 / 300-800 / 800-1,600 changed lines including tests, excluding bulky
 generated evidence. Time allowances are active development, not unmeasured heavy-gate wall time.

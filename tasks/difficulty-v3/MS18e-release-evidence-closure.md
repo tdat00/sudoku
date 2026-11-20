@@ -2,11 +2,18 @@
 
 | Header | Value |
 |---|---|
-| Depends on | MS18d accepted; all required owner actions resolved |
-| Size / active time | Evidence/CI audit; 40-60 minutes plus GD/quick/final deep and named MS07f checks |
+| Depends on | MS18d accepted at 1faa96c5 / c978a2ee; staged admission and owner/remote gates in MS18e-dispatch-and-release-gates.md |
+| Size / active time | File-only preflight first; live duration comes from the approved current-source manifest, not an inherited estimate |
 | Owner / milestone | Release evidence and owner of the v3 PR's CI; M18 complete |
-| Authority / review | R20-R24, S-OD3/S-OD4/S-OD7/S-OD8; orchestrator review, not routine analyst cross-review |
-| Status | Not started |
+| Authority / review | R20-R24, S-OD3/S-OD4/S-OD7/S-OD8; owner-requested SA1 dispatch review; orchestrator implementation acceptance |
+| Status | Staged dispatch prepared: E0/E1 after review; no E2 live command without its approved bound; remote/owner actions separate |
+
+**Current concrete dispatch:** **`MS18e-dispatch-and-release-gates.md`**.
+It gives exact write paths, inventories/reuse rules, per-command admission,
+known documentation/CI corrections, final verification and the developer /
+orchestrator / owner boundary. It controls stale examples below. All Node work,
+including metadata and syntax checks, uses the unchanged shared helper and tee;
+no unlocked `node -e` or historical “under a second, no lock” exception applies.
 
 ## Goal & business context
 
@@ -29,10 +36,13 @@ owner-approved a3s in S order; all succeeded. The accepted raw-ledger population
 is **114 total =111 prior +3 a3**, never 117. Retain all nine earlier control-holds,
 the pre-window event and the 125-line C log; no admission was refunded.
 
-Phase D is dispatched in `MS18d-phase-d-dispatch.md` and still needs acceptance
-before this task starts. It owns R6, both final-fingerprint quick sets, final
-file-only GG and the full item register. Audit its actual accepted handoff,
-not a blanket inference that GP alone completes release verification.
+Phase D is **accepted**, implementation `1faa96c55afa6a4f0aa57e6b457fba86593cb3ce`
+and acceptance `c978a2ee1a274cbdc2b8bae83e6caac90e226c1c`.
+Its R6 documents, two target/source re-checks, GG520, quick4807/2981 and local
+CI check passed; the 30-item register and handoff are immutable inputs.
+No matching-head remote pass, final GD/deep or S-AV11 profile follows from that
+acceptance. Preserve its unlocked syntax-check and corrected-helper/format
+disclosures; do not retrofit their history or edit the frozen artifacts.
 Audit separate **Q2/S-OD16, Q3/S-OD17, Q4/S-OD18**, all three F3 disposition
 objects/lines, and the B1/H1/V1 through B4/H4/V2 chain. Only the explicit owner
 decisions authorized the three third admissions; neither F3 nor a global cap
@@ -200,11 +210,11 @@ retention, shallow warning/Retry and proof coverage are all documented in both l
 S0 baseline old 202/204 versus qualified 91/204 is not a v3 result. Include isolated target and final
 matched comparisons, per-cell losses, omitted levels and all performance misses.
 No new floor certificate or target leaks into the external Player exchange.
-Resume anchors at c9935cd: `generator/tests/manual/difficulty.test.js:1231`
-(`hits the requested level in at least 90 %`), `:1259` (`I5: every puzzle has a complete proof`),
-and the `digLevel makes one attempt` guarantee;
-`generator/js/ui/cache.js:47` (`const SCHEMA_VERSION = 2` before MS17b),
-`generator/js/ui/history.js:19` (`const VERSION = 1`). Find the quoted tests after later changes.
+Use current identifiers/full test names, not the old c9935cd line numbers:
+`hits the requested level in at least 90 %`, `I5: every puzzle has a complete proof`
+and `digLevel makes one attempt` in `generator/tests/manual/difficulty.test.js`;
+`SCHEMA_VERSION` in `generator/js/ui/cache.js` is now 3, while `VERSION` in
+`generator/js/ui/history.js` remains 1. E0 binds the actual final sources.
 
 ## Files to create/modify
 
@@ -216,6 +226,11 @@ and the `digLevel makes one attempt` guarantee;
   mega deep tool is run, not redesigned to bypass a slow final cell.
 
 ## Implementation steps
+
+Execute the concrete E0–E4 staging in the dispatch leaf: inventory and source/
+compatibility/admission review first, owned document/CI corrections, then only
+released live rows, final-fingerprint quick/audit, and orchestrator/owner remote
+actions. The five steps below remain the obligations, not blanket live permission.
 
 1. Reconcile all task handoffs and every inherited/new S-OD4 item against final sources/decisions.
 2. Finish living guide/design/workflow/group corrections and create the release-report skeleton
@@ -292,8 +307,9 @@ actual final offline deep/GD/E/GQ/GP evidence, not claim r5m's old source valida
 Apply check-list section 2's "Maintaining CI quick projections" rule to the final measurements:
 audit the recorded before/after revisions, the 1.5 process-wall margin rounded up to ten seconds,
 the authority for any membership/tier change, and the unchanged factors and ceilings.
-In both current workflows the Player job has **15 minutes (900 s)**, although the helper reports
-its generic 30-minute manifest ceiling.
+In both current workflows the Player job has **15 minutes (900 s)**. At dispatch
+the helper incorrectly checks/reports its generic 30-minute manifest ceiling;
+the concrete E1 assignment fixes that check and its focused selftests.
 Verify `180 + 3 * player.projectionSeconds <= 900` explicitly; a helper pass against 1800 s is
 insufficient. No estimate revision turns a timeout or missing remote result into a pass.
 The final helper/workflow audit must account for this difference without raising the Player timeout.
@@ -335,13 +351,13 @@ wrapper, unassigned extra sweep, stub or skipped hidden request.
 MS18c owns any diagnostic-only support guard needed by the fixed replay requests; verify its
 array restoration and do not weaken the public unsupported-level refusal.
 
-```powershell
-Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=perf','--filter=> instrumented generators: what the events cost > generating puzzles:','--verbose','--results=..\docs\difficulty-v3\evidence\MS18e\manual\ratios.json')
-Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=variants','--filter=> player: the replay steps of a result > real top-level results with clues shown again replay faithfully (mega16)','--verbose','--results=..\docs\difficulty-v3\evidence\MS18e\manual\mega-replay.json')
-```
+The dispatch leaf lists the three exact ratio names and the mega16 replay name.
+Run one admitted ratio per tee/locked command, with a new result/transcript.
+The replay may be supplied by the accepted MS18c live coverage only after its
+explicit compatibility proof; otherwise it needs a reviewed replacement bound.
 
 Apply the current-source <=450 s projection and 540 s command ceiling, with explicit margin;
-split the ratios into individual exact selectors if their combined projection is unsafe.
+the concrete dispatch uses one ratio per individually admitted exact selector.
 MS07f's historical times are not final bounds. Retain every real failure/incomplete outcome
 and its item; `-AllowExit1` does not turn it into a pass. These four selectors are specifically
 authorized, not a whole `perf`/`variants` or `--manual` run. Verify the retained classic9 request
@@ -363,8 +379,10 @@ Record >240 s/timeouts as named availability/cost outcomes; wrong puzzles/flags/
 
 #### Final CV3 mega cells — live only (Addendum B1 route)
 
-Every mega12/mega16 CV3 cell in the final offered-level manifest runs live, including Nightmare
-and hell1 when offered. No record provider, Node replay entry point or in-runner deep-record reuse.
+Every mega12/mega16 CV3 cell in the final offered-level manifest requires actual
+live coverage, including Nightmare and hell1 when offered. Explicitly approved
+compatibility may retain MS18c's actual live coverage; otherwise a replacement
+runs live. No record provider, Node replay entry point or in-runner deep-record reuse.
 
 1. Preflight each normal `--suite=variants` selector with `--list-tests`, using the quoted boundary
    filter `'--filter=> variants: <id> > CV3 <level>:'`. Require selected total 1 and the intended full name.
@@ -402,26 +420,12 @@ their refusal coverage; do not enable them for CV3. Their fixed deep diagnostic 
 
 ## Test plan and gates
 
-Generator:
-
-```powershell
-$offered = @(& node -e "require('./tests/replay-fixtures.js').nodeEnv().engine(); console.log(SG.variants.get('classic9').difficultySupport.join('\n'))")
-if ($LASTEXITCODE -ne 0) { throw 'offered-level manifest failed' }
-$offered = @($offered | Where-Object { $_ -ne '' })
-$first = if ($offered -contains 'nightmare') { 'nightmare' } elseif ($offered.Count -gt 0) { $offered[0] } else { $null }
-if ($null -ne $first) {
-  Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=difficulty',"--filter=time) > $first >")
-}
-# Examples of ONE cell each: complete the full current per-level/variant manifest below.
-Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=killer','--filter=> normal: 20 puzzles > I5:','--verbose')
-Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=jigsaw','--filter=> normal: 20 puzzles > I5:','--verbose')
-Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=greater-than','--filter=> normal: 20 puzzles > I5:','--verbose')
-Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=extra-regions','--filter=> diagonalX normal: 20 puzzles > I5:','--verbose')
-Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=wordoku','--filter=> normal: 20 puzzles > I5:','--verbose')
-Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=variants','--filter=> variants: classic9 > CV3 normal:','--verbose')
-Invoke-Dv3Node -Task MS18e -AllowExit1 -NodeArgs @('tests\node-runner.js','--suite=variants','--filter=> variants: classic9 > CV3 unsupported:','--verbose')
-# Complete both app quick sets through the refreshed bounded manifest, not an unconditional whole run.
-```
+E0 obtains the current offered-level/ordinal manifest through locked/teed
+registration-only commands. No unlocked metadata call is authorized.
+The current public I5 manifest has 32 selectors; Greater-Than Normal and Wordoku
+Normal are hidden and the former example selectors would select nothing.
+Use the dispatch leaf's exact source-qualified shapes and whole-command admission
+checks, not a hard-coded first Nightmare launch or a blanket manual invocation.
 
 Player likewise uses `Invoke-Dv3Node`; a no-options run is allowed only with a current <=450 s
 projection. Otherwise use the complete disjoint manifest and result reconciliation.
@@ -457,7 +461,7 @@ bound stops that command and creates a named final item; no automatic new toolin
 final pass or silently omitted. Preserve counts and record current-source actuals; each command
 under 540 seconds. A selector with no tests is not a pass. Use r6b's measured per-app standing
 cost and current projections, not the obsolete one-minute/fifteen-second comments.
-Use the shared lock for all commands expected over 10 seconds. **Announce to the orchestrator
+Use the shared lock and tee for **every Node command**. **Announce to the orchestrator
 before starting (pentomino runs in parallel on the same machine).** 540-second process ceiling (check-list section 7).
 S-OD4 lets the task continue after a time/availability finding, not claim release gates passed.
 Record unsatisfied final gates and pending PR CI explicitly. A change to a recorded gate needs
@@ -465,7 +469,8 @@ the owner or its recorded delegated decision route; correctness/evidence corrupt
 CV6-05 leaves Normal's base at 700 ms unless its specific final contract decision was recorded
 through MS18c before GP; audit that actual disposition. Its performance-only stop is superseded.
 No new evidence class to hide a slow cell.
-No new --all/--manual/browser/SG_DEEP permission is inferred.
+No blanket live --all/--manual/browser/SG_DEEP permission is inferred. The leaf's
+explicit --all --list-tests exception is registration only, never test execution.
 
 ## Definition of done & handoff
 
