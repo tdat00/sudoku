@@ -7,7 +7,7 @@
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
 | Authority | R24/R21, FS23, S-OD4, S-OD15 A; S-AV01 not offered; S-OD13 remains GQ-only |
-| Status | C2 complete at 732d1b66: final.m1 complete/meets, 79 cells, 3,950 requests, 74 meeting targets (72 required), five misses retained; Phase D dispatch in MS18d-phase-d-dispatch.md; task acceptance still pending |
+| Status | ACCEPTED at `1faa96c55afa6a4f0aa57e6b457fba86593cb3ce` (orchestrator acceptance): GP complete/meets at `732d1b66` (79/79 cells, 3,950 requests, 74 meeting targets, 72 required; five misses retained); Phase D closed with R6 attribution, both quick sets green on the final fingerprints and local CI check passed; no remote CI claim |
 
 ## Goal & business context
 
@@ -1240,14 +1240,14 @@ Return the complete inherited/new item list to MS18e; no suite addition is autho
 
 | Field | Value |
 |---|---|
-| Status | |
-| Start | |
-| End | |
-| Duration | |
-| Model | |
-| Token usage | |
-| AI credits | |
-| Verification | |
-| Acceptance | |
-| Issues & resolutions | |
-| Handoff | |
+| Status | Accepted by the orchestrator at `1faa96c5` (Phase D) on the dispatch reviewed by SA1 (`6e4d97bc` + `b54e67ae`). GP complete and meeting: all-79 `final.m1` at `732d1b66`, `complete=true meets=true`, 74/79 strict `p95 < target` (72 required), 3,950 requests from 114 accepted raw ledgers, 9 holds retained, 35 extra cold starts; SA1's independent file-only recompute equal to the report (`84a591ad`). Five misses retained as named numerical findings. Owner decisions S-OD15 (Q1 A) and S-OD16/17/18 (Q2/Q3/Q4 A, one a3 each, all consumed) |
+| Start | 2026-11-19 10:37:46 (+07:00) SA2 preparation `cf1f540a`; Phase A developer accepted at `602af371` 11:08 |
+| End | 2026-11-20 09:39:29 (+07:00) Phase D commit `1faa96c5`; execution log at the following orchestrator commit |
+| Duration | About 23 h elapsed (19/11 10:37 -> 20/11 09:45), including owner waits (Q1 answered 14:13; Q2-Q4 asked from 21:09 and answered 05:50:08). Phase A 11:08; Phase B 12:53 (`50903182`) / 13:08; C0/C0b 15:53; C1 17:46; C1b B1 18:18; base B 18:24; C2 queue 18:25 -> 04:57 (114 chunks: 111 successes, 3 cells held twice; B2 20:28, B3 22:56 transport repairs; outer scheduling gates from chunk 42); B4 spec 05:12, owner records 05:52, B4 07:11, base-4 07:14; a3s 07:16-07:30 (gate waits 325/124/247 s); final merge 07:31:25-07:31:53; Phase D dispatch 08:10/08:47, developer 08:47:26-09:36:21 (quick runs 09:09:52-09:23:22) |
+| Model | claude-sonnet-5.5 (developer); gpt-6-astra (SA2 specs, rulings, packs, Phase D dispatch); claude-opus-5.5 (SA1 reviews and independent recompute; orchestrator, which ran the GP campaign, a3s and final merge) |
+| Token usage | Window 19/11 10:37 - 20/11 09:45 (+07:00), from local usage events. Developer: 1,857 calls; 723,958,978 input (711,196,256 cache reads); 3,402,422 output. SA1: 530 calls; 208,445,835 input (191,143,168 cache reads); 921,501 output. SA2: 265 calls; 105,457,690 input (97,443,854 cache reads); 949,584 output (window total; may include minor non-MS18d work). Orchestrator: 746 calls; 300,059,478 input (286,466,560 cache reads); 540,200 output |
+| AI credits | about 13,705 (developer); about 14,317 (SA1); about 42,268 (SA2, window total); about 17,384 (orchestrator) |
+| Verification | Phase A preflight; Phase B 17 targets from frozen GQ, 104/104 GG shards, 520 keys unchanged (E `344afdec`, replay `1cf64919`). C2: 4 declared epochs (B1/H1/V1, B2/H2/V1, B3/H3/V1, B4/H4/V2), base records and proofs `--check` ok, journals/live host verified before each a3, wide-gate pre-launch checks clean. Final merge exit 0, 0 problems; SA1 recompute 79/79, consumed 114/114, totals/holds equal, `recompute.json` 1779f78b. Phase D: target re-check before/after byte-identical (135 positions, 79 active, table 3d0bffdb, sources 75b0955e3e356bd1, 11/11 retained-vs-GP pairs); GG check-only 520 unchanged; focused perf-tooling/smoke/help 105/105; Generator quick 4,807/4,807 (8 shards) and Player quick 2,981/2,981 on final fingerprints 10ed919c / 00db9a68 / manual a818c0b9; CI metadata timing-only (own-fast 330->350, Player 180->190; Player job 750 of 900 s); local CI check passed |
+| Acceptance | Business B01/B02 and technical T01-T22 met with evidence in `docs/difficulty-v3/evidence/MS18d/` (preflight, hashes, phase-b, phase-c, gp run folders, all-79/final.m1, phase-d incl. operator records, SA1 recompute, item register, transcripts) and `docs/difficulty-v3/performance-v3.md`; misses reported as misses, no target or hash changed to conceal them |
+| Issues & resolutions | Owner Q1 (S-OD15 A, host-active admission; resource clause scheduling-only). R24 raw-ledger route replaced 17 monolithic obstructions (52 chunks). Transport defects fixed under reviewed epochs: B2 (watch freshness starvation, mega16-easy pre-window hold about 1,203 s) and B3 (release history vs the pre-window row). External OS consumers (EventLog, Dnscache, Intune/SenseIR PowerShell, BackgroundDownload, MsMpEng, 1ESDevBoxHibernationDelayAgent) caused 9 unstarted holds; outer scheduling gates added (b0c0bfac, 2a5cb26a, wide 55c4e867). Three cells exhausted two admissions -> owner Q2-Q4 A -> one exceptional a3 each under B4 (all succeeded). Phase D: SA1 dispatch conditions B1-B3/M1-M4; orchestrator per-chunk gate waits for chunks 42-114 not retained (disclosed unknown); developer disclosed one unlocked `node --check`, four corrected own-helper runs, long lines in two Phase D helpers |
+| Handoff | To MS18e: remote CI at the matching head; S-OD4 dispositions of the five GP misses (mega12/expert, sohei/hell2, butterfly/hell2, wordoku/expert, wordoku/nightmare); GD and final deep admission (IR17); S-AV11 profile; finder-cap audits S-AV31-S-AV39, MS15b-GP-J/U, MS18c-GQ-ENGINE-COST and S-AV08; live manual suites and perf as planned; item register `docs/difficulty-v3/evidence/MS18d/phase-d/item-register.json` |
